@@ -1,0 +1,8 @@
+# Windowsの場合
+
+cd ..¥test3
+
+
+# Linux、Macの場合
+
+cd ../test3

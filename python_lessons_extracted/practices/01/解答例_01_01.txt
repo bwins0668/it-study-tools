@@ -1,0 +1,7 @@
+# Windowsの場合
+mkdir C:¥zero-python¥test2
+mkdir C:¥zero-python¥test3
+
+# Linux、Macの場合
+mkdir ~/zero-python/test2
+mkdir ~/zero-python/test3

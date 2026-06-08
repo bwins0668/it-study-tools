@@ -1,0 +1,8 @@
+print(type(1 + 2))
+print(type(4 * 2 * 3.14))
+print(type(8 / 3))
+print(type(8 // 3))
+print(type('1 + 2'))
+print(type('Hello' + '3'))
+print(type(True))
+print(type('False'))

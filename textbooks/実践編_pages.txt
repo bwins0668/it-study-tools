@@ -1,0 +1,180 @@
+=== PDF: java実践編.pdf ===
+Page 1: Java 学習教材（２） | 筑波⼤学 システム情報系 三⾕純
+Page 2: 本資料は | 『Java 第3版実践編
+Page 3: 第1章 パッケージとJava API | 
+Page 4: モジュールとパッケージ | • Javaには「クラスライブラリ」と呼ばれる、便
+Page 5: Javaの主なモジュールとパッケージ | 
+Page 6: パッケージに含まれるクラスの利⽤ | java.utilパッケージに含まれるRandomクラス
+Page 7: import宣⾔ | 完全限定名を毎回記述するのは⼤変
+Page 8: import宣⾔の効果 | 
+Page 9: import宣⾔の使⽤例 | import java.util.Random;
+Page 10: 複数のクラスのimport宣⾔ | • 複数のクラスをimport宣⾔する場合、そのクラ
+Page 11: パッケージの階層 | 例えば次の⼆つは異なるパッケージ
+Page 12: java.langパッケージ | • java.langパッケージにはJavaの基本的な
+Page 13: API仕様書 | Javaにはあらかじめ膨⼤な数のクラスやイン
+Page 14: API仕様書で確認できるクラス情報 | • Randomクラスはjava.baseモ
+Page 15: クラスの情報 | ・クラスの説明
+Page 16: Stringクラス | • String は java.langパッケージに含まれる
+Page 17: Stringオブジェクトの⽣成⽅法による違い | String s1 = new String("こんにちは");
+Page 18: Stringオブジェクトの⽣成⽅法による違い | String s1 = "こんにちは";
+Page 19: Stringクラスのメソッド | Stringクラスには、⽂字列を扱うための便利
+Page 20: Stringクラスのメソッド | String str = "2020/11/22";
+Page 21: Mathクラス | java.lang.Mathクラスには数学的な計算を⾏
+Page 22: Mathクラスの使⽤ | • java.langパッケージはimport⽂を省略で
+Page 23: パッケージの作成 | package mypackage;
+Page 24: パッケージの階層構造とフォルダの階層構造 | jp.co.javacompany.developパッケージ内に
+Page 25: パッケージ名の設定 | • パッケージ名は他⼈が作ったものと同じ
+Page 26: クラスのアクセス制御 | アクセス修飾⼦を使って、パッケージ外部
+Page 27: メソッドとフィールドのアクセス修飾⼦ | メソッドとフィールドの宣⾔で使⽤できるアクセス修飾⼦
+Page 28: アクセス修飾⼦の優先順位 | フィールドやメソッドのアクセス修飾⼦が
+Page 29: 複数のクラス宣⾔を持つプログラムコード | • 1つの.javaファイルで複数のクラスを宣⾔できる
+Page 30: 第2章 例外処理 | 
+Page 31: 例外の発⽣ | • プログラムが動作する時にトラブルが発
+Page 32: 例外が発⽣する例 | int a = 4;
+Page 33: 例外が発⽣する例 | int[] scores = new int[3];
+Page 34: 投げられた例外をキャッチする | • 例外が投げられたときにも、
+Page 35: try〜catch⽂ | try {
+Page 36: 処理の流れ | 
+Page 37: 例外処理の例 | public class ExceptionExample3 {
+Page 38: finallyの処理 | public static void main(String[] args) {
+Page 39: catchブロックの検索 | class SimpleClass {
+Page 40: 例外オブジェクト | • 例外が発⽣した時には
+Page 41: 例外オブジェクトの種類による場合分け | try {
+Page 42: 例外クラスの階層 | Exceptionオブジェクトが投げられる可能性がある場合はtry
+Page 43: 例外を作成して投げる | • 例外オブジェクトを⾃分で作成して投げ
+Page 44: メソッドの外への例外の送出 | ⾃分で作成した例外オブジェクトをthrowし
+Page 45: メソッドの外への例外の送出の例 | class Person {
+Page 46: 第3章 スレッド | 
+Page 47: スレッドとは | • スレッドは処理の流れ
+Page 48: スレッドの作成 | • 通常のプログラムは1つのスレッドで実⾏
+Page 49: ⽅法1. Threadクラスを拡張する | • Threadクラスを継承したクラスを作成する
+Page 50: ⽅法1のThreadの使⽤例 | class MyThread extends Thread {
+Page 51: Threadの使⽤例 | • Threadクラスのrunメソッドを直接呼ばな
+Page 52: ⽅法2. Runnableインタフェースを実装する | ⽅法1がいつでも使えるとは限らない。
+Page 53: ⽅法2のThread使⽤例 | class MyThread implements Runnable {
+Page 54: スレッドを⼀定時間停⽌させる | Thread.sleep(停止時間（ミリ秒）);
+Page 55: スレッドの終了を待つ | MyThread t = new MyThread();
+Page 56: joinメソッドの呼び出しによる待機 | 
+Page 57: スレッドを⽌める | • スレッドはrunメソッドの処理が終了すると、動
+Page 58: マルチスレッドで問題が⽣じるケース | • 複数のスレッドが1つの変数に同時にアクセスす
+Page 59: 問題が⽣じないケース | 変数moneyの値（現在の値は98）をスレッドAとスレッドB
+Page 60: 問題が⽣じるケース | 変数moneyの値（現在の値は98）をスレッドAとスレッドB
+Page 61: スレッドの同期 | メソッドにsynchronized修飾⼦をつけると、その
+Page 62: 第4章 ガーベッジコレクションとメモリ | 
+Page 63: プログラムの実⾏とメモリ管理 | • プログラム実⾏中に覚えておかなくてはならな
+Page 64: スタックとヒープ | MyObject doSomething() {
+Page 65: 空きメモリサイズの確認 | class DataSet {
+Page 66: 使⽤できるサイズは有限 | • インスタンスを⼤量に⽣成すると、ヒー
+Page 67: ガーベッジコレクション | • プログラムの中で不要になったインスタ
+Page 68: ガーベッジコレクションの対象になるタイミング | MyObject obj1 = new MyObject();
+Page 69: ガーベッジコレクションの対象になるタイミング | MyObject obj = new MyObject();
+Page 70: ガーベッジコレクションが実⾏されるタイミング | • Java仮想マシンが適切なタイミングで実⾏する
+Page 71: 第5章 コレクション | 
+Page 72: ⼤きさの変わる配列 | Javaでの配列の使い⽅
+Page 73: 型を指定するクラス | 型パラメータを指定したArrayListオブジェ
+Page 74: ジェネリクス | • API仕様書でArrayListを⾒るとクラス名が次の
+Page 75: ラッパークラス | • ArrayListに格納できるのは参照型
+Page 76: 基本型とそれに対応するラッパークラス | 
+Page 77: コレクションフレームワーク | • 実際のプログラムでは、複数の（多数の）オブジェクト
+Page 78: リスト | • オブジェクトが順番に並ぶ
+Page 79: マップ | • キーと値（オブジェクト）のペアを管理する
+Page 80: セット | • 格納されるオブジェクトに重複がないことを保証
+Page 81: リストコレクション：ArrayList | • 配列＋便利な機能
+Page 82: リストコレクション：LinkedList | • 要素の追加と削除は⾼速
+Page 83: マップコレクション：HashMap | キーと値に使⽤する型を型パラメータで指定する
+Page 84: セットコレクション：HashSet | キーと値に使⽤する型を型パラメータで指定する
+Page 85: コレクションに含まれる全要素へのアクセス | これまでに学習したfor⽂を使うと、次のようにし
+Page 86: イテレータ（Iterator） | • イテレータは、コレクションの中の要素を1つず
+Page 87: イテレータ（Iterator）の使⽤例 | HashSet<String> set = new HashSet<String>();
+Page 88: 拡張for⽂ | 通常のfor⽂、イテレータを使ったアクセスよりも
+Page 89: LinkedListクラスによるキュー | キュー：先⼊れ先出し（First In First Out:FIFO）
+Page 90: Queueインタフェースの使⽤ | Queue<String> queue = new LinkedList<String>();
+Page 91: LinkedListクラスによるスタック | スタック：後⼊れ先出し（Last In First
+Page 92: LinkedListのスタックとしての利⽤ | LinkedList<String> stack = new LinkedList<String>();
+Page 93: sortメソッドによる並べ替え | • コレクションに格納された要素を値の⼤⼩で並
+Page 94: ⾃作クラスのインスタンスの並び替え | ⾃分で作ったクラスを順番に並び替える場合は、
+Page 95: Comarableインタフェースの実装例 | class Point implements Comparable<Point> {
+Page 96: 第6章 ラムダ式 | 
+Page 97: 内部クラス | クラスの宣⾔を別のクラスの内部で⾏える
+Page 98: 匿名クラス | • メソッドの引数を指定するカッコの中で、
+Page 99: 匿名クラスの例 | interface SayHello {
+Page 100: 関数型インタフェース | 抽象メソッドを1つしか含まないインタフェ
+Page 101: ラムダ式 | 関数型インタフェースを実装したクラスの
+Page 102: ラムダ式の記述⽅法 | (引数列) -> {処理内容}
+Page 103: ラムダ式の省略形 | 引数列の型は省略できる
+Page 104: ラムダ式の省略形 | 処理の中⾝に命令⽂が1つしかない場合、処理を囲
+Page 105: ラムダ式の省略形を使った例 | interface SimpleInterface{
+Page 106: forEachメソッドとラムダ式 | • ArrayListの要素にアクセスするために拡張for⽂
+Page 107: ラムダ式を⽤いた並べ替え | • 各コレクションクラスに備わっているsortメソッ
+Page 108: ラムダ式を⽤いた並べ替えの例 | pointList.sort((p0, p1) -> (p0.x + p0.y) - (p1.x + p1.y));
+Page 109: 第7章 ⼊出⼒ | 
+Page 110: ⼊出⼒ | ⼊⼒：プログラムにデータが⼊ってくること
+Page 111: 標準出⼒ | ⼊出⼒先を特に指定しなかった場合に標準的に使
+Page 112: 標準⼊⼒ | 標準⼊⼒からの⽂字列の受け取り
+Page 113: ⽂字列と数値の変換 | • 標準⼊⼒から渡されるデータは⽂字列
+Page 114: ファイルへの出⼒ | try {
+Page 115: バッファを⽤いたデータの書き込み | 
+Page 116: バッファを⽤いたデータの読み込み | 
+Page 117: ストリームの連結 | • ストリームは最低1つ必要
+Page 118: ファイルからの⼊⼒ | try {
+Page 119: シリアライゼーションとオブジェクトの保存 | プログラムの状態をファイルに保存する
+Page 120: シリアライゼーション | • オブジェクトをその状態を保持したままファイ
+Page 121: シリアライゼーションを使⽤したオブジェクトの保存 | try {
+Page 122: 保存したオブジェクトの再現 | try {
+Page 123: ファイルとフォルダの操作 | • java.io.Fileクラスを使って、ファイルと
+Page 124: フォルダ操作 | File file = new File("C:¥¥java");
+Page 125: 第8章 GUIアプリケーション | 
+Page 126: GUIアプリケーションとは | • GUI: Graphical User Interface
+Page 127: Swingライブラリ | • ウィンドウ、ボタン、メニューなどを扱うクラ
+Page 128: フレームの作成 | import javax.swing.*;
+Page 129: ⾃分⾃⾝のインスタンスを⽣成するクラス | import javax.swing.*;
+Page 130: コンポーネントの配置 | • ボタンやチェックボックスなどのGUI部品は
+Page 131: JButton（ボタン）コンポーネントの配置 | import javax.swing.*;
+Page 132: ボーダーレイアウト | • JFrameクラスのgetContentPaneメソッドで取得で
+Page 133: ボーダーレイアウトの配置例 | getContentPane().add(BorderLayout.CENTER, new JButton("CENTER"));
+Page 134: ボーダーレイアウトの配置例 | WESTに配置しなかった場合 CENTER,SOUTHのみ
+Page 135: レイアウトマネージャ | • レイアウトマネージャがコンポーネントをど
+Page 136: フローレイアウト | setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+Page 137: ボックスレイアウト | getContentPane().setLayout(
+Page 138: グリッドレイアウト | getContentPane().setLayout(
+Page 139: パネルを活⽤したレイアウト | • JPanelはコンポーネントをのせることが
+Page 140: イベント処理 | • 「ボタンがクリックされた」などのように、
+Page 141: ソースとリスナ | • ソース（source）
+Page 142: イベント処理（ボタン押下時の処理）を⾏うプログラムの作成 | 1. リスナを作成する
+Page 143: EMPTY PAGE | 
+Page 144: イベント処理の様⼦ | • リスナ登録したオブジェクト
+Page 145: 複数のコンポーネントがある場合 | • 異なるボタンに対して、同じオブジェクトをリ
+Page 146: EMPTY PAGE | 
+Page 147: さまざまなコンポーネント | • Swingライブラリには、さまざまなコン
+Page 148: 第9章 | グラフィックスとマウスイベント
+Page 149: import java.awt.*; | import javax.swing.*;
+Page 150: Graphiscオブジェクトの座標系 | 描画領域の⼤きさはコンポーネントの
+Page 151: 直線の描画 | public void paintComponent(Graphics g) {
+Page 152: 様々な描画メソッド | • drawArc 円弧を描く
+Page 153: Graphics2Dクラス | • Graphicsクラスよりも⾼機能なグラ
+Page 154: マウスイベント | • マウスクリック、カーソルの移動、ド
+Page 155: 2つのイベントリスナ | • MouseListenerインタフェース
+Page 156: import java.awt.event.*; | import javax.swing.*;
+Page 157: 第10章 ネットワーク | 
+Page 158: ネットワーク接続 | • ⼀般的にTCP/IPというプロトコルが⽤い
+Page 159: IPアドレスとポート番号 | • クライアントがサーバーに接続要求を出
+Page 160: ServerSocketとSocket | 
+Page 161: サーバー側のプログラム例 | try {
+Page 162: クライアント側のプログラム例 | try {
+Page 163: EMPTY PAGE | 
+Page 164: EMPTY PAGE | 
+Page 165: 第11章 ⼀歩進んだ | Javaプログラミング
+Page 166: コレクションとストリーム | • コレクションに格納されたオブジェクトを
+Page 167: ストリーム | オブジェクトのまとまりに対して、なにかし
+Page 168: ストリームの⽣成 | List<String> list = Arrays.asList("January","February","March");
+Page 169: ストリームに対する終端操作 | List<String> list = Arrays.asList("January","February","March");
+Page 170: ストリームに対する中間操作 | • filterメソッドは、ある条件を満たすオブジェク
+Page 171: ストリームに対する中間操作 | • Sortedメソッドはデータを並べ替えるこ
+Page 172: ストリーム処理の例 | List<String> list = Arrays.asList("January",
+Page 173: スタティックインポート | パッケージ名とクラス名を省略して、クラス変数
+Page 174: インタフェースのデフォルトメソッド | • インタフェースのメソッドにdefault(デフォルト)
+Page 175: デフォルトメソッドの例 | interface SayHello {
+Page 176: アノテーション | • メソッド名の前の@Overrideなど、
+Page 177: System.out.printfメソッド | ⽂字列の中の特別な記号（%d, %fなど）を、引数
+Page 178: enum宣⾔ | 特定の定数の値だけを取れる独⾃の型を定義できる
+Page 179: == 演算⼦とequalsメソッド | • ==演算⼦を使って2つのオブジェクト参照を⽐

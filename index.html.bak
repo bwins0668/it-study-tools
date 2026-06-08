@@ -1,0 +1,2177 @@
+﻿<!DOCTYPE html>
+
+<html lang="zh-Hans">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta name="description" content="SQL / MySQL, IT繝代せ繝昴・繝・& Java 螟夂沿蝮苓′荳壼ｭｦ荵髣ｨ謌ｷ縲ょ桁蜷ｫSQL莠､莠呈ｲ咏將縲！T Passport荳ｭ譌･蜿瑚ｯｭ謨咏ｨ九，BT讓｡諡溯・ｯ募所Java郛也ｨ区ｲ咏將縲・>
+
+  <title>Study Tools</title>
+
+  <!-- Google Fonts & FontAwesome Localized -->
+
+  <link rel="stylesheet" href="assets/lib/google-fonts/css/google-fonts.css">
+
+  <link rel="stylesheet" href="assets/lib/font-awesome/css/all.min.css">
+
+  <link rel="stylesheet" href="assets/css/index.css?v=20260604_redesign_v7">
+  <link rel="stylesheet" href="assets/css/light-theme.css">
+
+</head>
+
+<body>
+
+
+
+  <!-- App Container -->
+
+  <div class="app-container">
+
+
+
+    <!-- Header Panel -->
+
+    <header class="app-header">
+
+      <div class="header-logo">
+
+        <i class="fa-solid fa-graduation-cap logo-icon" id="main-logo-icon"></i>
+
+        <div class="logo-text">
+
+          <h1 id="main-title-text">Study Tools</h1>
+
+          <span>驟榊･怜､・・ｹｳ蜿ｰ &nbsp;窶｢&nbsp; By: Coco</span>
+
+        </div>
+
+      </div>
+
+
+
+      <!-- Subject Tab Switcher -->
+
+      <div class="header-subject-selector" onclick="event.stopPropagation()">
+
+        <button class="subject-tab active" id="subject-tab-sql" onclick="switchSubject('sql')">
+
+          <i class="fa-solid fa-database"></i> SQL 蟄ｦ荵
+
+        </button>
+
+        <button class="subject-tab" id="subject-tab-java" onclick="switchSubject('java')">
+
+          <i class="fa-brands fa-java"></i> Java 蟄ｦ鄙・
+
+        </button>
+
+        <button class="subject-tab" id="subject-tab-python" onclick="switchSubject('python')">
+
+          <i class="fa-brands fa-python"></i> Python 蟄ｦ荵
+
+        </button>
+
+        <button class="subject-tab" id="subject-tab-itpass" onclick="switchSubject('itpass')">
+
+          <i class="fa-solid fa-graduation-cap"></i> IT繝代せ繝昴・繝・螟・・
+
+        </button>
+
+        <button class="subject-tab" id="subject-tab-sg" onclick="switchSubject('sg')">
+
+          <i class="fa-solid fa-shield-halved"></i> SG 螟・・
+
+        </button>
+
+        <button class="subject-tab" id="subject-tab-typing" onclick="switchSubject('typing')">
+
+          <i class="fa-solid fa-keyboard"></i> 謇灘ｭ礼ｻ・ｹ
+
+        </button>
+
+      </div>      
+      <button class="theme-toggle-btn" id="theme-toggle-btn" onclick="toggleTheme()" title="切换浅色/深色模式">
+        <i class="fa-solid fa-sun"></i>
+      </button>
+      <button class="ai-settings-btn" id="ai-settings-btn" onclick="openAiSettings()" title="AI隶ｾ鄂ｮ / AI Settings">
+
+        <i class="fa-solid fa-robot"></i> <span>AI隶ｾ鄂ｮ</span>
+
+      </button>
+
+
+
+      <!-- Header Challenge Widget (SQL only) -->
+
+      <div class="header-challenge" id="header-challenge">
+
+        <button class="header-challenge-btn-start" id="challenge-start-btn" onclick="startCrossChallenge()">
+
+          <i class="fa-solid fa-fire-flame-curved"></i> 扈ｼ蜷磯囂譛ｺ謖第・
+
+        </button>
+
+        <div class="challenge-active-controls" id="challenge-controls" style="display: none;">
+
+          <span class="challenge-status-text" id="challenge-status-text">謖第・荳ｭ (1/1)</span>
+
+          <span class="challenge-source-tag" id="challenge-source-tag" style="display: none;"></span>
+
+          <button class="challenge-control-btn" id="challenge-next-btn" onclick="nextCrossChallenge()" style="display: none;">
+
+            <i class="fa-solid fa-forward"></i> 謐｢荳鬚・
+
+          </button>
+
+          <button class="challenge-control-btn stop-btn" id="challenge-stop-btn" onclick="stopCrossChallenge()" style="display: none;">
+
+            <i class="fa-solid fa-stop"></i> 扈捺據
+
+          </button>
+
+        </div>
+
+      </div>
+
+
+
+      <button class="reset-all-btn" onclick="resetAllProgress()">
+
+        <i class="fa-solid fa-rotate-left"></i> 驥咲ｽｮ霑帛ｺｦ
+
+      </button>
+
+    </header>
+
+
+
+    <!-- Sub-Header Bar (Visible in SQL mode to toggle Textbook vs Mock Exam) -->
+
+    <div class="sub-header-bar" id="sql-sub-header" style="display: none;">
+
+      <div class="sub-header-tabs">
+
+        <button class="sub-header-tab active" id="sql-sub-tab-lessons" onclick="switchSqlSubMode('lessons')">
+
+          <i class="fa-solid fa-book-open"></i> 謨咏ｧ台ｹｦ荳取ｼ皮ｻ・ｲ咏將 (繝・く繧ｹ繝医・貍皮ｿ・
+
+        </button>
+
+        <button class="sub-header-tab" id="sql-sub-tab-exam" onclick="switchSqlSubMode('exam')">
+
+          <i class="fa-solid fa-laptop-code"></i> 螳樊桃讓｡諡溯・ｯ・(螳滓橿讓｡謫ｬ隧ｦ鬨・
+
+        </button>
+
+      </div>
+
+    </div>
+
+
+
+    <!-- Sub-Header Bar (Visible in IT Passport mode to toggle Textbook vs Past Exam Dojo) -->
+
+    <div class="sub-header-bar" id="itpass-sub-header" style="display: none;">
+
+      <div class="sub-header-tabs">
+
+        <button class="sub-header-tab active" id="sub-tab-lessons" onclick="switchItPassSubMode('lessons')">
+
+          <i class="fa-solid fa-book-open"></i> 謨咏ｧ台ｹｦ遶闃ょｭｦ荵 (繝・く繧ｹ繝亥ｭｦ鄙・
+
+        </button>
+
+        <button class="sub-header-tab" id="sub-tab-dojo" onclick="switchItPassSubMode('dojo')">
+
+          <i class="fa-solid fa-compass"></i> 霑・悉髣ｮ驕灘惻 & 讓｡諡溯・ｯ・(驕主悉蝠城％蝣ｴ)
+
+        </button>
+
+      </div>
+
+    </div>
+
+
+
+    <!-- Sub-Header Bar (Visible in SG mode to toggle Textbook vs Past Exam Dojo) -->
+
+    <div class="sub-header-bar" id="sg-sub-header" style="display: none;">
+
+      <div class="sub-header-tabs">
+
+        <button class="sub-header-tab active" id="sg-sub-tab-lessons" onclick="switchSgSubMode('lessons')">
+
+          <i class="fa-solid fa-book-open"></i> 謨咏ｧ台ｹｦ遶闃ょｭｦ荵 (繝・く繧ｹ繝亥ｭｦ鄙・
+
+        </button>
+
+        <button class="sub-header-tab" id="sg-sub-tab-dojo" onclick="switchSgSubMode('dojo')">
+
+          <i class="fa-solid fa-compass"></i> 霑・悉髣ｮ驕灘惻 & 讓｡諡溯・ｯ・(驕主悉蝠城％蝣ｴ)
+
+        </button>
+
+      </div>
+
+    </div>
+
+
+
+    <!-- Java Sub-Header (蜈･髢邱ｨ / 螳溯ｷｵ邱ｨ switch + Exam) -->
+
+    <div class="sub-header-bar" id="java-sub-header" style="display: none;">
+
+      <div class="sub-header-tabs">
+
+        <button class="sub-header-tab active" id="java-sub-tab-nyumon" onclick="switchJavaBook('nyumon')">
+
+          <i class="fa-solid fa-seedling"></i> 蜈･髢邱ｨ (蝓ｺ遑遽・ 窶・隨ｬ1縲・遶
+
+        </button>
+
+        <button class="sub-header-tab" id="java-sub-tab-jissen" onclick="switchJavaBook('jissen')">
+
+          <i class="fa-solid fa-rocket"></i> 螳溯ｷｵ邱ｨ (霑幃亳遽・ 窶・隨ｬ1縲・1遶
+
+        </button>
+
+        <button class="sub-header-tab" id="java-sub-tab-exam" onclick="switchJavaSubMode('exam')">
+
+          <i class="fa-solid fa-laptop-code"></i> 螳樊桃讓｡諡溯・ｯ・(螳滓橿讓｡謫ｬ隧ｦ鬨・
+
+        </button>
+
+      </div>
+
+    </div>
+
+
+
+    <!-- Sub-Header Bar (Visible in Python mode to toggle Textbook vs Mock Exam) -->
+
+    <div class="sub-header-bar" id="python-sub-header" style="display: none;">
+
+      <div class="sub-header-tabs">
+
+        <button class="sub-header-tab active" id="python-sub-tab-lessons" onclick="switchPythonSubMode('lessons')">
+
+          <i class="fa-solid fa-book-open"></i> 謨咏ｧ台ｹｦ荳取ｼ皮ｻ・ｲ咏將 (繝・く繧ｹ繝医・貍皮ｿ・
+
+        </button>
+
+        <button class="sub-header-tab" id="python-sub-tab-exam" onclick="switchPythonSubMode('exam')">
+
+          <i class="fa-solid fa-laptop-code"></i> 螳樊桃讓｡諡溯・ｯ・(螳滓橿讓｡謫ｬ隧ｦ鬨・
+
+        </button>
+
+      </div>
+
+    </div>
+
+
+
+    <!-- Main Workspace -->
+
+    <div class="app-body" id="main-app-body">
+
+
+
+      <!-- Sidebar: Lessons List -->
+
+      <aside class="app-sidebar">
+
+        <!-- Sidebar Progress -->
+
+        <div class="sidebar-progress" id="sidebar-progress-wrapper">
+
+          <div class="progress-info">
+
+            <span>騾ｲ謐礼憾豕・(蟄ｦ荵霑帛ｺｦ): <strong id="progress-percentage">0%</strong></span>
+
+            <span id="progress-fraction">(0 / 36)</span>
+
+          </div>
+
+          <div class="progress-bar-container">
+
+            <div class="progress-bar-fill" id="progress-fill"></div>
+
+          </div>
+
+        </div>
+
+
+
+        <div class="sidebar-title">
+
+          <i class="fa-solid fa-list-check"></i>
+
+          <span id="sidebar-title-text">蜊伜・繝ｪ繧ｹ繝・(隸ｾ遞狗岼蠖・</span>
+
+        </div>
+
+        <nav class="lessons-nav" id="lessons-nav">
+
+          <!-- Dynamically populated via JS -->
+
+        </nav>
+
+        <div class="sidebar-pdf-container" id="sidebar-pdf-container" style="display: none;">
+
+          <button class="sidebar-pdf-btn" onclick="openTextbookPdf()">
+
+            <i class="fa-solid fa-file-pdf"></i>
+
+            <span>譏ｾ遉ｺ蜴滉ｹｦ PDF</span>
+
+          </button>
+
+        </div>
+
+      </aside>
+
+
+
+      <!-- Center: Lesson Content -->
+
+      <main class="lesson-content">
+
+        <div class="content-card">
+
+          <!-- Lesson Header -->
+
+          <div class="lesson-header">
+
+            <div class="lesson-header-top">
+
+              <span class="lesson-badge" id="lesson-section-badge">繧ｫ繝・ざ繝ｪ繝ｼ</span>
+
+              <button class="locate-pdf-btn" id="locate-pdf-btn" style="display: none;" onclick="openTextbookPdfForCurrentLesson()">
+
+                <i class="fa-solid fa-location-crosshairs"></i>
+
+                <span>螳壻ｽ榊次荵ｦ鬘ｵ</span>
+
+              </button>
+
+            </div>
+
+            <h2 id="lesson-title-ja">01-SQL繧・ョ繝ｼ繧ｿ繝吶・繧ｹ縺ｨ縺ｯ菴輔°・・/h2>
+
+            <h3 id="lesson-title-zh">01-莉荵域弍謨ｰ謐ｮ蠎灘柱SQL・・/h3>
+
+          </div>
+
+
+
+          <!-- Language Selector Tabs -->
+
+          <div class="lang-tabs">
+
+            <button class="lang-tab active" data-lang="both" onclick="setLangView('both')">
+
+              <i class="fa-solid fa-columns"></i> 蟾ｦ蜿ｳ蟇ｹ辣ｧ (譌･/荳ｭ)
+
+            </button>
+
+            <button class="lang-tab" data-lang="ja" onclick="setLangView('ja')">
+
+              譌･譛ｬ隱槭・縺ｿ
+
+            </button>
+
+            <button class="lang-tab" data-lang="zh" onclick="setLangView('zh')">
+
+              荳ｭ譁・ｮ菴・
+
+            </button>
+
+          </div>
+
+
+
+          <!-- Concept Text Body -->
+
+          <div class="concept-container" id="concept-container">
+
+            <div class="concept-col ja-col">
+
+              <h4><i class="fa-solid fa-graduation-cap"></i> 隗｣隱ｬ (譌･譛ｬ隱・</h4>
+
+              <div class="concept-body" id="concept-ja-body">
+
+                <!-- Loaded dynamically -->
+
+              </div>
+
+            </div>
+
+            <div class="concept-col zh-col">
+
+              <h4><i class="fa-solid fa-language"></i> 隶ｲ隗｣ (荳ｭ譁・</h4>
+
+              <div class="concept-body" id="concept-zh-body">
+
+                <!-- Loaded dynamically -->
+
+              </div>
+
+            </div>
+
+          </div>
+
+
+
+          <!-- Analogy Card -->
+
+          <div class="analogy-card">
+
+            <div class="card-icon"><i class="fa-solid fa-lightbulb"></i></div>
+
+            <div class="card-content">
+
+              <h5 id="analogy-title-text">霄ｫ霑代↑萓九∴ (蠖｢雎｡豈泌冥)</h5>
+
+              <p id="lesson-analogy">豈泌湊陦ｨ迴ｾ縺後％縺薙↓蜈･繧翫∪縺吶・/p>
+
+            </div>
+
+          </div>
+
+
+
+          <!-- Code Example Card / Glossary Card -->
+
+          <div class="example-card collapsed" id="example-card">
+
+            <div class="example-header" onclick="toggleExampleCard()" style="cursor: pointer; user-select: none;">
+
+              <span id="example-header-title"><i class="fa-solid fa-code"></i> SQL讒区枚萓・(SQL遉ｺ萓・</span>
+
+              <div style="display:flex; align-items:center; gap:12px;">
+
+                <button class="copy-example-btn" id="copy-example-btn" onclick="event.stopPropagation(); copyExampleToPlayground()">
+
+                  <i class="fa-solid fa-copy"></i> 繧ｨ繝・ぅ繧ｿ縺ｸ繧ｳ繝斐・ (螟榊宛蛻ｰ郛冶ｾ大勣)
+
+                </button>
+
+                <i class="fa-solid fa-chevron-down toggle-icon" id="example-toggle-icon" style="transform: rotate(-90deg); transition: transform 0.25s;"></i>
+
+              </div>
+
+            </div>
+
+            <pre id="example-pre-block" style="display: none;"><code class="language-sql" id="lesson-example">SELECT * FROM students;</code></pre>
+
+            <div id="lesson-glossary" style="display: none; padding: 12px; font-size: 14px; line-height: 1.6; white-space: pre-wrap; color: var(--text-muted);">
+
+              <!-- IT Passport key glossary definitions loaded dynamically -->
+
+            </div>
+
+          </div>
+
+
+
+          <!-- Java Vocab Flashcard Section (Java mode only) -->
+
+          <div class="java-vocab-section" id="java-vocab-section" style="display: none;">
+
+            <div class="java-vocab-header">
+
+              <i class="fa-solid fa-cards"></i>
+
+              <span>蜊倩ｪ槭き繝ｼ繝・/ 隸肴ｱ・略蜊｡</span>
+
+              <button class="java-vocab-flip-btn" onclick="javaFlipCard()">鄙ｻ霓ｬ / Flip</button>
+
+              <button class="java-vocab-nav-btn" onclick="javaVocabPrev()"><i class="fa-solid fa-chevron-left"></i></button>
+
+              <button class="java-vocab-nav-btn" onclick="javaVocabNext()"><i class="fa-solid fa-chevron-right"></i></button>
+
+              <span id="java-vocab-counter" class="java-vocab-counter">1 / 1</span>
+
+            </div>
+
+            <div class="java-flashcard-wrapper" onclick="javaFlipCard()">
+
+              <div class="java-flashcard" id="java-flashcard">
+
+                <div class="java-flashcard-front">
+
+                  <div class="java-card-term" id="java-card-term">繧ｯ繝ｩ繧ｹ</div>
+
+                  <div class="java-card-hint">繧ｯ繝ｪ繝・け縺励※陬上ｒ隕九ｋ / Click to flip</div>
+
+                </div>
+
+                <div class="java-flashcard-back">
+
+                  <div class="java-card-zh" id="java-card-zh">邀ｻ</div>
+
+                  <div class="java-card-desc" id="java-card-desc">繧ｪ繝悶ず繧ｧ繧ｯ繝医・險ｭ險亥峙縲・/div>
+
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+
+
+          <!-- Python Vocab Flashcard Section (Python mode only) -->
+
+          <div class="python-vocab-section" id="python-vocab-section" style="display: none;">
+
+            <div class="python-vocab-header">
+
+              <i class="fa-solid fa-cards"></i>
+
+              <span>蜊倩ｪ槭き繝ｼ繝・/ 隸肴ｱ・略蜊｡</span>
+
+              <button class="python-vocab-flip-btn" onclick="pythonFlipCard()">鄙ｻ霓ｬ / Flip</button>
+
+              <button class="python-vocab-nav-btn" onclick="pythonVocabPrev()"><i class="fa-solid fa-chevron-left"></i></button>
+
+              <button class="python-vocab-nav-btn" onclick="pythonVocabNext()"><i class="fa-solid fa-chevron-right"></i></button>
+
+              <span id="python-vocab-counter" class="python-vocab-counter">1 / 1</span>
+
+            </div>
+
+            <div class="python-flashcard-wrapper" onclick="pythonFlipCard()">
+
+              <div class="python-flashcard" id="python-flashcard">
+
+                <div class="python-flashcard-front">
+
+                  <div class="python-card-term" id="python-card-term">繝ｪ繧ｹ繝・/div>
+
+                  <div class="python-card-hint">繧ｯ繝ｪ繝・け縺励※陬上ｒ隕九ｋ / Click to flip</div>
+
+                </div>
+
+                <div class="python-flashcard-back">
+
+                  <div class="python-card-zh" id="python-card-zh">蛻苓｡ｨ</div>
+
+                  <div class="python-card-desc" id="python-card-desc">隍・焚縺ｮ繝・・繧ｿ繧偵∪縺ｨ繧√※邂｡逅・☆繧九さ繝ｬ繧ｯ繧ｷ繝ｧ繝ｳ縲・/div>
+
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+
+
+          <!-- Quiz Section -->
+
+          <div class="quiz-section">
+
+            <h4><i class="fa-solid fa-circle-question"></i> 逅・ｧ｣蠎ｦ繝・せ繝・(遶闃ょｰ乗ｵ・</h4>
+
+            
+
+            <!-- Quiz Navigator (IT Passport Mode Only) -->
+
+            <div class="quiz-nav-header" id="itpass-quiz-nav" style="display: none;">
+
+              <span class="quiz-nav-text" id="itpass-quiz-progress-text">髣ｮ鬚・1 / 蜈ｱ 2 鬚・/span>
+
+              <div class="quiz-nav-buttons">
+
+                <button class="quiz-nav-btn" onclick="quizPrev()"><i class="fa-solid fa-chevron-left"></i> 荳贋ｸ鬚・/button>
+
+                <button class="quiz-nav-btn" onclick="quizNext()">荳倶ｸ鬚・<i class="fa-solid fa-chevron-right"></i></button>
+
+              </div>
+
+            </div>
+
+
+
+            <p class="quiz-question" id="quiz-question">繧ｯ繧､繧ｺ蝠城｡後′縺薙％縺ｫ蜈･繧翫∪縺吶・/p>
+
+            <div class="quiz-options" id="quiz-options">
+
+              <!-- Loaded dynamically -->
+
+            </div>
+
+            <div class="quiz-footer">
+
+              <button class="quiz-submit-btn" id="quiz-submit-btn" onclick="checkQuizAnswer()">
+
+                <i class="fa-solid fa-circle-check"></i> 蝗樒ｭ斐☆繧・(謠蝉ｺ､蝗樒ｭ・
+
+              </button>
+
+              <div id="quiz-feedback" class="quiz-feedback hidden">
+
+                <!-- Feedback text -->
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+
+        <!-- ==================== CODING EXAM WIDGETS ==================== -->
+
+        <!-- Coding Exam Launch Config Screen -->
+
+        <div class="content-card coding-exam-config" id="coding-exam-config" style="display: none;">
+
+          <div class="cbt-config-card">
+
+            <div class="cbt-config-header-main" style="text-align: center; margin-bottom: 24px;">
+
+              <i class="fa-solid fa-laptop-code cbt-logo-icon" style="font-size: 48px; margin-bottom: 12px; display: inline-block;"></i>
+
+              <h2 id="coding-config-title" style="font-size: 24px; font-weight: 700;">螳樊桃郛也ｨ区ｨ｡諡溯・ｯ・(螳滓橿讓｡隧ｦ)</h2>
+
+              <p id="coding-config-desc" style="color: var(--text-muted); margin-top: 8px;">讓｡諡滓律譛ｬ IT 荳馴葎蟄ｦ譬｡逧・ｼ也ｨ玖・ｯ慕識蠅・ょ惠髯仙ｮ壽慮髣ｴ蜀・ｮ梧・扈吝ｮ夂噪郛也∵・謨ｰ謐ｮ蠎謎ｻｻ蜉｡縲・/p>
+
+            </div>
+
+
+
+            <div class="cbt-config-options" style="background: rgba(0,0,0,0.15); padding: 20px; border-radius: 12px; border: 1px solid var(--border-color); margin-bottom: 24px;">
+
+              <div class="cbt-option-row" style="margin-bottom: 16px;">
+
+                <label style="font-weight: 600; display: block; margin-bottom: 8px; color: var(--neon-cyan);"><i class="fa-solid fa-list-check"></i> 閠・ｯ戊ｧ・・ (隧ｦ鬨楢ｦ丞援):</label>
+
+                <ul class="exam-rules-list" style="padding-left: 20px; font-size: 13px; line-height: 1.8; color: var(--text-main);">
+
+                  <li>鬚倡岼蝮・ｸｺ<strong>螳樊桃郛也ｨ矩｢・謨ｰ謐ｮ蠎捺衍隸｢鬚・/strong>・檎ｻ呎律譁・枚蟄嶺ｻｻ蜉｡謌夜｢・悄霎灘・扈捺棡縲・/li>
+
+                  <li>謾ｯ謖∝惠蜿ｳ萓ｧ逧・strong>讓｡諡滓ｲ咏將郛冶ｾ大勣</strong>荳ｭ蜊ｳ譌ｶ郛門・縲∬ｿ占｡後∝柱隹・ｯ穂ｻ｣遐√・/li>
+
+                  <li>螳梧・莉｣遐∝錘・檎せ蜃ｻ<strong>窶憺ｪ瑚ｯ∝ｹｶ菫晏ｭ倡ｭ疲｡・(蛻､螳・窶・/strong>霑幄｡梧ｵ玖ｯ慕畑萓区｡鬪後・/li>
+
+                  <li>豬玖ｯ墓・蜉滂ｼ・assed 笨難ｼ芽ｮ｡蜈･蠕怜・・悟庄莉･蜿榊､堺ｿｮ謾ｹ逶ｴ蛻ｰ蛻､螳夐夊ｿ・・/li>
+
+                  <li>隸ｷ蝨ｨ蛟定ｮ｡譌ｶ扈捺據蜑咲せ蜃ｻ<strong>窶懃ｻ捺據閠・ｯ募ｹｶ莠､蜊ｷ窶・/strong>・瑚ｶ・慮邉ｻ扈溷ｰ・・蜉ｨ謾ｶ蜊ｷ縲・/li>
+
+                </ul>
+
+              </div>
+
+
+
+              <div class="cbt-option-row" style="display: flex; align-items: center; justify-content: space-between; padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.05);">
+
+                <label for="coding-exam-count" style="font-weight: 600; font-size: 14px;"><i class="fa-solid fa-hashtag"></i> 讓｡諡溯・ｯ暮｢倬㍼:</label>
+
+                <select id="coding-exam-count" style="background: var(--bg-secondary); border: 1px solid var(--border-color); color: var(--text-main); padding: 8px 12px; border-radius: 6px; cursor: pointer; outline: none; font-size: 13px;">
+
+                  <option value="5">5 鬚・(蠢ｫ騾滓ｵ玖ｯ・- 髯先慮 15 蛻・帖)</option>
+
+                  <option value="10" selected>10 鬚・(譬・㊥螳樊桃 - 髯先慮 30 蛻・帖)</option>
+
+                  <option value="15">15 鬚・(蜈ｨ髱｢謖第・ - 髯先慮 45 蛻・帖)</option>
+
+                </select>
+
+              </div>
+
+            </div>
+
+
+
+            <button class="cbt-launch-btn" onclick="startCodingExam()" style="width: 100%; padding: 14px; background: linear-gradient(135deg, var(--neon-blue), var(--neon-cyan)); color: #000; border: none; border-radius: 8px; font-size: 16px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 4px 15px rgba(0, 240, 255, 0.2); transition: var(--transition-smooth);">
+
+              <i class="fa-solid fa-circle-play"></i> 蠑蟋句ｮ樊桃閠・ｯ・(隧ｦ鬨馴幕蟋・
+
+            </button>
+
+          </div>
+
+        </div>
+
+
+
+        <!-- Coding Exam Running Session -->
+
+        <div class="content-card coding-exam-panel" id="coding-exam-panel" style="display: none;">
+
+          <!-- Exam Header Info -->
+
+          <div class="exam-header-bar" style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 16px; margin-bottom: 16px;">
+
+            <div class="exam-title-box">
+
+              <span class="cbt-indicator-badge" style="background: rgba(0, 240, 255, 0.1); border: 1px solid rgba(0, 240, 255, 0.2); color: var(--neon-cyan); padding: 2px 6px; border-radius: 4px; font-size: 11px; font-weight: 600;"><i class="fa-solid fa-code"></i> 螳樊桃譛ｺ閠・/span>
+
+              <h4 id="coding-exam-display-title" style="font-size: 16px; font-weight: 600; margin-top: 4px;">SQL 螳樊桃閭ｽ蜉帶ｨ｡諡滓ｵ玖ｯ・/h4>
+
+            </div>
+
+            <div class="exam-timer-box" style="background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.25); color: #f87171; padding: 6px 14px; border-radius: 6px; font-size: 14px; font-weight: 700; display: flex; align-items: center; gap: 6px;">
+
+              <i class="fa-solid fa-stopwatch"></i> 蜑ｩ菴呎慮髣ｴ: <span id="coding-timer-display">30:00</span>
+
+            </div>
+
+          </div>
+
+
+
+          <!-- Active Question Card -->
+
+          <div class="eq-card" style="display: flex; flex-direction: column; gap: 16px;">
+
+            <div class="eq-card-header" style="display: flex; justify-content: space-between; align-items: center; font-size: 13px;">
+
+              <div style="display: flex; align-items: center; gap: 8px;">
+
+                <span class="eq-number" id="eq-number-text" style="font-weight: 700; color: var(--neon-cyan);">隨ｬ 1 鬚・/ 蝠・1</span>
+
+                <span class="eq-diff-badge" id="eq-diff-text" style="background: rgba(255,255,255,0.05); padding: 2px 6px; border-radius: 4px; color: var(--text-muted);">髫ｾ蠎ｦ: 笘・・笘・/span>
+
+              </div>
+
+              <button class="eq-flag-btn" id="eq-flag-btn" onclick="toggleCodingQuestionFlag()" style="background: transparent; border: none; color: var(--text-muted); cursor: pointer; transition: var(--transition-smooth); display: flex; align-items: center; gap: 4px;">
+
+                <i class="fa-regular fa-flag"></i> 譬・ｮｰ豁､鬚伜､肴衍
+
+              </button>
+
+            </div>
+
+
+
+            <!-- Task text details -->
+
+            <div class="eq-body-area" style="background: rgba(0,0,0,0.2); border: 1px solid var(--border-color); border-radius: 10px; padding: 18px; display: flex; flex-direction: column; gap: 14px;">
+
+              <div class="eq-text-ja" style="font-size: 14.5px; line-height: 1.6; font-weight: 500; color: var(--text-main);">
+
+                <h5 style="color: var(--neon-cyan); margin-bottom: 6px; font-size: 13px; font-weight: 600;"><i class="fa-solid fa-graduation-cap"></i> 繝溘ャ繧ｷ繝ｧ繝ｳ (譌･譁・ｻｻ蜉｡謠剰ｿｰ)</h5>
+
+                <p id="eq-task-ja">蟄ｦ逕溘・繧ｹ繧ｿ縺九ｉ縺吶∋縺ｦ縺ｮ繝・・繧ｿ繧貞叙蠕励＠縺ｪ縺輔＞縲・/p>
+
+              </div>
+
+              <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.05);">
+
+              <div class="eq-text-zh" style="font-size: 13.5px; line-height: 1.5; color: var(--text-muted);">
+
+                <h5 style="color: var(--neon-blue); margin-bottom: 6px; font-size: 12px; font-weight: 600;"><i class="fa-solid fa-language"></i> 荳ｭ譁・ｿｻ隸大ｯｹ辣ｧ</h5>
+
+                <p id="eq-task-zh">譟･隸｢蟄ｦ逕滉ｸｻ陦ｨ逧・園譛画焚謐ｮ縲・/p>
+
+              </div>
+
+              
+
+              <!-- Expected output (for Java/Python) -->
+
+              <div class="eq-expected-box" id="eq-expected-output-box" style="display: none; margin-top: 8px;">
+
+                <h5 style="color: #fcb900; margin-bottom: 6px; font-size: 12px; font-weight: 600;"><i class="fa-solid fa-square-poll-horizontal"></i> 譛溷ｾ・＆繧後ｋ蜃ｺ蜉帷ｵ先棡 (譛滓悍謇ｧ陦瑚ｾ灘・)</h5>
+
+                <pre style="background: #030712; border: 1px solid rgba(255,255,255,0.05); padding: 12px; border-radius: 6px; overflow-x: auto; font-family: 'Fira Code', monospace; font-size: 13px; color: #ff9e64;" id="eq-expected-output">Expected output goes here...</pre>
+
+              </div>
+
+            </div>
+
+          </div>
+
+
+
+          <!-- Inline Actions for current question -->
+
+          <div class="eq-actions-row" style="display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,0.02); padding: 12px 18px; border-radius: 8px; border: 1px solid var(--border-color); margin-top: 8px;">
+
+            <div class="eq-verify-status-box" style="display: flex; align-items: center; gap: 8px; font-size: 13px;">
+
+              <span>豬玖ｯ慕憾諤・ </span>
+
+              <span class="verify-status-badge" id="eq-verify-status-badge" style="background: rgba(255,255,255,0.05); padding: 3px 8px; border-radius: 4px; font-weight: 600; color: var(--text-muted);">譛ｪ菴懃ｭ・(譛ｪ逹謇・</span>
+
+            </div>
+
+            
+
+            <button class="eq-verify-btn" onclick="verifyCurrentCodingQuestion()" style="padding: 8px 16px; background: linear-gradient(135deg, #7c3aed, #a855f7); color: #fff; border: none; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 6px; box-shadow: 0 4px 10px rgba(168, 85, 247, 0.2); transition: var(--transition-smooth);">
+
+              <i class="fa-solid fa-circle-check"></i> 鬪瑚ｯ∝ｹｶ菫晏ｭ倡ｭ疲｡・(蛻､螳・
+
+            </button>
+
+          </div>
+
+
+
+          <!-- Bottom Navigation and Navigator Row -->
+
+          <div class="eq-navigation-row" style="display: flex; align-items: center; justify-content: space-between; margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--border-color);">
+
+            <button class="cbt-nav-btn" onclick="codingPrevQuestion()" style="padding: 8px 14px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: var(--text-main); border-radius: 6px; font-size: 13px; cursor: pointer; display: flex; align-items: center; gap: 6px; transition: var(--transition-smooth);">
+
+              <i class="fa-solid fa-chevron-left"></i> 荳贋ｸ鬚・(蜑阪∈)
+
+            </button>
+
+
+
+            <!-- Compact grid selector -->
+
+            <div class="coding-navigator-grid" id="coding-navigator-grid" style="display: flex; gap: 6px; flex-wrap: wrap; justify-content: center; max-width: 320px;">
+
+              <!-- Javascript populates this -->
+
+            </div>
+
+
+
+            <button class="cbt-nav-btn" onclick="codingNextQuestion()" style="padding: 8px 14px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: var(--text-main); border-radius: 6px; font-size: 13px; cursor: pointer; display: flex; align-items: center; gap: 6px; transition: var(--transition-smooth);">
+
+              荳倶ｸ鬚・(谺｡縺ｸ) <i class="fa-solid fa-chevron-right"></i>
+
+            </button>
+
+          </div>
+
+
+
+          <!-- Finish controls -->
+
+          <div class="exam-finish-bar" style="margin-top: 24px; padding-top: 16px; border-top: 1px dashed var(--border-color); display: flex; justify-content: space-between; gap: 12px;">
+
+            <button class="cbt-btn-action reset" onclick="exitCodingExam()" style="padding: 10px 20px; background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.25); color: #f87171; border-radius: 6px; font-size: 13px; cursor: pointer; font-weight: 600; display: flex; align-items: center; gap: 6px; transition: var(--transition-smooth);">
+
+              <i class="fa-solid fa-right-from-bracket"></i> 荳ｭ譁ｭ騾蜃ｺ (隧ｦ鬨馴屬閼ｱ)
+
+            </button>
+
+            
+
+            <button class="cbt-btn-action submit" onclick="submitCodingExam()" style="padding: 10px 24px; background: linear-gradient(135deg, #10b981, #059669); border: none; color: #fff; border-radius: 6px; font-size: 13px; cursor: pointer; font-weight: 700; display: flex; align-items: center; gap: 6px; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2); transition: var(--transition-smooth);">
+
+              <i class="fa-solid fa-circle-check"></i> 謠蝉ｺ､隸募差蟷ｶ莠､蜊ｷ (隧ｦ鬨鍋ｵゆｺ・
+
+            </button>
+
+          </div>
+
+        </div>
+
+
+
+        <!-- Coding Exam Results Dashboard (Scorecard) -->
+
+        <div class="content-card coding-exam-results" id="coding-exam-results" style="display: none;">
+
+          <div class="cbt-results-card">
+
+            <div class="cbt-results-header" style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 16px; margin-bottom: 20px;">
+
+              <h2 style="font-size: 20px; font-weight: 700; display: flex; align-items: center; gap: 8px; color: var(--neon-cyan);"><i class="fa-solid fa-square-poll-vertical"></i> 螳樊桃閠・ｯ墓・扈ｩ蜊・(隧穂ｾ｡邨先棡)</h2>
+
+              <button class="cbt-results-close-btn" onclick="closeCodingExamResults()" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: var(--text-main); padding: 6px 12px; border-radius: 6px; font-size: 12px; cursor: pointer; transition: var(--transition-smooth);">
+
+                霑泌屓荳ｻ鬘ｵ <i class="fa-solid fa-chevron-right"></i>
+
+              </button>
+
+            </div>
+
+
+
+            <!-- Score Summary Card -->
+
+            <div class="cbt-results-summary-row" style="display: flex; gap: 20px; background: rgba(0,0,0,0.15); padding: 24px; border-radius: 12px; border: 1px solid var(--border-color); margin-bottom: 24px; align-items: center;">
+
+              <div class="cbt-results-total-box" style="flex: 1; text-align: center; border-right: 1px solid rgba(255,255,255,0.05); padding-right: 20px; display: flex; flex-direction: column; align-items: center; gap: 8px;">
+
+                <span class="summary-label" style="font-size: 12px; color: var(--text-muted); text-transform: uppercase;">蜷域ｼ蛻､螳・/span>
+
+                <div class="pass-status-badge pass" id="coding-pass-badge" style="font-size: 18px; font-weight: 800; padding: 4px 16px; border-radius: 6px; width: fit-content; text-shadow: 0 0 8px rgba(16, 185, 129, 0.4);">蜷域ｼ</div>
+
+                <div class="score-display" style="margin-top: 8px;">
+
+                  <span class="score-num" id="coding-score-correct-count" style="font-size: 32px; font-weight: 800; color: var(--text-main);">8</span>
+
+                  <span class="score-max" style="font-size: 16px; color: var(--text-muted);"> / 10 鬚倬夊ｿ・/span>
+
+                </div>
+
+              </div>
+
+
+
+              <div class="cbt-results-fields-box" style="flex: 1.5; display: flex; flex-direction: column; gap: 12px; padding-left: 10px;">
+
+                <div class="field-score-item">
+
+                  <div class="field-score-meta" style="display: flex; justify-content: space-between; font-size: 13px; font-weight: 600; margin-bottom: 4px;">
+
+                    <strong>蠕礼せ邇・(騾夊ｿ・紫)</strong>
+
+                    <span id="coding-results-percentage-text">80%</span>
+
+                  </div>
+
+                  <div class="field-score-progressbar" style="height: 6px; background: rgba(255,255,255,0.05); border-radius: 3px; overflow: hidden;">
+
+                    <div class="field-score-fill" id="coding-results-progress-bar" style="height: 100%; width: 80%; background: linear-gradient(90deg, var(--neon-blue), var(--neon-cyan)); box-shadow: 0 0 6px var(--neon-cyan);"></div>
+
+                  </div>
+
+                </div>
+
+
+
+                <div class="field-score-item" style="display: flex; justify-content: space-between; font-size: 13px; color: var(--text-muted); border-top: 1px solid rgba(255,255,255,0.05); padding-top: 12px; margin-top: 4px;">
+
+                  <span>閠・ｯ慕畑譌ｶ (謇隕∵凾髢・:</span>
+
+                  <strong id="coding-results-time-spent" style="color: var(--text-main);">12蛻・4遘・/strong>
+
+                </div>
+
+              </div>
+
+            </div>
+
+
+
+            <!-- Detailed Question Breakdown -->
+
+            <div class="cbt-results-details-wrapper">
+
+              <h3 style="font-size: 15px; font-weight: 600; margin-bottom: 12px; color: var(--neon-purple);"><i class="fa-solid fa-list-ol"></i> 蜷・｢倬ｪ瑚ｯ∵ｵ玖ｯ戊ｯｦ諠・/h3>
+
+              <div class="results-table-container" style="overflow-x: auto; background: rgba(0,0,0,0.1); border: 1px solid var(--border-color); border-radius: 8px;">
+
+                <table class="results-table" style="width: 100%; border-collapse: collapse; text-align: left; font-size: 13px;">
+
+                  <thead>
+
+                    <tr style="background: rgba(255,255,255,0.02); border-bottom: 1px solid var(--border-color);">
+
+                      <th style="padding: 12px 16px; font-weight: 600;">鬚伜捷</th>
+
+                      <th style="padding: 12px 16px; font-weight: 600;">閠・ｸ遏･隸・せ (繧ｿ繧､繝医Ν)</th>
+
+                      <th style="padding: 12px 16px; font-weight: 600;">髫ｾ蠎ｦ</th>
+
+                      <th style="padding: 12px 16px; font-weight: 600; text-align: center;">鬪瑚ｯ∫ｻ捺棡</th>
+
+                      <th style="padding: 12px 16px; font-weight: 600; text-align: center;">謫堺ｽ・/th>
+
+                    </tr>
+
+                  </thead>
+
+                  <tbody id="coding-results-table-body">
+
+                    <!-- Tr rows dynamically inserted -->
+
+                  </tbody>
+
+                </table>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+
+        <div class="pdf-viewer-panel" id="pdf-viewer-panel" style="display: none;" aria-hidden="true">
+
+          <div class="pdf-panel-header">
+
+            <span id="pdf-panel-title"><i class="fa-solid fa-file-pdf"></i> 蜴滉ｹｦ PDF</span>
+
+            <div style="display: flex; gap: 8px; align-items: center;">
+
+              <button class="pdf-minimize-btn" id="pdf-minimize-btn" onclick="toggleMinimizePdf()" style="background: transparent; border: 1px solid rgba(255, 255, 255, 0.15); color: var(--text-muted); padding: 6px 14px; border-radius: 6px; font-size: 12px; cursor: pointer; display: flex; align-items: center; gap: 6px; transition: var(--transition-smooth);">
+
+                <i class="fa-solid fa-compress" id="pdf-minimize-icon"></i>
+
+                <span id="pdf-minimize-text">譛蟆丞喧</span>
+
+              </button>
+
+              <button class="pdf-close-btn" onclick="closeEmbeddedPdf()">
+
+                <i class="fa-solid fa-xmark"></i>
+
+                蜈ｳ髣ｭ
+
+              </button>
+
+            </div>
+
+          </div>
+
+          <div class="pdf-iframe-container">
+
+            <iframe id="embedded-pdf-iframe" title="IT Passport Textbook PDF"></iframe>
+
+          </div>
+
+        </div>
+
+
+
+      </main>
+
+
+
+      <!-- Right Column: SQL Sandbox & Info Reference -->
+
+      <section class="playground-section" id="playground-section">
+
+
+
+        <!-- ==================== SQL MODE WIDGETS ==================== -->
+
+        <!-- DB Schema Visualizer -->
+
+        <div class="playground-card schema-card sql-widget collapsed">
+
+          <div class="schema-header collapsed" onclick="toggleSchemaDetails()">
+
+            <span><i class="fa-solid fa-sitemap"></i> 繝・・繧ｿ繝吶・繧ｹ讒矩 (DB 陦ｨ扈捺桷蜿り・</span>
+
+            <div style="display:flex; align-items:center; gap:8px;">
+
+              <div class="db-group-tabs" onclick="event.stopPropagation()">
+
+                <button class="db-group-tab active" id="db-tab-school" onclick="switchDBGroup('school')">
+
+                  <i class="fa-solid fa-school"></i> 蟄ｦ譬｡DB
+
+                </button>
+
+                <button class="db-group-tab" id="db-tab-shop" onclick="switchDBGroup('shop')">
+
+                  <i class="fa-solid fa-book"></i> 荵ｦ蠎優B
+
+                </button>
+
+              </div>
+
+              <i class="fa-solid fa-chevron-down toggle-icon" id="schema-toggle-icon" style="transform: rotate(-90deg);"></i>
+
+            </div>
+
+          </div>
+
+          <div class="schema-body" id="schema-body" style="display: none;">
+
+            <div class="schema-tabs" id="schema-tabs">
+
+              <!-- Tabs for students, departments, etc. -->
+
+            </div>
+
+            <div class="schema-table-details" id="schema-table-details">
+
+              <!-- Selected table columns and description -->
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+
+        <!-- Live SQL Playground -->
+
+        <div class="playground-card console-card sql-widget">
+
+          <div class="console-header" onclick="toggleConsoleDetails()">
+
+            <span><i class="fa-solid fa-terminal"></i> SQL 繝励Ξ繧､繧ｰ繝ｩ繧ｦ繝ｳ繝・(貍皮ｻ・ｲ咏將)</span>
+
+            <div style="display:flex; align-items:center; gap:8px;">
+
+              <div class="console-actions" onclick="event.stopPropagation()">
+
+                <button class="console-btn hint-btn" onclick="showPlaygroundHint()">
+
+                  <i class="fa-solid fa-circle-info"></i> 繝偵Φ繝・(謠千､ｺ)
+
+                </button>
+
+                <button class="console-btn reset-db-btn" onclick="resetMockDB()">
+
+                  <i class="fa-solid fa-arrows-rotate"></i> DB繝ｪ繧ｻ繝・ヨ (驥咲ｽｮDB)
+
+                </button>
+
+              </div>
+
+              <i class="fa-solid fa-chevron-down toggle-icon" id="console-toggle-icon"></i>
+
+            </div>
+
+          </div>
+
+
+
+          <div class="console-card-body" id="console-card-body" style="display: flex; flex-direction: column; flex: 1; overflow: hidden;">
+
+            <div class="playground-task-desc">
+
+              <div class="task-desc-main">
+
+                <strong><i class="fa-solid fa-circle-dot"></i> <span id="mission-label-text">繝溘ャ繧ｷ繝ｧ繝ｳ (蠖灘燕莉ｻ蜉｡)</span>:</strong>
+
+                <span id="playground-task-text">蟄ｦ逕溘ユ繝ｼ繝悶Ν (students) 縺九ｉ縺吶∋縺ｦ縺ｮ繝・・繧ｿ繧貞叙蠕励＠縺ｦ縺ｿ縺ｾ縺励ｇ縺・・/span>
+
+              </div>
+
+              <div class="task-desc-actions">
+
+                <button class="console-btn change-practice-btn-style" id="change-practice-btn" onclick="changeRandomPracticeQuestion()" style="display: none;">
+
+                  <i class="fa-solid fa-arrows-rotate"></i> 謐｢荳鬚・
+
+                </button>
+
+                <button class="console-btn random-practice-btn" id="random-practice-btn" onclick="toggleRandomPractice()">
+
+                  <i class="fa-solid fa-shuffle"></i> 髫乗惻謖・ｻ､扈・ｹ
+
+                </button>
+
+              </div>
+
+            </div>
+
+
+
+            <div class="editor-container">
+
+              <div class="line-numbers" id="line-numbers">1</div>
+
+              <textarea class="sql-editor" id="sql-editor" spellcheck="false" placeholder=" 隸ｷ蝨ｨ豁､螟・ｾ灘・ SQL 隸ｭ蜿･...&#10;縺薙％縺ｫSQL繧貞・蜉帙＠縺ｦ縺上□縺輔＞..."></textarea>
+
+            </div>
+
+
+
+            <div class="console-footer">
+
+              <div class="playground-status" id="playground-status">
+
+                <span class="status-ready"><i class="fa-solid fa-circle-play"></i> 蟾ｲ蟆ｱ扈ｪ (Ready)</span>
+
+              </div>
+
+              <div class="run-area">
+
+                <button class="run-query-btn" id="run-query-btn" onclick="runPlaygroundQuery()">
+
+                  <i class="fa-solid fa-play"></i> 謇ｧ陦・SQL <kbd>Ctrl+Enter</kbd>
+
+                </button>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+        <!-- Query Output Terminal -->
+        <div class="playground-card output-card sql-widget" id="output-card">
+          <div class="output-header" onclick="toggleOutputDetails()">
+            <span><i class="fa-solid fa-table"></i> 繧ｯ繧ｨ繝ｪ邨先棡 (Query Results)</span>
+            <div style="display:flex; align-items:center; gap:8px;">
+              <div class="output-actions" onclick="event.stopPropagation()">
+                <span class="row-count-badge" id="output-row-count" style="display: none;">0陦・/span>
+                <button class="console-btn maximize-btn" id="output-maximize-btn" onclick="toggleMaximizeOutput()">
+                  <i class="fa-solid fa-expand"></i> 譛螟ｧ蛹・
+                </button>
+              </div>
+              <i class="fa-solid fa-chevron-down toggle-icon" id="output-toggle-icon"></i>
+            </div>
+          </div>
+          <div class="output-card-body" id="output-card-body" style="display: flex; flex-direction: column; flex: 1; overflow: hidden;">
+            <div class="output-body" id="output-body">
+              <div class="output-placeholder">
+                <i class="fa-solid fa-arrow-up-long"></i>
+                <p>繧ｯ繧ｨ繝ｪ繧貞ｮ溯｡後☆繧九→縲√％縺薙↓邨先棡繝・・繝悶Ν縺瑚｡ｨ遉ｺ縺輔ｌ縺ｾ縺吶・/p>
+                <span>(繝偵Φ繝・ SELECT * FROM students 繧定ｩｦ縺励※縺ｿ繧医≧)</span>
+              </div>
+            </div>
+            <div class="ai-debugger-panel" id="sql-ai-debugger" style="display: none;"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Java Playground Widgets (restored missing components) -->
+      <div class="playground-card console-card java-widget" id="java-console-card" style="display: none;">
+        <div class="console-header">
+          <span><i class="fa-brands fa-java"></i> Java 繝励Ξ繧､繧ｰ繝ｩ繧ｦ繝ｳ繝・(貍皮ｻ・ｲ咏將)</span>
+        </div>
+        <div class="console-card-body" style="display: flex; flex-direction: column; flex: 1; overflow: hidden;">
+          <div class="editor-container">
+            <textarea class="java-editor" id="java-editor" spellcheck="false" placeholder="縺薙％縺ｫJava繧ｳ繝ｼ繝峨ｒ蜈･蜉・..&#10;隸ｷ蝨ｨ豁､霎灘・Java莉｣遐・.."></textarea>
+          </div>
+          <div class="console-footer">
+            <div class="run-area">
+              <button class="run-query-btn" id="run-java-btn" onclick="runJavaCode()">
+                <i class="fa-solid fa-play"></i> 螳溯｡・(謇ｧ陦・Java) <kbd>Ctrl+Enter</kbd>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="playground-card output-card java-widget" id="java-output-card" style="display: none;">
+        <div class="output-header">
+          <span><i class="fa-solid fa-terminal"></i> 螳溯｡檎ｵ先棡 (謗ｧ蛻ｶ蜿ｰ霎灘・)</span>
+        </div>
+        <div class="output-card-body">
+          <div class="output-body" id="java-output-body">
+            <pre id="java-output-terminal" style="margin: 0; color: #a9b7c6; font-family: monospace;">遲牙ｾ・ｿ占｡・..</pre>
+          </div>
+        </div>
+      </div>
+
+      <!-- Python Playground Widgets (restored missing components) -->
+      <div class="playground-card console-card python-widget" id="python-console-card" style="display: none;">
+        <div class="console-header">
+          <span><i class="fa-brands fa-python"></i> Python 繝励Ξ繧､繧ｰ繝ｩ繧ｦ繝ｳ繝・(貍皮ｻ・ｲ咏將)</span>
+        </div>
+        <div class="console-card-body" style="display: flex; flex-direction: column; flex: 1; overflow: hidden;">
+          <div class="editor-container">
+            <textarea class="python-editor" id="python-editor" spellcheck="false" placeholder="縺薙％縺ｫPython繧ｳ繝ｼ繝峨ｒ蜈･蜉・..&#10;隸ｷ蝨ｨ豁､霎灘・Python莉｣遐・.."></textarea>
+          </div>
+          <div class="console-footer">
+            <div class="run-area">
+              <button class="run-query-btn" id="run-python-btn" onclick="runPythonCode()">
+                <i class="fa-solid fa-play"></i> 螳溯｡・(謇ｧ陦・Python) <kbd>Ctrl+Enter</kbd>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="playground-card output-card python-widget" id="python-output-card" style="display: none;">
+        <div class="output-header">
+          <span><i class="fa-solid fa-terminal"></i> 螳溯｡檎ｵ先棡 (謗ｧ蛻ｶ蜿ｰ霎灘・)</span>
+        </div>
+        <div class="output-card-body">
+          <div class="output-body" id="python-output-body">
+            <pre id="python-output-terminal" style="margin: 0; color: #a9b7c6; font-family: monospace;">遲牙ｾ・ｿ占｡・..</pre>
+          </div>
+        </div>
+      </div>
+
+      <!-- Exam Flashcard Widget (IT Passport / SG) (restored missing components) -->
+      <div class="playground-card itpass-widget sg-widget" id="exam-tools-card" style="display: none;">
+        <div class="console-header">
+          <span><i class="fa-solid fa-cards"></i> 證苓ｨ倥き繝ｼ繝・(螟・・略蜊｡荳守ｬ碑ｮｰ)</span>
+        </div>
+        <div class="console-card-body" style="padding: 16px; overflow-y: auto;">
+          <div id="exam-flashcard-container">
+            <p style="color: var(--text-muted); text-align: center; margin-top: 20px;">
+              <i class="fa-solid fa-hand-pointer"></i> 隸ｷ蝨ｨ蟾ｦ萓ｧ騾画叫遶闃ゆｻ･蜉霓ｽ蟇ｹ蠎皮噪髣ｪ蜊｡蜀・ｮｹ縲・            </p>
+          </div>
+        </div>
+      </div>
+
+
+
+      <!-- Typing Practice Module Workspace -->
+
+      <div class="typing-practice-container" id="typing-container" style="display: none;">
+
+        <!-- Left sidebar / control panel -->
+
+        <div class="typing-sidebar">
+
+          <div class="typing-sidebar-section">
+
+            <h3><i class="fa-solid fa-sliders"></i> 扈・ｹ隶ｾ鄂ｮ</h3>
+
+            
+
+            <div class="typing-setting-item">
+
+              <label for="typing-category-select">蜀・ｮｹ蛻・ｱｻ:</label>
+
+              <select id="typing-category-select" onchange="TypingSandbox.changeCategory()">
+
+                <option value="daily" selected>譌･蟶ｸ逕滓ｴｻ莠､豬・(譌･蟶ｸ)</option>
+
+                <option value="business_mail">蝠・苅驍ｮ莉ｶ謦ｰ蜀・(蝠・苅)</option>
+
+                <option value="workplace">閨悟惻豎・冠荳取ｲ滄・(閨悟惻)</option>
+
+                <option value="news">譁ｰ髣ｻ譌ｶ莠倶ｸ守､ｾ莨・(譁ｰ髣ｻ)</option>
+
+              </select>
+
+            </div>
+
+
+
+            <div class="typing-setting-item">
+
+              <label for="typing-article-select">騾画叫譁・ｫ:</label>
+
+              <select id="typing-article-select" onchange="TypingSandbox.changeArticle()" style="max-width: 100%;">
+
+                <!-- Populated dynamically via JS -->
+
+              </select>
+
+            </div>
+
+
+
+            <div class="typing-setting-item">
+
+              <label class="typing-checkbox">
+
+                <input type="checkbox" id="typing-setting-keyboard" checked onchange="TypingSandbox.toggleKeyboard()">
+
+                <span><i class="fa-solid fa-keyboard"></i> 譏ｾ遉ｺ陌壽供髞ｮ逶・/span>
+
+              </label>
+
+            </div>
+
+
+
+            <div class="typing-setting-item">
+
+              <label class="typing-checkbox">
+
+                <input type="checkbox" id="typing-setting-romaji-guide" checked onchange="TypingSandbox.toggleRomajiGuide()">
+
+                <span><i class="fa-solid fa-circle-info"></i> 譏ｾ遉ｺ鄂鈴ｩｬ髻ｳ謠千､ｺ</span>
+
+              </label>
+
+            </div>
+
+          </div>
+
+
+
+          <!-- Session statistics -->
+
+          <div class="typing-stats-panel">
+
+            <h3><i class="fa-solid fa-chart-simple"></i> 螳樊慮扈溯ｮ｡</h3>
+
+            <div class="typing-stat-grid">
+
+              <div class="typing-stat-card">
+
+                <span class="stat-label">WPM</span>
+
+                <span class="stat-value" id="typing-stat-wpm">0</span>
+
+              </div>
+
+              <div class="typing-stat-card">
+
+                <span class="stat-label">蜃・｡ｮ邇・/span>
+
+                <span class="stat-value" id="typing-stat-accuracy">100%</span>
+
+              </div>
+
+              <div class="typing-stat-card">
+
+                <span class="stat-label">蜃ｻ髞ｮ謨ｰ</span>
+
+                <span class="stat-value" id="typing-stat-correct">0</span>
+
+              </div>
+
+              <div class="typing-stat-card">
+
+                <span class="stat-label">髞呵ｯｯ謨ｰ</span>
+
+                <span class="stat-value" id="typing-stat-errors">0</span>
+
+              </div>
+
+            </div>
+
+            
+
+            <div class="typing-combo-wrapper">
+
+              <div class="typing-combo-count" id="typing-combo-display" style="opacity: 0;">
+
+                <span class="combo-number" id="typing-combo-num">0</span>
+
+                <span class="combo-text">COMBO</span>
+
+              </div>
+
+            </div>
+
+          </div>
+
+          
+
+          <button class="typing-restart-btn" onclick="TypingSandbox.restartSession()">
+
+            <i class="fa-solid fa-rotate-left"></i> 驥肴眠蠑蟋・(繝ｪ繧ｹ繧ｿ繝ｼ繝・
+
+          </button>
+
+        </div>
+
+
+
+        <!-- Main typing interactive board -->
+
+        <div class="typing-board">
+
+          <!-- Scrollable Article Card -->
+
+          <div class="typing-word-card typing-article-card">
+
+            <div class="typing-progress-bar-container">
+
+              <div class="typing-progress-bar-fill" id="typing-progress-fill" style="width: 0%;"></div>
+
+            </div>
+
+            
+
+            <div class="typing-word-header">
+
+              <span class="typing-article-title" id="typing-article-title">譁・ｫ蜉霓ｽ荳ｭ...</span>
+
+              <span id="typing-word-index">陦・1 / 10</span>
+
+            </div>
+
+            
+
+            <!-- Full scrollable article viewport -->
+
+            <div class="typing-article-scroll-view" id="typing-article-scroll-view">
+
+              <!-- Dynamically populated lines -->
+
+            </div>
+
+            
+
+            <!-- Active sentence/line editor display -->
+
+            <div class="typing-active-line-panel">
+
+              <div class="typing-word-display" id="typing-word-display">
+
+                <!-- Active line kanji -->
+
+              </div>
+
+              
+
+              <div class="typing-word-furigana" id="typing-word-furigana">
+
+                <!-- Active line furigana -->
+
+              </div>
+
+              
+
+              <div class="typing-word-romaji" id="typing-word-romaji">
+
+                <!-- Active line romaji guide -->
+
+              </div>
+
+            </div>
+
+            
+
+            <!-- Translation card below -->
+
+            <div class="typing-translation-card" id="typing-translation-card">
+
+              <div class="translation-zh" id="typing-trans-zh">荳ｭ譁・ｿｻ隸・/div>
+
+              <div class="translation-desc" id="typing-trans-desc">譛ｬ蜿･隸ｦ扈・ｯｴ譏・..</div>
+
+            </div>
+
+          </div>
+
+
+
+          <!-- Virtual Keyboard container -->
+
+          <div class="typing-keyboard-wrapper" id="typing-keyboard-wrapper">
+
+            <!-- Glassmorphic QWERTY visual keyboard -->
+
+            <div class="virtual-keyboard" id="virtual-keyboard">
+
+              <!-- Generated via JS for cleaner code and easy key mapping -->
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+
+        <!-- Results screen overlay -->
+
+        <div class="typing-results-overlay" id="typing-results-overlay" style="display: none;">
+
+          <div class="cbt-results-card typing-results-card">
+
+            <div class="cbt-results-header">
+
+              <h2><i class="fa-solid fa-award"></i> 扈・ｹ謚･蜻・(繧ｿ繧､繝斐Φ繧ｰ邨先棡)</h2>
+
+              <button class="cbt-results-close-btn" onclick="TypingSandbox.closeResults()">
+
+                扈ｧ扈ｭ扈・ｹ <i class="fa-solid fa-chevron-right"></i>
+
+              </button>
+
+            </div>
+
+
+
+            <div class="cbt-results-summary-row">
+
+              <div class="cbt-results-total-box">
+
+                <span class="summary-label">謇灘ｭ玲ｮｵ菴・/span>
+
+                <div class="score-display">
+
+                  <span class="score-num" id="typing-result-rank" style="color: var(--neon-cyan); font-size: 40px;">B+</span>
+
+                </div>
+
+                <div class="pass-status-badge pass" id="typing-result-accuracy-badge">蜷域ｼ</div>
+
+              </div>
+
+
+
+              <div class="cbt-results-fields-box">
+
+                <div class="field-score-item">
+
+                  <div class="field-score-meta">
+
+                    <strong>謇灘ｭ鈴溷ｺｦ (WPM)</strong>
+
+                    <span id="typing-result-wpm">0 WPM</span>
+
+                  </div>
+
+                  <div class="field-score-progressbar">
+
+                    <div class="field-score-fill" id="typing-result-wpm-bar" style="width: 0%"></div>
+
+                  </div>
+
+                </div>
+
+                
+
+                <div class="field-score-item">
+
+                  <div class="field-score-meta">
+
+                    <strong>謖蛾醗蜃・｡ｮ邇・/strong>
+
+                    <span id="typing-result-accuracy">100%</span>
+
+                  </div>
+
+                  <div class="field-score-progressbar">
+
+                    <div class="field-score-fill" id="typing-result-accuracy-bar" style="width: 0%"></div>
+
+                  </div>
+
+                </div>
+
+
+
+                <div class="field-score-item" style="display: flex; justify-content: space-between; font-size: 13px; color: var(--text-muted); border-top: 1px solid rgba(255,255,255,0.05); padding-top: 12px; margin-top: 4px;">
+
+                  <span>蜃ｻ髞ｮ諤ｻ謨ｰ: <strong id="typing-result-total-hits" style="color: var(--text-main);">0</strong></span>
+
+                  <span>螟ｱ隸ｯ謨ｰ: <strong id="typing-result-total-errors" style="color: var(--error-color);">0</strong></span>
+
+                </div>
+
+              </div>
+
+            </div>
+
+            
+
+            <div class="cbt-results-details-wrapper">
+
+              <h3><i class="fa-solid fa-list-ol"></i> 譛ｬ霓ｮ隸肴ｱ・屓鬘ｾ</h3>
+
+              <div class="results-table-container">
+
+                <table class="results-table">
+
+                  <thead>
+
+                    <tr>
+
+                      <th>隸肴ｱ・(蜊戊ｯ・</th>
+
+                      <th>隸ｻ髻ｳ (蟷ｳ蛛・錐)</th>
+
+                      <th>荳ｭ譁・㈱荵・/th>
+
+                    </tr>
+
+                  </thead>
+
+                  <tbody id="typing-results-table-body">
+
+                    <!-- JS generated list -->
+
+                  </tbody>
+
+                </table>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+
+    </div>
+
+
+
+    <!-- CBT Exam Simulator Container (Visible when Dojo is selected and active) -->
+
+    <div class="cbt-exam-container" id="cbt-exam-container" style="display: none;">
+
+      
+
+      <!-- CBT Config Screen -->
+
+      <div class="cbt-config-screen" id="cbt-config-screen">
+
+        <div class="cbt-config-card">
+
+          <div class="cbt-config-header-main">
+
+            <i class="fa-solid fa-school-flag cbt-logo-icon"></i>
+
+            <h2>驕主悉蝠城％蝣ｴ 窶・CBT 讓｡諡溯・ｯ慕ｳｻ扈・/h2>
+
+            <p>蝓ｺ莠手ｿ大ｹｴ IT 閠・ｯ慕悄鬚假ｼ梧ｨ｡諡溽悄螳櫁ｮ｡邂玲惻譛ｺ閠・(CBT) 邇ｯ蠅・・/p>
+
+          </div>
+
+
+
+          <div class="cbt-config-options">
+
+            <div class="cbt-option-row">
+
+              <label for="cbt-year-select"><i class="fa-solid fa-calendar-days"></i> 騾画叫閠・ｯ募ｹｴ蠎ｦ/逵滄｢・</label>
+
+              <select id="cbt-year-select">
+
+                <option value="all" selected>髫乗惻豺ｷ蜷育悄鬚・(謗ｨ闕・- 扈ｼ蜷域ｨ｡閠・</option>
+
+                <option value="08_haru">莉､蜥・蟷ｴ蠎ｦ (R8) 蜈ｬ蠑髣ｮ鬚・/option>
+
+                <option value="07_haru">莉､蜥・蟷ｴ蠎ｦ (R7) 蜈ｬ蠑髣ｮ鬚・/option>
+
+                <option value="06_haru">莉､蜥・蟷ｴ蠎ｦ (R6) 蜈ｬ蠑髣ｮ鬚・/option>
+
+                <option value="05_haru">莉､蜥・蟷ｴ蠎ｦ (R5) 蜈ｬ蠑髣ｮ鬚・/option>
+
+                <option value="04_haru">莉､蜥・蟷ｴ蠎ｦ (R4) 蜈ｬ蠑髣ｮ鬚・/option>
+
+                <option value="03_haru">莉､蜥・蟷ｴ蠎ｦ (R3) 蜈ｬ蠑髣ｮ鬚・/option>
+
+              </select>
+
+            </div>
+
+
+
+            <div class="cbt-option-row">
+
+              <label for="cbt-count-select"><i class="fa-solid fa-hashtag"></i> 讓｡諡溯・ｯ暮｢倬㍼:</label>
+
+              <select id="cbt-count-select">
+
+                <option value="100">100 鬚・(豁｣蠑乗惻閠・・㊥ - 髯先慮120蛻・帖)</option>
+
+                <option value="50">50 鬚・(邊ｾ邂讓｡閠・- 髯先慮60蛻・帖)</option>
+
+                <option value="30">30 鬚・(蠢ｫ騾溷姐鬚・- 髯先慮36蛻・帖)</option>
+
+                <option value="10" selected>10 鬚・(蠕ｮ蝙句ｰ乗ｵ・- 髯先慮12蛻・帖)</option>
+
+              </select>
+
+            </div>
+
+
+
+            <div class="cbt-option-row">
+
+              <label><i class="fa-solid fa-gears"></i> 譛ｺ閠・ｸｪ諤ｧ蛹夜蛾｡ｹ:</label>
+
+              <div class="cbt-checkbox-group">
+
+                <label class="cbt-checkbox">
+
+                  <input type="checkbox" id="cbt-opt-shuffle" checked> 髫乗惻謇謎ｹｱ騾画叫閧｢鬘ｺ蠎・(繧｢縲懊お)
+
+                </label>
+
+                <label class="cbt-checkbox">
+
+                  <input type="checkbox" id="cbt-opt-nocalc"> 霑・ｻ､隶｡邂鈴｢・(荳肴仞遉ｺ蜷ｫ譛牙・蠑剰ｮ｡邂礼噪鬚倡岼)
+
+                </label>
+
+              </div>
+
+            </div>
+
+          </div>
+
+
+
+          <button class="cbt-launch-btn" onclick="startCbtExam()">
+
+            <i class="fa-solid fa-play-circle"></i> 蠑蟋区惻閠・倦謌・(隧ｦ鬨馴幕蟋・
+
+          </button>
+
+        </div>
+
+      </div>
+
+
+
+      <!-- CBT Testing Run Screen -->
+
+      <div class="cbt-testing-screen" id="cbt-testing-screen" style="display: none;">
+
+        <div class="cbt-testing-header">
+
+          <div class="cbt-exam-title-box">
+
+            <span class="cbt-indicator-badge"><i class="fa-solid fa-laptop"></i> CBT 讓｡諡溽ｳｻ扈・/span>
+
+            <h4 id="cbt-exam-display-title">莉､蜥・蟷ｴ 蜈ｬ蠑髣ｮ鬚・讓｡諡溯・ｯ・/h4>
+
+          </div>
+
+          
+
+          <div class="cbt-exam-timer-box">
+
+            <i class="fa-solid fa-stopwatch"></i> 蜑ｩ菴呎慮髣ｴ: <strong id="cbt-timer-display">120:00</strong>
+
+          </div>
+
+
+
+          <div class="cbt-exam-actions">
+
+            <button class="cbt-btn-action reset" onclick="exitCbtExam()">
+
+              <i class="fa-solid fa-rectangle-xmark"></i> 荳ｭ譁ｭ騾蜃ｺ
+
+            </button>
+
+            <button class="cbt-btn-action submit" onclick="submitCbtExam()">
+
+              <i class="fa-solid fa-circle-check"></i> 謠蝉ｺ､隸募差
+
+            </button>
+
+          </div>
+
+        </div>
+
+
+
+        <div class="cbt-testing-body">
+
+          <!-- Question Canvas -->
+
+          <div class="cbt-question-canvas">
+
+            <div class="cbt-q-card-header">
+
+              <span class="cbt-q-number" id="cbt-q-number-text">隨ｬ 1 鬚・/ 蝠・1</span>
+
+              <span class="cbt-q-field" id="cbt-q-field-text">繝・け繝弱Ο繧ｸ邉ｻ / 繝阪ャ繝医Ρ繝ｼ繧ｯ</span>
+
+              <button class="cbt-q-flag-btn" id="cbt-q-flag-btn" onclick="toggleCbtQuestionFlag()">
+
+                <i class="fa-regular fa-flag"></i> 譬・ｮｰ豁､鬚伜､肴衍
+
+              </button>
+
+            </div>
+
+            
+
+            <div class="cbt-q-body-text" id="cbt-q-body-text">
+
+              <!-- Question HTML here -->
+
+            </div>
+
+
+
+            <div class="cbt-q-options-list" id="cbt-q-options-list">
+
+              <!-- Choices -->
+
+            </div>
+
+
+
+            <!-- Bottom Navigation -->
+
+            <div class="cbt-q-navigation-bar">
+
+              <button class="cbt-nav-btn" id="cbt-prev-btn" onclick="cbtPrevQuestion()">
+
+                <i class="fa-solid fa-chevron-left"></i> 荳贋ｸ鬚・(蜑阪∈)
+
+              </button>
+
+              <span class="cbt-nav-status" id="cbt-nav-status-text">隨ｬ 1 鬚假ｼ悟・ 10 鬚・(蟾ｲ菴懃ｭ・0 鬚・</span>
+
+              <button class="cbt-nav-btn" id="cbt-next-btn" onclick="cbtNextQuestion()">
+
+                荳倶ｸ鬚・(谺｡縺ｸ) <i class="fa-solid fa-chevron-right"></i>
+
+              </button>
+
+            </div>
+
+          </div>
+
+
+
+          <!-- CBT Grid Navigator Sidebar -->
+
+          <div class="cbt-navigator-panel">
+
+            <h5><i class="fa-solid fa-list-ol"></i> 遲秘｢伜今逵区攸</h5>
+
+            <div class="cbt-grid-canvas" id="cbt-grid-canvas">
+
+              <!-- Question index grid buttons -->
+
+            </div>
+
+            <div class="cbt-grid-legend">
+
+              <span class="legend-unit"><span class="legend-color-box cbt-unanswered"></span>譛ｪ遲・/span>
+
+              <span class="legend-unit"><span class="legend-color-box cbt-answered"></span>蟾ｲ遲・/span>
+
+              <span class="legend-unit"><span class="legend-color-box cbt-flagged"><i class="fa-solid fa-flag"></i></span>譬・ｮｰ</span>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+
+      <!-- CBT Results Report Screen -->
+
+      <div class="cbt-results-screen" id="cbt-results-screen" style="display: none;">
+
+        <div class="cbt-results-card">
+
+          <div class="cbt-results-header">
+
+            <h2><i class="fa-solid fa-square-poll-vertical"></i> 讓｡諡溯・ｯ墓ｵ玖ｯ・・扈ｩ蜊・/h2>
+
+            <button class="cbt-results-close-btn" onclick="closeCbtResults()">
+
+              <i class="fa-solid fa-chevron-left"></i> 霑泌屓驕灘惻
+
+            </button>
+
+          </div>
+
+
+
+          <!-- Score Summary Dashboard -->
+
+          <div class="cbt-results-summary-row">
+
+            <div class="cbt-results-total-box">
+
+              <span class="summary-label">扈ｼ蜷亥ｾ礼せ (諤ｻ蛻・</span>
+
+              <div class="score-display">
+
+                <span class="score-num" id="cbt-score-total">650</span>
+
+                <span class="score-max">/ 1000 轤ｹ</span>
+
+              </div>
+
+              <div class="pass-status-badge pass" id="cbt-pass-status-badge">蜷域ｼ</div>
+
+            </div>
+
+
+
+            <div class="cbt-results-fields-box">
+
+              <!-- Strategy -->
+
+              <div class="field-score-item">
+
+                <div class="field-score-meta">
+
+                  <strong>繧ｹ繝医Λ繝・ず邉ｻ (遲也払鬚・沺)</strong>
+
+                  <span id="cbt-field-score-strat">600 / 1000</span>
+
+                </div>
+
+                <div class="field-score-progressbar">
+
+                  <div class="field-score-fill" id="cbt-field-bar-strat" style="width: 60%"></div>
+
+                </div>
+
+                <span class="field-score-status" id="cbt-field-status-strat">蜷域ｼ (>=300)</span>
+
+              </div>
+
+              <!-- Management -->
+
+              <div class="field-score-item">
+
+                <div class="field-score-meta">
+
+                  <strong>繝槭ロ繧ｸ繝｡繝ｳ繝育ｳｻ (邂｡逅・｢・沺)</strong>
+
+                  <span id="cbt-field-score-man">700 / 1000</span>
+
+                </div>
+
+                <div class="field-score-progressbar">
+
+                  <div class="field-score-fill" id="cbt-field-bar-man" style="width: 70%"></div>
+
+                </div>
+
+                <span class="field-score-status" id="cbt-field-status-man">蜷域ｼ (>=300)</span>
+
+              </div>
+
+              <!-- Technology -->
+
+              <div class="field-score-item">
+
+                <div class="field-score-meta">
+
+                  <strong>繝・け繝弱Ο繧ｸ邉ｻ (謚譛ｯ鬚・沺)</strong>
+
+                  <span id="cbt-field-score-tech">650 / 1000</span>
+
+                </div>
+
+                <div class="field-score-progressbar">
+
+                  <div class="field-score-fill" id="cbt-field-bar-tech" style="width: 65%"></div>
+
+                </div>
+
+                <span class="field-score-status" id="cbt-field-status-tech">蜷域ｼ (>=300)</span>
+
+              </div>
+
+              <!-- Subject B -->
+
+              <div class="field-score-item" id="cbt-field-score-item-subb" style="display: none;">
+
+                <div class="field-score-meta">
+
+                  <strong>遘醍岼B (蝨ｺ譎ｯ蠎皮畑)</strong>
+
+                  <span id="cbt-field-score-subb">0 / 1000 轤ｹ</span>
+
+                </div>
+
+                <div class="field-score-progressbar">
+
+                  <div class="field-score-fill" id="cbt-field-bar-subb" style="width: 0%"></div>
+
+                </div>
+
+                <span class="field-score-status" id="cbt-field-status-subb">蜷域ｼ (>=300)</span>
+
+              </div>
+
+            </div>
+
+          </div>
+
+
+
+          <!-- Question Review and Analysis List -->
+
+          <div class="cbt-results-details-wrapper">
+
+            <h3><i class="fa-solid fa-circle-question"></i> 逵滄｢伜屓鬘ｾ荳朱漠鬚伜・譫・/h3>
+
+            <p class="results-table-tip"><i class="fa-solid fa-lightbulb"></i> 轤ｹ蜃ｻ荳区婿陦ｨ譬ｼ荳ｭ逧・ｻｻ諢剰｡鯉ｼ悟庄逶ｴ謗･螻募ｼ譟･逵矩｢伜ｹｲ隸ｦ諠・所荳ｭ譌･譁・曙隸ｭ隕∫せ隗｣譫舌・/p>
+
+            
+
+            <div class="results-table-container">
+
+              <table class="results-table">
+
+                <thead>
+
+                  <tr>
+
+                    <th>鬚伜捷</th>
+
+                    <th>鬚・沺</th>
+
+                    <th>閠・ｸ遏･隸・せ</th>
+
+                    <th>謔ｨ逧・ｭ疲｡・/th>
+
+                    <th>豁｣遑ｮ遲疲｡・/th>
+
+                    <th>豬玖ｯ慕ｻ捺棡</th>
+
+                  </tr>
+
+                </thead>
+
+                <tbody id="cbt-results-table-body">
+
+                  <!-- Tr rows dynamically inserted -->
+
+                </tbody>
+
+              </table>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+
+    </div>
+
+
+
+"  </div>\n\n  <!-- AI Hint Modal -->\n  <div class=\"ai-modal-overlay\" id=\"ai-hint-modal\" style=\"display: none;\">\n    <div class=\"ai-modal-card\">\n      <div class=\"ai-modal-header\">\n        <h3><i class=\"fa-solid fa-robot\"></i> AI 髦ｶ譴ｯ蠑募ｯｼ謠千､ｺ (AI Step-by-Step Hint)</h3>\n        <button class=\"ai-modal-close-btn\" onclick=\"closeAiHintModal()\"><i class=\"fa-solid fa-xmark\"></i></button>\n      </div>\n      <div class=\"ai-modal-body\">\n        <div class=\"ai-hint-steps-container\">\n          <!-- Step 1 -->\n          <div class=\"ai-hint-step-box\" id=\"ai-hint-step-1\">\n            <div class=\"step-box-header\">\n              <span class=\"step-num-badge\">1</span>\n              <h4>諤晁ｷｯ謠千､ｺ (Thinking Path)</h4>\n              <button class=\"unlock-step-btn\" id=\"unlock-btn-1\" onclick=\"unlockHintStep(1)\">\n                <i class=\"fa-solid fa-unlock\"></i> 闔ｷ蜿匁晁ｷｯ\n              </button>\n            </div>\n            <div class=\"step-box-content\" id=\"step-content-1\" style=\"display: none;\"></div>\n          </div>\n          \n          <!-- Step 2 -->\n          <div class=\"ai-hint-step-box locked\" id=\"ai-hint-step-2\">\n            <div class=\"step-box-header\">\n              <span class=\"step-num-badge\">2</span>\n              <h4>隸ｭ豕暮ｪｨ譫ｶ (Syntax Skeleton)</h4>\n              <button class=\"unlock-step-btn\" id=\"unlock-btn-2\" onclick=\"unlockHintStep(2)\" disabled>\n                <i class=\"fa-solid fa-lock\"></i> 隗｣髞・ｪｨ譫ｶ\n              </button>\n            </div>\n            <div class=\"step-box-content\" id=\"step-content-2\" style=\"display: none;\"></div>\n          </div>\n          \n          <!-- Step 3 -->\n          <div class=\"ai-hint-step-box locked\" id=\"ai-hint-step-3\">\n            <div class=\"step-box-header\">\n              <span class=\"step-num-badge\">3</span>\n              <h4>蜿り・ｭ疲｡・(Reference Answer)</h4>\n              <button class=\"unlock-step-btn\" id=\"unlock-btn-3\" onclick=\"unlockHi
+
+<truncated 1935 bytes>
+
+  <script src="data/db.js?v=20260604"></script>
+
+  <script src="data/lessons.js?v=20260604"></script>
+
+  <script src="data/it_passport_lessons.js?v=20260604"></script>
+
+  <script src="data/it_passport_past_exams.js?v=20260604"></script>
+
+  <script src="data/sg_lessons.js?v=20260604"></script>
+
+  <script src="data/sg_past_exams.js?v=20260604"></script>
+
+  <script src="data/java_lessons.js?v=20260604"></script>
+
+  <script src="assets/js/java_sandbox.js?v=20260604"></script>
+
+  <script src="data/python_lessons.js?v=20260604"></script>
+
+  <script src="assets/js/python_sandbox.js?v=20260604"></script>
+
+  <script src="data/sql_exam_questions.js?v=20260604"></script>
+
+  <script src="data/java_exam_questions.js?v=20260604"></script>
+
+  <script src="data/python_exam_questions.js?v=20260604"></script>
+
+  <script src="data/typing_articles.js?v=20260604"></script>
+
+  <script src="assets/js/typing_sandbox.js?v=20260604"></script>
+
+  <script src="assets/js/app.js?v=20260604"></script>
+
+</body>
+
+</html>
+
+
+
+
+
+

@@ -1,0 +1,10 @@
+backups/
+jdk/
+output/
+.playwright-cli/
+.study-tools-browser-profile/
+chrome-release-check-profile/
+__pycache__/
+*.pyc
+*.log
+*.zip

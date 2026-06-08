@@ -1,0 +1,10 @@
+# Windowsの場合
+# カレントフォルダがC:¥Users¥python の場合
+
+cd ..¥..¥zero-python¥test2
+
+
+# Linux、Macの場合
+# カレントフォルダが ~/ の場合
+
+cd zero-python/test2

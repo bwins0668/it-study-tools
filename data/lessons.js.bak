@@ -1,0 +1,3436 @@
+const SQL_LESSONS = [
+
+  {
+
+    id: 1,
+
+    section: "数据库的基础",
+
+    titleJa: "01-SQLやデータベースとは何か？",
+
+    titleZh: "01-什么是数据库 and SQL？",
+
+    conceptJa: `データベース(DB)とは、整理されたデータの集まりです。
+
+多くのシステムでは、データを「表(テーブル)」の形式で管理する**リレーショナルデータベース(RDB)**が使われます。
+
+**SQL**は、そのデータベースに対して「データを取ってきて」「データを登録して」と命令するための専用の言語です。
+
+今回は、あなたの学校のデータベースから学生マスタを取得する、もっとも基本的なデータ取得命令を学びましょう。`,
+
+    conceptZh: `数据库（Database, 简称DB）是按组织结构存储的数据集合。
+
+在大多数系统里，数据是以类似于Excel表格的“表（Table）”的形式存储在**关系型数据库（RDB）**中的。
+
+**SQL**（结构化查询语言）是用来给数据库发送指令（比如“读取数据”、“插入数据”）的专用语言。
+
+这一节我们将从你学校真实的“学生主表”中获取所有数据，体验最基本的查询指令。`,
+
+    analogy: "学校的系统就像一个大抽屉（数据库），里面的 students_mst 文件夹就像是“学生表”，我们的 SQL 语句就是向它要数据的指令。",
+
+    example: "SELECT * FROM students_mst;",
+
+    playgroundTask: "查询学生主表 (students_mst) 的所有列和所有行的数据。",
+
+    expectedQuery: /^\s*SELECT\s+\*\s+FROM\s+students_mst\s*;?\s*$/i,
+
+    quiz: {
+
+      question: "SQLとは何をするための言語ですか？ (SQL是用来做什么的语言？)",
+
+      options: [
+
+        "ホームページのデザインを整える (调整网页设计)",
+
+        "データベースを操作し、データを取得・加工する (操作数据库以获取和加工数据)",
+
+        "スマートフォンアプリの画面を作る (制作手机App界面)"
+
+      ],
+
+      answerIdx: 1,
+
+      hint: "SQL stands for Structured Query Language. It works with databases."
+
+    }
+
+  },
+
+  {
+    id: 2,
+    section: "数据库的基础",
+    titleJa: "02-テーブル構造（型・主キー）",
+    titleZh: "02-数据表结构（数据类型与主键）",
+    conceptJa: `テーブルは「列(カラム)」と「行(レコード)」で構成されます。
+それぞれの列には**データ型**(数値、文字列、日付など)が設定されており、型と違うデータは入れられません。
+また、テーブルには各行を絶対に区別するための目印である**主キー(Primary Key)**を設定します。
+あなたの学校の departments_mst (科系主表) では、department_id が主キーになります。`,
+    conceptZh: `数据表由“列（Column）”和“行（Row/Record）”组成。
+每一列都有固定的**数据型（Data Type）**，如整数（INT）、字符串（VARCHAR）、日期（DATETIME）等，不能存入不符的类型。
+另外，为了能唯一标识每一行，表中必须设置一个**主键（Primary Key）**。主键的值在整张表里不能重复。
+例如在科系表 departments_mst 中，department_id 就是主键。`,
+    analogy: "学生证的“学籍编号”就是主键。即便有两个同名同姓的“山田太郎”，只要学籍编号（student_id）不同，就能区分开。",
+    example: "SELECT * FROM departments_mst;",
+    playgroundTask: "查询科系主表 (departments_mst) 的所有列和所有数据。",
+    expectedQuery: /^\s*SELECT\s+\*\s+FROM\s+departments_mst\s*;?\s*$/i,
+    quiz: {
+      question: "テーブルの中で、データを一意(重複なし)に識別するための列を何と呼びますか？ (表中用来唯一标识数据、不能重复的列叫什么？)",
+      options: [
+        "外部キー (Foreign Key / 外键)",
+        "主キー (Primary Key / 主键)",
+        "インデックス (Index / 索引)"
+      ],
+      answerIdx: 1,
+      hint: "主键的英文缩写是 PK (Primary Key)。"
+    }
+  },
+  {
+    id: 3,
+    section: "SELECT文的基本",
+    titleJa: "03-SELECT文①基本構文",
+    titleZh: "03-SELECT语句①基本语法",
+    conceptJa: `データを取得する基本は「SELECT 列名 FROM テーブル名;」です。
+すべての列を取得したい場合は、列名の代わりに「* (アスタリスク)」を指定します。
+特定の列だけが欲しい場合は、カンマ区切りで列名を書きます。`,
+    conceptZh: `获取数据最基本的SQL结构是：“SELECT 列名 FROM 表名;”。
+如果你想查询表中的**所有列**，可以用星号（*）代替列名。
+如果只需要**特定的几列**，就把这几列的名字用逗号隔开写出来。`,
+    analogy: "“从学生卡片抽屉里（FROM students_mst），只把姓名（student_name）和得分（test_score）这两个信息卡拿出来（SELECT）”的逻辑。",
+    example: "SELECT student_name, test_score FROM students_mst;",
+    playgroundTask: "从 students_mst 表中，只查询学生姓名 (student_name) 和分数 (test_score) 这两列的数据。",
+    expectedQuery: /^\s*SELECT\s+(student_name\s*,\s*test_score|test_score\s*,\s*student_name)\s+FROM\s+students_mst\s*;?\s*$/i,
+    quiz: {
+      question: "テーブルの「すべての列」を省略して指定するための記号は何ですか？ (用来代表表里“所有列”的通配符是什么？)",
+      options: [
+        "& (和号)",
+        "# (井号)",
+        "* (星号)"
+      ],
+      answerIdx: 2,
+      hint: "使用数学上的乘号符号：*"
+    }
+  },
+  {
+    id: 4,
+    section: "SELECT文的基本",
+    titleJa: "04-SELECT文②条件：where",
+    titleZh: "04-SELECT语句②过滤条件：WHERE",
+    conceptJa: `データを絞り込むには**WHERE句**を使います。
+「SELECT 列名 FROM テーブル名 WHERE 条件;」のように書きます。
+例えば、年齢が20歳の人だけを絞り込むときは「WHERE age = 20」と指定します。
+文字列を指定するときはシングルクォーテーション「'」で囲む必要があります。
+今回のデータでは、gender の「'0'」は男性、「'1'」は女性を意味します。`,
+    conceptZh: `使用 **WHERE子句** 可以对查询的数据进行筛选 and 过滤。
+语法为：“SELECT 列名 FROM 表名 WHERE 过滤条件;”。
+例如，只查询年龄为20岁的学生，写做：\`WHERE age = 20\`。
+注意：如果是数值类型直接写数字；如果是字符串类型，必须用单引号 \`'\` 包裹。
+在你学校的数据库中，性别字段 gender 的值用字符串 '0'（男）和 '1'（女）表示。`,
+    analogy: "在学生名单中拿着筛子，把“年龄为 20 岁”的数据筛出来，只显示符合条件的部分。",
+    example: "SELECT * FROM students_mst WHERE gender = '1';",
+    playgroundTask: "从 students_mst 表中，查询所有性别 (gender) 为 '1'（女生）的学生数据。",
+    expectedQuery: /^\s*SELECT\s+\*\s+FROM\s+students_mst\s+WHERE\s+gender\s*=\s*['"']1['"']\s*;?\s*$/i,
+    quiz: {
+      question: "SQLで条件を指定してデータを絞り込むために使用するキーワードはどれですか？ (SQL中用来指定筛选条件的是哪个关键字？)",
+      options: [
+        "WHEN",
+        "WHERE",
+        "FILTER"
+      ],
+      answerIdx: 1,
+      hint: "拼写以 W-H-E-R-E 开头。"
+    }
+  },
+  {
+    id: 5,
+    section: "SELECT文的基本",
+    titleJa: "05-SELECT文③条件：and",
+    titleZh: "05-SELECT语句③多条件：AND",
+    conceptJa: `複数の条件を**すべて満たす (かつ (AND))**データを絞り込むには、**AND**を使用します。
+「WHERE 条件1 AND 条件2」のように書きます。
+これによって、「24歳」かつ「科系ID 1」といったより細かい絞り込みが可能になります。
+
+**【重要キーワード】**
+・**かつ (AND)**：指定した条件の「すべて」に一致する場合。`,
+    conceptZh: `如果你需要**同时满足多个条件**，可以使用 **AND** 运算符。
+语法为：“WHERE 条件1 AND 条件2”。
+在日语技术题中，看到 **かつ** 即代表逻辑“与”关系，需要用 **AND** 运算符连接。
+
+**【重要词汇对照表】**
+・**かつ (AND)**：并且、且（所有条件均需满足）。`,
+    analogy: "就像找人要求“戴着眼镜”并且（AND）“身穿黑衣”，缺一不可。",
+    example: "SELECT * FROM students_mst WHERE age = 24 AND department_id = 1;",
+    playgroundTask: "从 students_mst 表中，查询所有年龄 (age) 为 24 岁，并且科系ID (department_id) 为 1 的学生数据。",
+    expectedQuery: /^\s*SELECT\s+\*\s+FROM\s+students_mst\s+WHERE\s+(age\s*=\s*24\s+AND\s+department_id\s*=\s*1|department_id\s*=\s*1\s+AND\s+age\s*=\s*24)\s*;?\s*$/i,
+    quiz: {
+      question: "条件Aと条件Bの「両方を満たす」場合に真となる論理演算子はどれですか？ (逻辑“且”（两个条件都必须成立）是用哪个关键字？)",
+      options: [
+        "OR",
+        "AND",
+        "NOT"
+      ],
+      answerIdx: 1,
+      hint: "在英语里表示“并且”的词。"
+    }
+  },
+  {
+    id: 6,
+    section: "SELECT文的基本",
+    titleJa: "06-SELECT文④条件：or",
+    titleZh: "06-SELECT语句④多条件：OR",
+    conceptJa: `複数の条件の**いずれか片方でも満たす (または (OR))**データを絞り込むには、**OR**を使用します。
+「WHERE 条件1 OR 条件2」のように書きます。
+例えば、「学科ID 1」または「学科ID 2」の学生を抽出したい場合などに有効です。
+
+**【重要キーワード】**
+・**または (OR)**：指定した条件の「いずれか片方（または両方）」に一致する場合。`,
+    conceptZh: `如果你需要满足**多个条件中的任意一个即可**，可以使用 **OR** 运算符。
+语法为：“WHERE 条件1 OR 条件2”。
+在日语技术题中，看到 **または** 即代表逻辑“或”关系，需要用 **OR** 运算符连接。
+
+**【重要词汇对照表】**
+・**または (OR)**：或者、或（满足其中之一即可）。`,
+    analogy: "就像去派对，只要“带了邀请函”或者（OR）“是俱乐部VIP”都可以入场。",
+    example: "SELECT * FROM students_mst WHERE department_id = 1 OR department_id = 2;",
+    playgroundTask: "从 students_mst 表中，查询科系ID (department_id) 是 1 或者 2 的所有学生数据。",
+    expectedQuery: /^\s*SELECT\s+\*\s+FROM\s+students_mst\s+WHERE\s+(department_id\s*=\s*1\s+OR\s+department_id\s*=\s*2|department_id\s*=\s*2\s+OR\s+department_id\s*=\s*1)\s*;?\s*$/i,
+    quiz: {
+      question: "「AまたはBのいずれかを満たす」という条件を指定する演算子はどれですか？ (逻辑“或”（两个条件满足任意一个即可）用哪个关键字？)",
+      options: [
+        "OR",
+        "AND",
+        "XOR"
+      ],
+      answerIdx: 0,
+      hint: "在英语里表示“或者”的词。"
+    }
+  },
+{
+
+    id: 7,
+
+    section: "SELECT文的基本",
+
+    titleJa: "07-SELECT文⑤条件：and・or",
+
+    titleZh: "07-SELECT语句⑤组合：AND与OR结合",
+
+    conceptJa: `ANDとORは組み合わせて使用できます。
+
+注意点として、**ANDはORよりも優先して処理される**というルールがあります。
+
+意図した順序で判定させたい場合は、カッコ「( )」を使ってグループ化します。`,
+
+    conceptZh: `AND 和 OR 可以放在同一个 WHERE 子句中组合使用。
+
+**特别注意**：SQL中 **AND 的优先级高于 OR**（就像乘法先于加法）。
+
+如果你想改变运算顺序，必须像数学运算那样用括号 ` + "`()`" + ` 把条件括起来。`,
+
+    analogy: "“（红笔 或 蓝笔） 并且 还有橡皮擦的人”——括号改变了优先级，强制先算括号内的“或”判断。",
+
+    example: "SELECT * FROM students_mst WHERE (age = 20 OR age = 24) AND gender = '0';",
+
+    playgroundTask: "从 students_mst 表中，查询“年龄为 20 岁，或者 24 岁，并且性别 (gender) 为 '0'（男生）”的学生。",
+
+    expectedQuery: /^\s*SELECT\s+\*\s+FROM\s+students_mst\s+WHERE\s+(\(\s*age\s*=\s*20\s+OR\s*age\s*=\s*24\s*\)\s+AND\s+gender\s*=\s*['"']0['"']|gender\s*=\s*['"']0['"']\s+AND\s+\(\s*age\s*=\s*20\s+OR\s*age\s*=\s*24\s*\))\s*;?\s*$/i,
+
+    quiz: {
+
+      question: "SQLにおいて、ANDとORが混在する場合、どちらが先に処理されますか？ (当 AND 和 OR 混在一起时，哪一个默认先执行？)",
+
+      options: [
+
+        "左側にある方が先 (左边的先执行)",
+
+        "ORが優先 (OR优先)",
+
+        "ANDが優先 (AND优先)"
+
+      ],
+
+      answerIdx: 2,
+
+      hint: "AND 代表“且”，它的粘合力更强，优先级高于“或” (OR)。"
+
+    }
+
+  },
+
+  {
+
+    id: 8,
+
+    section: "SELECT文的基本",
+
+    titleJa: "08-SELECT文⑥条件：比較演算子",
+
+    titleZh: "08-SELECT语句⑥条件：比较运算符",
+
+    conceptJa: `「イコール(=)」以外の比較も可能です。
+
+- 「>」 (より大きい) / 「<」 (より小さい)
+
+- 「>=」 (以上) / 「<=」 (以下)
+
+- 「<>」または「!=」 (等しくない / 以外)
+
+これらを使いこなすことで、数値の範囲指定や特定データ除外が簡単になります。`,
+
+    conceptZh: `除了等于（=），我们还可以使用各种比较运算符：
+
+- ` + "`>`" + ` (大于) / ` + "`<`" + ` (小于)
+
+- ` + "`>=`" + ` (大于等于) / ` + "`<=`" + ` (小于等于)
+
+- ` + "`<>`" + ` 或 ` + "`!=`" + ` (不等于)
+
+通过这些运算符可以过滤出特定得分范围，或者排除某部分记录。`,
+
+    analogy: "“分数在 90 分以上（含90分）”与“分数大于 90 分（不含90分）”的区别，就是逻辑运算符的界限。",
+
+    example: "SELECT * FROM students_mst WHERE test_score >= 90;",
+
+    playgroundTask: "从 students_mst 中，查询分数 (test_score) 在 90 分以上（大于等于90分）的所有学生数据。",
+
+    expectedQuery: /^\s*SELECT\s+\*\s+FROM\s+students_mst\s+WHERE\s+test_score\s*>=\s*90\s*;?\s*$/i,
+
+    quiz: {
+
+      question: "SQLで「等しくない(〜以外)」を表す比較演算子はどれですか？ (SQL中代表“不等于”的运算符是哪个？)",
+
+      options: [
+
+        "==",
+
+        "<>",
+
+        "><"
+
+      ],
+
+      answerIdx: 1,
+
+      hint: "像两个张开的尖括号相互排斥：<> （或者在很多系统里也写做 !=）。"
+
+    }
+
+  },
+
+  {
+
+    id: 9,
+
+    section: "SELECT文的基本",
+
+    titleJa: "09-SELECT文⑦条件：is null / is not null",
+
+    titleZh: "09-SELECT语句⑦条件：IS NULL 与 IS NOT NULL",
+
+    conceptJa: `値が何も入力されていない状態を **NULL**(ヌル) と言います。
+
+NULLを比較するときは「= NULL」ではなく、専用の演算子である **IS NULL** または **IS NOT NULL** を使います。
+
+あなたの学校のテーブルでは、退学していない(削除されていない)学生の delete_at は NULL です。`,
+
+    conceptZh: `如果某个单元格里什么都没有输入，这个状态在数据库里叫 **NULL**。
+
+因为 NULL 代表“无/空”，所以不能用 ` + "`= NULL`" + ` 去判断。
+
+必须使用专属 of **IS NULL**（是空）或 **IS NOT NULL**（不是空）进行查询。
+
+在你学校的表中，正常在读（没有被软删除）的学生的 delete_at 字段全都是 NULL。`,
+
+    analogy: "“钱包里面有0元”（是一个有数值的零值）与“根本没有钱包”（是一个空虚的状态，即 NULL）的区别。",
+
+    example: "SELECT * FROM students_mst WHERE delete_at IS NOT NULL;",
+
+    playgroundTask: "从 students_mst 中，查询所有已经被删除（即 delete_at 不是 NULL）的学生数据。",
+
+    expectedQuery: /^\s*SELECT\s+\*\s+FROM\s+students_mst\s+WHERE\s+delete_at\s+IS\s+NOT\s+NULL\s*;?\s*$/i,
+
+    quiz: {
+
+      question: "値が空(NULL)であるデータを検索するとき、正しい書き方はどれですか？ (查询值为 NULL 的数据，正确的写法是哪个？)",
+
+      options: [
+
+        "WHERE delete_at = NULL",
+
+        "WHERE delete_at IS NULL",
+
+        "WHERE delete_at == NULL"
+
+      ],
+
+      answerIdx: 1,
+
+      hint: "永远不要在 NULL 上用等号 =，要用 IS 关键字。"
+
+    }
+
+  },
+
+  {
+
+    id: 10,
+
+    section: "SELECT文的基本",
+
+    titleJa: "10-SELECT文⑧条件：like",
+
+    titleZh: "10-SELECT语句⑧条件：LIKE 模糊查询",
+
+    conceptJa: `部分一致で検索したいときは **LIKE** 演算子とワイルドカード文字を使います。
+
+- **%**: 0文字以上の任意の文字列を表す
+
+- **_**: 任意の1文字を表す
+
+例えば、「'山本%'」と書くと、「山本」から始まるすべての氏名(前方一致)にマッチします。`,
+
+    conceptZh: `进行模糊搜索（比如寻找姓“山田”的人，或者平假名中含有某字符的记录）时使用 **LIKE**。
+
+配合 LIKE 使用的有两个通配符：
+
+- **%**：代表任意长度（包括0个字符）的任意字符。
+
+- **_**：代表任意单个字符。
+
+例如：` + "`'山本%'`" + ` 匹配所有姓山本的人（如“山本 太郎”、“山本 高之”）。`,
+
+    analogy: "类似百度搜索的“关键字模糊匹配”，输入一部分，带出相关的所有结果。",
+
+    example: "SELECT * FROM students_mst WHERE student_name_kana LIKE 'ヤマ%';",
+
+    playgroundTask: "从 students_mst 中，查询所有名字平假名 (student_name_kana) 以 'ヤマ' (Yama) 开头的学生数据。",
+
+    expectedQuery: /^\s*SELECT\s+\*\s+FROM\s+students_mst\s+WHERE\s+student_name_kana\s+LIKE\s+['"']ヤマ%['"']\s*;?\s*$/i,
+
+    quiz: {
+
+      question: "「〜で終わる(後方一致)」データをLIKEで探したい場合、ワイルドカード記号「%」はどこに置きますか？ (寻找以某字符结尾（后方一致）的记录时，通配符 % 放哪里？)",
+
+      options: [
+
+        "文字の前 (例えば '%太郎') (字前)",
+
+        "文字の後 (例えば '太郎%') (字后)",
+
+        "文字の前後 (例えば '%太郎%') (前后都放)"
+
+      ],
+
+      answerIdx: 0,
+
+      hint: "要以“太郎”结尾，代表前面什么字符都可以，所以 % 要加在前面： '%太郎'。"
+
+    }
+
+  },
+
+  {
+
+    id: 11,
+
+    section: "SELECT文的基本",
+
+    titleJa: "11-SELECT文⑨条件：between",
+
+    titleZh: "11-SELECT语句⑨条件：BETWEEN 范围查询",
+
+    conceptJa: `ある範囲の間に収まるデータを抽出するには **BETWEEN** を使います。
+
+「WHERE カラム名 BETWEEN A AND B」と書くことで、「A以上かつB以下」の範囲指定が1文で書けます。
+
+これは「>= A AND <= B」と同じ意味ですが、シンプルに記述できます。`,
+
+    conceptZh: `想要过滤出某个区间内的数据（比如年龄在20到25之间），可以用 **BETWEEN**。
+
+语法：“WHERE 列名 BETWEEN A AND B”（包含A和B边界值）。
+
+这等价于 ` + "`列名 >= A AND 列名 <= B`" + `，但写起来更加简洁。`,
+
+    analogy: "“考分在 60 分到 80 分之间的同学请站出来”——这形成了一个闭区间段。",
+
+    example: "SELECT * FROM students_mst WHERE age BETWEEN 20 AND 25;",
+
+    playgroundTask: "从 students_mst 中，查询年龄 (age) 在 20 岁到 25 岁之间的所有学生数据。",
+
+    expectedQuery: /^\s*SELECT\s+\*\s+FROM\s+students_mst\s+WHERE\s+age\s+BETWEEN\s+20\s+AND\s+25\s*;?\s*$/i,
+
+    quiz: {
+
+      question: "BETWEEN A AND B で指定した範囲に、AとBの値自体は含まれますか？ (BETWEEN A AND B 包含 A 和 B 自身的值吗？)",
+
+      options: [
+
+        "含まれる (包含)",
+
+        "含まれない (不包含)",
+
+        "データベースの設定による (取决于数据库设置)"
+
+      ],
+
+      answerIdx: 0,
+
+      hint: "代表“大于或等于 A” 并且 “小于或等于 B”。所以是包含的。"
+
+    }
+
+  },
+
+  {
+
+    id: 12,
+
+    section: "SELECT文的基本",
+
+    titleJa: "12-SELECT文⑩条件：in",
+
+    titleZh: "12-SELECT语句⑩条件：IN 集合查询",
+
+    conceptJa: `複数の値のいずれかに合致するかどうかを判定するには **IN** を使います。
+
+「WHERE カラム名 IN (値1, 値2, ...)」のように書きます。
+
+「OR」を何度もつなげて書く代わりに、スッキリ記述できます。`,
+
+    conceptZh: `当你想筛选某个字段的值是“几个特定值之一”时，使用 **IN** 运算符。
+
+语法：“WHERE 列名 IN (值1, 值2, ...)”。
+
+这能完美替代连续写好几个 OR 的繁琐情况。`,
+
+    analogy: "点名：“科系ID是 1、3、5 的同学请出列”，而不是连续喊“是不是1？是不是3？是不是5？”。",
+
+    example: "SELECT * FROM students_mst WHERE age IN (20, 25, 30);",
+
+    playgroundTask: "从 students_mst 中，查询年龄 (age) 是 20、25、30 这三个值之一的学生。",
+
+    expectedQuery: /^\s*SELECT\s+\*\s+FROM\s+students_mst\s+WHERE\s+age\s+IN\s*\(\s*(20\s*,\s*25\s*,\s*30|20\s*,\s*30\s*,\s*25|25\s*,\s*20\s*,\s*30|25\s*,\s*30\s*,\s*20|30\s*,\s*20\s*,\s*25|30\s*,\s*25\s*,\s*20)\s*\)\s*;?\s*$/i,
+
+    quiz: {
+
+      question: "IN句の逆(リストに含まれないもの)を指定したい場合、どう書きますか？ (如果是过滤“不在这个列表里”的记录，该怎么写？)",
+
+      options: [
+
+        "NOT IN",
+
+        "OUT IN",
+
+        "IN NOT"
+
+      ],
+
+      answerIdx: 0,
+
+      hint: "只要在 IN 关键字前面直接加 NOT 即可。"
+
+    }
+
+  },
+
+  {
+
+    id: 13,
+
+    section: "SELECT文的基本",
+
+    titleJa: "13-SELECT文⑪並び替え",
+
+    titleZh: "13-SELECT语句⑪排序：ORDER BY",
+
+    conceptJa: `データを並び替えて取得するには、**ORDER BY** 句を使用します。
+
+- **ASC**: 昇順 (小さい順) ※デフォルト
+
+- **DESC**: 降順 (大きい順)
+
+「SELECT * FROM テーブル名 ORDER BY カラム名 DESC;」のように最後に記述します。`,
+
+    conceptZh: `想要让查询结果排好序输出，使用 **ORDER BY** 子句。
+
+- **ASC**：升序（从小到大，默认）。
+
+- **DESC**：降序（从大到小）。
+
+一般把 ORDER BY 放在 SELECT 语句的末尾。`,
+
+    analogy: "类似考试成绩放榜，按“分数从高到低”进行降序排定顺序。",
+
+    example: "SELECT * FROM students_mst ORDER BY age ASC;",
+
+    playgroundTask: "从 students_mst 表中，查询所有学生并按照年龄 (age) 从低到高（升序）进行排序。",
+
+    expectedQuery: /^\s*SELECT\s+\*\s+FROM\s+students_mst\s+ORDER\s+BY\s+age\s*(ASC)?\s*;?\s*$/i,
+
+    quiz: {
+
+      question: "データを「値の大きい順（降順）」に並び替えるためのキーワードはどちらですか？ (将数据按“从大到小”降序排列的关键字是？)",
+
+      options: [
+
+        "ASC",
+
+        "DESC",
+
+        "DOWN"
+
+      ],
+
+      answerIdx: 1,
+
+      hint: "DESC 代表 Descending（下降/递减）。"
+
+    }
+
+  },
+
+  {
+
+    id: 14,
+
+    section: "SELECT文的基本",
+
+    titleJa: "14-SELECT文⑫行数制限",
+
+    titleZh: "14-SELECT语句⑫限制行数：LIMIT",
+
+    conceptJa: `取得する行数の上限を指定するには **LIMIT** を使用します。
+
+「LIMIT 件数」または「LIMIT 開始位置(オフセット), 件数」のように書きます。
+
+大量のデータがある場合に、最初の数件だけをすばやく表示したいときに重宝します。`,
+
+    conceptZh: `如果你只想取出前几条数据（比如成绩最好的前3名），可以使用 **LIMIT** 子句。
+
+写法：“LIMIT 数量” 或者 “LIMIT 起始偏移量, 数量”（注意偏移量从0开始算）。
+
+这在分页显示或者查询 TopN 场景中极其常用。`,
+
+    analogy: "谷歌搜索只在第一页显示“前 10 条结果”，后面的内容需要翻页才慢慢限制加载。",
+
+    example: "SELECT * FROM students_mst ORDER BY test_score DESC LIMIT 3;",
+
+    playgroundTask: "from students_mst 中，按考试分数 (test_score) 从高到低（降序）排列，只取前3名学生的数据。",
+
+    expectedQuery: /^\s*SELECT\s+\*\s+FROM\s+students_mst\s+ORDER\s+BY\s+test_score\s+DESC\s+LIMIT\s+3\s*;?\s*$/i,
+
+    quiz: {
+
+      question: "LIMIT 5 と書いた場合、最大で何行のデータが取得されますか？ (写 LIMIT 5 时，最多会返回多少行数据？)",
+
+      options: [
+
+        "4行",
+
+        "5行",
+
+        "6行"
+
+      ],
+
+      answerIdx: 1,
+
+      hint: "它就是设定行数的绝对上限，填5就是5行。"
+
+    }
+
+  },
+
+  {
+
+    id: 15,
+
+    section: "SELECT文的基本",
+
+    titleJa: "15-SELECT文⑬重複排除",
+
+    titleZh: "15-SELECT语句⑬排除重复：DISTINCT",
+
+    conceptJa: `検索結果から重複した行を取り除き、ユニークな値だけを取得するには **DISTINCT** を使います。
+
+「SELECT DISTINCT カラム名 FROM テーブル名;」のように、SELECTの直後に記述します。
+
+テーブルの中にどんな種類があるか確認したい時に便利です。`,
+
+    conceptZh: `如果查询结果里有重复的数据，你想把重复的过滤掉、只保留唯一的类型，使用 **DISTINCT**。
+
+它紧跟在 SELECT 关键字后面：“SELECT DISTINCT 列名 FROM 表名;”。
+
+用来查看表里有哪些“不重复的分类”时非常有用。`,
+
+    analogy: "学生表里很多人所属的科系ID重复，用 DISTINCT 可以帮你列出“我们学校到底有哪些学科”。",
+
+    example: "SELECT DISTINCT age FROM students_mst;",
+
+    playgroundTask: "从 students_mst 中，获取一个“所有被记录的学生年龄 (age)，且年龄不重复”的列表。",
+
+    expectedQuery: /^\s*SELECT\s+DISTINCT\s+age\s+FROM\s+students_mst\s*;?\s*$/i,
+
+    quiz: {
+
+      question: "重複データを排除するキーワード DISTINCT は、SQL文のどこに書きますか？ (排重关键字 DISTINCT 写在 SQL 语句的哪个位置？)",
+
+      options: [
+
+        "SELECTの直後 (SELECT的紧后面)",
+
+        "FROMの直後 (FROM的紧后面)",
+
+        "WHEREの直後 (WHERE的紧后面)"
+
+      ],
+
+      answerIdx: 0,
+
+      hint: "直接放在 SELECT 的正后面，紧密相连，如 SELECT DISTINCT ..."
+
+    }
+
+  },
+
+  {
+
+    id: 16,
+
+    section: "SQL函数与聚合",
+
+    titleJa: "16-関数：文字列・日付など",
+
+    titleZh: "16-SQL内置函数：字符串与日期操作",
+
+    conceptJa: `SQLにはデータを変換するための様々な組み込み関数があります。
+
+- 文字数を数える: **LENGTH()** / **CHAR_LENGTH()**
+
+- 文字列を結合する: **CONCAT()**
+
+- 現在の日時を取得する: **NOW()** / **CURRENT_DATE()**
+
+- これらを利用することで、取得段階でデータを整形できます。`,
+
+    conceptZh: `SQL 提供了很多方便的内置函数来处理数据：
+
+- 计算字符长度：**CHAR_LENGTH(字段)**
+
+- 拼接字符串：**CONCAT(字段1, 字段2)**
+
+- 获取系统当前时间：**NOW()**
+
+利用这些函数，可以在查询数据库的同时把内容排版好。`,
+
+    analogy: "就像 Excel 里的 LEN 或是 CONCATENATE 函数，帮你把凌乱的单元格整理出标准样式。",
+
+    example: "SELECT student_id, CHAR_LENGTH(student_name) FROM students_mst;",
+
+    playgroundTask: "从 students_mst 中，查询学生 ID (student_id) 以及学生姓名所含的“文字数 (使用 CHAR_LENGTH(student_name))”。",
+
+    expectedQuery: /^\s*SELECT\s+(student_id\s*,\s*CHAR_LENGTH\(\s*student_name\s*\)|CHAR_LENGTH\(\s*student_name\s*\)\s*,\s*student_id)\s+FROM\s+students_mst\s*;?\s*$/i,
+
+    quiz: {
+
+      question: "文字列を連結するために使用するSQL関数はどれですか？ (用来拼接/合并两个字符串的 SQL 函数是哪个？)",
+
+      options: [
+
+        "MERGE()",
+
+        "JOIN()",
+
+        "CONCAT()"
+
+      ],
+
+      answerIdx: 2,
+
+      hint: "全称是 concatenate，英文简写即 C-O-N-C-A-T。"
+
+    }
+
+  },
+
+  {
+
+    id: 17,
+
+    section: "SQL函数与聚合",
+
+    titleJa: "17-関数：case式",
+
+    titleZh: "17-条件分支：CASE WHEN 表达式",
+
+    conceptJa: `SQL内で条件分岐を行いたい場合は、**CASE式** を使います。
+
+「CASE WHEN 条件 THEN 値 ELSE デフォルト値 END」という構文です。
+
+例えば、「80点以上なら'合格'、それ以外なら'不合格'」のような判定結果を新しい列として出力できます。`,
+
+    conceptZh: `想在查询时做条件判断（类似于 If-Else 逻辑），可以使用 **CASE 表达式**。
+
+语法结构：
+
+` + "`CASE WHEN 条件1 THEN 结果1 WHEN 条件2 THEN 结果2 ELSE 默认结果 END`" + `。
+
+比如在查询成绩时，将“80分以上”显示为“及格”，其他显示为“不及格”。`,
+
+    analogy: "就像一个智能传送带，根据箱子上的标签重量，分拨贴上“超重”或“正常”的标签贴纸。",
+
+    example: "SELECT student_name, CASE WHEN age >= 20 THEN '成人' ELSE '未成年' END FROM students_mst;",
+
+    playgroundTask: "从 students_mst 中，查询姓名 (student_name) 和年龄评定，要求：“如果年龄 (age) 大于等于 20，则输出 '成人'，否则输出 '未成年'”。",
+
+    expectedQuery: /^\s*SELECT\s+student_name\s*,\s*CASE\s+WHEN\s+age\s*>=\s*20\s+THEN\s+['"\u2019]成人['"\u2019]\s+ELSE\s+['"\u2019]未成年['"\u2019]\s+END\s+FROM\s+students_mst\s*;?\s*$/i,
+
+    quiz: {
+
+      question: "CASE式の最後を締めくくる必須のキーワードは何ですか？ (CASE 表达式必须以什么关键字结尾？)",
+
+      options: [
+
+        "END",
+
+        "STOP",
+
+        "CASE_END"
+
+      ],
+
+      answerIdx: 0,
+
+      hint: "代表终结、完结：E-N-D。"
+
+    }
+
+  },
+
+  {
+
+    id: 18,
+
+    section: "SQL函数与聚合",
+
+    titleJa: "18-集計関数：合計・平均・件数など",
+
+    titleZh: "18-聚合函数：求和、平均、计数等",
+
+    conceptJa: `複数行のデータをまとめて計算する関数を **集計関数** と呼びます。
+
+- **COUNT(列)**: 行数を数える
+
+- **SUM(列)**: 合計値を計算する
+
+- **AVG(列)**: 平均値を計算する
+
+- **MAX(列)** / **MIN(列)**: 最大値 / 最小値
+
+集計関数を使うと、個々の行ではなくグループ全体の統計が得られます。`,
+
+    conceptZh: `能够对多行数据进行汇总、统计的函数叫做 **聚合函数**：
+
+- **COUNT()**：统计行数（数量）
+
+- **SUM()**：计算总和
+
+- **AVG()**：计算平均值
+
+- **MAX() / MIN()**：找出最大值 / 最小值
+
+它们用于获取整体的宏观数据。`,
+
+    analogy: "用计算器算出全班同学的平均考分，而不是单看某一个人的分数。",
+
+    example: "SELECT AVG(test_score) FROM students_mst WHERE delete_at IS NULL;",
+
+    playgroundTask: "从 students_mst 中，统计所有正常在读学生（delete_at IS NULL）的分数 (test_score) 的“平均值 (AVG(test_score))”。",
+
+    expectedQuery: /^\s*SELECT\s+AVG\(\s*test_score\s*\)\s+FROM\s+students_mst\s+WHERE\s+delete_at\s+IS\s+NULL\s*;?\s*$/i,
+
+    quiz: {
+
+      question: "行数(データの件数)をカウントするために用いる集集計関数はどれですか？ (用来统计记录条数的聚合函数是？)",
+
+      options: [
+
+        "SUM()",
+
+        "COUNT()",
+
+        "TOTAL()"
+
+      ],
+
+      answerIdx: 1,
+
+      hint: "用来计数的英文单词：C-O-U-N-T。"
+
+    }
+
+  },
+
+  {
+
+    id: 19,
+
+    section: "SQL函数与聚合",
+
+    titleJa: "19-集計関数②：グループ化",
+
+    titleZh: "19-聚合数据②：分组 GROUP BY",
+
+    conceptJa: `データをグループごとに切り分けて集計するには **GROUP BY** 句を使います。
+
+「SELECT 性別, AVG(年齢) FROM students GROUP BY 性別;」のように書きます。
+
+これにより、「男子の平均年齢」と「女子の平均年齢」を一度に計算できます。`,
+
+    conceptZh: `想按照某个分类（比如按“性别”或者“学科”）进行分组统计，使用 **GROUP BY**。
+
+语法：在 SQL 结尾写上 ` + "`GROUP BY 分组字段`" + `。
+
+比如“统计每个学科各有多少人”或者“男生的平均分与女生的平均分”。`,
+
+    analogy: "全校学生在操场上，按“班级”划分排成一队一队，分别数出每个班的人数。",
+
+    example: "SELECT department_id, COUNT(*) FROM students_mst GROUP BY department_id;",
+
+    playgroundTask: "从 students_mst 中，按科系ID (department_id) 分组，并查询每个科系的“学生人数 (COUNT(*))”。",
+
+    expectedQuery: /^\s*SELECT\s+department_id\s*,\s*COUNT\(\s*\*?\s*\)\s+FROM\s+students_mst\s+GROUP\s+BY\s+department_id\s*;?\s*$/i,
+
+    quiz: {
+
+      question: "GROUP BYを使用する際、SELECT句に指定できる列名にはどのような制限がありますか？ (使用 GROUP BY 时，SELECT 后面能写的列名有什么限制？)",
+
+      options: [
+
+        "どんな列名でも自由に指定できる (可以自由写任何列)",
+
+        "GROUP BYに指定した列、または集計関数で囲んだ列のみ (只能写分组列或被聚合函数包裹的列)",
+
+        "数値型の列のみ指定できる (只能写数值型列)"
+
+      ],
+
+      answerIdx: 1,
+
+      hint: "非分组字段，数据库在分组折叠时不知道该显示哪一行的值，除非用聚合函数折叠。"
+
+    }
+
+  },
+
+  {
+
+    id: 20,
+
+    section: "SQL函数与聚合",
+
+    titleJa: "20-集計関数③：グループ化条件",
+
+    titleZh: "20-聚合数据③：分组后过滤 HAVING",
+
+    conceptJa: `GROUP BYで集計した**後の**結果に対してさらに絞り込みを行いたい場合は、WHEREではなく **HAVING** 句を使用します。
+
+WHERE句は「グループ化する前」に行を絞り込み、HAVING句は「グループ化した後」にグループを絞り込みます。`,
+
+    conceptZh: `如果想对分组聚合**之后**的结果进行条件筛选，不能用 WHERE，而必须用 **HAVING**。
+
+- **WHERE**：在分组前筛选原始数据（如“排除18岁以下的学生”）。
+
+- **HAVING**：在分组后筛选统计数据（如“只保留平均分大于80的学科”）。`,
+
+    analogy: "“先按学科分组（GROUP BY）”，计算完各学科平均分后，“把平均分小于 60 分的整组人排除（HAVING）”。",
+
+    example: "SELECT department_id, AVG(test_score) FROM students_mst GROUP BY department_id HAVING AVG(test_score) >= 60;",
+
+    playgroundTask: "从 students_mst 中，分组查询平均分数 (AVG(test_score)) 大于等于 60 分的“科系ID (department_id)”和“平均分”。",
+
+    expectedQuery: /^\s*SELECT\s+department_id\s*,\s*AVG\(\s*test_score\s*\)\s+FROM\s+students_mst\s+GROUP\s+BY\s+department_id\s+HAVING\s+AVG\(\s*test_score\s*\)\s*>\s*=\s*60\s*;?\s*$/i,
+
+    quiz: {
+
+      question: "「グループ化された結果」に対して絞り込み条件を適用するキーワードはどれですか？ (对分组后的汇总结果进行筛选，用哪个关键字？)",
+
+      options: [
+
+        "WHERE",
+
+        "HAVING",
+
+        "WHERE GROUP"
+
+      ],
+
+      answerIdx: 1,
+
+      hint: "以 H-A-V-I-N-G 开头。"
+
+    }
+
+  },
+
+  {
+
+    id: 21,
+
+    section: "多表联接 (JOIN)",
+
+    titleJa: "21-データベース設計・正規化",
+
+    titleZh: "21-数据库设计与规范化",
+
+    conceptJa: `データベース設計では、無駄な重複や矛盾を避けるためにデータを複数のテーブルに分割します。これを**正規化(Normalization)**と呼びます。
+
+例えば、学生テーブルに直接「学科名」を書くのではなく、「学科ID」だけを書いておき、詳細は別の「学科テーブル」で管理します。`,
+
+    conceptZh: `在数据库设计中，为了防止数据重复录入或产生逻辑冲突，会将数据拆分到多个相关的表中存储。这个过程称为**正规化（Normalization）**。
+
+例如：你的学校数据库里，学生表 ` + "`students_mst`" + ` 中不写学科名，只用 ` + "`department_id`" + ` 关联科系表 ` + "`departments_mst`" + `。`,
+
+    analogy: "把一张有几百列的超级大表格，拆分成各自独立的“学生名录”和“科系名单”两本小账本。",
+
+    example: "SELECT * FROM departments_mst;",
+
+    playgroundTask: "查询科系主表 (departments_mst)，熟悉下它都有哪些列结构和数据。",
+
+    expectedQuery: /^\s*SELECT\s+\*\s+FROM\s+departments_mst\s*;?\s*$/i,
+
+    quiz: {
+
+      question: "データを分割して矛盾をなくすデータベース設計のプロセスを何と呼びますか？ (拆分表结构以减少重复和矛盾的过程叫什么？)",
+
+      options: [
+
+        "正規化 (正规化/规范化)",
+
+        "最適化 (优化/Index Optimization)",
+
+        "結合 (联接/Join)"
+
+      ],
+
+      answerIdx: 0,
+
+      hint: "日语中叫做“正規化” (Seikika)。"
+
+    }
+
+  },
+
+  {
+
+    id: 22,
+
+    section: "多表联接 (JOIN)",
+
+    titleJa: "22-テーブル結合①：INNER JOIN",
+
+    titleZh: "22-多表联接①：内联接 INNER JOIN",
+
+    conceptJa: `分割されたテーブルを1つに結びつけて情報を取得するのが **JOIN(結合)** です。
+
+**INNER JOIN(内部結合)**は、両方のテーブルに存在する共通のキーが一致する行だけを結合して取得します。
+
+「FROM 表A INNER JOIN 表B ON 表A.キー = 表B.キー」と書きます。`,
+
+    conceptZh: `通过 **JOIN（联接）** 可以把被拆分到多张表里的关联数据合并成一个大表来展现。
+
+**INNER JOIN（内联接）**：只保留两个表里关联字段**完全匹配**的数据行。
+
+写法：“FROM 表A INNER JOIN 表B ON 表A.外键 = 表B.主键”。`,
+
+    analogy: "学生表里的“科系ID 1”与科系表里的“科系ID 1（宠物商务科）”像拼图一样合二为一，拼出完整的学科名。",
+
+    example: "SELECT students_mst.student_name, departments_mst.department_name FROM students_mst INNER JOIN departments_mst ON students_mst.department_id = departments_mst.department_id;",
+
+    playgroundTask: "将 students_mst 表和 departments_mst 表通过 INNER JOIN 联接，查询学生姓名 (student_name) 和科系名称 (department_name)。",
+
+    expectedQuery: /^\s*SELECT\s+(students_mst\.student_name\s*,\s*departments_mst\.department_name|departments_mst\.department_name\s*,\s*students_mst\.student_name)\s+FROM\s+students_mst\s+INNER\s+JOIN\s+departments_mst\s+ON\s+students_mst\.department_id\s*=\s*departments_mst\.department_id\s*;?\s*$/i,
+
+    quiz: {
+
+      question: "INNER JOINにおいて、結合条件を指定する際に使用するキーワードは何ですか？ (在写 JOIN 时，用来指定两张表关联条件的是哪个关键字？)",
+
+      options: [
+
+        "WHERE",
+
+        "ON",
+
+        "USING"
+
+      ],
+
+      answerIdx: 1,
+
+      hint: "表示在...条件之上，关键字是 O-N。"
+
+    }
+
+  },
+
+  {
+
+    id: 23,
+
+    section: "多表联接 (JOIN)",
+
+    titleJa: "23-テーブル結合②：LEFT/RIGHT JOIN",
+
+    titleZh: "23-多表联接②：外联接 LEFT/RIGHT JOIN",
+
+    conceptJa: `**OUTER JOIN(外部結合)**は、片方のテーブルのデータをすべて残しつつ、もう片方のテーブルを結合します。
+
+- **LEFT JOIN**: FROM句の左側に書いたテーブルのデータをすべて残す
+
+- **RIGHT JOIN**: 右側に書いたテーブルのデータをすべて残す
+
+- 一致する相手がいない場合は、NULLが入ります。`,
+
+    conceptZh: `**OUTER JOIN（外联接）**：即使另一张表里没有匹配的记录，也会把其中一张表的数据完整保留下来。
+
+- **LEFT JOIN**：左表为主，左边的数据全部显示，右表没匹配上的地方填 NULL。
+
+- **RIGHT JOIN**：右表为主，右边的数据全部显示。`,
+
+    analogy: "学生即使没分配科系（科系ID为空），由于以学生表为主（LEFT JOIN），他的记录也会查出来，只是学科名那一栏写着 NULL。",
+
+    example: "SELECT students_mst.student_name, departments_mst.department_name FROM students_mst LEFT JOIN departments_mst ON students_mst.department_id = departments_mst.department_id;",
+
+    playgroundTask: "使用 LEFT JOIN 联接 students_mst 和 departments_mst，查询所有学生的姓名 (student_name) 和对应的学科名称 (department_name)。",
+
+    expectedQuery: /^\s*SELECT\s+(students_mst\.student_name\s*,\s*departments_mst\.department_name|departments_mst\.department_name\s*,\s*students_mst\.student_name)\s+FROM\s+students_mst\s+LEFT\s+(OUTER\s+)?JOIN\s+departments_mst\s+ON\s+students_mst\.department_id\s*=\s*departments_mst\.department_id\s*;?\s*$/i,
+
+    quiz: {
+
+      question: "LEFT JOINで結合相手のテーブルに合致するデータがなかった場合、その列の値はどうなりますか？ (LEFT JOIN 中，右表没有对应匹配值时，该字段填充什么？)",
+
+      options: [
+
+        "エラーになり処理が止まる (报错中止)",
+
+        "NULLになる (变成 NULL)",
+
+        "空文字や0になる (变成空字符串或0)"
+
+      ],
+
+      answerIdx: 1,
+
+      hint: "数据库用特殊的值 NULL 来表示“没有对应的值”。"
+
+    }
+
+  },
+
+  {
+
+    id: 24,
+
+    section: "多表联接 (JOIN)",
+
+    titleJa: "24-テーブル結合③：複数結合と自己結合",
+
+    titleZh: "24-自联接 Self Join",
+
+    conceptJa: `同じテーブル同士を結合することを **自己結合(SELF JOIN)** と呼びます。
+
+これは、同じテーブルから関係するペアを抽出したい場合に有効です。
+
+エイリアス(別名)を「students_mst AS s1」のように付けて、別のテーブルであるかのように扱います。`,
+
+    conceptZh: `让一张表自己与自己进行联接，被称为 **自联接（Self Join）**。
+
+这在想找出表内“同类关联”（比如：同一学科内的不同学生配对）时非常有用。
+
+通过给表取不同的别名（比如 ` + "`students_mst AS s1`" + ` 和 ` + "`students_mst AS s2`" + `）来假装这是两个表。`,
+
+    analogy: "让学生排成一排，然后每个人再跟队伍里其他和自己同班的人拉手配对。",
+
+    example: "SELECT s1.student_name AS student_1, s2.student_name AS student_2 FROM students_mst s1 JOIN students_mst s2 ON s1.department_id = s2.department_id WHERE s1.student_id <> s2.student_id;",
+
+    playgroundTask: "运用自联接，找出所属学科 (department_id) 相同、但 ID 不同的两位学生的组合姓名。",
+
+    expectedQuery: /^\s*SELECT\s+[\w\.\s,]+FROM\s+students_mst\s+(\w+)\s+(INNER\s+)?JOIN\s+students_mst\s+(\w+)\s+ON\s+[\w\.]+\s*=\s*[\w\.]+\s+WHERE\s+[\w\.]+\s*(<>|!=)\s*[\w\.]+\s*;?\s*$/i,
+
+    quiz: {
+
+      question: "同じテーブル同士を結合する「自己結合」で、テーブルに別名(エイリアス)を付ける必要があるのはなぜですか？ (自联接中，为什么必须给表起不同的别名？)",
+
+      options: [
+
+        "SQLの文字数を減らすため (为了减少 SQL 字符数)",
+
+        "sameテーブル名だと列名の衝突や区別がつかなくなるため (不加别名数据库无法区分列来自左侧还是右侧)",
+
+        "主キーを変更するため (为了修改主键)"
+
+      ],
+
+      answerIdx: 1,
+
+      hint: "如果不起别名，比如写 s1 和 s2，数据库就不知道你说的哪个字段是哪一侧的字段了。"
+
+    }
+
+  },
+
+  {
+
+    id: 25,
+
+    section: "多表联接 (JOIN)",
+
+    titleJa: "25-副問合せ",
+
+    titleZh: "25-子查询 Subquery",
+
+    conceptJa: `SQLの中に別のSQLを埋め込んだものを **副問合せ(サブクエリ)** と呼びます。
+
+例えば、「平均スコアより高い学生の一覧が欲しい」場合、まずサブクエリで平均点を計算し、その結果を使って外側のSQLで絞り込みます。
+
+カッコ「( )」の中に内側のSQLを記述します。`,
+
+    conceptZh: `在一条 SQL 查询的内部嵌套另一条 SQL 查询，被称为 **子查询（Subquery）**。
+
+例如想找出“考分大于平均分的学生”：先用子查询算出平均分是多少，再把这个值传给外层的 WHERE 条件进行过滤。
+
+子查询必须用括号 ` + "`()`" + ` 包裹。`,
+
+    analogy: "“老师先算出全班平均分（第1步子查询）”，然后“把成绩大于该分数的名单挑出来（第2步外层查询）”。",
+
+    example: "SELECT * FROM students_mst WHERE test_score > (SELECT AVG(test_score) FROM students_mst);",
+
+    playgroundTask: "查询 students_mst 表中，所有测试分 (test_score) 大于“平均分”的学生数据。",
+
+    expectedQuery: /^\s*SELECT\s+\*\s+FROM\s+students_mst\s+WHERE\s+test_score\s*>\s*\(\s*SELECT\s+AVG\(\s*test_score\s*\)\s+FROM\s+students_mst\s*\)\s*;?\s*$/i,
+
+    quiz: {
+
+      question: "副問合せ(サブクエリ)を記述する際、記述ルールとして正しいものはどれですか？ (书写子查询时必须遵守的规则是？)",
+
+      options: [
+
+        "必ず大文字で書く (必须全部大写)",
+
+        "サブクエリ部分をカッコ「( )」で囲む (子查询必须加括号)",
+
+        "セミコロン「;」を2回書く (必须写两个分号)"
+
+      ],
+
+      answerIdx: 1,
+
+      hint: "子查询要像数学公式里先计算的部分一样，放入圆括号 () 里。"
+
+    }
+
+  },
+
+  {
+
+    id: 26,
+
+    section: "数据操作 (DML)",
+
+    titleJa: "26-INSERT文",
+
+    titleZh: "26-数据插入：INSERT 语句",
+
+    conceptJa: `テーブルに新しいデータを登録するには **INSERT** 文を使用します。
+
+「INSERT INTO テーブル名 (列1, 列2) VALUES (値1, 値2);」と書きます。
+
+値を書く順序は、指定した列の並び順と一致させる必要があります。`,
+
+    conceptZh: `往数据表里新增一行数据，使用 **INSERT** 语句。
+
+基本语法：“INSERT INTO 表名 (列1, 列2, ...) VALUES (值1, 值2, ...);”。
+
+值写入的顺序必须与括号里列出的列名顺序一一对应。`,
+
+    analogy: "填写入学申请表，将信息一行行填好后，插到学生主表档案库的最底部。",
+
+    example: "INSERT INTO students_mst (student_id, student_name, gender, insert_at, update_at) VALUES (31, '鈴木 健', '0', '2026-06-03 12:00:00', '2026-06-03 12:00:00');",
+
+    playgroundTask: "向 students_mst 插入一条新记录：ID (student_id) 为 31，姓名为 '鈴木 健'，性别 (gender) 为 '0'，写入时间 insert_at 和 update_at 为 '2026-06-03 12:00:00'。",
+
+    expectedQuery: /^\s*INSERT\s+INTO\s+students_mst\s*\(\s*student_id\s*,\s*student_name\s*,\s*gender\s*,\s*insert_at\s*,\s*update_at\s*\)\s*VALUES\s*\(\s*31\s*,\s*['"']鈴木\s*健['"']\s*,\s*['"']0['"']\s*,\s*['"']2026-06-03\s+12:00:00['"']\s*,\s*['"']2026-06-03\s+12:00:00['"']\s*\)\s*;?\s*$/i,
+
+    quiz: {
+
+      question: "INSERT文で新しく登録する行の値を指定するキーワードはどれですか？ (INSERT 语句中用来指定要插入的具体数值的关键字是？)",
+
+      options: [
+
+        "DATA",
+
+        "SET",
+
+        "VALUES"
+
+      ],
+
+      answerIdx: 2,
+
+      hint: "提供的值的复数词：V-A-L-U-E-S。"
+
+    }
+
+  },
+
+  {
+
+    id: 27,
+
+    section: "数据操作 (DML)",
+
+    titleJa: "27-UPDATE文",
+
+    titleZh: "27-数据更新：UPDATE 语句",
+
+    conceptJa: `登録済みのデータを書き換えるには **UPDATE** 文を使用します。
+
+「UPDATE テーブル名 SET 列名 = 新しい値 WHERE 条件;」のように書きます。
+
+**注意！WHERE句を書き忘れると、テーブル内のすべての行が書き換わってしまいます！**`,
+
+    conceptZh: `修改表中已有的数据，使用 **UPDATE** 语句。
+
+基本语法：“UPDATE 表名 SET 列名 = 新しい値 WHERE 条件;”。
+
+> [!CAUTION]
+
+> **极其重要**：如果漏写 WHERE 子句，整张表的所有数据都会被修改！`,
+
+    analogy: "学生处的老师修改“学籍号是3的学生的成绩”，如果不说明改谁的，整张表的成绩就都变成了一样的分数！",
+
+    example: "UPDATE students_mst SET test_score = 95 WHERE student_id = 3;",
+
+    playgroundTask: "将 students_mst 表中 ID (student_id) 为 3 的学生的考试得分 (test_score) 更新修改为 95 分。",
+
+    expectedQuery: /^\s*UPDATE\s+students_mst\s+SET\s+test_score\s*=\s*95\s+WHERE\s+student_id\s*=\s*3\s*;?\s*$/i,
+
+    quiz: {
+
+      question: "UPDATE文で、もしWHERE句を書き忘れた場合、どのような事態が発生しますか？ (如果 UPDATE 语句漏写了 WHERE 条件，会发生什么？)",
+
+      options: [
+
+        "エラーになり、更新は行われない (报错不执行)",
+
+        "テーブルの全レコードが同じ値に更新されてしまう (整张表所有行都被强行更新)",
+
+        "最初の1行だけが更新される (只有第一行被更新)"
+
+      ],
+
+      answerIdx: 1,
+
+      hint: "没有过滤条件限制时，变更指令会不加区分地作用于整张表的所有数据行。"
+
+    }
+
+  },
+
+  {
+
+    id: 28,
+
+    section: "数据操作 (DML)",
+
+    titleJa: "28-DELETE文",
+
+    titleZh: "28-数据删除：DELETE 语句",
+
+    conceptJa: `データを削除するには **DELETE** 文を使用します。
+
+「DELETE FROM テーブル名 WHERE 条件;」のように書きます。
+
+こちらもUPDATE文と同様、**WHERE句がないとテーブル内のすべての行が消え去ってしまいます。**`,
+
+    conceptZh: `从表中删除指定的数据行，使用 **DELETE** 语句。
+
+基本语法：“DELETE FROM 表名 WHERE 过滤条件;”。
+
+> [!CAUTION]
+
+> **极其重要**：如果漏写 WHERE 子句，整张表的所有记录都会被全部清空！`,
+
+    analogy: "将某一毕业生的学生档案从总表中抽出来粉碎。如果不说抽谁的，整包档案全都会被烧毁。",
+
+    example: "DELETE FROM students_mst WHERE student_id = 30;",
+
+    playgroundTask: "从 students_mst 表中，彻底删除学生 ID (student_id) 为 30 的这条学生记录。",
+
+    expectedQuery: /^\s*DELETE\s+FROM\s+students_mst\s+WHERE\s+student_id\s*=\s*30\s*;?\s*$/i,
+
+    quiz: {
+
+      question: "DELETE文で特定の行だけを削除するために、必ず指定すべき句はどれですか？ (DELETE 语句中为了避免删错整张表，必须指定哪一个子句？)",
+
+      options: [
+
+        "HAVING句",
+
+        "WHERE句",
+
+        "ORDER BY句"
+
+      ],
+
+      answerIdx: 1,
+
+      hint: "用来筛选被执行具体删除操作行的是 WHERE 子句。"
+
+    }
+
+  },
+
+  {
+
+    id: 29,
+
+    section: "表结构定义 (DDL)",
+
+    titleJa: "29-CREATE文",
+
+    titleZh: "29-创建表：CREATE TABLE 语句",
+
+    conceptJa: `新しくテーブルを作るには **CREATE TABLE** 文を使用します。
+
+「CREATE TABLE テーブル名 (列名 型, 列名 型, ...);」のように定義します。
+
+例えば、主キーにする列には「PRIMARY KEY」という制約ワードを添えて宣言します。`,
+
+    conceptZh: `在数据库中新建一张全新的数据表，使用 **CREATE TABLE** 语句。
+
+基本结构：“CREATE TABLE 表名 (列名 数据类型, 列名 数据类型, ...);”。
+
+如需指定某一列为主键，在其类型声明后面追加 ` + "`PRIMARY KEY`" + ` 即可。`,
+
+    analogy: "在 Excel 中点击新建一页白纸工作表，并设置好第一行标题行的字段名称和输入约束规则。",
+
+    example: "CREATE TABLE test_table (id INT PRIMARY KEY, name VARCHAR(50));",
+
+    playgroundTask: "在数据库中建立一张名为 test_table 的表，包含 id (INT型，主键 PRIMARY KEY) 和 name (VARCHAR(50)) 两列。",
+
+    expectedQuery: /^\s*CREATE\s+TABLE\s+test_table\s*\(\s*id\s+INT\s+PRIMARY\s+KEY\s*,\s*name\s+VARCHAR\(\s*50\s*\)\s*\)\s*;?\s*$/i,
+
+    quiz: {
+
+      question: "新しくデータベースのテーブルを作るためのSQLコマンドはどれですか？ (创建新表的 SQL 命令是哪个？)",
+
+      options: [
+
+        "MAKE TABLE",
+
+        "ADD TABLE",
+
+        "CREATE TABLE"
+
+      ],
+
+      answerIdx: 2,
+
+      hint: "从无到有地构建/创造新表：C-R-E-A-T-E TABLE。"
+
+    }
+
+  },
+
+  {
+
+    id: 30,
+
+    section: "表结构定义 (DDL)",
+
+    titleJa: "30-制約：not null / unique / default",
+
+    titleZh: "30-数据约束：NOT NULL, UNIQUE, DEFAULT",
+
+    conceptJa: `テーブルの列にはデータ品質を保つためのルール(制約)を設定できます。
+
+- **NOT NULL**: 空欄(NULL)を禁止する
+
+- **UNIQUE**: 重複した値を禁止する
+
+- **DEFAULT 値**: 値が省略されたときに自動で入る値を設定する`,
+
+    conceptZh: `可以在创建表的时候，给某些列附加特定的限制规则（约束 Constraint）来确保数据质量：
+
+- **NOT NULL**：这一列不能为空，必填。
+
+- **UNIQUE**：这一列的值在整张表里不能重复（例如登录账号、邮箱）。
+
+- **DEFAULT 默认值**：如果插入数据时没填写此列，自动填入指定的默认值。`,
+
+    analogy: "表单上的必填星号（NOT NULL）以及用户名重名检测（UNIQUE）。",
+
+    example: "CREATE TABLE log_table (log_id INT PRIMARY KEY, action VARCHAR(100) NOT NULL, created_at DATETIME DEFAULT '2026-06-03 12:00:00');",
+
+    playgroundTask: "创建一个名为 log_table 的表，包含主键 log_id (INT PRIMARY KEY)，操作行为 action (VARCHAR(100) 且不能为空 NOT NULL)，以及创建时间 created_at (DATETIME 且默认值为 '2026-06-03 12:00:00' DEFAULT '2026-06-03 12:00:00')。",
+
+    expectedQuery: /^\s*CREATE\s+TABLE\s+log_table\s*\([\s\w\(\),]+action\s+VARCHAR\(\s*100\s*\)\s+NOT\s+NULL[\s\w(),':"-]*\)\s*;?\s*$/i,
+
+    quiz: {
+
+      question: "「空欄の入力を禁止する」制約はどれですか？ (禁止输入空值的约束叫什么？)",
+
+      options: [
+
+        "UNIQUE",
+
+        "NOT NULL",
+
+        "DEFAULT"
+
+      ],
+
+      answerIdx: 1,
+
+      hint: "即代表“不允许为 NULL” 的约束。"
+
+    }
+
+  },
+
+  {
+
+    id: 31,
+
+    section: "表结构定义 (DDL)",
+
+    titleJa: "31-主キーと自動採番",
+
+    titleZh: "31-主键与自动递增：AUTO_INCREMENT",
+
+    conceptJa: `主キー(PRIMARY KEY)は、テーブルごとに1つだけ設定できます。
+
+MySQLでは、主キーに **AUTO_INCREMENT** を指定すると、データを新しく挿入したときに「1, 2, 3...」と自動的に連番が割り振られるようになります。`,
+
+    conceptZh: `每张数据表一般只设立一个主键（PRIMARY KEY）。
+
+在 MySQL 中，主键通常会搭配 **AUTO_INCREMENT**（自动递增）。
+
+设置后，每次插入新行时，你无需手动指定 ID，数据库会自动按“1, 2, 3...”依次往后累加生成。`,
+
+    analogy: "超市排队取号机，按一下按钮，自动吐出一张印着递增数字的号码牌。",
+
+    example: "CREATE TABLE items (id INT AUTO_INCREMENT PRIMARY KEY, item_name VARCHAR(100));",
+
+    playgroundTask: "创建一个名为 items 的表，把 id 设置为自动递增的主键 (INT AUTO_INCREMENT PRIMARY KEY)，以及 item_name (VARCHAR(100))。",
+
+    expectedQuery: /^\s*CREATE\s+TABLE\s+items\s*\(\s*id\s+INT\s+AUTO_INCREMENT\s+PRIMARY\s+KEY\s*,\s*item_name\s+VARCHAR\(\s*100\s*\)\s*\)\s*;?\s*$/i,
+
+    quiz: {
+
+      question: "MySQLで、データを追加したときに連番を自动的に割り振る機能は何ですか？ (MySQL中实现自增数字的主键语法是？)",
+
+      options: [
+
+        "NEXT_VAL",
+
+        "AUTO_INCREMENT",
+
+        "SEQUENCE"
+
+      ],
+
+      answerIdx: 1,
+
+      hint: "自增：A-U-T-O_I-N-C-R-E-M-E-N-T。"
+
+    }
+
+  },
+
+  {
+
+    id: 32,
+
+    section: "表结构定义 (DDL)",
+
+    titleJa: "32-外部キー制約",
+
+    titleZh: "32-外键约束 FOREIGN KEY",
+
+    conceptJa: `テーブル同士の繋がり(関連性)を保証するために **外部キー(FOREIGN KEY)** 制約を使います。
+
+- 例えば、「学生のdepartment_idは、departments_mstテーブルに実在するdepartment_idでなければならない」というルールです。これにより、存在しない幽霊学科IDが登録されるのを防ぎます。`,
+
+    conceptZh: `为了确保两张表之间的关联数据不会出错，需要设置 **外键（FOREIGN KEY）**。
+
+例如：限制“students_mst 表的 department_id 列，它的值必须存在于科系表（departments_mst）的 department_id 列中”。
+
+这可以防止手抖录入一个根本不存在的神秘学科ID。`,
+
+    analogy: "入馆权限检查：如果这名员工在“部门花名册”里根本没有所属的部门，门禁卡就不会被允许录入激活。",
+
+    example: "CREATE TABLE scores (score_id INT PRIMARY KEY, student_id INT, FOREIGN KEY (student_id) REFERENCES students_mst(student_id));",
+
+    playgroundTask: "创建一个名为 scores 的表，包含主键 score_id (INT PRIMARY KEY)，以及关联到 students_mst 表中 student_id 的外键字段 student_id (INT, FOREIGN KEY (student_id) REFERENCES students_mst(student_id))。",
+
+    expectedQuery: /^\s*CREATE\s+TABLE\s+scores\s*\([\s\w\(\),]+FOREIGN\s+KEY\s*\(\s*student_id\s*\)\s+REFERENCES\s+students_mst\s*\(\s*student_id\s*\)\s*\)\s*;?\s*$/i,
+
+    quiz: {
+
+      question: "外部キー制約が参照する親テーブルのキーを指し示すキーワードは何ですか？ (指定外键引用的目标表 and 目标列时使用哪个关键字？)",
+
+      options: [
+
+        "LINKS TO",
+
+        "REFERENCES",
+
+        "CONNECTS"
+
+      ],
+
+      answerIdx: 1,
+
+      hint: "指向引用的表结构，使用 R-E-F-E-R-E-N-C-E-S 关键字。"
+
+    }
+
+  },
+
+  {
+
+    id: 33,
+
+    section: "表结构定义 (DDL)",
+
+    titleJa: "33-ALTER文・DROP文",
+
+    titleZh: "33-表结构修改与删除：ALTER TABLE 与 DROP TABLE",
+
+    conceptJa: `テーブル作成後の操作です。
+
+- **ALTER TABLE**: テーブルの構造(列の追加や変更)を修正する
+
+  - 列の追加: 「ALTER TABLE テーブル名 ADD 列名 型;」
+
+- **DROP TABLE**: テーブルそのものを完全に削除する
+
+  - 「DROP TABLE テーブル名;」 (※中のデータもすべて消えます)`,
+
+    conceptZh: `创建完表之后的维护：
+
+- **ALTER TABLE**：修改表结构（如增加新列、删除列、修改类型）。
+
+  - 例：` + "`ALTER TABLE 表名 ADD 新列名 类型;`" + `。
+
+- **DROP TABLE**：彻底删除整张表以及表里的所有数据。
+
+  - 例：` + "`DROP TABLE 表名;`" + `（※此操作不可逆，请万分小心）。`,
+
+    analogy: "ALTER 是后期重新装修房子，推掉一堵墙或加一扇窗户；DROP 是叫来拆迁队把整座房子彻底铲为平地。",
+
+    example: "ALTER TABLE students_mst ADD email VARCHAR(100);",
+
+    playgroundTask: "为学生主表 (students_mst) 新增一列邮箱地址 email，数据类型为 VARCHAR(100) 。",
+
+    expectedQuery: /^\s*ALTER\s+TABLE\s+students_mst\s+ADD\s+email\s+VARCHAR\(\s*100\s*\)\s*;?\s*$/i,
+
+    quiz: {
+
+      question: "データベースからテーブル自体を完全に削除するコマンドはどれですか？ (将表及其结构从数据库彻底删除的命令是？)",
+
+      options: [
+
+        "DELETE TABLE",
+
+        "REMOVE TABLE",
+
+        "DROP TABLE"
+
+      ],
+
+      answerIdx: 2,
+
+      hint: "完全清除、丢弃表：D-R-O-P TABLE。"
+
+    }
+
+  },
+
+  {
+
+    id: 34,
+
+    section: "数据库的进阶与应用",
+
+    titleJa: "34-トランザクション処理",
+
+    titleZh: "34-事务处理 Transaction",
+
+    conceptJa: `複数の処理をまとめて「1つの処理単位」として扱う仕組みを **トランザクション** と呼びます。
+
+- **COMMIT**: すべての変更を確定し保存する
+
+- **ROLLBACK**: エラーがあった場合に処理をすべて開始前に巻き戻す
+
+銀行の振り込み（A口座から引き落とし、かつB口座へ入金）など、中途半端な失敗が許されない処理で必須です。`,
+
+    conceptZh: `把多个数据库操作打包成“一个不可分割的整体工作单元”，称为 **事务（Transaction）**。
+
+- **COMMIT**：全部执行成功，保存更改。
+
+- **ROLLBACK**：中间发生错误，把已经做的修改全部撤销，恢复到初始状态。
+
+经典例子是银行转账：必须同时满足“A账户扣钱”与“B账户加钱”，任意一步失败必须全部回滚。`,
+
+    analogy: "自动贩卖机买可乐，投币并且掉货整套动作完毕才算成功。如果卡机了，就把币退回（ROLLBACK）。",
+
+    example: "START TRANSACTION; UPDATE students_mst SET test_score = 100 WHERE student_id = 1; COMMIT;",
+
+    playgroundTask: "开始一个事务 (START TRANSACTION)，更新 ID 为 1 的学生成绩为 100，最后提交该事务 (COMMIT)。",
+
+    expectedQuery: /^(START TRANSACTION|COMMIT|ROLLBACK)/i,
+
+    quiz: {
+
+      question: "トランザクション処理中に問題が発生したため、処理をすべて取り消して開始前に戻す操作を何と呼びますか？ (事务出错时撤销所有修改的操作叫什么？)",
+
+      options: [
+
+        "ROLLBACK",
+
+        "COMMIT",
+
+        "BACKUP"
+
+      ],
+
+      answerIdx: 0,
+
+      hint: "让修改全部“滚回”到最初的状态，即 R-O-L-L-B-A-C-K。"
+
+    }
+
+  },
+
+  {
+
+    id: 35,
+
+    section: "数据库的进阶与应用",
+
+    titleJa: "35-インデックス",
+
+    titleZh: "35-索引 Index",
+
+    conceptJa: `テーブル内のデータ検索を高速化するための「索引」を **インデックス(INDEX)** と呼びます。
+
+大量のデータがあるテーブルで、特定の列にインデックスを貼ることで、検索のスピードが劇的に向上します。
+
+ただし、インデックスを作りすぎるとデータの追加・更新速度が低下するデメリットもあります。`,
+
+    conceptZh: `**索引（Index）** 是为了加快数据检索速度而创建的“目录”。
+
+当表里的数据达到几十万、几百万条时，在经常用来查询的列上建立索引，可以将查询时间从几秒缩短到几毫秒。
+
+缺点：索引需要额外占用存储空间，并且在插入/更新数据时会因为需要维护目录而变慢。`,
+
+    analogy: "就如一本书的尾部“检索目录”，有了它，你就不需要每页都看，直接跳转到关键词所在的页数。",
+
+    example: "CREATE INDEX idx_student_name ON students_mst(student_name);",
+
+    playgroundTask: "给 students_mst 表的姓名列 student_name 建立一个名为 idx_student_name 的索引。",
+
+    expectedQuery: /^\s*CREATE\s+INDEX\s+idx_student_name\s+ON\s+students_mst\s*\(\s*student_name\s*\)\s*;?\s*$/i,
+
+    quiz: {
+
+      question: "インデックスを貼る最大のメリットは何ですか？ (创建索引的最大好处是什么？)",
+
+      options: [
+
+        "データの重複を防ぐことができる (防止数据重复)",
+
+        "SELECT文による検索スピードが高速化する (极大加快查询速度)",
+
+        "データベースのファイル容量を小さくできる (减小数据库 file 容量)"
+
+      ],
+
+      answerIdx: 1,
+
+      hint: "它主要是让 SELECT 检索时快速定位，从而实现高速检索。"
+
+    }
+
+  },
+
+  {
+
+    id: 36,
+
+    section: "数据库的进阶与应用",
+
+    titleJa: "36-ビュー・ストアドルーチン",
+
+    titleZh: "36-视图 View 与 存储过程",
+
+    conceptJa: `よく使うSQLを再利用・効率化する仕組みです。
+
+- **ビュー (VIEW)**: 複雑なSELECT文を「仮想的なテーブル」として保存したもの。
+
+- **ストアドルーチン (Stored Procedure)**: 複数のSQL処理や条件分岐をプログラムとしてデータベース側に保存し、呼び出すだけで実行できるようにしたもの。`,
+
+    conceptZh: `将常用的 SQL 语句进行封装以复用和提高运行效率的工具：
+
+- **视图（VIEW）**：一张由 SELECT 查询临时组成的“虚拟表”，你可以像查询普通表一样直接查询它。
+
+- **存储过程/存储例程（Stored Routine/Procedure）**：把一系列复杂的 SQL 语句和业务逻辑写成函数，保存在数据库端，以后只需要发送一个调用指令即可执行。`,
+
+    analogy: "视图是复杂 SELECT 查询结果的一个快捷图标，双击就能直接看；存储过程是一整套数据库运行宏命令。",
+
+    example: "CREATE VIEW active_students AS SELECT * FROM students_mst WHERE delete_at IS NULL;",
+
+    playgroundTask: "为 students_mst 创建一个名为 active_students 的视图，用来保存“所有在读学生（delete_at IS NULL）”的数据。",
+
+    expectedQuery: /^\s*CREATE\s+VIEW\s+active_students\s+AS\s+SELECT\s+[\w\.\s,\*]+FROM\s+students_mst\s+WHERE\s+delete_at\s+IS\s+NULL\s*;?\s*$/i,
+
+    quiz: {
+
+      question: "複雑なSELECT句を仮想的なテーブルとして保存し、再利用しやすくしたものを何と呼びますか？ (把复杂的 SELECT 语句包装并作为“虚拟表”提供复用，这叫什么？)",
+
+      options: [
+
+        "インデックス (Index)",
+
+        "ビュー (View)",
+
+        "トランザクション (Transaction)"
+
+      ],
+
+      answerIdx: 1,
+
+      hint: "英文名称是 View（意思是视野/视图）。"
+
+    }
+
+  }
+
+];
+
+
+
+// 随机指令练习题库 (包含多道题目，以便灵活切换)
+
+const RANDOM_EXERCISES = {
+
+  1: [
+
+    {
+
+      task: "查询科系主表 (departments_mst) 的所有数据，体验最基本的 SQL 指令。",
+
+      example: "SELECT * FROM departments_mst;",
+
+      expectedQuery: /^\s*SELECT\s+\*\s+FROM\s+departments_mst\s*;?\s*$/i
+
+    },
+
+    {
+
+      task: "查询学生主表 (students_mst) 的所有数据，巩固最基本的 SQL 指令。",
+
+      example: "SELECT * FROM students_mst;",
+
+      expectedQuery: /^\s*SELECT\s+\*\s+FROM\s+students_mst\s*;?\s*$/i
+
+    },
+
+    {
+
+      task: "获取科系主表 (departments_mst) 的全量内容，熟悉表的基本数据形式。",
+
+      example: "SELECT * FROM departments_mst;",
+
+      expectedQuery: /^\s*SELECT\s+\*\s+FROM\s+departments_mst\s*;?\s*$/i
+
+    }
+
+  ],
+
+  2: [
+
+    {
+
+      task: "查询学生主表 (students_mst) 的所有数据，观察其中的列结构与主键设计。",
+
+      example: "SELECT * FROM students_mst;",
+
+      expectedQuery: /^\s*SELECT\s+\*\s+FROM\s+students_mst\s*;?\s*$/i
+
+    },
+
+    {
+
+      task: "查询科系主表 (departments_mst) 的所有数据，寻找该表的主键字段形式。",
+
+      example: "SELECT * FROM departments_mst;",
+
+      expectedQuery: /^\s*SELECT\s+\*\s+FROM\s+departments_mst\s*;?\s*$/i
+
+    },
+
+    {
+
+      task: "读取 departments_mst 表的全部字段，体验规范化的主表结构设计。",
+
+      example: "SELECT * FROM departments_mst;",
+
+      expectedQuery: /^\s*SELECT\s+\*\s+FROM\s+departments_mst\s*;?\s*$/i
+
+    }
+
+  ],
+
+  3: [
+
+    {
+
+      task: "从 students_mst 表中，只查询学生 ID (student_id) 和学生姓名 (student_name) 这两列的数据。",
+
+      example: "SELECT student_id, student_name FROM students_mst;",
+
+      expectedQuery: /^\s*SELECT\s+(student_id\s*,\s*student_name|student_name\s*,\s*student_id)\s+FROM\s+students_mst\s*;?\s*$/i
+
+    },
+
+    {
+
+      task: "从 students_mst 表中，只查询学生姓名 (student_name) 和年龄 (age) 这两列的数据。",
+
+      example: "SELECT student_name, age FROM students_mst;",
+
+      expectedQuery: /^\s*SELECT\s+(student_name\s*,\s*age|age\s*,\s*student_name)\s+FROM\s+students_mst\s*;?\s*$/i
+
+    },
+
+    {
+
+      task: "从 students_mst 表中，只查询学号 (student_number) 和性别 (gender) 这两列的数据。",
+
+      example: "SELECT student_number, gender FROM students_mst;",
+
+      expectedQuery: /^\s*SELECT\s+(student_number\s*,\s*gender|gender\s*,\s*student_number)\s+FROM\s+students_mst\s*;?\s*$/i
+
+    }
+
+  ],
+
+  4: [
+
+    {
+
+      task: "从 students_mst 表中，查询所有性别 (gender) 为 '0'（男生）的学生数据。",
+
+      example: "SELECT * FROM students_mst WHERE gender = '0';",
+
+      expectedQuery: /^\s*SELECT\s+\*\s+FROM\s+students_mst\s+WHERE\s+gender\s*=\s*['"']0['"']\s*;?\s*$/i
+
+    },
+
+    {
+
+      task: "从 students_mst 表中，查询所有年龄 (age) 为 20 岁的学生数据。",
+
+      example: "SELECT * FROM students_mst WHERE age = 20;",
+
+      expectedQuery: /^\s*SELECT\s+\*\s+FROM\s+students_mst\s+WHERE\s+age\s*=\s*20\s*;?\s*$/i
+
+    },
+
+    {
+
+      task: "从 students_mst 表中，查询所属科系 ID (department_id) 为 2 的学生数据。",
+
+      example: "SELECT * FROM students_mst WHERE department_id = 2;",
+
+      expectedQuery: /^\s*SELECT\s+\*\s+FROM\s+students_mst\s+WHERE\s+department_id\s*=\s*2\s*;?\s*$/i
+
+    }
+
+  ],
+
+  5: [
+
+    {
+
+      task: "从 students_mst 表中，查询所有年龄 (age) 为 20 岁，并且性别 (gender) 为 '1'（女生）的学生数据。",
+
+      example: "SELECT * FROM students_mst WHERE age = 20 AND gender = '1';",
+
+      expectedQuery: /^\s*SELECT\s+\*\s+FROM\s+students_mst\s+WHERE\s+(age\s*=\s*20\s+AND\s+gender\s*=\s*['"']1['"']|gender\s*=\s*['"']1['"']\s+AND\s+age\s*=\s*20)\s*;?\s*$/i
+
+    },
+
+    {
+
+      task: "从 students_mst 表中，查询所属科系 ID (department_id) 为 1，并且年龄 (age) 为 19 岁的学生数据。",
+
+      example: "SELECT * FROM students_mst WHERE department_id = 1 AND age = 19;",
+
+      expectedQuery: /^\s*SELECT\s+\*\s+FROM\s+students_mst\s+WHERE\s+(department_id\s*=\s*1\s+AND\s+age\s*=\s*19|age\s*=\s*19\s+AND\s+department_id\s*=\s*1)\s*;?\s*$/i
+
+    },
+
+    {
+
+      task: "从 students_mst 表中，查询所有性别 (gender) 为 '0'（男生），并且测试成绩 (test_score) 大于等于 80 分的学生数据。",
+
+      example: "SELECT * FROM students_mst WHERE gender = '0' AND test_score >= 80;",
+
+      expectedQuery: /^\s*SELECT\s+\*\s+FROM\s+students_mst\s+WHERE\s+(gender\s*=\s*['"']0['"']\s+AND\s+test_score\s*>=\s*80|test_score\s*>=\s*80\s+AND\s+gender\s*=\s*['"']0['"'])\s*;?\s*$/i
+
+    }
+
+  ],
+
+  6: [
+
+    {
+
+      task: "从 students_mst 表中，查询年龄 (age) 是 18 岁或者 19 岁的所有学生数据。",
+
+      example: "SELECT * FROM students_mst WHERE age = 18 OR age = 19;",
+
+      expectedQuery: /^\s*SELECT\s+\*\s+FROM\s+students_mst\s+WHERE\s+(age\s*=\s*18\s+OR\s*age\s*=\s*19|age\s*=\s*19\s+OR\s*age\s*=\s*18)\s*;?\s*$/i
+
+    },
+
+    {
+
+      task: "从 students_mst 表中，查询所属科系 (department_id) 是 3 或者 4 的所有学生数据。",
+
+      example: "SELECT * FROM students_mst WHERE department_id = 3 OR department_id = 4;",
+
+      expectedQuery: /^\s*SELECT\s+\*\s+FROM\s+students_mst\s+WHERE\s+(department_id\s*=\s*3\s+OR\s*department_id\s*=\s*4|department_id\s*=\s*4\s+OR\s*department_id\s*=\s*3)\s*;?\s*$/i
+
+    },
+
+    {
+
+      task: "从 students_mst 表中，查询性别 (gender) 是 '1'（女生）或者年龄 (age) 为 25 岁的所有学生数据。",
+
+      example: "SELECT * FROM students_mst WHERE gender = '1' OR age = 25;",
+
+      expectedQuery: /^\s*SELECT\s+\*\s+FROM\s+students_mst\s+WHERE\s+(gender\s*=\s*['"']1['"']\s+OR\s+age\s*=\s*25|age\s*=\s*25\s+OR\s+gender\s*=\s*['"']1['"'])\s*;?\s*$/i
+
+    }
+
+  ],
+
+  7: [
+
+    {
+
+      task: "从 students_mst 表中，查询“科系ID (department_id) 为 1 或者 2，并且年龄 (age) 为 20 岁”的学生数据。",
+
+      example: "SELECT * FROM students_mst WHERE (department_id = 1 OR department_id = 2) AND age = 20;",
+
+      expectedQuery: /^\s*SELECT\s+\*\s+FROM\s+students_mst\s+WHERE\s+(\(\s*department_id\s*=\s*1\s+OR\s*department_id\s*=\s*2\s*\)\s+AND\s+age\s*=\s*20|age\s*=\s*20\s+AND\s+\(\s*department_id\s*=\s*1\s+OR\s*department_id\s*=\s*2\s*\))\s*;?\s*$/i
+
+    },
+
+    {
+
+      task: "从 students_mst 表中，查询“性别 (gender) 为 '1' 或者 年龄大于等于 24 岁，并且科系ID (department_id) 为 3”的学生数据。",
+
+      example: "SELECT * FROM students_mst WHERE (gender = '1' OR age >= 24) AND department_id = 3;",
+
+      expectedQuery: /^\s*SELECT\s+\*\s+FROM\s+students_mst\s+WHERE\s+(\(\s*gender\s*=\s*['"']1['"']\s+OR\s+age\s*>=\s*24\s*\)\s+AND\s+department_id\s*=\s*3|department_id\s*=\s*3\s+AND\s+\(\s*gender\s*=\s*['"']1['"']\s+OR\s+age\s*>=\s*24\s*\))\s*;?\s*$/i
+
+    },
+
+    {
+
+      task: "从 students_mst 表中，查询“年龄 (age) 为 18 或者 22，并且性别 (gender) 为 '0'（男生）”的学生数据。",
+
+      example: "SELECT * FROM students_mst WHERE (age = 18 OR age = 22) AND gender = '0';",
+
+      expectedQuery: /^\s*SELECT\s+\*\s+FROM\s+students_mst\s+WHERE\s+(\(\s*age\s*=\s*18\s+OR\s*age\s*=\s*22\s*\)\s+AND\s+gender\s*=\s*['"']0['"']|gender\s*=\s*['"']0['"']\s+AND\s+\(\s*age\s*=\s*18\s+OR\s*age\s*=\s*22\s*\))\s*;?\s*$/i
+
+    }
+
+  ],
+
+  8: [
+
+    {
+
+      task: "从 students_mst 表中，查询年龄 (age) 小于 20 岁的所有学生数据。",
+
+      example: "SELECT * FROM students_mst WHERE age < 20;",
+
+      expectedQuery: /^\s*SELECT\s+\*\s+FROM\s+students_mst\s+WHERE\s+age\s*<\s*20\s*;?\s*$/i
+
+    },
+
+    {
+
+      task: "从 students_mst 表中，查询测试分数 (test_score) 大于 85 分的所有学生数据。",
+
+      example: "SELECT * FROM students_mst WHERE test_score > 85;",
+
+      expectedQuery: /^\s*SELECT\s+\*\s+FROM\s+students_mst\s+WHERE\s+test_score\s*>\s*85\s*;?\s*$/i
+
+    },
+
+    {
+
+      task: "从 students_mst 表中，查询所属科系ID (department_id) 不等于 1 的所有学生数据。",
+
+      example: "SELECT * FROM students_mst WHERE department_id <> 1;",
+
+      expectedQuery: /^\s*SELECT\s+\*\s+FROM\s+students_mst\s+WHERE\s+department_id\s*(<>|!=)\s*1\s*;?\s*$/i
+
+    }
+
+  ],
+
+  9: [
+
+    {
+
+      task: "从 students_mst 表中，查询所有未被软删除（即 delete_at 是 NULL）的学生数据。",
+
+      example: "SELECT * FROM students_mst WHERE delete_at IS NULL;",
+
+      expectedQuery: /^\s*SELECT\s+\*\s+FROM\s+students_mst\s+WHERE\s+delete_at\s+IS\s+NULL\s*;?\s*$/i
+
+    },
+
+    {
+
+      task: "从 students_mst 表中，查询所有已被软删除（即 delete_at 不是 NULL）的学生数据。",
+
+      example: "SELECT * FROM students_mst WHERE delete_at IS NOT NULL;",
+
+      expectedQuery: /^\s*SELECT\s+\*\s+FROM\s+students_mst\s+WHERE\s+delete_at\s+IS\s+NOT\s+NULL\s*;?\s*$/i
+
+    },
+
+    {
+
+      task: "从 departments_mst 表中，查询所有未被软删除（即 delete_at 是 NULL）的科系数据。",
+
+      example: "SELECT * FROM departments_mst WHERE delete_at IS NULL;",
+
+      expectedQuery: /^\s*SELECT\s+\*\s+FROM\s+departments_mst\s+WHERE\s+delete_at\s+IS\s+NULL\s*;?\s*$/i
+
+    }
+
+  ],
+
+  10: [
+
+    {
+
+      task: "从 students_mst 表中，模糊查询名字 (student_name) 中包含 '藤' 字的所有学生数据。",
+
+      example: "SELECT * FROM students_mst WHERE student_name LIKE '%藤%';",
+
+      expectedQuery: /^\s*SELECT\s+\*\s+FROM\s+students_mst\s+WHERE\s+student_name\s+LIKE\s+['"']%藤%['"']\s*;?\s*$/i
+
+    },
+
+    {
+
+      task: "从 students_mst 表中，模糊查询平假名名字 (student_name_kana) 以 'ス' (Su) 开头的所有学生数据。",
+
+      example: "SELECT * FROM students_mst WHERE student_name_kana LIKE 'ス%';",
+
+      expectedQuery: /^\s*SELECT\s+\*\s+FROM\s+students_mst\s+WHERE\s+student_name_kana\s+LIKE\s+['"']ス%['"']\s*;?\s*$/i
+
+    },
+
+    {
+
+      task: "从 students_mst 表中，模糊查询名字 (student_name) 以 '子' 结尾的所有学生数据。",
+
+      example: "SELECT * FROM students_mst WHERE student_name LIKE '%子';",
+
+      expectedQuery: /^\s*SELECT\s+\*\s+FROM\s+students_mst\s+WHERE\s+student_name\s+LIKE\s+['"']%子['"']\s*;?\s*$/i
+
+    }
+
+  ],
+
+  11: [
+
+    {
+
+      task: "从 students_mst 表中，查询分数 (test_score) 在 70 分到 89 分之间的所有学生数据。",
+
+      example: "SELECT * FROM students_mst WHERE test_score BETWEEN 70 AND 89;",
+
+      expectedQuery: /^\s*SELECT\s+\*\s+FROM\s+students_mst\s+WHERE\s+test_score\s+BETWEEN\s+70\s+AND\s+89\s*;?\s*$/i
+
+    },
+
+    {
+
+      task: "从 students_mst 表中，查询年龄 (age) 在 18 岁到 22 岁之间的所有学生数据。",
+
+      example: "SELECT * FROM students_mst WHERE age BETWEEN 18 AND 22;",
+
+      expectedQuery: /^\s*SELECT\s+\*\s+FROM\s+students_mst\s+WHERE\s+age\s+BETWEEN\s+18\s+AND\s+22\s*;?\s*$/i
+
+    },
+
+    {
+
+      task: "从 students_mst 表中，查询所属科系ID (department_id) 在 1 到 3 之间的所有学生数据。",
+
+      example: "SELECT * FROM students_mst WHERE department_id BETWEEN 1 AND 3;",
+
+      expectedQuery: /^\s*SELECT\s+\*\s+FROM\s+students_mst\s+WHERE\s+department_id\s+BETWEEN\s+1\s+AND\s+3\s*;?\s*$/i
+
+    }
+
+  ],
+
+  12: [
+
+    {
+
+      task: "从 students_mst 表中，查询所属科系 (department_id) 为 1, 3, 5 之一的所有学生数据。",
+
+      example: "SELECT * FROM students_mst WHERE department_id IN (1, 3, 5);",
+
+      expectedQuery: /^\s*SELECT\s+\*\s+FROM\s+students_mst\s+WHERE\s+department_id\s+IN\s*\(\s*(1\s*,\s*3\s*,\s*5|1\s*,\s*5\s*,\s*3|3\s*,\s*1\s*,\s*5|3\s*,\s*5\s*,\s*1|5\s*,\s*1\s*,\s*3|5\s*,\s*3\s*,\s*1)\s*\)\s*;?\s*$/i
+
+    },
+
+    {
+
+      task: "从 students_mst 表中，查询年龄 (age) 是 19、21、23 岁之一的所有学生数据。",
+
+      example: "SELECT * FROM students_mst WHERE age IN (19, 21, 23);",
+
+      expectedQuery: /^\s*SELECT\s+\*\s+FROM\s+students_mst\s+WHERE\s+age\s+IN\s*\(\s*(19\s*,\s*21\s*,\s*23|19\s*,\s*23\s*,\s*21|21\s*,\s*19\s*,\s*23|21\s*,\s*23\s*,\s*19|23\s*,\s*19\s*,\s*21|23\s*,\s*21\s*,\s*19)\s*\)\s*;?\s*$/i
+
+    },
+
+    {
+
+      task: "从 students_mst 表中，查询学生ID (student_id) 是 1、5、10 之一的所有学生数据。",
+
+      example: "SELECT * FROM students_mst WHERE student_id IN (1, 5, 10);",
+
+      expectedQuery: /^\s*SELECT\s+\*\s+FROM\s+students_mst\s+WHERE\s+student_id\s+IN\s*\(\s*(1\s*,\s*5\s*,\s*10|1\s*,\s*10\s*,\s*5|5\s*,\s*1\s*,\s*10|5\s*,\s*10\s*,\s*1|10\s*,\s*1\s*,\s*5|10\s*,\s*5\s*,\s*1)\s*\)\s*;?\s*$/i
+
+    }
+
+  ],
+
+  13: [
+
+    {
+
+      task: "从 students_mst 表中，查询所有学生并按照分数 (test_score) 从高到低（降序）进行排序。",
+
+      example: "SELECT * FROM students_mst ORDER BY test_score DESC;",
+
+      expectedQuery: /^\s*SELECT\s+\*\s+FROM\s+students_mst\s+ORDER\s+BY\s+test_score\s+DESC\s*;?\s*$/i
+
+    },
+
+    {
+
+      task: "从 students_mst 表中，查询所有学生并按照年龄 (age) 从小到大（升序）进行排序。",
+
+      example: "SELECT * FROM students_mst ORDER BY age ASC;",
+
+      expectedQuery: /^\s*SELECT\s+\*\s+FROM\s+students_mst\s+ORDER\s+BY\s+age\s*(ASC)?\s*;?\s*$/i
+
+    },
+
+    {
+
+      task: "从 students_mst 表中，查询所有学生，首先按照科系ID (department_id) 升序排列，科系相同时按照分数 (test_score) 降序排列。",
+
+      example: "SELECT * FROM students_mst ORDER BY department_id ASC, test_score DESC;",
+
+      expectedQuery: /^\s*SELECT\s+\*\s+FROM\s+students_mst\s+ORDER\s+BY\s+department_id\s*(ASC)?\s*,\s*test_score\s+DESC\s*;?\s*$/i
+
+    }
+
+  ],
+
+  14: [
+
+    {
+
+      task: "从 students_mst 表中，按年龄 (age) 从小到大（升序）排序，且只取前 5 行数据。",
+
+      example: "SELECT * FROM students_mst ORDER BY age ASC LIMIT 5;",
+
+      expectedQuery: /^\s*SELECT\s+\*\s+FROM\s+students_mst\s+ORDER\s+BY\s+age\s*(ASC)?\s+LIMIT\s+5\s*;?\s*$/i
+
+    },
+
+    {
+
+      task: "从 students_mst 表中，按测试分数 (test_score) 从大到小（降序）排序，且只取前 3 行数据。",
+
+      example: "SELECT * FROM students_mst ORDER BY test_score DESC LIMIT 3;",
+
+      expectedQuery: /^\s*SELECT\s+\*\s+FROM\s+students_mst\s+ORDER\s+BY\s+test_score\s+DESC\s+LIMIT\s+3\s*;?\s*$/i
+
+    },
+
+    {
+
+      task: "直接从 students_mst 中限制只读取前 10 行的数据记录。",
+
+      example: "SELECT * FROM students_mst LIMIT 10;",
+
+      expectedQuery: /^\s*SELECT\s+\*\s+FROM\s+students_mst\s+LIMIT\s+10\s*;?\s*$/i
+
+    }
+
+  ],
+
+  15: [
+
+    {
+
+      task: "从 students_mst 表中，获取所有不重复的科系ID (department_id) 列表。",
+
+      example: "SELECT DISTINCT department_id FROM students_mst;",
+
+      expectedQuery: /^\s*SELECT\s+DISTINCT\s+department_id\s+FROM\s+students_mst\s*;?\s*$/i
+
+    },
+
+    {
+
+      task: "从 students_mst 表中，获取所有不重复的学生年龄 (age) 列表。",
+
+      example: "SELECT DISTINCT age FROM students_mst;",
+
+      expectedQuery: /^\s*SELECT\s+DISTINCT\s+age\s+FROM\s+students_mst\s*;?\s*$/i
+
+    },
+
+    {
+
+      task: "从 students_mst 表中，获取所有不重复的性别 (gender) 列表。",
+
+      example: "SELECT DISTINCT gender FROM students_mst;",
+
+      expectedQuery: /^\s*SELECT\s+DISTINCT\s+gender\s+FROM\s+students_mst\s*;?\s*$/i
+
+    }
+
+  ],
+
+  16: [
+
+    {
+
+      task: "使用 SQL 函数直接查询当前的系统日期和时间 (使用 NOW() 函数)。",
+
+      example: "SELECT NOW();",
+
+      expectedQuery: /^\s*SELECT\s+NOW\(\s*\)\s*;?\s*$/i
+
+    },
+
+    {
+
+      task: "从 students_mst 中，查询学生 ID (student_id) 以及学生姓名所含的“文字数 (使用 CHAR_LENGTH(student_name))”。",
+
+      example: "SELECT student_id, CHAR_LENGTH(student_name) FROM students_mst;",
+
+      expectedQuery: /^\s*SELECT\s+(student_id\s*,\s*CHAR_LENGTH\(\s*student_name\s*\)|CHAR_LENGTH\(\s*student_name\s*\)\s*,\s*student_id)\s+FROM\s+students_mst\s*;?\s*$/i
+
+    },
+
+    {
+
+      task: "使用 CONCAT 函数，拼接每个学生的姓名 (student_name) 与括号包裹的学号 (student_number)。",
+
+      example: "SELECT CONCAT(student_name, ' (', student_number, ')') FROM students_mst;",
+
+      expectedQuery: /^\s*SELECT\s+CONCAT\(\s*student_name\s*,\s*['"']\s*\(\s*['"']\s*,\s*student_number\s*,\s*['"']\s*\)\s*['"']\s*\)\s+FROM\s+students_mst\s*;?\s*$/i
+
+    }
+
+  ],
+
+  17: [
+
+    {
+
+      task: "查询学生姓名 (student_name) 并判断其性别：“如果性别 (gender) 为 '0' 输出 '男'，否则输出 '女'” (使用 CASE 表达式)。",
+
+      example: "SELECT student_name, CASE WHEN gender = '0' THEN '男' ELSE '女' END FROM students_mst;",
+
+      expectedQuery: /^\s*SELECT\s+student_name\s*,\s*CASE\s+WHEN\s+gender\s*=\s*['"']0['"']\s+THEN\s+['"']男['"']\s+ELSE\s+['"']女['"']\s+END\s+FROM\s+students_mst\s*;?\s*$/i
+
+    },
+
+    {
+
+      task: "查询学生姓名 (student_name) 和分数等级：“分数 (test_score) 大于等于 80 输出 '优秀'，大于等于 60 输出 '及格'，否则输出 '不及格'”。",
+
+      example: "SELECT student_name, CASE WHEN test_score >= 80 THEN '优秀' WHEN test_score >= 60 THEN '及格' ELSE '不及格' END FROM students_mst;",
+
+      expectedQuery: /^\s*SELECT\s+student_name\s*,\s*CASE\s+WHEN\s+test_score\s*>=\s*80\s+THEN\s+['"']优秀['"']\s+WHEN\s+test_score\s*>=\s*60\s+THEN\s+['"']及格['"']\s+ELSE\s+['"']不及格['"']\s+END\s+FROM\s+students_mst\s*;?\s*$/i
+
+    },
+
+    {
+
+      task: "查询学生姓名 (student_name) 并在新字段中输出其年龄评定：“如果年龄 (age) 大于等于 20，则输出 '成人'，否则输出 '未成年'”。",
+
+      example: "SELECT student_name, CASE WHEN age >= 20 THEN '成人' ELSE '未成年' END FROM students_mst;",
+
+      expectedQuery: /^\s*SELECT\s+student_name\s*,\s*CASE\s+WHEN\s+age\s*>=\s*20\s+THEN\s+['"\u2019]成人['"\u2019]\s+ELSE\s+['"\u2019]未成年['"\u2019]\s+END\s+FROM\s+students_mst\s*;?\s*$/i
+
+    }
+
+  ],
+
+  18: [
+
+    {
+
+      task: "计算 students_mst 中所有学生测试分数 (test_score) 的总和 (SUM)。",
+
+      example: "SELECT SUM(test_score) FROM students_mst;",
+
+      expectedQuery: /^\s*SELECT\s+SUM\(\s*test_score\s*\)\s+FROM\s+students_mst\s*;?\s*$/i
+
+    },
+
+    {
+
+      task: "计算 students_mst 中所有学生的平均年龄 (AVG(age))。",
+
+      example: "SELECT AVG(age) FROM students_mst;",
+
+      expectedQuery: /^\s*SELECT\s+AVG\(\s*age\s*\)\s+FROM\s+students_mst\s*;?\s*$/i
+
+    },
+
+    {
+
+      task: "统计 students_mst 中测试分数 (test_score) 在 80 分及以上的优秀学生人数 (COUNT)。",
+
+      example: "SELECT COUNT(*) FROM students_mst WHERE test_score >= 80;",
+
+      expectedQuery: /^\s*SELECT\s+COUNT\(\s*\*?\s*\)\s+FROM\s+students_mst\s+WHERE\s+test_score\s*>=\s*80\s*;?\s*$/i
+
+    }
+
+  ],
+
+  19: [
+
+    {
+
+      task: "按学生性别 (gender) 分组，并查询男女生的平均测试分数 (AVG(test_score))。",
+
+      example: "SELECT gender, AVG(test_score) FROM students_mst GROUP BY gender;",
+
+      expectedQuery: /^\s*SELECT\s+gender\s*,\s*AVG\(\s*test_score\s*\)\s+FROM\s+students_mst\s+GROUP\s+BY\s+gender\s*;?\s*$/i
+
+    },
+
+    {
+
+      task: "按科系ID (department_id) 分组，查询每个科系里的学生最高测试分数 (MAX(test_score))。",
+
+      example: "SELECT department_id, MAX(test_score) FROM students_mst GROUP BY department_id;",
+
+      expectedQuery: /^\s*SELECT\s+department_id\s*,\s*MAX\(\s*test_score\s*\)\s+FROM\s+students_mst\s+GROUP\s+BY\s+department_id\s*;?\s*$/i
+
+    },
+
+    {
+
+      task: "按学生年龄 (age) 分组，并查询每个年龄层的学生总人数 (COUNT(*))。",
+
+      example: "SELECT age, COUNT(*) FROM students_mst GROUP BY age;",
+
+      expectedQuery: /^\s*SELECT\s+age\s*,\s*COUNT\(\s*\*?\s*\)\s+FROM\s+students_mst\s+GROUP\s+BY\s+age\s*;?\s*$/i
+
+    }
+
+  ],
+
+  20: [
+
+    {
+
+      task: "按科系ID (department_id) 分组，并筛选出学生人数大于等于 5 人的科系ID和对应人数 (使用 HAVING)。",
+
+      example: "SELECT department_id, COUNT(*) FROM students_mst GROUP BY department_id HAVING COUNT(*) >= 5;",
+
+      expectedQuery: /^\s*SELECT\s+department_id\s*,\s*COUNT\(\s*\*?\s*\)\s+FROM\s+students_mst\s+GROUP\s+BY\s+department_id\s+HAVING\s+COUNT\(\s*\*?\s*\)\s*>\s*=\s*5\s*;?\s*$/i
+
+    },
+
+    {
+
+      task: "按科系ID (department_id) 分组，并筛选出平均测试分数大于等于 70 分的科系ID和对应平均分。",
+
+      example: "SELECT department_id, AVG(test_score) FROM students_mst GROUP BY department_id HAVING AVG(test_score) >= 70;",
+
+      expectedQuery: /^\s*SELECT\s+department_id\s*,\s*AVG\(\s*test_score\s*\)\s+FROM\s+students_mst\s+GROUP\s+BY\s+department_id\s+HAVING\s+AVG\(\s*test_score\s*\)\s*>\s*=\s*70\s*;?\s*$/i
+
+    },
+
+    {
+
+      task: "按性别 (gender) 分组，筛选出学生人数大于 10 人的性别组及其人数。",
+
+      example: "SELECT gender, COUNT(*) FROM students_mst GROUP BY gender HAVING COUNT(*) > 10;",
+
+      expectedQuery: /^\s*SELECT\s+gender\s*,\s*COUNT\(\s*\*?\s*\)\s+FROM\s+students_mst\s+GROUP\s+BY\s+gender\s+HAVING\s+COUNT\(\s*\*?\s*\)\s*>\s*10\s*;?\s*$/i
+
+    }
+
+  ],
+
+  21: [
+
+    {
+
+      task: "查询科系主表 (departments_mst) 中的科系ID (department_id) 和科系名称 (department_name) 这两列。",
+
+      example: "SELECT department_id, department_name FROM departments_mst;",
+
+      expectedQuery: /^\s*SELECT\s+(department_id\s*,\s*department_name|department_name\s*,\s*department_id)\s+FROM\s+departments_mst\s*;?\s*$/i
+
+    },
+
+    {
+
+      task: "获取 students_mst 中现有的不重复科系ID (department_id)，以验证字段关联性。",
+
+      example: "SELECT DISTINCT department_id FROM students_mst;",
+
+      expectedQuery: /^\s*SELECT\s+DISTINCT\s+department_id\s+FROM\s+students_mst\s*;?\s*$/i
+
+    },
+
+    {
+
+      task: "查询未被删除（delete_at IS NULL）的所有科系主表记录。",
+
+      example: "SELECT * FROM departments_mst WHERE delete_at IS NULL;",
+
+      expectedQuery: /^\s*SELECT\s+\*\s+FROM\s+departments_mst\s+WHERE\s+delete_at\s+IS\s+NULL\s*;?\s*$/i
+
+    }
+
+  ],
+
+  22: [
+
+    {
+
+      task: "通过 INNER JOIN 关联学生表和科系表，查询年龄大于等于 25 岁的学生姓名 (student_name) 和所属科系名称 (department_name)。",
+
+      example: "SELECT s.student_name, d.department_name FROM students_mst s INNER JOIN departments_mst d ON s.department_id = d.department_id WHERE s.age >= 25;",
+
+      expectedQuery: /^\s*SELECT\s+[\w\.\s,]+FROM\s+students_mst\s+(\w+)\s+INNER\s+JOIN\s+departments_mst\s+(\w+)\s+ON\s+[\w\.]+\s*=\s*[\w\.]+\s+WHERE\s+[\w\.]+\s*>=\s*25\s*;?\s*$/i
+
+    },
+
+    {
+
+      task: "通过 INNER JOIN 关联学生与科系，查询所有女生（gender = '1'）的学生姓名 (student_name) 以及对应的科系名称 (department_name)。",
+
+      example: "SELECT s.student_name, d.department_name FROM students_mst s INNER JOIN departments_mst d ON s.department_id = d.department_id WHERE s.gender = '1';",
+
+      expectedQuery: /^\s*SELECT\s+[\w\.\s,]+FROM\s+students_mst\s+(\w+)\s+INNER\s+JOIN\s+departments_mst\s+(\w+)\s+ON\s+[\w\.]+\s*=\s*[\w\.]+\s+WHERE\s+[\w\.]+\s*=\s*['"']1['"']\s*;?\s*$/i
+
+    },
+
+    {
+
+      task: "INNER JOIN 关联两张表，查询学号 (student_number) 和所属科系名称 (department_name)，并按学号升序排列。",
+
+      example: "SELECT s.student_number, d.department_name FROM students_mst s INNER JOIN departments_mst d ON s.department_id = d.department_id ORDER BY s.student_number ASC;",
+
+      expectedQuery: /^\s*SELECT\s+[\w\.\s,]+FROM\s+students_mst\s+(\w+)\s+INNER\s+JOIN\s+departments_mst\s+(\w+)\s+ON\s+[\w\.]+\s*=\s*[\w\.]+\s+ORDER\s+BY\s+[\w\.]+\s*(ASC)?\s*;?\s*$/i
+
+    }
+
+  ],
+
+  23: [
+
+    {
+
+      task: "使用 LEFT JOIN 联接 departments_mst (作为左表) 和 students_mst (作为右表)，以保证所有科系名称 (department_name) 都会被查出，并显示对应的学生姓名 (student_name)。",
+
+      example: "SELECT d.department_name, s.student_name FROM departments_mst d LEFT JOIN students_mst s ON d.department_id = s.department_id;",
+
+      expectedQuery: /^\s*SELECT\s+[\w\.\s,]+FROM\s+departments_mst\s+(\w+)\s+LEFT\s+(OUTER\s+)?JOIN\s+students_mst\s+(\w+)\s+ON\s+[\w\.]+\s*=\s*[\w\.]+\s*;?\s*$/i
+
+    },
+
+    {
+
+      task: "使用 LEFT JOIN 联接 students_mst (作为左表) 和 departments_mst (作为右表)，以查询出所有学生的姓名 (student_name) 以及对应的科系名称 (department_name)（即使科系为空）。",
+
+      example: "SELECT s.student_name, d.department_name FROM students_mst s LEFT JOIN departments_mst d ON s.department_id = d.department_id;",
+
+      expectedQuery: /^\s*SELECT\s+[\w\.\s,]+FROM\s+students_mst\s+(\w+)\s+LEFT\s+(OUTER\s+)?JOIN\s+departments_mst\s+(\w+)\s+ON\s+[\w\.]+\s*=\s*[\w\.]+\s*;?\s*$/i
+
+    },
+
+    {
+
+      task: "使用 LEFT JOIN 联接科系表 (左表) 和学生表 (右表)，并按科系名称 (department_name) 分组，统计每个科系名下的学生人数 (COUNT(s.student_id))。",
+
+      example: "SELECT d.department_name, COUNT(s.student_id) FROM departments_mst d LEFT JOIN students_mst s ON d.department_id = s.department_id GROUP BY d.department_name;",
+
+      expectedQuery: /^\s*SELECT\s+[\w\.\s,()]+FROM\s+departments_mst\s+(\w+)\s+LEFT\s+(OUTER\s+)?JOIN\s+students_mst\s+(\w+)\s+ON\s+[\w\.]+\s*=\s*[\w\.]+\s+GROUP\s+BY\s+[\w\.]+\s*;?\s*$/i
+
+    }
+
+  ],
+
+  24: [
+
+    {
+
+      task: "在 students_mst 进行自联接，找出年龄 (age) 相同、但 ID 不同的两位学生组合姓名。",
+
+      example: "SELECT s1.student_name AS s1_name, s2.student_name AS s2_name FROM students_mst s1 JOIN students_mst s2 ON s1.age = s2.age WHERE s1.student_id <> s2.student_id;",
+
+      expectedQuery: /^\s*SELECT\s+[\w\.\s,]+FROM\s+students_mst\s+(\w+)\s+(INNER\s+)?JOIN\s+students_mst\s+(\w+)\s+ON\s+[\w\.]+\s*=\s*[\w\.]+\s+WHERE\s+[\w\.]+\s*(<>|!=)\s*[\w\.]+\s*;?\s*$/i
+
+    },
+
+    {
+
+      task: "自联接 students_mst，找出所属学科 (department_id) 相同、但学生ID不同的两位学生组合姓名，要求使用 s1.student_id < s2.student_id 排除镜像组合。",
+
+      example: "SELECT s1.student_name, s2.student_name FROM students_mst s1 JOIN students_mst s2 ON s1.department_id = s2.department_id WHERE s1.student_id < s2.student_id;",
+
+      expectedQuery: /^\s*SELECT\s+[\w\.\s,]+FROM\s+students_mst\s+(\w+)\s+(INNER\s+)?JOIN\s+students_mst\s+(\w+)\s+ON\s+[\w\.]+\s*=\s*[\w\.]+\s+WHERE\s+[\w\.]+\s*<\s*[\w\.]+\s*;?\s*$/i
+
+    },
+
+    {
+
+      task: "自联接 students_mst，匹配性别 (gender) 相同、但ID不同的前10对学生姓名对。",
+
+      example: "SELECT s1.student_name, s2.student_name FROM students_mst s1 JOIN students_mst s2 ON s1.gender = s2.gender WHERE s1.student_id <> s2.student_id LIMIT 10;",
+
+      expectedQuery: /^\s*SELECT\s+[\w\.\s,]+FROM\s+students_mst\s+(\w+)\s+(INNER\s+)?JOIN\s+students_mst\s+(\w+)\s+ON\s+[\w\.]+\s*=\s*[\w\.]+\s+WHERE\s+[\w\.]+\s*(<>|!=)\s*[\w\.]+\s+LIMIT\s+10\s*;?\s*$/i
+
+    }
+
+  ],
+
+  25: [
+
+    {
+
+      task: "使用子查询查询 students_mst 表中，所有测试分 (test_score) 低于“平均分”的学生数据。",
+
+      example: "SELECT * FROM students_mst WHERE test_score < (SELECT AVG(test_score) FROM students_mst);",
+
+      expectedQuery: /^\s*SELECT\s+\*\s+FROM\s+students_mst\s+WHERE\s+test_score\s*<\s*\(\s*SELECT\s+AVG\(\s*test_score\s*\)\s+FROM\s+students_mst\s*\)\s*;?\s*$/i
+
+    },
+
+    {
+
+      task: "使用子查询查询 students_mst 表中，所有年龄 (age) 大于“平均年龄”的学生数据。",
+
+      example: "SELECT * FROM students_mst WHERE age > (SELECT AVG(age) FROM students_mst);",
+
+      expectedQuery: /^\s*SELECT\s+\*\s+FROM\s+students_mst\s+WHERE\s+age\s*>\s*\(\s*SELECT\s+AVG\(\s*age\s*\)\s+FROM\s+students_mst\s*\)\s*;?\s*$/i
+
+    },
+
+    {
+
+      task: "使用子查询查询所属科系为“智能系统科”对应的所有学生数据（子查询先从 departments_mst 找出对应 department_id）。",
+
+      example: "SELECT * FROM students_mst WHERE department_id = (SELECT department_id FROM departments_mst WHERE department_name = '智能系统科');",
+
+      expectedQuery: /^\s*SELECT\s+\*\s+FROM\s+students_mst\s+WHERE\s+department_id\s*=\s*\(\s*SELECT\s+department_id\s+FROM\s+departments_mst\s+WHERE\s+department_name\s*=\s*['"']智能系统科['"']\s*\)\s*;?\s*$/i
+
+    }
+
+  ],
+
+  26: [
+
+    {
+
+      task: "往科系表 (departments_mst) 中插入一行新数据：学科ID为 12，学科名称为 '人工智能科'，更新时间字段填充当前时间字符串。",
+
+      example: "INSERT INTO departments_mst (department_id, department_name, insert_at, update_at) VALUES (12, '人工智能科', '2026-06-03 12:00:00', '2026-06-03 12:00:00');",
+
+      expectedQuery: /^\s*INSERT\s+INTO\s+departments_mst\s*.*?VALUES\s*.*?12\s*,\s*['"']人工智能科['"']/i
+
+    },
+
+    {
+
+      task: "往学生表 (students_mst) 中插入一行新数据：学籍ID为 99，姓名为 '测试学生'，性别为 '0' (男)，时间字段填充当前日期字符串。",
+
+      example: "INSERT INTO students_mst (student_id, student_name, gender, insert_at, update_at) VALUES (99, '测试学生', '0', '2026-06-03 12:00:00', '2026-06-03 12:00:00');",
+
+      expectedQuery: /^\s*INSERT\s+INTO\s+students_mst\s*.*?VALUES\s*.*?99\s*,\s*['"']测试学生['"']/i
+
+    },
+
+    {
+
+      task: "往科系表 (departments_mst) 中插入一行新数据：学科ID为 13，学科名称为 '游戏设计科'，更新时间字段填充当前日期字符串。",
+
+      example: "INSERT INTO departments_mst (department_id, department_name, insert_at, update_at) VALUES (13, '游戏设计科', '2026-06-03 12:00:00', '2026-06-03 12:00:00');",
+
+      expectedQuery: /^\s*INSERT\s+INTO\s+departments_mst\s*.*?VALUES\s*.*?13\s*,\s*['"']游戏设计科['"']/i
+
+    }
+
+  ],
+
+  27: [
+
+    {
+
+      task: "更新学生表 (students_mst) 中，ID 为 2 的学生年龄 (age) 为 22 岁。",
+
+      example: "UPDATE students_mst SET age = 22 WHERE student_id = 2;",
+
+      expectedQuery: /^\s*UPDATE\s+students_mst\s+SET\s+age\s*=\s*22\s+WHERE\s+student_id\s*=\s*2\s*;?\s*$/i
+
+    },
+
+    {
+
+      task: "更新学生表 (students_mst) 中，ID 为 5 的学生测试分数 (test_score) 为 95 分。",
+
+      example: "UPDATE students_mst SET test_score = 95 WHERE student_id = 5;",
+
+      expectedQuery: /^\s*UPDATE\s+students_mst\s+SET\s+test_score\s*=\s*95\s+WHERE\s+student_id\s*=\s*5\s*;?\s*$/i
+
+    },
+
+    {
+
+      task: "更新科系表 (departments_mst) 中，ID 为 1 的科系名称 (department_name) 为 '新情报商务科'。",
+
+      example: "UPDATE departments_mst SET department_name = '新情报商务科' WHERE department_id = 1;",
+
+      expectedQuery: /^\s*UPDATE\s+departments_mst\s+SET\s+department_name\s*=\s*['"']新情报商务科['"']\s+WHERE\s+department_id\s*=\s*1\s*;?\s*$/i
+
+    }
+
+  ],
+
+  28: [
+
+    {
+
+      task: "删除学生表 (students_mst) 中，ID 为 30 的学生记录。",
+
+      example: "DELETE FROM students_mst WHERE student_id = 30;",
+
+      expectedQuery: /^\s*DELETE\s+FROM\s+students_mst\s+WHERE\s+student_id\s*=\s*30\s*;?\s*$/i
+
+    },
+
+    {
+
+      task: "删除学生表 (students_mst) 中，所有年龄 (age) 大于等于 30 岁的学生记录。",
+
+      example: "DELETE FROM students_mst WHERE age >= 30;",
+
+      expectedQuery: /^\s*DELETE\s+FROM\s+students_mst\s+WHERE\s+age\s*>=\s*30\s*;?\s*$/i
+
+    },
+
+    {
+
+      task: "删除科系表 (departments_mst) 中，ID 为 11 的科系记录。",
+
+      example: "DELETE FROM departments_mst WHERE department_id = 11;",
+
+      expectedQuery: /^\s*DELETE\s+FROM\s+departments_mst\s+WHERE\s+department_id\s*=\s*11\s*;?\s*$/i
+
+    }
+
+  ],
+
+  29: [
+
+    {
+
+      task: "创建一个名为 test_table 的简单表，包含字段 id (INT) 和 name (VARCHAR(50))。",
+
+      example: "CREATE TABLE test_table (id INT, name VARCHAR(50));",
+
+      expectedQuery: /^\s*CREATE\s+TABLE\s+test_table\s*\(\s*id\s+INT\s*,\s*name\s+VARCHAR\(\s*50\s*\)\s*\)\s*;?\s*$/i
+
+    },
+
+    {
+
+      task: "创建一个名为 sample_table 的简单表，包含字段 sample_id (INT) 和 status (VARCHAR(20))。",
+
+      example: "CREATE TABLE sample_table (sample_id INT, status VARCHAR(20));",
+
+      expectedQuery: /^\s*CREATE\s+TABLE\s+sample_table\s*\(\s*sample_id\s+INT\s*,\s*status\s+VARCHAR\(\s*20\s*\)\s*\)\s*;?\s*$/i
+
+    },
+
+    {
+
+      task: "创建一个名为 temp_students 的表，包含字段 student_id (INT) 和 score (INT)。",
+
+      example: "CREATE TABLE temp_students (student_id INT, score INT);",
+
+      expectedQuery: /^\s*CREATE\s+TABLE\s+temp_students\s*\(\s*student_id\s+INT\s*,\s*score\s+INT\s*\)\s*;?\s*$/i
+
+    }
+
+  ],
+
+  30: [
+
+    {
+
+      task: "创建一个名为 logs 的表，包含 log_id (INT) 以及 log_text (VARCHAR(255) 且不允许为空 NOT NULL) 字段。",
+
+      example: "CREATE TABLE logs (log_id INT, log_text VARCHAR(255) NOT NULL);",
+
+      expectedQuery: /^\s*CREATE\s+TABLE\s+logs\s*\([\s\w\(\),]+log_text\s+VARCHAR\(\s*255\s*\)\s+NOT\s+NULL[\s\w(),':"-]*\)\s*;?\s*$/i
+
+    },
+
+    {
+
+      task: "创建一个名为 users 的表，包含 user_id (INT) 字段，以及 nickname (VARCHAR(50) 且其默认值为 '游客' DEFAULT '游客') 字段。",
+
+      example: "CREATE TABLE users (user_id INT, nickname VARCHAR(50) DEFAULT '游客');",
+
+      expectedQuery: /^\s*CREATE\s+TABLE\s+users\s*\([\s\w\(\),]+nickname\s+VARCHAR\(\s*50\s*\)\s+DEFAULT\s+['"']游客['"'][\s\w(),':"-]*\)\s*;?\s*$/i
+
+    },
+
+    {
+
+      task: "创建一个名为 tasks 的表，包含 task_id (INT) 字段，并含有 title (VARCHAR(100) 且不能为空 NOT NULL)，以及 is_done (INT 且默认值为 0 DEFAULT 0) 字段。",
+
+      example: "CREATE TABLE tasks (task_id INT, title VARCHAR(100) NOT NULL, is_done INT DEFAULT 0);",
+
+      expectedQuery: /^\s*CREATE\s+TABLE\s+tasks\s*\([\s\w\(\),]+title\s+VARCHAR\(\s*100\s*\)\s+NOT\s+NULL[\s\w(),':"-]*\)\s*;?\s*$/i
+
+    }
+
+  ],
+
+  31: [
+
+    {
+
+      task: "创建一个名为 products 的表，包含自增主键 product_id (INT AUTO_INCREMENT PRIMARY KEY) 和商品名称 name (VARCHAR(100))。",
+
+      example: "CREATE TABLE products (product_id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(100));",
+
+      expectedQuery: /^\s*CREATE\s+TABLE\s+products\s*\(\s*product_id\s+INT\s+AUTO_INCREMENT\s+PRIMARY\s+KEY\s*,\s*name\s+VARCHAR\(\s*100\s*\)\s*\)\s*;?\s*$/i
+
+    },
+
+    {
+
+      task: "创建一个名为 logs_autoincrement 的表，包含自增主键 id (INT AUTO_INCREMENT PRIMARY KEY) 以及 message (VARCHAR(255)) 字段。",
+
+      example: "CREATE TABLE logs_autoincrement (id INT AUTO_INCREMENT PRIMARY KEY, message VARCHAR(255));",
+
+      expectedQuery: /^\s*CREATE\s+TABLE\s+logs_autoincrement\s*\(\s*id\s+INT\s+AUTO_INCREMENT\s+PRIMARY\s+KEY\s*,\s*message\s+VARCHAR\(\s*255\s*\)\s*\)\s*;?\s*$/i
+
+    },
+
+    {
+
+      task: "创建一个名为 categories 的表，包含自增主键 cat_id (INT AUTO_INCREMENT PRIMARY KEY) 和种类名称 title (VARCHAR(50))。",
+
+      example: "CREATE TABLE categories (cat_id INT AUTO_INCREMENT PRIMARY KEY, title VARCHAR(50));",
+
+      expectedQuery: /^\s*CREATE\s+TABLE\s+categories\s*\(\s*cat_id\s+INT\s+AUTO_INCREMENT\s+PRIMARY\s+KEY\s*,\s*title\s+VARCHAR\(\s*50\s*\)\s*\)\s*;?\s*$/i
+
+    }
+
+  ],
+
+  32: [
+
+    {
+
+      task: "创建名为 class_members 的表，包含主键 member_id (INT PRIMARY KEY)，以及关联到 departments_mst 表的 department_id 字段作为外键约束。",
+
+      example: "CREATE TABLE class_members (member_id INT PRIMARY KEY, department_id INT, FOREIGN KEY (department_id) REFERENCES departments_mst(department_id));",
+
+      expectedQuery: /^\s*CREATE\s+TABLE\s+class_members\s*\([\s\w\(\),]+FOREIGN\s+KEY\s*\(\s*department_id\s*\)\s+REFERENCES\s+departments_mst\s*\(\s*department_id\s*\)\s*\)\s*;?\s*$/i
+
+    },
+
+    {
+
+      task: "创建名为 exam_scores 的表，包含主键 score_id (INT PRIMARY KEY)，以及 student_id (INT) 字段且外键关联至 students_mst 表的 student_id 字段。",
+
+      example: "CREATE TABLE exam_scores (score_id INT PRIMARY KEY, student_id INT, FOREIGN KEY (student_id) REFERENCES students_mst(student_id));",
+
+      expectedQuery: /^\s*CREATE\s+TABLE\s+exam_scores\s*\([\s\w\(\),]+FOREIGN\s+KEY\s*\(\s*student_id\s*\)\s+REFERENCES\s+students_mst\s*\(\s*student_id\s*\)\s*\)\s*;?\s*$/i
+
+    },
+
+    {
+
+      task: "创建名为 student_contacts 的表，包含主键 contact_id (INT PRIMARY KEY)，以及 student_id (INT) 作为关联至 students_mst 表 student_id 的外键字段。",
+
+      example: "CREATE TABLE student_contacts (contact_id INT PRIMARY KEY, student_id INT, FOREIGN KEY (student_id) REFERENCES students_mst(student_id));",
+
+      expectedQuery: /^\s*CREATE\s+TABLE\s+student_contacts\s*\([\s\w\(\),]+FOREIGN\s+KEY\s*\(\s*student_id\s*\)\s+REFERENCES\s+students_mst\s*\(\s*student_id\s*\)\s*\)\s*;?\s*$/i
+
+    }
+
+  ],
+
+  33: [
+
+    {
+
+      task: "从学生主表 (students_mst) 中，删除测试分数这一列 (test_score) 。",
+
+      example: "ALTER TABLE students_mst DROP COLUMN test_score;",
+
+      expectedQuery: /^\s*ALTER\s+TABLE\s+students_mst\s+DROP\s+(COLUMN\s+)?test_score\s*;?\s*$/i
+
+    },
+
+    {
+
+      task: "为学生主表 (students_mst) 新增一列邮箱地址 email，数据类型为 VARCHAR(100) 。",
+
+      example: "ALTER TABLE students_mst ADD email VARCHAR(100);",
+
+      expectedQuery: /^\s*ALTER\s+TABLE\s+students_mst\s+ADD\s+email\s+VARCHAR\(\s*100\s*\)\s*;?\s*$/i
+
+    },
+
+    {
+
+      task: "彻底删除科系主表 (departments_mst) 及其所有关联数据（仅作测试）。",
+
+      example: "DROP TABLE departments_mst;",
+
+      expectedQuery: /^\s*DROP\s+TABLE\s+departments_mst\s*;?\s*$/i
+
+    }
+
+  ],
+
+  34: [
+
+    {
+
+      task: "开始一个事务 (START TRANSACTION)，删除所有年龄在 30 岁及以上的学生记录，然后回滚该事务 (ROLLBACK)。",
+
+      example: "START TRANSACTION; DELETE FROM students_mst WHERE age >= 30; ROLLBACK;",
+
+      expectedQuery: /^(START TRANSACTION|ROLLBACK)/i
+
+    },
+
+    {
+
+      task: "开始一个事务 (START TRANSACTION)，将学籍ID为 10 的学生分数更新为 100 分，并正式提交此事务 (COMMIT)。",
+
+      example: "START TRANSACTION; UPDATE students_mst SET test_score = 100 WHERE student_id = 10; COMMIT;",
+
+      expectedQuery: /^(START TRANSACTION|COMMIT)/i
+
+    },
+
+    {
+
+      task: "开始一个事务 (START TRANSACTION)，删除 students_mst 表的所有行，最后回滚此删除操作以恢复数据 (ROLLBACK)。",
+
+      example: "START TRANSACTION; DELETE FROM students_mst; ROLLBACK;",
+
+      expectedQuery: /^(START TRANSACTION|ROLLBACK)/i
+
+    }
+
+  ],
+
+  35: [
+
+    {
+
+      task: "为 students_mst 表的年龄列 age 创建一个名为 idx_student_age 的索引，以加快年龄查询的速度。",
+
+      example: "CREATE INDEX idx_student_age ON students_mst(age);",
+
+      expectedQuery: /^\s*CREATE\s+INDEX\s+idx_student_age\s+ON\s+students_mst\s*\(\s*age\s*\)\s*;?\s*$/i
+
+    },
+
+    {
+
+      task: "为 students_mst 表的测试分数列 test_score 创建一个名为 idx_student_score 的索引，以加速排序性能。",
+
+      example: "CREATE INDEX idx_student_score ON students_mst(test_score);",
+
+      expectedQuery: /^\s*CREATE\s+INDEX\s+idx_student_score\s+ON\s+students_mst\s*\(\s*test_score\s*\)\s*;?\s*$/i
+
+    },
+
+    {
+
+      task: "删除 students_mst 表的年龄列上的索引 idx_student_age (使用 DROP INDEX 语法)。",
+
+      example: "DROP INDEX idx_student_age ON students_mst;",
+
+      expectedQuery: /^\s*DROP\s+INDEX\s+idx_student_age\s+ON\s+students_mst\s*;?\s*$/i
+
+    }
+
+  ],
+
+  36: [
+
+    {
+
+      task: "创建一个名为 female_students 的视图，只包含所有性别 (gender) 为 '1' (女生) 的学生信息。",
+
+      example: "CREATE VIEW female_students AS SELECT * FROM students_mst WHERE gender = '1';",
+
+      expectedQuery: /^\s*CREATE\s+VIEW\s+female_students\s+AS\s+SELECT\s+[\w\.\s,\*]+FROM\s+students_mst\s+WHERE\s+gender\s*=\s*['"']1['"']\s*;?\s*$/i
+
+    },
+
+    {
+
+      task: "创建一个名为 high_scorers 的视图，筛选出所有测试分 (test_score) 大于等于 80 分的学生数据。",
+
+      example: "CREATE VIEW high_scorers AS SELECT * FROM students_mst WHERE test_score >= 80;",
+
+      expectedQuery: /^\s*CREATE\s+VIEW\s+high_scorers\s+AS\s+SELECT\s+[\w\.\s,\*]+FROM\s+students_mst\s+WHERE\s+test_score\s*>=\s*80\s*;?\s*$/i
+
+    },
+
+    {
+
+      task: "创建一个名为 it_students 的视图，筛选出所属科系 (department_id) 为 1 的所有学生数据。",
+
+      example: "CREATE VIEW it_students AS SELECT * FROM students_mst WHERE department_id = 1;",
+
+      expectedQuery: /^\s*CREATE\s+VIEW\s+it_students\s+AS\s+SELECT\s+[\w\.\s,\*]+FROM\s+students_mst\s+WHERE\s+department_id\s*=\s*1\s*;?\s*$/i
+
+    }
+
+  ]
+
+};
+
+
+
+// 将随机练习映射到 SQL_LESSONS 数组中 (存储为 randomExercises 数组，并初始化 index 为 0)
+
+
+// Dynamic generation helper to expand each lesson's exercise list to 20 variations
+function expandAllRandomExercises() {
+  const ages = [18, 20, 22, 24, 25, 27, 28, 29, 30, 32, 33, 35, 38, 40, 42, 44, 45, 47, 50, 54, 55, 56, 60, 65, 77];
+  const depts = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+  const scores = [10, 30, 44, 45, 50, 55, 60, 65, 70, 80, 85, 90, 95, 99, 100];
+  const genders = ['0', '1'];
+
+  for (let id = 1; id <= 36; id++) {
+    let exercises = RANDOM_EXERCISES[id] || [];
+    if (exercises.length === 0) continue;
+
+    let attempts = 0;
+    while (exercises.length < 20 && attempts < 500) {
+      attempts++;
+      let index = exercises.length;
+      let base = exercises[index % 3]; // use the 3 base exercises as templates
+      let mutated = null;
+
+      if (id === 1 || id === 2) {
+        let phrasing = [
+          `查询【students_mst】表格的全部内容进行练习（变化型 ${index}）。`,
+          `读取学生主表 (students_mst) 的全量字段与行记录（变化型 ${index}）。`,
+          `从 students_mst 表中获取所有的列与行（变化型 ${index}）。`,
+          `查询【departments_mst】科系主表的全部字段（变化型 ${index}）。`,
+          `读取科系主表 (departments_mst) 的所有记录以进行测试（变化型 ${index}）。`,
+          `从 departments_mst 表中获取所有行数据以熟悉结构（变化型 ${index}）。`
+        ];
+        let pick = phrasing[index % phrasing.length];
+        let isStudents = pick.includes("students_mst");
+        mutated = {
+          task: pick,
+          example: isStudents ? "SELECT * FROM students_mst;" : "SELECT * FROM departments_mst;",
+          expectedQuery: isStudents ? /^\s*SELECT\s+\*\s+FROM\s+students_mst\s*;?\s*$/i : /^\s*SELECT\s+\*\s+FROM\s+departments_mst\s*;?\s*$/i
+        };
+      }
+      else if (id === 3) {
+        let colPairs = [
+          { cols: ["student_name", "gender"], name1: "学生姓名 (student_name)", name2: "性别 (gender)" },
+          { cols: ["student_name", "age"], name1: "学生姓名 (student_name)", name2: "年龄 (age)" },
+          { cols: ["student_id", "test_score"], name1: "学生 ID (student_id)", name2: "成绩 (test_score)" },
+          { cols: ["student_number", "age"], name1: "学籍编号 (student_number)", name2: "年龄 (age)" },
+          { cols: ["student_name_kana", "gender"], name1: "姓名平假名 (student_name_kana)", name2: "性别 (gender)" },
+          { cols: ["department_id", "test_score"], name1: "所属科系 ID (department_id)", name2: "成绩 (test_score)" },
+          { cols: ["student_name", "test_score"], name1: "学生姓名 (student_name)", name2: "成绩 (test_score)" },
+          { cols: ["student_number", "department_id"], name1: "学籍编号 (student_number)", name2: "所属科系 ID (department_id)" }
+        ];
+        let pair = colPairs[index % colPairs.length];
+        let c1 = pair.cols[0];
+        let c2 = pair.cols[1];
+        mutated = {
+          task: `从 students_mst 表中，只查询${pair.name1}和${pair.name2}这两列的数据（变化型 ${index}）。`,
+          example: `SELECT ${c1}, ${c2} FROM students_mst;`,
+          expectedQuery: new RegExp("^\\s*SELECT\\s+(" + c1 + "\\s*,\\s*" + c2 + "|" + c2 + "\\s*,\\s*" + c1 + ")\\s+FROM\\s+students_mst\\s*;?\\s*$", "i")
+        };
+      }
+      else if (id === 4) {
+        if (index % 3 === 0) {
+          let age = ages[index % ages.length];
+          mutated = {
+            task: `从 students_mst 表中，查询所有年龄 (age) 为 ${age} 岁的学生数据（筛选条件：age = ${age}）。`,
+            example: `SELECT * FROM students_mst WHERE age = ${age};`,
+            expectedQuery: new RegExp("^\\s*SELECT\\s+\\*\\s+FROM\\s+students_mst\\s+WHERE\\s+age\\s*=\\s*" + age + "\\s*;?\\s*$", "i")
+          };
+        } else if (index % 3 === 1) {
+          let gender = genders[index % genders.length];
+          let sexStr = gender === '0' ? '男生' : '女生';
+          mutated = {
+            task: `从 students_mst 表中，查询所有性别 (gender) 为 '${gender}'（${sexStr}）的学生数据。`,
+            example: `SELECT * FROM students_mst WHERE gender = '${gender}';`,
+            expectedQuery: new RegExp("^\\s*SELECT\\s+\\*\\s+FROM\\s+students_mst\\s+WHERE\\s+gender\\s*=\\s*['\"]" + gender + "['\"]\\s*;?\\s*$", "i")
+          };
+        } else {
+          let dept = depts[index % depts.length];
+          mutated = {
+            task: `从 students_mst 表中，查询所属科系 ID (department_id) 为 ${dept} 的学生数据。`,
+            example: `SELECT * FROM students_mst WHERE department_id = ${dept};`,
+            expectedQuery: new RegExp("^\\s*SELECT\\s+\\*\\s+FROM\\s+students_mst\\s+WHERE\\s+department_id\\s*=\\s*" + dept + "\\s*;?\\s*$", "i")
+          };
+        }
+      }
+      else if (id === 5) {
+        let age = ages[index % ages.length];
+        let dept = depts[(index + 1) % depts.length];
+        mutated = {
+          task: `从 students_mst 表中，查询所有年龄 (age) 为 ${age} 岁，并且所属科系 ID (department_id) 为 ${dept} 的学生数据。`,
+          example: `SELECT * FROM students_mst WHERE age = ${age} AND department_id = ${dept};`,
+          expectedQuery: new RegExp("^\\s*SELECT\\s+\\*\\s+FROM\\s+students_mst\\s+WHERE\\s+(age\\s*=\\s*" + age + "\\s+AND\\s+department_id\\s*=\\s*" + dept + "|department_id\\s*=\\s*" + dept + "\\s+AND\\s+age\\s*=\\s*" + age + ")\\s*;?\\s*$", "i")
+        };
+      }
+      else if (id === 6) {
+        let d1 = depts[index % depts.length];
+        let d2 = depts[(index + 2) % depts.length];
+        if (d1 === d2) d2 = (d1 + 1) % 10 + 1;
+        mutated = {
+          task: `从 students_mst 表中，查询科系 ID (department_id) 是 ${d1} 或者 ${d2} 的所有学生数据。`,
+          example: `SELECT * FROM students_mst WHERE department_id = ${d1} OR department_id = ${d2};`,
+          expectedQuery: new RegExp("^\\s*SELECT\\s+\\*\\s+FROM\\s+students_mst\\s+WHERE\\s+(department_id\\s*=\\s*" + d1 + "\\s+OR\\s+department_id\\s*=\\s*" + d2 + "|department_id\\s*=\\s*" + d2 + "\\s+OR\\s+department_id\\s*=\\s*" + d1 + ")\\s*;?\\s*$", "i")
+        };
+      }
+      else if (id === 7) {
+        let a1 = ages[index % ages.length];
+        let a2 = ages[(index + 3) % ages.length];
+        if (a1 === a2) a2 = a1 + 5;
+        let gender = genders[index % genders.length];
+        mutated = {
+          task: `从 students_mst 表中，查询年龄为 ${a1} 岁或者 ${a2} 岁，并且性别 (gender) 为 '${gender}' 的学生。`,
+          example: `SELECT * FROM students_mst WHERE (age = ${a1} OR age = ${a2}) AND gender = '${gender}';`,
+          expectedQuery: new RegExp("^\\s*SELECT\\s+\\*\\s+FROM\\s+students_mst\\s+WHERE\\s+(\\(\\s*age\\s*=\\s*" + a1 + "\\s+OR\\s+age\\s*=\\s*" + a2 + "\\s*\\)\\s+AND\\s+gender\\s*=\\s*['\"]" + gender + "['\"]|gender\\s*=\\s*['\"]" + gender + "['\"]\\s+AND\\s+\\(\\s*age\\s*=\\s*" + a1 + "\\s+OR\\s+age\\s*=\\s*" + a2 + "\\s*\\))\\s*;?\\s*$", "i")
+        };
+      }
+      else if (id === 8) {
+        let score = scores[index % scores.length];
+        let op = index % 4 === 0 ? ">=" : (index % 4 === 1 ? "<=" : (index % 4 === 2 ? ">" : "<"));
+        let opName = op === ">=" ? "大于等于" : (op === "<=" ? "小于等于" : (op === ">" ? "大于" : "小于"));
+        mutated = {
+          task: `从 students_mst 中，查询分数 (test_score) ${opName} ${score} 分的所有学生数据。`,
+          example: `SELECT * FROM students_mst WHERE test_score ${op} ${score};`,
+          expectedQuery: new RegExp("^\\s*SELECT\\s+\\*\\s+FROM\\s+students_mst\\s+WHERE\\s+test_score\\s*" + (op === '>=' ? '&gt;=' : (op === '<=' ? '&lt;=' : op)) + "\\s*" + score + "\\s*;?\\s*$", "i")
+        };
+      }
+      else if (id === 9) {
+        let isNot = index % 2 === 0;
+        mutated = {
+          task: isNot ? `从 students_mst 中，查询所有已经被软删除（即 delete_at 不是 NULL）的学生数据（版本 ${index}）。` : `从 students_mst 中，查询所有未被软删除（即 delete_at 是 NULL）的学生数据（版本 ${index}）。`,
+          example: isNot ? `SELECT * FROM students_mst WHERE delete_at IS NOT NULL;` : `SELECT * FROM students_mst WHERE delete_at IS NULL;`,
+          expectedQuery: isNot ? /^\s*SELECT\s+\*\s+FROM\s+students_mst\s+WHERE\s+delete_at\s+IS\s+NOT\s+NULL\s*;?\s*$/i : /^\s*SELECT\s+\*\s+FROM\s+students_mst\s+WHERE\s+delete_at\s+IS\s+NULL\s*;?\s*$/i
+        };
+      }
+      else if (id === 10) {
+        let nameKana = ["ヤマ%", "%ト", "%ラ%", "シ%", "シン%", "%タ%", "%ロ%", "サイトウ%", "ヤマダ%", "サトウ%"];
+        let nameZh = ["以 'ヤマ' 开头", "以 'ト' 结尾", "包含 'ラ'", "以 'シ' 开头", "以 'シン' 开头", "包含 'タ'", "包含 'ロ'", "以 'サイトウ' 开头", "以 'ヤマダ' 开头", "以 'サトウ' 开头"];
+        let k = nameKana[index % nameKana.length];
+        let z = nameZh[index % nameZh.length];
+        mutated = {
+          task: `从 students_mst 中，查询所有名字平假名 (student_name_kana) ${z} 的学生数据。`,
+          example: `SELECT * FROM students_mst WHERE student_name_kana LIKE '${k}';`,
+          expectedQuery: new RegExp("^\\s*SELECT\\s+\\*\\s+FROM\\s+students_mst\\s+WHERE\\s+student_name_kana\\s+LIKE\\s+['\"]" + k + "['\"]\\s*;?\\s*$", "i")
+        };
+      }
+      else if (id === 11) {
+        let minAge = 15 + (index % 5) * 5;
+        let maxAge = minAge + 10;
+        mutated = {
+          task: `从 students_mst 中，查询年龄 (age) 在 ${minAge} 岁到 ${maxAge} 岁之间的所有学生数据。`,
+          example: `SELECT * FROM students_mst WHERE age BETWEEN ${minAge} AND ${maxAge};`,
+          expectedQuery: new RegExp("^\\s*SELECT\\s+\\*\\s+FROM\\s+students_mst\\s+WHERE\\s+age\\s+BETWEEN\\s+" + minAge + "\\s+AND\\s+" + maxAge + "\\s*;?\\s*$", "i")
+        };
+      }
+      else if (id === 12) {
+        let pool = [20, 24, 25, 29, 30, 45, 50, 60, 65];
+        let v1 = pool[index % pool.length];
+        let v2 = pool[(index + 2) % pool.length];
+        let v3 = pool[(index + 4) % pool.length];
+        mutated = {
+          task: `从 students_mst 中，查询年龄 (age) 是 ${v1}、${v2} 或 ${v3} 岁之一的学生数据。`,
+          example: `SELECT * FROM students_mst WHERE age IN (${v1}, ${v2}, ${v3});`,
+          expectedQuery: new RegExp("^\\s*SELECT\\s+\\*\\s+FROM\\s+students_mst\\s+WHERE\\s+age\\s+IN\\s*\\([\\s\\d,\\s]+\\)\\s*;?\\s*$", "i")
+        };
+      }
+      else if (id === 13) {
+        let orderCols = ["test_score", "age", "student_id", "department_id"];
+        let col = orderCols[index % orderCols.length];
+        let dir = index % 2 === 0 ? "DESC" : "ASC";
+        let dirZh = dir === "DESC" ? "降序" : "升序";
+        mutated = {
+          task: `查询 students_mst 表的所有学生，并按照 ${col} 进行${dirZh}排序（版本 ${index}）。`,
+          example: `SELECT * FROM students_mst ORDER BY ${col} ${dir};`,
+          expectedQuery: new RegExp("^\\s*SELECT\\s+\\*\\s+FROM\\s+students_mst\\s+ORDER\\s+BY\\s+" + col + "\\s+" + dir + "\\s*;?\\s*$", "i")
+        };
+      }
+      else if (id === 14) {
+        let limitNum = (index % 5) + 3;
+        mutated = {
+          task: `从 students_mst 表中，查询分数前 ${limitNum} 高的学生数据（即按 test_score 降序排序后限制 ${limitNum} 行）。`,
+          example: `SELECT * FROM students_mst ORDER BY test_score DESC LIMIT ${limitNum};`,
+          expectedQuery: new RegExp("^\\s*SELECT\\s+\\*\\s+FROM\\s+students_mst\\s+ORDER\\s+BY\\s+test_score\\s+DESC\\s+LIMIT\\s+" + limitNum + "\\s*;?\\s*$", "i")
+        };
+      }
+      else if (id === 15) {
+        let distCols = ["age", "department_id", "gender"];
+        let col = distCols[index % distCols.length];
+        mutated = {
+          task: `查询 students_mst 表中所有不重复的 ${col} 数据以作 analysis（去重查询，版本 ${index}）。`,
+          example: `SELECT DISTINCT ${col} FROM students_mst;`,
+          expectedQuery: new RegExp("^\\s*SELECT\\s+DISTINCT\\s+" + col + "\\s+FROM\\s+students_mst\\s*;?\\s*$", "i")
+        };
+      }
+      else if (id === 16) {
+        let factor = (index % 5) + 2;
+        mutated = {
+          task: `从 students_mst 中，查询学生姓名 student_name，以及把年龄乘以 ${factor} 后的数值（命名为 double_age_${index}）。`,
+          example: `SELECT student_name, age * ${factor} AS double_age_${index} FROM students_mst;`,
+          expectedQuery: new RegExp("^\\s*SELECT\\s+student_name\\s*,\\s*age\\s*\\*\\s*" + factor + "\\s+(AS\\s+)?double_age_" + index + "\\s+FROM\\s+students_mst\\s*;?\\s*$", "i")
+        };
+      }
+      else if (id === 17) {
+        let dept = depts[index % depts.length];
+        mutated = {
+          task: `计算所属科系ID (department_id) 为 ${dept} 的所有学生的测试分数 (test_score) 总和。`,
+          example: `SELECT SUM(test_score) FROM students_mst WHERE department_id = ${dept};`,
+          expectedQuery: new RegExp("^\\s*SELECT\\s+SUM\\(\\s*test_score\\s*\\)\\s+FROM\\s+students_mst\\s+WHERE\\s+department_id\\s*=\\s*" + dept + "\\s*;?\\s*$", "i")
+        };
+      }
+      else if (id === 18) {
+        let dept = depts[index % depts.length];
+        mutated = {
+          task: `计算所属科系ID (department_id) 为 ${dept} 的所有学生的测试分数 (test_score) 平均值。`,
+          example: `SELECT AVG(test_score) FROM students_mst WHERE department_id = ${dept};`,
+          expectedQuery: new RegExp("^\\s*SELECT\\s+AVG\\(\\s*test_score\\s*\\)\\s+FROM\\s+students_mst\\s+WHERE\\s+department_id\\s*=\\s*" + dept + "\\s*;?\\s*$", "i")
+        };
+      }
+      else if (id === 19) {
+        let age = ages[index % ages.length];
+        mutated = {
+          task: `统计 students_mst 表中年龄大于 ${age} 岁的学生总人数（COUNT统计，版本 ${index}）。`,
+          example: `SELECT COUNT(*) FROM students_mst WHERE age > ${age};`,
+          expectedQuery: new RegExp("^\\s*SELECT\\s+COUNT\\(\\s*\\*\\s*\\)\\s+FROM\\s+students_mst\\s+WHERE\\s+age\\s*>\\s*" + age + "\\s*;?\\s*$", "i")
+        };
+      }
+      else if (id === 20) {
+        let dept = depts[index % depts.length];
+        mutated = {
+          task: `查询所属科系ID (department_id) 为 ${dept} 的学生中的最高测试分数 (test_score) 。`,
+          example: `SELECT MAX(test_score) FROM students_mst WHERE department_id = ${dept};`,
+          expectedQuery: new RegExp("^\\s*SELECT\\s+MAX\\(\\s*test_score\\s*\\)\\s+FROM\\s+students_mst\\s+WHERE\\s+department_id\\s*=\\s*" + dept + "\\s*;?\\s*$", "i")
+        };
+      }
+      else if (id === 21) {
+        let dept = depts[index % depts.length];
+        mutated = {
+          task: `查询所属科系ID (department_id) 为 ${dept} 的学生中的最低测试分数 (test_score) 。`,
+          example: `SELECT MIN(test_score) FROM students_mst WHERE department_id = ${dept};`,
+          expectedQuery: new RegExp("^\\s*SELECT\\s+MIN\\(\\s*test_score\\s*\\)\\s+FROM\\s+students_mst\\s+WHERE\\s+department_id\\s*=\\s*" + dept + "\\s*;?\\s*$", "i")
+        };
+      }
+      else if (id === 22) {
+        let gbCols = ["gender", "department_id"];
+        let col = gbCols[index % 2];
+        mutated = {
+          task: `按照 ${col} 进行分组，统计每个组的学生平均年龄（分组统计，版本 ${index}）。`,
+          example: `SELECT ${col}, AVG(age) FROM students_mst GROUP BY ${col};`,
+          expectedQuery: new RegExp("^\\s*SELECT\\s+" + col + "\\s*,\\s*AVG\\(\\s*age\\s*\\)\\s+FROM\\s+students_mst\\s+GROUP\\s+BY\\s+" + col + "\\s*;?\\s*$", "i")
+        };
+      }
+      else if (id === 23) {
+        let countLimit = (index % 3) + 2;
+        mutated = {
+          task: `按照所属科系ID (department_id) 进行分组，统计每个科系的学生人数，并且只保留人数大于 ${countLimit} 人的分组。`,
+          example: `SELECT department_id, COUNT(*) FROM students_mst GROUP BY department_id HAVING COUNT(*) > ${countLimit};`,
+          expectedQuery: new RegExp("^\\s*SELECT\\s+department_id\\s*,\\s*COUNT\\(\\s*\\*\\s*\\)\\s+FROM\\s+students_mst\\s+GROUP\\s+BY\\s+department_id\\s+HAVING\\s+COUNT\\(\\s*\\*\\s*\\)\\s*>\\s*" + countLimit + "\\s*;?\\s*$", "i")
+        };
+      }
+      else if (id === 24) {
+        let dept = depts[index % depts.length];
+        mutated = {
+          task: `从 students_mst 中，查询分数 (test_score) 大于【科系ID为 ${dept} 的学生平均分数】的所有学生记录。`,
+          example: `SELECT * FROM students_mst WHERE test_score > (SELECT AVG(test_score) FROM students_mst WHERE department_id = ${dept});`,
+          expectedQuery: new RegExp("^\\s*SELECT\\s+\\*\\s+FROM\\s+students_mst\\s+WHERE\\s+test_score\\s*>\\s*\\(\\s*SELECT\\s+AVG\\(\\s*test_score\\s*\\)\\s+FROM\\s+students_mst\\s+WHERE\\s+department_id\\s*=\\s*" + dept + "\\s*\\)\\s*;?\\s*$", "i")
+        };
+      }
+      else if (id >= 25 && id <= 29) {
+        let bookshopQueries = [
+          {
+            task: `从书店表 books 和分类表 cats 中，查询所有书的书名 title 和分类名 cat_name (INNER JOIN, 变化 ${index})。`,
+            example: "SELECT b.title, c.cat_name FROM books b INNER JOIN cats c ON b.cat_id = c.cat_id;",
+            expectedQuery: /INNER JOIN/i
+          },
+          {
+            task: `从订单表 orders 和会员表 members 中，联表查询订单 ID (order_id) 和买家姓名 (name) (INNER JOIN, 变化 ${index})。`,
+            example: "SELECT o.order_id, m.name FROM orders o INNER JOIN members m ON o.mem_id = m.mem_id;",
+            expectedQuery: /INNER JOIN/i
+          },
+          {
+            task: `查询每个订单 of order_id，购买图书 of title，以及购买数量 qty (三表联查, 变化 ${index})。`,
+            example: "SELECT o.order_id, b.title, o.qty FROM orders o INNER JOIN books b ON o.book_id = b.book_id;",
+            expectedQuery: /INNER JOIN/i
+          },
+          {
+            task: `查询所有分类 (cats) 以及其下的图书 (books) 列表。即使某些分类下没有书，也必须显示分类名 (LEFT JOIN, 变化 ${index})。`,
+            example: "SELECT c.cat_name, b.title FROM cats c LEFT JOIN books b ON c.cat_id = b.cat_id;",
+            expectedQuery: /LEFT JOIN/i
+          },
+          {
+            task: `查询所有会员 (members) 以及他们的购书订单信息。包括没有买过任何书的会员，也必须显示其姓名 (LEFT JOIN, 变化 ${index})。`,
+            example: "SELECT m.name, o.order_id FROM members m LEFT JOIN orders o ON m.mem_id = o.mem_id;",
+            expectedQuery: /LEFT JOIN/i
+          }
+        ];
+        mutated = bookshopQueries[index % bookshopQueries.length];
+      }
+      else if (id === 30) {
+        let idVal = 100 + index;
+        mutated = {
+          task: `向科系主表 (departments_mst) 中插入一条新纪录，主键 ID 为 ${idVal}，科系名称为 'AI技術研究科_${index}'。`,
+          example: `INSERT INTO departments_mst (department_id, department_name) VALUES (${idVal}, 'AI技術研究科_${index}');`,
+          expectedQuery: new RegExp("^\\s*INSERT\\s+INTO\s+departments_mst\\s*\\(\\s*department_id\\s*,\\s*department_name\\s*\\)\\s*VALUES\\s*\\(\\s*" + idVal + "\\s*,\\s*['\"]AI技術研究科_" + index + "['\"]\\s*\\)\\s*;?\\s*$", "i")
+        };
+      }
+      else if (id === 31) {
+        let score = scores[index % scores.length];
+        let targetId = (index % 25) + 1;
+        mutated = {
+          task: `将学籍 ID (student_id) 为 ${targetId} 的学生的测试分数 (test_score) 修改为 ${score} 分。`,
+          example: `UPDATE students_mst SET test_score = ${score} WHERE student_id = ${targetId};`,
+          expectedQuery: new RegExp("^\\s*UPDATE\\s+students_mst\\s+SET\\s+test_score\\s*=\\s*" + score + "\\s+WHERE\\s+student_id\\s*=\\s*" + targetId + "\\s*;?\\s*$", "i")
+        };
+      }
+      else if (id === 32) {
+        let targetId = (index % 25) + 1;
+        mutated = {
+          task: `从学生主表 (students_mst) 中，删除学籍 ID (student_id) 为 ${targetId} 的学生记录。`,
+          example: `DELETE FROM students_mst WHERE student_id = ${targetId};`,
+          expectedQuery: new RegExp("^\\s*DELETE\\s+FROM\\s+students_mst\\s+WHERE\\s+student_id\\s*=\\s*" + targetId + "\\s*;?\\s*$", "i")
+        };
+      }
+      else if (id === 33) {
+        let colName = `ext_col_${index}`;
+        mutated = {
+          task: `在科系表 (departments_mst) 中新增一列【${colName}】，类型为 VARCHAR(50)。`,
+          example: `ALTER TABLE departments_mst ADD ${colName} VARCHAR(50);`,
+          expectedQuery: new RegExp("^\\s*ALTER\\s+TABLE\\s+departments_mst\\s+ADD\\s+" + colName + "\\s+VARCHAR\\(\\s*50\\s*\\)\\s*;?\\s*$", "i")
+        };
+      }
+      else if (id === 34) {
+        let score = scores[index % scores.length];
+        let targetId = (index % 10) + 1;
+        mutated = {
+          task: `开启一个事务 (START TRANSACTION)，更新学生 ${targetId} 的分数为 ${score}分，最后回滚该事务 (ROLLBACK)。`,
+          example: `START TRANSACTION; UPDATE students_mst SET test_score = ${score} WHERE student_id = ${targetId}; ROLLBACK;`,
+          expectedQuery: /^(START TRANSACTION|ROLLBACK)/i
+        };
+      }
+      else if (id === 35) {
+        let name = `idx_name_${index}`;
+        mutated = {
+          task: `为 students_mst 表的 student_name 列创建一个名为 ${name} 的索引。`,
+          example: `CREATE INDEX ${name} ON students_mst(student_name);`,
+          expectedQuery: new RegExp("^\\s*CREATE\\s+INDEX\\s+" + name + "\\s+ON\\s+students_mst\\s*\\(\\s*student_name\\s*\\)\\s*;?\\s*$", "i")
+        };
+      }
+      else if (id === 36) {
+        let name = `view_dept_${index}`;
+        let dept = depts[index % depts.length];
+        mutated = {
+          task: `创建一个名为 ${name} 的视图，筛选出所有 department_id 为 ${dept} 的学生记录。`,
+          example: `CREATE VIEW ${name} AS SELECT * FROM students_mst WHERE department_id = ${dept};`,
+          expectedQuery: new RegExp("^\\s*CREATE\\s+VIEW\\s+" + name + "\\s+AS\\s+SELECT\\s+[\\w\\.\\s,\\*]+FROM\\s+students_mst\\s+WHERE\\s+department_id\\s*=\\s*" + dept + "\\s*;?\\s*$", "i")
+        };
+      }
+
+      if (mutated) {
+        let exists = exercises.some(ex => ex.task === mutated.task);
+        if (!exists) {
+          exercises.push(mutated);
+        }
+      }
+    }
+  }
+}
+
+// 自动扩展题库到 20 题
+expandAllRandomExercises();
+
+SQL_LESSONS.forEach(lesson => {
+
+  if (RANDOM_EXERCISES[lesson.id]) {
+
+    lesson.randomExercises = RANDOM_EXERCISES[lesson.id];
+
+    lesson.randomExerciseIndex = 0;
+
+    lesson.randomExercise = lesson.randomExercises[0];
+
+  }
+
+});
+

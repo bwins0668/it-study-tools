@@ -1,0 +1,1224 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="dark light">
+  <meta name="description" content="SQL / MySQL, ITパスポート & Java 多版块职业学习门户。包含SQL交互沙盒、IT Passport中日双语教程、CBT模拟考试及Java编程沙盒。">
+  <title>Study Tools</title>
+  <link rel="icon" href="app.ico">
+  <!-- Google Fonts & FontAwesome Localized -->
+  <link rel="stylesheet" href="assets/lib/google-fonts/css/google-fonts.css">
+  <link rel="stylesheet" href="assets/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="assets/css/index.css?v=20260608_global_target">
+  <link rel="stylesheet" href="assets/css/light-theme.css?v=20260608_i18n_fix">
+  <link rel="stylesheet" href="assets/css/japanese-typing.css?v=20260606_v2">
+  <link rel="stylesheet" href="assets/css/ai_learning.css?v=20260608_v2">
+</head>
+<body>
+
+  <!-- App Container -->
+  <div class="app-container">
+
+    <!-- Header Panel -->
+    <header class="app-header">
+      <div class="header-logo">
+        <i class="fa-solid fa-graduation-cap logo-icon" id="main-logo-icon"></i>
+        <div class="logo-text">
+          <h1 id="main-title-text">Study Tools</h1>
+          <span>配套备考平台 &nbsp;•&nbsp; By: Coco</span>
+        </div>
+      </div>
+
+      <!-- Subject Tab Switcher -->
+      <div class="header-subject-selector" onclick="event.stopPropagation()">
+        <button class="subject-tab active" id="subject-tab-sql" onclick="switchSubject('sql')">
+          <i class="fa-solid fa-database"></i> SQL 学习
+        </button>
+        <button class="subject-tab" id="subject-tab-java" onclick="switchSubject('java')">
+          <i class="fa-brands fa-java"></i> Java 学習
+        </button>
+        <button class="subject-tab" id="subject-tab-python" onclick="switchSubject('python')">
+          <i class="fa-brands fa-python"></i> Python 学习
+        </button>
+        <button class="subject-tab" id="subject-tab-itpass" onclick="switchSubject('itpass')">
+          <i class="fa-solid fa-graduation-cap"></i> ITパスポート 备考
+        </button>
+        <button class="subject-tab" id="subject-tab-sg" onclick="switchSubject('sg')">
+          <i class="fa-solid fa-shield-halved"></i> SG 备考
+        </button>
+        <button class="subject-tab" id="subject-tab-typing" onclick="switchSubject('typing')">
+          <i class="fa-solid fa-keyboard"></i> 日本語タイピング
+        </button>
+      </div>
+
+
+
+      <!-- Header Challenge Widget (SQL only) -->
+      <div class="header-challenge" id="header-challenge">
+        <button class="header-challenge-btn-start" id="challenge-start-btn" onclick="startCrossChallenge()">
+          <i class="fa-solid fa-fire-flame-curved"></i> 综合随机挑战
+        </button>
+        <div class="challenge-active-controls" id="challenge-controls" style="display: none;">
+          <span class="challenge-status-text" id="challenge-status-text">挑战中 (1/1)</span>
+          <span class="challenge-source-tag" id="challenge-source-tag" style="display: none;"></span>
+          <button class="challenge-control-btn" id="challenge-next-btn" onclick="nextCrossChallenge()" style="display: none;">
+            <i class="fa-solid fa-forward"></i> 换一题
+          </button>
+          <button class="challenge-control-btn stop-btn" id="challenge-stop-btn" onclick="stopCrossChallenge()" style="display: none;">
+            <i class="fa-solid fa-stop"></i> 结束
+          </button>
+        </div>
+      </div>
+
+      <button class="theme-toggle-btn" id="theme-toggle-btn" onclick="toggleTheme()" title="切换浅色/深色模式" aria-label="切换浅色或深色模式">
+        <i class="fa-solid fa-sun"></i>
+      </button>
+
+      <button class="reset-all-btn" onclick="resetAllProgress()">
+        <i class="fa-solid fa-rotate-left"></i> 重置进度
+      </button>
+    </header>
+
+    <!-- Sub-Header Bar (Visible in SQL mode to toggle Textbook vs Mock Exam) -->
+    <div class="sub-header-bar" id="sql-sub-header" style="display: none;">
+      <div class="sub-header-tabs">
+        <button class="sub-header-tab active" id="sql-sub-tab-lessons" onclick="switchSqlSubMode('lessons')">
+          <i class="fa-solid fa-book-open"></i> 教科书与演练沙盒 (テキスト・演習)
+        </button>
+        <button class="sub-header-tab" id="sql-sub-tab-exam" onclick="switchSqlSubMode('exam')">
+          <i class="fa-solid fa-laptop-code"></i> 实操模拟考试 (実技模擬試験)
+        </button>
+      </div>
+    </div>
+
+    <!-- Sub-Header Bar (Visible in IT Passport mode to toggle Textbook vs Past Exam Dojo) -->
+    <div class="sub-header-bar" id="itpass-sub-header" style="display: none;">
+      <div class="sub-header-tabs">
+        <button class="sub-header-tab active" id="sub-tab-lessons" onclick="switchItPassSubMode('lessons')">
+          <i class="fa-solid fa-book-open"></i> 教科书章节学习 (テキスト学習)
+        </button>
+        <button class="sub-header-tab" id="sub-tab-dojo" onclick="switchItPassSubMode('dojo')">
+          <i class="fa-solid fa-compass"></i> 过去问道场 & 模拟考试 (過去問道場)
+        </button>
+      </div>
+    </div>
+
+    <!-- Sub-Header Bar (Visible in SG mode to toggle Textbook vs Past Exam Dojo) -->
+    <div class="sub-header-bar" id="sg-sub-header" style="display: none;">
+      <div class="sub-header-tabs">
+        <button class="sub-header-tab active" id="sg-sub-tab-lessons" onclick="switchSgSubMode('lessons')">
+          <i class="fa-solid fa-book-open"></i> 教科书章节学习 (テキスト学習)
+        </button>
+        <button class="sub-header-tab" id="sg-sub-tab-dojo" onclick="switchSgSubMode('dojo')">
+          <i class="fa-solid fa-compass"></i> 过去问道场 & 模拟考试 (過去問道場)
+        </button>
+      </div>
+    </div>
+
+    <!-- Java Sub-Header (入門編 / 実践編 switch + Exam) -->
+    <div class="sub-header-bar" id="java-sub-header" style="display: none;">
+      <div class="sub-header-tabs">
+        <button class="sub-header-tab active" id="java-sub-tab-nyumon" onclick="switchJavaBook('nyumon')">
+          <i class="fa-solid fa-seedling"></i> 入門編 (基础篇) — 第1〜8章
+        </button>
+        <button class="sub-header-tab" id="java-sub-tab-jissen" onclick="switchJavaBook('jissen')">
+          <i class="fa-solid fa-rocket"></i> 実践編 (进阶篇) — 第1〜11章
+        </button>
+        <button class="sub-header-tab" id="java-sub-tab-exam" onclick="switchJavaSubMode('exam')">
+          <i class="fa-solid fa-laptop-code"></i> 实操模拟考试 (実技模擬試験)
+        </button>
+      </div>
+    </div>
+
+    <!-- Sub-Header Bar (Visible in Python mode to toggle Textbook vs Mock Exam) -->
+    <div class="sub-header-bar" id="python-sub-header" style="display: none;">
+      <div class="sub-header-tabs">
+        <button class="sub-header-tab active" id="python-sub-tab-lessons" onclick="switchPythonSubMode('lessons')">
+          <i class="fa-solid fa-book-open"></i> 教科书与演练沙盒 (テキスト・演習)
+        </button>
+        <button class="sub-header-tab" id="python-sub-tab-exam" onclick="switchPythonSubMode('exam')">
+          <i class="fa-solid fa-laptop-code"></i> 实操模拟考试 (実技模擬試験)
+        </button>
+      </div>
+    </div>
+
+    <!-- Main Workspace -->
+    <div class="app-body" id="main-app-body">
+
+      <!-- Sidebar: Lessons List -->
+      <aside class="app-sidebar">
+        <!-- Sidebar Progress -->
+        <div class="sidebar-progress" id="sidebar-progress-wrapper">
+          <div class="progress-info">
+            <span>進捗状況 (学习进度): <strong id="progress-percentage">0%</strong></span>
+            <span id="progress-fraction">(0 / 36)</span>
+          </div>
+          <div class="progress-bar-container">
+            <div class="progress-bar-fill" id="progress-fill"></div>
+          </div>
+        </div>
+
+        <div class="sidebar-title">
+          <i class="fa-solid fa-list-check"></i>
+          <span id="sidebar-title-text">単元リスト (课程目录)</span>
+        </div>
+        <nav class="lessons-nav" id="lessons-nav">
+          <!-- Dynamically populated via JS -->
+        </nav>
+        <div class="sidebar-pdf-container" id="sidebar-pdf-container" style="display: none;">
+          <button class="sidebar-pdf-btn" onclick="openTextbookPdf()">
+            <i class="fa-solid fa-file-pdf"></i>
+            <span>显示原书 PDF</span>
+          </button>
+        </div>
+      </aside>
+
+      <!-- Center: Lesson Content -->
+      <main class="lesson-content">
+        <div class="content-card">
+          <!-- Lesson Header -->
+          <div class="lesson-header">
+            <div class="lesson-header-top">
+              <span class="lesson-badge" id="lesson-section-badge">カテゴリー</span>
+              <button class="locate-pdf-btn" id="locate-pdf-btn" style="display: none;" onclick="openTextbookPdfForCurrentLesson()">
+                <i class="fa-solid fa-location-crosshairs"></i>
+                <span>定位原书页</span>
+              </button>
+            </div>
+            <h2 id="lesson-title-ja">01-SQLやデータベースとは何か？</h2>
+            <h3 id="lesson-title-zh">01-什么是数据库和SQL？</h3>
+          </div>
+
+          <!-- Language Selector Tabs -->
+          <div class="lang-tabs">
+            <button class="lang-tab active" data-lang="both" onclick="setLangView('both')">
+              <i class="fa-solid fa-columns"></i> 左右对照 (日/中)
+            </button>
+            <button class="lang-tab" data-lang="ja" onclick="setLangView('ja')">
+              日本語のみ
+            </button>
+            <button class="lang-tab" data-lang="zh" onclick="setLangView('zh')">
+              中文简体
+            </button>
+          </div>
+
+          <!-- Concept Text Body -->
+          <div class="concept-container" id="concept-container">
+            <div class="concept-col ja-col">
+              <h4><i class="fa-solid fa-graduation-cap"></i> 解説 (日本語)</h4>
+              <div class="concept-body" id="concept-ja-body">
+                <!-- Loaded dynamically -->
+              </div>
+            </div>
+            <div class="concept-col zh-col">
+              <h4><i class="fa-solid fa-language"></i> 讲解 (中文)</h4>
+              <div class="concept-body" id="concept-zh-body">
+                <!-- Loaded dynamically -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Analogy Card -->
+          <div class="analogy-card">
+            <div class="card-icon"><i class="fa-solid fa-lightbulb"></i></div>
+            <div class="card-content">
+              <h5 id="analogy-title-text">身近な例え (形象比喻)</h5>
+              <p id="lesson-analogy">比喩表現がここに入ります。</p>
+            </div>
+          </div>
+
+          <!-- Code Example Card / Glossary Card -->
+          <div class="example-card collapsed" id="example-card">
+            <div class="example-header" onclick="toggleExampleCard()" style="cursor: pointer; user-select: none;">
+              <span id="example-header-title"><i class="fa-solid fa-code"></i> SQL構文例 (SQL示例)</span>
+              <div style="display:flex; align-items:center; gap:12px;">
+                <button class="copy-example-btn" id="copy-example-btn" onclick="event.stopPropagation(); copyExampleToPlayground()">
+                  <i class="fa-solid fa-copy"></i> エディタへコピー (复制到编辑器)
+                </button>
+                <i class="fa-solid fa-chevron-down toggle-icon" id="example-toggle-icon" style="transform: rotate(-90deg); transition: transform 0.25s;"></i>
+              </div>
+            </div>
+            <pre id="example-pre-block" style="display: none;"><code class="language-sql" id="lesson-example">SELECT * FROM students;</code></pre>
+            <div id="lesson-glossary" style="display: none; padding: 12px; font-size: 14px; line-height: 1.6; white-space: pre-wrap; color: var(--text-muted);">
+              <!-- IT Passport key glossary definitions loaded dynamically -->
+            </div>
+          </div>
+
+          <!-- Java Vocab Flashcard Section (Java mode only) -->
+          <div class="java-vocab-section" id="java-vocab-section" style="display: none;">
+            <div class="java-vocab-header">
+              <i class="fa-solid fa-cards"></i>
+              <span>単語カード / 词汇闪卡</span>
+              <button class="java-vocab-flip-btn" onclick="javaFlipCard()">翻转 / Flip</button>
+              <button class="java-vocab-nav-btn" onclick="javaVocabPrev()"><i class="fa-solid fa-chevron-left"></i></button>
+              <button class="java-vocab-nav-btn" onclick="javaVocabNext()"><i class="fa-solid fa-chevron-right"></i></button>
+              <span id="java-vocab-counter" class="java-vocab-counter">1 / 1</span>
+            </div>
+            <div class="java-flashcard-wrapper" onclick="javaFlipCard()">
+              <div class="java-flashcard" id="java-flashcard">
+                <div class="java-flashcard-front">
+                  <div class="java-card-term" id="java-card-term">クラス</div>
+                  <div class="java-card-hint">クリックして裏を見る / Click to flip</div>
+                </div>
+                <div class="java-flashcard-back">
+                  <div class="java-card-zh" id="java-card-zh">类</div>
+                  <div class="java-card-desc" id="java-card-desc">オブジェクトの設計図。</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Python Vocab Flashcard Section (Python mode only) -->
+          <div class="python-vocab-section" id="python-vocab-section" style="display: none;">
+            <div class="python-vocab-header">
+              <i class="fa-solid fa-cards"></i>
+              <span>単語カード / 词汇闪卡</span>
+              <button class="python-vocab-flip-btn" onclick="pythonFlipCard()">翻转 / Flip</button>
+              <button class="python-vocab-nav-btn" onclick="pythonVocabPrev()"><i class="fa-solid fa-chevron-left"></i></button>
+              <button class="python-vocab-nav-btn" onclick="pythonVocabNext()"><i class="fa-solid fa-chevron-right"></i></button>
+              <span id="python-vocab-counter" class="python-vocab-counter">1 / 1</span>
+            </div>
+            <div class="python-flashcard-wrapper" onclick="pythonFlipCard()">
+              <div class="python-flashcard" id="python-flashcard">
+                <div class="python-flashcard-front">
+                  <div class="python-card-term" id="python-card-term">リスト</div>
+                  <div class="python-card-hint">クリックして裏を見る / Click to flip</div>
+                </div>
+                <div class="python-flashcard-back">
+                  <div class="python-card-zh" id="python-card-zh">列表</div>
+                  <div class="python-card-desc" id="python-card-desc">複数のデータをまとめて管理するコレクション。</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quiz Section -->
+          <div class="quiz-section">
+            <h4><i class="fa-solid fa-circle-question"></i> 理解度テスト (章节小测)</h4>
+            
+            <!-- Quiz Navigator (IT Passport Mode Only) -->
+            <div class="quiz-nav-header" id="itpass-quiz-nav" style="display: none;">
+              <span class="quiz-nav-text" id="itpass-quiz-progress-text">问题 1 / 共 2 题</span>
+              <div class="quiz-nav-buttons">
+                <button class="quiz-nav-btn" onclick="quizPrev()"><i class="fa-solid fa-chevron-left"></i> 上一题</button>
+                <button class="quiz-nav-btn" onclick="quizNext()">下一题 <i class="fa-solid fa-chevron-right"></i></button>
+              </div>
+            </div>
+
+            <p class="quiz-question" id="quiz-question">クイズ問題がここに入ります。</p>
+            <div class="quiz-options" id="quiz-options">
+              <!-- Loaded dynamically -->
+            </div>
+            <div class="quiz-footer">
+              <button class="quiz-submit-btn" id="quiz-submit-btn" onclick="checkQuizAnswer()">
+                <i class="fa-solid fa-circle-check"></i> 回答する (提交回答)
+              </button>
+              <div id="quiz-feedback" class="quiz-feedback hidden">
+                <!-- Feedback text -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==================== CODING EXAM WIDGETS ==================== -->
+        <!-- Coding Exam Launch Config Screen -->
+        <div class="content-card coding-exam-config" id="coding-exam-config" style="display: none;">
+          <div class="cbt-config-card">
+            <div class="cbt-config-header-main" style="text-align: center; margin-bottom: 24px;">
+              <i class="fa-solid fa-laptop-code cbt-logo-icon" style="font-size: 48px; margin-bottom: 12px; display: inline-block;"></i>
+              <h2 id="coding-config-title" style="font-size: 24px; font-weight: 700;">实操编程模拟考试 (実技模試)</h2>
+              <p id="coding-config-desc" style="color: var(--text-muted); margin-top: 8px;">模拟日本 IT 专门学校的编程考试环境。在限定时间内完成给定的编码或数据库任务。</p>
+            </div>
+
+            <div class="cbt-config-options" style="background: rgba(0,0,0,0.15); padding: 20px; border-radius: 12px; border: 1px solid var(--border-color); margin-bottom: 24px;">
+              <div class="cbt-option-row" style="margin-bottom: 16px;">
+                <label style="font-weight: 600; display: block; margin-bottom: 8px; color: var(--neon-cyan);"><i class="fa-solid fa-list-check"></i> 考试规则 (試験規則):</label>
+                <ul class="exam-rules-list" style="padding-left: 20px; font-size: 13px; line-height: 1.8; color: var(--text-main);">
+                  <li>题目均为<strong>实操编程题/数据库查询题</strong>，给日文文字任务或预期输出结果。</li>
+                  <li>支持在右侧的<strong>模拟沙盒编辑器</strong>中即时编写、运行、和调试代码。</li>
+                  <li>完成代码后，点击<strong>“验证并保存答案 (判定)”</strong>进行测试用例校验。</li>
+                  <li>测试成功（Passed ✓）计入得分，可以反复修改直到判定通过。</li>
+                  <li>请在倒计时结束前点击<strong>“结束考试并交卷”</strong>，超时系统将自动收卷。</li>
+                </ul>
+              </div>
+
+              <div class="cbt-option-row" style="display: flex; align-items: center; justify-content: space-between; padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.05);">
+                <label for="coding-exam-count" style="font-weight: 600; font-size: 14px;"><i class="fa-solid fa-hashtag"></i> 模拟考试题量:</label>
+                <select id="coding-exam-count" style="background: var(--bg-secondary); border: 1px solid var(--border-color); color: var(--text-main); padding: 8px 12px; border-radius: 6px; cursor: pointer; outline: none; font-size: 13px;">
+                  <option value="5">5 题 (快速测试 - 限时 15 分钟)</option>
+                  <option value="10" selected>10 题 (标准实操 - 限时 30 分钟)</option>
+                  <option value="15">15 题 (全面挑战 - 限时 45 分钟)</option>
+                </select>
+              </div>
+            </div>
+
+            <button class="cbt-launch-btn" onclick="startCodingExam()" style="width: 100%; padding: 14px; background: linear-gradient(135deg, var(--neon-blue), var(--neon-cyan)); color: #000; border: none; border-radius: 8px; font-size: 16px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 4px 15px rgba(0, 240, 255, 0.2); transition: var(--transition-smooth);">
+              <i class="fa-solid fa-circle-play"></i> 开始实操考试 (試験開始)
+            </button>
+          </div>
+        </div>
+
+        <!-- Coding Exam Running Session -->
+        <div class="content-card coding-exam-panel" id="coding-exam-panel" style="display: none;">
+          <!-- Exam Header Info -->
+          <div class="exam-header-bar" style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 16px; margin-bottom: 16px;">
+            <div class="exam-title-box">
+              <span class="cbt-indicator-badge" style="background: rgba(0, 240, 255, 0.1); border: 1px solid rgba(0, 240, 255, 0.2); color: var(--neon-cyan); padding: 2px 6px; border-radius: 4px; font-size: 11px; font-weight: 600;"><i class="fa-solid fa-code"></i> 实操机考</span>
+              <h4 id="coding-exam-display-title" style="font-size: 16px; font-weight: 600; margin-top: 4px;">SQL 实操能力模拟测试</h4>
+            </div>
+            <div class="exam-timer-box" style="background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.25); color: #f87171; padding: 6px 14px; border-radius: 6px; font-size: 14px; font-weight: 700; display: flex; align-items: center; gap: 6px;">
+              <i class="fa-solid fa-stopwatch"></i> 剩余时间: <span id="coding-timer-display">30:00</span>
+            </div>
+          </div>
+
+          <!-- Active Question Card -->
+          <div class="eq-card" style="display: flex; flex-direction: column; gap: 16px;">
+            <div class="eq-card-header" style="display: flex; justify-content: space-between; align-items: center; font-size: 13px;">
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <span class="eq-number" id="eq-number-text" style="font-weight: 700; color: var(--neon-cyan);">第 1 题 / 問 1</span>
+                <span class="eq-diff-badge" id="eq-diff-text" style="background: rgba(255,255,255,0.05); padding: 2px 6px; border-radius: 4px; color: var(--text-muted);">难度: ★☆☆</span>
+              </div>
+              <button class="eq-flag-btn" id="eq-flag-btn" onclick="toggleCodingQuestionFlag()" style="background: transparent; border: none; color: var(--text-muted); cursor: pointer; transition: var(--transition-smooth); display: flex; align-items: center; gap: 4px;">
+                <i class="fa-regular fa-flag"></i> 标记此题复查
+              </button>
+            </div>
+
+            <!-- Task text details -->
+            <div class="eq-body-area" style="background: rgba(0,0,0,0.2); border: 1px solid var(--border-color); border-radius: 10px; padding: 18px; display: flex; flex-direction: column; gap: 14px;">
+              <div class="eq-text-ja" style="font-size: 14.5px; line-height: 1.6; font-weight: 500; color: var(--text-main);">
+                <h5 style="color: var(--neon-cyan); margin-bottom: 6px; font-size: 13px; font-weight: 600;"><i class="fa-solid fa-graduation-cap"></i> ミッション (日文任务描述)</h5>
+                <p id="eq-task-ja">学生マスタからすべてのデータを取得しなさい。</p>
+              </div>
+              <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.05);">
+              <div class="eq-text-zh" style="font-size: 13.5px; line-height: 1.5; color: var(--text-muted);">
+                <h5 style="color: var(--neon-blue); margin-bottom: 6px; font-size: 12px; font-weight: 600;"><i class="fa-solid fa-language"></i> 中文翻译对照</h5>
+                <p id="eq-task-zh">查询学生主表的所有数据。</p>
+              </div>
+              
+              <!-- Expected output (for Java/Python) -->
+              <div class="eq-expected-box" id="eq-expected-output-box" style="display: none; margin-top: 8px;">
+                <h5 style="color: #fcb900; margin-bottom: 6px; font-size: 12px; font-weight: 600;"><i class="fa-solid fa-square-poll-horizontal"></i> 期待される出力結果 (期望执行输出)</h5>
+                <pre style="background: #030712; border: 1px solid rgba(255,255,255,0.05); padding: 12px; border-radius: 6px; overflow-x: auto; font-family: 'Fira Code', monospace; font-size: 13px; color: #ff9e64;" id="eq-expected-output">Expected output goes here...</pre>
+              </div>
+            </div>
+          </div>
+
+          <!-- Inline Actions for current question -->
+          <div class="eq-actions-row" style="display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,0.02); padding: 12px 18px; border-radius: 8px; border: 1px solid var(--border-color); margin-top: 8px;">
+            <div class="eq-verify-status-box" style="display: flex; align-items: center; gap: 8px; font-size: 13px;">
+              <span>测试状态: </span>
+              <span class="verify-status-badge" id="eq-verify-status-badge" style="background: rgba(255,255,255,0.05); padding: 3px 8px; border-radius: 4px; font-weight: 600; color: var(--text-muted);">未作答 (未着手)</span>
+            </div>
+            
+            <button class="eq-verify-btn" onclick="verifyCurrentCodingQuestion()" style="padding: 8px 16px; background: linear-gradient(135deg, #7c3aed, #a855f7); color: #fff; border: none; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 6px; box-shadow: 0 4px 10px rgba(168, 85, 247, 0.2); transition: var(--transition-smooth);">
+              <i class="fa-solid fa-circle-check"></i> 验证并保存答案 (判定)
+            </button>
+          </div>
+
+          <!-- Bottom Navigation and Navigator Row -->
+          <div class="eq-navigation-row" style="display: flex; align-items: center; justify-content: space-between; margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--border-color);">
+            <button class="cbt-nav-btn" onclick="codingPrevQuestion()" style="padding: 8px 14px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: var(--text-main); border-radius: 6px; font-size: 13px; cursor: pointer; display: flex; align-items: center; gap: 6px; transition: var(--transition-smooth);">
+              <i class="fa-solid fa-chevron-left"></i> 上一题 (前へ)
+            </button>
+
+            <!-- Compact grid selector -->
+            <div class="coding-navigator-grid" id="coding-navigator-grid" style="display: flex; gap: 6px; flex-wrap: wrap; justify-content: center; max-width: 320px;">
+              <!-- Javascript populates this -->
+            </div>
+
+            <button class="cbt-nav-btn" onclick="codingNextQuestion()" style="padding: 8px 14px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: var(--text-main); border-radius: 6px; font-size: 13px; cursor: pointer; display: flex; align-items: center; gap: 6px; transition: var(--transition-smooth);">
+              下一题 (次へ) <i class="fa-solid fa-chevron-right"></i>
+            </button>
+          </div>
+
+          <!-- Finish controls -->
+          <div class="exam-finish-bar" style="margin-top: 24px; padding-top: 16px; border-top: 1px dashed var(--border-color); display: flex; justify-content: space-between; gap: 12px;">
+            <button class="cbt-btn-action reset" onclick="exitCodingExam()" style="padding: 10px 20px; background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.25); color: #f87171; border-radius: 6px; font-size: 13px; cursor: pointer; font-weight: 600; display: flex; align-items: center; gap: 6px; transition: var(--transition-smooth);">
+              <i class="fa-solid fa-right-from-bracket"></i> 中断退出 (試験離脱)
+            </button>
+            
+            <button class="cbt-btn-action submit" onclick="submitCodingExam()" style="padding: 10px 24px; background: linear-gradient(135deg, #10b981, #059669); border: none; color: #fff; border-radius: 6px; font-size: 13px; cursor: pointer; font-weight: 700; display: flex; align-items: center; gap: 6px; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2); transition: var(--transition-smooth);">
+              <i class="fa-solid fa-circle-check"></i> 提交试卷并交卷 (試験終了)
+            </button>
+          </div>
+        </div>
+
+        <!-- Coding Exam Results Dashboard (Scorecard) -->
+        <div class="content-card coding-exam-results" id="coding-exam-results" style="display: none;">
+          <div class="cbt-results-card">
+            <div class="cbt-results-header" style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 16px; margin-bottom: 20px;">
+              <h2 style="font-size: 20px; font-weight: 700; display: flex; align-items: center; gap: 8px; color: var(--neon-cyan);"><i class="fa-solid fa-square-poll-vertical"></i> 实操考试成绩单 (評価結果)</h2>
+              <button class="cbt-results-close-btn" onclick="closeCodingExamResults()" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: var(--text-main); padding: 6px 12px; border-radius: 6px; font-size: 12px; cursor: pointer; transition: var(--transition-smooth);">
+                返回主页 <i class="fa-solid fa-chevron-right"></i>
+              </button>
+            </div>
+
+            <!-- Score Summary Card -->
+            <div class="cbt-results-summary-row" style="display: flex; gap: 20px; background: rgba(0,0,0,0.15); padding: 24px; border-radius: 12px; border: 1px solid var(--border-color); margin-bottom: 24px; align-items: center;">
+              <div class="cbt-results-total-box" style="flex: 1; text-align: center; border-right: 1px solid rgba(255,255,255,0.05); padding-right: 20px; display: flex; flex-direction: column; align-items: center; gap: 8px;">
+                <span class="summary-label" style="font-size: 12px; color: var(--text-muted); text-transform: uppercase;">合格判定</span>
+                <div class="pass-status-badge pass" id="coding-pass-badge" style="font-size: 18px; font-weight: 800; padding: 4px 16px; border-radius: 6px; width: fit-content; text-shadow: 0 0 8px rgba(16, 185, 129, 0.4);">合格</div>
+                <div class="score-display" style="margin-top: 8px;">
+                  <span class="score-num" id="coding-score-correct-count" style="font-size: 32px; font-weight: 800; color: var(--text-main);">8</span>
+                  <span class="score-max" style="font-size: 16px; color: var(--text-muted);"> / 10 题通过</span>
+                </div>
+              </div>
+
+              <div class="cbt-results-fields-box" style="flex: 1.5; display: flex; flex-direction: column; gap: 12px; padding-left: 10px;">
+                <div class="field-score-item">
+                  <div class="field-score-meta" style="display: flex; justify-content: space-between; font-size: 13px; font-weight: 600; margin-bottom: 4px;">
+                    <strong>得点率 (通过率)</strong>
+                    <span id="coding-results-percentage-text">80%</span>
+                  </div>
+                  <div class="field-score-progressbar" style="height: 6px; background: rgba(255,255,255,0.05); border-radius: 3px; overflow: hidden;">
+                    <div class="field-score-fill" id="coding-results-progress-bar" style="height: 100%; width: 80%; background: linear-gradient(90deg, var(--neon-blue), var(--neon-cyan)); box-shadow: 0 0 6px var(--neon-cyan);"></div>
+                  </div>
+                </div>
+
+                <div class="field-score-item" style="display: flex; justify-content: space-between; font-size: 13px; color: var(--text-muted); border-top: 1px solid rgba(255,255,255,0.05); padding-top: 12px; margin-top: 4px;">
+                  <span>考试用时 (所要時間):</span>
+                  <strong id="coding-results-time-spent" style="color: var(--text-main);">12分34秒</strong>
+                </div>
+              </div>
+            </div>
+
+            <!-- Detailed Question Breakdown -->
+            <div class="cbt-results-details-wrapper">
+              <h3 style="font-size: 15px; font-weight: 600; margin-bottom: 12px; color: var(--neon-purple);"><i class="fa-solid fa-list-ol"></i> 各题验证测试详情</h3>
+              <div class="results-table-container" style="overflow-x: auto; background: rgba(0,0,0,0.1); border: 1px solid var(--border-color); border-radius: 8px;">
+                <table class="results-table" style="width: 100%; border-collapse: collapse; text-align: left; font-size: 13px;">
+                  <thead>
+                    <tr style="background: rgba(255,255,255,0.02); border-bottom: 1px solid var(--border-color);">
+                      <th style="padding: 12px 16px; font-weight: 600;">题号</th>
+                      <th style="padding: 12px 16px; font-weight: 600;">考核知识点 (タイトル)</th>
+                      <th style="padding: 12px 16px; font-weight: 600;">难度</th>
+                      <th style="padding: 12px 16px; font-weight: 600; text-align: center;">验证结果</th>
+                      <th style="padding: 12px 16px; font-weight: 600; text-align: center;">操作</th>
+                    </tr>
+                  </thead>
+                  <tbody id="coding-results-table-body">
+                    <!-- Tr rows dynamically inserted -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="pdf-viewer-panel" id="pdf-viewer-panel" style="display: none;" aria-hidden="true">
+          <div class="pdf-panel-header">
+            <span id="pdf-panel-title"><i class="fa-solid fa-file-pdf"></i> 原书 PDF</span>
+            <div style="display: flex; gap: 8px; align-items: center;">
+              <button class="pdf-minimize-btn" id="pdf-minimize-btn" onclick="toggleMinimizePdf()" style="background: transparent; border: 1px solid rgba(255, 255, 255, 0.15); color: var(--text-muted); padding: 6px 14px; border-radius: 6px; font-size: 12px; cursor: pointer; display: flex; align-items: center; gap: 6px; transition: var(--transition-smooth);">
+                <i class="fa-solid fa-compress" id="pdf-minimize-icon"></i>
+                <span id="pdf-minimize-text">最小化</span>
+              </button>
+              <button class="pdf-close-btn" onclick="closeEmbeddedPdf()">
+                <i class="fa-solid fa-xmark"></i>
+                关闭
+              </button>
+            </div>
+          </div>
+          <div class="pdf-iframe-container">
+            <iframe id="embedded-pdf-iframe" title="IT Passport Textbook PDF"></iframe>
+          </div>
+        </div>
+
+      </main>
+
+      <!-- Right Column: SQL Sandbox & Info Reference -->
+      <section class="playground-section" id="playground-section">
+
+        <!-- ==================== SQL MODE WIDGETS ==================== -->
+        <!-- DB Schema Visualizer -->
+        <div class="playground-card schema-card sql-widget collapsed">
+          <div class="schema-header collapsed" onclick="toggleSchemaDetails()">
+            <span><i class="fa-solid fa-sitemap"></i> データベース構造 (DB 表结构参考)</span>
+            <div style="display:flex; align-items:center; gap:8px;">
+              <div class="db-group-tabs" onclick="event.stopPropagation()">
+                <button class="db-group-tab active" id="db-tab-school" onclick="switchDBGroup('school')">
+                  <i class="fa-solid fa-school"></i> 学校DB
+                </button>
+                <button class="db-group-tab" id="db-tab-shop" onclick="switchDBGroup('shop')">
+                  <i class="fa-solid fa-book"></i> 书店DB
+                </button>
+              </div>
+              <i class="fa-solid fa-chevron-down toggle-icon" id="schema-toggle-icon" style="transform: rotate(-90deg);"></i>
+            </div>
+          </div>
+          <div class="schema-body" id="schema-body" style="display: none;">
+            <div class="schema-tabs" id="schema-tabs">
+              <!-- Tabs for students, departments, etc. -->
+            </div>
+            <div class="schema-table-details" id="schema-table-details">
+              <!-- Selected table columns and description -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Live SQL Playground -->
+        <div class="playground-card console-card sql-widget">
+          <div class="console-header" onclick="toggleConsoleDetails()">
+            <span><i class="fa-solid fa-terminal"></i> SQL プレイグラウンド (演练沙盒)</span>
+            <div style="display:flex; align-items:center; gap:8px;">
+              <div class="console-actions" onclick="event.stopPropagation()">
+                <button class="console-btn hint-btn" onclick="showPlaygroundHint()">
+                  <i class="fa-solid fa-circle-info"></i> ヒント (提示)
+                </button>
+                <button class="console-btn reset-db-btn" onclick="resetMockDB()">
+                  <i class="fa-solid fa-arrows-rotate"></i> DBリセット (重置DB)
+                </button>
+              </div>
+              <i class="fa-solid fa-chevron-down toggle-icon" id="console-toggle-icon"></i>
+            </div>
+          </div>
+
+          <div class="console-card-body" id="console-card-body" style="display: flex; flex-direction: column; flex: 1; overflow: hidden;">
+            <div class="playground-task-desc">
+              <div class="task-desc-main">
+                <strong><i class="fa-solid fa-circle-dot"></i> <span id="mission-label-text">ミッション (当前任务)</span>:</strong>
+                <span id="playground-task-text">学生テーブル (students) からすべてのデータを取得してみましょう。</span>
+              </div>
+              <div class="task-desc-actions">
+                <button class="console-btn change-practice-btn-style" id="change-practice-btn" onclick="changeRandomPracticeQuestion()" style="display: none;">
+                  <i class="fa-solid fa-arrows-rotate"></i> 换一题
+                </button>
+                <button class="console-btn random-practice-btn" id="random-practice-btn" onclick="toggleRandomPractice()">
+                  <i class="fa-solid fa-shuffle"></i> 随机指令练习
+                </button>
+              </div>
+            </div>
+
+            <div class="editor-container">
+              <div class="line-numbers" id="line-numbers">1</div>
+              <textarea class="sql-editor" id="sql-editor" spellcheck="false" placeholder=" 请在此处输入 SQL 语句...&#10;ここにSQLを入力してください..."></textarea>
+            </div>
+
+            <div class="console-footer">
+              <div class="playground-status" id="playground-status">
+                <span class="status-ready"><i class="fa-solid fa-circle-play"></i> 已就绪 (Ready)</span>
+              </div>
+              <div class="run-area">
+                <button class="run-query-btn" id="run-query-btn" onclick="runPlaygroundQuery()">
+                  <i class="fa-solid fa-play"></i> 执行 SQL <kbd>Ctrl+Enter</kbd>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Query Output Terminal -->
+        <div class="playground-card output-card sql-widget" id="output-card">
+          <div class="output-header" onclick="toggleOutputDetails()">
+            <span><i class="fa-solid fa-table"></i> 実行結果 (执行结果)</span>
+            <div style="display:flex; align-items:center; gap:8px;">
+              <div class="output-actions" onclick="event.stopPropagation()">
+                <span class="row-count-badge" id="output-row-count" style="display: none;">0行</span>
+                <button class="console-btn maximize-btn" id="output-maximize-btn" onclick="toggleMaximizeOutput()">
+                  <i class="fa-solid fa-expand"></i> 最大化
+                </button>
+              </div>
+              <i class="fa-solid fa-chevron-down toggle-icon" id="output-toggle-icon"></i>
+            </div>
+          </div>
+          <div class="output-card-body" id="output-card-body" style="display: flex; flex-direction: column; flex: 1; overflow: hidden;">
+            <div class="output-body" id="output-body">
+              <div class="output-placeholder">
+                <i class="fa-solid fa-arrow-up-long"></i>
+                <p>クエリを実行すると、ここに結果テーブルが表示されます。</p>
+                <span>(执行 SQL 后，查询结果表格将在此处显示)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==================== IT PASSPORT WIDGETS ==================== -->
+        <!-- Checklist Card -->
+        <div class="playground-card schema-card itpass-widget" id="itpass-checklist-card" style="display: none;">
+          <div class="schema-header" onclick="toggleItPassCard('checklist')">
+            <span><i class="fa-solid fa-clipboard-list"></i> 章节要点速记表 (要点確認)</span>
+            <i class="fa-solid fa-chevron-down toggle-icon" id="checklist-toggle-icon"></i>
+          </div>
+          <div class="schema-body" id="checklist-body">
+            <!-- Populated dynamically via JS -->
+          </div>
+        </div>
+
+        <!-- Flashcards Card -->
+        <div class="playground-card console-card itpass-widget" id="itpass-flashcards-card" style="display: none;">
+          <div class="console-header" onclick="toggleItPassCard('flashcards')">
+            <span><i class="fa-solid fa-clone"></i> 核心专业词卡 (用語カード)</span>
+            <i class="fa-solid fa-chevron-down toggle-icon" id="flashcards-toggle-icon"></i>
+          </div>
+          <div class="console-card-body" id="flashcards-body" style="display: flex; flex-direction: column; flex: 1; overflow: hidden;">
+            <div class="flashcard-desc-box">
+              <span>点击闪卡即可翻转查看中日对照翻译及释义：</span>
+            </div>
+            
+            <div class="flashcard-outer">
+              <div class="flashcard" id="flashcard-element" onclick="flipFlashcard()">
+                <div class="flashcard-front">
+                  <h3 id="fc-ja-term">CPU (中央処理装置)</h3>
+                  <span><i class="fa-solid fa-rotate"></i> 点击查看中文释义</span>
+                </div>
+                <div class="flashcard-back">
+                  <h4 id="fc-zh-term">中央处理器</h4>
+                  <p id="fc-desc">计算机的运算与控制核心。负责解释计算机指令并处理程序中的数据。</p>
+                  <span><i class="fa-solid fa-rotate"></i> 点击返回日语</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="flashcard-footer">
+              <button class="console-btn" onclick="prevFlashcard()">
+                <i class="fa-solid fa-chevron-left"></i> 上一个
+              </button>
+              <span class="flashcard-counter" id="fc-counter">1 / 5</span>
+              <button class="console-btn" onclick="nextFlashcard()">
+                下一个 <i class="fa-solid fa-chevron-right"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Calculator Tools Card -->
+        <div class="playground-card output-card itpass-widget" id="itpass-tools-card" style="display: none;">
+          <div class="output-header" onclick="toggleItPassCard('tools')">
+            <span><i class="fa-solid fa-calculator"></i> 备考小计算器工具箱</span>
+            <i class="fa-solid fa-chevron-down toggle-icon" id="tools-toggle-icon"></i>
+          </div>
+          <div class="output-card-body" id="tools-body" style="display: flex; flex-direction: column; flex: 1; padding: 12px; overflow-y: auto;">
+            <div class="tool-selector-group">
+              <label for="calculator-select">选择工具: </label>
+              <select id="calculator-select" onchange="switchCalculatorTool()">
+                <option value="binary">2 / 10 / 16 进制快捷转换</option>
+                <option value="reliability">系统可用性 (稼働率) 计算</option>
+                <option value="roi">投资收益率 (ROI) 与损益平衡</option>
+              </select>
+            </div>
+
+            <!-- Tool Content Container -->
+            <div class="tool-inputs-container" id="tool-inputs-container">
+              <!-- Rendered via JS -->
+            </div>
+          </div>
+        </div>
+
+        <!-- ==================== JAVA MODE WIDGETS ==================== -->
+        <!-- Java Sandbox Card -->
+        <div class="playground-card java-sandbox-card java-widget" id="java-sandbox-card" style="display: none;">
+          <div class="java-sandbox-header">
+            <div class="java-sandbox-title">
+              <i class="fa-brands fa-java"></i>
+              <span>Java プログラミング沙盒 / Java编程沙盒</span>
+            </div>
+            <div class="java-sandbox-meta">
+              <span id="java-sandbox-lesson-title" class="java-sandbox-lesson-label">— 选择课程后载入示例代码 —</span>
+            </div>
+          </div>
+
+          <div class="java-sandbox-body">
+            <!-- Editor Panel -->
+            <div class="java-editor-panel">
+              <div class="java-editor-toolbar">
+                <button class="java-tool-btn" id="java-load-template-btn" onclick="JavaSandbox.toggleTemplate()" title="加载当前课程模板">
+                  <i class="fa-solid fa-file-code"></i> テンプレ
+                </button>
+                <button class="java-tool-btn" onclick="JavaSandbox.copyCode()" title="复制代码">
+                  <i class="fa-solid fa-copy"></i> コピー
+                </button>
+                <button class="java-tool-btn danger" onclick="JavaSandbox.clearCode()" title="清空并重置">
+                  <i class="fa-solid fa-trash"></i> リセット
+                </button>
+              </div>
+              <div class="java-editor-container">
+                <div class="java-line-numbers" id="java-line-numbers">
+                  <span>1</span>
+                </div>
+                <div class="java-editor-wrapper" style="position: relative; flex: 1; height: 100%; overflow: hidden;">
+                  <pre class="java-highlight-overlay" id="java-highlight-overlay" aria-hidden="true"></pre>
+                  <textarea
+                    class="java-editor"
+                    id="java-editor"
+                    spellcheck="false"
+                    placeholder="Java コードをここに入力してください..."
+                  ></textarea>
+                </div>
+              </div>
+            </div>
+
+            <!-- Input Panel -->
+            <div class="java-input-panel">
+              <div class="java-input-header">
+                <span><i class="fa-solid fa-keyboard"></i> 标准输入 / Standard Input (stdin)</span>
+              </div>
+              <div class="java-input-row">
+                <textarea
+                  class="java-input-content"
+                  id="java-input-content"
+                  spellcheck="false"
+                  placeholder="程序接收的输入内容写在这里..."
+                ></textarea>
+                <div class="java-input-sidebar">
+                  <div class="java-run-info-mini">
+                    <span>JDK 21 · 10s · 128MB</span>
+                  </div>
+                  <button class="java-run-btn" id="java-run-btn" onclick="JavaSandbox.runCode()">
+                    <span class="sandbox-btn-icon">▶</span> 実行 <kbd>Ctrl+Enter</kbd>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Java Output Card (replacing Java Info Card) -->
+        <div class="playground-card output-card java-widget" id="java-output-card" style="display: none;">
+          <div class="output-header java-output-header" onclick="toggleJavaOutputDetails()">
+            <span><i class="fa-solid fa-terminal"></i> 実行結果 (执行结果)</span>
+            <div style="display:flex; align-items:center; gap:8px;">
+              <div class="output-actions" onclick="event.stopPropagation()">
+                <span class="java-sandbox-status" id="java-sandbox-status">準備完了 / Ready</span>
+                <button class="console-btn maximize-btn" id="java-output-maximize-btn" onclick="toggleMaximizeJavaOutput()">
+                  <i class="fa-solid fa-expand"></i> 最大化
+                </button>
+              </div>
+              <i class="fa-solid fa-chevron-down toggle-icon" id="java-output-toggle-icon"></i>
+            </div>
+          </div>
+          <div class="output-card-body" id="java-output-card-body" style="display: flex; flex-direction: column; flex: 1; overflow: hidden;">
+            <pre class="java-output-content" id="java-output-content">（実行ボタンを押すと、ここに結果が表示されます）
+（点击运行按钮，结果将显示在这里）</pre>
+          </div>
+        </div>
+
+        <!-- ==================== PYTHON MODE WIDGETS ==================== -->
+        <!-- Python Sandbox Card -->
+        <div class="playground-card python-sandbox-card python-widget" id="python-sandbox-card" style="display: none;">
+          <div class="python-sandbox-header">
+            <div class="python-sandbox-title">
+              <i class="fa-brands fa-python"></i>
+              <span>Python プログラミング沙盒 / Python编程沙盒</span>
+            </div>
+            <div class="python-sandbox-meta">
+              <span id="python-sandbox-lesson-title" class="python-sandbox-lesson-label">— 选择课程后载入示例代码 —</span>
+            </div>
+          </div>
+
+          <div class="python-sandbox-body">
+            <!-- Editor Panel -->
+            <div class="python-editor-panel">
+              <div class="python-editor-toolbar">
+                <button class="python-tool-btn" id="python-load-template-btn" onclick="PythonSandbox.toggleTemplate()" title="加载当前课程模板">
+                  <i class="fa-solid fa-file-code"></i> テンプレ
+                </button>
+                <button class="python-tool-btn" onclick="PythonSandbox.copyCode()" title="复制代码">
+                  <i class="fa-solid fa-copy"></i> コピー
+                </button>
+                <button class="python-tool-btn danger" onclick="PythonSandbox.clearCode()" title="清空并重置">
+                  <i class="fa-solid fa-trash"></i> リセット
+                </button>
+              </div>
+              <div class="python-editor-container">
+                <div class="python-line-numbers" id="python-line-numbers">
+                  <span>1</span>
+                </div>
+                <div class="python-editor-wrapper" style="position: relative; flex: 1; height: 100%; overflow: hidden;">
+                  <pre class="python-highlight-overlay" id="python-highlight-overlay" aria-hidden="true"></pre>
+                  <textarea
+                    class="python-editor"
+                    id="python-editor"
+                    spellcheck="false"
+                    placeholder="Python コードをここに入力してください..."
+                  ></textarea>
+                </div>
+              </div>
+            </div>
+
+            <!-- Input Panel -->
+            <div class="python-input-panel">
+              <div class="python-input-header">
+                <span><i class="fa-solid fa-keyboard"></i> 标准输入 / Standard Input (stdin)</span>
+              </div>
+              <div class="python-input-row">
+                <textarea
+                  class="python-input-content"
+                  id="python-input-content"
+                  spellcheck="false"
+                  placeholder="程序接收的输入内容写在这里..."
+                ></textarea>
+                <div class="python-input-sidebar">
+                  <div class="python-run-info-mini">
+                    <span>Python 3.12 · 10s · 离线沙盒</span>
+                  </div>
+                  <button class="python-run-btn" id="python-run-btn" onclick="PythonSandbox.runCode()">
+                    <span class="sandbox-btn-icon">▶</span> 実行 <kbd>Ctrl+Enter</kbd>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Python Output Card -->
+        <div class="playground-card output-card python-widget" id="python-output-card" style="display: none;">
+          <div class="output-header python-output-header" onclick="togglePythonOutputDetails()">
+            <span><i class="fa-solid fa-terminal"></i> 実行結果 (执行结果)</span>
+            <div style="display:flex; align-items:center; gap:8px;">
+              <div class="output-actions" onclick="event.stopPropagation()">
+                <span class="python-sandbox-status" id="python-sandbox-status">準備完了 / Ready</span>
+                <button class="console-btn maximize-btn" id="python-output-maximize-btn" onclick="toggleMaximizePythonOutput()">
+                  <i class="fa-solid fa-expand"></i> 最大化
+                </button>
+              </div>
+              <i class="fa-solid fa-chevron-down toggle-icon" id="python-output-toggle-icon"></i>
+            </div>
+          </div>
+          <div class="output-card-body" id="python-output-card-body" style="display: flex; flex-direction: column; flex: 1; overflow: hidden;">
+            <pre class="python-output-content" id="python-output-content">（実行ボタンを押すと、ここに結果が表示されます）
+（点击运行按钮，结果将显示在这里）</pre>
+          </div>
+        </div>
+        
+        <!-- Maximize Overlay Backdrop -->
+        <div class="maximize-overlay" id="maximize-overlay" onclick="toggleMaximizeOutput()"></div>
+
+      </section>
+
+    </div>
+
+    <!-- CBT Exam Simulator Container (Visible when Dojo is selected and active) -->
+    <div class="cbt-exam-container" id="cbt-exam-container" style="display: none;">
+      
+      <!-- CBT Config Screen -->
+      <div class="cbt-config-screen" id="cbt-config-screen">
+        <div class="cbt-config-card">
+          <div class="cbt-config-header-main">
+            <i class="fa-solid fa-school-flag cbt-logo-icon"></i>
+            <h2>過去問道場 — CBT 模拟考试系统</h2>
+            <p>基于近年 IT 考试真题，模拟真实计算机机考 (CBT) 环境。</p>
+          </div>
+
+          <div class="cbt-config-options">
+            <div class="cbt-option-row">
+              <label for="cbt-year-select"><i class="fa-solid fa-calendar-days"></i> 选择考试年度/真题:</label>
+              <select id="cbt-year-select">
+                <option value="all" selected>随机混合真题 (推荐 - 综合模考)</option>
+                <option value="08_haru">令和8年度 (R8) 公开问题</option>
+                <option value="07_haru">令和7年度 (R7) 公开问题</option>
+                <option value="06_haru">令和6年度 (R6) 公开问题</option>
+                <option value="05_haru">令和5年度 (R5) 公开问题</option>
+                <option value="04_haru">令和4年度 (R4) 公开问题</option>
+                <option value="03_haru">令和3年度 (R3) 公开问题</option>
+              </select>
+            </div>
+
+            <div class="cbt-option-row">
+              <label for="cbt-count-select"><i class="fa-solid fa-hashtag"></i> 模拟考试题量:</label>
+              <select id="cbt-count-select">
+                <option value="100">100 题 (正式机考标准 - 限时120分钟)</option>
+                <option value="50">50 题 (精简模考 - 限时60分钟)</option>
+                <option value="30">30 题 (快速刷题 - 限时36分钟)</option>
+                <option value="10" selected>10 题 (微型小测 - 限时12分钟)</option>
+              </select>
+            </div>
+
+            <div class="cbt-option-row">
+              <label><i class="fa-solid fa-gears"></i> 机考个性化选项:</label>
+              <div class="cbt-checkbox-group">
+                <label class="cbt-checkbox">
+                  <input type="checkbox" id="cbt-opt-shuffle" checked> 随机打乱选择肢顺序 (ア〜エ)
+                </label>
+                <label class="cbt-checkbox">
+                  <input type="checkbox" id="cbt-opt-nocalc"> 过滤计算题 (不显示含有公式计算的题目)
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <button class="cbt-launch-btn" onclick="startCbtExam()">
+            <i class="fa-solid fa-play-circle"></i> 开始机考挑战 (試験開始)
+          </button>
+        </div>
+      </div>
+
+      <!-- CBT Testing Run Screen -->
+      <div class="cbt-testing-screen" id="cbt-testing-screen" style="display: none;">
+        <div class="cbt-testing-header">
+          <div class="cbt-exam-title-box">
+            <span class="cbt-indicator-badge"><i class="fa-solid fa-laptop"></i> CBT 模拟系统</span>
+            <h4 id="cbt-exam-display-title">令和6年 公开问题 模拟考试</h4>
+          </div>
+          
+          <div class="cbt-exam-timer-box">
+            <i class="fa-solid fa-stopwatch"></i> 剩余时间: <strong id="cbt-timer-display">120:00</strong>
+          </div>
+
+          <div class="cbt-exam-actions">
+            <button class="cbt-btn-action reset" onclick="exitCbtExam()">
+              <i class="fa-solid fa-rectangle-xmark"></i> 中断退出
+            </button>
+            <button class="cbt-btn-action submit" onclick="submitCbtExam()">
+              <i class="fa-solid fa-circle-check"></i> 提交试卷
+            </button>
+          </div>
+        </div>
+
+        <div class="cbt-testing-body">
+          <!-- Question Canvas -->
+          <div class="cbt-question-canvas">
+            <div class="cbt-q-card-header">
+              <span class="cbt-q-number" id="cbt-q-number-text">第 1 题 / 問 1</span>
+              <span class="cbt-q-field" id="cbt-q-field-text">テクノロジ系 / ネットワーク</span>
+              <button class="cbt-q-flag-btn" id="cbt-q-flag-btn" onclick="toggleCbtQuestionFlag()">
+                <i class="fa-regular fa-flag"></i> 标记此题复查
+              </button>
+            </div>
+            
+            <div class="cbt-q-body-text" id="cbt-q-body-text">
+              <!-- Question HTML here -->
+            </div>
+
+            <div class="cbt-q-options-list" id="cbt-q-options-list">
+              <!-- Choices -->
+            </div>
+
+            <!-- Bottom Navigation -->
+            <div class="cbt-q-navigation-bar">
+              <button class="cbt-nav-btn" id="cbt-prev-btn" onclick="cbtPrevQuestion()">
+                <i class="fa-solid fa-chevron-left"></i> 上一题 (前へ)
+              </button>
+              <span class="cbt-nav-status" id="cbt-nav-status-text">第 1 题，共 10 题 (已作答 0 题)</span>
+              <button class="cbt-nav-btn" id="cbt-next-btn" onclick="cbtNextQuestion()">
+                下一题 (次へ) <i class="fa-solid fa-chevron-right"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- CBT Grid Navigator Sidebar -->
+          <div class="cbt-navigator-panel">
+            <h5><i class="fa-solid fa-list-ol"></i> 答题卡看板</h5>
+            <div class="cbt-grid-canvas" id="cbt-grid-canvas">
+              <!-- Question index grid buttons -->
+            </div>
+            <div class="cbt-grid-legend">
+              <span class="legend-unit"><span class="legend-color-box cbt-unanswered"></span>未答</span>
+              <span class="legend-unit"><span class="legend-color-box cbt-answered"></span>已答</span>
+              <span class="legend-unit"><span class="legend-color-box cbt-flagged"><i class="fa-solid fa-flag"></i></span>标记</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CBT Results Report Screen -->
+      <div class="cbt-results-screen" id="cbt-results-screen" style="display: none;">
+        <div class="cbt-results-card">
+          <div class="cbt-results-header">
+            <h2><i class="fa-solid fa-square-poll-vertical"></i> 模拟考试测评成绩单</h2>
+            <button class="cbt-results-close-btn" onclick="closeCbtResults()">
+              <i class="fa-solid fa-chevron-left"></i> 返回道场
+            </button>
+          </div>
+
+          <!-- Score Summary Dashboard -->
+          <div class="cbt-results-summary-row">
+            <div class="cbt-results-total-box">
+              <span class="summary-label">综合得点 (总分)</span>
+              <div class="score-display">
+                <span class="score-num" id="cbt-score-total">650</span>
+                <span class="score-max">/ 1000 点</span>
+              </div>
+              <div class="pass-status-badge pass" id="cbt-pass-status-badge">合格</div>
+            </div>
+
+            <div class="cbt-results-fields-box">
+              <!-- Strategy -->
+              <div class="field-score-item">
+                <div class="field-score-meta">
+                  <strong>ストラテジ系 (策略领域)</strong>
+                  <span id="cbt-field-score-strat">600 / 1000</span>
+                </div>
+                <div class="field-score-progressbar">
+                  <div class="field-score-fill" id="cbt-field-bar-strat" style="width: 60%"></div>
+                </div>
+                <span class="field-score-status" id="cbt-field-status-strat">合格 (>=300)</span>
+              </div>
+              <!-- Management -->
+              <div class="field-score-item">
+                <div class="field-score-meta">
+                  <strong>マネジメント系 (管理领域)</strong>
+                  <span id="cbt-field-score-man">700 / 1000</span>
+                </div>
+                <div class="field-score-progressbar">
+                  <div class="field-score-fill" id="cbt-field-bar-man" style="width: 70%"></div>
+                </div>
+                <span class="field-score-status" id="cbt-field-status-man">合格 (>=300)</span>
+              </div>
+              <!-- Technology -->
+              <div class="field-score-item">
+                <div class="field-score-meta">
+                  <strong>テクノロジ系 (技术领域)</strong>
+                  <span id="cbt-field-score-tech">650 / 1000</span>
+                </div>
+                <div class="field-score-progressbar">
+                  <div class="field-score-fill" id="cbt-field-bar-tech" style="width: 65%"></div>
+                </div>
+                <span class="field-score-status" id="cbt-field-status-tech">合格 (>=300)</span>
+              </div>
+              <!-- Subject B -->
+              <div class="field-score-item" id="cbt-field-score-item-subb" style="display: none;">
+                <div class="field-score-meta">
+                  <strong>科目B (场景应用)</strong>
+                  <span id="cbt-field-score-subb">0 / 1000 点</span>
+                </div>
+                <div class="field-score-progressbar">
+                  <div class="field-score-fill" id="cbt-field-bar-subb" style="width: 0%"></div>
+                </div>
+                <span class="field-score-status" id="cbt-field-status-subb">合格 (>=300)</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Question Review and Analysis List -->
+          <div class="cbt-results-details-wrapper">
+            <h3><i class="fa-solid fa-circle-question"></i> 真题回顾与错题分析</h3>
+            <p class="results-table-tip"><i class="fa-solid fa-lightbulb"></i> 点击下方表格中的任意行，可直接展开查看题干详情及中日文双语要点解析。</p>
+            
+            <div class="results-table-container">
+              <table class="results-table">
+                <thead>
+                  <tr>
+                    <th>题号</th>
+                    <th>领域</th>
+                    <th>考核知识点</th>
+                    <th>您的答案</th>
+                    <th>正确答案</th>
+                    <th>测试结果</th>
+                  </tr>
+                </thead>
+                <tbody id="cbt-results-table-body">
+                  <!-- Tr rows dynamically inserted -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <section class="typing-hub" id="typing-hub" aria-label="日本語タイピング">
+    <aside class="typing-panel typing-library-panel">
+      <h2 class="typing-hub-title">タイピング文庫</h2>
+      <p class="typing-hub-subtitle">N3からN1まで幅広く使える実用日本語入力。生活・職場・長文を自分のペースで練習できます。</p>
+
+      <div class="typing-field">
+        <label for="typing-library-search">文库搜索</label>
+        <input id="typing-library-search" type="search" placeholder="标题、内容或标签" oninput="TypingHub.search(this.value)">
+      </div>
+
+      <div class="typing-category-list" id="typing-category-list"></div>
+      <div class="typing-field">
+        <label>文章列表 <span id="typing-library-count"></span></label>
+      </div>
+      <div class="typing-article-list" id="typing-article-list"></div>
+    </aside>
+
+    <main class="typing-panel typing-main-panel">
+      <div class="typing-toolbar">
+        <button class="typing-primary-btn" onclick="TypingHub.randomArticle()">
+          <i class="fa-solid fa-shuffle"></i> 随机一篇
+        </button>
+        <button class="typing-secondary-btn" onclick="TypingHub.restart()">
+          <i class="fa-solid fa-rotate-left"></i> 重新开始
+        </button>
+        <label for="typing-time-limit" style="color:var(--text-muted);font-size:12px;">限时</label>
+        <select id="typing-time-limit" class="typing-secondary-btn">
+          <option value="0">不限时</option>
+          <option value="60">1分钟</option>
+          <option value="180">3分钟</option>
+          <option value="300">5分钟</option>
+          <option value="600">10分钟</option>
+        </select>
+        <span class="typing-toolbar-spacer"></span>
+        <button class="typing-secondary-btn typing-favorite-btn" id="typing-favorite-btn" onclick="TypingHub.toggleFavorite()" title="收藏当前文章">
+          <i class="fa-solid fa-star"></i> 收藏
+        </button>
+      </div>
+
+      <div class="typing-workspace">
+        <div class="typing-article-heading">
+          <div>
+            <h2 id="typing-current-title">文章准备中</h2>
+            <div class="typing-tags" id="typing-current-tags"></div>
+          </div>
+          <span class="typing-tag">IME 实战模式</span>
+        </div>
+
+        <div class="typing-progress"><div id="typing-progress-fill"></div></div>
+        <div class="typing-source" id="typing-source"></div>
+
+        <textarea
+          class="typing-input"
+          id="typing-ime-input"
+          lang="ja"
+          spellcheck="false"
+          autocomplete="off"
+          placeholder="日语输入法をオンにして、ここから入力してください。"
+        ></textarea>
+        <p class="typing-help">系统日语 IME 输入。全角与半角会统一比较；删除和改写会计入修改次数。</p>
+
+        <div class="typing-stats">
+          <div class="typing-stat"><span>速度</span><strong id="typing-stat-kpm">0</strong><small> KPM</small></div>
+          <div class="typing-stat"><span>正确率</span><strong id="typing-stat-accuracy">100%</strong></div>
+          <div class="typing-stat"><span>有效进度</span><strong id="typing-stat-progress">0/0</strong></div>
+          <div class="typing-stat"><span>修改次数</span><strong id="typing-stat-corrections">0</strong></div>
+          <div class="typing-stat"><span>时间</span><strong id="typing-stat-time">00:00</strong></div>
+        </div>
+
+        <div class="typing-result" id="typing-result">
+          <h3 id="typing-result-title">练习完成</h3>
+          <p id="typing-result-summary"></p>
+          <button class="typing-primary-btn" onclick="TypingHub.randomArticle()">继续随机练习</button>
+        </div>
+
+        <div class="typing-bottom-grid">
+          <section class="typing-mini-card">
+            <h3><i class="fa-solid fa-clock-rotate-left"></i> 最近成绩</h3>
+            <div id="typing-history-list"></div>
+          </section>
+          <section class="typing-mini-card">
+            <h3><i class="fa-solid fa-bullseye"></i> 个人复练</h3>
+            <p class="typing-empty">正确率低于 98% 的文章会自动加入错句复练；满分完成后自动移除。</p>
+            <strong id="typing-review-count" class="typing-review-count">0 篇待复练</strong>
+          </section>
+        </div>
+      </div>
+    </main>
+  </section>
+
+  <!-- Lesson Data & JS Scripts -->
+  <script src="data/db.js?v=20260604"></script>
+  <script src="data/lessons.js?v=20260604"></script>
+  <script src="data/it_passport_lessons.js?v=20260604"></script>
+  <script src="data/it_passport_past_exams.js?v=20260604"></script>
+  <script src="data/sg_lessons.js?v=20260604"></script>
+  <script src="data/sg_past_exams.js?v=20260604"></script>
+  <script src="data/java_lessons.js?v=20260604"></script>
+  <script src="assets/js/java_sandbox.js?v=20260606_v4"></script>
+  <script src="data/python_lessons.js?v=20260606_v6"></script>
+  <script src="assets/js/python_sandbox.js?v=20260606_v4"></script>
+  <script src="data/sql_exam_questions.js?v=20260604"></script>
+  <script src="data/java_exam_questions.js?v=20260604"></script>
+  <script src="data/python_exam_questions.js?v=20260604"></script>
+  <script src="data/japanese_typing_library.js?v=20260606_v1"></script>
+  <script src="data/japanese_typing_expansion.js?v=20260606_v1"></script>
+  <script src="assets/js/japanese_typing.js?v=20260606_v1"></script>
+  <script src="assets/js/i18n.js?v=20260608_global_target_v2"></script>
+  <script src="assets/js/app.js?v=20260608_i18n_fix"></script>
+  <script src="assets/js/ai_assistant.js?v=20260608_global_target"></script>
+</body>
+</html>

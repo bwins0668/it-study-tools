@@ -1,0 +1,2962 @@
+// java_lessons.js — Java 学習コースデータベース（入門編8章 + 実践編11章）
+// 筑波大学 三谷純 先生の教科書をベースに構成。中日双语対応。
+
+const JAVA_LESSONS = [
+
+// ============================================================
+// 入門編 第1章 — Java言語に触れる
+// ============================================================
+{
+  id: "nyumon-1",
+  book: "入門編",
+  bookZh: "入门篇",
+  chapter: 1,
+  titleJa: "第1章 Java言語に触れる",
+  titleZh: "第1章 初识Java语言",
+  subtitleJa: "プログラムとは何か、Javaの構造",
+  subtitleZh: "什么是程序？Java的基本结构",
+  conceptJa: `<h3>プログラムとは</h3>
+<p>コンピュータに「何をするか」を命令する手順書のことです。日常生活のレシピや料理手順書と同じように、コンピュータはプログラムに書かれた命令を上から順番に実行します。</p>
+<p>プログラムを書くための専用言語を<strong>プログラミング言語</strong>と言い、Javaはその代表的な一つです。</p>
+
+<h3>Javaの特徴</h3>
+<ul>
+  <li><strong>プラットフォーム非依存</strong>：Javaで書いたプログラムは、WindowsでもMacでもLinuxでも動作します（「Write Once, Run Anywhere」）</li>
+  <li><strong>オブジェクト指向</strong>：現実世界の「もの（オブジェクト）」を模してプログラムを設計できます</li>
+  <li><strong>強い型付け</strong>：変数の種類（型）を厳密に決めるため、バグが少なくなります</li>
+  <li><strong>豊富なライブラリ</strong>：標準で多くの機能が付属しており、すぐに使えます</li>
+</ul>
+
+<h3>Javaプログラムの基本構造</h3>
+<p>最もシンプルなJavaプログラムはこのような形をしています：</p>
+<pre><code>class クラス名 {
+    public static void main(String[] args) {
+        // ここに処理を書く
+    }
+}</code></pre>
+<p>このように、Javaプログラムは必ず<strong>クラス</strong>の中に処理を書きます。<code>main</code>メソッドが、プログラムの入り口（エントリーポイント）です。</p>
+
+<h3>コメント文</h3>
+<p><code>//</code>から行末までがコメント（注釈）です。コンピュータは実行時に無視するので、メモ書きとして使います。</p>
+<p>複数行のコメントは <code>/* ～ */</code> で囲みます。</p>
+
+<h3>ブロックとインデント</h3>
+<p><code>{</code>と<code>}</code>で囲まれた部分を<strong>ブロック</strong>と言います。ブロックの内側はインデント（字下げ）して読みやすくする慣習があります。</p>`,
+
+  conceptZh: `<h3>什么是程序</h3>
+<p>程序就是告诉计算机「该做什么」的指令集合。就像菜谱一样，计算机会按顺序执行程序中的每条指令。</p>
+<p>用于编写程序的专用语言叫做<strong>编程语言</strong>，Java就是其中最著名的一种。</p>
+
+<h3>Java的特点</h3>
+<ul>
+  <li><strong>跨平台性</strong>：Java写的程序在Windows、Mac、Linux上都能运行（"一次编写，到处运行"）</li>
+  <li><strong>面向对象</strong>：用「对象」来模拟现实世界中的事物来设计程序</li>
+  <li><strong>强类型语言</strong>：变量必须指定类型，减少错误</li>
+  <li><strong>丰富的类库</strong>：自带大量现成功能，直接可用</li>
+</ul>
+
+<h3>Java程序的基本结构</h3>
+<p>最简单的Java程序长这样：</p>
+<pre><code>class 类名 {
+    public static void main(String[] args) {
+        // 在这里写处理逻辑
+    }
+}</code></pre>
+<p>Java程序必须写在<strong>类（class）</strong>中，<code>main</code>方法是程序的入口点，程序从这里开始执行。</p>
+
+<h3>注释</h3>
+<p><code>//</code>后面是单行注释，计算机执行时会忽略它，可以用来写备注。多行注释用<code>/* ～ */</code>包围。</p>
+
+<h3>代码块与缩进</h3>
+<p>用<code>{</code>和<code>}</code>包围的部分叫做<strong>代码块</strong>。通常在块内部用缩进（空格）来提高可读性。</p>`,
+
+  analogy: "☕ Java就像一个翻译官：你用Java语言写的代码，先被「javac」翻译成字节码（.class文件），再由JVM（Java虚拟机）在任何平台上执行。就像一份菜谱可以被任何国家的厨师（JVM）按照步骤做出来。",
+
+  codeExample: `// 第1章の例：最初のJavaプログラム
+// 第1章示例：第一个Java程序
+public class Main {
+    public static void main(String[] args) {
+        // System.out.println() で文字を表示します
+        // System.out.println() 用于在屏幕上显示文字
+        System.out.println("Hello, Java!");
+        System.out.println("こんにちは、世界！");
+        System.out.println("你好，Java！");
+        
+        // /* */ は複数行のコメントです
+        /* このコメントは
+           複数行に渡ります */
+    }
+}`,
+  codeTitle: "Hello World — 最初のプログラム",
+
+  quizList: [
+    {
+      question: "Javaプログラムの入り口（最初に実行されるメソッド）は何ですか？",
+      questionZh: "Java程序的入口（最先执行的方法）叫什么？",
+      options: ["class", "main", "public", "println"],
+      answerIdx: 1,
+      hint: "プログラムはここから始まります / 程序从这里开始执行。"
+    },
+    {
+      question: "Javaプログラムでコメントを書くときに使う記号はどれですか？",
+      questionZh: "在Java中用于写单行注释的符号是什么？",
+      options: ["##", "//", "--", "**"],
+      answerIdx: 1,
+      hint: "この記号から行末まではコンピュータが無視します / 计算机会忽略这个符号到行末的内容。"
+    },
+    {
+      question: "Javaの特徴として正しいものはどれですか？",
+      questionZh: "以下哪项是Java的特点？",
+      options: ["Windowsでしか動かない", "型がなく自由に変数が使える", "Write Once, Run Anywhere", "コンパイルが不要"],
+      answerIdx: 2,
+      hint: "JVMのおかげで、複数のOSで同じプログラムが動きます / 因为有JVM，同一程序可在多个操作系统上运行。"
+    }
+  ],
+
+  vocabList: [
+    { term: "クラス (class)", zh: "类", desc: "Javaプログラムの基本単位。データと処理をひとまとめにしたもの。" },
+    { term: "メソッド (method)", zh: "方法/函数", desc: "処理のまとまり（手順）。mainメソッドがプログラムの入り口。" },
+    { term: "JVM", zh: "Java虚拟机", desc: "Java Virtual Machine。Javaのバイトコードを実行する仮想コンピュータ。" },
+    { term: "コンパイル", zh: "编译", desc: "人間が書いたプログラムコードを、コンピュータが実行できる形式に変換する作業。" }
+  ]
+},
+
+// ============================================================
+// 入門編 第2章 — Java言語の基本
+// ============================================================
+{
+  id: "nyumon-2",
+  book: "入門編",
+  bookZh: "入门篇",
+  chapter: 2,
+  titleJa: "第2章 Java言語の基本",
+  titleZh: "第2章 Java语言基础",
+  subtitleJa: "変数・型・演算子・String",
+  subtitleZh: "变量、类型、运算符、String",
+  conceptJa: `<h3>変数とは</h3>
+<p>値を一時的に保存する「箱」のようなものです。箱には名前（変数名）と、入れられる値の種類（型）があります。</p>
+<p>変数を使う前に<strong>宣言</strong>が必要です：</p>
+<pre><code>型名 変数名;          // 宣言
+型名 変数名 = 値;     // 宣言と同時に初期化</code></pre>
+
+<h3>Javaの基本データ型</h3>
+<table border="1" style="border-collapse:collapse;width:100%">
+<tr><th>型名</th><th>内容</th><th>例</th></tr>
+<tr><td>int</td><td>整数（約±21億）</td><td>100, -5, 0</td></tr>
+<tr><td>double</td><td>小数点数（倍精度）</td><td>3.14, -2.5</td></tr>
+<tr><td>boolean</td><td>真偽値</td><td>true, false</td></tr>
+<tr><td>char</td><td>1文字</td><td>'A', 'あ'</td></tr>
+<tr><td>long</td><td>大きな整数</td><td>1000000000L</td></tr>
+<tr><td>String</td><td>文字列（クラス型）</td><td>"Hello"</td></tr>
+</table>
+
+<h3>算術演算子</h3>
+<ul>
+  <li><code>+</code> 加算　<code>-</code> 減算　<code>*</code> 乗算　<code>/</code> 除算　<code>%</code> 余り</li>
+  <li>整数同士の割り算は小数点以下が切り捨てられます：<code>7/2 = 3</code></li>
+  <li><code>++</code> インクリメント（1増加）　<code>--</code> デクリメント（1減少）</li>
+</ul>
+
+<h3>型変換（キャスト）</h3>
+<p>異なる型を混ぜた計算では、自動的に大きい型へ変換されます（暗黙の型変換）。</p>
+<p>明示的に変換したい場合は<strong>キャスト演算子</strong>を使います：<code>(int) 3.7</code> → 3</p>
+
+<h3>Stringクラス（文字列）</h3>
+<p><code>String</code>は文字列を扱うクラス型です。<code>+</code>演算子で文字列を連結できます。</p>
+<pre><code>String name = "太郎";
+System.out.println("こんにちは" + name + "さん");</code></pre>
+
+<h3>エスケープシーケンス</h3>
+<p>文字列内で特別な文字を表す方法：</p>
+<ul>
+  <li><code>\\n</code>：改行　<code>\\t</code>：タブ　<code>\\"</code>：ダブルクォート　<code>\\\\</code>：バックスラッシュ</li>
+</ul>`,
+
+  conceptZh: `<h3>什么是变量</h3>
+<p>变量就像一个有名字的「盒子」，用来临时存储数据。使用变量前需要先「声明」它的类型：</p>
+<pre><code>类型名 变量名;          // 声明
+类型名 变量名 = 值;     // 声明并初始化</code></pre>
+
+<h3>Java的基本数据类型</h3>
+<table border="1" style="border-collapse:collapse;width:100%">
+<tr><th>类型</th><th>说明</th><th>示例</th></tr>
+<tr><td>int</td><td>整数（约±21亿）</td><td>100, -5, 0</td></tr>
+<tr><td>double</td><td>小数（双精度浮点）</td><td>3.14, -2.5</td></tr>
+<tr><td>boolean</td><td>布尔值（真/假）</td><td>true, false</td></tr>
+<tr><td>char</td><td>单个字符</td><td>'A', 'あ'</td></tr>
+<tr><td>long</td><td>大整数</td><td>1000000000L</td></tr>
+<tr><td>String</td><td>字符串（类类型）</td><td>"Hello"</td></tr>
+</table>
+
+<h3>算术运算符</h3>
+<ul>
+  <li><code>+</code>加法 <code>-</code>减法 <code>*</code>乘法 <code>/</code>除法 <code>%</code>取余</li>
+  <li>整数除法会丢弃小数部分：<code>7/2 = 3</code></li>
+  <li><code>++</code> 自增1，<code>--</code> 自减1</li>
+</ul>
+
+<h3>类型转换（Cast）</h3>
+<p>不同类型混合运算时会自动转换为较大的类型。强制转换用括号：<code>(int) 3.7</code> → 3</p>
+
+<h3>String字符串</h3>
+<p><code>String</code>是字符串类型，用<code>+</code>可以连接字符串。</p>
+<pre><code>String name = "太郎";
+System.out.println("こんにちは" + name + "さん");</code></pre>
+
+<h3>转义字符</h3>
+<ul>
+  <li><code>\\n</code>换行 <code>\\t</code>制表符 <code>\\"</code>双引号 <code>\\\\</code>反斜杠</li>
+</ul>`,
+
+  analogy: "📦 变量就像贴了标签的收纳盒：int类型的盒子只能放整数，double的盒子放小数，String的盒子放文字。不能往int的盒子里放小数，就像不能往装书的盒子里放液体一样！",
+
+  codeExample: `public class Main {
+    public static void main(String[] args) {
+        // 変数の宣言と使用 / 变量声明与使用
+        int nenrei = 20;
+        double身長 = 170.5;
+        String namae = "田中";
+        boolean isStudent = true;
+        
+        System.out.println("名前: " + namae);
+        System.out.println("年齢: " + nenrei + "歳");
+        System.out.println("身長: " + 身長 + "cm");
+        System.out.println("学生ですか: " + isStudent);
+        
+        // 算術演算 / 算术运算
+        int a = 10, b = 3;
+        System.out.println("10 + 3 = " + (a + b));
+        System.out.println("10 / 3 = " + (a / b));     // 整数除算 = 3
+        System.out.println("10.0 / 3 = " + (10.0 / b)); // 小数除算
+        System.out.println("10 % 3 = " + (a % b));     // 余り = 1
+        
+        // 型変換 / 类型转换
+        double pi = 3.14159;
+        int piInt = (int) pi;  // キャスト
+        System.out.println("π の整数部分: " + piInt);
+    }
+}`,
+  codeTitle: "変数・型・演算子の使い方",
+
+  quizList: [
+    {
+      question: "整数を扱うJavaの型はどれですか？",
+      questionZh: "Java中用于处理整数的类型是哪个？",
+      options: ["double", "boolean", "int", "String"],
+      answerIdx: 2,
+      hint: "integer（整数）の略です / 是integer（整数）的缩写。"
+    },
+    {
+      question: "int型同士の計算 7 / 2 の結果はどれですか？",
+      questionZh: "int类型计算 7 / 2 的结果是什么？",
+      options: ["3.5", "3", "4", "エラー"],
+      answerIdx: 1,
+      hint: "整数同士の割り算は小数点以下が切り捨てられます / 整数除法会截断小数部分。"
+    },
+    {
+      question: "文字列 \"Hello\" と \"World\" を + で繋げた結果は？",
+      questionZh: "字符串 \"Hello\" 和 \"World\" 用 + 连接的结果是？",
+      options: ["HelloWorld", "Hello World", "Hello+World", "エラー"],
+      answerIdx: 0,
+      hint: "Javaの+演算子は文字列同士を結合します / Java的+运算符可以连接字符串。"
+    }
+  ],
+
+  vocabList: [
+    { term: "変数 (variable)", zh: "变量", desc: "値を記憶するための名前付きの格納場所。" },
+    { term: "データ型 (data type)", zh: "数据类型", desc: "変数に入れられる値の種類（int, double, String など）。" },
+    { term: "キャスト (cast)", zh: "强制类型转换", desc: "(型名) を付けて強制的に型を変換すること。例: (int) 3.7 → 3" },
+    { term: "インクリメント (++)", zh: "自增", desc: "変数の値を1増やす演算子。i++ または ++i と書く。" }
+  ]
+},
+
+// ============================================================
+// 入門編 第3章 — 条件分岐と繰り返し
+// ============================================================
+{
+  id: "nyumon-3",
+  book: "入門編",
+  bookZh: "入门篇",
+  chapter: 3,
+  titleJa: "第3章 条件分岐と繰り返し",
+  titleZh: "第3章 条件判断与循环",
+  subtitleJa: "if/switch/for/while/配列",
+  subtitleZh: "if/switch/for/while/数组",
+  conceptJa: `<h3>条件分岐（if文）</h3>
+<p>条件によって処理を分岐させます。</p>
+<pre><code>if (条件式) {
+    // 条件がtrueのとき実行
+} else if (別の条件) {
+    // 別の条件がtrueのとき
+} else {
+    // どれも当てはまらないとき
+}</code></pre>
+
+<h3>関係演算子と論理演算子</h3>
+<table border="1" style="border-collapse:collapse;width:100%">
+<tr><th>演算子</th><th>意味</th><th>例</th></tr>
+<tr><td>==</td><td>等しい</td><td>a == b</td></tr>
+<tr><td>!=</td><td>等しくない</td><td>a != b</td></tr>
+<tr><td>&gt;, &lt;</td><td>大なり・小なり</td><td>a > b</td></tr>
+<tr><td>&amp;&amp;</td><td>かつ（AND）</td><td>a>0 &amp;&amp; b>0</td></tr>
+<tr><td>||</td><td>または（OR）</td><td>a>0 || b>0</td></tr>
+<tr><td>!</td><td>否定（NOT）</td><td>!isStudent</td></tr>
+</table>
+
+<h3>switch文</h3>
+<p>一つの変数の値に応じて処理を分岐します。</p>
+<pre><code>switch (変数) {
+    case 値1: 処理1; break;
+    case 値2: 処理2; break;
+    default: その他の処理;
+}</code></pre>
+
+<h3>繰り返し（for文）</h3>
+<pre><code>for (初期化; 条件; 更新) {
+    // 繰り返す処理
+}
+// 例：1から5まで表示
+for (int i = 1; i <= 5; i++) {
+    System.out.println(i);
+}</code></pre>
+
+<h3>繰り返し（while文・do-while文）</h3>
+<pre><code>while (条件) { 処理; }  // 条件が真の間繰り返す
+do { 処理; } while (条件);  // 必ず1回は実行</code></pre>
+
+<h3>break と continue</h3>
+<ul>
+  <li><code>break</code>：ループを途中で抜け出す</li>
+  <li><code>continue</code>：今のループの繰り返しをスキップして次へ</li>
+</ul>
+
+<h3>配列</h3>
+<p>同じ型の値を複数まとめて管理します。</p>
+<pre><code>int[] scores = {85, 90, 78, 95, 82};  // 5要素の配列
+System.out.println(scores[0]);  // 最初の要素（インデックス0から始まる）
+System.out.println(scores.length);  // 配列の長さ = 5</code></pre>`,
+
+  conceptZh: `<h3>条件判断（if语句）</h3>
+<p>根据条件决定执行哪段代码：</p>
+<pre><code>if (条件) {
+    // 条件为true时执行
+} else if (另一个条件) {
+    // 另一个条件为true时执行
+} else {
+    // 以上都不满足时执行
+}</code></pre>
+
+<h3>关系运算符和逻辑运算符</h3>
+<table border="1" style="border-collapse:collapse;width:100%">
+<tr><th>运算符</th><th>含义</th><th>示例</th></tr>
+<tr><td>==</td><td>等于</td><td>a == b</td></tr>
+<tr><td>!=</td><td>不等于</td><td>a != b</td></tr>
+<tr><td>&gt;, &lt;</td><td>大于、小于</td><td>a > b</td></tr>
+<tr><td>&amp;&amp;</td><td>且（AND）</td><td>a>0 &amp;&amp; b>0</td></tr>
+<tr><td>||</td><td>或（OR）</td><td>a>0 || b>0</td></tr>
+<tr><td>!</td><td>非（NOT）</td><td>!isStudent</td></tr>
+</table>
+
+<h3>switch语句</h3>
+<p>根据一个变量的值来执行不同分支，注意每个case后面需要<code>break</code>。</p>
+
+<h3>for循环</h3>
+<pre><code>for (初始化; 条件; 更新) {
+    // 重复执行的代码
+}
+// 例：打印1到5
+for (int i = 1; i <= 5; i++) {
+    System.out.println(i);
+}</code></pre>
+
+<h3>while循环与do-while</h3>
+<p><code>while</code>：先检查条件，再执行。<code>do-while</code>：先执行一次，再检查条件。</p>
+
+<h3>break与continue</h3>
+<ul>
+  <li><code>break</code>：立即退出循环</li>
+  <li><code>continue</code>：跳过本次循环，继续下一次</li>
+</ul>
+
+<h3>数组</h3>
+<p>用来存储同一类型的多个值，下标从0开始：</p>
+<pre><code>int[] scores = {85, 90, 78, 95, 82};
+System.out.println(scores[0]);    // 85
+System.out.println(scores.length); // 5（数组长度）</code></pre>`,
+
+  analogy: "🚦 条件分岐は交差点の信号のようなもの。赤（false）なら止まり、青（true）なら進む。for文は「10回ジャンプ」という命令のようにあらかじめ回数が決まっており、while文は「疲れるまで走り続ける」という条件が基準になっている。",
+
+  codeExample: `public class Main {
+    public static void main(String[] args) {
+        // if-else の例 / if-else示例
+        int score = 75;
+        if (score >= 90) {
+            System.out.println("優秀 / Excellent");
+        } else if (score >= 70) {
+            System.out.println("良好 / Good");
+        } else {
+            System.out.println("要努力 / Need improvement");
+        }
+        
+        // for ループ / for循环
+        System.out.println("\\n1から5までの合計:");
+        int sum = 0;
+        for (int i = 1; i <= 5; i++) {
+            sum += i;
+            System.out.println("i=" + i + " sum=" + sum);
+        }
+        
+        // 配列の使い方 / 数组示例
+        int[] numbers = {10, 20, 30, 40, 50};
+        System.out.println("\\n配列の全要素:");
+        for (int i = 0; i < numbers.length; i++) {
+            System.out.println("numbers[" + i + "] = " + numbers[i]);
+        }
+        
+        // 偶数のみ出力（continue） / 只输出偶数
+        System.out.println("\\n偶数:");
+        for (int i = 1; i <= 10; i++) {
+            if (i % 2 != 0) continue;
+            System.out.print(i + " ");
+        }
+    }
+}`,
+  codeTitle: "条件分岐・ループ・配列の総合例",
+
+  quizList: [
+    {
+      question: "for(int i=0; i<3; i++) の繰り返し回数は？",
+      questionZh: "for(int i=0; i<3; i++) 会循环几次？",
+      options: ["2回", "3回", "4回", "無限"],
+      answerIdx: 1,
+      hint: "i=0, i=1, i=2 の3回実行されます / i=0, i=1, i=2共3次。"
+    },
+    {
+      question: "配列 int[] a = {5,10,15} において a[1] の値は？",
+      questionZh: "数组 int[] a = {5,10,15} 中，a[1] 的值是？",
+      options: ["5", "10", "15", "エラー"],
+      answerIdx: 1,
+      hint: "配列のインデックスは0から始まります / 数组下标从0开始。"
+    },
+    {
+      question: "break文の働きは何ですか？",
+      questionZh: "break语句的作用是什么？",
+      options: ["ループを一時停止する", "ループを途中で終了する", "次の繰り返しに飛ぶ", "プログラムを終了する"],
+      answerIdx: 1,
+      hint: "continueは次の繰り返しにスキップ、breakは完全に抜け出します / continue跳到下次循环，break完全退出。"
+    }
+  ],
+
+  vocabList: [
+    { term: "条件分岐 (conditional branch)", zh: "条件分支", desc: "条件が真か偽かによって実行する処理を切り替えること。" },
+    { term: "ループ (loop)", zh: "循环", desc: "同じ処理を繰り返す仕組み。for, while, do-while がある。" },
+    { term: "配列 (array)", zh: "数组", desc: "同じ型のデータを連続して管理するデータ構造。インデックスで各要素にアクセス。" },
+    { term: "インデックス (index)", zh: "下标/索引", desc: "配列の各要素の位置を表す番号。0から始まる。" }
+  ]
+},
+
+// ============================================================
+// 入門編 第4章 — メソッド
+// ============================================================
+{
+  id: "nyumon-4",
+  book: "入門編",
+  bookZh: "入门篇",
+  chapter: 4,
+  titleJa: "第4章 メソッド",
+  titleZh: "第4章 方法（Method）",
+  subtitleJa: "引数・戻り値・オーバーロード",
+  subtitleZh: "参数、返回值、方法重载",
+  conceptJa: `<h3>メソッドとは</h3>
+<p>処理のまとまりに名前を付けて、何度でも呼び出せるようにしたものです。同じ処理を繰り返し書く必要がなくなり、プログラムが整理されます。</p>
+<pre><code>static 戻り値の型 メソッド名(引数の型 引数名) {
+    処理;
+    return 戻り値;
+}</code></pre>
+
+<h3>引数（パラメータ）</h3>
+<p>メソッドに渡す値のことです。呼び出すときに値を指定します。</p>
+<pre><code>static void greet(String name) {
+    System.out.println("こんにちは、" + name + "さん");
+}
+// 呼び出し
+greet("太郎");  // こんにちは、太郎さん</code></pre>
+
+<h3>戻り値</h3>
+<p>メソッドが処理の結果として返す値です。<code>return</code>で返します。戻り値がない場合は<code>void</code>を使います。</p>
+<pre><code>static int add(int a, int b) {
+    return a + b;
+}
+int result = add(3, 4);  // result = 7</code></pre>
+
+<h3>メソッドのオーバーロード</h3>
+<p>同じメソッド名で引数の型や数が異なるメソッドを複数定義できます。これを<strong>オーバーロード（多重定義）</strong>と言います。</p>
+<pre><code>static int add(int a, int b) { return a + b; }
+static double add(double a, double b) { return a + b; }
+static int add(int a, int b, int c) { return a + b + c; }</code></pre>
+<p>呼び出す際、引数に合ったメソッドが自動的に選ばれます。</p>
+
+<h3>変数のスコープ</h3>
+<p>変数が使える範囲（スコープ）はブロック<code>{}</code>の中に限られます。メソッド内で宣言した変数は、そのメソッドの外からは使えません（ローカル変数）。</p>`,
+
+  conceptZh: `<h3>什么是方法（Method）</h3>
+<p>方法是把一段有名字的处理逻辑封装起来，可以反复调用。避免了重复写相同代码。</p>
+<pre><code>static 返回值类型 方法名(参数类型 参数名) {
+    处理逻辑;
+    return 返回值;
+}</code></pre>
+
+<h3>参数（Parameters）</h3>
+<p>调用方法时传入的值。方法可以有多个参数，也可以没有参数。</p>
+
+<h3>返回值（Return Value）</h3>
+<p>方法处理完毕后返回的结果，用<code>return</code>关键字返回。如果不返回任何值，类型写<code>void</code>。</p>
+<pre><code>static int add(int a, int b) {
+    return a + b;
+}
+int result = add(3, 4);  // result = 7</code></pre>
+
+<h3>方法重载（Overload）</h3>
+<p>同一个方法名，但参数的类型或数量不同，这叫<strong>重载</strong>。Java会根据传入参数自动选择对应的方法。</p>
+<pre><code>static int add(int a, int b) { return a + b; }
+static double add(double a, double b) { return a + b; }
+static int add(int a, int b, int c) { return a + b + c; }</code></pre>
+
+<h3>变量作用域（Scope）</h3>
+<p>变量只在声明它的代码块<code>{}</code>内有效。方法内声明的变量（局部变量）在方法外无法访问。</p>`,
+
+  analogy: "🔧 方法就像一台自动贩卖机：你投入「参数」（硬币），机器按固定流程处理，然后给你「返回值」（饮料）。你不需要知道机器内部怎么工作，只要用就行了！",
+
+  codeExample: `public class Main {
+    // 引数なし、戻り値なしのメソッド / 无参数，无返回值
+    static void showWelcome() {
+        System.out.println("=== Java学習へようこそ ===");
+    }
+    
+    // 引数あり、戻り値あり / 有参数，有返回值
+    static double calculateAverage(int a, int b, int c) {
+        return (a + b + c) / 3.0;
+    }
+    
+    // オーバーロード例 / 重载示例
+    static String describe(int n) {
+        return "整数: " + n;
+    }
+    static String describe(double d) {
+        return "小数: " + d;
+    }
+    static String describe(String s) {
+        return "文字列: " + s;
+    }
+    
+    public static void main(String[] args) {
+        showWelcome();
+        
+        double avg = calculateAverage(80, 90, 75);
+        System.out.println("平均点: " + avg);
+        
+        // オーバーロード / 重载
+        System.out.println(describe(42));
+        System.out.println(describe(3.14));
+        System.out.println(describe("こんにちは"));
+    }
+}`,
+  codeTitle: "メソッドの定義と呼び出し",
+
+  quizList: [
+    {
+      question: "戻り値がないメソッドの戻り値の型は何ですか？",
+      questionZh: "没有返回值的方法，返回类型写什么？",
+      options: ["null", "empty", "void", "none"],
+      answerIdx: 2,
+      hint: "「空」を意味する英単語です / 意思是「空」的英文单词。"
+    },
+    {
+      question: "メソッドのオーバーロードとは何ですか？",
+      questionZh: "方法重载是什么？",
+      options: ["メソッドを上書きすること", "同じ名前で引数の異なるメソッドを複数定義すること", "メソッドを削除すること", "メソッドを別のクラスにコピーすること"],
+      answerIdx: 1,
+      hint: "同じ名前で引数の型や数が違うメソッドを複数持てます / 同名但参数类型或数量不同的多个方法。"
+    },
+    {
+      question: "次のメソッドを呼び出したときの戻り値は？ static int double(int n) { return n * 2; } double(5)",
+      questionZh: "调用以下方法的返回值是？ static int twice(int n) { return n * 2; } twice(5)",
+      options: ["5", "10", "2", "25"],
+      answerIdx: 1,
+      hint: "5 * 2 = ? / 5乘以2等于？"
+    }
+  ],
+
+  vocabList: [
+    { term: "メソッド (method)", zh: "方法", desc: "処理のまとまりに名前をつけたもの。何度でも呼び出せる。" },
+    { term: "引数 (parameter/argument)", zh: "参数", desc: "メソッドに渡す値。呼び出し時に指定する。" },
+    { term: "戻り値 (return value)", zh: "返回值", desc: "メソッドが処理の結果として返す値。returnキーワードで返す。" },
+    { term: "オーバーロード (overload)", zh: "重载", desc: "同じメソッド名で引数の型や数が異なるメソッドを複数定義すること。" }
+  ]
+},
+
+// ============================================================
+// 入門編 第5章 — クラスの基本
+// ============================================================
+{
+  id: "nyumon-5",
+  book: "入門編",
+  bookZh: "入门篇",
+  chapter: 5,
+  titleJa: "第5章 クラスの基本",
+  titleZh: "第5章 类的基础（OOP入门）",
+  subtitleJa: "オブジェクト指向・クラス・インスタンス・参照",
+  subtitleZh: "面向对象、类、实例、引用",
+  conceptJa: `<h3>オブジェクト指向とは</h3>
+<p>現実世界の「もの（オブジェクト）」をプログラムで表現する考え方です。例えば「学生」というオブジェクトには、名前・学籍番号という<strong>属性（フィールド）</strong>と、勉強する・試験を受けるという<strong>操作（メソッド）</strong>があります。</p>
+
+<h3>クラスとインスタンス</h3>
+<ul>
+  <li><strong>クラス</strong>：オブジェクトの設計図・ひな形。型のようなもの。</li>
+  <li><strong>インスタンス</strong>：設計図から作られた実際のオブジェクト。</li>
+</ul>
+<pre><code>// クラスの定義（設計図）
+class Student {
+    String name;    // フィールド（属性）
+    int studentId;
+}
+
+// インスタンスの生成
+Student s = new Student();
+s.name = "田中";
+s.studentId = 1001;
+System.out.println(s.name);</code></pre>
+
+<h3>参照型</h3>
+<p>クラス型の変数は、実際のデータ（オブジェクト）が置かれているメモリの「住所（参照）」を持ちます。</p>
+<p><code>Student s2 = s;</code> とすると、s2 も同じオブジェクトを指します（コピーではない！）。</p>
+
+<h3>null</h3>
+<p><code>null</code>は「何も参照していない」状態を表す特別な値です。nullのオブジェクトのフィールドやメソッドにアクセスすると <strong>NullPointerException</strong> が発生します。</p>
+
+<h3>参照の配列</h3>
+<p>クラス型の配列を作ることもできます：</p>
+<pre><code>Student[] students = new Student[3];
+students[0] = new Student();
+students[0].name = "佐藤";</code></pre>`,
+
+  conceptZh: `<h3>什么是面向对象（OOP）</h3>
+<p>面向对象编程是用「对象（Object）」来描述现实世界中事物的编程方式。每个对象有<strong>属性（字段/Field）</strong>和<strong>行为（方法/Method）</strong>。</p>
+<p>例如「学生」对象：有名字、学号（属性），有学习、考试（行为）。</p>
+
+<h3>类与实例</h3>
+<ul>
+  <li><strong>类（Class）</strong>：对象的设计图/模板</li>
+  <li><strong>实例（Instance）</strong>：根据设计图创建出来的具体对象</li>
+</ul>
+<pre><code>// 定义类（设计图）
+class Student {
+    String name;     // 字段（属性）
+    int studentId;
+}
+// 创建实例
+Student s = new Student();
+s.name = "田中";
+s.studentId = 1001;
+System.out.println(s.name);</code></pre>
+
+<h3>引用类型（Reference Type）</h3>
+<p>类类型的变量保存的不是对象本身，而是对象在内存中的「地址（引用）」。</p>
+<p><code>Student s2 = s;</code> 后，s2和s指向同一个对象（不是复制！），修改s2也会影响s。</p>
+
+<h3>null</h3>
+<p><code>null</code>表示「不引用任何对象」。访问null对象的字段或方法会产生 <strong>NullPointerException</strong> 异常。</p>
+
+<h3>引用类型数组</h3>
+<p>也可以创建类类型的数组：</p>
+<pre><code>Student[] students = new Student[3];
+students[0] = new Student();
+students[0].name = "佐藤";</code></pre>`,
+
+  analogy: "🏠 类就像建筑图纸，实例就像按图纸建造的房子。图纸只有一份（类定义），但可以建造无数栋房子（实例）。每栋房子（实例）的地址（引用）不同，但结构相同。",
+
+  codeExample: `// クラスの定義 / 类的定义
+class Car {
+    String brand;
+    int year;
+    double price;
+    
+    void showInfo() {
+        System.out.println("ブランド: " + brand + 
+                           ", 年式: " + year + 
+                           ", 価格: " + price + "万円");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        // インスタンスの生成 / 创建实例
+        Car car1 = new Car();
+        car1.brand = "Toyota";
+        car1.year = 2022;
+        car1.price = 250.0;
+        
+        Car car2 = new Car();
+        car2.brand = "Honda";
+        car2.year = 2023;
+        car2.price = 180.0;
+        
+        car1.showInfo();
+        car2.showInfo();
+        
+        // 参照の確認 / 引用示例
+        Car car3 = car1;  // car3はcar1と同じオブジェクトを参照
+        car3.price = 220.0;
+        System.out.println("car1の価格も変わった: " + car1.price);
+        
+        // null チェック / null检查
+        Car nullCar = null;
+        System.out.println("nullCar == null: " + (nullCar == null));
+    }
+}`,
+  codeTitle: "クラスとインスタンスの基本",
+
+  quizList: [
+    {
+      question: "クラスとインスタンスの関係で正しいものはどれですか？",
+      questionZh: "类与实例的关系，哪项描述正确？",
+      options: ["クラスが実物で、インスタンスが設計図", "クラスが設計図で、インスタンスが実物", "どちらも同じ意味", "クラスはメソッドのみを含む"],
+      answerIdx: 1,
+      hint: "家を建てる例で考えましょう / 用建房子来类比思考。"
+    },
+    {
+      question: "new キーワードの役割は何ですか？",
+      questionZh: "new关键字的作用是什么？",
+      options: ["クラスを定義する", "インスタンスをメモリ上に作成する", "変数を宣言する", "メソッドを呼び出す"],
+      answerIdx: 1,
+      hint: "newは「新しく作る」という意味です / new意思是「新建」。"
+    },
+    {
+      question: "nullのオブジェクトのメソッドを呼び出すと何が起きますか？",
+      questionZh: "对null对象调用方法会发生什么？",
+      options: ["何も起きない", "0が返される", "NullPointerExceptionが発生する", "自動的にnewされる"],
+      answerIdx: 2,
+      hint: "nullは「何も参照していない」状態です / null表示「不引用任何对象」。"
+    }
+  ],
+
+  vocabList: [
+    { term: "クラス (class)", zh: "类", desc: "オブジェクトの設計図。フィールドとメソッドをまとめたもの。" },
+    { term: "インスタンス (instance)", zh: "实例", desc: "クラスから生成された具体的なオブジェクト。" },
+    { term: "フィールド (field)", zh: "字段/成员变量", desc: "クラスが持つデータ（属性）。" },
+    { term: "参照 (reference)", zh: "引用", desc: "オブジェクトのメモリ上の場所を指す情報。" },
+    { term: "null", zh: "空引用", desc: "何も参照していない状態を表す特別な値。" }
+  ]
+},
+
+// ============================================================
+// 入門編 第6章 — クラスの一歩進んだ使い方
+// ============================================================
+{
+  id: "nyumon-6",
+  book: "入門編",
+  bookZh: "入门篇",
+  chapter: 6,
+  titleJa: "第6章 クラスの一歩進んだ使い方",
+  titleZh: "第6章 类的进阶用法",
+  subtitleJa: "コンストラクタ・this・static・クラスメソッド",
+  subtitleZh: "构造器、this、static、类方法",
+  conceptJa: `<h3>コンストラクタ</h3>
+<p>インスタンス生成時（<code>new</code>のとき）に自動的に呼ばれる特別なメソッドです。フィールドの初期化に使います。</p>
+<ul>
+  <li>クラスと同じ名前</li>
+  <li>戻り値の型は書かない</li>
+</ul>
+<pre><code>class Point {
+    int x, y;
+    Point(int x, int y) {  // コンストラクタ
+        this.x = x;
+        this.y = y;
+    }
+}
+Point p = new Point(3, 5);  // コンストラクタが呼ばれる</code></pre>
+
+<h3>this キーワード</h3>
+<p><code>this</code>は「自分自身のインスタンス」を指します。引数名とフィールド名が同じとき、<code>this.フィールド名</code>でフィールドを指定できます。</p>
+
+<h3>クラス変数（static フィールド）</h3>
+<p>全インスタンスで共有される変数です。<code>static</code>をつけて宣言します。</p>
+<pre><code>class Counter {
+    static int count = 0;  // クラス変数（全インスタンスで共有）
+    int id;
+    Counter() {
+        count++;
+        id = count;
+    }
+}
+// Counter.count でアクセスできる</code></pre>
+
+<h3>クラスメソッド（static メソッド）</h3>
+<p>インスタンスを作らなくても呼び出せるメソッドです。<code>Math.sqrt()</code> や <code>System.out.println()</code> のようなものがこれに当たります。</p>
+<pre><code>class MathHelper {
+    static double circle(double r) {
+        return Math.PI * r * r;  // 円の面積
+    }
+}
+double area = MathHelper.circle(5.0);</code></pre>`,
+
+  conceptZh: `<h3>构造器（Constructor）</h3>
+<p>构造器是在<code>new</code>创建实例时自动调用的特殊方法，用于初始化字段。</p>
+<ul>
+  <li>名称与类名相同</li>
+  <li>没有返回值类型</li>
+</ul>
+<pre><code>class Point {
+    int x, y;
+    Point(int x, int y) {  // 构造器
+        this.x = x;
+        this.y = y;
+    }
+}
+Point p = new Point(3, 5);  // 自动调用构造器</code></pre>
+
+<h3>this关键字</h3>
+<p><code>this</code>表示「当前实例自身」。当参数名与字段名相同时，用<code>this.字段名</code>区分。</p>
+
+<h3>类变量（static字段）</h3>
+<p>用<code>static</code>声明的变量被所有实例共享，通过<code>类名.变量名</code>访问。</p>
+
+<h3>类方法（static方法）</h3>
+<p>不需要创建实例就能调用的方法，如<code>Math.sqrt()</code>、<code>System.out.println()</code>。</p>`,
+
+  analogy: "🏭 构造器就像工厂的初始化流水线：每次新建一个产品（实例），流水线（构造器）自动运行，给产品设置初始属性。static字段就像工厂的「总产品数量」计数器，所有产品共享同一个计数。",
+
+  codeExample: `class BankAccount {
+    static int totalAccounts = 0;  // クラス変数（全口座で共有）
+    
+    String owner;
+    int balance;
+    int accountNumber;
+    
+    // コンストラクタ / 构造器
+    BankAccount(String owner, int initialBalance) {
+        totalAccounts++;          // 全口座数をカウント
+        this.accountNumber = totalAccounts;
+        this.owner = owner;
+        this.balance = initialBalance;
+    }
+    
+    void deposit(int amount) {
+        this.balance += amount;
+        System.out.println(owner + ": +" + amount + "円 (残高: " + balance + "円)");
+    }
+    
+    static void showTotal() {  // クラスメソッド
+        System.out.println("口座総数: " + totalAccounts);
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        BankAccount a1 = new BankAccount("田中", 10000);
+        BankAccount a2 = new BankAccount("佐藤", 5000);
+        BankAccount a3 = new BankAccount("鈴木", 20000);
+        
+        a1.deposit(3000);
+        a2.deposit(1500);
+        
+        BankAccount.showTotal();  // クラスメソッドを呼び出し
+    }
+}`,
+  codeTitle: "コンストラクタとstaticの活用",
+
+  quizList: [
+    {
+      question: "コンストラクタはいつ呼ばれますか？",
+      questionZh: "构造器在什么时候被调用？",
+      options: ["クラスを定義したとき", "newでインスタンスを生成したとき", "メソッドを呼び出したとき", "プログラムが終了するとき"],
+      answerIdx: 1,
+      hint: "new クラス名() のタイミングです / 在 new 类名() 时调用。"
+    },
+    {
+      question: "static フィールドの特徴は何ですか？",
+      questionZh: "static字段的特点是什么？",
+      options: ["各インスタンスが個別に持つ", "全インスタンスで共有される", "読み取り専用になる", "外部からアクセスできなくなる"],
+      answerIdx: 1,
+      hint: "staticは「クラスに属する」という意味です / static表示「属于类」。"
+    },
+    {
+      question: "thisキーワードが指すものは何ですか？",
+      questionZh: "this关键字指的是什么？",
+      options: ["クラス自体", "現在のインスタンス（自分自身）", "親クラス", "staticフィールド"],
+      answerIdx: 1,
+      hint: "「このインスタンス」という意味です / 意思是「这个实例」。"
+    }
+  ],
+
+  vocabList: [
+    { term: "コンストラクタ (constructor)", zh: "构造器", desc: "インスタンス生成時に自動呼び出しされる初期化用メソッド。" },
+    { term: "this", zh: "自身引用", desc: "現在のインスタンス自身を指すキーワード。" },
+    { term: "static", zh: "静态的", desc: "クラスに属し、インスタンスで共有されることを示す修飾子。" },
+    { term: "クラスメソッド", zh: "类方法/静态方法", desc: "staticが付いたメソッド。インスタンスなしで呼び出せる。" }
+  ]
+},
+
+// ============================================================
+// 入門編 第7章 — 継承
+// ============================================================
+{
+  id: "nyumon-7",
+  book: "入門編",
+  bookZh: "入门篇",
+  chapter: 7,
+  titleJa: "第7章 継承",
+  titleZh: "第7章 继承（Inheritance）",
+  subtitleJa: "extends・オーバーライド・ポリモーフィズム",
+  subtitleZh: "extends、方法覆盖、多态性",
+  conceptJa: `<h3>継承とは</h3>
+<p>既存のクラス（スーパークラス/親クラス）の機能を引き継いで、新しいクラス（サブクラス/子クラス）を作ることです。コードの再利用が容易になります。</p>
+<pre><code>class Animal {
+    String name;
+    void eat() { System.out.println(name + "が食べる"); }
+}
+
+class Dog extends Animal {  // Animalを継承
+    void bark() { System.out.println(name + "が吠える"); }
+}
+// Dog は eat() と bark() の両方が使える</code></pre>
+
+<h3>メソッドのオーバーライド</h3>
+<p>スーパークラスのメソッドを子クラスで再定義（上書き）することです。</p>
+<pre><code>class Animal {
+    void speak() { System.out.println("..."); }
+}
+class Dog extends Animal {
+    @Override
+    void speak() { System.out.println("ワン！"); }  // 上書き
+}
+class Cat extends Animal {
+    @Override
+    void speak() { System.out.println("ニャー！"); }
+}</code></pre>
+
+<h3>ポリモーフィズム（多態性）</h3>
+<p>スーパークラス型の変数でサブクラスのインスタンスを受け取れます。どのメソッドが呼ばれるかは実際のインスタンスの型で決まります。</p>
+<pre><code>Animal a1 = new Dog();
+Animal a2 = new Cat();
+a1.speak();  // ワン！
+a2.speak();  // ニャー！</code></pre>
+
+<h3>super キーワード</h3>
+<p>スーパークラスのコンストラクタやメソッドを呼び出すときに使います。</p>
+<pre><code>class Dog extends Animal {
+    Dog(String name) {
+        super(name);  // 親クラスのコンストラクタ呼び出し
+    }
+}</code></pre>
+
+<h3>Objectクラス</h3>
+<p>Javaの全クラスは<code>Object</code>クラスを暗黙的に継承しています。</p>`,
+
+  conceptZh: `<h3>什么是继承（Inheritance）</h3>
+<p>继承是让新类（子类/SubClass）自动拥有已有类（父类/SuperClass）的所有字段和方法的机制，实现代码复用。</p>
+<pre><code>class Animal {
+    String name;
+    void eat() { System.out.println(name + "在吃"); }
+}
+class Dog extends Animal {  // 继承Animal
+    void bark() { System.out.println(name + "在叫"); }
+}
+// Dog 可以用 eat() 和 bark() 两个方法</code></pre>
+
+<h3>方法覆盖（Override）</h3>
+<p>在子类中重新定义父类已有的方法，建议加上<code>@Override</code>注解。</p>
+
+<h3>多态性（Polymorphism）</h3>
+<p>父类类型的变量可以引用子类实例。调用方法时，根据实际对象的类型来决定执行哪个方法。</p>
+<pre><code>Animal a1 = new Dog();
+Animal a2 = new Cat();
+a1.speak();  // ワン！（调用Dog的speak）
+a2.speak();  // ニャー！（调用Cat的speak）</code></pre>
+
+<h3>super关键字</h3>
+<p>用于在子类中调用父类的构造器或方法。</p>
+
+<h3>Object类</h3>
+<p>Java中所有类都隐式继承自<code>Object</code>类，所以每个类都有<code>toString()</code>等方法。</p>`,
+
+  analogy: "🌳 继承就像家族传承：孩子（子类）继承了父母（父类）的特征（字段/方法），还能有自己独特的特征。多态就像「动物园里的所有动物都能吃东西」，但每种动物吃法不同——同一个动作（speak），不同动物（实例）有不同表现。",
+
+  codeExample: `class Shape {
+    String color;
+    
+    Shape(String color) {
+        this.color = color;
+    }
+    
+    // サブクラスでオーバーライドされる
+    double area() {
+        return 0;
+    }
+    
+    void display() {
+        System.out.println(color + "の図形: 面積=" + area());
+    }
+}
+
+class Circle extends Shape {
+    double radius;
+    
+    Circle(String color, double radius) {
+        super(color);  // 親クラスのコンストラクタを呼び出す
+        this.radius = radius;
+    }
+    
+    @Override
+    double area() {
+        return Math.PI * radius * radius;
+    }
+}
+
+class Rectangle extends Shape {
+    double width, height;
+    
+    Rectangle(String color, double width, double height) {
+        super(color);
+        this.width = width;
+        this.height = height;
+    }
+    
+    @Override
+    double area() {
+        return width * height;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        // ポリモーフィズム / 多态性
+        Shape[] shapes = {
+            new Circle("赤", 5.0),
+            new Rectangle("青", 4.0, 6.0),
+            new Circle("緑", 3.0)
+        };
+        
+        for (Shape s : shapes) {
+            s.display();
+        }
+    }
+}`,
+  codeTitle: "継承とポリモーフィズムの例",
+
+  quizList: [
+    {
+      question: "Javaで継承を行うキーワードはどれですか？",
+      questionZh: "Java中实现继承使用的关键字是什么？",
+      options: ["implements", "extends", "super", "inherit"],
+      answerIdx: 1,
+      hint: "「拡張する」という意味の英単語です / 意思是「扩展」的英文单词。"
+    },
+    {
+      question: "@Overrideアノテーションの目的は何ですか？",
+      questionZh: "@Override注解的目的是什么？",
+      options: ["新しいメソッドを作る", "スーパークラスのメソッドを上書きすることをコンパイラに知らせる", "メソッドを削除する", "staticメソッドにする"],
+      answerIdx: 1,
+      hint: "コンパイラがミスを検出できるようになります / 让编译器能检测到错误。"
+    },
+    {
+      question: "ポリモーフィズムとは何ですか？",
+      questionZh: "多态性（Polymorphism）是什么？",
+      options: ["一つのクラスに複数のコンストラクタを持つこと", "スーパークラス型の変数でサブクラスインスタンスを扱えること", "メソッドのオーバーロードのこと", "クラスを継承しないこと"],
+      answerIdx: 1,
+      hint: "「多態」は「多くの形を取れる」という意味です / 多态意思是「可以有多种形态」。"
+    }
+  ],
+
+  vocabList: [
+    { term: "継承 (inheritance)", zh: "继承", desc: "既存クラスの機能を引き継いで新しいクラスを作ること。" },
+    { term: "スーパークラス (superclass)", zh: "父类/超类", desc: "継承元のクラス（親クラス）。" },
+    { term: "サブクラス (subclass)", zh: "子类", desc: "継承先のクラス（子クラス）。" },
+    { term: "オーバーライド (override)", zh: "方法覆盖", desc: "スーパークラスのメソッドをサブクラスで再定義すること。" },
+    { term: "ポリモーフィズム (polymorphism)", zh: "多态性", desc: "同じ型の変数でも、実際のインスタンスに応じて異なるメソッドが呼ばれる性質。" }
+  ]
+},
+
+// ============================================================
+// 入門編 第8章 — 抽象クラスとインタフェース
+// ============================================================
+{
+  id: "nyumon-8",
+  book: "入門編",
+  bookZh: "入门篇",
+  chapter: 8,
+  titleJa: "第8章 抽象クラスとインタフェース",
+  titleZh: "第8章 抽象类与接口",
+  subtitleJa: "abstract・interface・private・final",
+  subtitleZh: "抽象类、接口、访问修饰符、final",
+  conceptJa: `<h3>アクセス修飾子</h3>
+<table border="1" style="border-collapse:collapse;width:100%">
+<tr><th>修飾子</th><th>アクセス範囲</th></tr>
+<tr><td>public</td><td>どこからでもアクセス可</td></tr>
+<tr><td>private</td><td>同じクラス内のみ</td></tr>
+<tr><td>protected</td><td>同じパッケージ + サブクラス</td></tr>
+<tr><td>（なし）</td><td>同じパッケージ内</td></tr>
+</table>
+<p><strong>カプセル化</strong>：フィールドを<code>private</code>にして外部から直接アクセスさせず、<code>getter/setter</code>メソッドを通じてアクセスさせる設計パターン。</p>
+
+<h3>final修飾子</h3>
+<ul>
+  <li><code>final</code>変数：値を変更できない定数</li>
+  <li><code>final</code>メソッド：オーバーライドできない</li>
+  <li><code>final</code>クラス：継承できない（例：Stringクラス）</li>
+</ul>
+
+<h3>抽象クラス（abstract class）</h3>
+<p>インスタンスを直接作れないクラスです。サブクラスで実装すべき<strong>抽象メソッド</strong>（処理なし・宣言のみ）を持てます。</p>
+<pre><code>abstract class Animal {
+    abstract void speak();  // 実装はサブクラスに任せる
+    void breathe() { System.out.println("呼吸中..."); }
+}
+class Dog extends Animal {
+    @Override
+    void speak() { System.out.println("ワン！"); }
+}</code></pre>
+
+<h3>インタフェース（interface）</h3>
+<p>メソッドの宣言のみを持つ「規約・契約書」です。クラスは<code>implements</code>で複数のインタフェースを実装できます（多重継承の代替）。</p>
+<pre><code>interface Flyable {
+    void fly();  // 実装なし
+}
+interface Swimmable {
+    void swim();
+}
+class Duck extends Animal implements Flyable, Swimmable {
+    public void fly() { System.out.println("飛ぶ"); }
+    public void swim() { System.out.println("泳ぐ"); }
+}</code></pre>`,
+
+  conceptZh: `<h3>访问修饰符</h3>
+<table border="1" style="border-collapse:collapse;width:100%">
+<tr><th>修饰符</th><th>访问范围</th></tr>
+<tr><td>public</td><td>任何地方都可访问</td></tr>
+<tr><td>private</td><td>只有同一个类内部</td></tr>
+<tr><td>protected</td><td>同包 + 子类</td></tr>
+<tr><td>（无）</td><td>同一个包内</td></tr>
+</table>
+<p><strong>封装（Encapsulation）</strong>：将字段设为<code>private</code>，通过<code>getter/setter</code>方法访问，保护数据不被随意修改。</p>
+
+<h3>final修饰符</h3>
+<ul>
+  <li><code>final</code>变量：常量，值不可改变</li>
+  <li><code>final</code>方法：不可被子类覆盖</li>
+  <li><code>final</code>类：不可被继承（如String类）</li>
+</ul>
+
+<h3>抽象类（abstract class）</h3>
+<p>不能直接创建实例的类，包含<strong>抽象方法</strong>（只有声明，没有实现），强制子类必须实现这些方法。</p>
+
+<h3>接口（interface）</h3>
+<p>只有方法声明的「规约/契约」。一个类可以用<code>implements</code>实现多个接口（解决Java不支持多继承的问题）。</p>`,
+
+  analogy: "📜 接口就像「合同条款」：签了合同（implements接口）的类必须履行所有条款（实现所有方法）。抽象类就像「半成品模板」：定义了一些已完成的部分，但留了一些空白需要子类填写。",
+
+  codeExample: `// インタフェースの定義 / 接口定义
+interface Printable {
+    void print();
+}
+
+interface Saveable {
+    void save(String filename);
+}
+
+// 抽象クラス / 抽象类
+abstract class Document implements Printable {
+    private String title;   // カプセル化 / 封装
+    private String content;
+    
+    Document(String title, String content) {
+        this.title = title;
+        this.content = content;
+    }
+    
+    // getter / 获取器
+    public String getTitle() { return title; }
+    public String getContent() { return content; }
+    
+    // 抽象メソッド / 抽象方法
+    abstract String getType();
+    
+    // 共通の実装 / 共同实现
+    @Override
+    public void print() {
+        System.out.println("[" + getType() + "] " + title);
+        System.out.println(content);
+    }
+}
+
+class Report extends Document implements Saveable {
+    Report(String title, String content) {
+        super(title, content);
+    }
+    
+    @Override
+    String getType() { return "報告書"; }
+    
+    @Override
+    public void save(String filename) {
+        System.out.println(getTitle() + " を " + filename + " に保存しました");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Report report = new Report("月次報告", "今月の売上は好調です。");
+        report.print();
+        report.save("monthly_report.txt");
+        
+        // final 定数 / final常量
+        final double TAX_RATE = 0.1;
+        System.out.println("消費税率: " + (TAX_RATE * 100) + "%");
+    }
+}`,
+  codeTitle: "抽象クラス・インタフェース・カプセル化",
+
+  quizList: [
+    {
+      question: "インタフェースを実装するキーワードはどれですか？",
+      questionZh: "实现接口使用的关键字是什么？",
+      options: ["extends", "implements", "interface", "abstract"],
+      answerIdx: 1,
+      hint: "「実装する」という英単語です / 意思是「实现」的英文单词。"
+    },
+    {
+      question: "privateフィールドの特徴は何ですか？",
+      questionZh: "private字段的特点是什么？",
+      options: ["どこからでもアクセスできる", "同じクラス内からのみアクセスできる", "サブクラスからアクセスできる", "staticである"],
+      answerIdx: 1,
+      hint: "カプセル化（データ隠蔽）のために使います / 用于封装（数据隐藏）。"
+    },
+    {
+      question: "抽象クラスについて正しい説明はどれですか？",
+      questionZh: "关于抽象类，哪个描述正确？",
+      options: ["インスタンスを直接作れる", "全てのメソッドが抽象メソッドである必要がある", "直接インスタンス化できず、サブクラスで実装する", "final修飾子が必須"],
+      answerIdx: 2,
+      hint: "abstractクラスはnewで生成できません / abstract类不能用new直接创建。"
+    }
+  ],
+
+  vocabList: [
+    { term: "カプセル化 (encapsulation)", zh: "封装", desc: "データを隠蔽してgetterやsetterを通じてアクセスさせる設計原則。" },
+    { term: "抽象クラス (abstract class)", zh: "抽象类", desc: "インスタンス化できないクラス。抽象メソッドを含む可能性がある。" },
+    { term: "インタフェース (interface)", zh: "接口", desc: "メソッドの宣言のみを持つ規約。classはimplementsで実装する。" },
+    { term: "final", zh: "最终的/不可变", desc: "変数・メソッド・クラスを変更不可にする修飾子。" }
+  ]
+},
+
+// ============================================================
+// 実践編 第1章 — パッケージとJava API
+// ============================================================
+{
+  id: "jissen-1",
+  book: "実践編",
+  bookZh: "实践篇",
+  chapter: 1,
+  titleJa: "実践編 第1章 パッケージとJava API",
+  titleZh: "实践篇 第1章 包与Java API",
+  subtitleJa: "import・String・Mathクラス",
+  subtitleZh: "import声明、String类、Math类",
+  conceptJa: `<h3>パッケージとは</h3>
+<p>関連するクラスをグループにまとめる仕組みです。フォルダに例えると分かりやすいです。</p>
+<p>例：<code>java.util.ArrayList</code> は、<code>java</code>パッケージの<code>util</code>サブパッケージにある<code>ArrayList</code>クラスです。</p>
+
+<h3>import宣言</h3>
+<p>他のパッケージのクラスを使うときは<code>import</code>で読み込みます。<code>java.lang</code>パッケージは自動でインポートされます。</p>
+<pre><code>import java.util.ArrayList;     // 特定のクラス
+import java.util.*;              // パッケージ内の全クラス</code></pre>
+
+<h3>Stringクラスの主なメソッド</h3>
+<table border="1" style="border-collapse:collapse;width:100%">
+<tr><th>メソッド</th><th>説明</th><th>例</th></tr>
+<tr><td>length()</td><td>文字数</td><td>"Hello".length() → 5</td></tr>
+<tr><td>charAt(i)</td><td>i番目の文字</td><td>"Hello".charAt(1) → 'e'</td></tr>
+<tr><td>substring(s,e)</td><td>部分文字列</td><td>"Hello".substring(1,3) → "el"</td></tr>
+<tr><td>indexOf(s)</td><td>文字列の位置</td><td>"Hello".indexOf("l") → 2</td></tr>
+<tr><td>equals(s)</td><td>文字列比較</td><td>"abc".equals("abc") → true</td></tr>
+<tr><td>toUpperCase()</td><td>大文字変換</td><td>"hello".toUpperCase() → "HELLO"</td></tr>
+<tr><td>split(s)</td><td>分割</td><td>"a,b,c".split(",") → {"a","b","c"}</td></tr>
+</table>
+
+<h3>Mathクラスの主なメソッド</h3>
+<pre><code>Math.abs(-5)      // 絶対値 = 5
+Math.sqrt(16.0)   // 平方根 = 4.0
+Math.pow(2, 10)   // 累乗 = 1024.0
+Math.max(3, 7)    // 最大値 = 7
+Math.random()     // 0.0〜1.0の乱数
+Math.PI           // 円周率 ≈ 3.14159...</code></pre>`,
+
+  conceptZh: `<h3>什么是包（Package）</h3>
+<p>包是对相关类进行分组的机制，类似文件夹的组织方式。</p>
+<p>例：<code>java.util.ArrayList</code> — 在<code>java</code>包的<code>util</code>子包中的<code>ArrayList</code>类。</p>
+
+<h3>import声明</h3>
+<p>要使用其他包中的类，需要用<code>import</code>声明。<code>java.lang</code>包会自动导入。</p>
+<pre><code>import java.util.ArrayList;   // 导入特定类
+import java.util.*;            // 导入整个包的所有类</code></pre>
+
+<h3>String类的主要方法</h3>
+<p>字符串比较必须用<code>.equals()</code>，不能用<code>==</code>（==比较的是引用地址，不是内容）。</p>
+
+<h3>Math类的主要方法</h3>
+<p>Math类的方法都是static的，直接用<code>Math.方法名()</code>调用，不需要创建实例。</p>`,
+
+  analogy: "📚 包就像图书馆的分区：java.util是「工具书区」，java.io是「输入输出区」。import就像图书借阅单，告诉程序「我要用这本书」。String的equals()像比较文字内容，==像比较两本书是否是同一本实体书。",
+
+  codeExample: `import java.util.Arrays;
+
+public class Main {
+    public static void main(String[] args) {
+        // Stringクラスのメソッド / String类方法
+        String text = "Hello, Java World!";
+        System.out.println("文字数: " + text.length());
+        System.out.println("大文字: " + text.toUpperCase());
+        System.out.println("部分文字列: " + text.substring(7, 11));
+        System.out.println("検索: " + text.indexOf("Java"));
+        
+        // 文字列の分割 / 字符串分割
+        String csv = "田中,佐藤,鈴木,山田";
+        String[] names = csv.split(",");
+        System.out.println("\\n名前リスト:");
+        for (String name : names) {
+            System.out.println("  - " + name);
+        }
+        
+        // ==とequalsの違い / ==与equals的区别
+        String a = new String("hello");
+        String b = new String("hello");
+        System.out.println("\\na == b: " + (a == b));         // false（参照比較）
+        System.out.println("a.equals(b): " + a.equals(b));   // true（内容比較）
+        
+        // Mathクラス / Math类
+        System.out.println("\\n=== Math クラス ===");
+        System.out.println("√2 = " + Math.sqrt(2));
+        System.out.println("2^10 = " + (int)Math.pow(2, 10));
+        System.out.println("乱数: " + (int)(Math.random() * 100));
+        System.out.println("円周率: " + Math.PI);
+    }
+}`,
+  codeTitle: "String・Mathクラスの活用",
+
+  quizList: [
+    {
+      question: "文字列の内容を比較するとき、正しい方法はどれですか？",
+      questionZh: "比较字符串内容时，正确的方法是什么？",
+      options: ["== を使う", ".equals() を使う", ".compare() を使う", ".match() を使う"],
+      answerIdx: 1,
+      hint: "==は参照（アドレス）を比較します。文字列の中身を比べるにはequalsです / ==比较地址，内容比较用equals。"
+    },
+    {
+      question: "\"Hello\".length() の結果は？",
+      questionZh: "\"Hello\".length() 的结果是什么？",
+      options: ["4", "5", "6", "エラー"],
+      answerIdx: 1,
+      hint: "H-e-l-l-o の5文字です / H-e-l-l-o共5个字符。"
+    },
+    {
+      question: "Math.random()が返す値の範囲は？",
+      questionZh: "Math.random()返回值的范围是？",
+      options: ["0〜100", "0.0以上1.0未満", "-1.0〜1.0", "0〜Integer.MAX_VALUE"],
+      answerIdx: 1,
+      hint: "0.0以上1.0未満の小数です / 大于等于0.0小于1.0的小数。"
+    }
+  ],
+
+  vocabList: [
+    { term: "パッケージ (package)", zh: "包", desc: "関連するクラスをグループにまとめる仕組み。フォルダに相当。" },
+    { term: "import", zh: "导入", desc: "他のパッケージのクラスを使えるようにする宣言。" },
+    { term: "API (Application Programming Interface)", zh: "应用程序接口", desc: "他者が提供するプログラムの使い方の仕様。Javaには標準APIが豊富。" }
+  ]
+},
+
+// ============================================================
+// 実践編 第2章 — 例外処理
+// ============================================================
+{
+  id: "jissen-2",
+  book: "実践編",
+  bookZh: "实践篇",
+  chapter: 2,
+  titleJa: "実践編 第2章 例外処理",
+  titleZh: "实践篇 第2章 异常处理",
+  subtitleJa: "try-catch-finally・throw・throws",
+  subtitleZh: "try-catch-finally、throw、throws",
+  conceptJa: `<h3>例外とは</h3>
+<p>プログラム実行中に発生するエラーのことです。例えば、0での割り算、存在しない配列のインデックスへのアクセス、nullのメソッド呼び出しなどがあります。</p>
+
+<h3>try〜catch文</h3>
+<p>例外が発生した場合に、プログラムが停止しないよう処理を「捕捉（キャッチ）」します。</p>
+<pre><code>try {
+    // 例外が発生する可能性のある処理
+    int result = 10 / 0;
+} catch (ArithmeticException e) {
+    // 例外をキャッチして対処
+    System.out.println("エラー: " + e.getMessage());
+} finally {
+    // 例外の有無に関わらず必ず実行
+    System.out.println("処理終了");
+}</code></pre>
+
+<h3>主な例外クラス</h3>
+<table border="1" style="border-collapse:collapse;width:100%">
+<tr><th>例外クラス</th><th>発生場面</th></tr>
+<tr><td>ArithmeticException</td><td>0での割り算など</td></tr>
+<tr><td>NullPointerException</td><td>nullのオブジェクト操作</td></tr>
+<tr><td>ArrayIndexOutOfBoundsException</td><td>配列の範囲外アクセス</td></tr>
+<tr><td>NumberFormatException</td><td>数値変換の失敗</td></tr>
+<tr><td>IOException</td><td>入出力エラー</td></tr>
+</table>
+
+<h3>例外を投げる（throw）</h3>
+<pre><code>throw new IllegalArgumentException("負の値は不可: " + value);</code></pre>
+
+<h3>メソッドの外への送出（throws）</h3>
+<p>メソッド内で例外をキャッチせず、呼び出し元に任せるときに使います。</p>
+<pre><code>void readFile(String path) throws IOException {
+    // IOExceptionが発生する可能性がある処理
+}</code></pre>`,
+
+  conceptZh: `<h3>什么是异常（Exception）</h3>
+<p>程序运行时发生的错误，例如：除以零、访问数组越界、对null对象调用方法等。</p>
+
+<h3>try-catch-finally语句</h3>
+<p>用于捕获异常，防止程序崩溃：</p>
+<pre><code>try {
+    // 可能产生异常的代码
+    int result = 10 / 0;
+} catch (ArithmeticException e) {
+    // 捕获并处理异常
+    System.out.println("错误: " + e.getMessage());
+} finally {
+    // 无论是否发生异常，都会执行
+    System.out.println("处理结束");
+}</code></pre>
+
+<h3>主要异常类</h3>
+<p>异常类按层级分为<code>Error</code>（系统级错误）和<code>Exception</code>（程序级错误），其中<code>RuntimeException</code>不需要强制处理。</p>
+
+<h3>抛出异常（throw）</h3>
+<p>手动创建并抛出异常：<code>throw new 异常类("错误信息");</code></p>
+
+<h3>方法声明异常（throws）</h3>
+<p>告诉调用者「我可能抛出这个异常，你来处理」：</p>
+<pre><code>void readFile(String path) throws IOException { ... }</code></pre>`,
+
+  analogy: "🧯 异常处理就像安全网：try是「危险区域」，catch是「安全网」，finally是「无论如何都要做的收尾工作」（比如关门关灯）。throw是「主动拉响警报」，throws是「把责任推给叫你来的人」。",
+
+  codeExample: `public class Main {
+    // 年齢バリデーション（例外を投げる）/ 年龄验证（抛出异常）
+    static void checkAge(int age) {
+        if (age < 0 || age > 150) {
+            throw new IllegalArgumentException("無効な年齢: " + age);
+        }
+        System.out.println("有効な年齢: " + age);
+    }
+    
+    // 安全な整数変換 / 安全的整数转换
+    static int parseIntSafe(String s) {
+        try {
+            return Integer.parseInt(s);
+        } catch (NumberFormatException e) {
+            System.out.println("変換失敗: \"" + s + "\" は数値ではありません");
+            return 0;
+        }
+    }
+    
+    public static void main(String[] args) {
+        // 例外のキャッチ / 异常捕获
+        try {
+            int result = 10 / 0;  // ArithmeticException
+        } catch (ArithmeticException e) {
+            System.out.println("算術エラー: " + e.getMessage());
+        } finally {
+            System.out.println("finallyは必ず実行される");
+        }
+        
+        // 配列の境界外アクセス / 数组越界
+        try {
+            int[] arr = {1, 2, 3};
+            System.out.println(arr[5]);  // 存在しないインデックス
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println("配列エラー: " + e.getMessage());
+        }
+        
+        // 数値変換 / 数值转换
+        System.out.println(parseIntSafe("123"));
+        System.out.println(parseIntSafe("abc"));
+        
+        // カスタム例外 / 自定义异常
+        try {
+            checkAge(200);
+        } catch (IllegalArgumentException e) {
+            System.out.println("バリデーションエラー: " + e.getMessage());
+        }
+    }
+}`,
+  codeTitle: "例外処理の総合例",
+
+  quizList: [
+    {
+      question: "finallyブロックが実行されるのはいつですか？",
+      questionZh: "finally块在什么情况下执行？",
+      options: ["例外が発生したときだけ", "例外が発生しなかったときだけ", "例外の有無にかかわらず常に", "catchが成功したときだけ"],
+      answerIdx: 2,
+      hint: "finallyは「最終的に」という意味で、必ず実行されます / finally意思是「最终」，总是会执行。"
+    },
+    {
+      question: "0での割り算が起きたときに発生する例外は？",
+      questionZh: "除以零时会发生什么异常？",
+      options: ["NullPointerException", "ArithmeticException", "NumberFormatException", "IOException"],
+      answerIdx: 1,
+      hint: "算術（Arithmetic）に関する例外です / 与算术（Arithmetic）相关的异常。"
+    },
+    {
+      question: "throwsキーワードの目的は？",
+      questionZh: "throws关键字的目的是什么？",
+      options: ["例外をキャッチする", "例外を直接処理する", "メソッドが例外を発生させる可能性があることを宣言する", "finallyブロックを実行する"],
+      answerIdx: 2,
+      hint: "呼び出し元に例外処理を任せる宣言です / 声明此方法可能抛出异常，让调用者处理。"
+    }
+  ],
+
+  vocabList: [
+    { term: "例外 (exception)", zh: "异常", desc: "プログラム実行中に発生するエラー。" },
+    { term: "try-catch", zh: "异常捕获", desc: "例外が発生する可能性のある処理を囲んで、例外をキャッチする構文。" },
+    { term: "throw", zh: "抛出", desc: "プログラマが意図的に例外を投げる（発生させる）こと。" },
+    { term: "finally", zh: "最终", desc: "例外の有無にかかわらず必ず実行されるブロック。" }
+  ]
+},
+
+// ============================================================
+// 実践編 第3章 — スレッド
+// ============================================================
+{
+  id: "jissen-3",
+  book: "実践編",
+  bookZh: "实践篇",
+  chapter: 3,
+  titleJa: "実践編 第3章 スレッド",
+  titleZh: "实践篇 第3章 线程（Thread）",
+  subtitleJa: "マルチスレッド・Thread・Runnable・同期",
+  subtitleZh: "多线程、Thread、Runnable、同步",
+  conceptJa: `<h3>スレッドとは</h3>
+<p>プログラムの実行の流れのことです。通常のプログラムは1つのスレッド（メインスレッド）で動きますが、<strong>マルチスレッド</strong>を使うと複数の処理を同時に進められます。</p>
+
+<h3>スレッドの作成方法①：Threadクラスを継承</h3>
+<pre><code>class MyThread extends Thread {
+    @Override
+    public void run() {
+        for (int i = 0; i < 5; i++) {
+            System.out.println(getName() + ": " + i);
+        }
+    }
+}
+MyThread t = new MyThread();
+t.start();  // run()を別スレッドで実行</code></pre>
+
+<h3>スレッドの作成方法②：Runnableインタフェースを実装</h3>
+<pre><code>class MyTask implements Runnable {
+    @Override
+    public void run() { /* 処理 */ }
+}
+Thread t = new Thread(new MyTask());
+t.start();</code></pre>
+
+<h3>よく使うThreadメソッド</h3>
+<ul>
+  <li><code>Thread.sleep(ms)</code>：指定ミリ秒間スレッドを停止</li>
+  <li><code>join()</code>：スレッドの終了を待つ</li>
+  <li><code>getName()</code>：スレッド名を取得</li>
+</ul>
+
+<h3>同期（synchronized）</h3>
+<p>複数スレッドが同時に同じデータを操作すると不整合が起きます。<code>synchronized</code>キーワードで排他制御します。</p>
+<pre><code>synchronized void increment() {
+    count++;  // このメソッドは同時に1スレッドしか実行できない
+}</code></pre>`,
+
+  conceptZh: `<h3>什么是线程（Thread）</h3>
+<p>线程是程序执行的单位。普通程序只有一个线程（主线程），<strong>多线程</strong>可以让多个任务同时进行。</p>
+
+<h3>创建线程的方法①：继承Thread类</h3>
+<pre><code>class MyThread extends Thread {
+    @Override
+    public void run() {
+        // 在新线程中执行的代码
+    }
+}
+MyThread t = new MyThread();
+t.start();  // 启动新线程执行run()</code></pre>
+
+<h3>创建线程的方法②：实现Runnable接口</h3>
+<p>推荐使用Runnable方式，因为Java不支持多继承，但可以实现多个接口。</p>
+
+<h3>常用Thread方法</h3>
+<ul>
+  <li><code>Thread.sleep(ms)</code>：让线程暂停指定毫秒</li>
+  <li><code>join()</code>：等待线程结束</li>
+  <li><code>getName()</code>：获取线程名称</li>
+</ul>
+
+<h3>同步（synchronized）</h3>
+<p>多个线程同时修改同一数据时会出现「竞争条件（Race Condition）」，用<code>synchronized</code>实现排他控制（互斥锁）。</p>`,
+
+  analogy: "🍳 多线程就像厨房里的多个厨师：可以同时切菜、煮汤、烤肉（并行处理）。但同时用同一把刀（共享资源）就会出问题——synchronized就像「一次只能一个厨师用刀」的规则。",
+
+  codeExample: `public class Main {
+    // 共有カウンター / 共享计数器
+    static int counter = 0;
+    
+    // Runnableを実装 / 实现Runnable
+    static class CountTask implements Runnable {
+        String name;
+        CountTask(String name) { this.name = name; }
+        
+        @Override
+        public void run() {
+            for (int i = 1; i <= 3; i++) {
+                System.out.println(name + " - ステップ " + i);
+                try {
+                    Thread.sleep(100);  // 100ms待機
+                } catch (InterruptedException e) {
+                    System.out.println("割り込まれました");
+                }
+            }
+            System.out.println(name + " 完了！");
+        }
+    }
+    
+    public static void main(String[] args) throws InterruptedException {
+        System.out.println("=== マルチスレッド デモ ===");
+        
+        Thread t1 = new Thread(new CountTask("スレッドA"));
+        Thread t2 = new Thread(new CountTask("スレッドB"));
+        
+        t1.start();  // スレッドA 開始
+        t2.start();  // スレッドB 開始（同時に）
+        
+        t1.join();   // t1の終了を待つ
+        t2.join();   // t2の終了を待つ
+        
+        System.out.println("\\n全スレッド終了");
+        System.out.println("メインスレッドのみ継続中: " + Thread.currentThread().getName());
+    }
+}`,
+  codeTitle: "マルチスレッドの基本",
+
+  quizList: [
+    {
+      question: "スレッドを開始するメソッドはどれですか？",
+      questionZh: "启动线程的方法是哪个？",
+      options: ["run()", "start()", "execute()", "begin()"],
+      answerIdx: 1,
+      hint: "run()を直接呼ぶと同じスレッドで実行されます / 直接调run()会在同一线程执行，不会新建线程。"
+    },
+    {
+      question: "Thread.sleep(1000) の効果は？",
+      questionZh: "Thread.sleep(1000) 的效果是什么？",
+      options: ["1秒間プログラムを終了する", "1秒間スレッドを一時停止する", "1秒後にスレッドを起動する", "1000回ループする"],
+      answerIdx: 1,
+      hint: "1000ミリ秒 = 1秒間 スレッドを停止します / 1000毫秒=1秒，让线程暂停。"
+    },
+    {
+      question: "synchronizedの目的は何ですか？",
+      questionZh: "synchronized的目的是什么？",
+      options: ["スレッドを高速化する", "複数スレッドの同時アクセスを排他制御する", "スレッドを停止する", "スレッドを複製する"],
+      answerIdx: 1,
+      hint: "複数スレッドが同時にデータを操作するときの整合性を保ちます / 保证多线程同时访问数据时的一致性。"
+    }
+  ],
+
+  vocabList: [
+    { term: "スレッド (thread)", zh: "线程", desc: "プログラムの実行の流れの単位。" },
+    { term: "マルチスレッド", zh: "多线程", desc: "複数のスレッドを同時に実行すること。" },
+    { term: "synchronized", zh: "同步/互斥", desc: "複数スレッドが同時にメソッドやブロックを実行しないよう制御すること。" },
+    { term: "join()", zh: "等待线程结束", desc: "あるスレッドの終了を待つメソッド。" }
+  ]
+},
+
+// ============================================================
+// 実践編 第4章 — ガーベッジコレクションとメモリ
+// ============================================================
+{
+  id: "jissen-4",
+  book: "実践編",
+  bookZh: "实践篇",
+  chapter: 4,
+  titleJa: "実践編 第4章 GCとメモリ管理",
+  titleZh: "实践篇 第4章 垃圾回收与内存管理",
+  subtitleJa: "スタック・ヒープ・ガーベッジコレクション",
+  subtitleZh: "栈、堆、垃圾回收（GC）",
+  conceptJa: `<h3>メモリの種類</h3>
+<ul>
+  <li><strong>スタック（Stack）</strong>：ローカル変数やメソッドの呼び出し情報が保存される。高速だが容量が小さい。LIFO（後入れ先出し）方式。</li>
+  <li><strong>ヒープ（Heap）</strong>：<code>new</code>で生成したオブジェクトが保存される。容量が大きいが速度はスタックより遅い。</li>
+</ul>
+
+<h3>ガーベッジコレクション（GC）</h3>
+<p>使わなくなったオブジェクト（どこからも参照されていないオブジェクト）のメモリを自動的に解放する仕組みです。Javaではプログラマが手動でメモリ解放をする必要がありません（CやC++とは異なる）。</p>
+
+<h3>GCが実行されるタイミング</h3>
+<ul>
+  <li>ヒープのメモリが不足したとき</li>
+  <li>JVMが適切と判断したとき（プログラマは制御できない）</li>
+</ul>
+
+<h3>GCの対象になるケース</h3>
+<pre><code>Point p = new Point(1, 2);
+p = new Point(3, 4);  // 最初のPoint(1,2)はGCの対象に
+// または
+p = null;  // 参照を切ることでGCの対象に</code></pre>
+
+<h3>メモリの注意点</h3>
+<ul>
+  <li><strong>OutOfMemoryError</strong>：ヒープが不足すると発生</li>
+  <li><strong>StackOverflowError</strong>：再帰呼び出しが深すぎると発生</li>
+</ul>`,
+
+  conceptZh: `<h3>内存的种类</h3>
+<ul>
+  <li><strong>栈（Stack）</strong>：存储局部变量和方法调用信息。速度快，容量小，LIFO（后进先出）结构。</li>
+  <li><strong>堆（Heap）</strong>：用<code>new</code>创建的对象存储在这里。容量大，速度相对慢。</li>
+</ul>
+
+<h3>垃圾回收（GC）</h3>
+<p>Java自动回收不再被引用的对象所占用的内存，程序员不需要手动释放内存（这是Java与C/C++的重要区别）。</p>
+
+<h3>GC触发时机</h3>
+<ul>
+  <li>堆内存不足时</li>
+  <li>JVM认为合适的时候（程序员无法控制）</li>
+</ul>
+
+<h3>什么对象会被GC回收</h3>
+<p>没有任何引用指向的对象会被标记为「垃圾」等待回收。</p>
+<pre><code>Point p = new Point(1, 2);
+p = new Point(3, 4);  // 原来的Point(1,2)变成垃圾
+p = null;             // p引用的对象也变成垃圾</code></pre>
+
+<h3>内存注意事项</h3>
+<ul>
+  <li><strong>OutOfMemoryError</strong>：堆内存不足时发生</li>
+  <li><strong>StackOverflowError</strong>：递归调用过深导致栈溢出时发生</li>
+</ul>`,
+
+  analogy: "🏠 堆就像客厅，所有家具（对象）放在这里。栈就像便利贴墙，记录「现在用的是哪件家具（引用）」。GC就像自动清洁机器人，发现没人用的家具（无引用）就自动搬走。",
+
+  codeExample: `public class Main {
+    public static void main(String[] args) {
+        // メモリ情報の表示 / 显示内存信息
+        Runtime runtime = Runtime.getRuntime();
+        
+        System.out.println("=== JVMメモリ情報 ===");
+        System.out.println("最大ヒープ: " + (runtime.maxMemory() / 1024 / 1024) + " MB");
+        System.out.println("合計ヒープ: " + (runtime.totalMemory() / 1024 / 1024) + " MB");
+        System.out.println("空きヒープ: " + (runtime.freeMemory() / 1024 / 1024) + " MB");
+        
+        // GCの対象になる例 / 成为GC对象的示例
+        System.out.println("\\n=== オブジェクトの作成 ===");
+        String[] data = new String[1000];
+        for (int i = 0; i < 1000; i++) {
+            data[i] = "データ" + i;
+        }
+        System.out.println("1000個のStringオブジェクトを作成");
+        
+        long usedBefore = runtime.totalMemory() - runtime.freeMemory();
+        
+        // 参照を切る（GCの対象に）/ 断开引用（成为GC对象）
+        data = null;
+        System.gc();  // GCを要請（実行保証はない）
+        
+        long usedAfter = runtime.totalMemory() - runtime.freeMemory();
+        System.out.println("GC前使用量: " + (usedBefore / 1024) + " KB");
+        System.out.println("GC後使用量: " + (usedAfter / 1024) + " KB");
+        
+        // スタックオーバーフローのデモ（コメントを外すと実行可）
+        // recursion(0);
+        
+        System.out.println("\\nプログラム正常終了");
+    }
+    
+    // 再帰呼び出しの例 / 递归调用示例
+    static int factorial(int n) {
+        if (n <= 1) return 1;
+        return n * factorial(n - 1);  // スタックが積み重なる
+    }
+}`,
+  codeTitle: "メモリとGCの確認",
+
+  quizList: [
+    {
+      question: "Javaでnewで作ったオブジェクトはどこに保存されますか？",
+      questionZh: "Java中用new创建的对象保存在哪里？",
+      options: ["スタック", "ヒープ", "レジスタ", "ハードディスク"],
+      answerIdx: 1,
+      hint: "newはヒープにオブジェクトを確保します / new在堆上分配对象。"
+    },
+    {
+      question: "ガーベッジコレクションの目的は何ですか？",
+      questionZh: "垃圾回收的目的是什么？",
+      options: ["プログラムの速度を上げる", "不要になったオブジェクトのメモリを自動解放する", "エラーを修正する", "プログラムを再起動する"],
+      answerIdx: 1,
+      hint: "プログラマが手動でメモリを解放する必要がなくなります / 程序员不需要手动释放内存。"
+    },
+    {
+      question: "ローカル変数はどこに保存されますか？",
+      questionZh: "局部变量保存在哪里？",
+      options: ["ヒープ", "スタック", "GC", "クラスファイル"],
+      answerIdx: 1,
+      hint: "メソッド呼び出しの情報はスタックに積まれます / 方法调用信息保存在栈中。"
+    }
+  ],
+
+  vocabList: [
+    { term: "スタック (stack)", zh: "栈", desc: "ローカル変数やメソッド呼び出し情報を保存するメモリ領域。LIFO構造。" },
+    { term: "ヒープ (heap)", zh: "堆", desc: "newで生成したオブジェクトが保存されるメモリ領域。GCが管理する。" },
+    { term: "GC (Garbage Collection)", zh: "垃圾回收", desc: "不要になったオブジェクトのメモリを自動回収する仕組み。" }
+  ]
+},
+
+// ============================================================
+// 実践編 第5章 — コレクション
+// ============================================================
+{
+  id: "jissen-5",
+  book: "実践編",
+  bookZh: "实践篇",
+  chapter: 5,
+  titleJa: "実践編 第5章 コレクション",
+  titleZh: "实践篇 第5章 集合框架（Collections）",
+  subtitleJa: "ArrayList・HashMap・HashSet・Iterator",
+  subtitleZh: "ArrayList、HashMap、HashSet、迭代器",
+  conceptJa: `<h3>コレクションとは</h3>
+<p>複数のオブジェクトをまとめて管理するクラス群です。配列と異なり、サイズが動的に変わります。</p>
+<p>主なコレクションインタフェース：<strong>List</strong>（順序あり・重複あり）、<strong>Set</strong>（重複なし）、<strong>Map</strong>（キーと値のペア）</p>
+
+<h3>ArrayList（リスト）</h3>
+<pre><code>import java.util.ArrayList;
+ArrayList&lt;String&gt; list = new ArrayList&lt;&gt;();
+list.add("りんご");       // 追加
+list.add("バナナ");
+list.get(0);             // "りんご"（インデックスでアクセス）
+list.size();             // 2
+list.remove(0);          // インデックス0を削除
+list.contains("バナナ"); // true</code></pre>
+
+<h3>HashMap（マップ）</h3>
+<pre><code>import java.util.HashMap;
+HashMap&lt;String, Integer&gt; map = new HashMap&lt;&gt;();
+map.put("田中", 90);
+map.put("佐藤", 85);
+map.get("田中");        // 90
+map.containsKey("佐藤"); // true
+map.keySet();           // キーの集合</code></pre>
+
+<h3>HashSet（セット）</h3>
+<pre><code>import java.util.HashSet;
+HashSet&lt;String&gt; set = new HashSet&lt;&gt;();
+set.add("apple");
+set.add("apple");  // 重複は無視される
+set.size();        // 1</code></pre>
+
+<h3>拡張for文（for-each）</h3>
+<pre><code>for (String item : list) {
+    System.out.println(item);
+}</code></pre>
+
+<h3>ジェネリクス（Generics）</h3>
+<p><code>&lt;String&gt;</code>のように型パラメータを指定することで、コレクションに入れられる型を制限します。型安全になり、キャスト不要。</p>`,
+
+  conceptZh: `<h3>什么是集合框架（Collections Framework）</h3>
+<p>用于管理多个对象的类库。与数组不同，集合的大小可以动态变化。</p>
+<ul>
+  <li><strong>List</strong>：有序、可重复（如ArrayList）</li>
+  <li><strong>Set</strong>：无序、不重复（如HashSet）</li>
+  <li><strong>Map</strong>：键值对（如HashMap）</li>
+</ul>
+
+<h3>ArrayList（列表）</h3>
+<p>动态数组，按下标访问，支持重复元素，添加/删除操作方便。</p>
+
+<h3>HashMap（映射/字典）</h3>
+<p>键值对存储，通过键快速查找值。键不可重复，值可以重复。</p>
+<pre><code>map.put("key", value);  // 添加
+map.get("key");         // 获取
+map.containsKey("key"); // 是否包含键</code></pre>
+
+<h3>HashSet（集合）</h3>
+<p>不允许重复元素，常用于去重和快速查找某元素是否存在。</p>
+
+<h3>增强for循环（for-each）</h3>
+<pre><code>for (String item : list) {
+    System.out.println(item);
+}</code></pre>
+
+<h3>泛型（Generics）</h3>
+<p>用<code>&lt;类型&gt;</code>指定集合中元素的类型，保证类型安全，避免类型转换错误。</p>`,
+
+  analogy: "🗃️ ArrayList是有编号的抽屉柜（按顺序放，按编号取）。HashMap是带标签的储物柜（标签=key，内容=value，按标签找物品）。HashSet是「无重复物品区」（同一物品只能放一个）。",
+
+  codeExample: `import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+
+public class Main {
+    public static void main(String[] args) {
+        // ArrayList の使用 / ArrayList示例
+        System.out.println("=== ArrayList ===");
+        ArrayList<String> fruits = new ArrayList<>();
+        fruits.add("りんご");
+        fruits.add("バナナ");
+        fruits.add("みかん");
+        fruits.add("バナナ");  // 重複可
+        
+        System.out.println("サイズ: " + fruits.size());
+        for (String f : fruits) {
+            System.out.println("  " + f);
+        }
+        fruits.remove("バナナ");  // 最初の"バナナ"を削除
+        System.out.println("削除後: " + fruits);
+        
+        // HashMap の使用 / HashMap示例
+        System.out.println("\\n=== HashMap ===");
+        HashMap<String, int[]> scores = new HashMap<>();
+        scores.put("田中", new int[]{80, 90, 75});
+        scores.put("佐藤", new int[]{95, 85, 92});
+        scores.put("鈴木", new int[]{70, 75, 80});
+        
+        for (String name : scores.keySet()) {
+            int[] s = scores.get(name);
+            int avg = (s[0] + s[1] + s[2]) / 3;
+            System.out.println(name + ": 平均=" + avg + "点");
+        }
+        
+        // HashSet の使用（重複排除）/ HashSet示例（去重）
+        System.out.println("\\n=== HashSet（重複排除） ===");
+        int[] nums = {3, 1, 4, 1, 5, 9, 2, 6, 5, 3};
+        HashSet<Integer> unique = new HashSet<>();
+        for (int n : nums) unique.add(n);
+        System.out.println("ユニークな数値: " + unique);
+    }
+}`,
+  codeTitle: "コレクション (ArrayList / HashMap / HashSet) の活用",
+
+  quizList: [
+    {
+      question: "ArrayListとHashSetの最大の違いは何ですか？",
+      questionZh: "ArrayList和HashSet最大的区别是什么？",
+      options: ["ArrayListは数値のみ、HashSetは文字列のみ", "ArrayListは重複を許可、HashSetは重複を許可しない", "ArrayListは順序なし、HashSetは順序あり", "ArrayListはキーと値のペアを持つ"],
+      answerIdx: 1,
+      hint: "Set（集合）は数学の集合と同じで、同じ要素は1つしか持てません / Set与数学的集合一样，不允许重复元素。"
+    },
+    {
+      question: "HashMapのデータアクセス方法は？",
+      questionZh: "HashMap访问数据的方法是什么？",
+      options: ["インデックス（数値）でアクセス", "キー（任意のオブジェクト）でアクセス", "ランダムにアクセス", "先頭から順番にアクセスのみ"],
+      answerIdx: 1,
+      hint: "MapはKey-Valueペアです。get(key)でvalueを取得します / Map是键值对，用get(key)获取value。"
+    },
+    {
+      question: "ArrayList<String> のジェネリクス<String>の目的は？",
+      questionZh: "ArrayList<String> 中 <String> 泛型的目的是什么？",
+      options: ["ArrayListのサイズを制限する", "String以外の型を追加しようとするとコンパイルエラーにする", "ArrayListを高速化する", "文字列を自動でソートする"],
+      answerIdx: 1,
+      hint: "型安全（type-safe）を保証するためです / 用于保证类型安全。"
+    }
+  ],
+
+  vocabList: [
+    { term: "コレクション (collection)", zh: "集合/容器", desc: "複数のオブジェクトをまとめて管理するクラス。List, Set, Mapがある。" },
+    { term: "ArrayList", zh: "动态数组列表", desc: "サイズが動的に変わるリスト。インデックスでアクセス。重複あり。" },
+    { term: "HashMap", zh: "哈希映射", desc: "キーと値のペアでデータを管理。キーで高速検索。" },
+    { term: "HashSet", zh: "哈希集合", desc: "重複要素を持たないコレクション。" },
+    { term: "ジェネリクス (generics)", zh: "泛型", desc: "<T>のように型パラメータを指定し、型安全なコレクションを実現する仕組み。" }
+  ]
+},
+
+// ============================================================
+// 実践編 第6章 — ラムダ式
+// ============================================================
+{
+  id: "jissen-6",
+  book: "実践編",
+  bookZh: "实践篇",
+  chapter: 6,
+  titleJa: "実践編 第6章 ラムダ式",
+  titleZh: "实践篇 第6章 Lambda表达式",
+  subtitleJa: "匿名クラス・関数型インタフェース・forEach",
+  subtitleZh: "匿名类、函数式接口、forEach",
+  conceptJa: `<h3>匿名クラスとは</h3>
+<p>名前のないクラスをその場で定義して使うことができます。インタフェースを実装する際によく使います。</p>
+
+<h3>関数型インタフェース</h3>
+<p>メソッドが1つだけのインタフェースを<strong>関数型インタフェース</strong>と呼びます。ラムダ式はこれを簡潔に書く方法です。</p>
+
+<h3>ラムダ式の書き方</h3>
+<pre><code>// 通常の匿名クラス
+Runnable r = new Runnable() {
+    @Override
+    public void run() { System.out.println("Hello"); }
+};
+
+// ラムダ式（簡潔！）
+Runnable r = () -> System.out.println("Hello");</code></pre>
+
+<h3>ラムダ式の省略形</h3>
+<pre><code>// 引数1つ → カッコ省略可
+x -> x * 2
+
+// 処理が1行 → {}とreturn省略可
+(a, b) -> a + b
+
+// 完全形
+(int a, int b) -> { return a + b; }</code></pre>
+
+<h3>forEach と ラムダ</h3>
+<pre><code>List&lt;String&gt; list = Arrays.asList("A", "B", "C");
+list.forEach(s -> System.out.println(s));
+// または
+list.forEach(System.out::println);  // メソッド参照</code></pre>
+
+<h3>ラムダ式でのソート</h3>
+<pre><code>list.sort((a, b) -> a.compareTo(b));  // 昇順
+list.sort((a, b) -> b.compareTo(a));  // 降順</code></pre>`,
+
+  conceptZh: `<h3>什么是Lambda表达式</h3>
+<p>Lambda表达式是Java 8引入的简洁语法，用于实现「只有一个方法的接口」（函数式接口），大幅减少代码量。</p>
+
+<h3>函数式接口（Functional Interface）</h3>
+<p>只有一个抽象方法的接口，例如<code>Runnable</code>、<code>Comparator</code>。Lambda表达式可以直接实现这类接口。</p>
+
+<h3>Lambda表达式语法</h3>
+<pre><code>// 传统匿名类（冗长）
+Runnable r = new Runnable() {
+    @Override
+    public void run() { System.out.println("Hello"); }
+};
+
+// Lambda表达式（简洁）
+Runnable r = () -> System.out.println("Hello");</code></pre>
+
+<h3>Lambda的各种写法</h3>
+<pre><code>// 无参数
+() -> System.out.println("Hello")
+// 一个参数（可省略括号）
+x -> x * 2
+// 两个参数
+(a, b) -> a + b
+// 多行代码
+(x) -> {
+    int result = x * 2;
+    return result;
+}</code></pre>
+
+<h3>forEach与Lambda</h3>
+<p>集合的<code>forEach</code>方法接受Lambda表达式，对每个元素执行操作。</p>
+
+<h3>使用Lambda进行排序</h3>
+<pre><code>list.sort((a, b) -> a.compareTo(b));  // 升序
+list.sort((a, b) -> b.compareTo(a));  // 降序</code></pre>`,
+
+  analogy: "✂️ Lambda就像「速记符号」：以前要写一大段匿名类代码，现在用Lambda几个字母就能表达同样的意思。就像原来写「我想要一杯冰美式咖啡，糖少一点，冰多一点」，现在只需写「冰美式少糖多冰」一样简洁。",
+
+  codeExample: `import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+public class Main {
+    // 関数型インタフェース / 函数式接口
+    @FunctionalInterface
+    interface Calculator {
+        int calculate(int a, int b);
+    }
+    
+    public static void main(String[] args) {
+        // ラムダ式で関数型インタフェースを実装 / Lambda实现函数式接口
+        Calculator add = (a, b) -> a + b;
+        Calculator multiply = (a, b) -> a * b;
+        Calculator max = (a, b) -> a > b ? a : b;
+        
+        System.out.println("加算: " + add.calculate(10, 5));
+        System.out.println("乗算: " + multiply.calculate(10, 5));
+        System.out.println("最大: " + max.calculate(10, 5));
+        
+        // forEach とラムダ / forEach与Lambda
+        List<String> names = Arrays.asList("田中", "佐藤", "鈴木", "山田");
+        System.out.println("\\n名前リスト:");
+        names.forEach(name -> System.out.println("  ・" + name));
+        
+        // ソート / 排序
+        List<String> words = new ArrayList<>(Arrays.asList("banana", "apple", "cherry", "date"));
+        words.sort((a, b) -> a.compareTo(b));  // アルファベット順
+        System.out.println("\\n昇順ソート: " + words);
+        
+        words.sort((a, b) -> b.length() - a.length());  // 長さの降順
+        System.out.println("長さ降順: " + words);
+        
+        // Runnable とラムダ / Runnable与Lambda
+        Runnable greeting = () -> System.out.println("\nラムダ式でスレッドを起動！");
+        new Thread(greeting).start();
+    }
+}`,
+  codeTitle: "ラムダ式の基本と応用",
+
+  quizList: [
+    {
+      question: "ラムダ式が使えるインタフェースの条件は何ですか？",
+      questionZh: "可以使用Lambda表达式的接口需要满足什么条件？",
+      options: ["全てのインタフェース", "抽象メソッドが1つだけの関数型インタフェース", "staticメソッドを持つインタフェース", "Runnableを継承しているもの"],
+      answerIdx: 1,
+      hint: "@FunctionalInterfaceアノテーションで明示することもできます / 可以用@FunctionalInterface注解来标记。"
+    },
+    {
+      question: "ラムダ式 x -> x * 2 の意味は？",
+      questionZh: "Lambda表达式 x -> x * 2 的含义是什么？",
+      options: ["xを宣言して2を掛ける変数", "xを受け取ってx*2を返す関数", "2つの引数xを受け取る", "xが2以上かどうかを判定する"],
+      answerIdx: 1,
+      hint: "-> の左が引数、右が処理（戻り値）です / ->左边是参数，右边是处理（返回值）。"
+    },
+    {
+      question: "list.forEach(System.out::println) の :: は何を表しますか？",
+      questionZh: "list.forEach(System.out::println) 中的 :: 是什么？",
+      options: ["パッケージの区切り", "メソッド参照（Method Reference）", "エラーの発生", "変数の宣言"],
+      answerIdx: 1,
+      hint: "メソッド参照はラムダ式をさらに短く書く方法です / 方法引用是Lambda表达式的更简洁写法。"
+    }
+  ],
+
+  vocabList: [
+    { term: "ラムダ式 (lambda expression)", zh: "Lambda表达式", desc: "関数型インタフェースを簡潔に実装する記法。(引数) -> 処理 の形。" },
+    { term: "関数型インタフェース", zh: "函数式接口", desc: "抽象メソッドが1つだけのインタフェース。ラムダ式で実装できる。" },
+    { term: "メソッド参照 (method reference)", zh: "方法引用", desc: "ClassName::methodName の形でメソッドをラムダ式として渡す記法。" }
+  ]
+},
+
+// ============================================================
+// 実践編 第7章 — 入出力
+// ============================================================
+{
+  id: "jissen-7",
+  book: "実践編",
+  bookZh: "实践篇",
+  chapter: 7,
+  titleJa: "実践編 第7章 入出力（I/O）",
+  titleZh: "实践篇 第7章 输入输出（I/O）",
+  subtitleJa: "ファイル読み書き・バッファ・シリアライゼーション",
+  subtitleZh: "文件读写、缓冲流、序列化",
+  conceptJa: `<h3>標準入出力</h3>
+<ul>
+  <li><strong>標準出力</strong>：<code>System.out.println()</code>（画面への出力）</li>
+  <li><strong>標準入力</strong>：<code>Scanner scanner = new Scanner(System.in);</code>（キーボードからの入力）</li>
+</ul>
+<pre><code>import java.util.Scanner;
+Scanner sc = new Scanner(System.in);
+System.out.print("名前を入力: ");
+String name = sc.nextLine();     // 1行読み込み
+int age = sc.nextInt();          // 整数読み込み
+sc.close();</code></pre>
+
+<h3>ファイルへの書き込み</h3>
+<pre><code>import java.io.*;
+// 基本的な書き込み
+FileWriter fw = new FileWriter("test.txt");
+fw.write("Hello, File!");
+fw.close();
+
+// バッファを使った書き込み（高速）
+BufferedWriter bw = new BufferedWriter(new FileWriter("test.txt"));
+bw.write("こんにちは");
+bw.newLine();
+bw.close();</code></pre>
+
+<h3>ファイルからの読み込み</h3>
+<pre><code>BufferedReader br = new BufferedReader(new FileReader("test.txt"));
+String line;
+while ((line = br.readLine()) != null) {
+    System.out.println(line);
+}
+br.close();</code></pre>
+
+<h3>try-with-resources</h3>
+<p>ストリームを自動的にcloseする書き方（Java 7以降）：</p>
+<pre><code>try (BufferedWriter bw = new BufferedWriter(new FileWriter("test.txt"))) {
+    bw.write("自動クローズ");
+}  // ここで自動的にclose()される</code></pre>
+
+<h3>シリアライゼーション</h3>
+<p>オブジェクトをそのままファイルに保存・読み込みする仕組み。クラスに<code>implements Serializable</code>が必要。</p>`,
+
+  conceptZh: `<h3>标准输入输出</h3>
+<ul>
+  <li><strong>标准输出</strong>：<code>System.out.println()</code>（输出到屏幕）</li>
+  <li><strong>标准输入</strong>：<code>Scanner</code>类（从键盘读取输入）</li>
+</ul>
+
+<h3>文件写入</h3>
+<p>使用<code>FileWriter</code>或带缓冲的<code>BufferedWriter</code>（速度更快）。</p>
+<pre><code>// 基本写入
+FileWriter fw = new FileWriter("test.txt");
+fw.write("Hello");
+fw.close();  // 必须关闭！否则数据可能丢失</code></pre>
+
+<h3>文件读取</h3>
+<p>使用<code>BufferedReader</code>逐行读取效率高。</p>
+
+<h3>try-with-resources</h3>
+<p>Java 7引入的语法，自动关闭流，不需要手动调用<code>close()</code>，更安全。</p>
+<pre><code>try (BufferedReader br = new BufferedReader(new FileReader("test.txt"))) {
+    String line;
+    while ((line = br.readLine()) != null) {
+        System.out.println(line);
+    }
+}  // 自动关闭，不需要br.close()</code></pre>
+
+<h3>序列化（Serialization）</h3>
+<p>将对象直接保存为文件，或从文件恢复对象。类需要实现<code>Serializable</code>接口。</p>`,
+
+  analogy: "🚿 流（Stream）就像水管：FileWriter是「出水管」（写入），FileReader是「进水管」（读取）。BufferedWriter是「带蓄水箱的出水管」，先把水蓄满再一次性放出去，效率更高。try-with-resources就像「自动关阀门」，用完自动关上，防止漏水。",
+
+  stdinExample: "田中\n20\n",
+
+  codeExample: `import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        // 実際のScannerを使用した標準入力の受け取り
+        // 使用实际的Scanner读取标准输入
+        Scanner sc = new Scanner(System.in);
+        
+        System.out.println("=== キーボード入力テスト (键盘输入测试) ===");
+        System.out.print("お名前を入力してください (请输入姓名): ");
+        if (sc.hasNextLine()) {
+            String name = sc.nextLine();
+            System.out.println("こんにちは、" + name + "さん！");
+        }
+        
+        System.out.print("年齢を入力してください (请输入年龄): ");
+        if (sc.hasNextInt()) {
+            int age = sc.nextInt();
+            System.out.println("年齢: " + age + "歳 (" + (age >= 20 ? "大人" : "未成年") + ")");
+        }
+        sc.close();
+        
+        System.out.println("\n※ サンドボックスでScannerを試す際は、");
+        System.out.println("※ 右下の「標準入力 (stdin)」欄にテスト用の値を入力してください。");
+        System.out.println("※ (在沙盒里测试时，请在右下角的「标准输入」栏写上测试输入值)");
+    }
+}`,
+  codeTitle: "入出力の基本（Scanner・数値変換）",
+
+  quizList: [
+    {
+      question: "キーボードから1行入力を読み込むScannerのメソッドは？",
+      questionZh: "用Scanner从键盘读取一行输入的方法是什么？",
+      options: ["readLine()", "next()", "nextLine()", "read()"],
+      answerIdx: 2,
+      hint: "1行まるごと読むのはnextLine()、単語だけならnext()です / 读一行用nextLine()，读一个词用next()。"
+    },
+    {
+      question: "try-with-resources の利点は何ですか？",
+      questionZh: "try-with-resources的优点是什么？",
+      options: ["例外を全て無視する", "リソースを自動的にcloseする", "処理を高速化する", "ファイルを暗号化する"],
+      answerIdx: 1,
+      hint: "close()を書き忘れるバグを防ぎます / 防止忘写close()导致的bug。"
+    },
+    {
+      question: "BufferedWriterとFileWriterの違いは？",
+      questionZh: "BufferedWriter与FileWriter的区别是什么？",
+      options: ["BufferedWriterは読み込み専用", "BufferedWriterはバッファを使って書き込みを効率化する", "FileWriterは古くて廃止予定", "どちらも全く同じ"],
+      answerIdx: 1,
+      hint: "バッファ（一時保存領域）を使うことで、ファイルへの書き込み回数を減らし高速化します / 缓冲区减少了实际写入次数，提高效率。"
+    }
+  ],
+
+  vocabList: [
+    { term: "ストリーム (stream)", zh: "流", desc: "データの流れを表す概念。入力ストリームと出力ストリームがある。" },
+    { term: "バッファ (buffer)", zh: "缓冲区", desc: "データを一時的に蓄えておく領域。効率的なI/Oを実現する。" },
+    { term: "シリアライゼーション (serialization)", zh: "序列化", desc: "オブジェクトをバイト列に変換してファイルに保存する仕組み。" },
+    { term: "Scanner", zh: "扫描器/输入读取器", desc: "標準入力やファイルから値を読み込むクラス。" }
+  ]
+},
+
+// ============================================================
+// 実践編 第8章 — GUIアプリケーション
+// ============================================================
+{
+  id: "jissen-8",
+  book: "実践編",
+  bookZh: "实践篇",
+  chapter: 8,
+  titleJa: "実践編 第8章 GUIアプリケーション",
+  titleZh: "实践篇 第8章 GUI应用程序",
+  subtitleJa: "Swing・レイアウト・イベント処理",
+  subtitleZh: "Swing组件、布局管理器、事件处理",
+  conceptJa: `<h3>GUIとは</h3>
+<p>Graphical User Interface（グラフィカルユーザインタフェース）の略。ウィンドウ、ボタン、テキストフィールドなどの視覚的な部品（コンポーネント）を使ったアプリです。</p>
+
+<h3>Swingライブラリ</h3>
+<p>JavaのGUI作成に使う標準ライブラリです。<code>javax.swing</code>パッケージに含まれます。</p>
+<p>主なコンポーネント：</p>
+<table border="1" style="border-collapse:collapse;width:100%">
+<tr><th>クラス</th><th>説明</th></tr>
+<tr><td>JFrame</td><td>ウィンドウの枠</td></tr>
+<tr><td>JButton</td><td>ボタン</td></tr>
+<tr><td>JLabel</td><td>ラベル（テキスト表示）</td></tr>
+<tr><td>JTextField</td><td>1行テキスト入力</td></tr>
+<tr><td>JPanel</td><td>コンポーネントのまとめ用パネル</td></tr>
+</table>
+
+<h3>レイアウトマネージャ</h3>
+<ul>
+  <li><strong>FlowLayout</strong>：横に並べる（デフォルト）</li>
+  <li><strong>BorderLayout</strong>：上下左右中央の5エリア</li>
+  <li><strong>GridLayout</strong>：格子状に並べる</li>
+</ul>
+
+<h3>イベント処理</h3>
+<p>ボタンクリックなどのイベントに応答するための仕組みです。</p>
+<pre><code>JButton btn = new JButton("クリック");
+btn.addActionListener(e -> {
+    System.out.println("ボタンが押されました！");
+});</code></pre>
+
+<h3>注意</h3>
+<p>GUIプログラムはSwingウィンドウを必要とするため、このサンドボックスでは表示できません。ローカルのIDEで実行してください。</p>`,
+
+  conceptZh: `<h3>什么是GUI</h3>
+<p>图形用户界面（Graphical User Interface）。用窗口、按钮、文本框等图形组件与用户交互的应用程序。</p>
+
+<h3>Swing库</h3>
+<p>Java标准的GUI库，在<code>javax.swing</code>包中。主要组件：</p>
+<ul>
+  <li><code>JFrame</code>：窗口框架</li>
+  <li><code>JButton</code>：按钮</li>
+  <li><code>JLabel</code>：标签（显示文字）</li>
+  <li><code>JTextField</code>：单行文本输入</li>
+</ul>
+
+<h3>布局管理器（Layout Manager）</h3>
+<p>控制组件在窗口中的排列方式：</p>
+<ul>
+  <li><strong>FlowLayout</strong>：从左到右排列</li>
+  <li><strong>BorderLayout</strong>：上下左右中五个区域</li>
+  <li><strong>GridLayout</strong>：网格排列</li>
+</ul>
+
+<h3>事件处理（Event Handling）</h3>
+<p>用<code>ActionListener</code>监听按钮点击等用户操作，通过Lambda表达式简化代码：</p>
+<pre><code>button.addActionListener(e -> {
+    System.out.println("按钮被点击了！");
+});</code></pre>
+
+<h3>注意</h3>
+<p>GUI程序需要显示Swing窗口，在此沙盒中无法运行。请在本地IDE（如Eclipse、IntelliJ）中执行。</p>`,
+
+  analogy: "🖥️ Swing就像搭积木：JFrame是积木桶（容器），JButton、JLabel是不同形状的积木（组件），LayoutManager是「怎么排列积木」的规则，ActionListener是「按下某块积木会发生什么」的机关。",
+
+  codeExample: `// GUIアプリケーションのコード例（ローカルIDEで実行してください）
+// GUI程序示例（请在本地IDE中运行）
+// ※ このサンドボックスではGUIウィンドウは表示できません
+
+import javax.swing.*;
+import java.awt.*;
+
+public class Main {
+    public static void main(String[] args) {
+        // SwingのUIはEDT（Event Dispatch Thread）で作成する
+        SwingUtilities.invokeLater(() -> {
+            // フレームの作成 / 创建窗口
+            JFrame frame = new JFrame("簡単な電卓 / Simple Calculator");
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.setSize(300, 200);
+            
+            // パネルとレイアウト / 面板与布局
+            JPanel panel = new JPanel(new GridLayout(3, 2, 5, 5));
+            
+            JLabel label1 = new JLabel("数値A:");
+            JTextField field1 = new JTextField("10");
+            JLabel label2 = new JLabel("数値B:");
+            JTextField field2 = new JTextField("5");
+            JLabel resultLabel = new JLabel("結果: -");
+            JButton calcBtn = new JButton("計算");
+            
+            panel.add(label1); panel.add(field1);
+            panel.add(label2); panel.add(field2);
+            panel.add(resultLabel); panel.add(calcBtn);
+            
+            // イベント処理 / 事件处理
+            calcBtn.addActionListener(e -> {
+                try {
+                    int a = Integer.parseInt(field1.getText());
+                    int b = Integer.parseInt(field2.getText());
+                    resultLabel.setText("結果: " + (a + b));
+                } catch (NumberFormatException ex) {
+                    resultLabel.setText("エラー: 数値を入力してください");
+                }
+            });
+            
+            frame.add(panel);
+            frame.setVisible(true);  // ウィンドウを表示
+        });
+        
+        System.out.println("GUIウィンドウのコード構造を確認できます");
+        System.out.println("実際の実行にはEclipseやIntelliJ IDEAをご使用ください");
+        System.out.println("\\n=== Swingの主要クラス ===");
+        System.out.println("JFrame   - ウィンドウフレーム / 窗口框架");
+        System.out.println("JButton  - ボタン / 按钮");
+        System.out.println("JLabel   - テキスト表示 / 文字标签");
+        System.out.println("JPanel   - パネル（コンテナ）/ 面板容器");
+        System.out.println("JTextField - 1行入力 / 单行文本输入");
+    }
+}`,
+  codeTitle: "GUIアプリの構造（Swing）",
+
+  quizList: [
+    {
+      question: "JFrameとは何ですか？",
+      questionZh: "JFrame是什么？",
+      options: ["ボタンコンポーネント", "アプリケーションのウィンドウフレーム", "テキスト入力フィールド", "レイアウトマネージャ"],
+      answerIdx: 1,
+      hint: "GUIアプリの「箱」の役割をします / 是GUI应用程序的「窗口容器」。"
+    },
+    {
+      question: "BorderLayoutが分割する領域の数は？",
+      questionZh: "BorderLayout将窗口分为多少个区域？",
+      options: ["3", "4", "5", "9"],
+      answerIdx: 2,
+      hint: "North, South, East, West, Center の5エリアです / 分为North, South, East, West, Center共5个区域。"
+    },
+    {
+      question: "ボタンクリックのイベントを処理するインタフェースは？",
+      questionZh: "处理按钮点击事件的接口是什么？",
+      options: ["ClickListener", "ActionListener", "MouseListener", "EventHandler"],
+      answerIdx: 1,
+      hint: "addActionListener()メソッドで登録します / 通过addActionListener()方法注册。"
+    }
+  ],
+
+  vocabList: [
+    { term: "GUI", zh: "图形用户界面", desc: "ウィンドウやボタンなどのグラフィカルな部品を使ったユーザインタフェース。" },
+    { term: "コンポーネント (component)", zh: "组件", desc: "GUIを構成する部品（JButton, JLabel, JTextField など）。" },
+    { term: "イベント (event)", zh: "事件", desc: "ボタンクリックやキー入力など、ユーザの操作によって発生するもの。" },
+    { term: "レイアウトマネージャ", zh: "布局管理器", desc: "コンポーネントの配置方法を管理するクラス（FlowLayout, BorderLayout など）。" }
+  ]
+},
+
+// ============================================================
+// 実践編 第9章 — 図形描画とマウスイベント
+// ============================================================
+{
+  id: "jissen-9",
+  book: "実践編",
+  bookZh: "实践篇",
+  chapter: 9,
+  titleJa: "実践編 第9章 図形描画とマウスイベント",
+  titleZh: "实践篇 第9章 图形绘制与鼠标事件",
+  subtitleJa: "Graphics2D・paintComponent・MouseListener",
+  subtitleZh: "Graphics2D、绘图方法、鼠标监听器",
+  conceptJa: `<h3>Javaの描画の仕組み</h3>
+<p>SwingのJPanelを拡張して<code>paintComponent(Graphics g)</code>をオーバーライドすることで描画を行います。</p>
+<pre><code>class DrawPanel extends JPanel {
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        g.setColor(Color.RED);
+        g.fillRect(50, 50, 100, 80);  // 塗りつぶし四角形
+        g.drawOval(200, 50, 80, 80);  // 楕円（枠のみ）
+        g.drawLine(0, 0, 300, 300);   // 直線
+    }
+}</code></pre>
+
+<h3>Graphics2Dクラス</h3>
+<p>GraphicsをキャストしてGraphics2Dにすることで、より多彩な描画が可能：</p>
+<pre><code>Graphics2D g2 = (Graphics2D) g;
+g2.setStroke(new BasicStroke(3));  // 線の太さ
+g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+                    RenderingHints.VALUE_ANTIALIAS_ON);  // アンチエイリアス</code></pre>
+
+<h3>座標系</h3>
+<p>左上が(0,0)で、右がX軸正方向、下がY軸正方向です。</p>
+
+<h3>マウスイベント</h3>
+<p><code>MouseListener</code>インタフェースで5つのイベントを処理できます：</p>
+<ul>
+  <li><code>mouseClicked</code>：クリック</li>
+  <li><code>mousePressed</code>：ボタンを押した</li>
+  <li><code>mouseReleased</code>：ボタンを離した</li>
+  <li><code>mouseEntered</code>：コンポーネントにマウスが入った</li>
+  <li><code>mouseExited</code>：コンポーネントからマウスが出た</li>
+</ul>
+
+<h3>注意</h3>
+<p>描画プログラムはGUIウィンドウが必要なため、このサンドボックスでは直接実行できません。ローカルIDEをご利用ください。</p>`,
+
+  conceptZh: `<h3>Java绘图机制</h3>
+<p>继承JPanel并覆盖<code>paintComponent(Graphics g)</code>方法来绘图。每次窗口需要重绘时，此方法自动被调用。</p>
+
+<h3>常用绘图方法</h3>
+<table border="1" style="border-collapse:collapse;width:100%">
+<tr><th>方法</th><th>说明</th></tr>
+<tr><td>drawLine(x1,y1,x2,y2)</td><td>画直线</td></tr>
+<tr><td>drawRect(x,y,w,h)</td><td>画矩形边框</td></tr>
+<tr><td>fillRect(x,y,w,h)</td><td>填充矩形</td></tr>
+<tr><td>drawOval(x,y,w,h)</td><td>画椭圆边框</td></tr>
+<tr><td>fillOval(x,y,w,h)</td><td>填充椭圆</td></tr>
+<tr><td>drawString(s,x,y)</td><td>在(x,y)画文字</td></tr>
+</table>
+
+<h3>坐标系</h3>
+<p>原点(0,0)在左上角，X轴向右，Y轴向下（与数学坐标系Y轴相反！）。</p>
+
+<h3>鼠标事件（MouseListener）</h3>
+<p>实现<code>MouseListener</code>接口来响应鼠标操作：点击、按下、释放、进入、离开。</p>
+
+<h3>注意</h3>
+<p>绘图程序需要GUI窗口，在此沙盒中无法直接运行，请使用本地IDE。</p>`,
+
+  analogy: "🎨 paintComponent就像画布上的「重新绘制指令」：每次窗口需要更新（遮挡、缩放等），Java就自动调用这个方法重画一遍。鼠标监听器就像给画布装了「传感器」，感应鼠标的各种动作。",
+
+  codeExample: `// 図形描画の概念デモ（コンソールでASCIIアートを描画）
+// 图形绘制概念示例（在控制台绘制ASCII艺术）
+
+public class Main {
+    public static void main(String[] args) {
+        System.out.println("=== ASCII図形描画デモ ===");
+        System.out.println("（実際のJava Graphics2Dは本地IDEで実行）");
+        System.out.println();
+        
+        // 四角形を描く / 绘制矩形
+        drawRect(10, 4);
+        System.out.println();
+        
+        // 三角形を描く / 绘制三角形
+        drawTriangle(7);
+        System.out.println();
+        
+        // 円を近似描画 / 近似圆形
+        drawCircle(8);
+    }
+    
+    // ASCII四角形 / ASCII矩形
+    static void drawRect(int width, int height) {
+        System.out.println("矩形 (" + width + "x" + height + "):");
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                if (y == 0 || y == height-1 || x == 0 || x == width-1) {
+                    System.out.print("*");
+                } else {
+                    System.out.print(" ");
+                }
+            }
+            System.out.println();
+        }
+    }
+    
+    // ASCII三角形 / ASCII三角形
+    static void drawTriangle(int height) {
+        System.out.println("三角形 (高さ=" + height + "):");
+        for (int i = 1; i <= height; i++) {
+            for (int s = height - i; s > 0; s--) System.out.print(" ");
+            for (int j = 0; j < 2*i-1; j++) System.out.print("*");
+            System.out.println();
+        }
+    }
+    
+    // ASCII円 / ASCII圆形
+    static void drawCircle(int radius) {
+        System.out.println("円 (半径≈" + radius/2 + "):");
+        for (int y = -radius/2; y <= radius/2; y++) {
+            for (int x = -radius; x <= radius; x++) {
+                double d = (double)(x*x)/4 + (double)(y*y);
+                if (Math.abs(d - (double)(radius*radius)/4) < radius*0.7) {
+                    System.out.print("*");
+                } else {
+                    System.out.print(" ");
+                }
+            }
+            System.out.println();
+        }
+    }
+}`,
+  codeTitle: "図形描画の概念（コンソール版）",
+
+  quizList: [
+    {
+      question: "Java Swingで描画を行うために override するメソッドは？",
+      questionZh: "在Java Swing中，用于绘图需要覆盖的方法是？",
+      options: ["draw()", "paintComponent(Graphics g)", "render()", "display()"],
+      answerIdx: 1,
+      hint: "JPanelを継承したクラスでこのメソッドをオーバーライドします / 在继承JPanel的类中覆盖此方法。"
+    },
+    {
+      question: "Javaの画面座標で、Y軸の正方向はどちらですか？",
+      questionZh: "Java屏幕坐标中，Y轴正方向是哪里？",
+      options: ["上向き", "下向き", "右向き", "左向き"],
+      answerIdx: 1,
+      hint: "左上が原点(0,0)で、Y軸は下方向が正です（数学とは逆！）/ 左上为原点，Y轴向下为正（与数学坐标系相反！）"
+    },
+    {
+      question: "g.fillRect(10, 20, 100, 50) で塗りつぶされる形状は？",
+      questionZh: "g.fillRect(10, 20, 100, 50) 填充的是什么形状？",
+      options: ["円", "三角形", "四角形（幅100、高さ50）", "直線"],
+      answerIdx: 2,
+      hint: "fillRect(x, y, 幅, 高さ) / fillRect(x, y, 宽度, 高度)"
+    }
+  ],
+
+  vocabList: [
+    { term: "paintComponent", zh: "绘图方法", desc: "JPanel を継承して描画するためにオーバーライドするメソッド。" },
+    { term: "Graphics2D", zh: "2D图形对象", desc: "Graphicsの拡張版。より高機能な描画ができる。" },
+    { term: "MouseListener", zh: "鼠标监听器", desc: "マウスイベント（クリック、移動など）を処理するインタフェース。" }
+  ]
+},
+
+// ============================================================
+// 実践編 第10章 — ネットワーク
+// ============================================================
+{
+  id: "jissen-10",
+  book: "実践編",
+  bookZh: "实践篇",
+  chapter: 10,
+  titleJa: "実践編 第10章 ネットワーク",
+  titleZh: "实践篇 第10章 网络编程",
+  subtitleJa: "Socket・ServerSocket・TCP通信",
+  subtitleZh: "Socket、ServerSocket、TCP通信",
+  conceptJa: `<h3>Javaのネットワークプログラミング</h3>
+<p><code>java.net</code>パッケージを使ってTCP/IP通信を実装できます。</p>
+
+<h3>基本概念</h3>
+<ul>
+  <li><strong>IPアドレス</strong>：ネットワーク上のコンピュータの住所</li>
+  <li><strong>ポート番号</strong>：同じコンピュータ内でアプリを識別する番号（0〜65535）</li>
+  <li><strong>TCP</strong>：信頼性の高い通信プロトコル（データの到達を保証）</li>
+</ul>
+
+<h3>サーバー側</h3>
+<pre><code>ServerSocket serverSocket = new ServerSocket(8080);
+Socket socket = serverSocket.accept();  // クライアントの接続を待つ
+
+// データの受信
+BufferedReader in = new BufferedReader(
+    new InputStreamReader(socket.getInputStream()));
+String message = in.readLine();
+
+// データの送信
+PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+out.println("こんにちは！");</code></pre>
+
+<h3>クライアント側</h3>
+<pre><code>Socket socket = new Socket("localhost", 8080);  // サーバーに接続
+
+PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+out.println("Hello Server!");  // 送信
+
+BufferedReader in = new BufferedReader(
+    new InputStreamReader(socket.getInputStream()));
+String response = in.readLine();  // 受信</code></pre>
+
+<h3>注意</h3>
+<p>ネットワークプログラムはサーバーとクライアントの2つのプログラムが必要です。このサンドボックスでは直接実行できませんが、コード構造を確認できます。</p>`,
+
+  conceptZh: `<h3>Java网络编程</h3>
+<p>使用<code>java.net</code>包实现TCP/IP通信。</p>
+
+<h3>基本概念</h3>
+<ul>
+  <li><strong>IP地址</strong>：网络上计算机的地址</li>
+  <li><strong>端口号</strong>：同一台计算机上区分不同应用的编号（0-65535）</li>
+  <li><strong>TCP</strong>：可靠的传输协议，保证数据一定能到达</li>
+</ul>
+
+<h3>服务器端</h3>
+<pre><code>ServerSocket serverSocket = new ServerSocket(8080);
+Socket socket = serverSocket.accept();  // 等待客户端连接
+
+// 接收数据
+BufferedReader in = new BufferedReader(
+    new InputStreamReader(socket.getInputStream()));
+String message = in.readLine();
+
+// 发送数据
+PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+out.println("你好！");</code></pre>
+
+<h3>客户端</h3>
+<pre><code>Socket socket = new Socket("localhost", 8080);  // 连接到服务器
+
+PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+out.println("Hello Server!");  // 发送
+
+BufferedReader in = new BufferedReader(
+    new InputStreamReader(socket.getInputStream()));
+String response = in.readLine();  // 接收</code></pre>
+
+<h3>注意</h3>
+<p>网络程序需要同时运行服务器和客户端两个程序，在此沙盒中无法直接演示，但可以理解代码结构。</p>`,
+
+  analogy: "📞 网络编程就像打电话：ServerSocket是「装了电话的服务台」，等待来电（accept）。Socket是「电话连线」。InputStream/OutputStream是电话里的「听筒和话筒」，负责接收和发送信息。IP地址+端口号是「电话号码+分机号」。",
+
+  codeExample: `// ネットワーク通信の概念デモ（実際の通信はローカルIDEで）
+// 网络通信概念示例（实际通信请在本地IDE中演示）
+
+public class Main {
+    public static void main(String[] args) {
+        System.out.println("=== ネットワーク通信の概念 ===");
+        System.out.println();
+        
+        // URL処理の例（java.netを使用）
+        System.out.println("// サーバー側のコード構造:");
+        System.out.println("// ServerSocket server = new ServerSocket(8080);");
+        System.out.println("// Socket client = server.accept(); // 接続待機");
+        System.out.println("// BufferedReader in = new BufferedReader(");
+        System.out.println("//     new InputStreamReader(client.getInputStream()));");
+        System.out.println("// String msg = in.readLine();");
+        System.out.println();
+        System.out.println("// クライアント側のコード構造:");
+        System.out.println("// Socket socket = new Socket(\"localhost\", 8080);");
+        System.out.println("// PrintWriter out = new PrintWriter(socket.getOutputStream(), true);");
+        System.out.println("// out.println(\"Hello!\");");
+        System.out.println();
+        
+        // IPアドレスとポートの概念示説
+        System.out.println("=== IPアドレスとポートの例 ===");
+        String[][] portExamples = {
+            {"HTTP", "80"},
+            {"HTTPS", "443"},
+            {"SSH", "22"},
+            {"FTP", "21"},
+            {"MySQL", "3306"}
+        };
+        
+        System.out.printf("%-10s %s%n", "プロトコル", "ポート番号");
+        System.out.println("-".repeat(20));
+        for (String[] p : portExamples) {
+            System.out.printf("%-10s %s%n", p[0], p[1]);
+        }
+        
+        // 簡単なエコーサーバーシミュレーション
+        System.out.println("\\n=== エコーサーバーシミュレーション ===");
+        String[] messages = {"Hello Server", "データを送信", "接続終了"};
+        for (String msg : messages) {
+            System.out.println("クライアント → サーバー: " + msg);
+            System.out.println("サーバー → クライアント: [Echo] " + msg);
+            System.out.println();
+        }
+    }
+}`,
+  codeTitle: "ネットワーク通信の概念（コンソール版）",
+
+  quizList: [
+    {
+      question: "ServerSocket.accept()の役割は何ですか？",
+      questionZh: "ServerSocket.accept()的作用是什么？",
+      options: ["サーバーを終了する", "クライアントからの接続を待ち、Socket を返す", "データを送信する", "ポートを変更する"],
+      answerIdx: 1,
+      hint: "クライアントが接続するまでブロックして待ちます / 阻塞等待直到客户端连接，然后返回Socket。"
+    },
+    {
+      question: "TCPとUDPの違いについて正しいものは？",
+      questionZh: "关于TCP和UDP的区别，哪项正确？",
+      options: ["TCPは高速だが信頼性が低い", "TCPは信頼性が高く、UDPは高速だが信頼性が低い", "TCPとUDPに性能差はない", "UDPはWebで広く使われる"],
+      answerIdx: 1,
+      hint: "TCPは順番通りにデータが届くことを保証します / TCP保证数据按顺序可靠到达。"
+    },
+    {
+      question: "ポート番号 80 は一般的に何のプロトコルで使いますか？",
+      questionZh: "端口80通常用于什么协议？",
+      options: ["FTP", "SSH", "HTTP", "HTTPS"],
+      answerIdx: 2,
+      hint: "Webサイト（HTTP）の標準ポートです / Web网站（HTTP）的标准端口。"
+    }
+  ],
+
+  vocabList: [
+    { term: "Socket", zh: "套接字", desc: "ネットワーク通信の端点。SocketはクライアントとサーバーのTCP接続を表す。" },
+    { term: "ServerSocket", zh: "服务器套接字", desc: "クライアントからの接続を待ち受けるサーバー側のクラス。" },
+    { term: "ポート番号 (port)", zh: "端口号", desc: "同一コンピュータ内でアプリケーションを識別する番号（0〜65535）。" },
+    { term: "TCP", zh: "传输控制协议", desc: "信頼性の高い通信プロトコル。データの到達順序と完全性を保証する。" }
+  ]
+},
+
+// ============================================================
+// 実践編 第11章 — 一歩進んだJava
+// ============================================================
+{
+  id: "jissen-11",
+  book: "実践編",
+  bookZh: "实践篇",
+  chapter: 11,
+  titleJa: "実践編 第11章 一歩進んだJava",
+  titleZh: "实践篇 第11章 进阶Java特性",
+  subtitleJa: "Stream API・アノテーション・enum",
+  subtitleZh: "Stream API、注解、枚举",
+  conceptJa: `<h3>Stream API（Java 8以降）</h3>
+<p>コレクションの要素を関数型スタイルで処理する強力な仕組みです。</p>
+<pre><code>import java.util.stream.*;
+
+List&lt;Integer&gt; numbers = Arrays.asList(1,2,3,4,5,6,7,8,9,10);
+
+// 偶数のみフィルタして2倍にして合計
+int result = numbers.stream()
+    .filter(n -> n % 2 == 0)     // 中間操作：フィルタ
+    .map(n -> n * 2)             // 中間操作：変換
+    .reduce(0, Integer::sum);    // 終端操作：集計
+System.out.println(result);  // 60</code></pre>
+
+<h3>主なStream操作</h3>
+<table border="1" style="border-collapse:collapse;width:100%">
+<tr><th>種類</th><th>操作</th><th>説明</th></tr>
+<tr><td rowspan="3">中間操作</td><td>filter(predicate)</td><td>条件でフィルタリング</td></tr>
+<tr><td>map(function)</td><td>要素を変換</td></tr>
+<tr><td>sorted()</td><td>並び替え</td></tr>
+<tr><td rowspan="3">終端操作</td><td>collect()</td><td>Listなどに変換</td></tr>
+<tr><td>forEach()</td><td>各要素に処理</td></tr>
+<tr><td>count() / sum()</td><td>集計</td></tr>
+</table>
+
+<h3>アノテーション（Annotation）</h3>
+<p>コードにメタデータ（付加情報）を記述する仕組みです。</p>
+<ul>
+  <li><code>@Override</code>：メソッドのオーバーライドを明示</li>
+  <li><code>@Deprecated</code>：非推奨のメソッドを示す</li>
+  <li><code>@SuppressWarnings</code>：警告を抑制</li>
+  <li><code>@FunctionalInterface</code>：関数型インタフェースを明示</li>
+</ul>
+
+<h3>enum（列挙型）</h3>
+<p>決まった選択肢の値を表すための型です。</p>
+<pre><code>enum Season { SPRING, SUMMER, AUTUMN, WINTER }
+Season s = Season.SUMMER;
+System.out.println(s);  // SUMMER</code></pre>`,
+
+  conceptZh: `<h3>Stream API（Java 8+）</h3>
+<p>对集合元素进行函数式风格处理的强大机制，链式调用多个操作：</p>
+<pre><code>List<Integer> numbers = Arrays.asList(1,2,3,4,5,6,7,8,9,10);
+
+// 筛选偶数，乘以2，求总和
+int result = numbers.stream()
+    .filter(n -> n % 2 == 0)   // 中间操作：过滤
+    .map(n -> n * 2)            // 中间操作：映射
+    .reduce(0, Integer::sum);   // 终端操作：归约
+System.out.println(result);  // 60</code></pre>
+
+<h3>常用Stream操作</h3>
+<table border="1" style="border-collapse:collapse;width:100%">
+<tr><th>种类</th><th>操作</th><th>说明</th></tr>
+<tr><td rowspan="3">中间操作</td><td>filter(predicate)</td><td>条件过滤</td></tr>
+<tr><td>map(function)</td><td>转换元素</td></tr>
+<tr><td>sorted()</td><td>排序</td></tr>
+<tr><td rowspan="3">终端操作</td><td>collect()</td><td>收集为List等</td></tr>
+<tr><td>forEach()</td><td>对每个元素进行处理</td></tr>
+<tr><td>count() / sum()</td><td>统计/求和</td></tr>
+</table>
+
+<h3>注解（Annotation）</h3>
+<p>给代码添加元数据的机制，以<code>@</code>开头：</p>
+<ul>
+  <li><code>@Override</code>：标记覆盖父类方法</li>
+  <li><code>@Deprecated</code>：标记已废弃的方法</li>
+  <li><code>@FunctionalInterface</code>：标记函数式接口</li>
+</ul>
+
+<h3>枚举（enum）</h3>
+<p>用于定义一组固定的常量值，比用int更安全易读：</p>
+<pre><code>enum Season { SPRING, SUMMER, AUTUMN, WINTER }
+Season s = Season.SUMMER;
+// switch语句与enum配合使用
+switch (s) {
+    case SPRING: System.out.println("春"); break;
+    case SUMMER: System.out.println("夏"); break;
+}</code></pre>`,
+
+  analogy: "🌊 Stream API就像工厂流水线：原材料（集合）进入流水线，经过多道工序（filter/map等中间操作），最终产出成品（终端操作）。注解就像产品上的「标签」，告诉别人这个东西的特殊属性。",
+
+  codeExample: `import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
+// enum の定義 / 枚举定义
+enum Day {
+    MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY;
+    
+    public boolean isWeekend() {
+        return this == SATURDAY || this == SUNDAY;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        // Stream API の活用 / Stream API使用
+        System.out.println("=== Stream API ===");
+        List<Integer> numbers = Arrays.asList(1,2,3,4,5,6,7,8,9,10);
+        
+        // フィルタ + 変換 + リストに収集 / 过滤+映射+收集
+        List<Integer> evenDoubled = numbers.stream()
+            .filter(n -> n % 2 == 0)
+            .map(n -> n * 2)
+            .collect(Collectors.toList());
+        System.out.println("偶数を2倍: " + evenDoubled);
+        
+        // 合計 / 求和
+        int sum = numbers.stream().mapToInt(Integer::intValue).sum();
+        System.out.println("合計: " + sum);
+        
+        // 最大値 / 最大值
+        int max = numbers.stream().mapToInt(Integer::intValue).max().orElse(0);
+        System.out.println("最大: " + max);
+        
+        // 文字列処理 / 字符串处理
+        List<String> names = Arrays.asList("田中", "佐藤", "鈴木", "山田", "高橋");
+        String result = names.stream()
+            .filter(name -> name.length() == 2)  // 2文字の名前
+            .sorted()
+            .collect(Collectors.joining(", "));
+        System.out.println("ソート済み: " + result);
+        
+        // enum の使用 / 枚举使用
+        System.out.println("\\n=== enum（曜日）===");
+        for (Day day : Day.values()) {
+            System.out.println(day + ": " + (day.isWeekend() ? "休日" : "平日"));
+        }
+    }
+}`,
+  codeTitle: "Stream API・enum の活用",
+
+  quizList: [
+    {
+      question: "Stream の filter() は何をしますか？",
+      questionZh: "Stream的filter()方法做什么？",
+      options: ["要素を並び替える", "条件に合う要素だけを残す", "要素を変換する", "要素を削除する"],
+      answerIdx: 1,
+      hint: "filterは「フィルタリング（絞り込み）」です / filter的意思是「筛选/过滤」。"
+    },
+    {
+      question: "@Override アノテーションの目的は？",
+      questionZh: "@Override注解的目的是什么？",
+      options: ["新しいメソッドを作る", "メソッドのオーバーライドであることをコンパイラに知らせる", "メソッドを削除する", "メソッドを非公開にする"],
+      answerIdx: 1,
+      hint: "スペルミスなどのバグをコンパイル時に検出できます / 可以在编译时检测拼写错误等bug。"
+    },
+    {
+      question: "enumを使うメリットは何ですか？",
+      questionZh: "使用enum的优点是什么？",
+      options: ["速度が向上する", "決まった選択肢のみを型安全に表現できる", "メモリ使用量が減る", "並列処理ができる"],
+      answerIdx: 1,
+      hint: "例えばSeason型はSPRING, SUMMER, AUTUMN, WINTERしか取れません / 例如Season类型只能取SPRING/SUMMER/AUTUMN/WINTER。"
+    }
+  ],
+
+  vocabList: [
+    { term: "Stream API", zh: "流API", desc: "コレクションをパイプライン方式で処理するJava 8以降の機能。" },
+    { term: "filter()", zh: "过滤", desc: "Streamで条件に合う要素だけを残す中間操作。" },
+    { term: "map()", zh: "映射/转换", desc: "Streamで各要素を別の値に変換する中間操作。" },
+    { term: "アノテーション (annotation)", zh: "注解", desc: "@Overrideのように、コードにメタデータを付加する仕組み。" },
+    { term: "enum (enumeration)", zh: "枚举", desc: "決まった選択肢（定数の集合）を表すための型。" }
+  ]
+}
+
+]; // end JAVA_LESSONS
