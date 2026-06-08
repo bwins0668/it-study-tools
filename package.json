@@ -1,6 +1,6 @@
 {
   "name": "study-tools",
-  "version": "0.1.0",
+  "version": "2026.6.8",
   "description": "Study Tools - Multi-Subject Learning Portal (SQL, Java, Python, IT Passport, SG)",
   "scripts": {
     "dev": "npx -y live-server"

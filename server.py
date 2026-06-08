@@ -18,6 +18,8 @@ import webbrowser
 import time
 import re
 import urllib.request
+import hashlib
+from functools import lru_cache
 from http.server import HTTPServer, SimpleHTTPRequestHandler, ThreadingHTTPServer
 from urllib.parse import unquote
 
@@ -60,27 +62,94 @@ KNOWN_JDK_PATHS = [
     r"C:\Program Files\Amazon Corretto\jdk17\bin",
 ]
 
-def find_java_bin(exe_name):
-    """Find javac.exe or java.exe in known JDK paths."""
+def java_home_from_bin_dir(bin_dir):
+    return os.path.dirname(os.path.abspath(bin_dir))
+
+
+def has_non_ascii(path):
+    return any(ord(ch) > 127 for ch in path)
+
+
+@lru_cache(maxsize=32)
+def ascii_safe_jdk_bin_dir(bin_dir):
+    """Use an ASCII junction for JDKs stored under non-ASCII Windows paths."""
+    bin_dir = os.path.abspath(bin_dir)
+    if os.name != "nt" or not has_non_ascii(bin_dir):
+        return bin_dir
+
+    jdk_home = java_home_from_bin_dir(bin_dir)
+    digest = hashlib.sha1(jdk_home.encode("utf-8")).hexdigest()[:12]
+    link_home = os.path.join(tempfile.gettempdir(), f"study-tools-jdk-{digest}")
+    link_bin = os.path.join(link_home, "bin")
+    if os.path.isfile(os.path.join(link_bin, "java.exe")):
+        return link_bin
+
+    try:
+        subprocess.run(
+            ["cmd", "/c", "mklink", "/J", link_home, jdk_home],
+            capture_output=True,
+            text=True,
+            timeout=10,
+        )
+    except Exception:
+        return bin_dir
+
+    if os.path.isfile(os.path.join(link_bin, "java.exe")):
+        return link_bin
+    return bin_dir
+
+
+def java_subprocess_env(bin_dir):
+    """Create a clean Java environment for a specific JDK bin directory."""
+    bin_dir = ascii_safe_jdk_bin_dir(bin_dir)
+    env = os.environ.copy()
+    env["JAVA_HOME"] = java_home_from_bin_dir(bin_dir)
+    env.pop("JRE_HOME", None)
+    env["PATH"] = bin_dir + os.pathsep + env.get("PATH", "")
+    return env
+
+
+@lru_cache(maxsize=64)
+def is_usable_java_bin_dir(bin_dir):
+    """Return True only when java.exe from this bin directory can actually start."""
+    bin_dir = ascii_safe_jdk_bin_dir(bin_dir)
+    java_exe = os.path.join(bin_dir, "java.exe")
+    if not os.path.isfile(java_exe):
+        return False
+    try:
+        result = subprocess.run(
+            [java_exe, "-version"],
+            capture_output=True,
+            text=True,
+            encoding="utf-8",
+            errors="replace",
+            timeout=5,
+            env=java_subprocess_env(bin_dir),
+        )
+        return result.returncode == 0
+    except Exception:
+        return False
+
+
+def java_candidate_bins():
+    """Yield candidate JDK bin directories in priority order."""
     # 0. Check local embedded JDK directory first
     app_root = os.path.dirname(os.path.abspath(__file__))
     local_jdk_root = os.path.join(app_root, "jdk")
     if os.path.isdir(local_jdk_root):
         for root, dirs, files in os.walk(local_jdk_root):
-            if exe_name in files:
-                return os.path.join(root, exe_name)
+            dirs.sort()
+            if "java.exe" in files:
+                yield root
 
     # Check PATH first
     for path_dir in os.environ.get("PATH", "").split(os.pathsep):
-        candidate = os.path.join(path_dir, exe_name)
-        if os.path.isfile(candidate):
-            return candidate
+        if path_dir:
+            yield path_dir
     
     # Check known JDK paths
     for jdk_dir in KNOWN_JDK_PATHS:
-        candidate = os.path.join(jdk_dir, exe_name)
-        if os.path.isfile(candidate):
-            return candidate
+        yield jdk_dir
     
     # Search Program Files
     for base in [r"C:\Program Files", r"C:\Program Files (x86)"]:
@@ -88,8 +157,22 @@ def find_java_bin(exe_name):
             search_dir = os.path.join(base, sub)
             if os.path.isdir(search_dir):
                 for root, dirs, files in os.walk(search_dir):
-                    if exe_name in files:
-                        return os.path.join(root, exe_name)
+                    dirs.sort()
+                    if "java.exe" in files:
+                        yield root
+
+
+def find_java_bin(exe_name):
+    """Find a usable javac.exe or java.exe."""
+    seen = set()
+    for bin_dir in java_candidate_bins():
+        bin_dir = os.path.abspath(bin_dir)
+        if bin_dir in seen:
+            continue
+        seen.add(bin_dir)
+        candidate = os.path.join(bin_dir, exe_name)
+        if os.path.isfile(candidate) and is_usable_java_bin_dir(bin_dir):
+            return os.path.join(ascii_safe_jdk_bin_dir(bin_dir), exe_name)
     return None
 
 def extract_class_name(code):
@@ -117,6 +200,7 @@ def run_java_code(code, stdin_data=""):
     if not java_exe:
         return {"compileError": "❌ java.exe not found.", "runtimeError": "", "output": "", "executionTimeMs": None}
     
+    java_env = java_subprocess_env(os.path.dirname(java_exe))
     class_name = extract_class_name(code)
     
     with tempfile.TemporaryDirectory(ignore_cleanup_errors=True) as temp_dir:
@@ -135,7 +219,8 @@ def run_java_code(code, stdin_data=""):
                 encoding='utf-8',
                 errors='replace',
                 timeout=15,
-                cwd=temp_dir
+                cwd=temp_dir,
+                env=java_env
             )
         except subprocess.TimeoutExpired:
             return {"compileError": "⏱️ Compilation timed out (>15s).", "runtimeError": "", "output": "", "executionTimeMs": None}
@@ -166,7 +251,8 @@ def run_java_code(code, stdin_data=""):
                 errors='replace',
                 timeout=10,
                 cwd=temp_dir,
-                input=stdin_data
+                input=stdin_data,
+                env=java_env
             )
         except subprocess.TimeoutExpired:
             return {"compileError": "", "runtimeError": "⏱️ Execution timed out (>10s). Infinite loop?", "output": "", "executionTimeMs": None}
