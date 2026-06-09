@@ -12,6 +12,7 @@ if PROJECT_ROOT not in sys.path:
 from study_ai import (
     LearningStore,
     ServiceError,
+    _translate_missing_with_public,
     build_tutor_messages,
     call_provider,
     validate_question,
@@ -155,6 +156,81 @@ class ProviderTests(unittest.TestCase):
                     [{"role": "user", "content": "Hello"}],
                 )
         self.assertEqual("API_KEY_MISSING", context.exception.code)
+
+
+class TranslationBatchTests(unittest.TestCase):
+    @mock.patch("study_ai._public_translate_chunk")
+    def test_public_text_items_are_translated_in_one_batch(self, translate_chunk):
+        translate_chunk.side_effect = lambda text, *_args: (
+            text.replace("First label", "Premier libelle")
+            .replace("Second label", "Deuxieme libelle")
+        )
+        items = [
+            {
+                "id": "first",
+                "key": "first",
+                "source_lang": "en",
+                "source_hash": "hash-first",
+                "format": "text",
+                "text": "First label",
+            },
+            {
+                "id": "second",
+                "key": "second",
+                "source_lang": "en",
+                "source_hash": "hash-second",
+                "format": "text",
+                "text": "Second label",
+            },
+        ]
+
+        records = _translate_missing_with_public("fr", items)
+
+        self.assertEqual(1, translate_chunk.call_count)
+        self.assertEqual(
+            {
+                "hash-first": "Premier libelle",
+                "hash-second": "Deuxieme libelle",
+            },
+            {
+                record["source_hash"]: record["translated_text"]
+                for record in records
+            },
+        )
+
+    @mock.patch("study_ai._public_translate_chunk")
+    def test_public_batch_falls_back_to_individual_items(self, translate_chunk):
+        translate_chunk.side_effect = [
+            "Batch response without markers",
+            "Premier libelle",
+            "Deuxieme libelle",
+        ]
+        items = [
+            {
+                "id": "first",
+                "key": "first",
+                "source_lang": "en",
+                "source_hash": "hash-first",
+                "format": "text",
+                "text": "First label",
+            },
+            {
+                "id": "second",
+                "key": "second",
+                "source_lang": "en",
+                "source_hash": "hash-second",
+                "format": "text",
+                "text": "Second label",
+            },
+        ]
+
+        records = _translate_missing_with_public("fr", items)
+
+        self.assertEqual(3, translate_chunk.call_count)
+        self.assertEqual(
+            ["Premier libelle", "Deuxieme libelle"],
+            [record["translated_text"] for record in records],
+        )
 
 
 if __name__ == "__main__":

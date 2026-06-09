@@ -23,6 +23,14 @@ let crossChallengePool = [];
 let crossChallengeIndex = 0;
 let crossChallengeCurrentExercise = null;
 
+function escapeAttr(value) {
+  return String(value || "")
+    .replace(/&/g, "&amp;")
+    .replace(/"/g, "&quot;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
+}
+
 // IT Passport textbook curriculum state
 let currentItPassLessonId = 1;
 let completedItPassLessons = [];
@@ -735,12 +743,18 @@ function initSidebar() {
         const iconClass = isCompleted ? "fa-solid fa-circle-check" : "fa-regular fa-circle";
         
         // 渲染格式：小节编号 + 课件标题
-        const displayTitle = lesson.subSectionId 
+        const displayTitleJa = lesson.subSectionId
+          ? `${lesson.subSectionId} ${lesson.titleJa || lesson.titleZh}`
+          : (lesson.titleJa || lesson.titleZh);
+        const displayTitleZh = lesson.subSectionId
           ? `${lesson.subSectionId} ${lesson.titleZh || lesson.titleJa}`
           : (lesson.titleZh || lesson.titleJa);
+        const displayTitle = (window.I18n && window.I18n.isActive())
+          ? displayTitleJa
+          : displayTitleZh;
           
         item.innerHTML = `
-          <span>${displayTitle}</span>
+          <span data-i18n-source-lang="ja" data-i18n-source-text="${escapeAttr(displayTitleJa)}">${displayTitle}</span>
           <i class="${iconClass} nav-status-icon"></i>
         `;
         

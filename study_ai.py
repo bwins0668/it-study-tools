@@ -15,6 +15,7 @@ import urllib.error
 import urllib.parse
 import urllib.request
 import uuid
+from concurrent.futures import ThreadPoolExecutor, as_completed
 
 
 SUBJECTS = ("sql", "java", "python", "itpass", "sg")
@@ -898,18 +899,98 @@ def _public_translate_item_text(item, target_lang):
     return _split_translate_text(text, target_lang, source_lang)
 
 
-def _translate_missing_with_public(target_lang, items):
-    records = []
+_PUBLIC_BATCH_MARKER_RE = re.compile(r"\[\[\[STUDY_I18N_(\d{4})\]\]\]")
+
+
+def _split_public_text_batches(items, max_chars=1000):
+    batches = []
+    current = []
+    current_len = 0
     for item in items:
-        translated_text = ""
-        for _attempt in range(2):
-            try:
-                translated_text = _public_translate_item_text(item, target_lang)
-                break
-            except ServiceError:
-                translated_text = ""
-        if not translated_text:
+        item_len = len(item["text"]) + 28
+        if current and current_len + item_len > max_chars:
+            batches.append(current)
+            current = []
+            current_len = 0
+        current.append(item)
+        current_len += item_len
+    if current:
+        batches.append(current)
+    return batches
+
+
+def _translate_public_text_batch(target_lang, items):
+    payload_parts = []
+    for index, item in enumerate(items):
+        payload_parts.append(f"[[[STUDY_I18N_{index:04d}]]]\n{item['text']}")
+    translated = _public_translate_chunk(
+        "\n".join(payload_parts),
+        target_lang,
+        items[0].get("source_lang", "auto"),
+    )
+    matches = list(_PUBLIC_BATCH_MARKER_RE.finditer(translated))
+    if len(matches) != len(items):
+        raise ServiceError(
+            "PUBLIC_TRANSLATION_BATCH_FAILED",
+            "The public translation batch response was incomplete.",
+            502,
+        )
+
+    output = []
+    for position, match in enumerate(matches):
+        marker_index = int(match.group(1))
+        if marker_index >= len(items):
             continue
+        start = match.end()
+        end = matches[position + 1].start() if position + 1 < len(matches) else len(translated)
+        translated_text = translated[start:end].strip()
+        if translated_text:
+            output.append((items[marker_index], translated_text))
+    return output
+
+
+def _translate_public_work_unit(target_lang, items):
+    try:
+        if len(items) == 1 and items[0]["format"] == "html":
+            translated = _public_translate_item_text(items[0], target_lang)
+            return [(items[0], translated)] if translated else []
+        return _translate_public_text_batch(target_lang, items)
+    except ServiceError:
+        output = []
+        for item in items:
+            try:
+                translated = _public_translate_item_text(item, target_lang)
+            except ServiceError:
+                continue
+            if translated:
+                output.append((item, translated))
+        return output
+
+
+def _translate_missing_with_public(target_lang, items):
+    text_groups = {}
+    work_units = []
+    for item in items:
+        if item["format"] == "html":
+            work_units.append([item])
+            continue
+        text_groups.setdefault(item["source_lang"], []).append(item)
+    for grouped_items in text_groups.values():
+        work_units.extend(_split_public_text_batches(grouped_items))
+
+    translated_pairs = []
+    if work_units:
+        worker_count = min(8, len(work_units))
+        with ThreadPoolExecutor(max_workers=worker_count) as executor:
+            futures = [
+                executor.submit(_translate_public_work_unit, target_lang, unit)
+                for unit in work_units
+            ]
+            for future in as_completed(futures):
+                translated_pairs.extend(future.result())
+
+    records = []
+    for item, translated_text in translated_pairs:
         records.append(
             {
                 "id": item["id"],
@@ -973,7 +1054,11 @@ def translate_items(body, learning_store):
         target_lang, items, cache_provider, cache_model
     )
     translated_by_hash = dict(cached)
-    missing = [item for item in items if item["source_hash"] not in translated_by_hash]
+    missing_by_hash = {}
+    for item in items:
+        if item["source_hash"] not in translated_by_hash:
+            missing_by_hash.setdefault(item["source_hash"], item)
+    missing = list(missing_by_hash.values())
 
     if missing:
         if use_public_first:

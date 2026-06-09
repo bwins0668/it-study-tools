@@ -1,9 +1,15 @@
 import os
 import hashlib
 import subprocess
+import sys
 import tempfile
 import time
 import zipfile
+
+
+for stream in (sys.stdout, sys.stderr):
+    if hasattr(stream, "reconfigure"):
+        stream.reconfigure(errors="replace")
 
 
 PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))

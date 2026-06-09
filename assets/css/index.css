@@ -6592,3 +6592,116 @@ body.i18n-active .lang-tab {
   }
 }
 
+/* Global target-language mode: keep target text and Japanese readable without squeezing narrow columns. */
+body.i18n-active .concept-container {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-items: stretch;
+  gap: 18px;
+}
+
+body.i18n-active .concept-col {
+  min-width: 0;
+  width: 100%;
+}
+
+body.i18n-active .concept-col.zh-col,
+body.i18n-active .concept-col.ja-col {
+  flex: initial !important;
+  max-width: none !important;
+}
+
+body.i18n-active .concept-col.zh-col {
+  order: 1;
+}
+
+body.i18n-active .concept-col.ja-col {
+  order: 2;
+}
+
+body.i18n-active .concept-body {
+  overflow-wrap: break-word;
+  word-break: normal;
+}
+
+body.i18n-active .concept-col.ja-col .concept-body {
+  color: var(--text-secondary);
+}
+
+body.i18n-active .app-header {
+  gap: 10px;
+  padding-inline: 16px;
+}
+
+body.i18n-active .header-logo {
+  flex: 0 0 180px;
+  min-width: 160px;
+}
+
+body.i18n-active .logo-text span {
+  display: none;
+}
+
+body.i18n-active .header-subject-selector {
+  flex: 1 1 360px;
+  max-width: none;
+}
+
+body.i18n-active .header-challenge {
+  margin-right: 0;
+}
+
+body.i18n-active :where(
+  .app-header,
+  .subject-tab,
+  .sub-header-tab,
+  .sidebar-title,
+  .sidebar-chapter-header,
+  .lesson-nav-item,
+  .schema-header,
+  .console-header,
+  .output-header,
+  .schema-tab,
+  .db-group-tab,
+  .console-btn,
+  .maximize-btn,
+  .reset-all-btn,
+  .header-challenge-btn-start,
+  .language-toggle-btn,
+  .language-option,
+  .settings-btn
+) {
+  overflow-wrap: normal !important;
+  word-break: keep-all !important;
+}
+
+body.i18n-active :where(
+  .language-toggle-btn,
+  .header-challenge-btn-start,
+  .reset-all-btn,
+  .console-btn,
+  .db-group-tab,
+  .schema-tab,
+  .maximize-btn
+) {
+  min-width: 0;
+}
+
+body.i18n-active #language-current-label {
+  min-width: 0;
+  max-width: 96px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+body.i18n-active :where(
+  .playground-task-desc,
+  .analogy-card .card-content,
+  .quiz-question,
+  .quiz-feedback,
+  .review-kaisetsu-text
+) {
+  white-space: pre-line;
+}
+

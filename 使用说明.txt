@@ -1,8 +1,9 @@
 Study Tools 绿色免安装版
+版本：v2026.6.9
 
 使用方法：
 1. 解压完整发布包。
-2. 打开 Study-Tools-Portable-可用-日期 文件夹。
+2. 打开 Study-Tools-Portable-v2026.6.9 文件夹。
 3. 双击 Study-Tools.exe 启动。
 
 备用方法：

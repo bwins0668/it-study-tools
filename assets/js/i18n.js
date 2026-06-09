@@ -4,6 +4,7 @@
 
   const DEFAULT_LANG = "default-ja-zh";
   const STORAGE_KEY = "study-tools-language";
+  const CACHE_STORAGE_KEY = "study-tools-i18n-cache-v4";
   const SKIP_SELECTOR = [
     "[data-i18n-skip]",
     "[data-i18n-managed]",
@@ -20,8 +21,6 @@
     "svg",
     ".java-output-content",
     ".python-output-content",
-    ".output-body",
-    ".query-output",
     ".result-table",
     ".data-table",
     ".sql-result-table",
@@ -101,20 +100,275 @@
   const attrApplied = new WeakMap();
   const attrAppliedLang = new WeakMap();
   const translationCache = new Map();
+  const STATIC_UI_TRANSLATIONS = {
+    ko: {
+      "SQL 学习": "SQL 학습",
+      "SQL / MySQL 学习": "SQL / MySQL 학습",
+      "Java 学習": "Java 학습",
+      "Python 学习": "Python 학습",
+      "ITパスポート 备考": "IT 패스포트 대비",
+      "SG 备考": "SG 대비",
+      "日本語タイピング": "일본어 타자",
+      "综合随机挑战": "랜덤 도전",
+      "语言": "언어",
+      "重置进度": "초기화",
+      "教材书与演练沙盒 (テキスト・演習)": "교재와 연습 샌드박스",
+      "教科书与演练沙盒 (テキスト・演習)": "교재 연습",
+      "教科书章节学习 (テキスト学習)": "교재 학습",
+      "实操模拟考试 (実技模擬試験)": "실전 모의시험",
+      "进捗状況 (学习进度)": "진행 상황",
+      "単元リスト (课程目录)": "단원 목록",
+      "数据库的基础": "데이터베이스 기초",
+      "关系型数据库与SQL入门": "관계형 데이터베이스와 SQL 입문",
+      "数据检索核心 (SELECT)": "데이터 검색 핵심",
+      "SQL 函数与高级数据变换": "SQL 함수와 고급 데이터 변환",
+      "关联查询与子查询": "조인 조회와 서브쿼리",
+      "数据修改与表管理": "데이터 수정과 테이블 관리",
+      "データベース構造(DB 表结构参考)": "데이터베이스 구조",
+      "データベース構造 (DB 表结构参考)": "데이터베ース 구조",
+      "データベース構造(DB 表结构参考)": "데이터베이스 구조",
+      "データベース構造 (DB 表结构参考)": "데이터베이스 구조",
+      "学校DB": "학교 DB",
+      "书店DB": "서점 DB",
+      "SQL プレイグラウンド (演练沙盒)": "SQL 플레이그라운드",
+      "ヒント (提示)": "힌트",
+      "DBリセット (重置DB)": "DB 초기화",
+      "ミッション(当前任务)": "미션",
+      "ミッション (当前任务)": "미션",
+      "随机指令练习": "랜덤 지시 연습",
+      "実行結果 (执行结果)": "실행 결과",
+      "最大化": "최대화",
+      "查询学生主表 (students_mst) 的所有列和所有行的数据。": "학생 마스터(students_mst)의 모든 열과 모든 행을 조회하세요.",
+      "请在此处输入 SQL 语句 ...": "여기에 SQL 문을 입력하세요...",
+      "ここにSQLを入力してください ...": "여기에 SQL을 입력하세요..."
+    },
+    en: {
+      "SQL 学习": "SQL Learning",
+      "SQL / MySQL 学习": "SQL / MySQL Learning",
+      "Java 学習": "Java Learning",
+      "Python 学习": "Python Learning",
+      "ITパスポート 备考": "IT Passport Prep",
+      "SG 备考": "SG Prep",
+      "日本語タイピング": "Japanese Typing",
+      "综合随机挑战": "Random Challenge",
+      "语言": "Language",
+      "重置进度": "Reset",
+      "教材书与演练沙盒 (テキスト・演習)": "Textbook and Practice Sandbox",
+      "教科书与演练沙盒 (テキスト・演習)": "Textbook Practice",
+      "教科书章节学习 (テキスト学習)": "Textbook Learning",
+      "实操模拟考试 (実技模擬試験)": "Practical Mock Exam",
+      "进捗状況 (学习进度)": "Progress",
+      "単元リスト (课程目录)": "Unit List",
+      "数据库的基础": "Database Basics",
+      "データベース構造(DB 表结构参考)": "Database Structure",
+      "データベース構造 (DB 表结构参考)": "Database Structure",
+      "学校DB": "School DB",
+      "书店DB": "Bookstore DB",
+      "SQL プレイグラウンド (演练沙盒)": "SQL Playground",
+      "ヒント (提示)": "Hint",
+      "DBリセット (重置DB)": "Reset DB",
+      "ミッション(当前任务)": "Mission",
+      "ミッション (当前任务)": "Mission",
+      "随机指令练习": "Random Practice",
+      "実行結果 (执行结果)": "Results",
+      "最大化": "Maximize"
+    }
+  };
+  const STATIC_JA_FALLBACKS = {
+    "SQL 学习": "SQL 学習",
+    "SQL / MySQL 学习": "SQL / MySQL 学習",
+    "Java 学習": "Java 学習",
+    "Python 学习": "Python 学習",
+    "ITパスポート 备考": "ITパスポート 備考",
+    "SG 备考": "SG 備考",
+    "综合随机挑战": "総合ランダム挑戦",
+    "语言": "言語",
+    "重置进度": "進度をリセット",
+    "教材书与演练沙盒 (テキスト・演習)": "テキスト・演習",
+    "教科书与演练沙盒 (テキスト・演習)": "テキスト・演習",
+    "教科书章节学习 (テキスト学習)": "テキスト学習",
+    "实操模拟考试 (実技模擬試験)": "実技模擬試験",
+    "进捗状況 (学习进度)": "進捗状況",
+    "単元リスト (课程目录)": "単元リスト",
+    "关系型数据库与SQL入门": "関係型データベースとSQL入門",
+    "数据检索核心 (SELECT)": "データ検索核心 (SELECT)",
+    "SQL 函数与高级数据变换": "SQL関数と高度なデータ変換",
+    "关联查询与子查询": "結合問合せとサブクエリ",
+    "数据修改与表管理": "データ変更と表管理",
+    "数据库的基础": "データベースの基礎",
+    "データベース構造(DB 表结构参考)": "データベース構造",
+    "データベース構造 (DB 表结构参考)": "データベース構造",
+    "学校DB": "学校DB",
+    "书店DB": "書店DB",
+    "SQL プレイグラウンド (演练沙盒)": "SQLプレイグラウンド",
+    "ヒント (提示)": "ヒント",
+    "DBリセット (重置DB)": "DBリセット",
+    "ミッション(当前任务)": "ミッション",
+    "ミッション (当前任务)": "ミッション",
+    "随机指令练习": "ランダム指令練習",
+    "実行結果 (执行结果)": "実行結果",
+    "最大化": "最大化",
+    "查询学生主表 (students_mst) 的所有列和所有行的数据。": "学生マスタ(students_mst)のすべての列と行を取得してください。",
+    "请在此处输入 SQL 语句 ...": "ここにSQL文を入力してください...",
+    "ここにSQLを入力してください ...": "ここにSQLを入力してください..."
+  };
 
   let currentLang = localStorage.getItem(STORAGE_KEY) || DEFAULT_LANG;
-  const LAYOUT_FIX_RESET_KEY = "study-tools-i18n-layout-reset-20260608";
-  if (currentLang !== DEFAULT_LANG && localStorage.getItem(LAYOUT_FIX_RESET_KEY) !== "done") {
-    currentLang = DEFAULT_LANG;
-    localStorage.setItem(STORAGE_KEY, DEFAULT_LANG);
-    localStorage.setItem(LAYOUT_FIX_RESET_KEY, "done");
-  }
   if (!languageByCode.has(currentLang)) currentLang = DEFAULT_LANG;
   let observer = null;
   let scanTimer = null;
   let translating = false;
   let dirty = false;
+  let translationRunId = 0;
   let toastCooldown = 0;
+
+  function normalizeText(text) {
+    return String(text || "").replace(/\s+/g, " ").trim();
+  }
+
+  function loadPersistentCache() {
+    try {
+      const raw = localStorage.getItem(CACHE_STORAGE_KEY);
+      if (!raw) return;
+      const entries = JSON.parse(raw);
+      if (!Array.isArray(entries)) return;
+      entries.forEach(([key, value]) => {
+        if (typeof key === "string" && typeof value === "string") {
+          translationCache.set(key, value);
+        }
+      });
+    } catch (error) {
+      console.warn("[I18n] Failed to load translation cache", error);
+    }
+  }
+
+  function persistCacheSoon() {
+    window.clearTimeout(persistCacheSoon.timer);
+    persistCacheSoon.timer = window.setTimeout(() => {
+      try {
+        const entries = [...translationCache.entries()].slice(-5000);
+        localStorage.setItem(CACHE_STORAGE_KEY, JSON.stringify(entries));
+      } catch (error) {
+        console.warn("[I18n] Failed to persist translation cache", error);
+      }
+    }, 250);
+  }
+
+  function staticTranslation(text, language = currentLang) {
+    const table = STATIC_UI_TRANSLATIONS[language];
+    if (!table) return "";
+    const compact = normalizeText(text);
+    return table[compact] || table[String(text || "").trim()] || "";
+  }
+
+  function staticJapaneseFallback(text) {
+    const compact = normalizeText(text);
+    if (STATIC_JA_FALLBACKS[compact]) return STATIC_JA_FALLBACKS[compact];
+    const parenJa = compact.match(/[（(]([^()（）]*[\u3040-\u30ff\u31f0-\u31ff][^()（）]*)[）)]/);
+    if (parenJa) return parenJa[1].trim();
+    const slashParts = compact.split(/\s*[/／]\s*/).filter(Boolean);
+    const jaPart = slashParts.find((part) => /[\u3040-\u30ff\u31f0-\u31ff]/.test(part));
+    if (jaPart) return jaPart.trim();
+    if (/[\u3040-\u30ff\u31f0-\u31ff]/.test(compact)) {
+      return compact
+        .replace(/\s*[（(][^()（）]*[\u3400-\u9fff][^()（）]*[）)]\s*$/g, "")
+        .trim();
+    }
+    return "";
+  }
+
+  function translationSource(text, explicitSourceLang = "") {
+    const source = normalizeText(text);
+    const japanese = staticJapaneseFallback(source);
+    if (japanese) return { text: japanese, sourceLang: "ja" };
+    if (explicitSourceLang) return { text: source, sourceLang: explicitSourceLang };
+    if (/[\u3400-\u9fff]/.test(source)) return { text: source, sourceLang: "zh-CN" };
+    return { text: source, sourceLang: "auto" };
+  }
+
+  const COMPACT_PAIR_SELECTOR = [
+    ".app-header",
+    ".header-logo",
+    ".subject-tab",
+    ".sub-header-tab",
+    ".sidebar-title",
+    ".sidebar-chapter-header",
+    ".lesson-nav-item",
+    ".chapter-progress-badge",
+    ".lesson-badge",
+    ".lang-tabs",
+    ".lang-tab",
+    ".schema-header",
+    ".console-header",
+    ".output-header",
+    ".schema-tab",
+    ".db-group-tab",
+    ".console-btn",
+    ".maximize-btn",
+    ".reset-all-btn",
+    ".header-challenge-btn-start",
+    ".language-toggle-btn",
+    ".language-option",
+    ".settings-btn",
+    ".theme-toggle-btn",
+    ".ai-settings-btn",
+    ".quiz-submit-btn",
+    ".cbt-btn-action",
+  ].join(",");
+
+  const STACKED_PAIR_SELECTOR = [
+    ".playground-task-desc",
+    ".analogy-card .card-content",
+    ".quiz-question",
+    ".quiz-feedback",
+    ".ai-message",
+    ".review-kaisetsu-text",
+  ].join(",");
+
+  function closestElement(el, selector) {
+    return el && el.nodeType === 1 && typeof el.closest === "function" ? el.closest(selector) : null;
+  }
+
+  function isCompactPairContext(el) {
+    return Boolean(closestElement(el, COMPACT_PAIR_SELECTOR));
+  }
+
+  function isStackedPairContext(el, translated, jaText) {
+    if (closestElement(el, STACKED_PAIR_SELECTOR)) return true;
+    return normalizeText(translated).length + normalizeText(jaText).length > 42;
+  }
+
+  function compactVisibleText(text) {
+    const compact = normalizeText(text);
+    return compact.replace(/\s*[（(][^()（）]{2,90}[）)]\s*$/g, "").trim() || compact;
+  }
+
+  function setCompactPairHint(el, translated, jaText) {
+    const host = closestElement(el, "button,[role='button'],.lesson-nav-item,.sidebar-chapter-header,.schema-header,.console-header,.output-header,.header-logo") || el;
+    if (!host || !jaText || jaText === translated) return;
+    const pair = `${translated} / ${jaText}`;
+    host.setAttribute("data-i18n-compact-pair", pair);
+    if (!host.getAttribute("title") || host.getAttribute("data-i18n-title-managed") === "true") {
+      host.setAttribute("title", pair);
+      host.setAttribute("data-i18n-title-managed", "true");
+    }
+  }
+
+  function getCachedTranslation(item) {
+    const fixed = staticTranslation(item.text, item.targetLang || currentLang);
+    if (fixed) return fixed;
+    const key = cacheKey(item);
+    return translationCache.get(key) || "";
+  }
+
+  function rememberTranslation(item, translatedText) {
+    const clean = String(translatedText || "").trim();
+    if (!clean) return;
+    translationCache.set(cacheKey(item), clean);
+    persistCacheSoon();
+  }
+
+  loadPersistentCache();
 
   function langInfo(code = currentLang) {
     return languageByCode.get(code) || languageByCode.get(DEFAULT_LANG);
@@ -141,6 +395,19 @@
     if (el.hidden || el.getAttribute("aria-hidden") === "true") return false;
     const style = window.getComputedStyle(el);
     return style.display !== "none" && style.visibility !== "hidden";
+  }
+
+  function translationPriority(el, attribute = false) {
+    if (!el) return 20;
+    const rect = el.getBoundingClientRect();
+    const onScreen = rect.width > 0
+      && rect.height > 0
+      && rect.bottom >= 0
+      && rect.right >= 0
+      && rect.top <= window.innerHeight
+      && rect.left <= window.innerWidth;
+    if (onScreen) return attribute ? -2 : 0;
+    return attribute ? 8 : 10;
   }
 
   function getAiConfig() {
@@ -191,17 +458,20 @@
   }
 
   function cacheKey(item) {
-    return [currentLang, item.sourceLang || "auto", item.format || "text", item.text].join("\u0001");
+    return [item.targetLang || currentLang, item.sourceLang || "auto", item.format || "text", item.text].join("\u0001");
   }
 
-  async function translateBatch(items) {
+  async function translateBatch(items, onProgress) {
     if (!isActive() || !items || !items.length) return {};
+    const requestTargetLang = items[0]?.targetLang || currentLang;
+    const requestTargetInfo = langInfo(requestTargetLang);
+    const requestTargetLabel = requestTargetLang === "ja" ? "Japanese" : requestTargetInfo.label;
     const output = {};
     const missing = [];
     items.forEach((item) => {
-      const key = cacheKey(item);
-      if (translationCache.has(key)) {
-        output[item.id] = translationCache.get(key);
+      const cached = getCachedTranslation(item);
+      if (cached) {
+        output[item.id] = cached;
       } else {
         missing.push(item);
       }
@@ -209,13 +479,13 @@
     if (!missing.length) return output;
 
     const config = getAiConfig();
-    for (const chunk of splitChunks(missing, 24)) {
+    for (const chunk of splitChunks(missing, 80)) {
       const response = await fetch("/api/i18n/translate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          targetLang: currentLang,
-          targetLabel: langInfo().label,
+          targetLang: requestTargetLang,
+          targetLabel: requestTargetLabel,
           items: chunk,
           ...config,
         }),
@@ -230,22 +500,72 @@
       (payload.data.items || []).forEach((item) => {
         const source = chunk.find((candidate) => candidate.id === item.id);
         if (!source) return;
-        const key = cacheKey(source);
-        translationCache.set(key, item.text);
+        rememberTranslation(source, item.text);
         output[item.id] = item.text;
       });
+      if (typeof onProgress === "function") {
+        const partial = {};
+        (payload.data.items || []).forEach((item) => {
+          partial[item.id] = item.text;
+        });
+        onProgress(partial);
+      }
     }
     return output;
   }
 
-  function renderTargetText(original, translated) {
+  function renderPendingText(original, contextEl) {
+    const source = String(original || "");
+    const cleanOriginal = normalizeText(source);
+    const jaText = staticJapaneseFallback(cleanOriginal);
+    const leading = source.match(/^\s*/)?.[0] || "";
+    const trailing = source.match(/\s*$/)?.[0] || "";
+    if (jaText && jaText !== cleanOriginal) {
+      return `${leading}${jaText}${trailing}`;
+    }
+    if (/[\u3040-\u30ff\u31f0-\u31ff]/.test(cleanOriginal)) {
+      return `${leading}${compactVisibleText(cleanOriginal)}${trailing}`;
+    }
+    if (/[\u3400-\u9fff]/.test(cleanOriginal)) {
+      return `${leading}${isCompactPairContext(contextEl) ? "…" : "翻訳中…"}${trailing}`;
+    }
+    return source;
+  }
+
+  function renderPendingAttribute(original, attr) {
+    const source = String(original || "");
+    const cleanOriginal = normalizeText(source);
+    const jaText = staticJapaneseFallback(cleanOriginal);
+    if (jaText && jaText !== cleanOriginal) return jaText;
+    if (/[\u3040-\u30ff\u31f0-\u31ff]/.test(cleanOriginal)) return source;
+    if (/[\u3400-\u9fff]/.test(cleanOriginal)) {
+      return attr === "placeholder" ? "入力…" : "翻訳中…";
+    }
+    return source;
+  }
+
+  function renderTargetText(original, translated, contextEl, options = {}) {
     const source = String(original || "");
     const cleanOriginal = source.replace(/\s+/g, " ").trim();
     const cleanTranslated = String(translated || "").replace(/\s+/g, " ").trim();
     if (!cleanTranslated || cleanTranslated === cleanOriginal) return source || cleanOriginal;
+    const jaText = normalizeText(options.jaText || staticJapaneseFallback(cleanOriginal));
     const leading = source.match(/^\s*/)?.[0] || "";
     const trailing = source.match(/\s*$/)?.[0] || "";
-    return `${leading}${cleanTranslated}${trailing}`;
+    if (!jaText || jaText === cleanTranslated) return `${leading}${cleanTranslated}${trailing}`;
+    if (options.attr === "placeholder") return `${leading}${cleanTranslated}${trailing}`;
+    if (options.attr === "title" || options.attr === "aria-label") {
+      return `${leading}${cleanTranslated} / ${jaText}${trailing}`;
+    }
+    if (isCompactPairContext(contextEl)) {
+      const visibleText = compactVisibleText(cleanTranslated);
+      setCompactPairHint(contextEl, visibleText, jaText);
+      return `${leading}${visibleText}${trailing}`;
+    }
+    if (isStackedPairContext(contextEl, cleanTranslated, jaText)) {
+      return `${leading}${cleanTranslated}\n${jaText}${trailing}`;
+    }
+    return `${leading}${cleanTranslated}（${jaText}）${trailing}`;
   }
 
   function sanitizeHtml(html) {
@@ -290,14 +610,23 @@
     const titleTargetEl = document.getElementById("lesson-title-zh");
 
     if (tabs) tabs.style.display = active ? "none" : "";
-    if (titleTargetEl) titleTargetEl.style.display = active ? "none" : "";
+    if (titleTargetEl) titleTargetEl.style.display = "";
 
     if (active) {
-      if (container) container.style.flexDirection = "row";
-      if (jaCol) jaCol.style.display = "none";
-      if (targetCol) targetCol.style.display = "flex";
+      if (container) container.style.flexDirection = "column";
+      if (jaCol) {
+        jaCol.style.display = "flex";
+        jaCol.style.order = "2";
+      }
+      if (targetCol) {
+        targetCol.style.display = "flex";
+        targetCol.style.order = "1";
+      }
       return;
     }
+
+    if (jaCol) jaCol.style.order = "";
+    if (targetCol) targetCol.style.order = "";
 
     const selected = document.querySelector(".lang-tab.active")?.dataset.lang || "both";
     if (selected === "both") {
@@ -319,12 +648,13 @@
     tabs.forEach((tab) => {
       if (!tab.dataset.i18nDefaultHtml) tab.dataset.i18nDefaultHtml = tab.innerHTML;
     });
+
+    const jaHead = document.querySelector(".ja-col h4");
+    const targetHead = document.querySelector(".zh-col h4");
     if (!isActive()) {
       tabs.forEach((tab) => {
         if (tab.dataset.i18nDefaultHtml) tab.innerHTML = tab.dataset.i18nDefaultHtml;
       });
-      const jaHead = document.querySelector(".ja-col h4");
-      const targetHead = document.querySelector(".zh-col h4");
       if (jaHead) jaHead.innerHTML = '<i class="fa-solid fa-graduation-cap"></i> 解説 (日本語)';
       if (targetHead) targetHead.innerHTML = '<i class="fa-solid fa-language"></i> 讲解 (中文)';
       return;
@@ -333,11 +663,9 @@
     const both = document.querySelector('.lang-tab[data-lang="both"]');
     const ja = document.querySelector('.lang-tab[data-lang="ja"]');
     const target = document.querySelector('.lang-tab[data-lang="zh"]');
-    if (both) both.innerHTML = `<i class="fa-solid fa-columns"></i> 日本語 / ${info.native}`;
+    if (both) both.innerHTML = `<i class="fa-solid fa-columns"></i> ${info.native} / 日本語`;
     if (ja) ja.textContent = "日本語のみ";
     if (target) target.textContent = info.native;
-    const jaHead = document.querySelector(".ja-col h4");
-    const targetHead = document.querySelector(".zh-col h4");
     if (jaHead) jaHead.innerHTML = '<i class="fa-solid fa-graduation-cap"></i> 解説 (日本語)';
     if (targetHead) targetHead.innerHTML = `<i class="fa-solid fa-language"></i> Explanation (${info.native})`;
   }
@@ -383,26 +711,33 @@
       context: "Study lesson body. Preserve HTML tags and technical terms.",
     };
 
-    titleJaEl.textContent = "Translating...";
-    titleTargetEl.textContent = "Translating...";
-    conceptTargetEl.innerHTML = '<p class="i18n-loading">Translating...</p>';
+    const targetLangAtStart = currentLang;
+    const cachedTitle = getCachedTranslation(titleItem);
+    const cachedConcept = getCachedTranslation(conceptItem);
+    titleJaEl.textContent = cachedTitle || lesson.titleZh || lesson.titleJa || "";
+    titleTargetEl.textContent = lesson.titleJa || "";
+    conceptTargetEl.innerHTML = sanitizeHtml(cachedConcept || renderOriginalConcept(lesson.conceptZh || lesson.conceptJa || ""));
+
     try {
       const translated = await translateBatch([titleItem, conceptItem]);
+      if (!isActive() || currentLang !== targetLangAtStart) return;
       const translatedTitle = translated["lesson-title"] || lesson.titleZh || lesson.titleJa || "";
       titleJaEl.textContent = translatedTitle;
-      titleTargetEl.textContent = translatedTitle;
+      titleTargetEl.textContent = lesson.titleJa || "";
       conceptTargetEl.innerHTML = sanitizeHtml(translated["lesson-concept"] || renderOriginalConcept(lesson.conceptZh || ""));
     } catch (error) {
-      applyLessonTargetLayout(false);
-      titleJaEl.textContent = lesson.titleJa || "";
-      titleTargetEl.textContent = lesson.titleZh || "";
-      conceptTargetEl.innerHTML = renderOriginalConcept(lesson.conceptZh || "");
-      resetToDefaultAfterTranslationFailure(error);
       showI18nError(error);
     }
   }
 
   function restoreGenericTranslations() {
+    document.querySelectorAll("[data-i18n-compact-pair]").forEach((el) => {
+      el.removeAttribute("data-i18n-compact-pair");
+      if (el.getAttribute("data-i18n-title-managed") === "true") {
+        el.removeAttribute("title");
+        el.removeAttribute("data-i18n-title-managed");
+      }
+    });
     const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
     while (walker.nextNode()) {
       const node = walker.currentNode;
@@ -436,10 +771,14 @@
           const current = node.nodeValue || "";
           const lastApplied = textApplied.get(node);
           const lastAppliedLang = textAppliedLang.get(node);
+          const sourceHost = parent.closest("[data-i18n-source-text]");
+          if (sourceHost) {
+            textOriginals.set(node, sourceHost.getAttribute("data-i18n-source-text") || current);
+          }
           if (lastApplied && current === lastApplied && lastAppliedLang === currentLang) return NodeFilter.FILTER_REJECT;
-          if (lastApplied && current !== lastApplied) {
+          if (!sourceHost && lastApplied && current !== lastApplied) {
             textOriginals.set(node, current);
-          } else if (!textOriginals.has(node)) {
+          } else if (!sourceHost && !textOriginals.has(node)) {
             textOriginals.set(node, current);
           }
           const original = textOriginals.get(node);
@@ -450,19 +789,25 @@
     );
 
     let count = 0;
-    while (walker.nextNode() && count < 160) {
+    while (walker.nextNode()) {
       const node = walker.currentNode;
       const original = textOriginals.get(node);
+      const sourceHost = node.parentElement?.closest("[data-i18n-source-text]");
+      const preparedSource = translationSource(
+        original,
+        sourceHost?.dataset.i18nSourceLang || ""
+      );
       jobs.push({
         node,
         item: {
           id: `text-${Date.now()}-${count}`,
           key: "dom-text",
-          sourceLang: "auto",
+          sourceLang: preparedSource.sourceLang,
           targetLang: currentLang,
-          text: original,
+          text: preparedSource.text,
           format: "text",
-          context: "Visible UI text in Study Tools",
+          context: sourceHost?.dataset.i18nContext || "Visible UI text in Study Tools",
+          priority: translationPriority(node.parentElement),
         },
       });
       count += 1;
@@ -475,9 +820,10 @@
     const attrs = ["title", "aria-label", "placeholder"];
     const elements = [...(root || document.body).querySelectorAll("*")];
     elements.forEach((el, index) => {
-      if (shouldSkip(el) || !isVisible(el)) return;
+      const formControl = el.matches("input,textarea,select,option");
+      if ((!formControl && shouldSkip(el)) || !isVisible(el)) return;
       attrs.forEach((attr) => {
-        if (jobs.length >= 120) return;
+        if (attr === "title" && el.getAttribute("data-i18n-title-managed") === "true") return;
         const value = el.getAttribute(attr);
         if (!value || !shouldTranslateText(value)) return;
         const applied = attrApplied.get(el) || {};
@@ -488,17 +834,19 @@
           originals[attr] = value;
           attrOriginals.set(el, originals);
         }
+        const preparedSource = translationSource(originals[attr]);
         jobs.push({
           el,
           attr,
           item: {
             id: `attr-${Date.now()}-${index}-${attr}`,
             key: `dom-attr:${attr}`,
-            sourceLang: "auto",
+            sourceLang: preparedSource.sourceLang,
             targetLang: currentLang,
-            text: originals[attr],
+            text: preparedSource.text,
             format: "text",
             context: `Visible ${attr} attribute in Study Tools`,
+            priority: translationPriority(el, true),
           },
         });
       });
@@ -509,6 +857,7 @@
   async function translateVisible(root) {
     if (!isActive() || translating || !document.body) return;
     const targetLang = currentLang;
+    const runId = ++translationRunId;
     translating = true;
     dirty = false;
     let textJobs = [];
@@ -516,43 +865,141 @@
     try {
       textJobs = collectTextJobs(root || document.body);
       attrJobs = collectAttrJobs(root || document.body);
-      const items = [...textJobs.map((job) => job.item), ...attrJobs.map((job) => job.item)];
+      const items = [...textJobs.map((job) => job.item), ...attrJobs.map((job) => job.item)]
+        .sort((a, b) => (a.priority || 0) - (b.priority || 0));
       if (!items.length) return;
-      const translated = await translateBatch(items);
-      if (!isActive() || currentLang !== targetLang) {
-        dirty = true;
-        return;
-      }
-      textJobs.forEach((job) => {
-        if (!job.node.isConnected) return;
-        const translatedText = translated[job.item.id];
-        if (!translatedText) return;
-        const nextValue = renderTargetText(textOriginals.get(job.node), translatedText);
-        textApplied.set(job.node, nextValue);
-        textAppliedLang.set(job.node, targetLang);
-        job.node.nodeValue = nextValue;
+      const jobsById = new Map([
+        ...textJobs.map((job) => [job.item.id, { type: "text", job }]),
+        ...attrJobs.map((job) => [job.item.id, { type: "attr", job }]),
+      ]);
+      const japaneseCompanions = [];
+      const companionByTargetId = new Map();
+      items.forEach((item) => {
+        const source = normalizeText(item.text);
+        if (
+          item.targetLang === "ja"
+          || staticJapaneseFallback(source)
+          || !/[\u3400-\u9fff]/.test(source)
+        ) {
+          return;
+        }
+        const companion = {
+          ...item,
+          id: `ja-${item.id}`,
+          key: `${item.key}:ja`,
+          targetLang: "ja",
+          context: `${item.context || "Visible UI text"} Japanese companion`,
+        };
+        japaneseCompanions.push(companion);
+        companionByTargetId.set(item.id, companion);
       });
-      attrJobs.forEach((job) => {
+      const targetTranslations = {};
+      const japaneseTranslations = {};
+      const japaneseTextFor = (item) => {
+        const fixed = staticJapaneseFallback(item.text);
+        if (fixed) return fixed;
+        const companion = companionByTargetId.get(item.id);
+        if (!companion) return "";
+        return japaneseTranslations[companion.id] || getCachedTranslation(companion);
+      };
+
+      const applyTextJob = (job, translatedText, japaneseText = "") => {
+        if (!job.node.isConnected) return;
+        const nextValue = translatedText
+          ? renderTargetText(
+              textOriginals.get(job.node),
+              translatedText,
+              job.node.parentElement,
+              { jaText: japaneseText }
+            )
+          : japaneseText
+            ? renderPendingText(japaneseText, job.node.parentElement)
+          : renderPendingText(textOriginals.get(job.node), job.node.parentElement);
+        textApplied.set(job.node, nextValue);
+        textAppliedLang.set(job.node, translatedText ? targetLang : `pending:${targetLang}`);
+        job.node.nodeValue = nextValue;
+      };
+      const applyAttrJob = (job, translatedText, japaneseText = "") => {
         if (!job.el.isConnected) return;
-        const translatedText = translated[job.item.id];
-        if (!translatedText) return;
         const original = (attrOriginals.get(job.el) || {})[job.attr] || job.item.text;
-        const nextValue = renderTargetText(original, translatedText);
+        const nextValue = translatedText
+          ? renderTargetText(original, translatedText, job.el, {
+              attr: job.attr,
+              jaText: japaneseText,
+            })
+          : japaneseText
+            ? japaneseText
+          : renderPendingAttribute(original, job.attr);
         const applied = attrApplied.get(job.el) || {};
         applied[job.attr] = nextValue;
         attrApplied.set(job.el, applied);
         const appliedLang = attrAppliedLang.get(job.el) || {};
-        appliedLang[job.attr] = targetLang;
+        appliedLang[job.attr] = translatedText ? targetLang : `pending:${targetLang}`;
         attrAppliedLang.set(job.el, appliedLang);
         job.el.setAttribute(job.attr, nextValue);
         job.el.setAttribute("data-i18n-attrs", "true");
+      };
+
+      textJobs.forEach((job) => {
+        const cached = getCachedTranslation(job.item);
+        if (cached) targetTranslations[job.item.id] = cached;
+        applyTextJob(job, cached, japaneseTextFor(job.item));
       });
+      attrJobs.forEach((job) => {
+        const cached = getCachedTranslation(job.item);
+        if (cached) targetTranslations[job.item.id] = cached;
+        applyAttrJob(job, cached, japaneseTextFor(job.item));
+      });
+
+      const applyTranslations = (translations) => {
+        if (!translations || !isActive() || currentLang !== targetLang || runId !== translationRunId) return;
+        Object.assign(targetTranslations, translations);
+        Object.entries(translations).forEach(([id, translatedText]) => {
+          const entry = jobsById.get(id);
+          if (!entry) return;
+          const japaneseText = japaneseTextFor(entry.job.item);
+          if (entry.type === "text") {
+            applyTextJob(entry.job, translatedText, japaneseText);
+          } else {
+            applyAttrJob(entry.job, translatedText, japaneseText);
+          }
+        });
+      };
+
+      const applyJapaneseTranslations = (translations) => {
+        if (!translations || !isActive() || currentLang !== targetLang || runId !== translationRunId) return;
+        Object.assign(japaneseTranslations, translations);
+        companionByTargetId.forEach((companion, targetId) => {
+          const japaneseText = translations[companion.id];
+          if (!japaneseText) return;
+          const entry = jobsById.get(targetId);
+          if (!entry) return;
+          const translatedText = targetTranslations[targetId] || getCachedTranslation(entry.job.item);
+          if (entry.type === "text") {
+            applyTextJob(entry.job, translatedText, japaneseText);
+          } else {
+            applyAttrJob(entry.job, translatedText, japaneseText);
+          }
+        });
+      };
+
+      const [translated] = await Promise.all([
+        translateBatch(items, applyTranslations),
+        japaneseCompanions.length
+          ? translateBatch(japaneseCompanions, applyJapaneseTranslations)
+          : Promise.resolve({}),
+      ]);
+      if (!isActive() || currentLang !== targetLang) {
+        dirty = true;
+        return;
+      }
+      applyTranslations(translated);
     } catch (error) {
       showI18nError(error);
     } finally {
+      if (runId !== translationRunId) return;
       translating = false;
       if (dirty) scheduleTranslate();
-      if (isActive() && (textJobs.length >= 160 || attrJobs.length >= 120)) scheduleTranslate();
     }
   }
 
@@ -563,7 +1010,7 @@
       return;
     }
     window.clearTimeout(scanTimer);
-    scanTimer = window.setTimeout(() => translateVisible(root || document.body), 260);
+    scanTimer = window.setTimeout(() => translateVisible(root || document.body), 0);
   }
 
   function updateDocumentState() {
@@ -597,8 +1044,9 @@
     const info = langInfo();
     if (label) label.textContent = isActive() ? info.native : "中日";
     if (button) {
-      button.setAttribute("aria-label", `语言切换: ${info.native}`);
-      button.setAttribute("title", `语言切换: ${info.native}`);
+      const labelText = isActive() ? `${info.native} / 日本語` : info.native;
+      button.setAttribute("aria-label", `Language: ${labelText}`);
+      button.setAttribute("title", `Language: ${labelText}`);
     }
     renderOptions(document.getElementById("language-search-input")?.value || "");
   }
@@ -666,6 +1114,9 @@
   async function setLanguage(code) {
     const next = languageByCode.has(code) ? code : DEFAULT_LANG;
     if (next === currentLang) return;
+    translationRunId += 1;
+    translating = false;
+    dirty = false;
     restoreGenericTranslations();
     currentLang = next;
     localStorage.setItem(STORAGE_KEY, currentLang);
