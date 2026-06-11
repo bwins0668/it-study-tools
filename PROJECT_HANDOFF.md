@@ -1007,3 +1007,20 @@
         *   浏览器抽查情况：本轮未做浏览器抽查，仅完成 Node 读取与静态检查。
 *   当前结论：SG 英文 POC 接入安全复查通过，无 any 阻断风险，允许进入第 9.2 轮。
 *   下一步建议：第 9.2 轮批量扩展 SG 英文包，可直接补齐 Lesson 11-44。
+
+### 2026-06-11 - 第 9.2 轮任务：SG 英文内容语言包批量扩展 Lesson 11-44
+*   任务类型：数据包批量扩展轮
+*   完成内容：
+    *   **科目与包范围**：基于已封口的 SG 英文 POC（Lesson 1-10），本轮批量补全 SG 英文包，将覆盖率从 10/44 扩展到 44/44 = 100%。共新增 Lesson 11-44 的英文 `title` 和 `concept`，仅修改 `data/i18n_content/sg_en.js` 一个文件。
+    *   **内容质量**：每条 entry 的 `title` 基于 `titleZh` 中文标题意译为英文技术术语，`concept` 基于 `conceptZh` 翻译，保留了原有的 Markdown 粗体格式和技术术语（日语术语括号标注）。所有 entry 的 `needsReview` 均为 `true`，`source` 均为 `\"ai-assisted-from-sg-v1\"`，`sourceRef` 精确指向 `data/sg_lessons.js:N:conceptZh`。
+    *   **未修改范围**：未修改 Lesson 1-10 的任何 entry。未修改 `app.js`、`index.html`、SQL 包、IT Passport 包。
+*   检查与测试：
+    *   `node --check data/i18n_content/sg_en.js` 语法校验通过。
+    *   ContentI18n 读取测试：SG Lesson 1-44 所有 `en.title` / `en.concept` 均非空，Coverage 44/44，ALL FIELDS OK。
+    *   SQL 36课多语言包与 IT Passport 85课多语言包回归测试全部通过。
+*   修改文件：
+    *   `PROJECT_HANDOFF.md`
+    *   `data/i18n_content/sg_en.js`（+340 行，Lesson 11-44）
+*   Commit：`9c5e3ed feat(content-i18n): expand SG English lessons 11-44`
+*   当前 SG 英文包状态：**44/44 = 100%，待审计封口**
+*   下一步建议：第 9.3 轮：SG 英文包总审计 + PROJECT_HANDOFF.md 封口记录。
