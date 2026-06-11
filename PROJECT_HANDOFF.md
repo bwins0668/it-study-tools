@@ -1069,3 +1069,23 @@
 *   下一步建议：
     *   **第 9.5 轮**：SG 多语言派生批量补全，将 vi/my/fr 扩展到全 44 课
     *   或先做第 9.4.1 轮 SG 多语言 POC 安全复查
+
+### 2026-06-11 - 第 9.5 轮任务：SG 多语言派生包批量补全
+*   任务类型：数据包批量补全
+*   完成内容：
+    *   基于已封口的 SG 英文基准包，补全 SG 多语言派生包 `sg_vi.js` / `sg_my.js` / `sg_fr.js`。
+    *   将 vi/my/fr 覆盖率从 Lesson 1-3 (POC) 扩展到 Lesson 1-44 (全量)。
+    *   每条包含 title、concept、needsReview: true、source: "ai-assisted-from-en-v1"、sourceRef 指向 sg_en.js 对应 id。
+    *   未修改 `sg_en.js`、未修改 `data/sg_lessons.js`、未修改 `app.js` / `index.html` / `content-i18n.js`、未修改 SQL 和 IT Passport 多语言包。
+*   检查与测试：
+    *   ContentI18n 读取测试：SG vi/my/fr Lesson 1-44 全部返回 title + concept，sg:45 全部 null，zh-CN/ja-JP/default-ja-zh 全部 null。✅
+    *   SQL 36 课四语言包回归：全部正常 ✅
+    *   IT Passport 85 课四语言包回归：全部正常 ✅
+    *   语法检查：17 个关联 JS 文件 node --check 逐一通过 ✅
+    *   快速质量检查：44/44 覆盖、无 sg:45、title 和 concept 均非空、needsReview 全 true、source 和 sourceRef 格式正确、无禁止字段混入、无 Markdown 表格、fenced code block 和 bold 成对闭合、无危险 HTML ✅
+    *   浏览器抽查：本轮未做浏览器抽查，仅完成 Node 读取与静态检查。
+*   当前 SG 多语言包状态：**vi/my/fr 44/44 = 100%，待审计封口**
+*   遗留观察项：
+    *   vi/my/fr 为 AI 派生内容，未来仍需抽样人工校对。
+*   下一步建议：
+    *   **第 9.6 轮**：SG 多语言派生包总审计 + PROJECT_HANDOFF.md 封口记录
