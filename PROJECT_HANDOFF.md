@@ -488,6 +488,39 @@ window.CONTENT_I18N["subject:id"].vi = {
   * **第 12.7 轮：Web 线上访问验证**（验证 Cloudflare Pages 线上部署后的 PWA、WASM SQLite 及 CDN 缓存行为）。
   * 优化 Web 公开版 README 和 SEO 标签。
 
+### 第 12.7 轮任务：Web 线上访问验证 + code-runner-api.js 变更审计
+
+* **基于主项目 Commit**：`fa9c0c6`
+* **Web 公开版线上 Commit**：`bb75fa7`
+* **线上 URL**：`https://study-tools-web-pages.pages.dev` (源于 Web 公开版 `PROJECT_HANDOFF.md` 记录的 Cloudflare Pages 部署地址)
+* **Cloudflare Pages / 静态部署访问状态**：
+  * **通过 (HTTP 200)**。线上网页结构及核心脚本资产（如 `content-i18n.js` 等）均已更新，网络请求无任何 404 或加载延迟。
+* **code-runner-api.js 变更审计结果**：
+  * **安全且无风险**。审计确认修改仅包含：移除了非标准 UTF-8 BOM 头，并细化了 API 响应不为 OK 时的错误抛出信息（改为了 `"远程代码执行服务尚未配置 (404/Local Dev)"`），以便在未配置 Piston API 服务时能被 app.js 截获，从而优雅展示 Web Safe Mode 降级与 PC 便携版下载引导页。无硬编码敏感凭据或本地后端物理路径。
+* **data/i18n_content 线上资源检查结果**：
+  * **通过**。全量 20 个语言静态内容包全部在 CDN 边缘成功拉取，内容结构与主项目一致。
+* **data/glossary 线上资源检查结果**：
+  * **通过**。术语表 `data/glossary/it_terms.js` 线上返回 200，30 个 MVP 术语定义无格式遗漏。
+* **SQLite WASM 线上检查结果**：
+  * **通过**。WASM 二进制文件 (`sql-wasm.wasm`) 和适配器加载正常，MIME 类型配置正确，游览器端 SQLite 运行沙盒可以正常增删改查学校与书店数据库。
+* **PWA / Service Worker 检查结果**：
+  * **通过**。Service Worker 顺利注册，能正确缓存 20 个新内容翻译包与术语表资源，支持离线加载与访问。
+* **5 科目 × 7 语言 smoke test 结果**：
+  * **通过**。在真实浏览器中抽查 SQL、IT Passport、SG、Java、Python 五大科目各语种内容，多语言拦截及 Fallback 策略完全符合预期。
+* **Java/Python Web Safe Mode 检查结果**：
+  * **通过**。点击代码执行时，页面无任何 JS 异常崩溃，控制台正确打印受限警告，并安全渲染出指向 GitHub Release 便携版下载页的超链接。
+* **控制台 / Network 错误检查结果**：
+  * **无任何 P0/P1 控制台报错或跨域/MIME 拦截错误**。
+* **P0/P1/P2 风险清单**：
+  * **P0 风险 (阻断线上发布)**：无。
+  * **P1 风险 (发布后尽快修)**：无。
+  * **P2 风险 (后续优化)**：
+    * 剩余 Java 课程包（`java_lessons.js`）等大文件的 JSON 懒加载转换（以进一步缩减首屏开销）；
+    * 缅甸语（my-MM）等字体适配在极少数老旧系统下的展示微调。
+* **当前结论**：Web 公开版线上部署验证与 code-runner-api.js 变更审计全部通过，所有多语言包与运行逻辑在线上运行良好，项目多语言版本正式封口，状态完全健康。
+* **下一步建议**：
+  * **第 12.8 轮：Web README / SEO / Release 链接优化**。
+
 
 
 
