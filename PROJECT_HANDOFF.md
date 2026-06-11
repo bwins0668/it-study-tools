@@ -922,3 +922,18 @@
 *   当前 IT Passport 英文包状态：**封口修复完成 🔒**
 *   下一步建议：
     *   第 8.5 轮：IT Passport 多语言派生 POC，先做 Lesson 1-3 的 vi/my/fr。
+
+### 2026-06-11 - 第 8.5 轮任务：IT Passport 多语言派生 POC
+*   任务类型：多语言派生 POC 引入轮
+*   完成内容：
+    *   **科目与包范围**：基于已经封口的 IT Passport 英文包 `itpass_en.js`，建立了越南语 (`vi`)、缅甸语 (`my`)、法语 (`fr`) 的多语言派生 POC。
+    *   **新增内容**：创建了 `data/i18n_content/itpass_vi.js`、`data/i18n_content/itpass_my.js`、`data/i18n_content/itpass_fr.js`。每个文件仅包含 Lesson 1-3 的翻译，所有 needsReview 均为 `true`，source 均为 `"ai-assisted-from-en-v1"`，sourceRef 均正确且精确指向 `itpass_en.js` 对应的 `en` 节点。
+    *   **index.html 加载**：修改了 `index.html`，在 `itpass_en.js` 之后、`it_terms.js` 之前顺序引入了 `itpass_vi.js`、`itpass_my.js`、`itpass_fr.js`。
+    *   **未修改范围**：完全没有修改运行时代码（`app.js`、`content-i18n.js` 等），没有修改 `itpass_en.js`、`data/it_passport_lessons.js` 等文件，也没有触碰任何 SQL 多语言包及 Web 公开版项目。
+*   检查与测试：
+    *   **单元与回归测试**：在 Node.js 环境下通过更新后的测试脚本 `test_i18n.js` 进行全量读取测试。IT Passport 越南语/缅甸语/法语的 Lesson 1-3 能够正常解析并返回，Lesson 4 能够正常返回 `null` 触发 fallback 机制；SQL 36课多语言包回归读取测试全数正常通过。
+    *   **质量合规检查**：运行 `check_multilingual_poc_quality.js` 验证，POC 数据 100% 符合规范。无任何 CJK 字符泄漏（对 `vi`/`fr`/`my`），无 any Markdown pipe table 或危险 HTML，fenced code block 与加粗全部闭合，IT 专业术语英文保留规则被正确执行。
+    *   **语法检查**：使用 `node --check` 逐一、单独检查 12 个关联 JavaScript 文件，全部通过。
+    *   **浏览器抽查**：本轮未做浏览器抽查，仅完成 Node 读取与静态检查。
+*   下一步建议：
+    *   第 8.6 轮：批量补全 IT Passport 的 vi/my/fr 派生语言包到 85/85，实现全科目多语言完备覆盖。
