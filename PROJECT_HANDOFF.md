@@ -1316,3 +1316,27 @@
 *   当前 Python 英文覆盖率：**10/255 = 3.9% (POC 阶段)**
 *   下一步建议：
     *   第 11.2 轮：批量扩展 Python 英文包（Lesson 11-255 补齐至 100%）
+
+### 2026-06-11 - 第 11.1.1 轮任务：Python 英文 POC 接入安全复查
+*   任务类型：安全审计与交付质量复查轮
+*   基于 `c620592` 提交进行了安全与完整性双重复查。
+*   **最小接入审计**：复查确认 `app.js` 的修改仅限于 `loadPythonLesson(id)` 方法内部，调用了 `getLessonLocalizedText("python", lesson)`。对 SQL 的 `loadLesson`、IT Passport 的 `loadItPassLesson`、SG 的 `loadSgLesson`、Java 的 `loadJavaLesson` 以及 formatMarkdown 和 ContentI18n 底层核心无任何修改。完全保证了其他科目的隔离安全。
+*   **加载顺序审计**：复查确认 `index.html` 中 `python_en.js` 加载位置正确：在 `java_fr.js` 之后、`assets/js/app.js` 之前，未打乱 SQL/IT Passport/SG/Java 语言包顺序，未改动 UI 及无关脚本。
+*   **python_en.js 结构审计**：
+    *   文件遵循 IIFE 匿名自执行函数 ✅
+    *   仅覆盖 `python:1` 到 `python:10`，不存在 `python:11` ✅
+    *   所有 entry 满足 `needsReview: true`，`source` 均为 `"manual-python-en-v1"` ✅
+    *   `sourceRef` 均正确指向 `data/python_lessons.js:<id>:conceptJa` ✅
+    *   无 quiz / options / analogy / example / code / answer 等禁止字段 ✅
+    *   title 和 concept 均非空，无中文/日文残留 ✅
+*   **语法与静态测试**：
+    *   对 21 个关联 JS 文件的 `node --check` 语法校验已逐一、单独运行，全部通过 ✅
+    *   运行全量 ContentI18n 回归测试，1130/1130 读取通过 ✅
+    *   Python Lesson 1-10 英文解析正常，Lesson 11 返回 null ✅
+    *   zh-CN / ja-JP / default-ja-zh 均正确返回 null ✅
+    *   SQL 36 课四语言包回归全部正常 ✅
+    *   IT Passport 85 课四语言包回归全部正常 ✅
+    *   SG 44 课四语言包回归全部正常 ✅
+    *   Java 115 课四语言包回归全部正常 ✅
+    *   浏览器抽查情况：本轮未做浏览器抽查，仅完成 Node 读取与静态检查。
+*   当前结论：Python 英文 POC 接入安全复查通过，**允许进入第 11.2 轮批量扩展 Python 英文包**
