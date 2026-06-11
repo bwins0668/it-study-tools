@@ -888,3 +888,21 @@
 *   下一步建议：
     *   第 8.4 轮做 IT Passport 英文包总审计与交付质量安全边际校验。
     *   审计通过后再考虑派生 vi/my/fr 或进入 SG 英文基准包建设。
+
+### 2026-06-11 - 第 8.4 轮任务：IT Passport 英文内容语言包总审计
+*   任务类型：数据包总审计与封口
+*   完成内容：
+    *   **审计范围与结论**：基于提交 `4894d04` 进行了 IT Passport 英文内容语言包的最终总审计。审计结论：**通过**，未发现严重或阻断性问题。IT Passport 英文内容包完成封口 🔒。
+    *   **对照原始课件审计**：使用脚本对 `data/i18n_content/itpass_en.js` 与 `data/it_passport_lessons.js` 进行对照审计。确认 85 门原始课件与英文语言包中的 85 个翻译条目（`itpass:1` 至 `itpass:85`）的课程编号前缀（如 `1-01`、`1-02-1`、`10-10` 等）完全对齐，0 错位。`sourceRef` 均正确且精确指向对应 ID。
+    *   **元数据与字段合规性**：确认 `needsReview` 状态全部为 `true`，`source` 均为 `"manual-itpass-en-v1"`。所有翻译条目只包含 `title`、`concept`、`needsReview`、`source`、`sourceRef`，无任何违禁字段（如 `quiz`、`options`、`hint` 等）混入。
+    *   **语法与静态测试**：
+        *   对 9 个关联 JavaScript 文件的 `node --check` 语法校验已逐一、单独运行，全部通过。
+        *   运行 `test_i18n.js` 进行 ContentI18n 级别读取和回退测试，IT Passport Lesson 1-85 英文解析正常，Lesson 86 返回 null，zh-CN/ja-JP 返回 null。SQL 36课 4 语言包回归测试断言全部通过。
+        *   通过 `check_quality.js` 脚本验证，确认 0 格式与质量错误。
+        *   浏览器抽查情况：本轮未做浏览器抽查，仅完成 Node 读取与静态检查。
+*   当前 IT Passport 英文包状态：**封口完成 🔒**
+*   遗留观察项：
+    *   IT Passport 英文为 AI/人工辅助批量生成，未来仍需抽样人工校对。
+    *   在深度质量审计中发现 2 处非阻断性 Markdown 闭合标签瑕疵：Lesson 65 的 concept 中包含 `start to finish**` 多余的两个星号，Lesson 83 的 concept 中包含 `learning and growth."**` 多余的两个星号。由于语法正确且不破坏结构，记录为低风险观察项，未修改 `itpass_en.js` 保证封口纯净度。
+*   下一步建议：
+    *   第 8.5 轮：IT Passport 多语言派生 POC，先做 Lesson 1-3 的 vi/my/fr；或正式进入 SG 英文基准包建设。
