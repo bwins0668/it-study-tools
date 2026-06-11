@@ -580,6 +580,159 @@ window.CONTENT_I18N["subject:id"].vi = {
 * **P2**：语言包懒加载（当前全量预加载）、OG 图片（已存在但未验证社交平台渲染）、版本号动态显示、自动化线上巡检脚本
 * **Round 12 正式闭环**
 
+### Round 13.1：Web 语言包懒加载只读方案审计
+
+* **基于主项目 Commit**：`877f20c`
+* **Web 公开版 Commit**：`a562726`
+* **审计方式**：只读查看 index.html / content-i18n.js / app.js / i18n.js / service-worker.js / manifest.webmanifest
+
+#### 当前语言包加载方式
+
+| 检查项 | 当前状态 | 懒加载影响 |
+|--------|----------|------------|
+| index.html 一次性加载 20 个内容包 | 是。20 个 `<script src="data/i18n_content/*.js">` 同步阻塞加载 | 需要移除 script 标签 |
+| content-i18n.js 依赖 window.CONTENT_I18N 全局对象 | 是。get() 从 `window.CONTENT_I18N["subject:id"]` 读取 | 动态加载后该对象自动填充，无需修改 |
+| app.js 假设内容包已同步加载完成 | 是。getLessonLocalizedText(subject, lesson) 直接调用 ContentI18n.get() | 改为 async 或先加载后 render，当前函数返回 null 容错 |
+| i18n.js 语言切换时访问 ContentI18n | 是。applyLessonTranslation() 内调用 ContentI18n.get()，fallback 到原始课程内容 | 包未加载时自然 fallback，安全 |
+| Service Worker 预缓存 data/i18n_content/*.js | **否**。CORE_ASSETS 不含任何 i18n_content 文件 | 无冲突，懒加载后 SW 自动 runtime 缓存 |
+| Service Worker fetch 策略涉及 /data/ | 是。isStaticAsset() 匹配 `/data/` 路径，采用 stale-while-revalidate | 懒加载后语言包从 SW cache 读取，加速切换 |
+| 20 个语言包总大小 | **~1,858 KB**（最小 23 KB sql_en.js，最大 261 KB python_my.js） | 首屏不加载可节省 1.8 MB 传输 |
+| 首屏必须加载所有科目所有语言 | **否**。仅当前科目当前语言需要；首次切换时才需加载对应包 | 核心优化点 |
+| 哪些包可以延迟加载 | 所有 en/vi/my/fr 包：用户切换语言或选择科目时才需要 | 全部可懒加载 |
+
+#### 语言包大小明细（20 个，合计 ~1,858 KB）
+
+| 科目 | en | vi | my | fr |
+|------|----|----|----|----|----|
+| SQL | 23 KB | 30 KB | 50 KB | 28 KB |
+| IT Passport | 86 KB | 116 KB | 215 KB | 107 KB |
+| SG | 41 KB | 45 KB | 74 KB | 39 KB |
+| Java | 68 KB | 73 KB | 95 KB | 72 KB |
+| Python | 164 KB | 152 KB | 261 KB | 162 KB |
+
+#### 核心数据流（懒加载影响）
+
+```
+index.html (移除 20 script)
+  → content-i18n.js (保持首屏)
+  → app.js (loadLesson → getLessonLocalizedText → ContentI18n.get)
+     → ❌ 若包未加载: ContentI18n.get 返回 null → fallback 原始日文/中文内容 ✓
+  → i18n.js (applyLessonTranslation → ContentI18n.get)
+     → ❌ 若包未加载: 同上 fallback ✓
+```
+
+**关键条件**：app.js 和 i18n.js 已有完整的 fallback 链（→ lesson.titleJa → lesson.titleZh → ""），所以 ContentI18n.get() 返回 null 时不会崩，只是显示原始内容。
+
+#### 推荐懒加载目标
+
+1. 首屏不加载任何 data/i18n_content/*.js
+2. ja-JP / zh-CN / default-ja-zh 保持原始 fallback，无需外置包
+3. 用户选择 en-US / vi-VN / my-MM / fr-FR 时，按需加载对应语言包
+4. 加载粒度：`科目+语言`（如 sql_en.js），不拆到 lesson 级
+5. 已加载的包不重复加载（loadedPacks Set）
+6. 加载失败 → fallback 原始内容，不崩
+
+#### 推荐技术方案
+
+新增模块：在 content-i18n.js 中扩展 `ContentI18n.loadPack(subject, lang)`：
+
+| 模块 | 方案 | 风险 |
+|------|------|------|
+| index.html | 移除 20 个 data/i18n_content/*.js script 标签 | 低。ja/zh 不依赖这些包，en/vi/my/fr 首次使用时动态加载 |
+| content-i18n.js | 扩展 window.ContentI18n 增加 loadPack(subject, lang)：返回 Promise，动态创建 `<script>`，用 loadedPacks Set 去重 | 中。需保持同步 API 不变，新增异步接口 |
+| app.js | loadLesson / loadItPassLesson / loadSgLesson / loadJavaLesson / loadPythonLesson 入口处先 await ContentI18n.loadPack() 再 render；或包未加载时 render fallback 后异步补全 | 中。修改量小但涉及 5 个 load 函数 |
+| i18n.js | setLanguage() 切换语言后，await 加载目标语言所有 5 个科目的包，再触发 refreshI18nForCurrentLesson | 中。en/vi/my/fr 切换时需串行或并行加载 |
+| Service Worker | isStaticAsset() 已覆盖 /data/，runtime 自动缓存；不需修改 SW | 低。SW 不预缓存语言包，懒加载后 SW 自动管理 |
+| PWA 离线 | 首次在线访问过的语言包被 SW 缓存，离线可用；未访问过的语言包离线不可用 | 中。可接受，后续可添加 useLanguagePack API 主动预缓存 |
+| fallback | ContentI18n.get() 返回 null → app.js/i18n.js 已有完整 fallback 链 | 低。现有逻辑天然安全 |
+
+#### 动态加载函数设计
+
+```js
+// ContentI18n.loadPack(subject, lang) → Promise
+// subject: "sql" | "itpass" | "sg" | "java" | "python"
+// lang: "en" | "vi" | "my" | "fr"
+
+ContentI18n.loadPack = function(subject, lang) {
+  var key = subject + ":" + lang;
+  if (loadedPacks.has(key)) return Promise.resolve();
+  loadedPacks.add(key);
+  return new Promise(function(resolve, reject) {
+    var script = document.createElement("script");
+    script.src = "data/i18n_content/" + subject + "_" + lang + ".js";
+    script.onload = resolve;
+    script.onerror = function() {
+      console.warn("ContentI18n pack failed:", subject, lang);
+      resolve(); // 不 reject，防止调用链中断
+    };
+    document.head.appendChild(script);
+  });
+};
+```
+
+语言映射：
+
+| UI 语言 | lang 参数 | 依赖外置包 |
+|----------|-----------|------------|
+| ja-JP | ja | 否（课程源数据） |
+| zh-CN | zh | 否（课程源数据） |
+| default-ja-zh | zh | 否（课程源数据） |
+| en-US | en | 是 |
+| vi-VN | vi | 是 |
+| my-MM | my | 是 |
+| fr-FR | fr | 是 |
+
+#### P0 风险评估
+
+| 风险 | 等级 | 缓解措施 |
+|------|------|----------|
+| 内容包加载失败导致课程空白 | P0 | 现有 fallback 链（→ titleJa → ""）自动兜底，不会空白 |
+| 语言切换后不重新渲染 | P0 | i18n.js 已有 refreshI18nForCurrentLesson；setLanguage 内 await loadPack 后 dispatchEvent |
+| app.js 在包未加载时直接读取 ContentI18n.get 返回 null | P0 | 实际不会崩，getLessonLocalizedText 已有 null guard 且调用方兼容 null |
+| SW 缓存旧 index.html 与新 loader 冲突 | P0 | 低。SW 策略 stale-while-revalidate，新 index.html 不引用旧 script 不会出错 |
+| 离线模式下多语言包不可用 | P0 | 首次在线访问后 SW 自动缓存；从未访问的包离线不可用，fallback 到原始内容 |
+
+#### P1 风险
+
+| 风险 | 缓解措施 |
+|------|----------|
+| 首次切换语言时有短暂加载延迟 | 小包 50-100ms，大包 200-400ms；可添加 loading 指示 |
+| 部分语言包 404 时用户体验不直观 | console.warn + fallback 原始内容；不展示用户可见错误 |
+| PWA 离线多语言体验下降 | 已在首次访问时缓存的包可用；未缓存的 fallback |
+| ContentI18n API 需要扩展 loadPack | 向后兼容，get/has API 不变 |
+
+#### P2 待优化项
+
+- 进一步按 lesson 粒度拆包（当前 ~1.8 MB 全量预加载改按需后已大幅改善）
+- 自动生成语言包 manifest 索引
+- 资源版本号 cache busting（SW ignoreSearch 已缓存策略不变）
+- 构建脚本生成懒加载索引文件
+
+#### Round 13.2 执行建议
+
+1. **备份 Web 公开版**
+2. **修改 index.html**：移除 20 个 data/i18n_content/*.js script 标签
+3. **修改 content-i18n.js**：新增 loadPack(subject, lang) + loadedPacks Set
+4. **修改 app.js**：在 loadLesson / loadItPassLesson / loadSgLesson / loadJavaLesson / loadPythonLesson 中入口处调用 ContentI18n.loadPack()；包加载后异步刷新课程内容
+5. **修改 i18n.js**：setLanguage() 中当目标语言为 en/vi/my/fr 时，调用 loadPack 加载目标语言所有科目的包，再触发 refreshI18nForCurrentLesson
+6. **ja/zh/default-ja-zh fallback 保持不变**
+7. **本地 npm run dev 验证**
+8. **Playwright smoke test**
+9. **线上 Cloudflare Pages 部署验证**
+10. **Web commit + push**
+11. **主项目 PROJECT_HANDOFF.md commit + push**
+
+#### 当前结论
+
+* 懒加载方案安全可行。现有代码对 null ContentI18n 结果已有完整 fallback 链，不会产生 P0 空白或崩溃。
+* 修改范围控制在下表文件内：
+  * `index.html` — 移除 20 个 script 标签
+  * `assets/js/content-i18n.js` — 新增 loadPack + loadedPacks
+  * `assets/js/app.js` — 每个 load*Lesson 入口调用 loadPack
+  * `assets/js/i18n.js` — setLanguage 切换时加载对应语言包
+* Service Worker **不需要修改**，现有 isStaticAsset + stale-while-revalidate 策略已覆盖 /data/ 路径。
+* **可以进入 Round 13.2 懒加载实现**。
+
 
 
 
