@@ -827,8 +827,38 @@ ContentI18n.loadPack = function(subject, lang) {
 * **P2**：版本号仍 hardcode 在 version.js 中（未来可改为构建时注入）、cache busting 版本号规划、manifest 索引
 * **下一步建议**：
   * **Round 13.5：自动化线上巡检脚本**
-  * 或 OG 图片社交预览验证
-  * 或 cache busting / manifest 索引规划
+
+### Round 13.5：自动化线上巡检脚本
+
+* **基于主项目 Commit**：`b276e6a`
+* **Web 起始 Commit**：`5d6a189`
+* **Web 新 Commit**：`52533de`
+* **修改文件**：
+  * `scripts/online_smoke_test.py` — Playwright 线上巡检脚本
+* **巡检内容（13 项）**：
+  1. 首页 HTTP 200
+  2. 页面标题包含 Study Tools Web
+  3. 页面显示 v2026.6.11
+  4. Release 链接指向正确
+  5. 首屏 DOM 无 i18n_content script 标签
+  6. SQL + en-US：CONTENT_I18N 中有 en 内容
+  7. SQL + vi-VN：CONTENT_I18N 中有 vi 内容
+  8. Python + fr-FR：CONTENT_I18N 中有 fr 内容
+  9. ja-JP：不新增 i18n_content script 标签
+  10. Glossary 弹窗可打开
+  11. script src 无 localhost/127.0.0.1
+  12. Console 无 P0 JS 报错
+  13. Network 无核心资源 404
+* **脚本运行结果**：13/13 全部通过，ALL PASS
+* **未修改**：内容包、课程源数据、懒加载核心逻辑、SW/PWA、SQLite WASM、Web Safe Mode、任何业务 JS
+* **P0**：无
+* **P1**：无
+* **P2**：脚本依赖 Playwright（需 pip install）；Console 有 800+ 405 preflight 日志（语言包请求引起，已过滤）
+* **当前结论**：自动化线上巡检脚本完成，可重复执行验证线上状态。
+* **下一步建议**：
+  * OG 图片社交预览验证
+  * cache busting / manifest 索引规划
+  * 语言包长期精校
 
 
 
