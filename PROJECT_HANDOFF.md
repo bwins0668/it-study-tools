@@ -937,3 +937,21 @@
     *   **浏览器抽查**：本轮未做浏览器抽查，仅完成 Node 读取与静态检查。
 *   下一步建议：
     *   第 8.6 轮：批量补全 IT Passport 的 vi/my/fr 派生语言包到 85/85，实现全科目多语言完备覆盖。
+
+### 2026-06-11 - 第 8.6 轮任务：IT Passport 多语言派生包批量补全
+*   任务类型：多语言派生批量覆盖轮
+*   完成内容：
+    *   **科目与包范围**：基于 IT Passport 英文封口包 `itpass_en.js`，将越南语 (`vi`)、缅甸语 (`my`)、法语 (`fr`) 的派生包从 Lesson 1-3 批量补全到了 Lesson 1-85。
+    *   **补全内容**：使用 `TranslatorSubagent` 并发处理翻译，并用 `merge_multilingual.js` 自动整合，完全重写补全了 `data/i18n_content/itpass_vi.js`、`data/i18n_content/itpass_my.js`、`data/i18n_content/itpass_fr.js`。三语言均达到 85/85 = 100% 覆盖。
+    *   **翻译质量与规范**：所有 needsReview 状态均为 `true`，source 均为 `"ai-assisted-from-en-v1"`，sourceRef 格式正确且精确配对。保留了必要的英文 IT 专业术语，无 Markdown 表格，无危险 HTML，fenced code block 与粗体标记全部闭合，并且成功避免了 Lesson 65 / 83 的多余星号问题。
+    *   **未修改范围**：未修改 `itpass_en.js`，未修改原始课程数据 `data/it_passport_lessons.js`，未修改运行时代码及 `index.html`，未修改 SQL 多语言包。
+*   检查与测试：
+    *   **单元与回归测试**：运行更新后的 `test_i18n.js` 进行 ContentI18n 级别读取和回退测试。IT Passport 英文/越南语/缅甸语/法语 1-85 课均可正常获取 title 和 concept，86 课均返回 null 触发 fallback。SQL 36课 4 语言包回归测试断言全部通过。
+    *   **质量合规检查**：运行 `check_multilingual_full_quality.js` 验证，0 errors，0 warnings。格式和语言环境均符合设计规范。
+    *   **语法检查**：使用 `node --check` 逐一、单独检查 12 个关联 JavaScript 文件，全部通过。
+    *   **浏览器抽查**：本轮未做浏览器抽查，仅完成 Node 读取与静态检查。
+*   当前 IT Passport 多语言覆盖率：**85/85 = 100% (封口补全)**
+*   遗留观察项：
+    *   vi/my/fr 派生内容为 AI 翻译，未来可根据需要组织母语人员抽样校对。
+*   下一步建议：
+    *   第 8.7 轮：IT Passport 多语言派生包总审计，或开启 SG 英文基准包建设。
