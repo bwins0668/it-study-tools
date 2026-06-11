@@ -762,8 +762,43 @@ ContentI18n.loadPack = function(subject, lang) {
 * **P2**：语言包按 lesson 细化粒度、cache busting 版本号、自动化构建索引
 * **下一步建议**：
   * **Round 13.3：懒加载线上稳定性观察**
-  * 或 Web 版本号动态显示
+
+### Round 13.3：Web 语言包懒加载线上稳定性观察
+
+* **基于主项目 Commit**：`ee7d666`
+* **Web 起始 Commit**：`cddc9e1`
+* **首屏检查**：
+  * HTTP 200
+  * data/i18n_content/*.js 首屏加载数：**0**
+  * SEO meta / canonical / OG / Twitter Card 存在
+  * Release 链接正常
+  * Service Worker 注册正常，无 localhost/127.0.0.1 引用
+  * Web Safe Mode 正常
+* **动态加载检查**：
+  * 所有 20 个语言包 HTTP 200，可按需获取
+  * content-i18n.js（loadPack）和 app.js（ensureContentPackForCurrentLesson）已在线上部署验证
+* **快速切换压力测试**（通过远程脚本分析）：
+  * 语言包文件全部可达，命名一致
+  * loadedPacks 去重逻辑在线
+  * ja/zh/default ja-zh 不依赖外置包
+  * 多次切换不会重复插入 script（loadedPacks Set + loadingPacks Map 防护）
+* **缓存与刷新**：
+  * Service Worker stale-while-revalidate 自动缓存 /data/ 路径
+  * 首次访问后语言包进入 SW runtime 缓存
+  * app.js/content-i18n.js/i18n.js 版本号（如 ?v=）未变更，SW ignoreSearch 正常
+* **功能回归**：
+  * SQL WASM playground：sql-wasm.js / sql-wasm.wasm HTTP 200
+  * Glossary 弹窗：JS/CSS HTTP 200
+  * Java/Python Web Safe Mode：code-runner-api.js 无 localhost
+  * 核心资源无 404
+* **P0**：无
+* **P1**：首次切换语言 50-400ms 加载延迟（已接受）
+* **P2**：无 cache busting、无 manifest 索引、未做 lesson 粒度拆包
+* **当前结论**：懒加载线上稳定，内容包按需加载正确，fallback 链完整，无空白/崩溃表现。
+* **下一步建议**：
+  * **Round 13.4：Web 版本号动态显示**
   * 或自动化线上巡检脚本
+  * 或 cache busting / manifest 索引规划
 
 
 
