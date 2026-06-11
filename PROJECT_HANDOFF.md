@@ -329,5 +329,25 @@ window.CONTENT_I18N["subject:id"].vi = {
 * **下一步建议**：
   * 可以开始执行第 12.5 轮：Web 公开版同步前只读 diff 与备份规划。
 
+### 第 12.4.1 轮任务：GitHub Release 自动上传补全
+
+* **GitHub CLI (gh) 检查/安装结果**：已安装在 `C:\Program Files\GitHub CLI\gh.exe`，版本为 `2.93.0`。通过将路径添加到临时环境变量成功执行。
+* **gh 登录状态**：已成功登录 `bwins0668` 账号，具备 `repo` 读写权限。
+* **tag 检查结果**：本地与远程均已存在并正确推送 tag `v2026.6.11`。
+* **zip 路径与 SHA256 校验**：
+  * 路径：`E:\项目\sql-learning-hub\backups\Study-Tools-Portable-v2026.6.11.zip`
+  * SHA256：`95229A2507460DA2299E1C8659639EF62AAD7DAB4923CD52E5535DD88F921FE7`
+* **Release 创建与补全结果**：
+  * Release 状态：创建并补全成功。
+  * Asset 上传：`Study-Tools-Portable-v2026.6.11.zip`（301,513,467 字节）确认上传，云端 SHA256 摘要严格匹配。
+  * Release URL：[v2026.6.11 Release](https://github.com/bwins0668/it-study-tools/releases/tag/v2026.6.11)
+* **范围限制确认**：
+  * 未修改源码、内容包与课程源数据。
+  * 未操作 Web 公开版（`E:\项目\sql-learning-hub-web-public`）。
+  * zip 压缩包未提交进 git 仓库。
+* **下一步建议**：
+  * 可以开始执行第 12.5 轮：Web 公开版同步前只读 diff 与备份规划。
+
+
 
 
