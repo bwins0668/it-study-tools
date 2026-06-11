@@ -16,20 +16,20 @@
 
   window.CONTENT_I18N["sql:2"] = {
     en: {
-      title: "02-Retrieving Specific Data with SELECT",
-      concept: "Using the SELECT statement, you can retrieve specific columns from a table.\n\nInstead of the wildcard `*` you used in the previous lesson, you specify column names like `name` or `grade` to get only the data you need.\n\nThis lesson will teach you how to write queries that return exactly the columns you want — no more, no less.",
+      title: "02-Table Structure, Data Types, and Primary Keys",
+      concept: "A table consists of columns and rows.\n\nEach column is assigned a **data type** (such as number, text, or date), and data that does not match this type cannot be inserted.\n\nAdditionally, a **primary key (Primary Key)** is set for a table as a unique identifier to distinguish each row.\n\nIn your school's database, `department_id` serves as the primary key for the `departments_mst` table.",
       needsReview: true,
-      source: "manual-poc-sql-en-v1",
+      source: "manual-sql-en-v2",
       sourceRef: "data/lessons.js:2:conceptJa"
     }
   };
 
   window.CONTENT_I18N["sql:3"] = {
     en: {
-      title: "03-Writing Conditions with WHERE",
-      concept: "The WHERE clause lets you filter rows based on specific conditions.\n\nFor example, you can retrieve only students whose grade is 'A' or whose name starts with a certain letter.\n\nCombining WHERE with comparison operators (`=`, `>`, `<`, `LIKE`) is one of the most powerful features of SQL.\n\nIn this lesson, you will practice narrowing down results to find exactly the data you're looking for.",
+      title: "03-Basic SELECT Syntax",
+      concept: "The most basic way to retrieve data is using the structure: `SELECT column_name FROM table_name;`.\n\nIf you want to retrieve all columns, specify `*` (asterisk) instead of individual column names.\n\nIf you only need specific columns, list their names separated by commas.",
       needsReview: true,
-      source: "manual-poc-sql-en-v1",
+      source: "manual-sql-en-v2",
       sourceRef: "data/lessons.js:3:conceptJa"
     }
   };
@@ -37,7 +37,7 @@
   window.CONTENT_I18N["sql:4"] = {
     en: {
       title: "04-Filtering Rows with WHERE",
-      concept: "To filter data and get only the rows you need, use the **WHERE** clause.\n\nFor example, if you want to find only female students, you would write:\n\n```sql\nSELECT * FROM students_mst WHERE gender = '1';\n```\n\nThe WHERE clause checks each row in the table and keeps only the rows that match the specified condition.\n\nYou can use WHERE with numbers, text, and even dates. The condition can use operators like `=`, `>`, `<`, `>=`, `<=`.",
+      concept: "To filter data and retrieve only the rows you need, use the **WHERE** clause.\n\nYou write it like: `SELECT column_name FROM table_name WHERE condition;`.\n\nFor example, to find only female students (where gender is '1'), you would write:\n\n```sql\nSELECT * FROM students_mst WHERE gender = '1';\n```\n\nWhen specifying text, you must enclose it in single quotes `'`. The condition can check if columns equal, are greater than, or are less than certain values.",
       needsReview: true,
       source: "manual-sql-en-v2",
       sourceRef: "data/lessons.js:4:conceptJa"
