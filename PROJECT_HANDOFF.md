@@ -301,4 +301,33 @@ window.CONTENT_I18N["subject:id"].vi = {
   * 制定了精细文件同步范围（包含 `index.html`、`assets/`、`data/`，排除 `study_ai.db`、`node_modules` 等），采用“先备份、再只读 diff、再复制、再测试、再 push”的安全同步策略。
 * **当前结论**：无 P0 阻断项，无 P1 遗留项，审计完全通过，允许进入正式版打包准备。
 
+### 第 12.4 轮任务：正式版打包 + GitHub Release
+
+* **打包结果**：
+  * **文件名**：`Study-Tools-Portable-v2026.6.11.zip`
+  * **输出路径**：`backups/Study-Tools-Portable-v2026.6.11.zip`
+  * **大小**：`301,513,467` 字节 (~`287.55` MB)
+  * **SHA256**：`95229A2507460DA2299E1C8659639EF62AAD7DAB4923CD52E5535DD88F921FE7`
+* **内容安全审计结果**：
+  * **成功排除**：`.git/`、`node_modules/`、`data/study_ai.db`、`tree.txt`、`scratch/`、`tools/`、`backups/`、`output/` 以及 `.env*` 临时文件。通过对 `tree.txt` 进行了临时重命名重构打包，使其 100% 被安全滤除。
+  * **完整包含**：`index.html`、`assets/`、`data/` (不含db)、`python/`、`jdk/`、`textbooks/`、`README.md`、`Study-Tools.exe`、`启动.bat`、`使用说明.txt` 等。
+* **解压集成冒烟测试**：
+  * **成功通过**。自动在临时目录 `E:\项目\release-test\` 下解压 zip，使用内嵌的独立运行环境成功拉起服务并在 8888 端口运行，使用 Playwright 访问并验证 DOM 数据对齐一致性，测试 100% 成功，并在测试后自动安全删除临时目录。
+* **Git tag 创建与推送**：
+  * **成功推送**：已为 HEAD 节点创建 annotated 标签 `v2026.6.11`，并推送到远程仓库。
+* **GitHub Release 状态**：
+  * **需手动上传**。本机环境未安装 GitHub CLI (`gh` 命令行不可用)，需按以下步骤在浏览器中完成发布包上传：
+    1. 打开 GitHub 仓库的 Releases 页面；
+    2. 点击 "Draft a new release"；
+    3. 选择标签 `v2026.6.11`；
+    4. 标题填写 `Study Tools Portable v2026.6.11`；
+    5. 上传 `backups/Study-Tools-Portable-v2026.6.11.zip`；
+    6. 粘贴 Release Notes 草案；
+    7. 点击 "Publish release"。
+* **未修改源码确认**：
+  * **完全未修改**。核心代码、多语言字典、内容翻译包与课程源数据均 100% 保持未修改状态。Web 公开版目录未进行任何操作。
+* **下一步建议**：
+  * 可以开始执行第 12.5 轮：Web 公开版同步前只读 diff 与备份规划。
+
+
 
