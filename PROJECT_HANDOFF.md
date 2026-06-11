@@ -797,7 +797,37 @@ ContentI18n.loadPack = function(subject, lang) {
 * **当前结论**：懒加载线上稳定，内容包按需加载正确，fallback 链完整，无空白/崩溃表现。
 * **下一步建议**：
   * **Round 13.4：Web 版本号动态显示**
-  * 或自动化线上巡检脚本
+
+### Round 13.4：Web 版本号动态显示
+
+* **基于主项目 Commit**：`b08987e`
+* **Web 起始 Commit**：`cddc9e1`
+* **Web 新 Commit**：`5d6a189`
+* **修改文件**：
+  * `index.html` — 新增 `<script src="assets/js/version.js">`、添加 `data-study-tools-version`、`data-study-tools-desktop-version`、`data-study-tools-release-link` 属性
+  * `assets/js/version.js` — 新增轻量版本元数据模块，无框架依赖、无 app.js 耦合
+* **实现方式**：
+  * `window.STUDY_TOOLS_VERSION` 全局对象存储 webVersion/desktopVersion/releaseUrl/webUrl/stage
+  * `DOMContentLoaded` 时通过 data 属性自动填充版本号和 Release 链接
+  * 现有 hardcode 版本号保留为 fallback，JS 运行时动态覆盖
+  * version.js 在 app.js 之前加载，独立于课程和懒加载逻辑
+* **显示效果**：
+  * 头部原有 Release 链接改为：`Web v2026.6.11 • Windows 完整版 v2026.6.11`
+  * 语义化 data 属性确保未来可通过版本身份统一更新
+* **未修改**：内容包、课程源数据、懒加载核心逻辑、SW/PWA、SQLite WASM、Web Safe Mode、Glossary、CSS（无需额外样式）
+* **本地验证**：node --check 通过，dev server 正常，version.js 内容正确
+* **线上验证**：
+  * Cloudflare Pages 部署成功
+  * version.js HTTP 200，脚本加载顺序正确
+  * 首屏仍不加载 20 个语言包
+  * 动态语言包 HTTP 200
+  * 核心资产全部正常
+* **P0**：无
+* **P1**：无
+* **P2**：版本号仍 hardcode 在 version.js 中（未来可改为构建时注入）、cache busting 版本号规划、manifest 索引
+* **下一步建议**：
+  * **Round 13.5：自动化线上巡检脚本**
+  * 或 OG 图片社交预览验证
   * 或 cache busting / manifest 索引规划
 
 
