@@ -638,6 +638,23 @@
     *   Lesson 1-10 未被破坏 ✅
     *   node --check 全部通过 ✅
 *   commit: `392307e`, push 成功，工作区 clean
-*   当前 SQL 英文覆盖率：**17/36 = 47%**
+*   当前 SQL 英文覆盖率：**24/36 = 67%**
 *   下一步建议：
-    *   **第 7.8 轮** SQL Lesson 18-24 英文包扩展（聚合函数, GROUP BY, HAVING, 数据库设计, INNER/LEFT/RIGHT JOIN, Self JOIN）
+    *   **第 7.9 轮** SQL Lesson 25-30 英文包扩展（子查询, DML: INSERT/UPDATE/DELETE, DDL: CREATE TABLE, DROP TABLE, ALTER TABLE）
+
+### 2026-06-11 - 第 7.8 轮任务：SQL 英文内容语言包 Lesson 18-24 扩展
+*   任务类型：语言包扩展
+*   完成内容：
+    *   修改 `data/i18n_content/sql_en.js`，新增 SQL Lesson 18-24 英文 title + concept
+    *   覆盖：聚合函数, GROUP BY, HAVING, 数据库设计, INNER JOIN, LEFT/RIGHT JOIN, Self JOIN
+    *   每课包含 SQL 示例且格式排版正确
+    *   未修改 data/lessons.js / app.js / content-i18n.js / index.html
+    *   未翻译 quiz / code / playground / past exams
+*   检查：
+    *   ContentI18n 读取测试：Lesson 18-24 en-US → 全部返回 title + concept ✅
+    *   Lesson 25+ / zh-CN / ja-JP → 全部 null ✅
+    *   Lesson 1-17 未被破坏 ✅
+    *   node --check 全部通过 ✅
+*   当前 SQL 英文覆盖率：**24/36 = 67%**
+*   下一步建议：
+    *   **第 7.9 轮** SQL Lesson 25-30 英文包扩展（子查询, DML: INSERT/UPDATE/DELETE, DDL: CREATE TABLE, DROP TABLE, ALTER TABLE）

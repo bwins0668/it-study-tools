@@ -173,4 +173,74 @@
       sourceRef: "data/lessons.js:17:conceptJa"
     }
   };
+
+  window.CONTENT_I18N["sql:18"] = {
+    en: {
+      title: "18-Aggregate Functions: SUM, AVG, COUNT, etc.",
+      concept: "Functions that perform calculations on multiple rows of data together are called **aggregate functions**.\n\n- **COUNT(column)**: Counts the number of rows.\n- **SUM(column)**: Calculates the total value.\n- **AVG(column)**: Calculates the average value.\n- **MAX(column)** / **MIN(column)**: Finds the maximum / minimum value.\n\nUsing aggregate functions allows you to get statistics for the entire group rather than individual rows.",
+      needsReview: true,
+      source: "manual-sql-en-v2",
+      sourceRef: "data/lessons.js:18:conceptJa"
+    }
+  };
+
+  window.CONTENT_I18N["sql:19"] = {
+    en: {
+      title: "19-Grouping Data: GROUP BY",
+      concept: "To divide data into groups and perform aggregations on each group, use the **GROUP BY** clause.\n\nYou write it like:\n\n```sql\nSELECT gender, AVG(age) FROM students GROUP BY gender;\n```\n\nThis allows you to calculate statistics like the \"average age of male students\" and the \"average age of female students\" all at once.",
+      needsReview: true,
+      source: "manual-sql-en-v2",
+      sourceRef: "data/lessons.js:19:conceptJa"
+    }
+  };
+
+  window.CONTENT_I18N["sql:20"] = {
+    en: {
+      title: "20-Filtering Groups: HAVING",
+      concept: "If you want to filter results **after** they have been aggregated by GROUP BY, use the **HAVING** clause instead of WHERE.\n\nThe WHERE clause filters rows **before** they are grouped, while the HAVING clause filters groups **after** they have been grouped.",
+      needsReview: true,
+      source: "manual-sql-en-v2",
+      sourceRef: "data/lessons.js:20:conceptJa"
+    }
+  };
+
+  window.CONTENT_I18N["sql:21"] = {
+    en: {
+      title: "21-Database Design and Normalization",
+      concept: "In database design, data is split into multiple tables to avoid unnecessary duplication and inconsistencies. This process is called **normalization**.\n\nFor example, instead of writing the department name directly in the student table, you only write the \"department ID\" and manage the details in a separate department table.",
+      needsReview: true,
+      source: "manual-sql-en-v2",
+      sourceRef: "data/lessons.js:21:conceptJa"
+    }
+  };
+
+  window.CONTENT_I18N["sql:22"] = {
+    en: {
+      title: "22-Joining Tables: INNER JOIN",
+      concept: "**JOINing** is the process of linking separate tables together to retrieve combined information.\n\nAn **INNER JOIN (internal join)** retrieves only the rows where the common keys match in both tables.\n\nYou write it as:\n\n```sql\nFROM table_A INNER JOIN table_B ON table_A.key = table_B.key\n```",
+      needsReview: true,
+      source: "manual-sql-en-v2",
+      sourceRef: "data/lessons.js:22:conceptJa"
+    }
+  };
+
+  window.CONTENT_I18N["sql:23"] = {
+    en: {
+      title: "23-Joining Tables: LEFT/RIGHT JOIN",
+      concept: "An **OUTER JOIN** keeps all data from one table while joining matching data from another table.\n\n- **LEFT JOIN**: Keeps all data from the table written on the left side of the FROM clause.\n- **RIGHT JOIN**: Keeps all data from the table written on the right side.\n\nIf there is no matching record in the other table, it will be filled with `NULL`.",
+      needsReview: true,
+      source: "manual-sql-en-v2",
+      sourceRef: "data/lessons.js:23:conceptJa"
+    }
+  };
+
+  window.CONTENT_I18N["sql:24"] = {
+    en: {
+      title: "24-Self Joins and Multiple Joins",
+      concept: "Joining a table to itself is called a **self join**.\n\nThis is useful when you want to extract related pairs from the same table.\n\nYou assign aliases (temporary names) like `students_mst AS s1` and treat it as if it were a separate table.",
+      needsReview: true,
+      source: "manual-sql-en-v2",
+      sourceRef: "data/lessons.js:24:conceptJa"
+    }
+  };
 })();
