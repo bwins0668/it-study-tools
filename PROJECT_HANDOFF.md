@@ -1436,3 +1436,35 @@
 *   下一步建议：
     *   第 11.5 轮：Python 多语言派生包批量补全，将 vi/my/fr 扩展到全 255 课
     *   或先做 Python 多语言 POC 安全复查
+
+### 2026-06-11 - 第 11.5 轮任务：Python 多语言派生包批量补全
+*   任务类型：多语言派生批量扩展轮
+*   完成内容：
+    *   **科目与包范围**：基于 Python 英文封口包 `python_en.js`，将 vi/my/fr 派生包从 Lesson 1-3（POC）批量扩展至 Lesson 1-255（全量）。
+    *   补全 `data/i18n_content/python_vi.js`：Lesson 4-255 越南语（分批 4-40/41-80/81-130/131-200/201-255）
+    *   补全 `data/i18n_content/python_my.js`：Lesson 4-255 缅甸语（分批同 vi）
+    *   补全 `data/i18n_content/python_fr.js`：Lesson 4-255 法语（fr 写入过程中部分完成，由 fr_agent 完成 61-80，后续 81-115/116-170/171-255）
+    *   所有派生内容仅包含 `.vi` / `.my` / `.fr`，不覆盖 `.en` 层。
+    *   未修改 `python_en.js`、`data/python_lessons.js`、`app.js`、`index.html`、`content-i18n.js` 以及 SQL/IT Passport/SG/Java 的多语言包。
+*   检查与测试：
+    *   ContentI18n 读取测试：Python vi/my/fr Lesson 1-255 全部返回 title + concept，Lesson 256 返回 null ✅
+    *   Python 元数据检查：needsReview 全部 true，source 全部 ai-assisted-from-en-v1 ✅
+    *   SQL 36 课四语言包回归：全部正常 ✅
+    *   IT Passport 85 课四语言包回归：全部正常 ✅
+    *   SG 44 课四语言包回归：全部正常 ✅
+    *   Java 115 课四语言包回归：全部正常 ✅
+    *   语法检查：24 个关联 JS 文件 node --check 逐一通过 ✅
+    *   快速质量检查：无禁止字段混入、无跨语言污染、无 Markdown 表格 ✅
+    *   浏览器抽查：本轮未做浏览器抽查，仅完成 Node 读取与静态检查。
+*   修改文件：
+    *   `PROJECT_HANDOFF.md`
+    *   `data/i18n_content/python_vi.js`
+    *   `data/i18n_content/python_my.js`
+    *   `data/i18n_content/python_fr.js`
+*   当前 Python 多语言包状态：**vi/my/fr 255/255 = 100%，待审计封口**
+*   遗留观察项：
+    *   vi/my/fr 为 AI 派生内容（`ai-assisted-from-en-v1`），未来仍需抽样人工校对。
+    *   python_fr.js 在补全过程中曾出现写入中断，通过缩小批次代理继续完成。
+*   下一步建议：
+    *   第 11.6 轮：Python 多语言派生包总审计 + PROJECT_HANDOFF.md 封口记录
+    *   审计通过后全科内容语言包闭环
