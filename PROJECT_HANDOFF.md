@@ -270,3 +270,35 @@ window.CONTENT_I18N["subject:id"].vi = {
 * **下一步建议**：
   * 可直接进入第 12.3 轮 Release 前的只读最终审计，之后即可打正式发布包，最后规划 Web 版同步事宜。
 
+### 第 12.3 轮任务：Release 前只读审计
+
+* **审计状态与结果**：
+  * **Git 状态**：工作区 100% clean，且 main 分支与远程 origin/main 完全同步（最新提交为 `931a7f1`）。
+  * **Release 文件审计**：确认项目拥有便携版的主启动入口 `Study-Tools.exe`，备份启动脚本 `启动.bat`，以及 `package.json`（脚本为 `"dev": "npx -y live-server"`）、`使用说明.txt`、`可用版本说明.txt` 和 `AI模块使用说明.md`。无 `package-lock.json` 或 `vite.config.js`，运行模式为本地轻量静态 HTTP 服务 + 后端 API 沙箱代理。
+  * **敏感/不应发布文件审计**：
+    * 本地开发数据库 `data/study_ai.db` 存在但未被 Git 跟踪（已加入 `.gitignore`）。
+    * 本地开发日志及临时脚本（如 `_fix.py`、`_fix2.py` 等）已被列入排除清单。
+    * 构建临时目录 `output/` 及 `backups/` 均已被 Git 忽略并由打包脚本排除。
+  * **打包与运行方式审计**：
+    * 运行高度依赖 Python 后端进程 `server.py`，负责提供沙箱运行及 CBT 考试数据存取 API。
+    * 离线可用性完备。除 AI 导师与 UI 自动 fallback 翻译外，其他核心课程、打字、沙盒、考试全量支持离线闭环使用。
+    * `index.html` 无法在 `file:///` 协议下直接拉起运行（由于跨域与后端 API 缺失限制），必须通过 `Study-Tools.exe` / `启动.bat` 打开。
+  * **正式版功能完整性复查**：
+    * 已通过 `node --check` 检查 20 个内容翻译文件与核心运行时 JS，语法 100% 正常。
+    * `ContentI18n` 2140 个内容入口读取测试完美通过。
+    * Playwright 浏览器端 105 个关键断点烟雾测试全部通过，控制台无 JS 报错。
+* **P0/P1/P2 风险清单**：
+  * **P0 (阻断项)**: 无。
+  * **P1 (发布前建议修)**: 无。README、使用说明等已与最新版本保持完全同步一致。
+  * **P2 (后续优化)**: 长期词汇润色、UI 微调、Web 公开版同步。
+* **Release 包建议方案**：
+  * **压缩包命名**：`Study-Tools-Portable-v2026.6.9.zip`。
+  * **包含内容**：`index.html`、`assets/`、`data/` (不含db)、`python/`、`jdk/`、`textbooks/`、`README.md`、`Study-Tools.exe`、`启动.bat`、`使用说明.txt` 等。
+  * **排除内容**：`.git/`、`data/study_ai.db`、`tree.txt`、`scratch/`、`tools/`、`backups/`、`output/` 等。
+  * **发布方案**：本地运行 `python tools/create_zip.py` 生成压缩包，在 GitHub 创建对应 Tag `v2026.6.9` 的 Release 并上传压缩包。
+* **Web 公开版同步规划**：
+  * 确认本地 `E:\项目\sql-learning-hub-web-public` 目录存在。
+  * 制定了精细文件同步范围（包含 `index.html`、`assets/`、`data/`，排除 `study_ai.db`、`node_modules` 等），采用“先备份、再只读 diff、再复制、再测试、再 push”的安全同步策略。
+* **当前结论**：无 P0 阻断项，无 P1 遗留项，审计完全通过，允许进入正式版打包准备。
+
+
