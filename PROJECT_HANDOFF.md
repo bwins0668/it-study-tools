@@ -246,3 +246,27 @@ window.CONTENT_I18N["subject:id"].vi = {
     1. 母语校对：`needsReview: true` 仍保留，期待未来母语级别精细化润色。
     2. 缅甸语（my-MM）在旧系统的字体兼容性问题。
 * **当前结论**：项目级总审计与浏览器抽查全量通过，可以进入 Release 前审计。下一步建议进行第 12.2 轮 Release 前只读审计。
+
+### 第 12.2 轮任务：正式版前 P1 修复优化
+
+* **修复范围与内容**：
+  * **ContentI18n 静态包优先**：在 `assets/js/i18n.js` 的 `applyLessonTranslation` 函数中，对当前语言为原生语言 (`ja-JP` / `zh-CN` / `default-ja-zh`) 以及在外置静态包已覆盖的语言下，实现了高优先级拦截与提前 return 机制，不调用也不再触发后端 AI 翻译服务，彻底杜绝了动态覆盖 DOM 及请求超时的问题。
+  * **title/body 语言对齐**：解决了 `applyLessonTranslation` 函数中对 title 和 concept body 元素的目标语/源语（中/日）变量 diagonal 交叉绑定的缺陷，使得 `titleTargetEl` / `conceptTargetEl` 统一对应目标语，`titleJaEl` / `conceptJaEl` 统一对应原始日文，实现完美区域视觉对齐。
+* **文件修改清单**：
+  * [i18n.js](file:///E:/项目/sql-learning-hub/assets/js/i18n.js) (修改 `applyLessonTranslation` 逻辑)
+* **未修改范围确认**：
+  * 严禁修改的所有内容包、课程源数据、`index.html` 以及 `content-i18n.js` 保持 100% 原始未动。
+  * 严禁操作的 Web 公开版文件夹 `E:\项目\sql-learning-hub-web-public` 保持未动。
+* **node --check 结果**：
+  * **全部通过**。对核心 JS 文件及 20 个内容包翻译文件（5 科目 × 4 语言）进行了 Node.js 语法静态检查，结果无任何报错。
+* **ContentI18n 全量回归测试**：
+  * **100% 通过**。回归覆盖 5 个科目、所有已配置的派生语言（en, vi, my, fr）共计 2140 条内容入口，读取无遗漏，超出边界返回 `null`，且 ja/zh/default-ja-zh 返回 `null` 安全走 fallback 逻辑。
+* **浏览器/Playwright 抽查结果**：
+  * **100% 通过**。使用 Chrome 无头浏览器跑完 7 语言 × 5 科目 × 各 3 节抽查课，共计 105 个关键断点校验，显示内容与对应语言包/源数据完全契合，未调用任何课程内容翻译的 API，控制台无致命 JS 异常。
+* **P0/P1/P2 当前状态**：
+  * P0 阻断项：无
+  * P1 建议修（正式版前）：全部解决并关闭
+  * P2 建议修：保留（母语校对、特殊小语种字体等，均作为后续长期维护迭代项）
+* **下一步建议**：
+  * 可直接进入第 12.3 轮 Release 前的只读最终审计，之后即可打正式发布包，最后规划 Web 版同步事宜。
+

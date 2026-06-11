@@ -683,6 +683,15 @@
     if (targetHead) targetHead.innerHTML = `<i class="fa-solid fa-language"></i> Explanation (${info.native})`;
   }
 
+  function getActiveSubject() {
+    if (document.getElementById("subject-tab-sql")?.classList.contains("active")) return "sql";
+    if (document.getElementById("subject-tab-itpass")?.classList.contains("active")) return "itpass";
+    if (document.getElementById("subject-tab-java")?.classList.contains("active")) return "java";
+    if (document.getElementById("subject-tab-sg")?.classList.contains("active")) return "sg";
+    if (document.getElementById("subject-tab-python")?.classList.contains("active")) return "python";
+    return null;
+  }
+
   async function applyLessonTranslation(lesson) {
     if (!lesson) return;
     markManaged();
@@ -698,11 +707,32 @@
     titleJaEl.textContent = lesson.titleJa || "";
     conceptJaEl.innerHTML = renderOriginalConcept(lesson.conceptJa || "");
 
-    if (!isActive()) {
-      applyLessonTargetLayout(false);
-      titleTargetEl.textContent = lesson.titleZh || "";
-      conceptTargetEl.innerHTML = renderOriginalConcept(lesson.conceptZh || "");
+    const normLang = normalizeLanguageCode(currentLang);
+    if (normLang === "ja-JP" || normLang === "zh-CN" || normLang === "default-ja-zh") {
+      applyLessonTargetLayout(normLang !== "default-ja-zh");
+      if (normLang === "ja-JP") {
+        titleTargetEl.textContent = lesson.titleJa || "";
+        conceptTargetEl.innerHTML = renderOriginalConcept(lesson.conceptJa || "");
+      } else {
+        titleTargetEl.textContent = lesson.titleZh || "";
+        conceptTargetEl.innerHTML = renderOriginalConcept(lesson.conceptZh || "");
+      }
+      titleJaEl.textContent = lesson.titleJa || "";
+      conceptJaEl.innerHTML = renderOriginalConcept(lesson.conceptJa || "");
       return;
+    }
+
+    // Prefer static ContentI18n package content if available
+    const subject = getActiveSubject();
+    if (subject && window.ContentI18n && typeof window.ContentI18n.get === "function") {
+      const localized = window.ContentI18n.get(subject, lesson.id, currentLang);
+      if (localized && (localized.title || localized.concept)) {
+        titleTargetEl.textContent = localized.title || lesson.titleZh || lesson.titleJa || "";
+        conceptTargetEl.innerHTML = renderOriginalConcept(localized.concept || lesson.conceptZh || lesson.conceptJa || "");
+        titleJaEl.textContent = lesson.titleJa || "";
+        conceptJaEl.innerHTML = renderOriginalConcept(lesson.conceptJa || "");
+        return;
+      }
     }
 
     const titleItem = {
@@ -727,16 +757,16 @@
     const targetLangAtStart = currentLang;
     const cachedTitle = getCachedTranslation(titleItem);
     const cachedConcept = getCachedTranslation(conceptItem);
-    titleJaEl.textContent = cachedTitle || lesson.titleZh || lesson.titleJa || "";
-    titleTargetEl.textContent = lesson.titleJa || "";
+    titleTargetEl.textContent = cachedTitle || lesson.titleZh || lesson.titleJa || "";
+    titleJaEl.textContent = lesson.titleJa || "";
     conceptTargetEl.innerHTML = sanitizeHtml(cachedConcept || renderOriginalConcept(lesson.conceptZh || lesson.conceptJa || ""));
 
     try {
       const translated = await translateBatch([titleItem, conceptItem]);
       if (!isActive() || currentLang !== targetLangAtStart) return;
       const translatedTitle = translated["lesson-title"] || lesson.titleZh || lesson.titleJa || "";
-      titleJaEl.textContent = translatedTitle;
-      titleTargetEl.textContent = lesson.titleJa || "";
+      titleTargetEl.textContent = translatedTitle;
+      titleJaEl.textContent = lesson.titleJa || "";
       conceptTargetEl.innerHTML = sanitizeHtml(translated["lesson-concept"] || renderOriginalConcept(lesson.conceptZh || ""));
     } catch (error) {
       showI18nError(error);
