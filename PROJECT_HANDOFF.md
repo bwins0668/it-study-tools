@@ -1134,5 +1134,26 @@
     *   `data/i18n_content/java_en.js`
 *   当前 Java 英文覆盖率：**10/32 = 31% (POC 阶段)**
 *   下一步建议：
-    *   第 10.2 轮：批量扩展 Java 英文包（Lesson 11-32 补齐至 100%）
-    *   每批可按 20 或 30 课推进，但 Java 只剩 22 课，建议一次补齐到全量
+    *   第 10.2 轮：批量扩展 Java 英文包（Lesson 11-115 补齐至 100%）
+
+### 2026-06-11 - 第 10.2 轮任务：Java 英文内容语言包批量补全（Lesson 11-115）
+*   任务类型：数据包批量扩展轮
+*   完成内容：
+    *   **科目与包范围**：基于已封口的 Java 英文 POC（Lesson 1-10），本轮批量补全 Java 英文包，将覆盖率从 10/115 扩展到 115/115 = 100%。共新增 Lesson 11-115 的英文 `title` 和 `concept`，仅修改 `data/i18n_content/java_en.js` 一个文件。
+    *   **内容质量**：每条 entry 的英文 `title` 和 `concept` 基于 `conceptJa` 日文原文翻译，保留核心 Java 技术术语（class, object, method, variable, type, JVM, inheritance, interface, ArrayList 等）。所有 entry 的 `needsReview` 均为 `true`，`source` 均为 `"manual-java-en-v1"`，`sourceRef` 精确指向 `data/java_lessons.js:<id>:conceptJa`。
+    *   **未修改范围**：未修改 Lesson 1-10 的任何 entry。未修改 `app.js`、`index.html`、SQL 包、IT Passport 包、SG 包。
+*   检查与测试：
+    *   **语法检查**：17 个关联 JS 文件 `node --check` 逐一通过 ✅
+    *   **ContentI18n 读取测试**：Java Lesson 1-115 英文全部返回 title + concept，Lesson 116 返回 null；zh-CN / ja-JP / default-ja-zh 查询均正确返回 null ✅
+    *   **SQL 回归测试**：SQL 36 课四语言包回归全部正常 ✅
+    *   **IT Passport 回归测试**：IT Passport 85 课四语言包回归全部正常 ✅
+    *   **SG 回归测试**：SG 44 课四语言包回归全部正常 ✅
+    *   **合计**：775/775 ContentI18n 读取通过 ✅
+    *   **浏览器抽查**：本轮未做浏览器抽查，仅完成 Node 读取与静态检查。
+*   修改文件：
+    *   `PROJECT_HANDOFF.md`
+    *   `data/i18n_content/java_en.js`
+*   当前 Java 英文覆盖率：**115/115 = 100%（封口待审计）**
+*   下一步建议：
+    *   第 10.3 轮：Java 英文包总审计 + PROJECT_HANDOFF.md 封口记录
+    *   或直接进入 **Python 英文基准包建设**
