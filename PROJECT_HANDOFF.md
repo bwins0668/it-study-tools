@@ -856,9 +856,59 @@ ContentI18n.loadPack = function(subject, lang) {
 * **P2**：脚本依赖 Playwright（需 pip install）；Console 有 800+ 405 preflight 日志（语言包请求引起，已过滤）
 * **当前结论**：自动化线上巡检脚本完成，可重复执行验证线上状态。
 * **下一步建议**：
-  * OG 图片社交预览验证
-  * cache busting / manifest 索引规划
-  * 语言包长期精校
+  * **Round 13.6：OG 图片 / 社交预览验证 + 405 preflight 审计**
+
+### Round 13.6：OG 图片 / 社交预览验证 + 405 preflight 日志来源只读审计
+
+* **基于主项目 Commit**：`70f7e5e`
+* **Web Commit**：`52533de`
+
+#### SEO / OG / Twitter Card 审计
+
+| 项目 | 当前值 | 存在 | 风险 |
+|------|--------|------|------|
+| title | Study Tools Web - SQL / IT Passport / SG / Java / Python Learning Portal | 是 | 低 |
+| meta description | A multilingual web learning tool... | 是 | 低 |
+| canonical | https://study-tools-web-pages.pages.dev/ | 是 | 低 |
+| og:title | Study Tools Web - Multilingual IT Learning Portal | 是 | 低（与 title 略有差异） |
+| og:description | An interactive multilingual learning tool... | 是 | 低 |
+| og:type | website | 是 | 低 |
+| og:url | https://study-tools-web-pages.pages.dev/ | 是 | 低 |
+| og:image | https://study-tools-web-pages.pages.dev/assets/images/icons/icon-512x512.png | 是 | 中 — 使用 icon 而非定制社交卡片 |
+| twitter:card | summary | 是 | 低 |
+| twitter:title | Study Tools Web - Multilingual IT Learning Portal | 是 | 低 |
+| twitter:description | An interactive multilingual learning tool... | 是 | 低 |
+| twitter:image | https://study-tools-web-pages.pages.dev/assets/images/icons/icon-192x192.png | 是 | 中 — 同上 |
+* **验证**：og:image（512x512 PNG）HTTP 200，twitter:image（192x192 PNG）HTTP 200，均为绝对线上 URL
+* **图片优化空间**：当前使用 app icon 作为分享图，非定制 1200×630 OG 卡片
+
+#### 405 preflight 日志来源审计
+
+* **来源**：`i18n.js` 第 496 行 — `fetch("/api/i18n/translate")` AI 自动翻译接口
+* **触发场景**：`translateVisible()` 被 `scheduleTranslate()` 调用，而 `scheduleTranslate()` 在 `setLanguage`、`startObserver`、`init` 等处均会触发
+* **原因**：Web 公开版没有部署 `functions/api/i18n/translate` 函数（仅部署了 `functions/api/execute.js`），所以每次 POST 请求返回 Cloudflare Pages 的 405 Method Not Allowed
+* **次数**：约 800+ 次，因 MutationObserver 反复触发 `scheduleTranslate`，i18n.js 每次捕捉 DOM 变更就会重试翻译
+* **影响判断**：
+  * 不会影响页面功能（`translateBatch` 捕获异常后调用 `friendlyI18nError` 静默处理）
+  * 不会导致页面卡死（有 cooldown 机制，`toastCooldown` 8 秒）
+  * 不会影响用户（失败后 fallback 到默认中日显示）
+  * Cloudflare Pages 不会因重复请求收费
+  * **P2 级别噪音**
+
+| 来源 | 请求 | 原因 | 风险 | 建议 |
+|------|------|------|------|------|
+| i18n.js:496 | POST /api/i18n/translate | 无对应 functions，每次返回 405 | P2 | 方案A：添加 `onRequestOptions` 和空 `onRequestPost` 返回 503；方案B：仅在 `getAiConfig()` 有 API key 时才发起请求；方案C：脚本中过滤此噪音 |
+| smoke test | Console error | 842 条中 839 条是 405 | P2 | 已在脚本中过滤 `"status of 405"` |
+| MutationObserver | 反复触发 scheduleTranslate | DOM 变更 → translateVisible → fetch | P2 | i18n.js 已有 cooldown 和 desistBackoff 限制频率 |
+* **online_smoke_test.py 运行**：13/13 PASS
+* **P0**：无
+* **P1**：无
+* **P2**：OG 图片使用 app icon 非定制社交卡片；405 preflight 噪音约 800+ 条；脚本依赖 Playwright
+* **当前结论**：OG/Twitter Card 配置完整且线上可访问，图片资源 HTTP 200；405 preflight 来自 i18n.js AI 翻译接口缺少后端函数，不影响页面功能，为 P2 噪音。
+* **下一步建议**：
+  * 如需定制 OG 卡片：Round 13.7 添加 1200×630 OG 图片
+  * 如需消除 405：Round 13.7 添加空 i18n/translate functions 或在 i18n.js 中无 API key 时跳过请求
+  * 或直接进入 cache busting / manifest 索引规划
 
 
 
