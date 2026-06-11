@@ -906,3 +906,19 @@
     *   在深度质量审计中发现 2 处非阻断性 Markdown 闭合标签瑕疵：Lesson 65 的 concept 中包含 `start to finish**` 多余的两个星号，Lesson 83 的 concept 中包含 `learning and growth."**` 多余的两个星号。由于语法正确且不破坏结构，记录为低风险观察项，未修改 `itpass_en.js` 保证封口纯净度。
 *   下一步建议：
     *   第 8.5 轮：IT Passport 多语言派生 POC，先做 Lesson 1-3 的 vi/my/fr；或正式进入 SG 英文基准包建设。
+
+### 2026-06-11 - 第 8.4.1 轮任务：修复 IT Passport 英文包 Markdown 双星号微瑕疵
+*   任务类型：数据包微修复与最终封口
+*   完成内容：
+    *   **基于第 8.4 总审计发现的问题进行小修复**。
+    *   **精修位置**：
+        *   修改了 `data/i18n_content/itpass_en.js`，移除了 Lesson 65 concept 正文第 2 条末尾多余的 `**`（`start to finish**.` ➡️ `start to finish.`）。
+        *   修改了 `data/i18n_content/itpass_en.js`，移除了 Lesson 83 concept 正文第 1 条末尾多余的 `**`（`learning and growth."**` ➡️ `learning and growth."`）。
+    *   **审计与测试验证**：
+        *   对 9 个关联 JavaScript 文件的 `node --check` 语法校验已逐一、单独运行，全部通过。
+        *   运行 `test_i18n.js` 进行 ContentI18n 级别读取和回退测试，IT Passport Lesson 1-85 英文解析正常，Lesson 86 返回 null，zh-CN/ja-JP 返回 null。SQL 36课 4 语言包回归测试断言全部通过。
+        *   通过 `check_quality.js` 和增强版 `audit_itpass_quality.js` 脚本验证，确认 0 格式、0 语法与 0 质量错误，加粗闭合平衡检查完全通过。
+    *   **未修改范围**：未改变课程翻译含义，未修改 `assets/js/app.js`、`index.html`、`assets/js/content-i18n.js`，未修改原始课程数据 `data/it_passport_lessons.js`，也完全没有修改 any SQL 多语言包。
+*   当前 IT Passport 英文包状态：**封口修复完成 🔒**
+*   下一步建议：
+    *   第 8.5 轮：IT Passport 多语言派生 POC，先做 Lesson 1-3 的 vi/my/fr。
