@@ -1110,3 +1110,29 @@
 *   下一步建议：
     *   进入 **Java 英文基准包建设**
     *   或进入 **Python 英文基准包建设**
+
+### 2026-06-11 - 第 10.1 轮任务：Java 英文内容语言包 POC
+*   任务类型：数据包 POC 与前端最小接入轮
+*   完成内容：
+    *   **科目与包范围**：在 SQL / IT Passport / SG 多语言线均已封口后进入 Java 阶段。为 Java 建立了英文内容语言包 POC，新建 `data/i18n_content/java_en.js`，覆盖 Java Lesson 1-10 的 `title` 和 `concept`。使用的真实 subject key 为 `"java"`。
+    *   **前端最小接入**：修改了 `assets/js/app.js` 中的 `loadJavaLesson(id)` 函数，在加载课件时调用了 `getLessonLocalizedText("java", lesson)`。如果能够成功匹配，则使用英文 title/concept 替换原生日文内容；否则（如当前语言非 en-US，或当前课时超出 POC 范围）安全自动 fallback 到原始日文课程正文。属于 Java 科目的最小化接入，对 SQL / IT Passport / SG / Python 的渲染逻辑、多语言核心以及 formatMarkdown 未做任何修改。
+    *   **加载顺序引入**：修改了 `index.html`，在 `sg_fr.js` 之后、`it_terms.js` 之前顺序引入了 `data/i18n_content/java_en.js` 脚本。
+    *   **未修改范围**：未修改 `data/java_lessons.js` 原始课件数据，未翻译任何 quiz / options / playgroundTask / analogy / example / code / answer / past exams 字段，未修改 SQL / IT Passport / SG 的多语言包，未操作 Web 公开版。
+*   检查与测试：
+    *   **语法检查**：17 个关联 JS 文件 `node --check` 逐一通过 ✅
+    *   **ContentI18n 读取测试**：Java Lesson 1-10 英文全部返回 title + concept，Lesson 11 返回 null；zh-CN / ja-JP / default-ja-zh 查询均正确返回 null ✅
+    *   **SQL 回归测试**：SQL 36 课四语言包回归全部正常 ✅
+    *   **IT Passport 回归测试**：IT Passport 85 课四语言包回归全部正常 ✅
+    *   **SG 回归测试**：SG 44 课四语言包回归全部正常 ✅
+    *   **合计**：680/680 ContentI18n 读取通过 ✅
+    *   **浏览器抽查**：本轮未做浏览器抽查，仅完成 Node 读取与静态检查。
+*   修改文件：
+    *   `PROJECT_HANDOFF.md`
+    *   `index.html`
+    *   `assets/js/app.js`
+*   新增文件：
+    *   `data/i18n_content/java_en.js`
+*   当前 Java 英文覆盖率：**10/32 = 31% (POC 阶段)**
+*   下一步建议：
+    *   第 10.2 轮：批量扩展 Java 英文包（Lesson 11-32 补齐至 100%）
+    *   每批可按 20 或 30 课推进，但 Java 只剩 22 课，建议一次补齐到全量

@@ -993,11 +993,14 @@ function loadJavaLesson(id) {
   
   currentJavaLessonId = id;
 
+  // Resolve localized title/concept for current subject
+  const localized = getLessonLocalizedText("java", lesson);
+
   // Header
   const badge = document.getElementById("lesson-section-badge");
   badge.innerText = `${lesson.book} — 第 ${lesson.subSectionId} 节`;
   badge.className = "lesson-badge java-badge";
-  document.getElementById("lesson-title-ja").innerText = lesson.titleJa;
+  document.getElementById("lesson-title-ja").innerText = localized && localized.title ? localized.title : lesson.titleJa;
   document.getElementById("lesson-title-zh").innerText = lesson.titleZh;
   
   // 启用“显示原书 PDF”按钮！
@@ -1011,7 +1014,11 @@ function loadJavaLesson(id) {
   }
 
   // Concept Body
-  document.getElementById("concept-ja-body").innerHTML = lesson.conceptJa;
+  if (localized && localized.concept) {
+    document.getElementById("concept-ja-body").innerHTML = formatMarkdown(localized.concept);
+  } else {
+    document.getElementById("concept-ja-body").innerHTML = lesson.conceptJa;
+  }
   document.getElementById("concept-zh-body").innerHTML = lesson.conceptZh;
 
   // Analogy
