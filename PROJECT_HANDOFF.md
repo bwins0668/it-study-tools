@@ -521,6 +521,42 @@ window.CONTENT_I18N["subject:id"].vi = {
 * **下一步建议**：
   * **第 12.8 轮：Web README / SEO / Release 链接优化**。
 
+### 第 12.8 轮任务：Web README / SEO / Release 链接优化
+
+* **基于主项目 Commit**：`d7f9d0b`
+* **Web 公开版起始 Commit**：`bb75fa7`
+* **修改 Web 文件**：
+  * `README.md` (升级为全新的项目架构展示与便携版对比说明)
+  * `WEB_PUBLIC_README.md` (优化维护部署说明与除外清单)
+  * `index.html` (添加 SEO Meta、Canonical、Open Graph、Twitter Card 及 Windows 完整版下载链接)
+* **README 优化内容**：
+  * 提供了清晰的 Web 在线体验地址和 Windows 完整版 Release 下载链接；
+  * 以表格形式详述了 Web 公开版与 Windows 完整版（便携版）在运行引擎、代码沙盒、离线机制、本地数据库与 AI 服务上的差异，指导用户合理选择；
+  * 列出了 SQL WASM、CBT 机考真题道场、翻译静态包、IT 术语表、IME 打字训练等五大核心功能及相应的沙盒限制说明。
+* **WEB_PUBLIC_README 维护说明优化内容**：
+  * 明确了对应的主项目 Release 版本号 `v2026.6.11` 与对应的 Git 变更节点；
+  * 更新了专有架构描述（WASM SQL、PWA SW、Web CodeRunner 拦截与移动端适配）与 **严禁同步的排除清单**，为后续的维护和二次同步工作确立了标准规范。
+* **SEO meta / Open Graph / Twitter Card 优化内容**：
+  * **Title**：升级为 `Study Tools Web - SQL / IT Passport / SG / Java / Python Learning Portal`；
+  * **Description**：设定为统一的英文多语言功能性介绍；
+  * **Canonical**：加入 `https://study-tools-web-pages.pages.dev/`；
+  * **Open Graph / Twitter Card**：添加了标题、描述、类型、URL 及配图标签，大幅提升了社交分享预览体验。
+* **Release 链接**：
+  * 在页头 logo 右侧以不破坏大布局的形式，融入了指向 `https://github.com/bwins0668/it-study-tools/releases/tag/v2026.6.11` 的 Windows 完整版 Release 下载超链接，并添加了下载 icon 标识。
+* **未修改范围确认**：
+  * **未修改** 任何 data 翻译数据包、原始课程数据、SQLite WASM 代码及 Service Worker 等核心底层缓存逻辑。
+  * **未同步** 任何 PC 便携版特有的大文件或 Python/JDK 离线运行环境。
+* **本地 node / HTML 检查结果**：
+  * **通过**。对 `assets/js/app.js` 等核心 JS 文件进行语法检查全量通过，且 `index.html` 中引用路径与加载顺序完全正确。
+* **本地 smoke test 结果**：
+  * **100% 通过**。运行 Playwright 自动化回归测试，页面加载正常，标题及 SEO 信息无误，多科目多语种渲染、 Glossary 弹层、Java/Python Safe Mode 降级等逻辑均未受任何布局调整的影响。
+* **线上验证结果**：
+  * **通过**。成功在公网环境 `https://study-tools-web-pages.pages.dev` 确认 Cloudflare Pages 静态部署已经成功升级至 commit `a562726`。检查页面源代码，Title、SEO Description、OG 元标签及页头 Windows 完整版 Release 下载链接均生效，且全站所有学习功能与多语言切换在真实浏览器中表现优异。
+* **Web 公开版 commit hash**：`a562726`
+* **Web 公开版 push 结果**：成功推送到 `origin master` 远程仓库。
+* **下一步建议**：
+  * **第 12.9 轮：最终线上巡检与闭环归档**。
+
 
 
 
