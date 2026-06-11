@@ -8,3 +8,5 @@ __pycache__/
 *.pyc
 *.log
 *.zip
+data/study_ai.db
+tree.txt
