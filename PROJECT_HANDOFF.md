@@ -41,8 +41,7 @@
 ## 5. 当前 Git 状态记录
 *   当前分支：`main`
 *   未提交修改：`data/study_ai.db`, `tree.txt`
-*   本轮修改文件：`PROJECT_HANDOFF.md`, `index.html`
-*   本轮新增文件：`data/i18n_content/sql_vi.js`, `data/i18n_content/sql_my.js`, `data/i18n_content/sql_fr.js`
+*   本轮修改文件：`PROJECT_HANDOFF.md`, `data/i18n_content/sql_vi.js`, `data/i18n_content/sql_my.js`, `data/i18n_content/sql_fr.js`
 *   是否 commit：是 (待 commit)
 
 ## 6. 本轮完成内容
@@ -759,3 +758,43 @@
 *   下一步建议：
     *   若 POC 通过，再决定是否批量派生 SQL Lesson 4-36。
     *   或先开启其他科目（如 IT Passport / Java / Python）的英文基准包建设。
+
+### 2026-06-11 - 第 7.14 轮任务：SQL 多语言派生包批量补全
+*   任务类型：多语言派生数据包扩展轮
+*   完成内容：
+    *   基于已封口的 SQL 英文内容包（36/36 100% 覆盖率），对越南语、缅甸语和法语的外置派生包进行了批量扩展，将其覆盖率由 Lesson 1-3 补全至 Lesson 1-36 满额。
+    *   更新文件：
+        *   `data/i18n_content/sql_vi.js` (越南语，Lesson 1-36 完备)
+        *   `data/i18n_content/sql_my.js` (缅甸语，Lesson 1-36 完备)
+        *   `data/i18n_content/sql_fr.js` (法语，Lesson 1-36 完备)
+    *   翻译及派生机制对齐规范：
+        *   所有派生条目的 `needsReview` 状态设为 `true`。
+        *   `source` 设为 `ai-assisted-from-en-v1`。
+        *   `sourceRef` 精确指向英文基准包对应的 entry 及其 ID。
+        *   SQL 关键字大写，表名、列名及代码块内容未被本地化。
+        *   翻译均在 JavaScript 字符串的安全闭合范围内，无特殊多余字段。
+    *   本轮**未生成** `ja-JP`、`zh-CN`、`default-ja-zh` 语言包，上述语言不需外置包，直接使用系统原生自带的中日文及中日对照 fallback 逻辑。
+    *   本轮未修改任何运行时代码 (`content-i18n.js`、`i18n.js` 等)，亦没有修改 `index.html`（已在上轮正确加载）。
+*   检查与测试：
+    *   **语法检查**：通过 `node --check` 语法检查（包含新写入的3个文件在内共8个JS文件），全部通过 ✅
+    *   **功能测试**：在 Node.js 环境下运行扩展测试脚本 `test_i18n.js`，全部断言通过 ✅
+        *   `ContentI18n.get` 在英文 Lesson 1-36 返回内容正常。
+        *   `ContentI18n.get` 在越南语 (vi-VN)、缅甸语 (my-MM)、法语 (fr-FR) 下的 Lesson 1-36 全部成功返回翻译内容，而 Lesson 37 及其它未定义科目安全返回 `null`。
+        *   `zh-CN` / `ja-JP` / `default-ja-zh` 在内容层面均正确返回 `null` (代表 fallback 回原生自带内容)。
+    *   **质量检查**：在 Node.js 环境下运行定制质量检查脚本 `check_quality.js`，0 错误 ✅
+        *   所有 Lesson 的 `concept` / `title` 不为空，fenced code block 完全闭合。
+        *   无任何跨语言泄漏（vi/fr 中不包含缅甸文字；vi/fr/my 中均无中日韩字符泄漏）。
+        *   无 `<script>` 等危险 HTML。
+        *   所有翻译包中均未写入 Markdown 管道表格。
+        *   SQL 代码块中的 SQL 语句无本地化翻译现象。
+*   当前 SQL 各语言包覆盖率：
+    *   `sql_en.js` (英文)：**36/36 = 100% (已封口)**
+    *   `sql_vi.js` (越南语)：**36/36 = 100% ( needsReview: true )**
+    *   `sql_my.js` (缅甸语)：**36/36 = 100% ( needsReview: true )**
+    *   `sql_fr.js` (法语)：**36/36 = 100% ( needsReview: true )**
+*   遗留观察项：
+    *   新增的 vi/my/fr 派生内容均属 AI 翻译，未来建议由母语人员抽样校对。
+    *   Lesson 8 / Lesson 10 的 Markdown pipe table 在英文基准包中依然存在，为低风险渲染观察项；但在本轮翻译派生时，目标语言包已自觉将表格内容转为了有序/无序列表，避免了潜在的渲染风险。
+*   下一步建议：
+    *   可以进行第 7.15 轮对多语言派生包质量及渲染测试的最后审计。
+    *   然后可开启 IT Passport 等其他科目的英文基准包（`itpass_en.js` 等）建设，或组织对 SQL 派生语言包的人工校对。
