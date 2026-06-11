@@ -849,5 +849,23 @@
         *   对 9 个关联 JavaScript 文件的 `node --check` 语法校验已逐一、单独运行，全部通过。
         *   运行 `test_i18n.js` 进行 ContentI18n 级别读取和回退测试，IT Passport Lesson 1-10 英文解析正常，Lesson 11 返回 null，zh-CN/ja-JP 返回 null。SQL 36课 4 语言包回归测试断言全部通过。
         *   浏览器抽查情况：本轮未做浏览器抽查，仅完成 Node 读取与静态检查。
-*   当前结论：IT Passport 英文 POC 接入安全复查通过，无任何阻断风险。
+*   当前结论：IT Passport 英文 POC 接入安全复查通过，无 any 阻断风险。
 *   下一步建议：开始第 8.2 轮批量扩展 IT Passport 英文包，建议按 Lesson 11-40 或 Lesson 11-60 推进。
+
+### 2026-06-11 - 第 8.2 轮任务：IT Passport 英文内容语言包 Lesson 11-60 扩展
+*   任务类型：数据包批量扩展轮
+*   完成内容：
+    *   **科目与包范围**：将 IT Passport 的英文内容语言包从 Lesson 1-10 批量扩展到了 Lesson 1-60。新增了 Lesson 11-60 的英文 `title` 和 `concept` 翻译。使用 Subject Key `"itpass"` 并完整保留了 Lesson 1-10 原有的 POC 英文数据，未触碰 Lesson 61+。
+    *   **翻译与语言合规**：所有译文面向零基础，采用地道且通俗的短句，保留了专业 IT 英文词汇，校正了 `強化学習` 误译为 `Strong reinforcement learning` 的词汇瑕疵，校正了 `分散` 误译为 `Dispersion`、`増分バックアップ` 误译为 `Increasing backup` 的专业术语问题。
+    *   **未修改范围**：完全没有修改 `assets/js/app.js`、`index.html` 以及 `content-i18n.js`。未修改 `data/it_passport_lessons.js` 原始课件数据，未翻译任何 quiz / options / playgroundTask / analogy / example / past exams，亦未修改任何 SQL 多语言包。
+*   检查与测试：
+    *   **单元与回归测试**：在 Node.js 环境下通过更新后的测试脚本 `test_i18n.js` 进行全量读取测试。IT Passport 英文 Lesson 1-60 能够正常解析并返回，Lesson 61 能够正常返回 `null` fallback；非外置语种（`zh-CN`/`ja-JP`）访问 Lesson 1 与 Lesson 60 均返回 `null` fallback。SQL 36课多语言包回归读取测试全数正常通过。
+    *   **质量合规检查**：运行 `check_quality.js` 脚本验证，IT Passport 的 60 个 entry 数据均标记为 `needsReview: true`，`source` 均为 `"manual-itpass-en-v1"`，`sourceRef` 与课程及 ID 精确配对。无任何 CJK 字符残留（已把假名范围的中点“・”统一规范为英文横杠“- ”）。无任何 Markdown pipe table 或危险 HTML，fenced code block 完全闭合。
+    *   **语法检查**：使用 `node --check` 逐一、单独检查 9 个关联 JavaScript 文件，全部通过。
+    *   **浏览器抽查**：本轮未做浏览器抽查，仅完成 Node 读取与静态检查。
+*   修改文件：
+    *   `PROJECT_HANDOFF.md`
+    *   `data/i18n_content/itpass_en.js`
+*   当前 IT Passport 英文覆盖率：**60/85 = 70.6%**
+*   下一步建议：
+    *   第 8.3 轮继续扩展 IT Passport Lesson 61-85（完备覆盖 100%）。
