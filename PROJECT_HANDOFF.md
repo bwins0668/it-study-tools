@@ -346,7 +346,107 @@ window.CONTENT_I18N["subject:id"].vi = {
   * 未操作 Web 公开版（`E:\项目\sql-learning-hub-web-public`）。
   * zip 压缩包未提交进 git 仓库。
 * **下一步建议**：
-  * 可以开始执行第 12.5 轮：Web 公开版同步前只读 diff 与备份规划。
+  * 可以开始执行第 12.6 轮：Web 公开版备份 + 精确同步 + 冒烟测试。
+
+### 第 12.5 轮任务：Web 公开版同步前只读 diff + 备份规划
+
+* **基于主项目 Commit**：`81c73fc`
+* **主项目 Git 状态**：`clean`，`main` 与 `origin/main` 保持完全同步。
+* **Web 公开版 Git 状态**：`clean`，`master` 与 `origin/master` 保持完全同步，当前最新提交为 `c6878f2`。
+* **Release 状态校验**：
+  * **Portable Zip**：`Study-Tools-Portable-v2026.6.11.zip` 已生成，本地 SHA256 值为 `95229A2507460DA2299E1C8659639EF62AAD7DAB4923CD52E5535DD88F921FE7`。
+  * **Tag & Release**：`v2026.6.11` 已正确推送，GitHub Release 确认已发布。
+  * **Release URL**：[v2026.6.11 Release](https://github.com/bwins0668/it-study-tools/releases/tag/v2026.6.11)
+  * **云端摘要**：经 GitHub CLI 验证，云端 zip 文件的 sha256 摘要与本地完全一致。
+
+* **Web 公开版目录结构审计**：
+  | 路径 | 是否存在 | 说明 |
+  | ---- | -------- | ---- |
+  | `index.html` | 存在 | Web 专有结构，包含 PWA 注册与 WASM SQLite 引擎依赖。 |
+  | `assets/js/` | 存在 | 包含 `app.js`, `i18n.js` 等核心逻辑。 |
+  | `assets/css/` | 存在 | 包含主样式，其中 `index.css` 包含 Web 独有的响应式与手机端适配。 |
+  | `assets/img/` | 不存在 | 仅在 Web 公开版中存在 `assets/images`（存有 logo 与 PWA 图标）。 |
+  | `data/` | 存在 | 包含 lessons.js 等数据文件。 |
+  | `data/i18n_content/` | 不存在 | 缺失（多语言静态翻译内容包，需要全新创建并同步）。 |
+  | `data/glossary/` | 不存在 | 缺失（IT 术语表数据文件，需要全新创建并同步）。 |
+  | `README.md` | 存在 | 基础自述文件。 |
+  | `package.json` | 存在 | Web 专有配置（使用 `live-server` 端口 `5173` 启动）。 |
+  | `.gitignore` | 存在 | 已忽略 `node_modules` 等开发目录。 |
+  | `functions/` | 存在 | Cloudflare Wrangler backend api 目录。 |
+
+* **主项目与 Web 公开版差异 diff 摘要**：
+  | 类别 | 主项目状态 | Web 公开版状态 | 是否需要同步 | 风险 |
+  | ---- | ---------- | -------------- | ------------ | ---- |
+  | `index.html` | 整合了 20 语言包和 glossary 标签 | 包含 WASM SQLite & PWA 代码，无语言包加载 | **需手动合并** | **极高**（直接覆盖会导致 SQLite WASM/PWA 崩溃） |
+  | `assets/js/app.js` | 包含 `getLessonLocalizedText` 与新 Markdown 渲染 | 包含 WASM SQLite 检测/加载、手机侧边栏抽屉与 JSON 异步性能加载 | **需人工合并** | **极高**（直接覆盖将破坏所有 Web/移动端优化及 SQLite WASM 运行） |
+  | `assets/js/i18n.js` | 包含 Round 12.2 全部 i18n 拦截与 title 交叉对齐修复 | 为老版本 i18n 逻辑 | **可直接覆盖** | 低（结构兼容，无 Web 特有修改） |
+  | `assets/js/java_sandbox.js` | 使用本地 `fetch('/runjava')` | 使用 `window.WebCodeRunner.runJava` 触发安全限制 | **禁止同步** | 高（覆盖会导致 Web 端尝试访问本地 Python 服务报错） |
+  | `assets/js/python_sandbox.js` | 使用本地 `fetch('/runpython')` | 使用 `window.WebCodeRunner.runPython` 触发安全限制 | **禁止同步** | 高（覆盖会导致 Web 端尝试访问本地 Python 服务报错） |
+  | `assets/css/index.css` | 标准 PC 便携版样式 | 包含手机版 Flex 截断和 CBT 考场适配样式 | **禁止同步** | 中（覆盖会导致移动端样式和考场页面排版混乱） |
+  | `data/i18n_content/` | 包含 20 个多语言内容包 | 缺失该目录 | **直接全量复制** | 无（全新添加） |
+  | `data/glossary/` | 包含术语数据 | 缺失该目录 | **直接全量复制** | 无（全新添加） |
+
+* **Web 公开版同步候选清单**：
+  | 推荐同步 | 源路径 | 目标路径 | 理由 | 风险 |
+  | ---- | --- | ---- | -- | -- |
+  | **全量复制** | `data/i18n_content/` | `data/i18n_content/` | 同步所有 20 个语言静态翻译包 | 无 |
+  | **全量复制** | `data/glossary/` | `data/glossary/` | 同步术语表底层数据 | 无 |
+  | **直接覆盖** | `assets/js/i18n.js` | `assets/js/i18n.js` | 同步 12.2 的 title 对齐与静态包高优先级拦截修复 | 无 |
+  | **全量复制** | `assets/js/content-i18n.js` | `assets/js/content-i18n.js` | 内容翻译查询模块 | 无 |
+  | **全量复制** | `assets/js/i18n-ui-dict.js` | `assets/js/i18n-ui-dict.js` | 完整的多语言 UI 字典文件 | 无 |
+  | **全量复制** | `assets/js/glossary.js` | `assets/js/glossary.js` | 术语表弹框控制器 | 无 |
+  | **全量复制** | `assets/css/glossary.css` | `assets/css/glossary.css` | 术语表样式 | 无 |
+  | **手动合并** | `index.html` (JS 部分) | `index.html` (JS 部分) | 仅合并新 JS/CSS 文件加载脚本，保留 WASM SQLite & PWA 代码 | **高**（必须使用代码编辑工具进行精确追加，严禁文件覆盖） |
+  | **手动合并** | `assets/js/app.js` (核心逻辑) | `assets/js/app.js` (核心逻辑) | 将 `getLessonLocalizedText` 声明与 lessons 加载处调用、`formatMarkdown` 升级逻辑并入，保留 WASM 升级、移动端抽屉、JSON 延迟加载与 web-safe 限制 | **高**（需手工比对合并，确保逻辑不交叉干扰） |
+
+* **严禁同步清单**：
+  * **主项目便携特有文件**：`Study-Tools.exe`、`启动.bat`、`tree.txt`、`data/study_ai.db`。
+  * **主项目特有后端及依赖**：`server.py`、`study_ai.py`、`python/`、`jdk/`、`node_modules/`、`.git/`。
+  * **开发与临时文件夹**：`tools/`、`scratch/`、`backups/`、`output/`。
+  * **Sandbox 运行时**：`assets/js/java_sandbox.js` & `assets/js/python_sandbox.js`（保持 Web 端 WebCodeRunner 策略）。
+  * **样式文件**：`assets/css/index.css`（保持 Web 端响应式和移动端适配规则）。
+  * **配置文件**：`package.json`（保持 Web 端 live-server 端口 5173 及 wrangler 命令）。
+
+* **Web 公开版备份方案**：
+  1. **备份路径约定**：
+     在同级目录建立备份文件夹：`E:\项目\web-public-backups\sql-learning-hub-web-public-备份-20260611-2210`
+  2. **备份范围**：
+     将 `sql-learning-hub-web-public` 除 `.git` and `node_modules` 之外的全部文件复制至备份路径。
+  3. **备份校验**：
+     校验复制后的文件总数、总大小，确保关键文件（`index.html`, `assets/js/app.js`, `assets/css/index.css`）备份无损。
+  4. **回滚方案**：
+     一旦同步后的 Web 公开版出现 JS 报错或任何渲染异常，直接从备份文件夹覆盖回 Web 公开版目录，执行 `git checkout -- .` 或 `git reset --hard` 恢复工作区。
+
+* **第 12.6 轮 Web 同步执行方案**：
+  1. **环境校验**：确认主项目与 Web 公开版当前工作区 100% clean。
+  2. **执行备份**：按照本轮规划在外部执行全套 Web 公开版文件备份。
+  3. **全新文件复制**：将 `i18n_content/`、`glossary/` 等 7 项全量复制到对应位置，将 `i18n.js` 直接覆盖。
+  4. **精确合并 index.html**：使用编辑工具，在 `i18n.js` 加载前追加 `i18n-ui-dict.js` 加载，在 `i18n.js` 加载后追加 `content-i18n.js`、20个语言包、`it_terms.js` 与 `glossary.js` 加载，在 header 处引入 `glossary.css`。
+  5. **精确合并 app.js**：
+     * 写入 `getLessonLocalizedText(subject, lesson)` 声明函数。
+     * 修改 `loadLesson`, `loadItPassLesson`, `loadSgLesson`, `loadJavaLesson`, `loadPythonLesson`，使它们在加载课程时优先获取 localized 文本并渲染到 concept 区域。
+     * 替换 `formatMarkdown` 函数为包含 fenced code block 支持的安全回调提取版本。
+  6. **本地静态测试**：
+     * 在 Web 公开版运行 `npm run dev`（启动 5173 端口）。
+     * 打开浏览器，校验 SQL/Java/Python 章节加载是否正常，校验 PWA 与 WASM SQLite 是否正常工作，切换 en/vi/my/fr 校验内容对齐，控制台无报错。
+  8. **Git 提交推送**：
+     * 在 Web 公开版精确 add 同步文件与改动，禁止 `git add .`。
+     * commit 并推送至 `origin master`。
+     * 在主项目更新 handoff 并提交 main 推送。
+
+* **P0/P1/P2 风险清单**：
+  * **P0 风险（阻断级）**：
+    * 直接覆盖 `index.html` 或 `app.js`：将导致 WASM SQLite 引擎无法工作、PWA 缓存与 manifest 失效、移动端适配丢失、Java/Python 编译错误。
+    * 同步了本地数据库 `study_ai.db`：可能导致开发测试脏数据或用户隐私泄漏到公网。
+    * *控制策略*：采用严格的人工定向代码合并，使用单独的复制指令，排除任何敏感文件。
+  * **P1 风险（同步前建议）**：
+    * UI 中日文默认逻辑与派生语言（my-MM）在部分老旧移动浏览器中的字体显示兼容性。
+    * *控制策略*：在 Playwright 冒烟测试中加入移动端机型模拟校验。
+  * **P2 风险（后续优化）**：
+    * 多语言静态 JSON 延迟加载：如果 20 语言包体积继续膨胀，可能会影响页面加载。后续可考虑合并成动态载入。
+
+* **当前结论**：无 P0 阻断项。Web 公开版目录结构和同步差异已全面审计，备份与合并策略切实可行，可以安全进入第 12.6 轮 Web 公开版同步执行。
+
 
 
 
