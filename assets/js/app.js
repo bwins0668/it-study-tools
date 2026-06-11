@@ -1215,19 +1215,39 @@ function markJavaProgress(lessonId, action) {
   }
 }
 
+/**
+ * Resolve localized lesson title/concept from external language pack.
+ * Currently supports: subject "sql", language en-US.
+ * Falls back to null silently if ContentI18n is unavailable or no translation exists.
+ */
+function getLessonLocalizedText(subject, lesson) {
+  if (!window.ContentI18n || !lesson || !lesson.id) return null;
+  var lang = window.I18n && typeof window.I18n.getLanguage === "function"
+    ? window.I18n.getLanguage()
+    : "default-ja-zh";
+  return window.ContentI18n.get(subject, lesson.id, lang);
+}
+
 // Load Lesson Details into Content Panel
 function loadLesson(id) {
   const lesson = SQL_LESSONS.find(l => l.id === id);
   if (!lesson) return;
-  
+
+  // Resolve localized title/concept for current subject
+  const localized = getLessonLocalizedText("sql", lesson);
+
   // Header
   document.getElementById("lesson-section-badge").innerText = lesson.section;
-  document.getElementById("lesson-title-ja").innerText = lesson.titleJa;
+  document.getElementById("lesson-title-ja").innerText = localized && localized.title ? localized.title : lesson.titleJa;
   document.getElementById("lesson-title-zh").innerText = lesson.titleZh;
   document.getElementById("locate-pdf-btn").style.display = "none";
-  
+
   // Concept Body
-  document.getElementById("concept-ja-body").innerHTML = formatMarkdown(lesson.conceptJa);
+  if (localized && localized.concept) {
+    document.getElementById("concept-ja-body").innerHTML = formatMarkdown(localized.concept);
+  } else {
+    document.getElementById("concept-ja-body").innerHTML = formatMarkdown(lesson.conceptJa);
+  }
   document.getElementById("concept-zh-body").innerHTML = formatMarkdown(lesson.conceptZh);
   
   // Analogy & Example

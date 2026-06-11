@@ -513,3 +513,51 @@
     *   可以进入阶段性 Git 提交准备审计
     *   暂时不要实现 hover tooltip
     *   之后再考虑 Sidebar 或学习内容语言包
+
+### 2026-06-11 - 第 7.1 轮任务：学习内容语言包 POC（SQL 英文 title + concept）
+*   任务类型：POC 实现
+*   完成内容：
+    *   新建 `assets/js/content-i18n.js` — 内容语言包运行时模块
+        *   API：`ContentI18n.get(subject, id, lang)`、`ContentI18n.has(subject, id, lang)`
+        *   语言映射：复用 `normalizeLang` 逻辑（en-US→en, zh-CN→zh 等）
+        *   **Key 格式**：`"sql:1"`（subject:id）
+        *   安全 fallback：语言包或字段不存在时返回 null
+    *   新建 `data/i18n_content/sql_en.js` — SQL 课程英文语言包 POC
+        *   覆盖前 3 课（lesson id 1, 2, 3）的 title + concept
+        *   英文翻译 POC 草稿（needsReview: true）
+        *   保留 SQL / database / table / SELECT 等英文技术词
+        *   未覆盖 quiz / options / playgroundTask / code / analogy
+    *   修改 `index.html`：引入 content-i18n.js 和 sql_en.js
+        *   加载顺序：i18n.js → content-i18n.js → sql_en.js → it_terms.js → glossary.js → app.js
+    *   修改 `assets/js/app.js` — 最小接入
+        *   新增 `getLessonLocalizedText(subject, lesson)` helper 函数
+        *   在 `loadLesson()`（SQL 课程渲染函数）中调用，当前语言为 en-US 时替换 title 和 concept
+        *   不影响 IT Passport / SG / Java / Python 渲染
+        *   不影响 quiz / playground / exam / typing / glossary
+        *   不影响 `concept-zh-body`（保持现有日中对照）
+*   覆盖范围：SQL 前 3 课 title + concept
+*   未覆盖：
+    *   quiz / options / playgroundTask / analogy / code → 保持原文
+    *   past exams → 不受任何影响
+    *   IT Passport / SG / Java / Python 课程 → 不受影响
+    *   typing 文章 → 不受影响
+*   fallback 行为：
+    *   ContentI18n 不存在 → 保持原有 `lesson.titleJa` / `lesson.conceptJa`
+    *   语言不是 en-US → 保持原有日中显示
+    *   该 lesson 没有英文语言包 → fallback 到 `lesson.titleJa`
+    *   只有 title 没有 concept → 只替换 title
+*   未使用 i18n.js / i18n-ui-dict.js / glossary 相关文件
+*   语法检查：全部 7 个 JS 文件通过 node --check
+*   当前 Git 状态：
+    *   modified：`index.html`, `assets/js/app.js`
+    *   untracked：`assets/js/content-i18n.js`, `data/i18n_content/sql_en.js`
+    *   无 Web 版文件
+*   剩余风险：
+    *   英文翻译为 POC 草稿（needsReview: true），需要人工校对
+    *   切换语言后需要重新加载课程才能看到英文（不自动刷新）
+    *   如果未来增加更多语言包文件，需要相应更新 index.html 引入
+*   下一步建议：
+    *   第 7.2 轮做质量审计
+    *   第 7.3 轮再决定是否扩大到全部 SQL 课程
+    *   暂时不要做 past exams
+    *   暂时不要做 hover tooltip
