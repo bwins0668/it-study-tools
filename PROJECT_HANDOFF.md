@@ -972,3 +972,24 @@
     *   vi/my/fr 派生内容为 AI 翻译，未来可根据需要组织母语人员抽样校对。
 *   下一步建议：
     *   第 9 轮：SG（信息安全管理考试）英文基准包建设或 SG ContentI18n 接入。
+
+### 2026-06-11 - 第 9.1 轮任务：SG 英文内容语言包 POC
+*   任务类型：数据包 POC 与前端最小接入轮
+*   完成内容：
+    *   **科目与包范围**：在 SQL 与 IT Passport 多语言线均已封口后进入 SG 阶段。为 SG（信息安全管理考试）建立了英文内容语言包 POC，新建 `data/i18n_content/sg_en.js`，只覆盖 Lesson 1-10 的 `title` 和 `concept`。使用的真实 subject key 为 `"sg"`。
+    *   **前端最小接入**：修改了 `assets/js/app.js` 中的 `loadSgLesson(id)` 函数，在加载课件时调用了 `getLessonLocalizedText("sg", lesson)`。如果能够成功匹配，则使用英文 title/concept 替换原生中日对照/日文内容；否则（如当前语言非 en-US，或当前课时超出 POC 范围）安全自动 fallback 到原始课程正文。此为 SG 科目的最小化接入，对 SQL / IT Passport / Java / Python 的渲染逻辑、多语言核心以及 formatMarkdown 未做任何修改，保障了系统隔离安全。
+    *   **加载顺序引入**：修改了 `index.html`，在 `itpass_fr.js` 之后、`it_terms.js` 之前顺序引入了 `data/i18n_content/sg_en.js` 脚本。
+    *   **未修改范围**：未修改 `data/sg_lessons.js` 与 `data/sg_past_exams.js` 原始课件数据，未翻译任何 quiz / options / playgroundTask / analogy / example / past exams 字段，亦没有修改 SQL / IT Passport 的多语言包，未操作 Web 公开版。
+*   检查与测试：
+    *   **单元与回归测试**：在 Node.js 环境下通过更新后的测试脚本 `test_i18n.js` 进行全量读取测试。SG 英文 Lesson 1-10 均可正常解析返回，Lesson 11返回 null 正常 fallback，zh-CN/ja-JP 访问 Lesson 1-10 均返回 null 正常 fallback。SQL 36课多语言包与 IT Passport 85课多语言包回归读取测试全数正常通过。
+    *   **质量合规检查**：SG 英文包 entry 全部定义且字段完备，所有的 `needsReview` 状态均为 `true`，`source` 均为 `"manual-sg-en-v1"`，`sourceRef` 与 ID 精确配对。无任何 CJK 字符泄漏，无 any Markdown pipe table 或危险 HTML。
+    *   **语法检查**：使用 `node --check` 逐一、单独检查了 13 个关联 JavaScript 文件，全部通过。
+    *   **浏览器抽查**：本轮未做浏览器抽查，仅完成 Node 读取与静态检查。
+*   修改文件：
+    *   `PROJECT_HANDOFF.md`
+    *   `index.html`
+    *   `assets/js/app.js`
+*   新增文件：
+    *   `data/i18n_content/sg_en.js`
+*   下一步建议：
+    *   第 9.2 轮：批量扩展 SG 英文包。每批可按 15 或 20 课推进，平稳且安全地覆盖到全 44 课。

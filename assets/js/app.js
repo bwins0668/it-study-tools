@@ -1393,15 +1393,22 @@ function loadSgLesson(id) {
   sgQuizIdx = 0;
   selectedSgQuizOption = null;
   
+  // Resolve localized title/concept for current subject
+  const localized = getLessonLocalizedText("sg", lesson);
+  
   // Header details
   document.getElementById("lesson-section-badge").innerText = lesson.section;
-  document.getElementById("lesson-title-ja").innerText = lesson.titleJa;
+  document.getElementById("lesson-title-ja").innerText = localized && localized.title ? localized.title : lesson.titleJa;
   document.getElementById("lesson-title-zh").innerText = lesson.titleZh;
   const locatePdfBtn = document.getElementById("locate-pdf-btn");
   locatePdfBtn.style.display = lesson.pdfPage ? "inline-flex" : "none";
   
   // Concepts & Analogy
-  document.getElementById("concept-ja-body").innerHTML = formatMarkdown(lesson.conceptJa);
+  if (localized && localized.concept) {
+    document.getElementById("concept-ja-body").innerHTML = formatMarkdown(localized.concept);
+  } else {
+    document.getElementById("concept-ja-body").innerHTML = formatMarkdown(lesson.conceptJa);
+  }
   document.getElementById("concept-zh-body").innerHTML = formatMarkdown(lesson.conceptZh);
   document.getElementById("lesson-analogy").innerText = lesson.analogy;
   
