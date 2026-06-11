@@ -555,7 +555,30 @@ window.CONTENT_I18N["subject:id"].vi = {
 * **Web 公开版 commit hash**：`a562726`
 * **Web 公开版 push 结果**：成功推送到 `origin master` 远程仓库。
 * **下一步建议**：
-  * **第 12.9 轮：最终线上巡检与闭环归档**。
+  * **第 12.9 轮：最终线上多端巡检 + 闭环归档**。
+
+### 第 12.9 轮任务：最终线上多端巡检 + 闭环归档
+
+* **基于主项目 Commit**：`cdfc44a`
+* **线上 URL**：`https://study-tools-web-pages.pages.dev`
+* **Release URL**：`https://github.com/bwins0668/it-study-tools/releases/tag/v2026.6.11`
+* **线上巡检结果**：
+  * **首页 HTTP 200**：通过
+  * **SEO Meta**：Title、Description、Canonical、Open Graph、Twitter Card 全部存在
+  * **Release 链接**：Windows 完整版下载链接存在且可访问
+  * **科目页面**：SQL / IT Passport / SG / Java / Python 均可打开
+  * **多语言**：en / vi / my / fr 静态内容显示正常，ja / zh / default-ja-zh fallback 正常
+  * **SQL WASM playground**：sql-wasm.js / sql-wasm.wasm HTTP 200，正常
+  * **Java/Python Safe Mode**：code-runner-api.js 无 localhost / 127.0.0.1 引用，Safe Mode 正常
+  * **Glossary**：弹窗 JS/CSS HTTP 200，功能正常
+  * **Desktop / Tablet / Mobile**：三种视口无严重布局崩坏
+  * **Network**：核心资源（app.js, i18n.js, glossary.js, css, wasm, manifest）无 404
+  * **Console**：无 P0 JS 报错
+  * **PWA / Service Worker**：SW HTTP 200，注册逻辑正常，缓存策略合理
+* **P0**：无
+* **P1**：无
+* **P2**：语言包懒加载（当前全量预加载）、OG 图片（已存在但未验证社交平台渲染）、版本号动态显示、自动化线上巡检脚本
+* **Round 12 正式闭环**
 
 
 
