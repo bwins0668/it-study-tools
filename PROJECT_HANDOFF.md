@@ -733,6 +733,38 @@ ContentI18n.loadPack = function(subject, lang) {
 * Service Worker **不需要修改**，现有 isStaticAsset + stale-while-revalidate 策略已覆盖 /data/ 路径。
 * **可以进入 Round 13.2 懒加载实现**。
 
+### Round 13.2：Web 语言包懒加载实现
+
+* **基于主项目 Commit**：`364b5f9`
+* **Web 起始 Commit**：`a562726`
+* **Web 新 Commit**：`cddc9e1`
+* **修改文件**：
+  * `index.html` — 移除 20 个 data/i18n_content/*.js script 标签
+  * `assets/js/content-i18n.js` — 新增 `ContentI18n.loadPack(subject, lang)` + `isPackLoaded()` + loadedPacks/loadingPacks
+  * `assets/js/app.js` — 新增 `ensureContentPackForCurrentLesson()`，5 个 load 函数（SQL/IT Passport/SG/Java/Python）入口处异步调用
+  * `assets/js/i18n.js` — `setLanguage` 切换后调用 `ContentI18n.loadPack`，加载完成后刷新课程
+* **实现细节**：
+  * `loadPack` 关键行为：ja/zh resolve(false) 不加载外置包；动态创建 `<script>` 加载；已加载去重；加载中防并发；失败 console.warn + resolve(false)
+  * app.js 采用 fire-and-forget 策略：先 render fallback 内容，包加载后自动 rerender
+  * i18n.js 切换至 en/vi/my/fr 时异步加载当前科目的对应语言包
+  * get()/has() API 完全向后兼容
+* **未修改**：内容包（20 个 data/i18n_content/*.js 文件保留在原路径）、课程源数据、SW/PWA、glossary、UI 字典、SEO/Release 链接
+* **本地静态检查**：所有 JS 文件 node --check 通过
+* **本地 smoke test**：index.html 无 i18n_content script；核心脚本加载顺序正确；live-server 返回正常
+* **线上验证结果**：
+  * Cloudflare Pages 部署成功
+  * 首页 HTTP 200，首屏不再加载任何 data/i18n_content/*.js
+  * 动态加载所需包（sql_en.js → HTTP 200）
+  * SEO meta / Release 链接 / manifest / SW / WASM 均正常
+  * Console 无 P0 报错
+* **P0**：无
+* **P1**：首次切换语言时 50-400ms 加载延迟
+* **P2**：语言包按 lesson 细化粒度、cache busting 版本号、自动化构建索引
+* **下一步建议**：
+  * **Round 13.3：懒加载线上稳定性观察**
+  * 或 Web 版本号动态显示
+  * 或自动化线上巡检脚本
+
 
 
 
