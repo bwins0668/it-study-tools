@@ -561,3 +561,41 @@
     *   第 7.3 轮再决定是否扩大到全部 SQL 课程
     *   暂时不要做 past exams
     *   暂时不要做 hover tooltip
+
+### 2026-06-11 - 第 7.5 轮任务：SQL 英文内容语言包 Lesson 4-10 扩展
+*   任务类型：语言包扩展
+*   完成内容：
+    *   修改 `data/i18n_content/sql_en.js`，新增 SQL Lesson 4-10 英文 title + concept
+    *   覆盖范围：
+        *   4: WHERE — 04-Filtering Rows with WHERE
+        *   5: AND — 05-Combining Conditions with AND
+        *   6: OR — 06-Combining Conditions with OR
+        *   7: AND/OR — 07-Combining AND and OR Conditions
+        *   8: Comparison — 08-Using Comparison Operators （含 operators 表格）
+        *   9: IS NULL / IS NOT NULL — 09-Checking NULL with IS NULL and IS NOT NULL
+        *   10: LIKE — 10-Searching Text with LIKE （含 wildcard 表格）
+    *   每条包含 SQL 代码示例（代码块保留原文不翻译）
+    *   保留 SQL 关键字大写（WHERE, AND, OR, LIKE, IS NULL 等）
+    *   保留核心英文术语（database, table, row, column 等）
+    *   needsReview 全部 true
+    *   source: "manual-sql-en-v2"
+    *   sourceRef: "data/lessons.js:<id>:conceptJa"
+    *   未修改 data/lessons.js
+    *   未修改 ContentI18n / app.js / index.html
+    *   未翻译 quiz / options / playgroundTask / analogy / example
+*   语法检查：sql_en.js + content-i18n.js + app.js + i18n.js + i18n-ui-dict.js 全部通过
+*   功能测试：
+    *   Lesson 1-10 get(en-US): 全部返回正确 title + concept
+    *   Lesson 11-36: 全部返回 null（正确 fallback）
+    *   zh-CN 各课: 全部返回 null（正确 fallback）
+*   当前 Git 状态：
+    *   modified: `PROJECT_HANDOFF.md`, `data/i18n_content/sql_en.js`
+    *   无 Web 版文件
+*   剩余风险：
+    *   英文翻译为手动草稿（needsReview: true），需校对
+    *   lesson 8/10 包含 Markdown 表格，需确认渲染正确
+    *   SQL 代码示例使用 ```sql 格式，需确保 app.js 的 formatMarkdown 能处理或保留
+*   下一步建议：
+    *   第 7.5.1 轮做质量审计
+    *   审计通过后第 7.5.2 轮 commit + push
+    *   暂时不要扩大到 Lesson 11+
