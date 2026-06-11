@@ -133,7 +133,7 @@
   window.CONTENT_I18N["sg:15"] = window.CONTENT_I18N["sg:15"] || {};
   window.CONTENT_I18N["sg:15"].vi = {
     title: "3-1-2 Yêu cầu cốt lõi của Hệ thống phân cấp Chính sách Bảo mật",
-    concept: "**Chính sách bảo mật (Security Policy)** — Cấu trúc hình tháp:**\nHướng dẫn quản lý cấp cao xác định định hướng và mục tiêu an toàn thông tin của tổ chức.\n* **Tiêu chuẩn (Standards)**: Các quy tắc bắt buộc cụ thể hỗ trợ chính sách (ví dụ: tiêu chuẩn mã hóa, tiêu chuẩn mật khẩu).\n* **Quy trình (Procedures)**: Hướng dẫn từng bước chi tiết để thực hiện các tiêu chuẩn.\n* **Hướng dẫn (Guidelines)**: Các khuyến nghị linh hoạt hỗ trợ thực hành tốt nhất.\n* **Thực thi (Enforcement)**: Cơ chế đảm bảo tuân thủ thông qua kiểm toán và kỷ luật.",
+    concept: "**Chính sách bảo mật (Security Policy) — Cấu trúc hình tháp:**\nHướng dẫn quản lý cấp cao xác định định hướng và mục tiêu an toàn thông tin của tổ chức.\nHướng dẫn quản lý cấp cao xác định định hướng và mục tiêu an toàn thông tin của tổ chức.\n* **Tiêu chuẩn (Standards)**: Các quy tắc bắt buộc cụ thể hỗ trợ chính sách (ví dụ: tiêu chuẩn mã hóa, tiêu chuẩn mật khẩu).\n* **Quy trình (Procedures)**: Hướng dẫn từng bước chi tiết để thực hiện các tiêu chuẩn.\n* **Hướng dẫn (Guidelines)**: Các khuyến nghị linh hoạt hỗ trợ thực hành tốt nhất.\n* **Thực thi (Enforcement)**: Cơ chế đảm bảo tuân thủ thông qua kiểm toán và kỷ luật.",
     needsReview: true,
     source: "ai-assisted-from-en-v1",
     sourceRef: "data/i18n_content/sg_en.js:sg:15:en"

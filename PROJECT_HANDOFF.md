@@ -1089,3 +1089,24 @@
     *   vi/my/fr 为 AI 派生内容，未来仍需抽样人工校对。
 *   下一步建议：
     *   **第 9.6 轮**：SG 多语言派生包总审计 + PROJECT_HANDOFF.md 封口记录
+
+### 2026-06-11 - 第 9.6 轮任务：SG 多语言派生包总审计
+*   任务类型：数据包总审计与封口
+*   完成内容：
+    *   **审计范围与结论**：基于提交 `38e56d6`，对 SG 多语言派生包 `sg_vi.js`、`sg_my.js`、`sg_fr.js` 做了最终总审计。审计结论：**通过**。SG 多语言包最终封口 🔒。
+    *   **结构与覆盖审计**：确认三个派生包均覆盖 SG Lesson 1-44，无缺失、无重复 key、无越界 sg:45。三个包合计 132 条 entry，均完整定义了 title、concept、needsReview、source、sourceRef 五个字段。无任何禁止字段（quiz / options / hint / playgroundTask / analogy / example / code / answer / expectedQuery / pastExam / pastExams）混入。
+    *   **元数据一致性**：44/44 条 needsReview 均为 true。44/44 条 source 均为 `"ai-assisted-from-en-v1"`。44/44 条 sourceRef 均正确指向 `data/i18n_content/sg_en.js:sg:<id>:en`。
+    *   **修复项**：发现并修复了 `sg:15.vi` 中一处 bold 标记不配对问题（`**:` → 统一为 `**:`）。
+    *   **ContentI18n 读取测试**：SG en/vi/my/fr Lesson 1-44 全部返回 title + concept，sg:45 全部 null；zh-CN / ja-JP / default-ja-zh 查询均正确返回 null。✅
+    *   **多科回归测试**：
+        *   SQL 36 课四语言包回归全部正常 ✅
+        *   IT Passport 85 课四语言包回归全部正常 ✅
+    *   **语法检查**：16 个关联 JS 文件 node --check 逐一通过 ✅
+    *   **快速质量检查**：无中/日文字符混入英文标题、无 Markdown 表格、fenced code block 和 bold 全部成对闭合、无危险 HTML ✅
+    *   **浏览器抽查**：本轮未做浏览器抽查，仅完成 Node 读取与静态检查。
+*   当前 SG 多语言包状态：**封口完成 🔒**
+*   遗留观察项：
+    *   vi/my/fr 为 AI 派生内容，未来仍需抽样人工校对。
+*   下一步建议：
+    *   进入 **Java 英文基准包建设**
+    *   或进入 **Python 英文基准包建设**
