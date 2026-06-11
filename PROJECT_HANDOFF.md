@@ -1024,3 +1024,24 @@
 *   Commit：`9c5e3ed feat(content-i18n): expand SG English lessons 11-44`
 *   当前 SG 英文包状态：**44/44 = 100%，待审计封口**
 *   下一步建议：第 9.3 轮：SG 英文包总审计 + PROJECT_HANDOFF.md 封口记录。
+
+### 2026-06-11 - 第 9.3 轮任务：SG 英文内容语言包总审计
+*   任务类型：数据包总审计与封口
+*   完成内容：
+    *   **审计范围与结论**：基于提交 `9c5e3ed`（数据包）和 `b4f93ca`（文档记录），对 SG 英文内容语言包 `sg_en.js` 做了最终总审计。审计结论：**通过**。SG 英文基准包最终封口 🔒。
+    *   **结构与覆盖审计**：确认 sg_en.js 涵盖 SG Lesson 1-44，无缺失、无重复 key、无越界 sg:45。44 个 entry 全部定义了 `en.title`、`en.concept`、`en.needsReview`、`en.source`、`en.sourceRef` 五个字段。无任何禁止字段（quiz / options / hint / playgroundTask / analogy / example / code / answer / expectedQuery / pastExam / pastExams）混入。
+    *   **元数据一致性**：44/44 条 `needsReview` 均为 `true`。Lesson 1-10 的 `source` 为 `manual-sg-en-v1`，Lesson 11-44 为 `ai-assisted-from-sg-v1`（这在第 9.2 轮已说明）。`sourceRef` 中，Lesson 1-10 指向 `data/sg_lessons.js:<id>:conceptJa`，Lesson 11-44 指向 `data/sg_lessons.js:<id>:conceptZh`，均与每条的 lesson id 精确对应。
+    *   **内容质量检查**：title 格式为 `X-Y-Z` 章节号（SG 课程使用 subSectionId 编号），与原始 sg_lessons.js 的 subSectionId 一致，不存在 title 编号错位问题。检出部分 concept 中包含日文术语括号标注（如 `共通鍵`、`ハイブリッド暗号方式`、`インシデント` 等），属于在英文译文中刻意保留日文原词对照的技术术语处理方式，符合项目"日本考试术语保留日文原文"原则，不作为阻断项。无 CJK 字符混入英文标题。无 Markdown pipe table。fenced code block 和 `**bold**` 全部成对闭合。无危险 HTML。
+    *   **ContentI18n 读取测试**：SG Lesson 1-44 `get("sg", N, "en-US")` 全部返回 title + concept，sg:45 返回 null；zh-CN / ja-JP / default-ja-zh 查询 1-44 均正确返回 null。
+    *   **多科回归测试**：
+        *   SQL 36 课 en/vi/my/fr 四语言包回归全部正常 ✅
+        *   IT Passport 85 课 en/vi/my/fr 四语言包回归全部正常 ✅
+    *   **语法检查**：共 13 个关联 JS 文件 node --check 逐一单独通过 ✅
+    *   **浏览器抽查**：本轮未做浏览器抽查，仅完成 Node 读取与静态检查。
+*   当前 SG 英文包状态：**封口完成 🔒**
+*   遗留观察项：
+    *   SG 英文 Lesson 1-10 为手动起草（POC），Lesson 11-44 为 AI 辅助批量生成（`ai-assisted-from-sg-v1`），未来建议抽检校对 AI 生成部分。
+    *   SG 英文 concept 中的日文术语括号标注（如 `共通鍵`、`インシデント`）是技术术语一致性设计的一部分，未来如有需要可以评估是否统一用英语术语外加日语备注。
+*   下一步建议：
+    *   **第 9.4 轮**：SG 多语言派生 POC，先做 Lesson 1-3 的 vi/my/fr
+    *   或进入 **Java 英文基准包建设**
