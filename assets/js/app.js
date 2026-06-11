@@ -1445,23 +1445,50 @@ function loadSgLesson(id) {
   document.querySelector(".lesson-content").scrollTop = 0;
 }
 
-// Simple parser to render basic markdown bold and code blocks into HTML safely
+// Simple parser to render basic markdown bold, code blocks, and fenced code blocks into HTML safely
 function formatMarkdown(text) {
   if (!text) return "";
-  let escaped = text
+
+  // Step 1: Extract fenced code blocks (``` ... ```) and replace with placeholders
+  let codeBlocks = [];
+  let idx = 0;
+  let working = text;
+
+  const fencedRegex = /```([a-zA-Z0-9_+-]*)\s*\n([\s\S]*?)```/gm;
+  working = working.replace(fencedRegex, function(match, lang, code) {
+    const placeholder = "@@CODE_BLOCK_" + idx + "@@";
+    const safeLang = /^[a-zA-Z0-9_+-]*$/.test(lang) ? lang : "";
+    const escapedCode = String(code || "")
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;");
+    const langClass = safeLang ? " class=\"language-" + safeLang + "\"" : "";
+    const html = "<pre><code" + langClass + ">" + escapedCode + "</code></pre>";
+    codeBlocks.push(html);
+    idx++;
+    return placeholder;
+  });
+
+  // Step 2: Escape HTML in the remaining text
+  let escaped = working
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;");
-  
-  // Replace **bold** with <strong>bold</strong>
+
+  // Step 3: Replace **bold** with <strong>bold</strong>
   escaped = escaped.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
-  
-  // Replace `code` with <code>code</code>
+
+  // Step 4: Replace `code` with <code>code</code>
   escaped = escaped.replace(/`(.*?)`/g, "<code>$1</code>");
-  
-  // Highlight bilingual SQL and IT terms
+
+  // Step 5: Highlight bilingual SQL and IT terms
   escaped = escaped.replace(/([ぁ-んァ-ヶa-zA-Z0-9_ー]+)\s*\((AND|OR|WHERE|SELECT|LIMIT|ORDER BY|GROUP BY|HAVING|JOIN|INNER JOIN|LEFT JOIN|SUM|AVG|COUNT|MAX|MIN|BETWEEN|LIKE|IS NULL|IS NOT NULL|INSERT|UPDATE|DELETE|CREATE|DROP|ALTER|COMMIT|ROLLBACK|CPU|RAM|ROM|HDD|SSD|OS|WAF|RAID|MTBF|MTTR|SLA|DNS|DHCP|VoIP|SWOT|PPM|ERP|SCM|CRM|DX|ROI|!=|&lt;&gt;|=|\s*&gt;=\s*|\s*&lt;=\s*|\s*&gt;\s*|\s*&lt;\s*)\)/g, '<span class="vocab-highlight">$1 ($2)</span>');
-  
+
+  // Step 6: Restore code block placeholders (use callback to avoid $1/$& replacement pattern issues)
+  for (let i = 0; i < codeBlocks.length; i++) {
+    escaped = escaped.replace(new RegExp("@@CODE_BLOCK_" + i + "@@", "g"), function() { return codeBlocks[i]; });
+  }
+
   return escaped;
 }
 

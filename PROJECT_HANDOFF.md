@@ -599,3 +599,26 @@
     *   第 7.5.1 轮做质量审计
     *   审计通过后第 7.5.2 轮 commit + push
     *   暂时不要扩大到 Lesson 11+
+
+### 2026-06-11 - 第 7.6.1-7.6.3 轮任务：formatMarkdown fenced code block 小修
+*   任务类型：渲染能力升级 + 安全修复
+*   修改文件：`assets/js/app.js`
+*   完成内容：
+    *   `formatMarkdown` 新增 fenced code block 支持，将 ` ```sql ... ``` ` 渲染为 `<pre><code class="language-sql">`
+    *   支持 ` ``` `、` ```sql `、` ```SQL ` 三种格式
+    *   代码块内容独立 HTML escape，内部不解析 `**bold**` 或 `` `code` ``
+    *   原有 `**bold**` 和 `` `code` `` 行为保留
+    *   第 7.6.2 审计确认 fenced code block 正则 closing 正确（三反引号）
+    *   第 7.6.2.1 修复 placeholder 替换安全问题：原使用 `replace(placeholder, string)` 会解析 `$&`、`$1`、`$$`，改为 callback 方式
+    *   `$&` / `$1` / `$$` 函数级测试通过
+    *   XSS / HTML escape 测试通过
+    *   SQL Lesson 4-10 真实数据端到端测试通过（全部正确渲染 `<pre><code>`）
+    *   node --check 通过
+    *   未实现 Markdown 表格；Lesson 8/10 的 pipe table 保持纯文本显示（有意限制）
+*   未修改：`sql_en.js`、`data/lessons.js`、`content-i18n.js`、课程数据源
+*   当前 Git 状态：
+    *   modified：`assets/js/app.js`, `PROJECT_HANDOFF.md`
+    *   无 Web 版文件
+*   保留观察项：Markdown 表格仍未渲染，后续如有必要单独处理
+*   下一步建议：
+    *   第 7.7 轮 SQL Lesson 11-17 英文包扩展（BETWEEN, IN, ORDER BY, LIMIT, DISTINCT, 函数, CASE）
