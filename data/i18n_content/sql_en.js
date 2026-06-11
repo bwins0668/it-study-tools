@@ -103,4 +103,74 @@
       sourceRef: "data/lessons.js:10:conceptJa"
     }
   };
+
+  window.CONTENT_I18N["sql:11"] = {
+    en: {
+      title: "11-Filtering Ranges with BETWEEN",
+      concept: "To find values that fall **within a specific range**, use **BETWEEN**.\n\nFor example, to find students aged 20 to 25:\n\n```sql\nSELECT * FROM students_mst WHERE age BETWEEN 20 AND 25;\n```\n\nBETWEEN is **inclusive** — it includes both the start and end values. So `BETWEEN 20 AND 25` includes ages 20, 21, 22, 23, 24, and 25.\n\nYou can use BETWEEN with numbers, dates, and even text. It makes range queries clearer and shorter than using `>=` and `<=`.",
+      needsReview: true,
+      source: "manual-sql-en-v2",
+      sourceRef: "data/lessons.js:11:conceptJa"
+    }
+  };
+
+  window.CONTENT_I18N["sql:12"] = {
+    en: {
+      title: "12-Matching Multiple Values with IN",
+      concept: "When you want to check if a value matches **any one of several specific values**, use **IN**.\n\nFor example, to find students whose age is 20, 25, or 30:\n\n```sql\nSELECT * FROM students_mst WHERE age IN (20, 25, 30);\n```\n\nThis is much shorter than writing:\n```sql\nWHERE age = 20 OR age = 25 OR age = 30\n```\n\nIN works with numbers and text. You can also use IN with a subquery (a query inside another query).",
+      needsReview: true,
+      source: "manual-sql-en-v2",
+      sourceRef: "data/lessons.js:12:conceptJa"
+    }
+  };
+
+  window.CONTENT_I18N["sql:13"] = {
+    en: {
+      title: "13-Sorting Rows with ORDER BY",
+      concept: "To display your query results in a specific order, use **ORDER BY**.\n\nBy default, sorting is **ascending** (smallest to largest, A to Z). To reverse the order, add **DESC** (descending):\n\n```sql\n-- Sort by age from lowest to highest (ascending)\nSELECT * FROM students_mst ORDER BY age;\n\n-- Sort by age from highest to lowest (descending)\nSELECT * FROM students_mst ORDER BY age DESC;\n```\n\nYou can also sort by multiple columns:\n\n```sql\nSELECT * FROM students_mst ORDER BY department_id, age DESC;\n```\n\nThis sorts first by department, then by age within each department.",
+      needsReview: true,
+      source: "manual-sql-en-v2",
+      sourceRef: "data/lessons.js:13:conceptJa"
+    }
+  };
+
+  window.CONTENT_I18N["sql:14"] = {
+    en: {
+      title: "14-Limiting the Number of Rows with LIMIT",
+      concept: "When you only want the **first few rows** of a result, use **LIMIT**.\n\nFor example, to find the top 3 highest-scoring students:\n\n```sql\nSELECT * FROM students_mst\nORDER BY test_score DESC\nLIMIT 3;\n```\n\nThe query first sorts by score descending, then LIMIT keeps only the first 3 rows.\n\nLIMIT is placed at the very end of the query, after ORDER BY.\n\nThis is especially useful when you want a preview of the data or need to implement pagination.",
+      needsReview: true,
+      source: "manual-sql-en-v2",
+      sourceRef: "data/lessons.js:14:conceptJa"
+    }
+  };
+
+  window.CONTENT_I18N["sql:15"] = {
+    en: {
+      title: "15-Removing Duplicates with DISTINCT",
+      concept: "When a column contains duplicate values and you want to see **only the unique values**, add **DISTINCT** after SELECT.\n\nFor example, to see which ages exist in your student table (without repeats):\n\n```sql\nSELECT DISTINCT age FROM students_mst;\n```\n\nWithout DISTINCT, you would get the same age listed multiple times — one for each student.\n\nDISTINCT applies to all selected columns. If you write `SELECT DISTINCT age, name`, it shows unique combinations of age AND name together.\n\nDISTINCT is useful for exploring what values actually exist in your data.",
+      needsReview: true,
+      source: "manual-sql-en-v2",
+      sourceRef: "data/lessons.js:15:conceptJa"
+    }
+  };
+
+  window.CONTENT_I18N["sql:16"] = {
+    en: {
+      title: "16-Using SQL String and Date Functions",
+      concept: "SQL provides many built-in **functions** to transform, calculate, or extract parts of your data.\n\nCommon string functions:\n- `CHAR_LENGTH(str)` — number of characters in a string\n- `CONCAT(a, b)` — join two strings together\n- `UPPER(str)` / `LOWER(str)` — change letter case\n\nCommon date functions:\n- `CURRENT_DATE` — today's date\n- `YEAR(date)` / `MONTH(date)` — extract part of a date\n\nExample:\n```sql\nSELECT student_name, CHAR_LENGTH(student_name) AS name_length\nFROM students_mst;\n```\n\nFunctions do not modify the original data — they only transform the displayed output.",
+      needsReview: true,
+      source: "manual-sql-en-v2",
+      sourceRef: "data/lessons.js:16:conceptJa"
+    }
+  };
+
+  window.CONTENT_I18N["sql:17"] = {
+    en: {
+      title: "17-Using CASE Expressions for Conditional Logic",
+      concept: "**CASE** lets you add **if-then-else logic** directly inside your SQL query.\n\nBasic syntax:\n```sql\nSELECT student_name, age,\n  CASE\n    WHEN age >= 20 THEN 'Adult'\n    ELSE 'Minor'\n  END AS age_group\nFROM students_mst;\n```\n\nCASE checks each WHEN condition in order. The first matching condition wins. If none match, ELSE is used (or NULL if no ELSE).\n\nYou can also use CASE with multiple conditions:\n```sql\nCASE\n  WHEN score >= 80 THEN 'Excellent'\n  WHEN score >= 60 THEN 'Good'\n  ELSE 'Needs Improvement'\nEND\n```\n\nCASE is evaluated for each row, making it a powerful tool for creating calculated columns.",
+      needsReview: true,
+      source: "manual-sql-en-v2",
+      sourceRef: "data/lessons.js:17:conceptJa"
+    }
+  };
 })();
