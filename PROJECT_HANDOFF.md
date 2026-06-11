@@ -1403,3 +1403,36 @@
     *   Python 英文为人工辅助批量生成（`manual-python-en-v1`），未来建议抽样人工校对。
 *   下一步建议：
     *   **第 11.4 轮**：Python 多语言派生 POC，先做 Lesson 1-3 的 vi/my/fr
+
+### 2026-06-11 - 第 11.4 轮任务：Python 多语言派生 POC
+*   任务类型：多语言派生 POC 引入轮
+*   完成内容：
+    *   **科目与包范围**：基于已封口的 Python 英文基准包 `python_en.js`，派生 Python 多语言 POC。
+    *   新建 `data/i18n_content/python_vi.js` — Python Lesson 1-3 越南语
+    *   新建 `data/i18n_content/python_my.js` — Python Lesson 1-3 缅甸语
+    *   新建 `data/i18n_content/python_fr.js` — Python Lesson 1-3 法语
+    *   所有派生内容仅包含 `.vi` / `.my` / `.fr`，不覆盖 `.en` 层。
+    *   修改 `index.html`，在 `python_en.js` 之后、`app.js` 之前加载 `python_vi.js` / `python_my.js` / `python_fr.js`。
+    *   每条包含 title、concept、needsReview: true、source: "ai-assisted-from-en-v1"、sourceRef 指向 python_en.js。
+    *   未修改 `python_en.js`、`data/python_lessons.js`、`app.js`、`content-i18n.js` 以及 SQL/IT Passport/SG/Java 的多语言包。
+*   检查与测试：
+    *   ContentI18n 读取测试：Python vi/my/fr Lesson 1-3 均返回正确翻译，Lesson 4 返回 null ✅
+    *   SQL 36 课四语言包回归：全部正常 ✅
+    *   IT Passport 85 课四语言包回归：全部正常 ✅
+    *   SG 44 课四语言包回归：全部正常 ✅
+    *   Java 115 课四语言包回归：全部正常 ✅
+    *   合计：1384/1384 ContentI18n 读取通过 ✅
+    *   语法检查：24 个关联 JS 文件 node --check 逐一通过 ✅
+    *   快速质量检查：无禁止字段混入、无 CJK 污染、无 Markdown 表格 ✅
+    *   浏览器抽查：本轮未做浏览器抽查，仅完成 Node 读取与静态检查。
+*   修改文件：
+    *   `PROJECT_HANDOFF.md`
+    *   `index.html`
+*   新增文件：
+    *   `data/i18n_content/python_vi.js`
+    *   `data/i18n_content/python_my.js`
+    *   `data/i18n_content/python_fr.js`
+*   当前 Python 多语言包状态：**POC 完成 (vi/my/fr Lesson 1-3)**
+*   下一步建议：
+    *   第 11.5 轮：Python 多语言派生包批量补全，将 vi/my/fr 扩展到全 255 课
+    *   或先做 Python 多语言 POC 安全复查
