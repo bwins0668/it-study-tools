@@ -837,3 +837,17 @@
     *   `data/i18n_content/itpass_en.js`
 *   下一步建议：
     *   第 8.2 轮批量扩展 IT Passport 英文包（每批按 30-50 课推进）。
+
+### 2026-06-11 - 第 8.1.1 轮任务：IT Passport 英文 POC 接入安全复查
+*   任务类型：安全审计与交付质量复查轮
+*   完成内容：
+    *   **基于 98ead88 提交进行了安全与完整性双重复查**。
+    *   **最小接入审计**：复查确认 `app.js` 的修改仅限于 `loadItPassLesson(id)` 方法内部，调用了 `getLessonLocalizedText("itpass", lesson)`。对 SQL 的 `loadLesson`、SG / Java / Python 的渲染没有任何修改，未修改 `formatMarkdown` 以及 `ContentI18n` 底层核心，完全保证了其他科目的隔离安全。
+    *   **加载顺序审计**：复查确认 `index.html` 中的引入位置在 `content-i18n.js` 之后、`app.js` 之前，未打乱 SQL 语言包加载顺序，没有改动 UI 及无关脚本。
+    *   **itpass_en.js 结构审计**：复查确认文件遵循 IIFE 匿名自执行函数，仅针对 `CONTENT_I18N` 字典中以 `"itpass:"` 为前缀的 1-10 课进行扩展。所有 entry 满足 `needsReview: true`，`source` 均为 `"manual-itpass-en-v1"`，`sourceRef` 配对精确无误。无 quiz、options 等违禁字段写入。
+    *   **语法与静态测试**：
+        *   对 9 个关联 JavaScript 文件的 `node --check` 语法校验已逐一、单独运行，全部通过。
+        *   运行 `test_i18n.js` 进行 ContentI18n 级别读取和回退测试，IT Passport Lesson 1-10 英文解析正常，Lesson 11 返回 null，zh-CN/ja-JP 返回 null。SQL 36课 4 语言包回归测试断言全部通过。
+        *   浏览器抽查情况：本轮未做浏览器抽查，仅完成 Node 读取与静态检查。
+*   当前结论：IT Passport 英文 POC 接入安全复查通过，无任何阻断风险。
+*   下一步建议：开始第 8.2 轮批量扩展 IT Passport 英文包，建议按 Lesson 11-40 或 Lesson 11-60 推进。
