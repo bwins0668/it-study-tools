@@ -303,4 +303,64 @@
       sourceRef: "data/lessons.js:30:conceptJa"
     }
   };
+
+  window.CONTENT_I18N["sql:31"] = {
+    en: {
+      title: "31-Primary Keys and Auto-Increment",
+      concept: "A table can have only one primary key (PRIMARY KEY).\n\nIn MySQL, specifying **AUTO_INCREMENT** for a primary key automatically assigns sequential numbers like \"1, 2, 3...\" when new data is inserted.",
+      needsReview: true,
+      source: "manual-sql-en-v2",
+      sourceRef: "data/lessons.js:31:conceptJa"
+    }
+  };
+
+  window.CONTENT_I18N["sql:32"] = {
+    en: {
+      title: "32-Foreign Key Constraints",
+      concept: "To ensure the relationship and consistency between tables, use a **foreign key (FOREIGN KEY)** constraint.\n\n- For example, you can enforce a rule stating that \"a student's department_id must exist in the department_id column of the departments_mst table.\" This prevents registering department IDs that do not exist.",
+      needsReview: true,
+      source: "manual-sql-en-v2",
+      sourceRef: "data/lessons.js:32:conceptJa"
+    }
+  };
+
+  window.CONTENT_I18N["sql:33"] = {
+    en: {
+      title: "33-Modifying and Deleting Tables with ALTER and DROP",
+      concept: "These operations are performed after a table has been created:\n\n- **ALTER TABLE**: Modifies the structure of a table, such as adding or changing columns.\n  - Adding a column: `ALTER TABLE table_name ADD column_name data_type;`\n- **DROP TABLE**: Permanently deletes the table itself.\n  - `DROP TABLE table_name;` (Note: All data inside the table will also be deleted.)",
+      needsReview: true,
+      source: "manual-sql-en-v2",
+      sourceRef: "data/lessons.js:33:conceptJa"
+    }
+  };
+
+  window.CONTENT_I18N["sql:34"] = {
+    en: {
+      title: "34-Transaction Processing",
+      concept: "A mechanism that groups multiple operations and treats them as \"a single unit of work\" is called a **transaction**.\n\n- **COMMIT**: Finalizes and saves all changes.\n- **ROLLBACK**: Reverts all operations back to their state before the transaction started if an error occurs.\n\nThis is essential for processes where partial failures cannot be tolerated, such as bank transfers (deducting money from Account A and depositing it into Account B).",
+      needsReview: true,
+      source: "manual-sql-en-v2",
+      sourceRef: "data/lessons.js:34:conceptJa"
+    }
+  };
+
+  window.CONTENT_I18N["sql:35"] = {
+    en: {
+      title: "35-Indexes for Fast Searching",
+      concept: "A directory created to speed up data retrieval within a table is called an \"index (INDEX)\".\n\nOn tables with large amounts of data, creating an index on specific columns can dramatically improve search speeds.\n\nHowever, having too many indexes has the disadvantage of slowing down data insertions and updates because the index must be maintained.",
+      needsReview: true,
+      source: "manual-sql-en-v2",
+      sourceRef: "data/lessons.js:35:conceptJa"
+    }
+  };
+
+  window.CONTENT_I18N["sql:36"] = {
+    en: {
+      title: "36-Views and Stored Procedures",
+      concept: "These are mechanisms to reuse SQL queries and improve operation efficiency:\n\n- **VIEW**: A \"virtual table\" that saves a complex SELECT statement.\n- **Stored Routine (Stored Procedure)**: A program that saves multiple SQL operations and conditional logic directly on the database side, allowing them to be executed by simply calling the program.",
+      needsReview: true,
+      source: "manual-sql-en-v2",
+      sourceRef: "data/lessons.js:36:conceptJa"
+    }
+  };
 })();

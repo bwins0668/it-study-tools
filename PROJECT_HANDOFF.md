@@ -637,10 +637,10 @@
     *   Lesson 18+ / zh-CN / ja-JP → 全部 null ✅
     *   Lesson 1-10 未被破坏 ✅
     *   node --check 全部通过 ✅
-*   commit: `ae5bce6`, push 成功，工作区 clean
-*   当前 SQL 英文覆盖率：**30/36 = 83%**
+*   commit: `5c4a5cb`, push 成功，工作区 clean
+*   当前 SQL 英文覆盖率：**36/36 = 100%**
 *   下一步建议：
-    *   **第 7.10 轮** SQL Lesson 31-36 英文包扩展（主键与自动采番, 外部キー制約, 视图/视图模拟, 备份与设计, 综合练习）
+    *   **第 7.11 轮** SQL 英文语言包总审计与安全边际校验
 
 ### 2026-06-11 - 第 7.8 轮任务：SQL 英文内容语言包 Lesson 18-24 扩展
 *   任务类型：语言包扩展
@@ -672,6 +672,23 @@
     *   Lesson 31+ / zh-CN / ja-JP → 全部 null ✅
     *   Lesson 1-24 未被破坏 ✅
     *   node --check 全部通过 ✅
-*   当前 SQL 英文覆盖率：**30/36 = 83%**
+*   当前 SQL 英文覆盖率：**36/36 = 100%**
 *   下一步建议：
-    *   **第 7.10 轮** SQL Lesson 31-36 英文包扩展（主键与自动采番, 外部キー制約, 视图/视图模拟, 备份与设计, 综合练习）
+    *   **第 7.11 轮** SQL 英文语言包总审计与安全边际校验
+
+### 2026-06-11 - 第 7.10 轮任务：SQL 英文内容语言包 Lesson 31-36 扩展
+*   任务类型：语言包扩展
+*   完成内容：
+    *   修改 `data/i18n_content/sql_en.js`，新增 SQL Lesson 31-36 英文 title + concept
+    *   覆盖：主キーと自動採番 (31), 外部キー制約 (32), ALTER文・DROP文 (33), トランザクション処理 (34), インデックス (35), ビュー・ストアドルーチン (36)
+    *   完成 SQL 课程所有 36 课的英文包扩展，覆盖率达到 100%
+    *   未修改 data/lessons.js / app.js / content-i18n.js / index.html
+    *   未翻译 quiz / code / playground / past exams
+*   检查：
+    *   ContentI18n 读取测试：Lesson 31-36 en-US → 全部返回 title + concept ✅
+    *   Lesson 37+ / zh-CN / ja-JP → 全部 null ✅
+    *   Lesson 1-30 未被破坏 ✅
+    *   node --check 全部通过 ✅
+*   当前 SQL 英文覆盖率：**36/36 = 100%**
+*   下一步建议：
+    *   **第 7.11 轮** SQL 英文语言包总审计与安全边际校验
