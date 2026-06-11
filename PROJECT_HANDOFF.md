@@ -1224,3 +1224,36 @@
 *   下一步建议：
     *   第 10.5 轮：Java 多语言派生包批量补全，将 vi/my/fr 扩展到全 115 课
     *   或先做第 10.4.1 轮 Java 多语言 POC 安全复查
+
+### 2026-06-11 - 第 10.5 轮任务：Java 多语言派生包批量补全
+*   任务类型：多语言派生批量扩展轮
+*   完成内容：
+    *   **科目与包范围**：基于 Java 英文封口包 `java_en.js`，将 vi/my/fr 派生包从 Lesson 1-3（POC）批量扩张到 Lesson 1-115（全量）。
+    *   补全 `data/i18n_content/java_vi.js`：新增 Lesson 4-115 越南语
+    *   补全 `data/i18n_content/java_my.js`：新增 Lesson 4-115 缅甸语（Write 写入失败后采用恢复模式分批补全）
+    *   补全 `data/i18n_content/java_fr.js`：新增 Lesson 4-115 法语
+    *   所有派生内容仅包含 `.vi` / `.my` / `.fr`，不覆盖 `.en` 层。
+    *   未修改 `java_en.js`、`data/java_lessons.js`、`app.js`、`index.html`、`content-i18n.js` 以及 SQL/IT Passport/SG 的多语言包。
+*   检查与测试：
+    *   ContentI18n 读取测试：Java vi/my/fr Lesson 1-115 全部返回 title + concept，Lesson 116 返回 null ✅
+    *   Java 元数据检查：needsReview 全部 true，source 全部 ai-assisted-from-en-v1 ✅
+    *   SQL 36 课四语言包回归：全部正常 ✅
+    *   IT Passport 85 课四语言包回归：全部正常 ✅
+    *   SG 44 课四语言包回归：全部正常 ✅
+    *   合计：1120/1120 ContentI18n 读取通过 ✅
+    *   语法检查：20 个关联 JS 文件 node --check 逐一通过 ✅
+    *   快速质量检查：无禁止字段混入、无跨语言污染、无 Markdown 表格、fenced code block 和 bold 成对闭合 ✅
+    *   浏览器抽查：本轮未做浏览器抽查，仅完成 Node 读取与静态检查。
+*   修改文件：
+    *   `PROJECT_HANDOFF.md`
+    *   `data/i18n_content/java_vi.js`
+    *   `data/i18n_content/java_my.js`
+    *   `data/i18n_content/java_fr.js`
+*   当前 Java 多语言包状态：**vi/my/fr 115/115 = 100%，待审计封口**
+*   遗留观察项：
+    *   vi/my/fr 为 AI 派生内容（`ai-assisted-from-en-v1`），未来仍需抽样人工校对。
+    *   java_my.js 在补全过程中曾出现写入失败，通过恢复模式分批补全完成。
+*   下一步建议：
+    *   第 10.6 轮：Java 多语言派生包总审计 + PROJECT_HANDOFF.md 封口记录
+    *   审计通过后再进入 Python 英文基准包建设
+    *   或直接进入 Python 英文基准包建设
