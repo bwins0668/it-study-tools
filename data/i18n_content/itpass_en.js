@@ -602,4 +602,254 @@
       sourceRef: "data/it_passport_lessons.js:60:conceptJa"
     }
   };
+
+  window.CONTENT_I18N["itpass:61"] = {
+    en: {
+      title: "8-02 Development Process",
+      concept: "This is the process of building and verifying the system (SLCP).\n\n1. **Design**: Decide on screens and data formats based on requirements. There is an \"external design\" that determines what is visible to users, and an \"internal design\" for developers.\n2. **Test types and order**:\n   - **Unit test**: A test performed on the smallest component unit (module) of a program.\n   - **Integration test**: A test that verifies the interface by linking multiple parts.\n   - **System testing**: A test in which the developer integrates all functions and confirms that the entire system works as required.\n\n**Points for IT beginners:**\nThis field is asked very often in the IT Passport exam, so the shortcut to passing the exam is to not only define the keywords, but also organize related terms along with practical usage scenarios (examples).",
+      needsReview: true,
+      source: "manual-itpass-en-v1",
+      sourceRef: "data/it_passport_lessons.js:61:conceptJa"
+    }
+  };
+
+  window.CONTENT_I18N["itpass:62"] = {
+    en: {
+      title: "8-03 Test Methods, Operation and Maintenance",
+      concept: "This is a test method for operation/maintenance after system operation, and for repairs.\n\n1. **Regression test**: A \"regression prevention\" test that verifies that when a part of the system is changed, there are no unexpected defects (bugs) occurring in other unrelated parts.\n2. **Acceptance test**: A final test in which the user (customer) who ordered the system actually operates the developed system to confirm that it is working as per the contract.\n3. **Maintenance**: Continuous work to fix bugs and respond to environmental changes (OS version upgrades, etc.).\n\n**Points for IT beginners:**\nThis field is asked very often in the IT Passport exam, so the shortcut to passing the exam is to not only define the keywords, but also organize related terms along with practical usage scenarios (examples).",
+      needsReview: true,
+      source: "manual-itpass-en-v1",
+      sourceRef: "data/it_passport_lessons.js:62:conceptJa"
+    }
+  };
+
+  window.CONTENT_I18N["itpass:63"] = {
+    en: {
+      title: "8-04 Software Development Methodologies",
+      concept: "This is an approach to proceed with software development.\n\n1. **Waterfall model**: A solid method that progresses from requirements definition to design and testing in order like a river, and does not allow any backtracking to previous steps. Suitable for large-scale development with established specifications.\n2. **Agile model**: Divide the development period into short units (**iterations** or sprints) and repeat releases in small functional units. A method that can flexibly respond to changes in specifications.\n3. **DevOps**: A culture and activities in which development and operations work closely together to achieve both rapid system release and stable operation.\n\n**Points for IT beginners:**\nThis field is asked very often in the IT Passport exam, so the shortcut to passing the exam is to not only define the keywords, but also organize related terms along with practical usage scenarios (examples).",
+      needsReview: true,
+      source: "manual-itpass-en-v1",
+      sourceRef: "data/it_passport_lessons.js:63:conceptJa"
+    }
+  };
+
+  window.CONTENT_I18N["itpass:64"] = {
+    en: {
+      title: "8-05 Project Management",
+      concept: "It is a management method (PMBOK, etc.) for completing a project on time, within budget, and with the required quality.\n\n- **WBS (Work Breakdown Structure)**: A configuration diagram that hierarchically subdivides the work of the entire project. It prevents omissions of work and serves as the basis for schedule planning and budget estimation. The minimum unit of work in WBS is called **work package**.\n\n**Points for IT beginners:**\nThis field is asked very often in the IT Passport exam, so the shortcut to passing the exam is to not only define the keywords, but also organize related terms along with practical usage scenarios (examples).",
+      needsReview: true,
+      source: "manual-itpass-en-v1",
+      sourceRef: "data/it_passport_lessons.js:64:conceptJa"
+    }
+  };
+
+  window.CONTENT_I18N["itpass:65"] = {
+    en: {
+      title: "8-06 Time Management",
+      concept: "A method for managing schedules.\n\n1. **Arrow diagram (PERT diagram)**: A network diagram that connects the order of tasks with arrows. Write down the time required for each task.\n2. **Critical path**: In an arrow diagram, the path that takes the longest number of days from start to finish**. Delays in any work along this path will also delay the completion of the entire project.\n3. **Gantt chart**: A diagram that visually represents the progress status in a bar shape, with time on the horizontal axis and work items on the vertical axis.\n\n**Points for IT beginners:**\nThis field is asked very often in the IT Passport exam, so the shortcut to passing the exam is to not only define the keywords, but also organize related terms along with practical usage scenarios (examples).",
+      needsReview: true,
+      source: "manual-itpass-en-v1",
+      sourceRef: "data/it_passport_lessons.js:65:conceptJa"
+    }
+  };
+
+  window.CONTENT_I18N["itpass:66"] = {
+    en: {
+      title: "8-07 IT Service Management",
+      concept: "It is an operation management method for providing stable and high-quality IT services to customers after the system is operational (there is a collection of best practices called **ITIL**).\n\n- **SLA (Service Level Agreement)**: A document that specifies service quality levels (uptime, etc.) agreed between a service provider and a customer.\n- **Service Desk**: The first point of contact (single point of contact) for troubles and inquiries from users.\n- **Incident management**: Activities aimed at \"recovering services as quickly as possible\" using temporary workarounds when a failure occurs (investigating the root cause is the role of problem management).\n\n**Points for IT beginners:**\nThis field is asked very often in the IT Passport exam, so the shortcut to passing the exam is to not only define the keywords, but also organize related terms along with practical usage scenarios (examples).",
+      needsReview: true,
+      source: "manual-itpass-en-v1",
+      sourceRef: "data/it_passport_lessons.js:66:conceptJa"
+    }
+  };
+
+  window.CONTENT_I18N["itpass:67"] = {
+    en: {
+      title: "8-08 System Audits",
+      concept: "This is an activity in which an objective third party (system auditor) comprehensively evaluates and verifies from an independent standpoint whether information systems comply with management policies and are being managed and operated safely and appropriately.\n\nThe auditor submits an audit report to the audited department and makes recommendations for improvement if there are any problems. To maintain independence, auditors must not be responsible for the operations of the department being audited.\n\n**Points for IT beginners:**\nThis field is asked very often in the IT Passport exam, so the shortcut to passing the exam is to not only define the keywords, but also organize related terms along with practical usage scenarios (examples).",
+      needsReview: true,
+      source: "manual-itpass-en-v1",
+      sourceRef: "data/it_passport_lessons.js:67:conceptJa"
+    }
+  };
+
+  window.CONTENT_I18N["itpass:68"] = {
+    en: {
+      title: "9-01 Financial Statements",
+      concept: "This is a financial report for disclosing a company's financial status and performance to the outside world.\n\n1. **Balance Sheet (B/S)**: A table showing the financial position of a company at a certain point in time. Place **assets** (cash and deposits, accounts receivable, etc.) on the left, and **liabilities** (borrows, accounts payable, etc.) and **net assets** (capital, retained earnings, etc.) on the right. “Assets = Liabilities + Net Assets” always holds true.\n2. **P/L - Profit and Loss statement**: A table showing business results (profits) over a certain period of time. Subtract various expenses from sales to find the final \"net income.\"\n\n**Points for IT beginners:**\nThis field is asked very often in the IT Passport exam, so the shortcut to passing the exam is to not only define the keywords, but also organize related terms along with practical usage scenarios (examples).",
+      needsReview: true,
+      source: "manual-itpass-en-v1",
+      sourceRef: "data/it_passport_lessons.js:68:conceptJa"
+    }
+  };
+
+  window.CONTENT_I18N["itpass:69"] = {
+    en: {
+      title: "9-02 Break-Even Point and Asset Management",
+      concept: "It is an indicator for business planning and cost calculation.\n\n1. **Break-even point**: Sales at which sales and total costs are exactly equal and profit is zero. If you exceed this, you will make a profit.\n   - **Fixed costs**: Expenses that remain constant regardless of sales (rent, basic salary, etc.).\n   - **Variable costs**: Costs that increase or decrease in proportion to sales (raw material costs, purchasing costs, etc.).\n   - **Formula**: `Break-even sales = fixed costs / (1 - variable cost rate)` (variable cost rate = variable costs / sales)\n2. **Depreciation**: A procedure in which the acquisition cost of fixed assets such as computers is divided into expenses according to their useful life.\n\n**Points for IT beginners:**\nThis field is asked very often in the IT Passport exam, so the shortcut to passing the exam is to not only define the keywords, but also organize related terms along with practical usage scenarios (examples).",
+      needsReview: true,
+      source: "manual-itpass-en-v1",
+      sourceRef: "data/it_passport_lessons.js:69:conceptJa"
+    }
+  };
+
+  window.CONTENT_I18N["itpass:70"] = {
+    en: {
+      title: "9-03 Intellectual Property Rights",
+      concept: "Rights to products resulting from intellectual creative activities.\n\n1. **Industrial property rights (application and registration with the Patent Office required)**:\n   - **Patent rights**: Protect technologies and inventions (advanced ideas, business patents, etc.). The period is 20 years from the date of application.\n   - **Utility model right**: Invention of the shape of an article (minor invention). The period is 10 years from the date of application.\n   - **Design Rights**: The aesthetic design of a product. The period is 25 years from registration.\n   - **Trademark rights**: Brand names and logo marks. Renewable every 10 years.\n2. **Copyright**: Protects the creative expression of thoughts and feelings (also applies to program code). **No application registration required**, it will be generated automatically when the work is completed (**non-formal system**). The algorithms and programming languages ​​themselves are not protected.\n\n**Points for IT beginners:**\nThis field is asked very often in the IT Passport exam, so the shortcut to passing the exam is to not only define the keywords, but also organize related terms along with practical usage scenarios (examples).",
+      needsReview: true,
+      source: "manual-itpass-en-v1",
+      sourceRef: "data/it_passport_lessons.js:70:conceptJa"
+    }
+  };
+
+  window.CONTENT_I18N["itpass:71"] = {
+    en: {
+      title: "9-04 Security and Personal Information Regulations",
+      concept: "This is a law for safe and appropriate IT activities.\n\n1. **Unauthorized Access Prohibition Act**: A law that prohibits the act of logging in using someone else's ID and password without permission, and the act of illegally providing ID information to others.\n2. **Personal Information Protection Act**: A law that stipulates the appropriate handling of information that can identify individuals. Information about **living individuals** is covered (dead people are not covered). In principle, it is prohibited to provide personal information to third parties without the consent of the individual.\n3. **Unfair Competition Prevention Act**: A law that prohibits the illegal acquisition and use of **trade secrets** such as a company's technology and customer list. In order to be recognized as a trade secret, it must meet three requirements: \"secrecy controllability,\" \"usefulness,\" and \"non-public knowledge.\"\n\n**Points for IT beginners:**\nThis field is asked very often in the IT Passport exam, so the shortcut to passing the exam is to not only define the keywords, but also organize related terms along with practical usage scenarios (examples).",
+      needsReview: true,
+      source: "manual-itpass-en-v1",
+      sourceRef: "data/it_passport_lessons.js:71:conceptJa"
+    }
+  };
+
+  window.CONTENT_I18N["itpass:72"] = {
+    en: {
+      title: "9-05 Labor and Transaction Regulations",
+      concept: "Labor and contract laws are the most important in system development.\n\n1. **Contract (external contract)**: A contract in which the development company (contractor) promises to complete the system (delivery of deliverables). The entrusted company** has the right to command and command the workers. The ordering party must not give direct instructions to the contractor's workers (doing so would result in illegal \"**double dispatch (disguised contracting)**\").\n2. **Worker dispatch contract**: A contract for dispatching human resources. The right to command and command the workers lies with the dispatching company (ordering company)**.\n\n**Points for IT beginners:**\nThis field is asked very often in the IT Passport exam, so the shortcut to passing the exam is to not only define the keywords, but also organize related terms along with practical usage scenarios (examples).",
+      needsReview: true,
+      source: "manual-itpass-en-v1",
+      sourceRef: "data/it_passport_lessons.js:72:conceptJa"
+    }
+  };
+
+  window.CONTENT_I18N["itpass:73"] = {
+    en: {
+      title: "9-06 Business Analysis",
+      concept: "It is a tool that visualizes a company's current situation and quality issues.\n\n1. **SWOT analysis**: A method to analyze your company's environment along four axes: **Strengths (S)**, **Weaknesses (W)** (internal environment), and **Opportunities (O)** and **Threats (T)** (external environment).\n2. **3C analysis**: A method of analyzing the market environment from three perspectives: **Customer**, **Competitor**, and **Company** when formulating business strategies.\n3. **7 Quality Control (QC) Tools**:\n   - **Pareto Chart**: A diagram that combines a bar graph that arranges data in descending order by item and a line graph that connects cumulative ratios. Used to narrow down important management items (80:20 rule).\n   - **Cause-effect diagram**: A fishbone-like diagram that shows the relationship between results (troubles, etc.) and causes (factors).\n\n**Points for IT beginners:**\nThis field is asked very often in the IT Passport exam, so the shortcut to passing the exam is to not only define the keywords, but also organize related terms along with practical usage scenarios (examples).",
+      needsReview: true,
+      source: "manual-itpass-en-v1",
+      sourceRef: "data/it_passport_lessons.js:73:conceptJa"
+    }
+  };
+
+  window.CONTENT_I18N["itpass:74"] = {
+    en: {
+      title: "9-07 Data Utilization and Problem Solving",
+      concept: "This is a method of extracting knowledge useful for management from big data.\n\n1. **Regression analysis**: A method of predicting the future by expressing the causal relationship between one variable (e.g. temperature) and another variable (e.g. beer sales) in a mathematical formula based on past data.\n2. **Correlation**: A relationship in which two data groups are related (for example, if one increases, the other also increases). However, correlation does not necessarily mean causation.\n3. **Data mining**: A technology that uses statistical methods and machine learning to \"mine\" hidden regularities and correlations from large amounts of data.\n\n**Points for IT beginners:**\nThis field is asked very often in the IT Passport exam, so the shortcut to passing the exam is to not only define the keywords, but also organize related terms along with practical usage scenarios (examples).",
+      needsReview: true,
+      source: "manual-itpass-en-v1",
+      sourceRef: "data/it_passport_lessons.js:74:conceptJa"
+    }
+  };
+
+  window.CONTENT_I18N["itpass:75"] = {
+    en: {
+      title: "9-08 Standardization",
+      concept: "This is an activity to unify products and communication standards to increase compatibility and convenience.\n\n1. **Standardization organizations**: **ISO** (International Organization for Standardization), **IEC** (international standards in the electrical field), **IEEE** (society standards for electrical and electronic engineering, including LAN standards), **JIS** (Japanese Industrial Standards).\n2. **Code standards**: **JAN code** (Japanese common product barcode), **QR code** (two-dimensional code. It has data in both vertical and horizontal directions, can record more information than JAN code, and can partially restore even if it is damaged).\n\n**Points for IT beginners:**\nThis field is asked very often in the IT Passport exam, so the shortcut to passing the exam is to not only define the keywords, but also organize related terms along with practical usage scenarios (examples).",
+      needsReview: true,
+      source: "manual-itpass-en-v1",
+      sourceRef: "data/it_passport_lessons.js:75:conceptJa"
+    }
+  };
+
+  window.CONTENT_I18N["itpass:76"] = {
+    en: {
+      title: "10-01 The Fourth Industrial Revolution and Big Data",
+      concept: "We are living in an era of digital innovation that will significantly change industrial structures and lifestyles by utilizing IoT, AI, and big data.\n\n- **Big Data**: Large-volume, diverse, and high-frequency (real-time) data groups that cannot be processed by conventional systems.\n- **Sharing Economy**: A system in which assets such as spare rooms and cars are rented out between individuals via an Internet platform (e.g. car sharing, private lodging).\n\n**Points for IT beginners:**\nThis field is asked very often in the IT Passport exam, so the shortcut to passing the exam is to not only define the keywords, but also organize related terms along with practical usage scenarios (examples).",
+      needsReview: true,
+      source: "manual-itpass-en-v1",
+      sourceRef: "data/it_passport_lessons.js:76:conceptJa"
+    }
+  };
+
+  window.CONTENT_I18N["itpass:77"] = {
+    en: {
+      title: "10-02 Corporate Activities",
+      concept: "This is the role that companies should play in aiming for a sustainable society.\n\n1. **CSR (Corporate Social Responsibility)**: The idea that companies should not only pursue profits but also fulfill their social responsibilities from the perspectives of environmental protection, social contribution, and legal compliance.\n2. **SDGs (Sustainable Development Goals)**: Sustainable development goals set by the United Nations and consisting of 17 goals to be achieved by 2030.\n3. **Green IT**: Efforts to reduce environmental impact by reducing power consumption and making systems paperless.\n\n**Points for IT beginners:**\nThis field is asked very often in the IT Passport exam, so the shortcut to passing the exam is to not only define the keywords, but also organize related terms along with practical usage scenarios (examples).",
+      needsReview: true,
+      source: "manual-itpass-en-v1",
+      sourceRef: "data/it_passport_lessons.js:77:conceptJa"
+    }
+  };
+
+  window.CONTENT_I18N["itpass:78"] = {
+    en: {
+      title: "10-03 Corporate Governance and Internal Control",
+      concept: "This is a system to prevent corporate fraud and ensure sound management.\n\n1. **Corporate Governance**: A system in which shareholders and outside directors monitor management, prevent scandals, and improve management efficiency.\n2. **Internal Control**: Rules and processes established within a company to ensure proper business operations. The purpose is to ensure the reliability of financial reporting and legal compliance.\n3. **Compliance**: Complying not only with laws and regulations, but also with rules that include corporate ethics and social common sense.\n\n**Points for IT beginners:**\nThis field is asked very often in the IT Passport exam, so the shortcut to passing the exam is to not only define the keywords, but also organize related terms along with practical usage scenarios (examples).",
+      needsReview: true,
+      source: "manual-itpass-en-v1",
+      sourceRef: "data/it_passport_lessons.js:78:conceptJa"
+    }
+  };
+
+  window.CONTENT_I18N["itpass:79"] = {
+    en: {
+      title: "10-04 Management Strategy",
+      concept: "It is a management method to survive the competition and maximize growth.\n\n1. **Core Competence**: Unique core strengths (technology and know-how) that are unique to your company and cannot be imitated by other companies.\n2. **M&A**: Mergers and acquisitions of companies. The time to enter a new business can be significantly shortened.\n3. **Alliance**: An alliance in which multiple companies complement each other in technology and sales channels on an equal footing.\n4. **OEM**: Manufacturing a product under an original equipment brand name. Manufacturers can increase factory utilization rates, and purchasers can sell products without owning a factory.\n\n**Points for IT beginners:**\nThis field is asked very often in the IT Passport exam, so the shortcut to passing the exam is to not only define the keywords, but also organize related terms along with practical usage scenarios (examples).",
+      needsReview: true,
+      source: "manual-itpass-en-v1",
+      sourceRef: "data/it_passport_lessons.js:79:conceptJa"
+    }
+  };
+
+  window.CONTENT_I18N["itpass:80"] = {
+    en: {
+      title: "10-05 Information System Strategy and Business Processes",
+      concept: "It is a systemization strategy that utilizes IT to streamline and transform business.\n\n1. **EA (Enterprise Architecture)**: A method for modeling the overall picture of a large company's organization, business processes, systems, and data, and achieving overall optimization.\n2. **BPR (Business Process Redesign)**: **Fundamentally reviewing, radically redesigning and rebuilding** existing organizations and business processes in order to achieve dramatic results.\n3. **BPM (Business Process Management)**: Activities to continuously monitor and improve the flow of business.\n\n**Points for IT beginners:**\nThis field is asked very often in the IT Passport exam, so the shortcut to passing the exam is to not only define the keywords, but also organize related terms along with practical usage scenarios (examples).",
+      needsReview: true,
+      source: "manual-itpass-en-v1",
+      sourceRef: "data/it_passport_lessons.js:80:conceptJa"
+    }
+  };
+
+  window.CONTENT_I18N["itpass:81"] = {
+    en: {
+      title: "10-06 Marketing Strategy",
+      concept: "This is a method of maximizing sales by encouraging customers to choose a product.\n\n1. **STP**: An analysis method to segment the market (**S**egment), narrow down the target (**T**arget), and establish your company's position (**P**position).\n2. **4P**: A marketing mix that combines the four elements of **Product**, **Price**, **Place** (distribution), and **Promotion** (sales promotion) from the seller's perspective.\n3. **Upselling/Cross-selling**: Recommending a higher-priced product (up)/Getting people to buy related products together (cross).\n4. **RFM analysis**: A method to evaluate customer quality on three axes: **Recency** (latest purchase date), **Frequency** (purchase frequency), and **Monetary** (purchase amount).\n\n**Points for IT beginners:**\nThis field is asked very often in the IT Passport exam, so the shortcut to passing the exam is to not only define the keywords, but also organize related terms along with practical usage scenarios (examples).",
+      needsReview: true,
+      source: "manual-itpass-en-v1",
+      sourceRef: "data/it_passport_lessons.js:81:conceptJa"
+    }
+  };
+
+  window.CONTENT_I18N["itpass:82"] = {
+    en: {
+      title: "10-07 Technology Strategy",
+      concept: "This is a strategy for gaining a sustainable competitive advantage with technology at the core.\n\n1. **MOT (Management of Technology)**: A management strategy that efficiently connects the results of technological development to business and increases corporate value creation.\n2. **Technology roadmap**: A schedule chart that diagrams predictions and goals for technology evolution and new product development, with time on the horizontal axis and technological elements and product lines on the vertical axis.\n3. **Innovation Dilemma**: A phenomenon in which existing, successful companies listen to customers and stick to high-quality conventional products, but lose their market to new companies that create disruptive low-tech, low-cost innovations.\n\n**Points for IT beginners:**\nThis field is asked very often in the IT Passport exam, so the shortcut to passing the exam is to not only define the keywords, but also organize related terms along with practical usage scenarios (examples).",
+      needsReview: true,
+      source: "manual-itpass-en-v1",
+      sourceRef: "data/it_passport_lessons.js:82:conceptJa"
+    }
+  };
+
+  window.CONTENT_I18N["itpass:83"] = {
+    en: {
+      title: "10-08 Performance Evaluation and Management Systems",
+      concept: "A management tool that visualizes company performance and centralizes resources.\n\n1. **BSC (Balanced Scorecard)**: A method for performing performance evaluation and strategy execution in a well-balanced manner not only from financial indicators but also from four perspectives: \"finance,\" \"customer,\" \"business process,\" and \"learning and growth.\"**\n2. **KPI**: Key performance indicator. Intermediate target value (CSF is a key success factor) to measure progress towards achieving the strategy.\n3. **Major business management systems**:\n   - **ERP**: An integrated information system that centrally manages a company's people, goods, money, and information for overall optimization.\n   - **SCM**: Connect the chain from raw material procurement to sales and minimize inventory.\n   - **CRM**: Centralize customer information, deepen relationships, and increase repeat customers.\n\n**Points for IT beginners:**\nThis field is asked very often in the IT Passport exam, so the shortcut to passing the exam is to not only define the keywords, but also organize related terms along with practical usage scenarios (examples).",
+      needsReview: true,
+      source: "manual-itpass-en-v1",
+      sourceRef: "data/it_passport_lessons.js:83:conceptJa"
+    }
+  };
+
+  window.CONTENT_I18N["itpass:84"] = {
+    en: {
+      title: "10-09 Business Systems and Engineering",
+      concept: "This is an IT system that increases production efficiency in the manufacturing industry.\n\n1. **CAD / CAM**: Computer-aided design (CAD) and manufacturing assistance (CAM) that uses design data to control machine tools and automatically produce.\n2. **Concurrent Engineering**: In product development, a method that dramatically shortens the development period by **proceeding in parallel** rather than proceeding with each process such as design, prototyping, and manufacturing independently.\n3. **JIT (Just in Time)**: Toyota's signature method of producing and supplying what is needed, when it is needed, and in the amount it is needed. Reduce work-in-progress and inventory to the bare minimum.\n\n**Points for IT beginners:**\nThis field is asked very often in the IT Passport exam, so the shortcut to passing the exam is to not only define the keywords, but also organize related terms along with practical usage scenarios (examples).",
+      needsReview: true,
+      source: "manual-itpass-en-v1",
+      sourceRef: "data/it_passport_lessons.js:84:conceptJa"
+    }
+  };
+
+  window.CONTENT_I18N["itpass:85"] = {
+    en: {
+      title: "10-10 E-Business",
+      concept: "This is a form of business that utilizes the Internet.\n\n1. **Transaction type**: **B2C** (business-to-individual, e-commerce mall, etc.), **B2B** (business-to-business transactions), **C2C** (flea market apps, etc.).\n2. **O2O (Online to Offline)**: A method of encouraging customers to visit and purchase from physical stores (offline) through online activities (coupon distribution, etc.).\n3. **Smart contract**: A mechanism that automatically executes contracts according to predefined rules on the blockchain. Safe transactions that are extremely difficult to tamper with are possible without intermediaries.\n\n**Points for IT beginners:**\nThis field is asked very often in the IT Passport exam, so the shortcut to passing the exam is to not only define the keywords, but also organize related terms along with practical usage scenarios (examples).",
+      needsReview: true,
+      source: "manual-itpass-en-v1",
+      sourceRef: "data/it_passport_lessons.js:85:conceptJa"
+    }
+  };
 })();

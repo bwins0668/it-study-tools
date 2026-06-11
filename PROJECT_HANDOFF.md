@@ -869,3 +869,22 @@
 *   当前 IT Passport 英文覆盖率：**60/85 = 70.6%**
 *   下一步建议：
     *   第 8.3 轮继续扩展 IT Passport Lesson 61-85（完备覆盖 100%）。
+
+### 2026-06-11 - 第 8.3 轮任务：IT Passport 英文内容语言包 Lesson 61-85 补全
+*   任务类型：数据包批量补全轮
+*   完成内容：
+    *   **科目与包范围**：将 IT Passport 的英文内容语言包从 Lesson 60 扩展并补全到了 Lesson 85。新增了 Lesson 61-85 的英文 `title` 和 `concept` 翻译。IT Passport 英文基准包达成 85/85 = 100% 完备覆盖。使用 Subject Key `"itpass"` 并完整保留了 Lesson 1-60 的英文数据。
+    *   **翻译与语言合规**：所有译文面向零基础，采用地道且通俗的短句，保留了专业 IT 英文词汇，校正了 `受入テスト` 译为 `Acceptance test` 时的冗余括号。
+    *   **未修改范围**：完全没有修改 `assets/js/app.js`、`index.html` 或是 `content-i18n.js`。未修改 `data/it_passport_lessons.js` 原始课件数据，未翻译任何 quiz / options / playgroundTask / analogy / example / past exams，亦未修改任何 SQL 多语言包。
+*   检查与测试：
+    *   **单元与回归测试**：在 Node.js 环境下通过更新后的测试脚本 `test_i18n.js` 进行全量读取测试。IT Passport 英文 Lesson 1-85 能够正常解析并返回，Lesson 86 能够正常返回 `null` fallback；非外置语种（`zh-CN`/`ja-JP`）访问 Lesson 1 与 Lesson 85 均返回 `null` fallback。SQL 36课多语言包回归读取测试全数正常通过。
+    *   **质量合规检查**：运行 `check_quality.js` 脚本验证，IT Passport 的 85 个 entry 数据均标记为 `needsReview: true`，`source` 均为 `"manual-itpass-en-v1"`，`sourceRef` 与课程及 ID 精确配对。无任何 CJK 字符残留（已把假名范围的中点“・”统一规范为英文横杠“- ”）。无任何 Markdown pipe table 或危险 HTML，fenced code block 完全闭合。
+    *   **语法检查**：使用 `node --check` 逐一、单独检查 9 个关联 JavaScript 文件，全部通过。
+    *   **浏览器抽查**：本轮未做浏览器抽查，仅完成 Node 读取与静态检查。
+*   修改文件：
+    *   `PROJECT_HANDOFF.md`
+    *   `data/i18n_content/itpass_en.js`
+*   当前 IT Passport 英文覆盖率：**85/85 = 100% (封口)**
+*   下一步建议：
+    *   第 8.4 轮做 IT Passport 英文包总审计与交付质量安全边际校验。
+    *   审计通过后再考虑派生 vi/my/fr 或进入 SG 英文基准包建设。
