@@ -243,4 +243,64 @@
       sourceRef: "data/lessons.js:24:conceptJa"
     }
   };
+
+  window.CONTENT_I18N["sql:25"] = {
+    en: {
+      title: "25-Using Subqueries",
+      concept: "An SQL query nested inside another SQL query is called a **subquery**.\n\nFor example, if you want \"a list of students whose score is higher than the average score,\" you first calculate the average score using a subquery, and then use that result to filter the rows in the outer SQL query.\n\nYou write the inner SQL query inside parentheses `()`.",
+      needsReview: true,
+      source: "manual-sql-en-v2",
+      sourceRef: "data/lessons.js:25:conceptJa"
+    }
+  };
+
+  window.CONTENT_I18N["sql:26"] = {
+    en: {
+      title: "26-Inserting Rows with INSERT",
+      concept: "To register new data into a table, use the **INSERT** statement.\n\nYou write it as:\n\n```sql\nINSERT INTO table_name (column1, column2) VALUES (value1, value2);\n```\n\nThe order of the values must match the order of the specified columns.",
+      needsReview: true,
+      source: "manual-sql-en-v2",
+      sourceRef: "data/lessons.js:26:conceptJa"
+    }
+  };
+
+  window.CONTENT_I18N["sql:27"] = {
+    en: {
+      title: "27-Updating Rows with UPDATE",
+      concept: "To modify existing data in a table, use the **UPDATE** statement.\n\nYou write it like:\n\n```sql\nUPDATE table_name SET column_name = new_value WHERE condition;\n```\n\n> [!CAUTION]\n> **Extremely Important**: If you forget to write the WHERE clause, all rows in the table will be updated!",
+      needsReview: true,
+      source: "manual-sql-en-v2",
+      sourceRef: "data/lessons.js:27:conceptJa"
+    }
+  };
+
+  window.CONTENT_I18N["sql:28"] = {
+    en: {
+      title: "28-Deleting Rows with DELETE",
+      concept: "To delete data from a table, use the **DELETE** statement.\n\nYou write it as:\n\n```sql\nDELETE FROM table_name WHERE condition;\n```\n\n> [!CAUTION]\n> **Extremely Important**: Just like with the UPDATE statement, if there is no WHERE clause, all rows in the table will be deleted!",
+      needsReview: true,
+      source: "manual-sql-en-v2",
+      sourceRef: "data/lessons.js:28:conceptJa"
+    }
+  };
+
+  window.CONTENT_I18N["sql:29"] = {
+    en: {
+      title: "29-Creating Tables with CREATE TABLE",
+      concept: "To create a new table, use the **CREATE TABLE** statement.\n\nYou define it like:\n\n```sql\nCREATE TABLE table_name (column_name data_type, column_name data_type, ...);\n```\n\nFor example, to set a column as the primary key, declare it with the \"PRIMARY KEY\" constraint.",
+      needsReview: true,
+      source: "manual-sql-en-v2",
+      sourceRef: "data/lessons.js:29:conceptJa"
+    }
+  };
+
+  window.CONTENT_I18N["sql:30"] = {
+    en: {
+      title: "30-Using Constraints: NOT NULL, UNIQUE, and DEFAULT",
+      concept: "You can set rules (constraints) on table columns to maintain data quality:\n\n- **NOT NULL**: Disallows empty spaces (NULL).\n- **UNIQUE**: Disallows duplicate values.\n- **DEFAULT value**: Sets a value that is automatically entered when a value is omitted.",
+      needsReview: true,
+      source: "manual-sql-en-v2",
+      sourceRef: "data/lessons.js:30:conceptJa"
+    }
+  };
 })();
