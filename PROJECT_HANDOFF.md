@@ -1045,3 +1045,27 @@
 *   下一步建议：
     *   **第 9.4 轮**：SG 多语言派生 POC，先做 Lesson 1-3 的 vi/my/fr
     *   或进入 **Java 英文基准包建设**
+
+### 2026-06-11 - 第 9.4 轮任务：SG 多语言派生 POC
+*   任务类型：数据包 POC
+*   完成内容：
+    *   基于已封口的 SG 英文基准包 `sg_en.js`，派生 SG 多语言 POC。
+    *   新建 `data/i18n_content/sg_vi.js` — SG Lesson 1-3 越南语
+    *   新建 `data/i18n_content/sg_my.js` — SG Lesson 1-3 缅甸语
+    *   新建 `data/i18n_content/sg_fr.js` — SG Lesson 1-3 法语
+    *   所有派生内容仅包含 `.vi` / `.my` / `.fr`，不覆盖 `.en` 层。
+    *   修改 `index.html`，在 `sg_en.js` 之后、`app.js` 之前加载 `sg_vi.js` / `sg_my.js` / `sg_fr.js`。
+    *   每条包含 title、concept、needsReview: true、source: "ai-assisted-from-en-v1"、sourceRef 指向 sg_en.js。
+    *   未修改 `sg_en.js`、`data/sg_lessons.js`、`app.js`、`content-i18n.js` 以及 SQL 和 IT Passport 的多语言包。
+*   检查与测试：
+    *   ContentI18n 读取测试：SG vi/my/fr Lesson 1-3 均返回正确翻译，Lesson 4 返回 null，zh-CN/ja-JP/default-ja-zh 返回 null。
+    *   SQL 36 课四语言包回归：全部正常 ✅
+    *   IT Passport 85 课四语言包回归：全部正常 ✅
+    *   语法检查：16 个关联 JS 文件 node --check 逐一通过 ✅
+    *   浏览器抽查：本轮未做浏览器抽查，仅完成 Node 读取与静态检查。
+*   修改文件：`PROJECT_HANDOFF.md`、`index.html`
+*   新增文件：`data/i18n_content/sg_vi.js`、`data/i18n_content/sg_my.js`、`data/i18n_content/sg_fr.js`
+*   当前 SG 多语言包状态：**POC 完成 (vi/my/fr Lesson 1-3)**
+*   下一步建议：
+    *   **第 9.5 轮**：SG 多语言派生批量补全，将 vi/my/fr 扩展到全 44 课
+    *   或先做第 9.4.1 轮 SG 多语言 POC 安全复查
