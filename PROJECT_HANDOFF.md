@@ -993,3 +993,17 @@
     *   `data/i18n_content/sg_en.js`
 *   下一步建议：
     *   第 9.2 轮：批量扩展 SG 英文包。每批可按 15 或 20 课推进，平稳且安全地覆盖到全 44 课。
+
+### 2026-06-11 - 第 9.1.1 轮任务：SG 英文 POC 接入安全复查
+*   任务类型：安全审计与交付质量复查轮
+*   完成内容：
+    *   **基于 e078e32 提交进行了安全与完整性双重复查**。
+    *   **最小接入审计**：复查确认 `app.js` 的修改仅限于 `loadSgLesson(id)` 方法内部，调用了 `getLessonLocalizedText("sg", lesson)`。对 SQL 的 `loadLesson`、IT Passport 的 `loadItPassLesson`、Java / Python 的渲染没有任何修改，未修改 `formatMarkdown` 以及 `ContentI18n` 底层核心，完全保证了其他科目的隔离安全。
+    *   **加载顺序审计**：复查确认 `index.html` 中的引入位置在 `itpass_fr.js` 之后、`it_terms.js` 之前，未打乱 SQL 和 IT Passport 语言包的加载顺序，没有改动 UI 及无关脚本。
+    *   **sg_en.js 结构审计**：复查确认文件遵循 IIFE 匿名自执行函数，仅针对 `CONTENT_I18N` 字典中以 `"sg:"` 为前缀的 1-10 课进行扩展。所有 entry 满足 `needsReview: true`，`source` 均为 `"manual-sg-en-v1"`，`sourceRef` 配对精确无误。无 quiz、options 等违禁字段写入，title 和 concept 译文均非空，且无中文/日文残留。
+    *   **语法与静态测试**：
+        *   对 13 个关联 JavaScript 文件的 `node --check` 语法校验已逐一、单独运行，全部通过。
+        *   运行 `test_i18n.js` 进行 ContentI18n 级别读取和回退测试，SG Lesson 1-10 英文解析正常，Lesson 11 返回 null，zh-CN/ja-JP 返回 null。SQL 36课与 IT Passport 85课 4 语言包回归测试断言全部通过。
+        *   浏览器抽查情况：本轮未做浏览器抽查，仅完成 Node 读取与静态检查。
+*   当前结论：SG 英文 POC 接入安全复查通过，无 any 阻断风险，允许进入第 9.2 轮。
+*   下一步建议：第 9.2 轮批量扩展 SG 英文包，可直接补齐 Lesson 11-44。
