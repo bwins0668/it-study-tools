@@ -622,3 +622,22 @@
 *   保留观察项：Markdown 表格仍未渲染，后续如有必要单独处理
 *   下一步建议：
     *   第 7.7 轮 SQL Lesson 11-17 英文包扩展（BETWEEN, IN, ORDER BY, LIMIT, DISTINCT, 函数, CASE）
+
+### 2026-06-11 - 第 7.7 轮任务：SQL 英文内容语言包 Lesson 11-17 扩展
+*   任务类型：语言包扩展
+*   完成内容：
+    *   修改 `data/i18n_content/sql_en.js`，新增 SQL Lesson 11-17 英文 title + concept
+    *   覆盖：BETWEEN, IN, ORDER BY, LIMIT, DISTINCT, Functions, CASE
+    *   每课包含 fenced code block SQL 示例（利用 formatMarkdown 新渲染能力）
+    *   未使用 Markdown 表格
+    *   未修改 data/lessons.js / app.js / content-i18n.js / index.html
+    *   未翻译 quiz / code / playground / past exams
+*   检查：
+    *   ContentI18n 读取测试：Lesson 11-17 en-US → 全部返回 title + concept ✅
+    *   Lesson 18+ / zh-CN / ja-JP → 全部 null ✅
+    *   Lesson 1-10 未被破坏 ✅
+    *   node --check 全部通过 ✅
+*   commit: `392307e`, push 成功，工作区 clean
+*   当前 SQL 英文覆盖率：**17/36 = 47%**
+*   下一步建议：
+    *   **第 7.8 轮** SQL Lesson 18-24 英文包扩展（聚合函数, GROUP BY, HAVING, 数据库设计, INNER/LEFT/RIGHT JOIN, Self JOIN）
