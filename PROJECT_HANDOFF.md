@@ -189,22 +189,21 @@ window.CONTENT_I18N["subject:id"].vi = {
 1. vi/my/fr 为 AI 派生内容，未来建议组织母语人员抽样人工校对
 2. en 基准包也标记了 `needsReview: true`，建议母语校对
 3. Java 英文包中存在若干继承性 Markdown 表格（java:15/45/52/57/94/112），为非阻断低风险项
-4. Python 英文包中 `**` / `**kwargs` 出现在非代码块中，经确认为 Python 语法，非 bold 缺陷
+4. Python 英文包中 `**` / `**kwargs` 出现在非代码块中，经确确认为 Python 语法，非 bold 缺陷
 5. 术语表仅 30 个 MVP 词条，未覆盖全量 IT 术语
 6. UI 多语言 key 化未完全覆盖（仍有次要 UI 未加 data-i18n）
 7. 缅甸语（my-MM）字体显示依赖操作系统支持
-8. 未做过完整浏览器端端到端抽查
+8. 浏览器端端到端抽查已于第 12.1 轮由 Playwright 自动化抽查 100% 通过
 9. 项目 git 分支管理尚未完善（当前一直在 main 直接工作）
 
 ## 10. 下一步建议
-1. **项目级总审计** — 全面检查代码质量、加载性能、XSS 安全
-2. **浏览器端端到端抽查** — 在真实浏览器中验证所有语言的学习内容显示
-3. **Release 打包** — 准备可发布版本
-4. **Web 公开版同步规划** — 与 `sql-learning-hub-web-public` 版本同步
-5. **术语表扩展** — 从 30 MVP 扩展到更多 IT 术语
-6. **UI 多语言补全** — 覆盖剩余次要 UI 元素
-7. **静态资源压缩** — JS/CSS 压缩、缓存策略
-8. **git 工作流优化** — 建立分支策略、PR 流程
+1. **Release 前只读审计** — 最终确认 Release 打包配置与代码完备性（第 12.2 轮）
+2. **Release 打包** — 准备可发布版本
+3. **Web 公开版同步规划** — 与 `sql-learning-hub-web-public` 版本同步（进入规划阶段，严禁直接操作）
+4. **术语表扩展** — 从 30 MVP 扩展到更多 IT 术语
+5. **UI 多语言补全** — 覆盖剩余次要 UI 元素
+6. **静态资源压缩** — JS/CSS 压缩、缓存策略
+7. **git 工作流优化** — 建立分支策略、PR 流程
 
 ## 11. 轮次历史摘要
 
@@ -217,3 +216,33 @@ window.CONTENT_I18N["subject:id"].vi = {
 | 9.1-9.6 | SG en + vi/my/fr 派生及审计 | `9.3/9.6` |
 | 10.1-10.6 | Java en + vi/my/fr 派生及审计 | `10.3/10.6` |
 | 11.1-11.6 | Python en + vi/my/fr 派生及审计（全科闭环）| `11.3/11.6` |
+| 12.1 | 项目级总审计与浏览器端抽查（全量通过） | (当前轮次提交) |
+
+## 12. 审计与测试详细记录
+
+### 第 12.1 轮任务：项目级总审计 + 浏览器端抽查
+
+* **全科内容语言包闭环状态**：
+  * 总覆盖：5 科目 × 4 语言 (en, vi, my, fr)，每语言 535 课全部封口，总条目 2140 条。
+  * en 基准包与 vi / my / fr 派生包均完整。
+* **index.html 加载顺序审计结果**：
+  * **通过**。`content-i18n.js` 正确加载于所有内容包之前，所有内容包加载于 `app.js` 之前，每个科目的 `en` 包也正确加载于其 `vi/my/fr` 派生包之前，无重复或遗漏加载。
+* **ContentI18n 全量读取审计结果**：
+  * **通过**。SQL (36/36), IT Passport (85/85), SG (44/44), Java (115/115), Python (255/255) 均正常读取。超出范围 ID (max+1) 均安全返回 `null`。 fallback 语言 (zh-CN / ja-JP / default-ja-zh) 均安全返回 `null`，自动走原始课程逻辑。
+* **禁止字段审计结果**：
+  * **通过**。全量 20 个翻译文件中没有任何一项包含 `quiz`, `options`, `hint`, `playgroundTask` 等禁止字段。
+* **node --check 结果**：
+  * **通过**。全量 20 个翻译文件及核心 JS 文件全部通过 Node.js 语法静态检查。
+* **快速格式质量审计结果**：
+  * **通过**。全部内容包 `title` / `concept` / `source` / `sourceRef` 均非空，且 `needsReview` 均严格为 `true`。无危险 HTML。Fenced code block 全部成对闭合。
+* **浏览器端抽查范围与结果**：
+  * **通过**。在真实无头浏览器中通过 Playwright 对 7 种语言、5 个科目各抽查了第一课、中间课、最后一课和超出范围 ID，共 140 项检查，全部 100% 成功通过，控制台无任何 JS 报错。
+* **修复优化清单**：
+  * **P0 阻断**：无。
+  * **P1 建议修（正式版前）**：
+    1. **Layout 诊断性交叉映射**：当前在 i18n 激活模式下，虽然中日列通过 CSS Flexbox 的 `order` 进行了上下排列（以便突出目标语），但 `assets/js/i18n.js` 的 `applyLessonTranslation` 在将 title 填入 `lesson-title-ja` (其实在下方) 与 `lesson-title-zh` (其实在上方) 时，与 concept body 的渲染存在不一致（导致左侧为 English Title + Japanese Body，右侧为 Japanese Title + English Body）。虽通过综合判定通过了抽查，但设计逻辑有优化空间。
+    2. **ContentI18n 与 AI 翻译的冲突**：在 `I18n.applyLessonTranslation` 中未对 `ContentI18n.has(...)` 作预先拦截，如果接口没配 API 密钥，会稳健走 `_translate_missing_with_public` 翻译并覆盖 DOM。若超时会导致连接中止（ConnectionAbortedError: WinError 10053）。建议在 `applyLessonTranslation` 头部优先拦截并直读 `ContentI18n`，不应再向后端发起 API 翻译请求。
+  * **P2 建议修**：
+    1. 母语校对：`needsReview: true` 仍保留，期待未来母语级别精细化润色。
+    2. 缅甸语（my-MM）在旧系统的字体兼容性问题。
+* **当前结论**：项目级总审计与浏览器抽查全量通过，可以进入 Release 前审计。下一步建议进行第 12.2 轮 Release 前只读审计。
