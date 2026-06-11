@@ -1192,3 +1192,35 @@
 *   下一步建议：
     *   **第 10.4 轮**：Java 多语言派生 POC，先做 Lesson 1-3 的 vi/my/fr
     *   或进入 **Python 英文基准包建设**
+
+### 2026-06-11 - 第 10.4 轮任务：Java 多语言派生 POC
+*   任务类型：多语言派生 POC 引入轮
+*   完成内容：
+    *   **科目与包范围**：基于已封口的 Java 英文基准包 `java_en.js`，派生 Java 多语言 POC。
+    *   新建 `data/i18n_content/java_vi.js` — Java Lesson 1-3 越南语
+    *   新建 `data/i18n_content/java_my.js` — Java Lesson 1-3 缅甸语
+    *   新建 `data/i18n_content/java_fr.js` — Java Lesson 1-3 法语
+    *   所有派生内容仅包含 `.vi` / `.my` / `.fr`，不覆盖 `.en` 层。
+    *   修改 `index.html`，在 `java_en.js` 之后、`app.js` 之前加载 `java_vi.js` / `java_my.js` / `java_fr.js`。
+    *   每条包含 title、concept、needsReview: true、source: "ai-assisted-from-en-v1"、sourceRef 指向 java_en.js。
+    *   未修改 `java_en.js`、`data/java_lessons.js`、`app.js`、`content-i18n.js` 以及 SQL/IT Passport/SG 的多语言包。
+*   检查与测试：
+    *   ContentI18n 读取测试：Java vi/my/fr Lesson 1-3 均返回正确翻译，Lesson 4 返回 null ✅
+    *   SQL 36 课四语言包回归：全部正常 ✅
+    *   IT Passport 85 课四语言包回归：全部正常 ✅
+    *   SG 44 课四语言包回归：全部正常 ✅
+    *   合计：781/781 ContentI18n 读取通过 ✅
+    *   语法检查：20 个关联 JS 文件 node --check 逐一通过 ✅
+    *   快速质量检查：无禁止字段混入、无 CJK 污染、无 Markdown 表格、fenced code block 和 bold 成对闭合 ✅
+    *   浏览器抽查：本轮未做浏览器抽查，仅完成 Node 读取与静态检查。
+*   修改文件：
+    *   `PROJECT_HANDOFF.md`
+    *   `index.html`
+*   新增文件：
+    *   `data/i18n_content/java_vi.js`
+    *   `data/i18n_content/java_my.js`
+    *   `data/i18n_content/java_fr.js`
+*   当前 Java 多语言包状态：**POC 完成 (vi/my/fr Lesson 1-3)**
+*   下一步建议：
+    *   第 10.5 轮：Java 多语言派生包批量补全，将 vi/my/fr 扩展到全 115 课
+    *   或先做第 10.4.1 轮 Java 多语言 POC 安全复查
