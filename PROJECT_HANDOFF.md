@@ -41,9 +41,9 @@
 ## 5. 当前 Git 状态记录
 *   当前分支：`main`
 *   未提交修改：`data/study_ai.db`, `tree.txt`
-*   本轮修改文件：`assets/js/i18n.js`, `index.html`, `assets/js/app.js`, `assets/js/java_sandbox.js`, `assets/js/python_sandbox.js`, `assets/js/i18n-ui-dict.js`
-*   本轮新增文件：`PROJECT_HANDOFF.md`
-*   是否 commit：否
+*   本轮修改文件：`PROJECT_HANDOFF.md`, `index.html`
+*   本轮新增文件：`data/i18n_content/sql_vi.js`, `data/i18n_content/sql_my.js`, `data/i18n_content/sql_fr.js`
+*   是否 commit：是 (待 commit)
 
 ## 6. 本轮完成内容
 *   [x] 创建 `PROJECT_HANDOFF.md` 作为项目交接文件。
@@ -721,4 +721,41 @@
     *   遗留观察项：Lesson 8 / Lesson 10 存在低风险 Markdown pipe table，在此标记为非阻断排版观察项。
 *   当前 SQL 英文覆盖率：**36/36 = 100% (已修复错位且已封口)**
 *   下一步建议：
-    *   **第 7.13 轮** 多语言派生 POC 设计与开发（例如 vi-VN, my-MM 自动化派生）
+    *   **第 7.13 轮** 多语言派生 POC 设计与开发
+
+### 2026-06-11 - 第 7.13 轮任务：SQL 多语言派生 POC
+*   任务类型：多语言派生 POC 最小实现
+*   完成内容：
+    *   设计并实现了“英文基准包 -> 其他语言派生包”的文件结构与按需加载机制。
+    *   新增了越南语 `sql_vi.js`、缅甸语 `sql_my.js`、法语 `sql_fr.js` 三个语言包，分别包含 SQL Lesson 1-3 对应语言的派生内容。
+    *   这些新语言包遵循了以下规范：
+        *   不覆盖已有的英文内容，只追加对应的 `vi`/`my`/`fr` 属性。
+        *   `needsReview` 状态全部设置为 `true`。
+        *   `source` 设为 `ai-assisted-from-en-v1`。
+        *   `sourceRef` 指向英文基准包对应的 entry。
+        *   保留 SQL 关键字大写、表名/列名不本地化。
+    *   修改了 `index.html`，在 `sql_en.js` 之后、`app.js` 之前顺序引入了这三个新脚本，确保多语言运行时能解析。
+    *   只读确认了多语言运行时 `content-i18n.js` 原生支持对 `vi-VN`/`my-MM`/`fr-FR` 的规范化映射，未修改任何运行时代码或课程基础数据。
+*   检查与测试：
+    *   利用 Node.js 模拟环境测试脚本 `test_i18n.js` 运行测试，所有 7.13 单元断言通过 ✅
+        *   `ContentI18n.get` 在英文 Lesson 1-36 仍然完全正常。
+        *   `ContentI18n.get` 在 `vi-VN` / `my-MM` / `fr-FR` 语言下读取 Lesson 1-3 正常返回相应派生文本。
+        *   `ContentI18n.get` 在 Lesson 4 访问返回 null，安全 fallback 到中日对照内容。
+        *   `needsReview`, `source`, `sourceRef` 等元数据断言符合规范。
+    *   `node --check` 语法检查全部新增/修改文件及关联文件（共8个）全部通过。
+*   修改文件：
+    *   `PROJECT_HANDOFF.md`
+    *   `index.html`
+*   新增文件：
+    *   `data/i18n_content/sql_vi.js`
+    *   `data/i18n_content/sql_my.js`
+    *   `data/i18n_content/sql_fr.js`
+*   未修改范围：
+    *   `data/i18n_content/sql_en.js` (英文包未被修改)
+    *   `assets/js/content-i18n.js` (运行时未修改)
+    *   `assets/js/app.js` (页面渲染未修改)
+    *   `data/lessons.js` (原始课程数据未修改)
+*   当前 SQL 英文覆盖率：**36/36 = 100% (已修复错位且已封口)**
+*   下一步建议：
+    *   若 POC 通过，再决定是否批量派生 SQL Lesson 4-36。
+    *   或先开启其他科目（如 IT Passport / Java / Python）的英文基准包建设。
