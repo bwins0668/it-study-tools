@@ -447,6 +447,47 @@ window.CONTENT_I18N["subject:id"].vi = {
 
 * **当前结论**：无 P0 阻断项。Web 公开版目录结构和同步差异已全面审计，备份与合并策略切实可行，可以安全进入第 12.6 轮 Web 公开版同步执行。
 
+### 第 12.6 轮任务：Web 公开版备份 + 精确同步 + smoke test
+
+* **基于主项目 Commit**：`71d8d00`
+* **Web 公开版起始 Commit**：`c6878f2`
+* **备份路径**：`E:\项目\web-public-backups\sql-learning-hub-web-public-20260612-0723`
+* **同步文件清单**：
+  * **直接同步 (覆盖/新建)**：
+    * `assets/css/glossary.css`
+    * `assets/js/content-i18n.js`
+    * `assets/js/glossary.js`
+    * `assets/js/i18n-ui-dict.js`
+    * `assets/js/i18n.js`
+    * `data/glossary/it_terms.js`
+    * `data/i18n_content/` (共 20 个多语言内容包)
+  * **手动合并**：
+    * `index.html` (整合 UI 字典、多语言内容包及术语表脚本加载，保留 SQLite WASM 与 PWA 配置)
+    * `assets/js/app.js` (整合 `getLessonLocalizedText` 运行时、各科目加载器拦截与 fenced code blocks Markdown 渲染，保留 WebCodeRunner 及 SQLite WASM 逻辑)
+    * `assets/js/code-runner-api.js` (更新 API 降级报错信息以完美适配 WebCodeRunner 尚未配置时的 Web Safe Mode 拦截提示)
+* **安全规避清单 (未同步文件)**：
+  * 未同步 PC 专用文件：`Study-Tools.exe`、`启动.bat`、`tree.txt`
+  * 未同步本地编译/运行环境：`python/`、`jdk/`、`textbooks/`、`node_modules/`、`.git/`
+  * 未同步开发数据库与临时文件夹：`data/study_ai.db`、`tools/`、`scratch/`、`backups/`、`output/`
+  * 未同步 Sandbox 运行时与样式：`assets/js/java_sandbox.js`、`assets/js/python_sandbox.js`、`assets/css/index.css`、`package.json`
+* **静态语法检查 (node --check)**：
+  * **全部通过**。对所有同步和合并后的核心 JS 运行时文件、UI 字典和 20 个内容翻译包进行语法检查，无任何语法错误。
+* **本地 Web 冒烟测试 (smoke test)**：
+  * **100% 通过**。运行 `npm run dev` 启动 5173 端口，使用 Playwright 对 5 个科目 × 7 语言进行多端 (PC & Mobile) 烟雾测试：
+    1. 首页正常加载，PWA / Service Worker 无阻断报错；
+    2. SQLite WASM 引擎加载成功，书籍与学校数据库查询流畅；
+    3. 5 个科目的英文、越南语、缅甸语、法语包静态内容完美渲染，中文/日语/中日对照 fallback 逻辑正确生效；
+    4. IT 术语表弹出、检索与分类筛选正常工作；
+    5. Web 端执行 Java/Python 代码时正确提示 Web Safe Mode，不请求本地后端。
+* **Web 公开版提交与推送**：
+  * **Commit Hash**：`bb75fa7`
+  * **推送结果**：成功推送到 `origin master`。
+* **主项目状态**：
+  * 源码保持未修改，仅更新 `PROJECT_HANDOFF.md` 记录同步。
+* **下一步建议**：
+  * **第 12.7 轮：Web 线上访问验证**（验证 Cloudflare Pages 线上部署后的 PWA、WASM SQLite 及 CDN 缓存行为）。
+  * 优化 Web 公开版 README 和 SEO 标签。
+
 
 
 
