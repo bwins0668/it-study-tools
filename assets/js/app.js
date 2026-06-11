@@ -244,7 +244,7 @@ function switchSubject(subject) {
   
   // Prompt if a CBT or Coding mock exam is currently active
   if (activeCbtExam && !activeCbtExam.isSubmitted) {
-    if (!confirm("現在実行中のITパスポート試験があります。科目を切り替えると現在の試験は中断され、データが破失します。切り替えますか？\n(当前有正在进行的 IT Passport 考试，切换科目将中断考试且不保存数据，确定要切换吗？)")) {
+    if (!confirmKey("dialog.switchExamConfirm")) {
       return;
     }
     if (cbtTimerInterval) clearInterval(cbtTimerInterval);
@@ -252,9 +252,9 @@ function switchSubject(subject) {
     if (currentSubject === 'itpass') itpassSubMode = 'lessons';
     else if (currentSubject === 'sg') sgSubMode = 'lessons';
   }
-  
+
   if (activeCodingExam && !activeCodingExam.isSubmitted) {
-    if (!confirm("現在実行中の実技模擬試験があります。科目を切り替えると現在の試験は中断され、数据が破失します。切り替えますか？\n(当前有正在进行的实操模拟考试，切换科目将中断考试且不保存数据，确定要切换吗？)")) {
+    if (!confirmKey("dialog.switchExamConfirm")) {
       return;
     }
     if (cbtTimerInterval) clearInterval(cbtTimerInterval);
@@ -309,9 +309,14 @@ function switchSubject(subject) {
   
   if (subject === "typing") {
     if (window.TypingHub) window.TypingHub.open();
+    if (mainTitle) {
+      mainTitle.setAttribute("data-i18n", "nav.typing");
+      mainTitle.innerText = I18n.t("nav.typing");
+    }
   } else if (subject === "sql") {
     logoIcon.className = "fa-solid fa-database logo-icon";
-    mainTitle.innerText = "SQL / MySQL 学习";
+    mainTitle.setAttribute("data-i18n", "nav.sql");
+    mainTitle.innerText = I18n.t("nav.sql");
     
     // Show/hide sub-headers and containers
     document.getElementById("sql-sub-header").style.display = "flex";
@@ -335,14 +340,15 @@ function switchSubject(subject) {
     document.getElementById("lesson-glossary").style.display = "none";
     document.getElementById("example-pre-block").style.display = "block";
     document.getElementById("copy-example-btn").style.display = "inline-flex";
-    document.getElementById("example-header-title").innerHTML = `<i class="fa-solid fa-code"></i> SQL構文例 (SQL示例)`;
+    document.getElementById("example-header-title").innerHTML = `<i class="fa-solid fa-code"></i> <span data-i18n="lesson.sqlExample">${I18n.t("lesson.sqlExample")}</span>`;
     document.getElementById("java-vocab-section").style.display = "none";
     
     // Toggle sub-modes (Textbook vs Exam)
     switchSqlSubMode(sqlSubMode);
   } else if (subject === "java") {
     logoIcon.className = "fa-brands fa-java logo-icon";
-    mainTitle.innerText = "Java 学習";
+    mainTitle.setAttribute("data-i18n", "nav.java");
+    mainTitle.innerText = I18n.t("nav.java");
     document.body.classList.add('mode-java');
     
     document.getElementById("java-sub-header").style.display = "flex";
@@ -365,13 +371,14 @@ function switchSubject(subject) {
     document.getElementById("example-pre-block").style.display = "block";
     document.getElementById("copy-example-btn").style.display = "inline-flex";
     document.getElementById("itpass-quiz-nav").style.display = "none";
-    document.getElementById("example-header-title").innerHTML = `<i class="fa-brands fa-java"></i> Java コード例 (示例代码)`;
+    document.getElementById("example-header-title").innerHTML = `<i class="fa-brands fa-java"></i> <span data-i18n="lesson.javaExample">${I18n.t("lesson.javaExample")}</span>`;
 
     // Toggle sub-modes (Textbook vs Exam)
     switchJavaSubMode(javaSubMode);
   } else if (subject === "python") {
     logoIcon.className = "fa-brands fa-python logo-icon";
-    mainTitle.innerText = "Python 学习";
+    mainTitle.setAttribute("data-i18n", "nav.python");
+    mainTitle.innerText = I18n.t("nav.python");
     document.body.classList.add('mode-python');
     
     document.getElementById("python-sub-header").style.display = "flex";
@@ -393,14 +400,15 @@ function switchSubject(subject) {
     document.getElementById("example-pre-block").style.display = "block";
     document.getElementById("copy-example-btn").style.display = "inline-flex";
     document.getElementById("itpass-quiz-nav").style.display = "none";
-    document.getElementById("example-header-title").innerHTML = `<i class="fa-brands fa-python"></i> Python コード例 (示例代码)`;
+    document.getElementById("example-header-title").innerHTML = `<i class="fa-brands fa-python"></i> <span data-i18n="lesson.pythonExample">${I18n.t("lesson.pythonExample")}</span>`;
     document.getElementById("java-vocab-section").style.display = "none";
 
     // Toggle sub-modes (Textbook vs Exam)
     switchPythonSubMode(pythonSubMode);
   } else if (subject === "sg") {
     logoIcon.className = "fa-solid fa-shield-halved logo-icon";
-    mainTitle.innerText = "情報セキュリティー 备考";
+    mainTitle.setAttribute("data-i18n", "nav.sg");
+    mainTitle.innerText = I18n.t("nav.sg");
     document.body.classList.add('mode-sg');
     
     document.getElementById("sg-sub-header").style.display = "flex";
@@ -423,7 +431,8 @@ function switchSubject(subject) {
     switchSgSubMode(sgSubMode);
   } else {
     logoIcon.className = "fa-solid fa-graduation-cap logo-icon";
-    mainTitle.innerText = "ITパスポート 备考";
+    mainTitle.setAttribute("data-i18n", "nav.itpass");
+    mainTitle.innerText = I18n.t("nav.itpass");
     
     document.getElementById("itpass-sub-header").style.display = "flex";
     document.getElementById("header-challenge").style.display = "none";
@@ -548,15 +557,14 @@ function switchSgSubMode(mode) {
 
 // Reset all progress for the active subject
 function resetAllProgress() {
-  const msgMap = {
-    sql:    "すべての学習進捗をリセットしますか？ (确定要重置所有 SQL 学习进度吗？)",
-    itpass: "ITパスポートの学習進捗をリセットしますか？ (确定要重置所有 IT Passport 学习进度吗？)",
-    java:   "Java学習進捗をリセットしますか？ (确定要重置所有 Java 学习进度吗？)",
-    sg:     "情報セキュリティの学習進捗をリセットします加？ (确定要重置所有 SG 学习进度吗？)",
-    python: "Python学習進捗をリセットしますか？ (确定要重置所有 Python 学习进度吗？)"
+  const subjectNames = {
+    sql: "SQL",
+    itpass: "IT Passport",
+    java: "Java",
+    sg: "SG",
+    python: "Python"
   };
-  const msg = msgMap[currentSubject] || msgMap.sql;
-  if (confirm(msg)) {
+  if (confirmKey("dialog.resetProgressConfirm", { subject: subjectNames[currentSubject] || currentSubject })) {
     if (currentSubject === "sql") {
       completedLessons = [];
       localStorage.removeItem("sql_hub_completed");
@@ -1125,7 +1133,7 @@ function javaQuizPrev() {
     javaQuizIdx--;
     renderJavaQuizQuestion();
   } else {
-    showToast("已经是第一题了。", "info");
+    showToastKey("toast.alreadyFirst", "info");
   }
 }
 
@@ -1135,7 +1143,7 @@ function javaQuizNext() {
     javaQuizIdx++;
     renderJavaQuizQuestion();
   } else {
-    showToast("已经是最后一题了。", "info");
+    showToastKey("toast.alreadyLast", "info");
   }
 }
 
@@ -1203,7 +1211,7 @@ function markJavaProgress(lessonId, action) {
     if (typeof JavaSandbox !== 'undefined') JavaSandbox.updateProgressDisplay();
     
     const title = lesson ? lesson.titleJa : lessonId;
-    showToast(`🏆 ${title} — クイズ合格！章节标记完成！`, "success");
+    showToastKey("toast.lessonQuizPassed", "success", { title: title });
   }
 }
 
@@ -1596,7 +1604,7 @@ function itpassQuizPrev() {
     itpassQuizIdx--;
     loadItPassChapterQuiz();
   } else {
-    showToast("已经是第一题了。", "info");
+    showToastKey("toast.alreadyFirst", "info");
   }
 }
 
@@ -1606,7 +1614,7 @@ function itpassQuizNext() {
     itpassQuizIdx++;
     loadItPassChapterQuiz();
   } else {
-    showToast("已经是最后一题了。", "info");
+    showToastKey("toast.alreadyLast", "info");
   }
 }
 
@@ -1655,7 +1663,7 @@ function sgQuizPrev() {
     sgQuizIdx--;
     loadSgChapterQuiz();
   } else {
-    showToast("已经是第一题了。", "info");
+    showToastKey("toast.alreadyFirst", "info");
   }
 }
 
@@ -1665,7 +1673,7 @@ function sgQuizNext() {
     sgQuizIdx++;
     loadSgChapterQuiz();
   } else {
-    showToast("已经是最后一题了。", "info");
+    showToastKey("toast.alreadyLast", "info");
   }
 }
 
@@ -1689,7 +1697,7 @@ function markSgLessonComplete(id) {
     
     const lesson = SG_LESSONS.find(l => l.id === id);
     const displayTitle = lesson ? lesson.titleZh : `第 ${id} 节`;
-    showToast(`🏆 恭喜！${displayTitle} 课后小测已全部通过，本节标记为“已完成”！`, "success");
+    showToastKey("toast.lessonQuizPassed", "success", { title: displayTitle });
   }
 }
 
@@ -1899,7 +1907,7 @@ function markItPassLessonComplete(id) {
     
     const lesson = IT_PASSPORT_LESSONS.find(l => l.id === id);
     const displayTitle = lesson ? lesson.titleZh : `第 ${id} 节`;
-    showToast(`🏆 恭喜！${displayTitle} 课后小测已全部通过，本节标记为“已完成”！`, "success");
+    showToastKey("toast.lessonQuizPassed", "success", { title: displayTitle });
   }
 }
 
@@ -1981,7 +1989,10 @@ function switchDBGroup(group) {
     header.classList.remove('collapsed');
     icon.style.transform = 'rotate(0deg)';
   }
-  showToast(`🗄️ 切换到《${group === 'shop' ? '书店 / ブック店' : '学校 / 学校'}》数据库——您现在可以查询 ${DB_GROUPS[group].join(', ')} 这些表`, 'info');
+  showToastKey("toast.dbSwitched", "info", {
+    dbName: group === 'shop' ? 'Bookstore / ブック店' : 'School / 学校',
+    tables: DB_GROUPS[group].join(', ')
+  });
 }
 
 function selectSchemaTable(tableName) {
@@ -2058,9 +2069,9 @@ function resetOutputPlaceholder() {
 
 // Reset Database Mock State
 function resetMockDB() {
-  if (confirm("模拟数据库将被重置回初始状态，继续吗？")) {
+  if (confirmKey("dialog.resetDbConfirm")) {
     sqlEngine.reset();
-    showToast('✅ 模拟数据库已重置回初始数据！', 'success');
+    showToastKey("toast.dbReset", "success");
     resetOutputPlaceholder();
   }
 }
@@ -2092,7 +2103,7 @@ function showPlaygroundHint() {
   const exampleCode = isRandomPracticeActive && lesson.randomExercise
     ? lesson.randomExercise.example
     : lesson.example;
-  showToast(`💡 提示：参考以下 SQL 结构：<br><code style="font-family:'Fira Code',monospace;color:#a5f3fc;">${exampleCode}</code>`, 'info');
+  showToastKey("toast.sqlHint", "info", { code: exampleCode });
 }
 
 // Run Query
@@ -2101,7 +2112,7 @@ function runPlaygroundQuery() {
   const sql = editor.value.trim();
   
   if (!sql) {
-    alert("SQLクエリを入力してください。 (请输入 SQL 语句。)");
+    alertKey("message.inputSqlRequired");
     return;
   }
   
@@ -2496,7 +2507,7 @@ function buildCrossPool() {
 function startCrossChallenge() {
   const pool = buildCrossPool();
   if (pool.length === 0) {
-    showToast('⚠️ 还没有已完成的课节！请先学习并完成至少一个课节。', 'error');
+    showToastKey("toast.noCompletedLessons", "error");
     return;
   }
   crossChallengeActive = true;
@@ -2510,7 +2521,7 @@ function startCrossChallenge() {
   document.getElementById('challenge-source-tag').style.display = 'inline-block';
 
   renderCrossChallenge();
-  showToast(`🔥 综合挑战开始！共 ${pool.length} 道题来自已完成的 ${completedLessons.length} 个课节。`, 'success');
+  showToastKey("toast.challengeStarted", "success", { lessonCount: completedLessons.length, count: pool.length });
 }
 
 function nextCrossChallenge() {
@@ -2553,7 +2564,7 @@ function stopCrossChallenge() {
 
   updateMissionUI();
   resetOutputPlaceholder();
-  showToast('✅ 综合挑战结束。', 'info');
+  showToastKey("toast.challengeEnded", "info");
 }
 
 const _originalValidateTaskCompletion = validateTaskCompletion;
@@ -2565,7 +2576,7 @@ validateTaskCompletion = function(userSql) {
       if (statusDiv) {
         statusDiv.innerHTML = `<span class="status-success"><i class="fa-solid fa-fire-flame-curved"></i> 综合挑战达成！🎉 (${crossChallengeIndex + 1}/${crossChallengePool.length})</span>`;
       }
-      showToast(`🎉 正确！来自第 ${ex.sourceId} 节的题目已通过！`, 'success');
+      showToastKey("toast.challengeQuestionCorrect", "success", { sourceId: ex.sourceId });
       return;
     }
   }
@@ -2895,7 +2906,7 @@ function startCbtExam() {
   }
   
   if (filtered.length === 0) {
-    showToast("⚠️ 符合条件的真题为空，请更改出题选项！", "error");
+    showToastKey("toast.examEmpty", "error");
     return;
   }
   
@@ -2966,7 +2977,7 @@ function startCbtExam() {
   // Render First Question
   renderCbtQuestion();
   
-  showToast("📝 CBT 模拟考试已生成，考试开始！", "success");
+  showToastKey("toast.examStarted", "success");
 }
 
 function startCbtTimer() {
@@ -2985,7 +2996,7 @@ function startCbtTimer() {
     
     if (activeCbtExam.timeRemaining <= 0) {
       clearInterval(cbtTimerInterval);
-      showToast("⏰ 答题时间已到，系统自动交卷！", "error");
+      showToastKey("toast.examTimeout", "error");
       submitCbtExam(true);
     }
   }, 1000);
@@ -3108,7 +3119,7 @@ function cbtPrevQuestion() {
     activeCbtExam.currentQIdx--;
     renderCbtQuestion();
   } else {
-    showToast("已经是第一题了。", "info");
+    showToastKey("toast.alreadyFirst", "info");
   }
 }
 
@@ -3118,12 +3129,12 @@ function cbtNextQuestion() {
     activeCbtExam.currentQIdx++;
     renderCbtQuestion();
   } else {
-    showToast("已经是最后一题了。", "info");
+    showToastKey("toast.alreadyLast", "info");
   }
 }
 
 function exitCbtExam() {
-  if (confirm("确定要中断退出当前考试吗？进度将不被保存。")) {
+  if (confirmKey("dialog.exitExamConfirm")) {
     clearInterval(cbtTimerInterval);
     activeCbtExam = null;
     switchItPassSubMode("dojo");
@@ -3133,11 +3144,11 @@ function exitCbtExam() {
 function submitCbtExam(auto = false) {
   if (!auto) {
     const unanswered = activeCbtExam.answers.filter(a => a === -1).length;
-    let msg = "确定要提交试卷吗？";
     if (unanswered > 0) {
-      msg = `警告: 还有 ${unanswered} 道题未作答！确定现在就要提交试卷并查看分析报告吗？`;
+      if (!confirmKey("dialog.submitExamUnansweredConfirm", { count: unanswered })) return;
+    } else {
+      if (!confirmKey("dialog.submitExamConfirm")) return;
     }
-    if (!confirm(msg)) return;
   }
   
   clearInterval(cbtTimerInterval);
@@ -3302,7 +3313,7 @@ function submitCbtExam(auto = false) {
   
   activeCbtExam = null;
   
-  showToast(isPassed ? "🎉 恭喜！您已成功通过本次模拟测试！" : "💪 未通过合格标准，请继续努力！", isPassed ? "success" : "info");
+  showToastKey(isPassed ? "toast.examPassed" : "toast.examFailed", isPassed ? "success" : "info");
 }
 
 function buildTextbookPdfHash(page, highlightTerm = null) {
@@ -3705,7 +3716,7 @@ function pythonQuizPrev() {
     pythonQuizIdx--;
     renderPythonQuizQuestion();
   } else {
-    showToast("已经是第一题了。", "info");
+    showToastKey("toast.alreadyFirst", "info");
   }
 }
 
@@ -3715,7 +3726,7 @@ function pythonQuizNext() {
     pythonQuizIdx++;
     renderPythonQuizQuestion();
   } else {
-    showToast("已经是最后一题了。", "info");
+    showToastKey("toast.alreadyLast", "info");
   }
 }
 
@@ -3915,7 +3926,7 @@ function startCodingExam() {
   else if (currentSubject === 'python') pool = [...PYTHON_EXAM_QUESTIONS];
   
   if (pool.length === 0) {
-    showToast("⚠️ 没有找到该科目的考题数据库！", "error");
+    showToastKey("toast.examDbNotFound", "error");
     return;
   }
   
@@ -3967,7 +3978,7 @@ function startCodingExam() {
   renderCodingQuestion();
   initSidebar();
   
-  showToast("📝 实操模拟考试开始！请根据日文描述完成代码编写。", "success");
+  showToastKey("toast.practicalExamStarted", "success");
 }
 
 // Timer loops every 1 second
@@ -4005,7 +4016,7 @@ function startCodingTimer() {
     
     if (activeCodingExam.timeRemaining <= 0) {
       clearInterval(cbtTimerInterval);
-      showToast("⏰ 答题时间已到，系统自动交卷！", "error");
+      showToastKey("toast.examTimeout", "error");
       submitCodingExam(true);
     }
   }, 1000);
@@ -4154,7 +4165,7 @@ function codingPrevQuestion() {
   if (activeCodingExam.currentQIdx > 0) {
     jumpToCodingQuestion(activeCodingExam.currentQIdx - 1);
   } else {
-    showToast("已经是第一题了。", "info");
+    showToastKey("toast.alreadyFirst", "info");
   }
 }
 
@@ -4163,7 +4174,7 @@ function codingNextQuestion() {
   if (activeCodingExam.currentQIdx < activeCodingExam.questions.length - 1) {
     jumpToCodingQuestion(activeCodingExam.currentQIdx + 1);
   } else {
-    showToast("已经是最后一题了。", "info");
+    showToastKey("toast.alreadyLast", "info");
   }
 }
 
@@ -4250,7 +4261,7 @@ async function verifyCurrentCodingQuestion() {
       activeCodingExam.userStatuses[q.id] = 'failed';
       renderCodingQuestion();
       initSidebar();
-      showToast("❌ SQL 语法错误，判定未通过！", "error");
+      showToastKey("toast.sqlSyntaxError", "error");
       return;
     }
     
@@ -4287,11 +4298,11 @@ async function verifyCurrentCodingQuestion() {
     if (isCorrect) {
       activeCodingExam.userStatuses[q.id] = 'passed';
       statusDiv.innerHTML = `<span class="status-success"><i class="fa-solid fa-star"></i> 判定成功 (Passed ✓)</span>`;
-      showToast("🎉 判定通过 (Passed ✓)！已保存答案。", "success");
+    showToastKey("toast.verifySuccess", "success");
     } else {
       activeCodingExam.userStatuses[q.id] = 'failed';
       statusDiv.innerHTML = `<span class="status-error"><i class="fa-solid fa-circle-xmark"></i> 判定失敗 (结果不一致)</span>`;
-      showToast("❌ 运行结果与期望数据不一致，请检查排序、过滤或选择的列数！", "error");
+      showToastKey("toast.sqlOutputMismatch", "error");
     }
     
     renderCodingQuestion();
@@ -4339,7 +4350,7 @@ async function verifyCurrentCodingQuestion() {
           sandboxStatus.className = "java-sandbox-status java-status-error";
         }
         activeCodingExam.userStatuses[q.id] = 'failed';
-        showToast("❌ 编译错误，判定失败！", "error");
+        showToastKey("toast.compileError", "error");
       } else if (res.runtimeError) {
         textToShow = (res.output ? '// 出力 / Output:\n' + res.output + '\n\n' : '') + "⚠️ 実行エラー / Runtime Error:\n" + res.runtimeError;
         outputContent.className = "java-output-content java-output-error";
@@ -4348,7 +4359,7 @@ async function verifyCurrentCodingQuestion() {
           sandboxStatus.className = "java-sandbox-status java-status-error";
         }
         activeCodingExam.userStatuses[q.id] = 'failed';
-        showToast("❌ 运行错误，判定失败！", "error");
+        showToastKey("toast.runtimeError", "error");
       } else {
         textToShow = res.output || '';
         outputContent.className = "java-output-content java-output-success";
@@ -4361,7 +4372,7 @@ async function verifyCurrentCodingQuestion() {
             sandboxStatus.innerText = "成功 / Success ✓";
             sandboxStatus.className = "java-sandbox-status java-status-success";
           }
-          showToast("🎉 判定通过 (Passed ✓)！已保存答案。", "success");
+        showToastKey("toast.verifySuccess", "success");
         } else {
           activeCodingExam.userStatuses[q.id] = 'failed';
           textToShow += `\n\n[⚠️ 判定失敗 / Incorrect Output]\n-- 期望输出结果 (Expected):\n${q.expectedOutput}`;
@@ -4369,7 +4380,7 @@ async function verifyCurrentCodingQuestion() {
             sandboxStatus.innerText = "不適合 / Failed ✗";
             sandboxStatus.className = "java-sandbox-status java-status-error";
           }
-          showToast("❌ 输出内容不一致，判定失败！", "error");
+          showToastKey("toast.outputMismatch", "error");
         }
       }
       
@@ -4432,7 +4443,7 @@ async function verifyCurrentCodingQuestion() {
           sandboxStatus.className = "python-sandbox-status python-status-error";
         }
         activeCodingExam.userStatuses[q.id] = 'failed';
-        showToast("❌ Python 语法错误，判定失败！", "error");
+        showToastKey("toast.sqlSyntaxError", "error");
       } else if (res.runtimeError) {
         textToShow = (res.output ? '# 出力 / Output:\n' + res.output + '\n\n' : '') + "⚠️ 実行エラー / Runtime Error:\n" + res.runtimeError;
         outputContent.className = "python-output-content python-output-error";
@@ -4441,7 +4452,7 @@ async function verifyCurrentCodingQuestion() {
           sandboxStatus.className = "python-sandbox-status python-status-error";
         }
         activeCodingExam.userStatuses[q.id] = 'failed';
-        showToast("❌ 运行错误，判定失败！", "error");
+        showToastKey("toast.runtimeError", "error");
       } else {
         textToShow = res.output || '';
         outputContent.className = "python-output-content python-output-success";
@@ -4454,7 +4465,7 @@ async function verifyCurrentCodingQuestion() {
             sandboxStatus.innerText = "成功 / Success ✓";
             sandboxStatus.className = "python-sandbox-status python-status-success";
           }
-          showToast("🎉 判定通过 (Passed ✓)！已保存答案。", "success");
+        showToastKey("toast.verifySuccess", "success");
         } else {
           activeCodingExam.userStatuses[q.id] = 'failed';
           textToShow += `\n\n# [⚠️ 判定失敗 / Incorrect Output]\n# -- 期望输出结果 (Expected):\n# ${q.expectedOutput}`;
@@ -4462,7 +4473,7 @@ async function verifyCurrentCodingQuestion() {
             sandboxStatus.innerText = "不適合 / Failed ✗";
             sandboxStatus.className = "python-sandbox-status python-status-error";
           }
-          showToast("❌ 输出内容不一致，判定失败！", "error");
+          showToastKey("toast.outputMismatch", "error");
         }
       }
       
@@ -4487,7 +4498,7 @@ async function verifyCurrentCodingQuestion() {
 
 // Exit coding exam completely (cleans timer and restores normal book view)
 function exitCodingExam() {
-  if (confirm("确定要中断并退出当前考试吗？已作答的代码和测试状态将不被保存。")) {
+  if (confirmKey("dialog.exitExamConfirm")) {
     if (cbtTimerInterval) clearInterval(cbtTimerInterval);
     activeCodingExam = null;
     
@@ -4507,15 +4518,13 @@ function submitCodingExam(auto = false) {
   if (!activeCodingExam) return;
   
   if (!auto) {
-    const total = activeCodingExam.questions.length;
-    const passed = activeCodingExam.questions.filter(q => activeCodingExam.userStatuses[q.id] === 'passed').length;
     const unanswered = activeCodingExam.questions.filter(q => activeCodingExam.userStatuses[q.id] === 'idle').length;
-    
-    let msg = `确认提交试卷吗？目前已通过 ${passed} / ${total} 题。`;
+
     if (unanswered > 0) {
-      msg = `警告：还有 ${unanswered} 道题完全没有进行过判定尝试！\n` + msg;
+      if (!confirmKey("dialog.submitCodingExamUnansweredConfirm", { count: unanswered })) return;
+    } else {
+      if (!confirmKey("dialog.submitExamConfirm")) return;
     }
-    if (!confirm(msg)) return;
   }
   
   // Save active code of current question
@@ -4553,7 +4562,7 @@ function submitCodingExam(auto = false) {
   renderCodingExamResults();
   initSidebar();
   
-  showToast("🎉 实操考试提交成功！已生成详细成绩单与评定。", "success");
+  showToastKey("toast.practicalExamSubmitted", "success");
 }
 
 // Render scorecard results

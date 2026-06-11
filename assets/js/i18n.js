@@ -8,6 +8,10 @@
   const SKIP_SELECTOR = [
     "[data-i18n-skip]",
     "[data-i18n-managed]",
+    "[data-i18n]",
+    "[data-i18n-placeholder]",
+    "[data-i18n-title]",
+    "[data-i18n-aria-label]",
     "script",
     "style",
     "noscript",
@@ -25,10 +29,19 @@
     ".data-table",
     ".sql-result-table",
     ".CodeMirror",
+    ".quiz-section",
+    ".coding-exam-panel",
+    ".eq-body-area",
+    ".typing-workspace",
+    "[data-content-type=\"lesson\"]",
+    "[data-content-type=\"exam-question\"]",
+    "[data-content-type=\"explanation\"]"
   ].join(",");
 
   const LANGUAGES = [
     { code: DEFAULT_LANG, label: "默认中日双语", native: "既定: 日本語 / 中文", dir: "ltr" },
+    { code: "ja", label: "Japanese", native: "日本語", dir: "ltr" },
+    { code: "zh", label: "Chinese (Simplified)", native: "中文 (简体)", dir: "ltr" },
     { code: "en", label: "English", native: "English", dir: "ltr" },
     { code: "my", label: "Burmese", native: "မြန်မာဘာသာ", dir: "ltr" },
     { code: "th", label: "Thai", native: "ไทย", dir: "ltr" },
@@ -1111,6 +1124,190 @@
     updateButton();
   }
 
+  function shouldSkipStatic(el) {
+    if (!el) return true;
+    const STATIC_SKIP_SELECTOR = [
+      "[data-i18n-skip]",
+      "[data-i18n-managed=\"lesson\"]",
+      "script",
+      "style",
+      "noscript",
+      "pre",
+      "code",
+      "textarea",
+      ".quiz-section",
+      ".coding-exam-panel",
+      ".eq-body-area",
+      ".typing-workspace",
+      "[data-content-type=\"lesson\"]",
+      "[data-content-type=\"exam-question\"]",
+      "[data-content-type=\"explanation\"]"
+    ].join(",");
+    return el.closest(STATIC_SKIP_SELECTOR);
+  }
+
+  function normalizeLanguageCode(code) {
+    if (!code) return "default-ja-zh";
+    const clean = code.trim().toLowerCase();
+    if (clean === "default-ja-zh") return "default-ja-zh";
+    if (clean === "en" || clean === "en-us" || clean.startsWith("en-")) return "en-US";
+    if (clean === "ja" || clean === "ja-jp" || clean.startsWith("ja-")) return "ja-JP";
+    if (clean === "zh" || clean === "zh-cn" || clean.startsWith("zh-")) return "zh-CN";
+    if (clean === "vi" || clean === "vi-vn" || clean.startsWith("vi-")) return "vi-VN";
+    if (clean === "my" || clean === "my-mm" || clean.startsWith("my-")) return "my-MM";
+    if (clean === "fr" || clean === "fr-fr" || clean.startsWith("fr-")) return "fr-FR";
+    return "en-US";
+  }
+
+  function translateStatic(key, params) {
+    if (!key) return "";
+    const lang = normalizeLanguageCode(currentLang);
+    const fallbackChain = [lang, "en-US", "ja-JP", "zh-CN"];
+    let translated = null;
+
+    function getNestedValue(obj, path) {
+      if (!obj) return null;
+      const parts = path.split(".");
+      let val = obj;
+      for (const part of parts) {
+        if (val[part] === undefined) return null;
+        val = val[part];
+      }
+      return val;
+    }
+
+    if (window.I18nUiDict) {
+      for (const l of fallbackChain) {
+        const dict = window.I18nUiDict[l];
+        if (dict) {
+          const val = getNestedValue(dict, key);
+          if (val !== null && val !== undefined) {
+            translated = val;
+            break;
+          }
+        }
+      }
+    }
+
+    if (translated === null || translated === undefined) {
+      translated = key;
+    }
+
+    if (params && typeof params === "object") {
+      let text = String(translated);
+      for (const k in params) {
+        if (Object.prototype.hasOwnProperty.call(params, k)) {
+          text = text.replace(new RegExp(`{${k}}`, "g"), params[k]);
+        }
+      }
+      return text;
+    }
+
+    return String(translated);
+  }
+
+  function applyStaticUI(root) {
+    const container = root || document.body;
+    if (!container) return;
+
+    const isDefault = (currentLang === DEFAULT_LANG);
+
+    // 1. data-i18n
+    container.querySelectorAll("[data-i18n]").forEach((el) => {
+      if (shouldSkipStatic(el)) return;
+      const key = el.getAttribute("data-i18n");
+      
+      let original = el.getAttribute("data-i18n-original-text");
+      if (original === null) {
+        original = el.textContent || "";
+        el.setAttribute("data-i18n-original-text", original);
+      }
+
+      if (isDefault) {
+        el.textContent = original;
+        el.removeAttribute("data-i18n-managed");
+      } else {
+        const val = translateStatic(key);
+        if (val) {
+          el.textContent = val;
+          el.setAttribute("data-i18n-managed", "static");
+        }
+      }
+    });
+
+    // 2. data-i18n-placeholder
+    container.querySelectorAll("[data-i18n-placeholder]").forEach((el) => {
+      if (shouldSkipStatic(el)) return;
+      const key = el.getAttribute("data-i18n-placeholder");
+      
+      let original = el.getAttribute("data-i18n-original-placeholder");
+      if (original === null) {
+        original = el.getAttribute("placeholder") || "";
+        el.setAttribute("data-i18n-original-placeholder", original);
+      }
+
+      if (isDefault) {
+        if (original) el.setAttribute("placeholder", original);
+        else el.removeAttribute("placeholder");
+        el.removeAttribute("data-i18n-managed");
+      } else {
+        const val = translateStatic(key);
+        if (val) {
+          el.setAttribute("placeholder", val);
+          el.setAttribute("data-i18n-managed", "static");
+        }
+      }
+    });
+
+    // 3. data-i18n-title
+    container.querySelectorAll("[data-i18n-title]").forEach((el) => {
+      if (shouldSkipStatic(el)) return;
+      const key = el.getAttribute("data-i18n-title");
+      
+      let original = el.getAttribute("data-i18n-original-title");
+      if (original === null) {
+        original = el.getAttribute("title") || "";
+        el.setAttribute("data-i18n-original-title", original);
+      }
+
+      if (isDefault) {
+        if (original) el.setAttribute("title", original);
+        else el.removeAttribute("title");
+        el.removeAttribute("data-i18n-managed");
+      } else {
+        const val = translateStatic(key);
+        if (val) {
+          el.setAttribute("title", val);
+          el.setAttribute("data-i18n-managed", "static");
+        }
+      }
+    });
+
+    // 4. data-i18n-aria-label
+    container.querySelectorAll("[data-i18n-aria-label]").forEach((el) => {
+      if (shouldSkipStatic(el)) return;
+      const key = el.getAttribute("data-i18n-aria-label");
+      
+      let original = el.getAttribute("data-i18n-original-aria-label");
+      if (original === null) {
+        original = el.getAttribute("aria-label") || "";
+        el.setAttribute("data-i18n-original-aria-label", original);
+      }
+
+      if (isDefault) {
+        if (original) el.setAttribute("aria-label", original);
+        else el.removeAttribute("aria-label");
+        el.removeAttribute("data-i18n-managed");
+      } else {
+        const val = translateStatic(key);
+        if (val) {
+          el.setAttribute("aria-label", val);
+          el.setAttribute("data-i18n-managed", "static");
+        }
+      }
+    });
+  }
+
   async function setLanguage(code) {
     const next = languageByCode.has(code) ? code : DEFAULT_LANG;
     if (next === currentLang) return;
@@ -1123,6 +1320,15 @@
     updateDocumentState();
     updateButton();
     updateCourseLabels();
+    
+    // Apply static UI translations
+    applyStaticUI(document.body);
+
+    // Notify glossary and other components of language change
+    try {
+      document.dispatchEvent(new CustomEvent("i18n:languageChanged", { detail: { language: currentLang } }));
+    } catch (_e) { /* ignore dispatch errors */ }
+
     if (typeof window.refreshI18nForCurrentLesson === "function") {
       window.refreshI18nForCurrentLesson();
     }
@@ -1150,6 +1356,7 @@
     createMenu();
     updateDocumentState();
     updateCourseLabels();
+    applyStaticUI(document.body);
     startObserver();
     if (typeof window.refreshI18nForCurrentLesson === "function") {
       window.refreshI18nForCurrentLesson();
@@ -1167,7 +1374,9 @@
     translateBatch,
     applyLessonTranslation,
     scheduleTranslate,
-    t: async (key, options = {}) => {
+    applyStaticUI,
+    t: translateStatic,
+    tAsync: async (key, options = {}) => {
       const text = options.ja || options.source || "";
       if (!isActive() || !text) return text;
       const id = `manual-${key || Date.now()}`;
@@ -1184,9 +1393,29 @@
     },
     renderPair: async (key, options = {}) => {
       const source = options.ja || options.source || "";
-      const translated = await window.I18n.t(key, options);
+      const translated = await window.I18n.tAsync(key, options);
       return renderTargetText(source, translated);
     },
+  };
+
+  // Global helper functions
+  window.showToastKey = function (key, type = "info", params = null) {
+    const msg = window.I18n ? window.I18n.t(key, params) : key;
+    if (typeof window.showToast === "function") {
+      window.showToast(msg, type);
+    } else {
+      console.log(`[Toast] [${type}] ${msg}`);
+    }
+  };
+
+  window.alertKey = function (key, params = null) {
+    const msg = window.I18n ? window.I18n.t(key, params) : key;
+    window.alert(msg);
+  };
+
+  window.confirmKey = function (key, params = null) {
+    const msg = window.I18n ? window.I18n.t(key, params) : key;
+    return window.confirm(msg);
   };
 
   if (document.readyState === "loading") {

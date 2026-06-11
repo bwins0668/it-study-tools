@@ -1,0 +1,343 @@
+/* Glossary Modal - Study Tools */
+/* Minimal, non-intrusive styles for the glossary modal */
+/* Uses glossary- prefix to avoid conflicts */
+
+/* ---- Modal Container ---- */
+.glossary-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.glossary-modal[hidden] {
+  display: none;
+}
+
+/* ---- Backdrop ---- */
+.glossary-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(4px);
+  z-index: 800;
+}
+
+/* ---- Dialog Panel ---- */
+.glossary-dialog {
+  position: relative;
+  z-index: 801;
+  width: min(680px, calc(100vw - 24px));
+  max-height: min(85vh, 700px);
+  background: var(--bg-secondary, #0f172a);
+  border: 1px solid var(--border-color, rgba(255,255,255,0.08));
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 24px 72px rgba(0, 0, 0, 0.5);
+  animation: glossaryFadeIn 0.2s ease-out;
+  font-family: var(--font-main, "Myanmar Text", "Pyidaungsu", system-ui, sans-serif);
+}
+
+@keyframes glossaryFadeIn {
+  from { opacity: 0; transform: translateY(12px) scale(0.98); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* ---- Header ---- */
+.glossary-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 16px 20px 12px;
+  border-bottom: 1px solid var(--border-color, rgba(255,255,255,0.06));
+  flex-shrink: 0;
+}
+
+.glossary-header h2 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--neon-cyan, #22d3ee);
+}
+
+.glossary-header p {
+  margin: 2px 0 0;
+  font-size: 12px;
+  color: var(--text-muted, #94a3b8);
+}
+
+.glossary-close-btn {
+  background: transparent;
+  border: 1px solid var(--border-color, rgba(255,255,255,0.08));
+  color: var(--text-muted, #94a3b8);
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: all 0.15s;
+}
+
+.glossary-close-btn:hover {
+  background: rgba(255,255,255,0.06);
+  color: var(--text-main, #e2e8f0);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ---- Toolbar (search + filter) ---- */
+.glossary-toolbar {
+  display: flex;
+  gap: 10px;
+  padding: 12px 20px;
+  flex-shrink: 0;
+  flex-wrap: wrap;
+}
+
+.glossary-toolbar input[type="search"] {
+  flex: 1;
+  min-width: 180px;
+  padding: 8px 12px;
+  border: 1px solid var(--border-color, rgba(255,255,255,0.1));
+  border-radius: 6px;
+  background: var(--bg-primary, #0b1120);
+  color: var(--text-main, #e2e8f0);
+  font-size: 13px;
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.glossary-toolbar input[type="search"]:focus {
+  border-color: var(--neon-cyan, #22d3ee);
+}
+
+.glossary-toolbar select {
+  padding: 8px 10px;
+  border: 1px solid var(--border-color, rgba(255,255,255,0.1));
+  border-radius: 6px;
+  background: var(--bg-primary, #0b1120);
+  color: var(--text-main, #e2e8f0);
+  font-size: 13px;
+  cursor: pointer;
+  outline: none;
+}
+
+.glossary-toolbar select:focus {
+  border-color: var(--neon-cyan, #22d3ee);
+}
+
+/* ---- Count label ---- */
+.glossary-count {
+  padding: 0 20px 8px;
+  font-size: 12px;
+  color: var(--text-muted, #94a3b8);
+  flex-shrink: 0;
+}
+
+/* ---- Results List ---- */
+.glossary-results {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0 20px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* ---- Term Card ---- */
+.glossary-card {
+  background: rgba(255,255,255,0.02);
+  border: 1px solid var(--border-color, rgba(255,255,255,0.06));
+  border-radius: 8px;
+  padding: 14px 16px;
+  transition: background 0.15s;
+}
+
+.glossary-card:hover {
+  background: rgba(255,255,255,0.04);
+}
+
+.glossary-term-main {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--neon-blue, #60a5fa);
+  margin-bottom: 4px;
+}
+
+.glossary-term-en {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-muted, #94a3b8);
+  margin-bottom: 8px;
+}
+
+.glossary-lang-row {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--text-main, #e2e8f0);
+  margin: 2px 0;
+}
+
+.glossary-lang-label {
+  font-weight: 600;
+  color: var(--text-muted, #94a3b8);
+  display: inline-block;
+  min-width: 60px;
+}
+
+.glossary-chip {
+  display: inline-block;
+  font-size: 11px;
+  padding: 2px 7px;
+  border-radius: 4px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  color: var(--text-muted, #94a3b8);
+  margin: 2px 5px 2px 0;
+  white-space: nowrap;
+}
+
+.glossary-needs-review {
+  font-size: 11px;
+  padding: 3px 10px;
+  border-radius: 4px;
+  background: rgba(251, 191, 36, 0.12);
+  border: 1px solid rgba(251, 191, 36, 0.25);
+  color: #fbbf24;
+  display: inline-block;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.glossary-empty {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--text-muted, #94a3b8);
+  font-size: 14px;
+}
+
+.glossary-related-btn {
+  background: transparent;
+  border: none;
+  color: var(--neon-cyan, #22d3ee);
+  font-size: 13px;
+  cursor: pointer;
+  padding: 2px 0;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  transition: color 0.15s;
+}
+
+.glossary-related-btn:hover {
+  color: var(--neon-blue, #60a5fa);
+  text-decoration: none;
+}
+
+.glossary-example-block {
+  margin-top: 8px;
+  padding: 10px 14px;
+  background: rgba(0,0,0,0.25);
+  border-radius: 6px;
+  font-size: 12px;
+  font-family: 'Fira Code', 'Consolas', 'Monaco', monospace;
+  white-space: pre-wrap;
+  overflow-x: auto;
+  color: #a5f3fc;
+  line-height: 1.5;
+  border: 1px solid rgba(255,255,255,0.04);
+}
+
+/* ---- Light theme overrides ---- */
+body:not(.i18n-active) .glossary-dialog,
+html:not([data-theme="dark"]) .glossary-dialog {
+  background: var(--bg-secondary, #ffffff);
+  border-color: var(--border-color, #e2e8f0);
+}
+
+body:not(.i18n-active) .glossary-backdrop {
+  background: rgba(0,0,0,0.3);
+}
+
+/* ---- Mobile Responsive ---- */
+@media (max-width: 720px) {
+  .glossary-dialog {
+    width: calc(100vw - 16px);
+    max-height: 92vh;
+    border-radius: 14px;
+  }
+
+  .glossary-header {
+    padding: 12px 14px 8px;
+  }
+
+  .glossary-header h2 {
+    font-size: 16px;
+  }
+
+  .glossary-toolbar {
+    flex-direction: column;
+    padding: 10px 14px;
+    gap: 8px;
+  }
+
+  .glossary-toolbar input[type="search"],
+  .glossary-toolbar select {
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+
+  .glossary-results {
+    padding: 0 14px 12px;
+  }
+
+  .glossary-card {
+    padding: 12px;
+  }
+
+  .glossary-term-main {
+    font-size: 15px;
+  }
+
+  .glossary-count {
+    padding: 0 14px 6px;
+  }
+}
+
+@media (max-width: 420px) {
+  .glossary-dialog {
+    max-height: 96vh;
+    border-radius: 10px;
+  }
+
+  .glossary-card {
+    padding: 10px;
+  }
+
+  .glossary-term-main {
+    font-size: 14px;
+  }
+
+  .glossary-lang-row {
+    font-size: 12px;
+  }
+
+  .glossary-example-block {
+    font-size: 11px;
+  }
+}

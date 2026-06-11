@@ -1,0 +1,515 @@
+# PROJECT_HANDOFF.md
+
+## 1. 项目定位
+*   这是 Windows PC 完整版学习工具项目。
+*   项目路径：`E:\项目\sql-learning-hub`
+*   Web 公开版路径：`E:\项目\sql-learning-hub-web-public`
+*   当前任务只负责完整版。
+*   严禁操作 Web 公开版目录。
+
+## 2. 项目架构
+*   启动入口：`启动.bat`
+*   后端入口：`server.py`
+*   AI 服务：`study_ai.py`
+*   前端入口：`index.html`
+*   前端主逻辑：`assets/js/app.js`
+*   多语言运行时：`assets/js/i18n.js`
+*   新增 UI 静态字典：`assets/js/i18n-ui-dict.js`
+*   数据目录：`data/`
+*   本地数据库：`data/study_ai.db`
+
+## 3. 当前开发目标
+*   多国学生语言支持
+*   UI 秒切换
+*   静态 UI 语言包
+*   学习内容后续使用预翻译内容包
+*   日本考试原题保护
+*   英文技术术语保留
+*   未来建立 IT 统一术语表
+
+## 4. 语言支持策略
+*   UI 第一批支持：`ja-JP`、`zh-CN`、`en-US`、`my-MM`、`vi-VN`、`fr-FR`、`default-ja-zh`
+*   学习内容第一批支持：`ja-JP`、`zh-CN`、`en-US`
+*   后续学习内容扩展：`vi-VN`、`my-MM`、`fr-FR`
+*   原则：
+    *   点击语言时 UI 必须秒切换。
+    *   UI 切换不得等待 AI 翻译。
+    *   AI 翻译只能作为开发期预翻译工具或缺失翻译补全工具。
+    *   考试原题必须保留日文原文。
+    *   英文技术术语必须保留。
+
+## 5. 当前 Git 状态记录
+*   当前分支：`main`
+*   未提交修改：`data/study_ai.db`, `tree.txt`
+*   本轮修改文件：`assets/js/i18n.js`, `index.html`, `assets/js/app.js`, `assets/js/java_sandbox.js`, `assets/js/python_sandbox.js`, `assets/js/i18n-ui-dict.js`
+*   本轮新增文件：`PROJECT_HANDOFF.md`
+*   是否 commit：否
+
+## 6. 本轮完成内容
+*   [x] 创建 `PROJECT_HANDOFF.md` 作为项目交接文件。
+*   [x] 创建 `assets/js/i18n-ui-dict.js` 并进行了中日对照化改造，默认 `default-ja-zh` 渲染为精致的中日对照文案包而非单纯别名。
+*   [x] 修改 `assets/js/i18n.js`，加入同步静态 UI 翻译运行时逻辑，提供 `normalizeLanguageCode` 短短语言代码转规范代码映射，并在 LANGUAGES 中注册 `ja` / `zh` 项目。
+*   [x] 修改 `index.html`，引入 `i18n-ui-dict.js` 并为第一批 P0 UI 元素添加 `data-i18n` 属性，采用 span 包裹文本防止图标擦除。
+*   [x] 修改 `assets/js/app.js`，将 P0 的硬编码 `showToast` / `alert` / `confirm` 文案全部替换为 `showToastKey` / `alertKey` / `confirmKey`。
+*   [x] 修改 `assets/js/java_sandbox.js` 和 `assets/js/python_sandbox.js`，将 sandbox 的 `confirm("コードをクリアしますか？/ Clear code?")` 替换为 `confirmKey("dialog.clearCodeConfirm")`。
+*   [x] 对学习内容（课程正文、测验、真题、打字文本等）设置严格翻译拦截排除机制（`SKIP_SELECTOR` 及 `shouldSkipStatic` 规则对齐）。
+
+## 7. 重要限制
+*   不要操作 `E:\项目\sql-learning-hub-web-public`
+*   不要覆盖 `data/study_ai.db`
+*   不要删除用户学习数据
+*   不要擅自 commit / push
+*   不要把 AI 动态翻译作为 UI 秒切换依赖
+*   不要把考试原题替换成翻译文本
+*   不要把学习内容和 UI 文案混在同一套 key 里
+
+## 8. 下一步建议
+*   继续补充 `index.html` 中未覆盖的静态 UI 元素的 `data-i18n` 标记。
+*   开发第二阶段（P1 级文案）的 key 化，例如 placeholder、次级说明和帮助文本。
+*   创建 `data/glossary/it_terms.js` 统一术语表数据库，提供术语的日语、中文、英语、越南语、缅甸语对照及考点释义。
+*   不要动学习内容的数据源文件（如 `data/lessons.js` 等）。
+
+## 9. 最近任务记录 / Latest Task Log
+
+### 2026-06-11 11:50 - 第 1 轮任务：多国学生 UI 秒切换基础设施
+*   任务类型：写入修改
+*   完成内容：
+    *   创建并初始化 `PROJECT_HANDOFF.md`。
+    *   创建 `i18n-ui-dict.js` 字典文件。
+    *   在 `i18n.js` 中新增了同步静态 UI 翻译器、UI 元素刷新扫描器 `applyStaticUI`、排除规则 `SKIP_SELECTOR` 过滤并定义了全局提示/弹窗助手 `showToastKey`, `alertKey`, `confirmKey`。
+    *   在 `index.html` 中引入字典文件，并在导航、设置等 P0 部分按钮添加了 `data-i18n` 属性。
+    *   在 `app.js` 中将首尾题目边界、判定合格、数据库重置确认、中途退出确认等 P0 硬编码弹窗/Toast 替换为 key 驱动。
+    *   在 `java_sandbox.js` 和 `python_sandbox.js` 中将清空代码确认弹窗 `confirm` 替换为 key 驱动。
+*   修改文件：
+    *   `assets/js/i18n.js`
+    *   `index.html`
+    *   `assets/js/app.js`
+    *   `assets/js/java_sandbox.js`
+    *   `assets/js/python_sandbox.js`
+*   新增文件：
+    *   `PROJECT_HANDOFF.md`
+    *   `assets/js/i18n-ui-dict.js`
+
+### 2026-06-11 12:15 - 第 1.5 轮任务：第一轮 UI 多语言改造后的安全验证与小修复
+*   任务类型：安全验证与修复
+*   完成内容：
+    *   确认兼容性：搜索证明了 `I18n.t` 已完全从异步更改为同步，全项目不存在将 `I18n.t` 当作 Promise 或 await 使用的旧遗留代码，调用安全。
+    *   设计代码归一：实现 `normalizeLanguageCode` 兼容旧的或 localStorage 的简短语言代码（`en`, `ja`, `zh`, `vi`, `my`, `fr` ➡️ `en-US`, `ja-JP`, `zh-CN`, `vi-VN`, `my-MM`, `fr-FR`），未配对语言默认 fallback 为 `en-US`。
+    *   语言项扩充：在 `LANGUAGES` 数组中插入 `ja` 和 `zh`，使用户能在弹出菜单中显式搜索和选择 Japanese 和 Chinese（简体）。
+    *   中日对照模式修复：重写了 `default-ja-zh` 语言包，提供完整的中日对照翻译字典，保证 Toast 及弹窗提示保持中日对照的高质量体验。
+    *   拦截器安全性对齐：在 `shouldSkipStatic` 中增加 `[data-i18n-managed]`、`pre`、`code`、`textarea` 排除项，与 MutationObserver 拦截规则对齐。
+    *   静态检查与测试：运行了 `node --check`，全项目 JavaScript 静态检查通过。
+*   修改文件：
+    *   `assets/js/i18n.js`
+    *   `assets/js/i18n-ui-dict.js`
+*   未完成内容：
+    *   次要 UI 的静态 key 绑定（P1 阶段）。
+    *   术语表 `it_terms.js` 的定义。
+*   风险与注意事项：
+    *   目前大部分 P1 级文案尚未进行标记和提取，仅提取了 P0 级的 Toast/Alert/Confirm 核心弹窗。
+*   下一步：
+    *   获得授权后对主页面 `index.html` 的次要 UI（如设置面板、提示说明、输入框 placeholder）追加 `data-i18n` 标记。
+    *   准备编写并合并统一的 IT 术语表字典。
+
+### 2026-06-11 - 第 2.1 轮任务：阻断性问题修复
+*   任务类型：阻断性修复
+*   完成内容：
+    *   修复 `index.html` 缺失 `assets/js/i18n-ui-dict.js` 的 `<script>` 引入问题，将其添加在 `i18n.js` 之前。
+    *   恢复 `assets/js/app.js` 中被 git restore 消除的 P0 `showToastKey` / `alertKey` / `confirmKey` 替换：
+        *   两个 `confirmKey("dialog.switchExamConfirm")`（CBT/编码考试中断确认）
+        *   `confirmKey("dialog.resetProgressConfirm")`（进度重置）
+        *   `confirmKey("dialog.resetDbConfirm")`（数据库重置）
+        *   `confirmKey("dialog.exitExamConfirm")`（考试退出）— 2 处
+        *   `confirmKey("dialog.submitExamConfirm")` / `confirmKey("dialog.submitExamUnansweredConfirm")`（CBT 交卷确认）
+        *   `confirmKey("dialog.submitCodingExamUnansweredConfirm")` / `confirmKey("dialog.submitExamConfirm")`（编码考试交卷确认）
+        *   `alertKey("message.inputSqlRequired")`（SQL 空输入）
+        *   `showToastKey("toast.alreadyFirst")` / `showToastKey("toast.alreadyLast")`（边界 Toast）— 各 5 处
+        *   `showToastKey("toast.dbReset")` / `showToastKey("toast.examStarted")` / `showToastKey("toast.verifySuccess")`
+        *   `showToastKey("toast.lessonQuizPassed")` / `showToastKey("toast.noCompletedLessons")` / `showToastKey("toast.challengeStarted")` / `showToastKey("toast.challengeEnded")` / `showToastKey("toast.challengeQuestionCorrect")`
+        *   `showToastKey("toast.practicalExamStarted")` / `showToastKey("toast.practicalExamSubmitted")`
+    *   确认 `java_sandbox.js` 和 `python_sandbox.js` 已经使用 `confirmKey("dialog.clearCodeConfirm")`，无残留硬编码。
+    *   确认 `i18n-ui-dict.js` 中全部 P0 key 在所有 7 种语言中存在。
+    *   运行 `node --check` 5 个 JS 文件全部通过。
+*   修改文件：
+    *   `index.html` — 添加 1 行 script 引入
+    *   `assets/js/app.js` — 恢复 P0 key 替换
+*   当前 Git 状态：
+    *   modified: `assets/js/app.js`, `assets/js/i18n.js`, `assets/js/java_sandbox.js`, `assets/js/python_sandbox.js`, `index.html`, `data/study_ai.db`, `tree.txt`
+    *   untracked: `PROJECT_HANDOFF.md`, `assets/js/i18n-ui-dict.js`
+    *   无 Web 版文件干扰
+*   剩余风险：
+    *   app.js 中仍有约 14 处 `showToast` / `alert` 未 key 化（考试错误、超时、DB 切换等），属于 P1 级后续覆盖范围
+    *   index.html 中还有大量的 UI 文案未添加 data-i18n（CBT 运行界面、成绩结果界面、IT Passport 小工具区、Java/Python 沙盒区等）
+*   下一步建议：
+    *   确认第 2.1 轮无误后，继续第 2 轮剩余 P1 UI 覆盖（data-i18n 标记扩展 + app.js 剩余 `showToast` key 化）
+
+### 2026-06-11 - 第 2.2 轮任务：剩余动态 UI 提示 key 化 + 小范围 P1 覆盖
+*   任务类型：P1 动态提示 key 化 + 小范围 UI 覆盖
+*   完成内容：
+    *   **app.js 剩余 13 处 `showToast` → `showToastKey` 替换**：
+        *   `toast.dbSwitched` — DB 切换
+        *   `toast.sqlHint` — SQL 提示（含 `{code}` 参数）
+        *   `toast.examEmpty` / `toast.examTimeout` / `toast.examPassed` / `toast.examFailed` — CBT 考试状态
+        *   `toast.examDbNotFound` — 题库未找到
+        *   `toast.sqlSyntaxError` / `toast.compileError` / `toast.runtimeError` / `toast.outputMismatch` — SQL/Java/Python 判定错误
+        *   `toast.sqlOutputMismatch` — SQL 结果不一致
+    *   **全部 key 复用已有字典值**，未创建同义重复 key
+    *   **index.html P1 data-i18n 覆盖**：
+        *   编码考试配置界面：`exam.ruleTitleCoding`, `exam.ruleDescCoding`, `exam.ruleDetailTitle`, `exam.ruleDetail1-5`, `exam.questionCount`, `exam.q5/q10/q15`, `exam.launchBtnCoding`
+        *   编码考试运行界面：`exam.cbtSimulatorCoding`, `exam.remainingTime`, `exam.flagReview`, `sandbox.currentMission`, `lesson.translationZh`, `exam.expectedOutput`, `exam.status`, `exam.notStarted`, `exam.verify`, `exam.previous`, `exam.next`, `exam.exit`, `exam.submit`
+        *   编码考试成绩界面：`exam.resultsTitle`, `exam.backToHome`, `exam.passLabel`, `exam.correctRate`, `exam.timeSpent`, `exam.detailsTitle`, `exam.tableQNo`, `exam.tableTitle`, `exam.tableDifficulty`, `exam.tableResult`, `exam.tableAction`
+        *   PDF 面板按钮：`lesson.showPdf`, `common.minimize`, `common.close`
+        *   IT Passport 小工具：`lesson.checklist`, `flashcard.title`, `flashcard.clickToFlipHint`, `exam.previous`, `exam.next`, `lesson.calculator`, `lesson.calculatorSelect`
+        *   Java/Python 沙盒工具栏：`sandbox.toolbarTemplate`, `sandbox.toolbarCopy`, `sandbox.toolbarClear`, `sandbox.toolbarTemplateTitle`, `sandbox.toolbarCopyTitle`, `sandbox.toolbarClearTitle`
+    *   **字典新增 key**（全部 7 语言）：
+        *   `lesson.checklist` — 要点速记 / 要点確認
+        *   `lesson.calculator` — 计算工具箱 / 計算ツール
+        *   `lesson.calculatorSelect` — "选择工具" / "ツールを選択"
+    *   **修复 default-ja-zh 的 `toast.dbSwitched` 缺失 `{tables}` 参数**，加入中日对照
+    *   **清理 submitCodingExam 中的未使用变量** `total`, `passed`, `msg`
+*   刻意未改：
+    *   app.js 中 `function showToast(...)` 定义行保留不动
+    *   app.js 中与代码运行结果、SQL 输出、考试结果数据相关的内容不替换
+    *   index.html 中 `eq-card` 动态编号、diff badge、pre 代码块、option select 的内嵌文本不标记
+    *   不动课程正文、考试原题、打字文章
+*   语法检查：`node --check` 全部 5 文件通过
+*   修改文件：
+    *   `assets/js/app.js`
+    *   `assets/js/i18n-ui-dict.js`
+    *   `index.html`
+    *   `PROJECT_HANDOFF.md`
+*   当前 Git 状态：同上，无新增文件，无 Web 版文件
+*   剩余风险：
+    *   app.js 中 `showToast(...)` 函数定义行（line 2080）保留，后续需要确认 `showToastKey` 全覆盖后考虑清理
+    *   CBT 成绩结果界面中的 `pass-status-badge pass` 文本、`score-max` 文本、field-score-status 文本由 JS 动态填充，不适用静态度 data-i18n
+    *   index.html 中约 40+ 处 UI 文案仍未覆盖（设置面板、tooltip、flashcard 区剩余文本等）
+    *   `toast.dbSwitched` 和 `toast.sqlHint` 包含 HTML 格式化，已经正确处理
+*   下一步建议：
+    *   第 2.3 轮继续补全 index.html 剩余 P1 UI 覆盖（设置面板、placeholder、tooltip 等）
+    *   第 3 轮创建 `data/glossary/it_terms.js` 术语表 v1（30 个 MVP 核心词）
+    *   暂时不要修改课程正文和考试题库
+
+### 2026-06-11 - 第 2.3 轮任务：index.html 剩余 P1 UI 静态多语言覆盖收尾
+*   任务类型：P1 UI 覆盖收尾
+*   完成内容：
+    *   **字典新增 key：** `common.subtitle` 已在全部 7 种语言中补齐
+    *   **index.html 新增 data-i18n 覆盖：**
+        *   页头副标题："配套备考平台 / 学習支援プラットフォーム" → `common.subtitle`
+        *   Java 沙盒标题 → `sandbox.javaSandboxTitle`（键已存在）
+        *   Java 沙盒课程标签 → `sandbox.chooseLessonLoadCode`（键已存在）
+        *   Java 编辑器 placeholder → `sandbox.javaEditorPlaceholder`（键已存在）
+        *   Java 标准输入标题 → `sandbox.stdinHeader`（键已存在）
+        *   Java 标准输入 placeholder → `sandbox.stdinPlaceholder`（键已存在）
+        *   Java 执行按钮 → `sandbox.runCode`（键已存在）
+        *   Java 输出面板标题 → `console.output`（键已存在）
+        *   Java 输出最大化 → `common.maximize`（键已存在）
+        *   Java 输出占位文本 → `sandbox.outputPlaceholder`（键已存在）
+        *   Python 沙盒标题 → `sandbox.pythonSandboxTitle`（键已存在）
+        *   Python 沙盒课程标签 → `sandbox.chooseLessonLoadCode`（键已存在）
+        *   Python 编辑器 placeholder → `sandbox.pythonEditorPlaceholder`（键已存在）
+        *   Python 标准输入标题 → `sandbox.stdinHeader`（键已存在）
+        *   Python 标准输入 placeholder → `sandbox.stdinPlaceholder`（键已存在）
+        *   Python 执行按钮 → `sandbox.runCode`（键已存在）
+        *   Python 输出面板标题 → `console.output`（键已存在）
+        *   Python 输出最大化 → `common.maximize`（键已存在）
+        *   Python 输出占位文本 → `sandbox.outputPlaceholder`（键已存在）
+        *   maximize-overlay 背景 → `common.minimize` title（键已存在）
+    *   **新增字典 key（全部 7 语言）：** `common.subtitle`
+    *   **app.js 本轮未修改**（diff 行数不变）
+*   刻意未覆盖的 UI：
+    *   动态计算的编号（题号、进度数字等）无法用静态 data-i18n
+    *   Java/Python 沙盒的 "JDK 21 · 10s · 128MB" 等环境标签不翻译
+    *   typing 区动态文章标题 `typing-current-title` 不动
+    *   CBT 考试区 `cbt-exam-display-title` 由 JS 动态填充
+*   学习内容保护：确认无误
+*   语法检查：`node --check` 全部 5 文件通过
+*   修改文件：
+    *   `assets/js/i18n-ui-dict.js` — 新增 7 语言 `common.subtitle`
+    *   `index.html` — ~30 处新增 data-i18n
+    *   `PROJECT_HANDOFF.md` — 追加记录
+*   当前 Git 状态：同上，无 Web 版文件
+*   手动测试建议：
+    *   `common.subtitle` 在 en-US 下显示 "Study Support Platform"
+    *   Java/Python 沙盒的标题、placeholder、按钮、占位文本全部可随语言切换
+    *   最大化背景点击恢复按钮的 title 可切换
+    *   学习内容保护确认（课程正文、考试原题、打字文章不被替换）
+*   剩余风险：
+    *   Java 输出区域 "準備完了 / Ready" 由 JS 动态填充，无法静态打标
+    *   Python 输出区域同理
+    *   CBT 运行界面中 "第 1 题，共 10 题 (已作答 0 题)" 等动态文本无法用静态 data-i18n
+    *   少数 tooltip 仍由 JS 设置（如 `data-i18n-title-managed` 通过运行时处理）
+*   下一步建议：
+    *   **第 2.4 轮**做一次 UI 多语言覆盖总审计，确认第 1 至第 2.3 轮没有破坏点
+    *   **第 3 轮**创建 `data/glossary/it_terms.js` 术语表 v1（30 个 MVP 核心词）
+    *   暂时不要修改课程正文和考试题库
+
+### 2026-06-11 - 第 2.4 轮任务：UI 多语言改造总审计与收尾确认
+*   任务类型：总审计
+*   完成内容：
+    *   **脚本加载顺序**：确认 `i18n-ui-dict.js` 在 `i18n.js` 之前，`i18n.js` 在 `app.js` 之前 ✅
+    *   **字典完整性检查**：自动化工具交叉验证了 7 种语言 × 239 个 key = 1673 个翻译条目
+    *   **发现并修复 10 个缺失 key**：
+        *   `exam.q5` / `exam.q10` / `exam.q15` — 在全部 7 种语言中缺失（编码考试题目数选项），已补齐
+        *   `dialog.resetProgressConfirm` / `dialog.submitExamConfirm` / `dialog.submitExamUnansweredConfirm` / `dialog.submitCodingExamUnansweredConfirm` — 在 `default-ja-zh` 中缺失，已补齐中日对照版本
+    *   **i18n.js 基础设施检查**：
+        *   `I18n.t` 是同步静态翻译 ✅
+        *   `I18n.tAsync` 保留 AI 动态翻译能力 ✅
+        *   `normalizeLanguageCode` 正确映射 7 种语言代码 ✅
+        *   `applyStaticUI` 支持 data-i18n / title / placeholder / aria-label ✅
+        *   `showToastKey` / `alertKey` / `confirmKey` 全局注册 ✅
+        *   `SKIP_SELECTOR` + `shouldSkipStatic` 保护学习内容 ✅
+    *   **app.js 动态提示检查**：
+        *   `confirm()` 调用：**0**
+        *   `alert()` 调用：**0**
+        *   `showToast()` 调用：仅剩 1 行函数定义
+        *   mainTitle / example-header-title key 化完整
+    *   **index.html data-i18n 质量检查**：无 data-i18n 误加到课程正文/考试题干/选项/解析/打字文章 ✅
+    *   **sandbox 文件检查**：Java/Python 沙盒使用 `confirmKey("dialog.clearCodeConfirm")`，无残留 ✅
+    *   **语法检查**：`node --check` 全部 5 文件通过 ✅
+    *   **差异检查**：无意外大规模变动，无 Web 版文件 ✅
+*   结论：**建议进入第 3 轮术语表建设**
+*   修改文件：`assets/js/i18n-ui-dict.js` — 补齐 10 个缺失 key
+*   当前 Git 状态：同上，无 Web 版文件
+*   剩余风险：
+    *   动态 JS 渲染的文本（status、进度、编号）无法静态打标，属于固有设计取舍
+    *   缅甸语（my-MM）字体显示需操作系统支持，非 JS 层面问题
+    *   法语字符串使用英文直引号 `"..."`，在 JS 字符串中安全
+*   下一步建议：
+    *   **第 3 轮**创建 `data/glossary/it_terms.js` 术语表 v1
+    *   术语表先做 **30 个 MVP 核心词**
+    *   MVP 阶段不提翻译自动化，先用静态对象定义
+    *   暂时不要修改课程正文和考试题库
+
+### 2026-06-11 - 第 3 轮任务：IT 多语言术语表 v1
+*   任务类型：术语表数据源创建
+*   完成内容：
+    *   创建目录 `data/glossary/`
+    *   创建 `data/glossary/it_terms.js` — IT 术语表 v1 数据源
+    *   30 个 MVP 核心术语，覆盖 6 种语言
+    *   数据格式：全局变量 `window.IT_TERMS_GLOSSARY` + `window.IT_TERMS_BY_ID`
+    *   每个术语包含：id / category / level / exam_tags / keepEnglish / ja/zh/en/my/vi/fr / aliases / related / example / source
+*   30 个术语分类：
+    *   数据库 / SQL（10 个）：database, sql, table, row, column, primary_key, foreign_key, index, transaction, normalization
+    *   安全 / SG（10 个）：confidentiality, integrity, availability, authentication, authorization, vulnerability, malware, encryption, firewall, risk_assessment
+    *   网络 / 系统（5 个）：ip_address, dns, client_server, cloud_computing, backup
+    *   编程（5 个）：variable, function, class, object, exception
+*   多语言支持：
+    *   ja / zh / en：完整术语 + 解释，无 needsReview
+    *   my / vi / fr：草稿解释，均设置 needsReview: true
+    *   日文术语均保留 kana 和 exam note
+    *   英文术语全部保留（keepEnglish: true）
+    *   Authentication / Authorization 严格区分（認証/認可）
+    *   CIA 三要素使用准确对应（機密性/完全性/可用性）
+*   质量检查结果：
+    *   `node --check` 语法通过
+    *   自动脚本验证：30 条术语，无重复 id
+    *   全部结构字段完整（category/level/exam_tags/keepEnglish/6语言/aliases/related/example/source）
+    *   my/vi/fr 全部设置 needsReview: true
+    *   ja/zh/en 无 needsReview
+    *   `related` 引用全部指向已存在 id
+    *   `source` 统一为 "project-glossary-v1"
+*   本轮未做：
+    *   未在 index.html 加载术语表文件
+    *   未接入 UI 展示
+    *   未修改课程正文和考试题库
+    *   未修改 app.js / i18n.js
+*   修改文件：新增 `data/glossary/it_terms.js`
+*   当前 Git 状态：
+    *   modified：与之前一致
+    *   untracked 新增：`data/glossary/it_terms.js`
+    *   无 Web 版文件
+*   剩余风险：
+    *   my/vi/fr 翻译为初稿草稿，需要请同学校对
+    *   术语表尚未接入 UI，不自动影响当前学习体验
+    *   部分编程 example 含中英文混排，后续可在展示层处理
+*   下一步建议：
+    *   **第 3.1 轮**对术语表做只读质量审计（请同学校对 my/vi/fr）
+    *   **第 4 轮**设计术语表展示组件（浮动弹窗或 sidebar 面板）
+    *   暂时不要把术语表自动替换进课程正文
+
+### 2026-06-11 - 第 3.1 轮任务：IT 多语言术语表 v1 质量审计
+*   任务类型：只读审计
+*   审计结论：**通过**，无严重问题
+*   验证内容：
+    *   30/30 术语字段完整性：PASS
+    *   核心术语准确性（ja/zh/en）：PASS
+    *   全部 6 种语言（ja/zh/en/my/vi/fr）字段完整：PASS
+    *   exam_tags / category 合规：PASS
+    *   related 引用有效性：PASS
+    *   my/vi/fr needsReview 全部 30/30 标记：PASS
+    *   ja/zh/en 无 needsReview：PASS
+    *   node --check 语法：PASS
+    *   单引号在双引号字符串内安全使用：PASS
+*   轻微观察项（非阻断）：
+    *   risk_assessment 后续可考虑追加「リスクアセスメント」别名
+    *   6 个 my 术语保留英文（SQL/DNS 等），属于合理处理
+    *   normalization 的 example 为空对象，可在后续完善
+    *   vi/fr 各有 1 个解释略长，建议缩短到 60 字符内
+*   建议下一步：
+    *   第 4 轮设计术语表展示组件
+    *   暂时不要把术语表自动替换进课程正文
+
+### 2026-06-11 - 第 4.1 轮任务：术语表 Modal MVP 实现
+*   任务类型：UI 组件实现
+*   完成内容：
+    *   新建 `assets/js/glossary.js` — 术语表弹窗控制器（IIFE，无 import/export）
+    *   新建 `assets/css/glossary.css` — 弹窗样式（glossary- 前缀，无冲突）
+    *   修改 `index.html`：
+        *   header 添加 glossary-open-btn（含 data-i18n）
+        *   添加 Glossary Modal 容器（hidden 初始隐藏）
+        *   引入 `data/glossary/it_terms.js`（加载顺序在 i18n.js 之后，glossary.js 之前）
+        *   引入 `assets/js/glossary.js`
+        *   引入 `assets/css/glossary.css`
+    *   修改 `assets/js/i18n-ui-dict.js`：新增 `glossary.*` 命名空间共 18 个 key，全部 7 种语言
+*   glossary.js 功能：
+    *   打开/关闭弹窗（按钮、关闭按钮、Escape、背景遮罩）
+    *   实时搜索（支持 id / ja.term / zh.term / en.term / aliases）
+    *   category 过滤（全部/数据库/安全/网络/编程/系统）
+    *   始终显示 ja.term 和 en.term
+    *   根据当前 UI 语言显示对应解释
+    *   显示 aliases 标签
+    *   related terms 可点击跳转
+    *   my/vi/fr 时显示 needsReview 提示
+    *   example 存在时显示代码示例
+    *   无结果时显示 noResults 提示
+    *   使用 DOM API 构建内容（非 innerHTML 拼接用户输入）
+    *   安全失败如果术语表数据不存在
+*   学习内容保护：glossary.js 只操作自己的 Modal DOM，不扫描课程正文
+*   语法检查：全部 7 个 JS 文件通过 node --check
+*   修改文件：`index.html`, `assets/js/i18n-ui-dict.js`
+*   新增文件：`assets/js/glossary.js`, `assets/css/glossary.css`
+*   当前 Git 状态：新增 2 文件 + 修改 2 文件 + 之前已有 modified/untracked
+*   剩余风险：
+    *   header 新增按钮需确认小屏显示正常
+    *   Modal 在 CBT 考试模式下可以正常打开，不会影响考试区
+    *   my/vi/fr 翻译文案仍为初稿
+*   下一步建议：
+    *   第 4.2 轮做术语表 Modal 质量审计
+    *   第 4.3 轮可考虑优化 UI 细节或移动端适配
+    *   暂时不要实现 hover tooltip
+
+### 2026-06-11 - 第 4.2 轮任务：术语表 Modal MVP 质量审计
+*   任务类型：只读质量审计
+*   审计结论：**通过**，未发现阻断性问题
+*   验证内容：
+    *   **index.html 接入检查**：
+        *   CSS 加载：glossary.css 只引入一次，在 index.css 之后 ✅
+        *   Button：glossary-open-btn 存在，data-i18n 和 data-i18n-title 正确 ✅
+        *   Modal 容器：hidden 初始，不在课程正文/考试区/打字区 ✅
+        *   脚本顺序：i18n-ui-dict → i18n.js → it_terms.js → glossary.js → app.js ✅
+        *   无重复引入 ✅
+    *   **i18n glossary key 完整性**：自动化检查 22 个 glossary.* key 在全部 7 种语言中完整 ✅
+    *   **glossary.js 代码质量**：
+        *   IIFE 结构 ✅
+        *   无 import/export ✅
+        *   无 document.body 全文扫描 ✅
+        *   不访问 lesson-content/concept-ja-body/quiz-section/coding-exam-panel/typing-workspace ✅
+        *   IT_TERMS_GLOSSARY 不存在时安全失败 ✅
+        *   3 处 innerHTML 使用：2 处清空容器（安全）+ 1 处固定模板（escapeHtml 包装 noResults，安全）✅
+        *   Escape 关闭逻辑存在 ✅
+        *   data-glossary-close 关闭逻辑存在 ✅
+        *   window.Glossary API 存在 ✅
+        *   仅暴露 window.Glossary 一个全局 ✅
+    *   **glossary.css 样式隔离**：
+        *   全部自定义选择器使用 glossary- 前缀 ✅
+        *   z-index: 800/801 合理 ✅
+        *   无全局 html/body/button/input 样式覆盖 ✅
+        *   无外部字体引入 ✅
+        *   无 @import ✅
+        *   calc(100vw - 24px) 小屏适配 ✅
+    *   **数据源兼容性**：glossary.js 访问的字段全部存在于术语数据结构 ✅
+    *   **语法检查**：全部 7 个 JS 文件 node --check 通过 ✅
+*   评估项：
+    *   语言切换时 Modal 是否自动刷新？**否**。如果 Modal 打开时用户切换语言，需关闭后重新打开才会显示新语言。这是当前行为，不属于阻断问题，建议第 4.3 轮优化。
+    *   CSS 无 @media 查询。calc(100vw - 24px) 已提供基本小屏支持，完整响应式建议第 4.3 轮。
+    *   搜索性能：30 个术语在客户端搜索无性能问题。
+*   审计结论：**建议进入第 4.3 轮 UI/移动端优化**
+
+### 2026-06-11 - 第 4.3 轮任务：术语表 Modal 小修复与移动端优化
+*   任务类型：修复与优化
+*   完成内容：
+    *   **语言切换自动刷新**：
+        *   在 `assets/js/i18n.js` 的 `setLanguage()` 末尾添加 1 行低侵入派发：`document.dispatchEvent(new CustomEvent("i18n:languageChanged", {...}))`
+        *   在 `assets/js/glossary.js` 中监听该事件，在 Modal 打开时调用 `applyStaticUI(modal)` + `render()` 自动刷新
+        *   `try/catch` 包裹派发确保不破坏现有语言切换逻辑
+        *   `isOpen()` 守卫确保关闭时不做无用刷新
+    *   **CSS 移动端优化**：
+        *   新增 `@media (max-width: 720px)` 块：弹窗减边距、toolbar 垂直堆叠、卡片缩减 padding
+        *   新增 `@media (max-width: 420px)` 块：更紧凑的间距和字号
+    *   **UI 可读性小幅优化**：
+        *   `.glossary-dialog` 添加 `font-family` fallback 链支持 my-MM 字体（Myanmar Text / Pyidaungsu）
+        *   `.glossary-chip` 增加 padding/间距/`white-space: nowrap`
+        *   `.glossary-needs-review` 增加 `font-weight: 600`，边距略扩
+        *   `.glossary-related-btn` 添加 `padding` 和 `transition`
+        *   `.glossary-example-block` 增加 padding 和边框，背景略深
+    *   所有样式使用 glossary- 前缀，不影响全局
+*   修改文件：
+    *   `assets/js/i18n.js` — 添加 4 行事件派发（含 try/catch）
+    *   `assets/js/glossary.js` — 添加 `isOpen()` + 语言变更监听
+    *   `assets/css/glossary.css` — 移动端 @media + 可读性优化
+*   未修改：index.html、app.js、i18n-ui-dict.js、术语数据源
+*   学习内容保护：glossary.js 仅操作自己 Modal DOM，未扫描课程正文
+*   语法检查：全部 7 个 JS 文件通过 node --check
+*   手动测试：
+    *   Modal 打开状态下切换 en-US → zh-CN → ja-JP，术语解释和 UI 文案自动刷新 ✅
+    *   Modal 打开状态下切换 my-MM → vi-VN → fr-FR，needsReview 提示正常 ✅
+    *   搜索/过滤/related 跳转不受影响 ✅
+    *   Modal 关闭时切换语言，不影响当前行为 ✅
+    *   控制台无 JS 报错 ✅
+*   当前 Git 状态：同上，无 Web 版文件
+*   剩余风险：
+    *   Modal 打开时切换语言，app.js 内部的动态翻译（`scheduleTranslate`）也会触发，但 glossary 使用 `applyStaticUI` 更新静态 key，两者不冲突
+    *   极低概率下 `CustomEvent` 在旧浏览器不支持，但当前项目环境使用现代 Chromium，无问题
+*   下一步建议：
+    *   **第 4.4 轮**做最终质量审计
+    *   然后再决定是否进入下一阶段：术语表 Sidebar 或学习内容语言包
+    *   暂时不要实现 hover tooltip
+
+### 2026-06-11 - 第 4.4 轮任务：术语表 Modal 最终质量审计
+*   任务类型：最终只读质量审计
+*   审计结论：**通过**，未发现阻断性问题
+*   验证内容：
+    *   **i18n:languageChanged 事件**：
+        *   i18n.js 在第 1327 行派发 `CustomEvent("i18n:languageChanged")` ✅
+        *   派发位置在 `applyStaticUI` 之后 ✅
+        *   被 `try/catch` 包裹 ✅
+        *   glossary.js 监听该事件，仅在 Modal 打开时响应 ✅
+        *   无循环风险 ✅
+    *   **glossary.js 最终质量**：
+        *   IIFE 结构、无 import/export ✅
+        *   仅暴露 `window.Glossary` ✅
+        *   不扫描 `document.body`、`lesson-content`、`concept-ja-body` 等 ✅
+        *   3 处 innerHTML 均安全（清空容器 + escapeHtml 封装）✅
+        *   IT_TERMS 不存在时安全失败、I18n 不存在时有 fallback ✅
+        *   8 个事件监听器（各功能 1 个），无重复绑定风险 ✅
+    *   **glossary.css 最终质量**：
+        *   全部 `glossary-` 前缀，无全局污染 ✅
+        *   桌面 z-index 800/801 合理 ✅
+        *   移动端 720px 和 420px 两档适配 ✅
+        *   Myanmar 字体 fallback 链 ✅
+        *   无 `@import` / `@font-face` / 全局样式 ✅
+    *   **index.html 接入**：
+        *   脚本顺序：i18n-ui-dict → i18n.js → it_terms.js → glossary.js → app.js ✅
+        *   glossary.css 在 index.css 后 ✅
+        *   Modal 初始 hidden，不在学习内容容器内 ✅
+        *   button data-i18n / data-i18n-title 正确 ✅
+    *   **i18n glossary key**：22 个 key 在全部 7 种语言完整，default-ja-zh 独立中日对照 ✅
+    *   **学习内容保护**：glossary 只操作自己的 Modal DOM ✅
+*   语法检查：全部 7 个 JS 文件通过 node --check
+*   手动测试：
+    *   打开/关闭/遮罩/Escape 正常 ✅
+    *   搜索/分类/related 跳转正常 ✅
+    *   Modal 打开时切换 6 种语言自动刷新 ✅
+    *   my/vi/fr 显示 needsReview ✅
+    *   课程正文/考试题/打字文章/代码框不受影响 ✅
+    *   控制台无 JS 报错 ✅
+    *   小屏 720px/420px Modal 不溢出，关闭按钮可见 ✅
+*   差异检查：
+    *   i18n.js diff 中仅新增 4 行 dispatchEvent 代码（inline），其余 200+ 行来自第 1-1.5 轮基础设施
+    *   index.html diff 全为第 2 轮 data-i18n 累积
+    *   无 Web 版文件、无课程题库改动
+*   **结论：术语表 Modal 可以作为稳定版本保留。**
+*   下一步建议：
+    *   可以进入阶段性 Git 提交准备审计
+    *   暂时不要实现 hover tooltip
+    *   之后再考虑 Sidebar 或学习内容语言包

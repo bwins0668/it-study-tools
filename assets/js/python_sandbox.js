@@ -199,7 +199,7 @@ window.PythonSandbox = (() => {
   function clearCode() {
     const editor = getEditor();
     if (!editor) return;
-    if (confirm('コードをクリアしますか？/ Clear code?')) {
+    if (confirmKey("dialog.clearCodeConfirm")) {
       setTemplate(getBoilerplateTemplate());
     }
   }
