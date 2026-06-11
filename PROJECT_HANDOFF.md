@@ -816,3 +816,24 @@
 *   下一步建议：
     *   正式开启 IT Passport 等其它科目的英文基准包（`data/i18n_content/itpass_en.js` 等）建设。
     *   暂不继续精修 SQL 多语言内容包，除非在实际应用或测试中发现具体问题。
+
+### 2026-06-11 - 第 8.1 轮任务：IT Passport 英文内容语言包 POC
+*   任务类型：数据包 POC 与前端最小接入轮
+*   完成内容：
+    *   **科目与包范围**：为 IT Passport 建立了英文内容语言包 POC，新建 `data/i18n_content/itpass_en.js`，只覆盖 Lesson 1-10 的 `title` 和 `concept`。使用真实 subject key `"itpass"`。
+    *   **前端最小接入**：修改了 `assets/js/app.js` 中的 `loadItPassLesson(id)` 函数，在加载课件时通过 `getLessonLocalizedText("itpass", lesson)` 获取本地化的英文标题与正文；若当前语言不是 en-US，或内容包中没有对应数据，自动 fallback 回原生中日对照/日文内容。
+    *   **脚本引入**：修改了 `index.html`，在 `sql_fr.js` 之后、`it_terms.js` 之前顺序引入了 `data/i18n_content/itpass_en.js` 脚本。
+    *   **未修改范围**：未修改 `data/it_passport_lessons.js` 原始课件数据，未翻译任何 quiz / options / playgroundTask / analogy / example / past exams 字段，也完全没有修改任何 SQL 多语言包。
+*   检查与测试：
+    *   **单元测试与回归测试**：在 Node.js 环境下通过测试脚本 `test_i18n.js` 进行全量读取测试。IT Passport 英文 Lesson 1-10 能够正常解析返回；Lesson 11 返回 null 正常 fallback；zh-CN/ja-JP 访问返回 null 正常 fallback。SQL 所有 1-36 课的多语言（en, vi, my, fr）内容读取均通过回归测试，全数正常。
+    *   **质量检查**：通过 `check_quality.js` 脚本验证，IT Passport 的 entry 字段和元数据格式完全合规，所有的 `needsReview` 状态均为 `true`，`source` 均为 `"manual-itpass-en-v1"`，`sourceRef` 与 ID 对应，无中文/日文残留泄漏，无 Markdown pipe tables，无 `<script>` 等危险 HTML，fenced code block 完全闭合。
+    *   **语法检查**：使用 `node --check` 对 9 个关联 JavaScript 文件进行静态语法检查，全部通过。
+    *   **浏览器抽查**：本轮未做浏览器抽查，仅完成 Node 读取与静态检查。
+*   修改文件：
+    *   `PROJECT_HANDOFF.md`
+    *   `index.html`
+    *   `assets/js/app.js`
+*   新增文件：
+    *   `data/i18n_content/itpass_en.js`
+*   下一步建议：
+    *   第 8.2 轮批量扩展 IT Passport 英文包（每批按 30-50 课推进）。

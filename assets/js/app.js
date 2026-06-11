@@ -1306,15 +1306,22 @@ function loadItPassLesson(id) {
   itpassQuizIdx = 0;
   selectedItPassQuizOption = null;
   
+  // Resolve localized text for IT Passport (Round 8.1 addition)
+  const localized = getLessonLocalizedText("itpass", lesson);
+  
   // Header details
   document.getElementById("lesson-section-badge").innerText = lesson.section;
-  document.getElementById("lesson-title-ja").innerText = lesson.titleJa;
+  document.getElementById("lesson-title-ja").innerText = localized && localized.title ? localized.title : lesson.titleJa;
   document.getElementById("lesson-title-zh").innerText = lesson.titleZh;
   const locatePdfBtn = document.getElementById("locate-pdf-btn");
   locatePdfBtn.style.display = lesson.pdfPage ? "inline-flex" : "none";
   
   // Concepts & Analogy
-  document.getElementById("concept-ja-body").innerHTML = formatMarkdown(lesson.conceptJa);
+  if (localized && localized.concept) {
+    document.getElementById("concept-ja-body").innerHTML = formatMarkdown(localized.concept);
+  } else {
+    document.getElementById("concept-ja-body").innerHTML = formatMarkdown(lesson.conceptJa);
+  }
   document.getElementById("concept-zh-body").innerHTML = formatMarkdown(lesson.conceptZh);
   document.getElementById("lesson-analogy").innerText = lesson.analogy;
   
