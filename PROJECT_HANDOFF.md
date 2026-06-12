@@ -1875,3 +1875,64 @@ Implemented `normalizeTerm()` compatibility layer in `assets/js/glossary.js` (bo
 #### Next
 
 **Round 14.8**: migrate a small sample of glossary terms to v2 fields (schemaVersion, subcategory, skillTags) while keeping v1 compatibility.
+
+---
+
+### Round 14.8 — Glossary v2 Sample Migration
+
+**Status: ✅ PASS**
+
+#### Scope
+
+| Item | Value |
+| :--- | :--- |
+| Migrated sample terms | `database`, `table`, `row`, `column`, `primary_key` (5 of 30 total) |
+| Added v2 fields | `schemaVersion`, `subcategory`, `examTags`, `skillTags`, `searchBoost`, `updatedAt` |
+| v1 fields removed | **NO** — all original fields preserved |
+| Glossary term count | **unchanged** (still 30) |
+| `data/glossary/it_terms.js` modified | YES — 5 terms only |
+| `assets/js/glossary.js` modified | **NO** |
+| Korean UI added | **NO** |
+| Korean glossary content added | **NO** |
+
+#### Added v2 field details
+
+| field | example value |
+| :--- | :--- |
+| `schemaVersion` | `"v2"` |
+| `subcategory` | `"database-basic"`, `"relational-model"`, `"constraints"` |
+| `examTags` | `["itpass", "sg", "sql"]` (mirrors `exam_tags`) |
+| `skillTags` | `["database-basics", "relational-database", "table-design", "data-modeling", "constraints", "sql-ddl"]` |
+| `searchBoost` | `1.5`, `1.3`, `1.2` |
+| `updatedAt` | `"2026-06-12"` |
+
+#### Compatibility
+
+| Check | Result |
+| :--- | :--- |
+| v1-only terms still display | YES |
+| v2 mixed terms display normally | YES |
+| search behavior unchanged | YES |
+| category filter unchanged | YES |
+| language switching unchanged | YES |
+| clear button / Escape fine | YES |
+
+#### Validation
+
+| Check | Result |
+| :--- | :--- |
+| `node --check data/glossary/it_terms.js` (Windows) | PASS |
+| `node --check assets/js/glossary.js` (Windows) | PASS |
+| `node --check data/glossary/it_terms.js` (Web) | PASS |
+| `node --check assets/js/glossary.js` (Web) | PASS |
+| SHA256 match Windows ↔ Web | PASS (`4c58a6b3...`) |
+| Course/sandbox/backend modified | NO |
+
+#### Git
+
+- **Windows**: `data/glossary/it_terms.js`
+- **Web**: `data/glossary/it_terms.js` (identical copy)
+
+#### Next
+
+**Round 14.9**: enhance glossary search to include `examTags`, `level`, `subcategory`, `related`, and prepare `searchBoost` ranking.
