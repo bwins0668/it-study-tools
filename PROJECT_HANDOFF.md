@@ -1005,3 +1005,37 @@ ContentI18n.loadPack = function(subject, lang) {
 * **P0/P1/P2**：无。
 * **下一步建议**：
   * **Round 13.11** 持续观察 cache busting 机制在线上运行稳定性，或推进多语言包内容精校。
+
+### Round 13.11：Web Cache Busting 线上稳定性观察
+
+* **基于主项目 Commit**：`a92c6b6`
+* **Web Commit**：`65deb85`
+* **assetVersion**：`v2026.6.11-r13.10`
+* **Service Worker CACHE_NAME**：`study-tools-web-v2026-6-11-r13-10`
+* **测试场景及结果**：
+  * **普通访问**：页面成功加载 (HTTP 200)，版本显示 `v2026.6.11` 正常，控制台无 P0 JS 报错。
+  * **强制刷新 (Ctrl + F5)**：页面渲染正常，核心 JS/CSS 均带有 `?v=v2026.6.11-r13.10` 参数，首屏加载时 DOM 中无 20 个内容语言包 script。
+  * **隐私窗口访问**：首次加载正常，`version.js` 及其他版本化资源正常请求，Service Worker 未阻断页面，动态语言包带版本参数正常拉取。
+  * **清理站点数据后访问**：Service Worker 重新注册成功，`Cache Storage` 中成功创建并使用 `study-tools-web-v2026-6-11-r13-10`，无旧版本缓存阻断或残留干扰。
+  * **动态语言包加载**：
+    * SQL + en-US 成功请求 `sql_en.js?v=v2026.6.11-r13.10`；
+    * SQL + vi-VN 成功请求 `sql_vi.js?v=v2026.6.11-r13.10`；
+    * Python + fr-FR 成功请求 `python_fr.js?v=v2026.6.11-r13.10`；
+    * ja-JP / zh-CN / default-ja-zh 按预期不加载外置包，完全使用本地定义数据。
+  * **Service Worker / Cache 验证**：
+    * `CACHE_NAME` 正确匹配。
+    * 修改后的 ignoreSearch 策略（`ignoreSearch: !hasVersion`）生效，确保了 URL 中的 `?v=` 版本变更能被 Service Worker 精准识别并穿透缓存，同时对无版本参数资源保留强缓存离线支持。
+    * 动态 `/data/` 运行时缓存加载与读取一切正常。
+* **功能回归测试**：
+  * SQLite WASM 内存数据库初始化及 SQL 执行正常。
+  * IT 术语表 (Glossary) 正常呼出。
+  * Java/Python Web Safe Mode 代码沙箱逻辑与运行限制正常。
+  * Release 链接与 OG 图片正常访问。
+  * 移动端自适应布局、多语言切换均一切正常。
+* **自动化巡检结果**：
+  * 执行 `python scripts/online_smoke_test.py`：**18/18 PASS**。
+  * 控制台及网络请求 0 报错，无 `/api/i18n/translate` 调用，无 405/404 异常响应。
+* **P0/P1/P2**：无。
+* **当前结论**：Web Cache Busting 机制线上表现极其稳定，完美解决 stale-while-revalidate 缓存更新滞后及缓存击穿问题。
+* **下一步建议**：
+  * **Round 13.12** 静态资源 Manifest 索引规划，或自动版本号构建注入规划。
