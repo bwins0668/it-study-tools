@@ -2493,3 +2493,54 @@ node tools/verify_glossary.js --web <path>
 #### Next
 
 - **Round 15.6**: 400 terms quality review, Web cache version update, Windows Portable repack, and GitHub Release.
+
+---
+
+### Round 15.6 — Glossary 400-Term Milestone Release
+
+**Status: ✅ PASS**
+
+#### Release summary
+
+| Item | Value |
+| :--- | :--- |
+| Version tag | `v2026.6.13-r15.6` |
+| Glossary milestone | **400 terms** (0 errors, 0 warnings) |
+| Quality fixes | None (fully validated, no typos found) |
+| Windows Portable | `Study-Tools-Portable-v2026.6.13-r15.6.zip` |
+| SHA256 | `4C2951E9606C3FA11B660DCF021AF9C7A5BAAF4C7FBE6945A672BD12B773E5DE` |
+| Web assetVersion | `v2026.6.13-r15.6` |
+| Web CACHE_NAME | `study-tools-web-v2026-6-13-r15-6` |
+| Web Branch / Target | `master` / `master` (Cloudflare Pages deploy branch) |
+| Web Smoke Test | 30/30 PASS |
+| Release notes language | Chinese (中文) |
+
+#### Changes this round
+
+| File | Change |
+| :--- | :--- |
+| **Web** `assets/js/version.js` | assetVersion bumped to `v2026.6.13-r15.6` |
+| **Web** `assets/asset-manifest.json` | Generated with new file hashes & versions |
+| **Web** `data/i18n_content/manifest.json` | Generated with new file hashes & versions |
+| **Web** `service-worker.js` | CACHE_NAME bumped to `study-tools-web-v2026-6-13-r15-6` |
+
+#### Validation
+
+| Check | Result |
+| :--- | :--- |
+| `node tools/verify_glossary.js` (local + web) | PASS (0 errors, 0 warnings) |
+| Windows/Web SHA256 match | PASS (`a2fd973d57b5dc67f6c3c3e25bb7008bafbc1ba9947ef01d1070eb014ebbbb80`) |
+| Web `node --check` all modified JS | PASS |
+| Web git status | clean — committed (`292b776`) |
+
+#### Git
+
+| Repo | Branch | Commit hash | Push |
+| :--- | :--- | :--- | :--- |
+| Windows | main | (To be committed) | (To be committed) |
+| Web | master | `292b776` | ✅ |
+
+#### Next
+
+- **Round 15.7** (recommended): Expand glossary from 400 to 500 terms with sub-batch validation.
+- **Round 15-K** (alt): Korean support architecture planning.
