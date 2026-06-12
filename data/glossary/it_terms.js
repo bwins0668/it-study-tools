@@ -1893,6 +1893,47 @@
       related: ["function", "class"],
       example: { java: "try {\n  int x = 1 / 0;\n} catch (ArithmeticException e) {\n  System.out.println(e);\n}", python: "try:\n    x = 1 / 0\nexcept ZeroDivisionError as e:\n    print(e)" },
       source: "project-glossary-v1"
+    },
+    // ======================================================================
+    // 新增：补齐到 100 条 (id: 99-100)
+    // ======================================================================
+    {
+      id: "unit_test",
+      category: "system",
+      level: "basic",
+      subcategory: "development-basic",
+      exam_tags: ["itpass", "sg", "java", "python", "programming"],
+      examTags: ["itpass", "sg", "java", "python", "programming"],
+      skillTags: ["system-basics", "software-development"],
+      searchBoost: 1.1,
+      schemaVersion: "v2",
+      updatedAt: "2026-06-12",
+      keepEnglish: true,
+      ja: { term: "単体テスト", kana: "たんたいテスト", note: "個々のモジュールや関数を独立してテストする手法。テスト駆動開発とも関連。" },
+      zh: { term: "单元测试", explanation: "对软件中最小可测试单元进行独立验证的测试方法。" },
+      en: { term: "Unit Test", explanation: "A test that verifies the smallest testable part of software in isolation." },
+      aliases: ["単体テスト", "UT"],
+      related: ["testing", "debugging"],
+      source: "project-glossary-v1"
+    },
+    {
+      id: "virtualization",
+      category: "system",
+      level: "intermediate",
+      subcategory: "system-basic",
+      exam_tags: ["itpass", "sg", "system"],
+      examTags: ["itpass", "sg", "system"],
+      skillTags: ["system-basics", "cloud-basics"],
+      searchBoost: 1.2,
+      schemaVersion: "v2",
+      updatedAt: "2026-06-12",
+      keepEnglish: true,
+      ja: { term: "仮想化", kana: "かそうか", note: "物理リソースを論理的に分割・統合する技術。VMwareやHyper-Vが代表例。" },
+      zh: { term: "虚拟化", explanation: "将物理计算资源（服务器、存储）抽象为逻辑资源进行管理和分配的技术。" },
+      en: { term: "Virtualization", explanation: "Technology that abstracts physical computing resources into logical ones for flexible allocation." },
+      aliases: ["仮想化"],
+      related: ["operating_system", "cloud_computing"],
+      source: "project-glossary-v1"
     }
   ];
 

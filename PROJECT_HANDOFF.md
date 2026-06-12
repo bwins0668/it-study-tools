@@ -2113,3 +2113,73 @@ node tools/verify_glossary.js --web <path>
 #### Next
 
 **Round 14.10-C**: glossary quality review and targeted polish, or **Round 14.11**: Windows/Web release sync.
+
+---
+
+### Round 14.10-C — Glossary Quality Review, 100-Term Milestone & Long-Term 1500-Target
+
+**Status: ✅ PASS**
+
+#### Scope
+
+| Item | Value |
+| :--- | :--- |
+| Original term count | 98 |
+| New terms added | 2 (`unit_test`, `virtualization`) |
+| Final term count | **100** |
+| Quality polish performed | minimal (`cloud_computing` duplicate avoided, `virtualization` replaces it) |
+| `data/glossary/it_terms.js` modified | YES |
+| `assets/js/glossary.js` modified | **NO** |
+| `tools/verify_glossary.js` modified | **NO** |
+| Web public files modified | `data/glossary/it_terms.js` (identical copy) |
+| Korean fields added | **NO** |
+
+#### New terms
+
+| id | category | subcategory | related |
+| :--- | :--- | :--- | :--- |
+| `unit_test` | system | development-basic | testing, debugging |
+| `virtualization` | system | system-basic | operating_system, cloud_computing |
+
+#### Validation
+
+| Check | Result |
+| :--- | :--- |
+| `node tools/verify_glossary.js` (local + web) | PASS |
+| Errors | 0 |
+| Warnings | 0 |
+| Duplicate IDs | none |
+| `related` references valid | all exist |
+| SHA256 match Windows ↔ Web | PASS (`5211f76e...`) |
+
+#### Long-term glossary target: 1500 terms
+
+**Purpose**: Cover all project courses in full depth — beyond MVP-level terms.
+
+| Milestone | Description |
+| :--- | :--- |
+| 100 | ✅ First stable expanded glossary (this round) |
+| 300 | Entry-level complete glossary |
+| 600 | Main course coverage |
+| 1000 | Broad course coverage |
+| 1500 | Full project-course glossary target |
+
+**Coverage domains**:
+
+- SQL, Java, Python, IT Passport, 基本情報技術者試験
+- Networking, security, systems
+- Web/API, Git/dev tools, cloud/devops
+- Algorithms/data structures
+- Japanese IT workplace vocabulary
+
+**Policy**:
+
+- Maintain high-quality `zh` / `ja` / `en` explanations first.
+- Add `ko` fields later after glossary structure and fallback logic are stable (planned for Round 14.12+).
+- Run `tools/verify_glossary.js` after each internal batch.
+- Run full Windows/Web SHA256 consistency validation before commit.
+- Perform a dedicated quality review round after every 200-300 new terms.
+
+#### Next
+
+**Round 14.11**: Windows/Web release sync, Portable repack, and optional Web cache version update.
