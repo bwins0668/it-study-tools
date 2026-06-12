@@ -1505,3 +1505,188 @@ Round 14.8 → 术语表大规模扩充 + 双端校验脚本
 | UI-005 SQL 表格横向滚动 | `assets/js/app.js`（wrapper 函数）+ `assets/css/index.css`（table-scroll-wrapper 样式） | 小 |
 | UX-006 Glossary 清空按钮 | `assets/js/glossary.js` + `assets/css/glossary.css` | 小 |
 | UI-007 长表格挤压 | `assets/js/app.js`（`wrapAllTablesWithScrollWrapper` 调用） | 小 |
+
+---
+
+### Round 14.4：Windows 完整版同步 Round 14.2 Web UX 修复只读规划
+
+> **审计日期**：2026-06-12 | **执行模式**：只读审计，不修改任何源码
+
+#### 一、 当前双端基线
+
+| 维度 | Windows 完整版（主项目） | Web 公开版 |
+| :--- | :--- | :--- |
+| **最新 commit** | `5142766` | `c26638c` |
+| **分支** | `main` (origin/main) | `master` (origin/master) |
+| **工作区** | clean | clean |
+| **Round 14.3 已提交** | 是（`5142766`） | N/A |
+| **线上 smoke test** | N/A | 30/30 PASS |
+
+#### 二、 Web Round 14.2 修复清单
+
+| 问题 ID | 描述 | Web 涉及文件 |
+| :--- | :--- | :--- |
+| UX-001 | 首页新手引导横幅 | `index.html`, `assets/js/app.js`, `assets/css/index.css` |
+| UI-002 | 移动端语言按钮短标签 | `assets/js/i18n.js`, `index.html` |
+| UX-004 | Java/Python Safe Mode 明黄色 warning | `assets/js/java_sandbox.js`, `assets/js/python_sandbox.js` |
+| UI-005 | SQL 结果表格横向滚动 | `assets/js/app.js`, `assets/css/index.css` |
+| UX-006 | Glossary 搜索框 X 清空按钮 | `assets/js/glossary.js`, `assets/css/glossary.css` |
+| UI-007 | 移动端/模拟考长表格挤压 | `assets/js/app.js`, `assets/js/i18n.js` |
+| UX-010 | SQL WASM loading / 置灰态 | `assets/js/app.js`, `assets/css/index.css` |
+
+#### 三、 Windows 完整版对应模块审计
+
+| Web 修复项 | Web 文件 | Windows 对应文件 | 是否已有同等修复 | 差异 | 同步风险 |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **UX-001** 新手引导 | `index.html`, `app.js`, `index.css` | `index.html`, `assets/js/app.js`, `assets/css/index.css` | **否** | Windows 完整版首页**无**新手引导 DOM，`app.js` **无** `dismissGuidance()`/`startWithSubject()`，CSS **无** `.first-run-guidance` 样式。Web 版新增约 30 行 DOM + 20 行 JS + 60 行 CSS。 | 低 — 纯前端 UI，独立模块，不影响核心功能。 |
+| **UI-002** 语言按钮短标签 | `i18n.js`, `index.html` | `assets/js/i18n.js`, `index.html` | **否** | Windows 完整版 `i18n.js` **无** `span.lang-tab-full/short` 短标签渲染逻辑，`index.html` 语言 tab 为纯文本。 | 低 — Windows 主屏桌面宽屏，无移动端折行风险。 |
+| **UX-004** Safe Mode warning | `java_sandbox.js`, `python_sandbox.js` | `assets/js/java_sandbox.js`, `assets/js/python_sandbox.js` | **否**（平台差异） | Windows 完整版 sandbox **无任何** Safe Mode "尚未配置"捕获逻辑。两端 sandbox 架构完全不同：Web 通过 WebCodeRunner 远程安全沙箱；Windows 通过本地后端 server.py 调用本地 JDK/Python。 | **无** — 平台独有差异，Windows 不会触发 Safe Mode。 |
+| **UI-005** SQL 表格横向滚动 | `app.js`, `index.css` | `assets/js/app.js`, `assets/css/index.css` | **否** | Windows `app.js` 在 `runPlaygroundQuery` 中产生 `result-table`（2 处），但**无** `div.table-scroll-wrapper` 包装。CSS **无** `.table-scroll-wrapper` 样式。 | **中** — 桌面窗口缩小时同样可能截断多列表格。 |
+| **UX-006** Glossary 清空按钮 | `glossary.js`, `glossary.css` | `assets/js/glossary.js`, `assets/css/glossary.css` | **否** | Windows `glossary.js` **无** `clearBtn`/`glossary-search-clear` 相关逻辑，Escape 键不会清空搜索。CSS **无** clear 按钮样式。 | 低 — 纯前端交互，无平台依赖。 |
+| **UI-007** 长表格挤压 | `app.js`, `i18n.js` | `assets/js/app.js` | **否** | Windows `app.js` 有 `renderCbtQuestion` 和 `renderCodingQuestion` 函数（各 1 个），但在渲染后**未调用** `wrapAllTablesWithScrollWrapper`。 | 低 — 桌面宽屏下长表格溢出概率低，但在高 DPI 缩放时仍可能。 |
+| **UX-010** SQL WASM loading | `app.js`, `index.css` | `assets/js/app.js` | **否**（平台差异） | Windows `app.js` **无** `sqlEngineReady`/`updateSqlRunButtonState`。Windows 完整版通过 `server.py` 后端直连本地 SQLite，**无** WASM 加载延迟。初始化路径完全不同。 | **无** — 平台独有差异。 |
+
+#### 四、 逐项同步判断
+
+| 问题 ID | 是否建议同步 Windows | 优先级 | 推荐实现方式 | 是否可直接复用 Web 代码 | 风险 |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **UX-001** | **是** | **中** | 在 `index.html` 首页内容区添加新手引导 DOM（文案可微调，移除 Web-only 链接）；`app.js` 新增 `dismissGuidance()`/`startWithSubject()`；CSS 添加 `.first-run-guidance` 系列样式。 | 可参考 Web 代码结构，但需适配 Windows 版的 `switchSubject` 和 `loadLesson` 签名。 | 低 |
+| **UI-002** | **否** | 低 | 桌面宽屏无折行问题，不改。 | — | 无 |
+| **UX-004** | **否** | 无 | Windows 平台不会触发 Safe Mode，两端 sandbox 架构根本不同。 | — | 无 |
+| **UI-005** | **是** | **高** | 在 `app.js` 的 `runPlaygroundQuery` 中给 `result-table` 加 `div.table-scroll-wrapper` 外层；`index.css` 添加 `.table-scroll-wrapper { overflow-x: auto; }`。 | **可直接复用** — Web 端改动仅为 DOM 结构包装 + CSS，无平台依赖。 | 低 |
+| **UX-006** | **是** | **高** | 在 `glossary.js` 中添加 clearBtn 搜索框 X 按钮（DOM 创建 + 点击事件 + Escape 键清空）；`glossary.css` 添加 clear 按钮样式。 | **可直接复用** — Web 端 clearBtn 逻辑和 CSS 均为纯前端，无平台依赖。注意检查 glossary 的 HTML DOM id 是否一致。 | 低 |
+| **UI-007** | **是** | **中** | 在 `app.js` 的 `renderCbtQuestion` 和 `renderCodingQuestion` 末尾调用表格包装函数；在内容 i18n 渲染后也调用。 | **可直接复用** — 只需引用 `wrapAllTablesWithScrollWrapper` 函数（该函数本身需同步自 UI-005）。 | 低 |
+| **UX-010** | **否** | 无 | Windows 端 SQL 通过 `server.py` 后端直连本地 SQLite，无 WASM 初始化等待。不需要 loading / disabled 态。 | — | 无 |
+
+#### 五、 Round 14.5 推荐实施范围
+
+##### 优先同步（4 项）
+
+| 优先级 | 问题 | 涉及文件（Windows 完整版） | 改动类型 |
+| :--- | :--- | :--- | :--- |
+| **P-High** | **UI-005** SQL 表格横向滚动 | `assets/js/app.js`, `assets/css/index.css` | DOM 包装 + CSS |
+| **P-High** | **UX-006** Glossary 清空按钮 | `assets/js/glossary.js`, `assets/css/glossary.css` | JS 交互 + CSS |
+| **P-Med** | **UI-007** 长表格挤压 | `assets/js/app.js` | 调用表格包装 |
+| **P-Med** | **UX-001** 新手引导 | `index.html`, `assets/js/app.js`, `assets/css/index.css` | DOM + JS + CSS |
+
+##### 暂不同步（3 项）
+
+| 问题 | 不同步原因 |
+| :--- | :--- |
+| UI-002 语言按钮短标签 | Windows 桌面宽屏无移动端折行风险 |
+| UX-004 Safe Mode warning | Windows 有本地后端，不走 Safe Mode 路径 |
+| UX-010 SQL WASM loading | Windows 直连本地 SQLite，无 WASM 加载态 |
+
+##### Round 14.5 允许修改文件清单
+
+```
+允许修改（共 7 个文件）：
+  index.html                      # 新增新手引导 DOM 结构
+  assets/js/app.js                # 新手引导函数 + 表格包装函数 + SQL/CBT/Coding 渲染后调用
+  assets/js/glossary.js           # 新增 clearBtn 搜索框 X 按钮交互
+  assets/js/i18n.js               # 新增 wrapAllTablesWithScrollWrapper 调用（如需要）
+  assets/css/index.css            # .first-run-guidance + .table-scroll-wrapper 样式
+  assets/css/glossary.css         # .glossary-search-clear 相关样式
+```
+
+##### Round 14.5 禁止修改文件清单
+
+```
+禁止修改：
+  assets/js/java_sandbox.js      # 平台差异，不改
+  assets/js/python_sandbox.js    # 平台差异，不改
+  assets/js/content-i18n.js      # 内容加载核心，不改
+  assets/js/i18n-ui-dict.js      # UI 字典数据，不改
+  data/                          # 任何课程数据、术语表数据、内容包
+  server.py / study_ai.py        # 后端服务
+  启动.bat / .exe                # 启动脚本/二进制
+  release/portable 打包脚本       # 打包流程
+```
+
+##### 需要备份的文件
+
+实施 Round 14.5 前应备份以下原始文件（可通过 `git stash` 或分支管理回退）：
+
+```
+assets/js/app.js
+assets/js/glossary.js
+assets/js/i18n.js
+assets/css/index.css
+assets/css/glossary.css
+index.html
+```
+
+##### 本地验证步骤
+
+| 步骤 | 验证项 | 预期 |
+| :--- | :--- | :--- |
+| 1 | 打开首页 | 显示新手引导横幅，"从 SQL 开始"和"从 IT Passport 开始"按钮正常 |
+| 2 | 点击关闭引导横幅 | 引导消失，不重新出现（session 内） |
+| 3 | 点击"从 SQL 开始" | 自动切换到 SQL 科目并加载第 1 课 |
+| 4 | SQL 控制台执行 `SELECT * FROM students;` | 结果表格宽度适配，水平滚动正常，不超过右侧边框 |
+| 5 | 调整窗口宽度至 800px | 表格仍然有横向滚动条，无截断 |
+| 6 | 打开 Glossary 搜索 | 搜索框右侧出现 X 按钮，输入文字后 X 可见，点击 X 清空 |
+| 7 | Glossary 搜索后按 Esc | 搜索内容清空（不关闭弹窗） |
+| 8 | 进入 IT Passport/Coding 模拟考 | 含大表格的题干自动包装横向滚动容器 |
+| 9 | 切换 vi/fr 语言 | Glossary 和 SQL 表格功能正常 |
+| 10 | 回归测试核心功能 | SQL/Java/Python 运行正常，CBT 答题正确，Glossary 搜索正常 |
+
+##### 是否需要重新打包 Portable
+
+**是**。Round 14.5 修改了 `index.html`、CSS、JS 文件，发布新版本时必须重新打包 Windows Portable 版以确保离线用户获得最新 UX。
+
+##### 是否需要更新 Release
+
+**是**。变更涉及 4 个 UX 修复，建议发布次版本号递增（如 `v2026.6.12` 或 `v2026.6.11-r14.5`），Release 说明应列出同步的 Web UX 修复项。
+
+##### 是否需要同步 Web
+
+**不需要**。Round 14.5 是将 Web 已修复的 UX 问题同步到 Windows 完整版，Web 端无需额外改动。
+
+##### 是否需要新增 Windows 端 smoke test
+
+建议在 Windows 端建立基础的 smoke test 脚本 `tools/windows_smoke_test.py`（可选，非本轮强制），校验：
+- 首页新手引导 DOM 存在
+- Glossary 清空按钮存在
+- SQL 结果表格包含 table-scroll-wrapper
+
+#### 六、 补充同步规则
+
+1. **Web 已修复但 Windows 未同步的项目，不能标记为全项目完成。**
+2. **最终报告必须区分**：
+   - Web 已完成
+   - Windows 已完成
+   - 双端已完成
+3. **体验类修复若双端都有对应界面，默认必须同步。**
+4. **Web-only 修复必须在 commit/round report 中写原因。**
+5. **Windows-only 修复必须在 commit/round report 中写原因。**
+
+#### 七、 风险分级
+
+| 级别 | 风险 | 说明 |
+| :--- | :--- | :--- |
+| **P0** | Windows 同步后页面无法打开 | 新手引导 DOM 或 JS 语法错误导致白屏 |
+| **P0** | SQL / Java / Python 核心功能崩溃 | 表格包装或 i18n 钩子影响核心渲染流程 |
+| **P0** | Glossary 搜索失效 | clearBtn 事件绑定破坏原有搜索逻辑 |
+| **P1** | Web 与 Windows UI 行为明显不一致 | 新手引导文案或交互设计差异 |
+| **P1** | SQL 表格修复影响桌面宽屏体验 | `.table-scroll-wrapper` 在宽屏下滚动条不美观 |
+| **P1** | 同步后未验证 Portable 打包 | 离线版分发时包含未经测试的代码 |
+| **P2** | 语言按钮样式仍不完全一致 | UI-002 不准备同步，两端语言按钮布局有细微差异 |
+| **P2** | loading 文案需要多语言精修 | 新手引导文案目前仅中日对照 |
+| **P2** | Windows 端缺少自动 smoke test | 暂无自动化回归验证 |
+
+#### 八、 下一轮执行建议（Round 14.5 推荐）
+
+**推荐方向**：**实现 Windows 完整版同步 Round 14.2 Web UX 修复**
+
+按以下顺序实现：
+
+```
+实现顺序：
+1. UI-005 SQL 表格横向滚动（纯 CSS + DOM 包装，风险最低，先做）
+2. UX-006 Glossary 清空按钮（纯前端交互无平台依赖）
+3. UI-007 长表格挤压（依赖 1 的表格包装函数）
+4. UX-001 新手引导（涉及 DOM/JS/CSS 三端修改，放最后）
+```
+
+每个改动实现后应立即在本地浏览器验证，全部完成后再做回归测试和 Portable 打包。
