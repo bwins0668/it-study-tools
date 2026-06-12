@@ -2384,4 +2384,53 @@ node tools/verify_glossary.js --web <path>
 
 - **Round 15.4**: 300 terms quality review, Web cache version update, Windows Portable repack, and GitHub Release.
 
+---
 
+### Round 15.4 — Glossary 300-Term Milestone Release
+
+**Status: ✅ PASS**
+
+#### Release summary
+
+| Item | Value |
+| :--- | :--- |
+| Version tag | `v2026.6.13-r15.4` |
+| Glossary milestone | **300 terms** (0 errors, 0 warnings) |
+| Quality fixes | Corrected `zh.term` for `java_lambda` (from "Java 开启 Lambda 表达式" to "Java Lambda 表达式") |
+| Windows Portable | `Study-Tools-Portable-v2026.6.13-r15.4.zip` |
+| SHA256 | `BFF3E213B716F3D76231BCA85C7E952BC881AF60AFF3D84427F941D82A7E118D` |
+| Web assetVersion | `v2026.6.13-r15.4` |
+| Web CACHE_NAME | `study-tools-web-v2026-6-13-r15-4` |
+| Web Branch / Target | `master` / `master` (Cloudflare Pages deploy branch) |
+| Web Smoke Test | 30/30 PASS |
+
+#### Changes this round
+
+| File | Change |
+| :--- | :--- |
+| `data/glossary/it_terms.js` | Applied quality fixes for `java_lambda` |
+| **Web** `assets/js/version.js` | assetVersion bumped to `v2026.6.13-r15.4` |
+| **Web** `assets/asset-manifest.json` | Generated with new file hashes & versions |
+| **Web** `data/i18n_content/manifest.json` | Generated with new file hashes & versions |
+| **Web** `service-worker.js` | CACHE_NAME bumped to `study-tools-web-v2026-6-13-r15-4` |
+
+#### Validation
+
+| Check | Result |
+| :--- | :--- |
+| `node tools/verify_glossary.js` (local + web) | PASS (0 errors, 0 warnings) |
+| Windows/Web SHA256 match | PASS (`b8065053437fafe581609bab1ea3c461155b68680c6fa2dea43e16f9d1e15758`) |
+| Web `node --check` all modified JS | PASS |
+| Web git status | clean — committed (`0b56576`) |
+
+#### Git
+
+| Repo | Branch | Commit hash | Push |
+| :--- | :--- | :--- | :--- |
+| Windows | main | (To be committed) | (To be committed) |
+| Web | master | `0b56576` | ✅ |
+
+#### Next
+
+- **Round 15.5** (recommended): Expand glossary from 300 to 400 terms with sub-batch validation.
+- **Round 15-K** (alt): Korean support architecture planning.

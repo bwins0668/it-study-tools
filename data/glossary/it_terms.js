@@ -4408,7 +4408,7 @@
       updatedAt: "2026-06-13",
       keepEnglish: true,
       ja: { term: "Javaラムダ式", kana: "ラムダしき", note: "関数型インタフェースの実装メソッドを、簡潔な式として記述するJavaの構文。" },
-      zh: { term: "Java 开启 Lambda 表达式", explanation: "Java 8 引入的语法糖，允许将函数作为方法参数，以极其简短的匿名函数表达式风格实现函数式接口。" },
+      zh: { term: "Java Lambda 表达式", explanation: "Java 8 引入的语法糖，允许将函数作为方法参数，以极其简短的匿名函数表达式风格实现函数式接口。" },
       en: { term: "Java Lambda Expression", explanation: "A short block of code which takes in parameters and returns a value, facilitating functional programming in Java." },
       aliases: ["ラムダ式", "lambda expression"],
       related: ["lambda_function"],
