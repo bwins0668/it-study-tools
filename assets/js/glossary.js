@@ -116,21 +116,108 @@
 
   /* ---- Filtering & Search ---- */
 
+  /**
+   * normalizeSearchToken(value) — 搜索标记规范化
+   * 将连字符和下划线视为等价的单词分隔符，
+   * 使 primary_key 可以被 primary-key 命中，反之亦然。
+   */
+  function normalizeSearchToken(value) {
+    return String(value || "").toLowerCase().replace(/[_-]/g, " ");
+  }
+
+  /**
+   * collectSearchFields(term) — 收集 term 中所有可搜索字段值
+   * 返回一个扁平字符串数组，每项都是小写。
+   * 保留原匹配字段：id, ja.term, zh.term, en.term, aliases
+   * 新增匹配字段：category, subcategory, level, exam_tags, examTags, skillTags, related(id)
+   */
+  function collectSearchFields(term) {
+    if (!term || typeof term !== "object") return [];
+    var fields = [];
+
+    function push(val) {
+      if (val != null && val !== "") fields.push(normalizeSearchToken(val));
+    }
+
+    // ── id ──
+    push(term.id);
+
+    // ── 多语言 term ──
+    var langs = ["ja", "zh", "en"];
+    for (var i = 0; i < langs.length; i++) {
+      var langBlock = term[langs[i]];
+      if (langBlock && langBlock.term) push(langBlock.term);
+    }
+
+    // ── aliases ──
+    if (Array.isArray(term.aliases)) {
+      for (var a = 0; a < term.aliases.length; a++) {
+        push(term.aliases[a]);
+      }
+    }
+
+    // ── category & subcategory & level ──
+    push(term.category);
+    push(term.subcategory);
+    push(term.level);
+
+    // ── exam_tags & examTags ──
+    if (Array.isArray(term.exam_tags)) {
+      for (var et = 0; et < term.exam_tags.length; et++) {
+        push(term.exam_tags[et]);
+      }
+    }
+    if (Array.isArray(term.examTags)) {
+      for (var et2 = 0; et2 < term.examTags.length; et2++) {
+        push(term.examTags[et2]);
+      }
+    }
+
+    // ── skillTags ──
+    if (Array.isArray(term.skillTags)) {
+      for (var st = 0; st < term.skillTags.length; st++) {
+        push(term.skillTags[st]);
+      }
+    }
+
+    // ── related (仅匹配 id 字符串) ──
+    if (Array.isArray(term.related)) {
+      for (var r = 0; r < term.related.length; r++) {
+        push(term.related[r]);
+      }
+    }
+
+    return fields;
+  }
+
+  /**
+   * termMatchesQuery(term, needle) — 检查术语是否匹配搜索词
+   * needle 已过 toLowerCase().trim()，搜索大小写不敏感。
+   */
+  function termMatchesQuery(term, needle) {
+    if (!needle) return true;
+    var fields = collectSearchFields(term);
+    for (var i = 0; i < fields.length; i++) {
+      if (fields[i].indexOf(needle) !== -1) return true;
+    }
+    return false;
+  }
+
+  /**
+   * getSearchBoost(term) — 读取搜索权重
+   * 预留函数，本轮不启用排序。
+   */
+  function getSearchBoost(term) {
+    var boost = term && term.searchBoost;
+    return Number.isFinite(boost) ? boost : 1;
+  }
+
   function filterTerms(terms, query, category) {
     var needle = String(query || "").toLowerCase().trim();
     return terms.filter(function (term) {
       if (category !== "all" && term.category !== category) return false;
       if (!needle) return true;
-      if (term.id.toLowerCase().includes(needle)) return true;
-      if (term.ja && term.ja.term && term.ja.term.toLowerCase().includes(needle)) return true;
-      if (term.zh && term.zh.term && term.zh.term.toLowerCase().includes(needle)) return true;
-      if (term.en && term.en.term && term.en.term.toLowerCase().includes(needle)) return true;
-      if (Array.isArray(term.aliases)) {
-        for (var i = 0; i < term.aliases.length; i++) {
-          if (term.aliases[i].toLowerCase().includes(needle)) return true;
-        }
-      }
-      return false;
+      return termMatchesQuery(term, needle);
     });
   }
 

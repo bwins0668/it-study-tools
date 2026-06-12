@@ -1936,3 +1936,74 @@ Implemented `normalizeTerm()` compatibility layer in `assets/js/glossary.js` (bo
 #### Next
 
 **Round 14.9**: enhance glossary search to include `examTags`, `level`, `subcategory`, `related`, and prepare `searchBoost` ranking.
+
+---
+
+### Round 14.9 — Glossary Metadata Search Enhancement
+
+**Status: ✅ PASS**
+
+#### Scope
+
+| Item | Value |
+| :--- | :--- |
+| Search now supports | `category`, `subcategory`, `level`, `exam_tags`, `examTags`, `skillTags`, `related` |
+| Search already supported | `id`, `ja.term`, `zh.term`, `en.term`, `aliases` |
+| `data/glossary/it_terms.js` modified | **NO** |
+| New glossary terms added | **NO** |
+| Korean UI added | **NO** |
+| `searchBoost` ranking enabled | **NO** — function exists, ranking reserved |
+| Glossary UI changed | **NO** |
+
+#### New functions added in glossary.js
+
+| Function | Purpose |
+| :--- | :--- |
+| `normalizeSearchToken(value)` | Normalizes `_-` to space so `primary_key` matches `primary-key` |
+| `collectSearchFields(term)` | Collects all searchable field values into a flat array |
+| `termMatchesQuery(term, needle)` | Checks if a term matches query via its collected fields |
+| `getSearchBoost(term)` | Reserved function to read `searchBoost` for future ranking |
+
+#### Filtering logic
+
+- `filterTerms()` now delegates to `termMatchesQuery()` for matching.
+- Category filter (`term.category`) remains unchanged.
+- Empty query returns full list in original order — ranking not yet applied.
+- `searchBoost` is stored but not used for sorting in this round.
+
+#### Compatibility
+
+| Check | Result |
+| :--- | :--- |
+| v1 terms still searchable | YES |
+| v2 terms searchable via metadata | YES |
+| Empty search order unchanged | YES |
+| Category filter unchanged | YES |
+| Clear button & Escape | YES |
+| Language switching | YES |
+
+#### Validation
+
+| Check | Result |
+| :--- | :--- |
+| `node --check assets/js/glossary.js` (Windows) | PASS |
+| `node --check assets/js/glossary.js` (Web) | PASS |
+| SHA256 match Windows ↔ Web | PASS (`ab32bc9d...`) |
+| Glossary search: `basic` → hits `level:basic` terms | manually verified |
+| Glossary search: `intermediate` → hits `level:intermediate` terms | manually verified |
+| Glossary search: `itpass` → hits `exam_tags`/`examTags` | manually verified |
+| Glossary search: `database-basic` → hits `database` | manually verified |
+| Glossary search: `sql-ddl` / `sql_ddl` → hits `primary_key` | manually verified |
+| `data/glossary/it_terms.js` modified | NO |
+
+#### Git
+
+- **Windows**: commit `assets/js/glossary.js`
+- **Web**: commit `assets/js/glossary.js` (identical)
+
+#### Next
+
+1. **Round 14.10-A** (recommended): add glossary data validation script before batch expansion to prevent duplicate ids and schema drift.
+2. **Round 14.10-B**: batch expand glossary terms to 100–150 entries.
+
+**Recommendation**: start with **14.10-A** (validation script) before large-scale term addition.
