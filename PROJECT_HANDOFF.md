@@ -2792,3 +2792,59 @@ node tools/verify_glossary.js --web <path>
 - **Round 15.11**: Expand glossary from 600 to 700 terms with sub-batch validation.
 - Or first do a deeper 600-term quality review / search experience optimization.
 
+---
+
+### Round 15.11 — Glossary 700-Term Expansion (Batch 1-4)
+
+**Status: ✅ PASS**
+
+#### Expansion summary
+
+| Item | Value |
+| :--- | :--- |
+| Version tag | No tag (Deferred to a later release round) |
+| Glossary milestone | **700 terms** |
+| Expansion size | +100 terms (600 -> 700) |
+| Validation batches | 25 + 25 + 25 + 25 incremental validation |
+| Windows Portable | No Portable generated |
+| Web assetVersion | No version bump |
+| Web Branch / Target | `master` |
+
+#### Changes this round
+
+| File | Change |
+| :--- | :--- |
+| `data/glossary/it_terms.js` | Expanded glossary from 600 to 700 terms |
+| **Web** `data/glossary/it_terms.js` | Synchronized with Windows version |
+
+#### Validation
+
+| Check | Result |
+| :--- | :--- |
+| Batch 1 validator | PASS (625 terms, 0 errors, 0 warnings) |
+| Batch 2 validator | PASS (650 terms, 0 errors, 0 warnings) |
+| Batch 3 validator | PASS (675 terms, 0 errors, 0 warnings) |
+| Batch 4 validator | PASS (700 terms, 0 errors, 0 warnings) |
+| `node tools/verify_glossary.js` (local + web) | PASS (0 errors, 0 warnings) |
+| Windows/Web SHA256 match | PASS (`2556d4e268923328fc8a3befbd29a52e9407a5e86fe020291442ade413dbc285`) |
+| Added `ko` field | None |
+| Course/backend/sandbox changes | None |
+
+#### Git
+
+| Repo | Branch | Commit hash | Push |
+| :--- | :--- | :--- | :--- |
+| Windows | main | `e2cb705` | ✅ |
+| Web | master | `3b16139` | ✅ |
+
+#### Notes
+
+- Expanded only glossary data.
+- Did not update Web cache version.
+- Did not create a tag, Portable package, or GitHub Release.
+- Newly added Round 15.11 terms keep English technical terms as stable cross-language labels; future quality rounds may localize or polish `ja`/`zh` phrasing.
+
+#### Next
+
+- **Round 15.12**: 700-term quality review and localization polish.
+- Or prepare the next release round with Web cache update, Portable packaging, and GitHub Release.
