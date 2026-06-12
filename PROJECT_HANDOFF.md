@@ -2434,3 +2434,62 @@ node tools/verify_glossary.js --web <path>
 
 - **Round 15.5** (recommended): Expand glossary from 300 to 400 terms with sub-batch validation.
 - **Round 15-K** (alt): Korean support architecture planning.
+
+---
+
+### Round 15.5 — Glossary 400-Term Expansion (Batch 1-4)
+
+**Status: ✅ PASS**
+
+#### Scope
+
+| Item | Value |
+| :--- | :--- |
+| Glossary Milestone | **400 terms** (0 errors, 0 warnings) |
+| Total terms added this round | 100 (from 300 to 400) |
+| Batches | 4 batches (25 + 25 + 25 + 25 terms) |
+| `data/glossary/it_terms.js` modified | YES (Windows & Web) |
+| Runtime JS / UI modified | **NO** |
+| Web assetVersion / SW modified | **NO** |
+| Portable ZIP built | **NO** |
+| GitHub Release created | **NO** |
+| Korean fields/UI added | **NO** |
+
+#### New Terms Count by Category / Field
+
+| Category | Count | Proposed Target | Actual Added |
+| :--- | :--- | :--- | :--- |
+| IT Passport / SG | 16 | 16 | 16 |
+| SQL / Database | 14 | 14 | 14 |
+| Java | 12 | 12 | 12 |
+| Python | 12 | 12 | 12 |
+| Network | 10 | 10 | 10 |
+| Security | 12 | 12 | 12 |
+| System / OS / Hardware | 8 | 8 | 8 |
+| Web / API / HTTP | 6 | 6 | 6 |
+| Git / Dev Tools / Testing | 4 | 4 | 4 |
+| Cloud / DevOps | 4 | 4 | 4 |
+| Algorithm / Data Structure | 2 | 2 | 2 |
+| **Total** | **100** | **100** | **100** |
+
+#### Validation
+
+| Check | Result |
+| :--- | :--- |
+| `node tools/verify_glossary.js` (local + web) | PASS (0 errors, 0 warnings) |
+| Errors | 0 |
+| Warnings | 0 |
+| Duplicate IDs | none |
+| `related` references valid | all exist |
+| SHA256 match Windows ↔ Web | PASS (`a2fd973d57b5dc67f6c3c3e25bb7008bafbc1ba9947ef01d1070eb014ebbbb80`) |
+
+#### Git
+
+| Repo | Branch | Commit hash | Push |
+| :--- | :--- | :--- | :--- |
+| Windows | main | (To be submitted) | (To be submitted) |
+| Web | master | (To be submitted) | (To be submitted) |
+
+#### Next
+
+- **Round 15.6**: 400 terms quality review, Web cache version update, Windows Portable repack, and GitHub Release.
