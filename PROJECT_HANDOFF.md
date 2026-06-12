@@ -2275,3 +2275,55 @@ node tools/verify_glossary.js --web <path>
 
 **Round 15.2** (recommended): 200 terms quality review, Web cache version update, Windows Portable repack, and GitHub Release.
 
+---
+
+### Round 15.2 — Glossary 200-Term Milestone Release
+
+**Status: ✅ PASS**
+
+#### Release summary
+
+| Item | Value |
+| :--- | :--- |
+| Version tag | `v2026.6.13-r15.2` |
+| Glossary milestone | **200 terms** (0 errors, 0 warnings) |
+| Quality fixes | 2 items (`social_engineering` EN desc, `brute_force_attack` related) |
+| Windows Portable | `Study-Tools-Portable-v2026.6.13-r15.2.zip` |
+| SHA256 | `fdb1d8d2b6f013fc037b514289c4d96c74e092177c6d2e96e6efd752d54f25cb` |
+| Web assetVersion | `v2026.6.13-r15.2` |
+| Web CACHE_NAME | `study-tools-web-v2026-6-13-r15-2` |
+| Web Branch / Target | `master` / `master` (Cloudflare Pages deploy branch) |
+| Web Smoke Test | 30/30 PASS |
+
+#### Changes this round
+
+| File | Change |
+| :--- | :--- |
+| `data/glossary/it_terms.js` | Quality review fixes (Windows & Web) |
+| **Web** `assets/js/version.js` | assetVersion bumped to `v2026.6.13-r15.2` |
+| **Web** `assets/asset-manifest.json` | Generated with new file hashes & versions |
+| **Web** `data/i18n_content/manifest.json` | Generated with new file hashes & versions |
+| **Web** `service-worker.js` | CACHE_NAME bumped to `study-tools-web-v2026-6-13-r15-2` |
+
+#### Validation
+
+| Check | Result |
+| :--- | :--- |
+| `node tools/verify_glossary.js` (local + web) | PASS (0 errors, 0 warnings) |
+| Windows/Web SHA256 match | PASS (`f367ef6a...`) |
+| Web `node --check` all modified JS | PASS |
+| Web git status | clean — committed |
+
+#### Git
+
+| Repo | Commit hash | Push |
+| :--- | :--- | :--- |
+| Windows (main) | `current` | — |
+| Web (master) | `94c463a` | ✅ |
+
+#### Next
+
+- **Round 15.3** (recommended): Expand glossary from 200 to 300 terms with sub-batch validation.
+- **Round 14.12 / Round 15-K** (alt): Korean support architecture planning.
+
+

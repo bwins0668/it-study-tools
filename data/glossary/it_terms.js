@@ -3632,7 +3632,7 @@
       zh: { term: "暴力破解攻击", explanation: "通过尝试所有可能的字符组合来猜测密码或密钥的攻击手段。" },
       en: { term: "Brute Force Attack", explanation: "A cryptographic trial-and-error method used to decode login credentials or encryption keys." },
       aliases: ["総当たり攻撃", "brute force attack"],
-      related: [],
+      related: ["phishing", "encryption"],
       source: "project-glossary-v1"
     },
     {
@@ -3649,7 +3649,7 @@
       keepEnglish: true,
       ja: { term: "ソーシャルエンジニアリング", kana: "ソーシャルエンジニアリング", note: "人間の心理的な隙や物理的な盗み見等を通じて、機密情報を入手する手法。" },
       zh: { term: "社会工程学", explanation: "通过欺骗、诱导或偷看等心理/物理手段获取系统敏感信息的行为。" },
-      en: { term: "Social Engineering", explanation: "The use of centralized planning in an attempt to manage social change and regulate the future behavior of a society." },
+      en: { term: "Social Engineering", explanation: "The psychological manipulation of people into performing actions or divulging confidential information." },
       aliases: ["ソーシャル・エンジニアリング", "social engineering"],
       related: ["phishing", "vulnerability"],
       source: "project-glossary-v1"
