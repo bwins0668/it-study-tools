@@ -1239,3 +1239,24 @@ ContentI18n.loadPack = function(subject, lang) {
 * **批次一 (Round 14.2 - 主要体验与加载修复)**：修复 SQL 终端加载 Loading (UX-010)、SQL 终端表格滑动 (UI-005)、未翻译语言包统一 fallback 英文 (UX-008)、首页新手引导 (UX-001)。
 * **批次二 (Round 14.3 - 布局微调与进度记录)**：添加基于 localStorage 的课程进度对勾 (UX-003)、Safe Mode 黄色友好提示 (UX-004)、Glossary 清除按钮 (UX-006)、越/法大字长按钮遮挡微调 (UI-002)、长题目考卷排版 (UI-007)、深色模式对比度 (UI-009)。
 
+### Round 14.2：批次一体验与加载修复
+
+* **基于主项目 Commit**：`2f15564`
+* **Web 起始 Commit**：`72410ee`
+* **Web 新 Commit**：`c26638c`
+* **修复的问题**：
+  * **UX-001 首页新手引导**：在首页主要入口区域增加“初めての方へ / 新手建议”轻量引导横幅，提供“从 SQL 开始”和“从 IT Passport 开始”的明显点击入口。
+  * **UI-002 移动端语言按钮**：小屏幕手机（<768px）自适应将语言按钮文字微调为短标签（EN/ZH/JA/VI/MY/FR），避免在移动端折行挤压。
+  * **UX-004 Safe Mode warning**：重构了 Java/Python 沙盒在 Safe Mode 下执行时的 UI 反馈。不再输出红色的 Error 报错，改用黄色 warning 风格横幅提醒，并将状态徽标展示为“Web安全模式 / Webセーフモード”的黄色 warning 状态。
+  * **UI-005 SQL 表格横向滚动**：为 SQL 查询结果表格外层增加横向滚动容器及触控体验，并在窄屏下底部显示“左右滑动查看完整表格 / 左右スクロールで表全体を表示”提示。
+  * **UX-006 Glossary 清空按钮**：在术语检索框右侧内置一键清除 (X) 按钮，点击即可快速重置搜索词并刷新列表，支持 Esc 键触发。
+  * **UI-007 移动端长表格挤压**：重构了试题题干中的所有表格布局，统一加装 `overflow-x: auto` 的横向滚动容器，防止手机窄屏下内容折叠叠块。
+  * **UX-010 SQL WASM loading**：为 SQL 引擎初加载状态加入 loading 置灰态。加载就绪前“运行”按钮 disabled 并展示 “SQL engine loading...”，加载成功后自动恢复。
+* **assetVersion**：`v2026.6.11-r14.2`
+* **SW CACHE_NAME**：`study-tools-web-v2026-6-11-r14-2`
+* **自动化巡检运行结果**：`online_smoke_test.py` 升级至 `30/30` 项检测，本地及线上测试 **全部通过 (ALL PASS)**。
+* **本地与线上验证**：
+  * 本地 `npm run dev` 运行良好，全部体验问题完美修复，交互流畅。
+  * 线上 `https://study-tools-web-pages.pages.dev` 部署成功，无 P0/P1，缓存更新稳定。
+* **未修改内容**：课程源数据包、多语言 lazy loading 核心流程均保持冻结与零改动。
+* **下一步建议**：可以进入 Round 14.3，进行其余 UX 体验项修补（如 `localStorage` 学习进度打勾只读规划等）。
