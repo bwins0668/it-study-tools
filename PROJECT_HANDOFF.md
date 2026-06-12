@@ -984,7 +984,24 @@ ContentI18n.loadPack = function(subject, lang) {
   4. 同步升级 `service-worker.js` 中的 `CACHE_NAME` 到 `study-tools-web-v7`。
   5. 扩展 `online_smoke_test.py` 巡检脚本，增加对 `?v=` 版本参数完整性的正则表达式断言。
 
+### Round 13.10：Web Cache Busting 实现
 
-
-
-
+* **基于主项目 Commit**：`b1d64da`
+* **Web 起始 Commit**：`d8a20c8`
+* **Web 新 Commit**：`65deb85`
+* **新增/修改文件**：
+  * `assets/js/version.js` (Web 公开版) [MODIFY] — 在 `window.STUDY_TOOLS_VERSION` 中新增 `assetVersion: "v2026.6.11-r13.10"`，保留 `webVersion: "v2026.6.11"` 及 `desktopVersion: "v2026.6.11"`。
+  * `index.html` (Web 公开版) [MODIFY] — 将核心 JS/CSS 资源引用 URL 追加统一的 query 版本后缀 `?v=v2026.6.11-r13.10`；调整 `<script src="assets/js/version.js">` 移动到 `<head>` 块内，确保版本信息在其他脚本运行前可用。
+  * `assets/js/content-i18n.js` (Web 公开版) [MODIFY] — 更新 `ContentI18n.loadPack` 动态生成 script 时读取全局 `assetVersion` 追加 `?v=` 查询后缀，从而能够对懒加载语言包实现穿透浏览器强缓存；若无版本信息则保持原路径。
+  * `service-worker.js` (Web 公开版) [MODIFY] — 将 `CACHE_NAME` 升级为 `"study-tools-web-v2026-6-11-r13-10"`；针对带版本参数的核心 JS/CSS 运行时缓存进行精细调整，修改 `caches.match` 匹配选项，当 URL 含 `?v=` 时设置 `ignoreSearch: false`，使得版本升级能立刻打破 Service Worker 运行时缓存；对其他无版本参数的资源继续保持 `ignoreSearch: true` 离线支持。
+  * `scripts/online_smoke_test.py` (Web 公开版) [MODIFY] — 恢复 `BASE_URL` 默认值指向 `https://study-tools-web-pages.pages.dev`，支持命令行参数覆盖以兼容本地测试；新增 3 项 cache busting 断言检查，总检查项扩展到 18 项。
+  * `WEB_PUBLIC_README.md` (Web 公开版) [MODIFY] — 记录静态资源 Cache Busting 机制及 Service Worker 缓存策略调整说明。
+* **运行与验证结果**：
+  * 本地 Live Server 环境与线上环境双端自动化巡检：**18/18 PASS**。
+  * 控制台及网络核心资源 0 错误/404，未触发 `/api/i18n/translate` AI 翻译请求与 405。
+  * SQL WASM 正常、Glossary 正常、Java/Python Web Safe Mode 运行正常。
+  * 首屏仍不加载 20 个语言包，懒加载与切换正常工作，不重复加载。
+* **未修改**：内容包、课程源数据、`app.js` 业务层逻辑、`i18n.js` UI 翻译器逻辑、PC 专用代码。
+* **P0/P1/P2**：无。
+* **下一步建议**：
+  * **Round 13.11** 持续观察 cache busting 机制在线上运行稳定性，或推进多语言包内容精校。
