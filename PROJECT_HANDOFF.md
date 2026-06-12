@@ -2231,3 +2231,47 @@ node tools/verify_glossary.js --web <path>
 
 - **Round 15.1** (recommended): Expand glossary from 100 to 200 terms.
 - **Round 14.12** (alt): Korean language support architecture planning.
+
+---
+
+### Round 15.1 — Glossary 200-Term Expansion (Interrupted & Resumed)
+
+**Status: ✅ PASS**
+
+#### Scope
+
+| Item | Value |
+| :--- | :--- |
+| Interrupted Recovery | YES |
+| Terms detected at resume | 198 |
+| New terms added in recovery | 2 (`ssd`, `hdd`) |
+| Total terms added this round | 100 (from 100 to 200) |
+| Final term count | **200** |
+| `data/glossary/it_terms.js` modified | YES |
+| `assets/js/glossary.js` modified | **NO** |
+| `tools/verify_glossary.js` modified | **NO** |
+| Web public files modified | `data/glossary/it_terms.js` (identical copy) |
+| Korean fields added | **NO** |
+
+#### New terms (Recovery Phase)
+
+| id | category | subcategory | related |
+| :--- | :--- | :--- | :--- |
+| `ssd` | system | hardware | memory, hdd |
+| `hdd` | system | hardware | memory, ssd |
+
+#### Validation
+
+| Check | Result |
+| :--- | :--- |
+| `node tools/verify_glossary.js` (local + web) | PASS |
+| Errors | 0 |
+| Warnings | 0 |
+| Duplicate IDs | none |
+| `related` references valid | all exist |
+| SHA256 match Windows ↔ Web | PASS (`de54d3c3...`) |
+
+#### Next
+
+**Round 15.2** (recommended): 200 terms quality review, Web cache version update, Windows Portable repack, and GitHub Release.
+
