@@ -2183,3 +2183,51 @@ node tools/verify_glossary.js --web <path>
 #### Next
 
 **Round 14.11**: Windows/Web release sync, Portable repack, and optional Web cache version update.
+
+---
+
+### Round 14.11 — Glossary 100-Term Milestone Release
+
+**Status: ✅ PASS**
+
+#### Release summary
+
+| Item | Value |
+| :--- | :--- |
+| Version tag | `v2026.6.12-r14.11` |
+| Glossary milestone | **100 terms** (0 errors, 0 warnings) |
+| Windows Portable | `Study-Tools-Portable-v2026.6.12-r14.11.zip` |
+| SHA256 | `79122e0e5b8ca6e1079fee5e0eb4bf80dc412f4d869e9724d91e8028ba7c2255` |
+| Release URL | https://github.com/bwins0668/it-study-tools/releases/tag/v2026.6.12-r14.11 |
+| Web assetVersion | `v2026.6.12-r14.11` |
+| Web CACHE_NAME | `study-tools-web-v2026-6-12-r14-11` |
+
+#### Changes this round
+
+| File | Change |
+| :--- | :--- |
+| **Web** `assets/js/version.js` | assetVersion bumped |
+| **Web** `assets/asset-manifest.json` | assetVersion bumped |
+| **Web** `data/i18n_content/manifest.json` | assetVersion bumped |
+| **Web** `service-worker.js` | CACHE_NAME bumped |
+
+#### Validation
+
+| Check | Result |
+| :--- | :--- |
+| `node tools/verify_glossary.js` (local + web) | PASS (0 errors, 0 warnings) |
+| Windows/Web SHA256 match | PASS (`5211f76e...`) |
+| Web `node --check` all modified JS | PASS |
+| Web git status | clean — committed |
+
+#### Git
+
+| Repo | Commit hash | Push |
+| :--- | :--- | :--- |
+| Windows (main) | current | — |
+| Web (master) | `3a274c7` | ✅ |
+
+#### Next
+
+- **Round 15.1** (recommended): Expand glossary from 100 to 200 terms.
+- **Round 14.12** (alt): Korean language support architecture planning.
