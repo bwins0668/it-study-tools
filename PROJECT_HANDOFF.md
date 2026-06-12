@@ -1690,3 +1690,145 @@ index.html
 ```
 
 每个改动实现后应立即在本地浏览器验证，全部完成后再做回归测试和 Portable 打包。
+
+---
+
+### Round 14.5：Windows 完整版同步 Web UX 批次一修复（实现）
+
+> **执行日期**：2026-06-12 | **基于主项目 commit**：`7edd879` | **参考 Web commit**：`c26638c`
+
+#### 一、 实现摘要
+
+| 维度 | 状态 |
+| :--- | :--- |
+| **同步的问题** | UX-001 首页新手引导、UI-005 SQL 表格横向滚动、UX-006 Glossary 清空按钮、UI-007 长表格/多列表格挤压 |
+| **暂不同步的问题** | UI-002（桌面无折行问题）、UX-004（Windows 不走 Web Safe Mode）、UX-010（无 WASM loading） |
+| **修改文件数** | 6 个 |
+| **新增代码行数** | 297 行 |
+| **JS 语法检查** | 全部 PASS |
+
+#### 二、 修改文件清单
+
+| 文件 | 修改内容 |
+| :--- | :--- |
+| `index.html` | 新增新手引导 DOM (`#first-run-guidance`) + Glossary 搜索框 `#glossary-search-clear` 清空按钮 |
+| `assets/js/app.js` | 新增 `dismissGuidance()`, `startWithSubject()`, `wrapAllTablesWithScrollWrapper()`；SQL 结果表加 `div.table-scroll-wrapper` 包装；CBT/Coding 渲染后调用 wrapper |
+| `assets/js/glossary.js` | 新增 clearBtn 交互(click/Escape/reset)、open() 时重置搜索框 |
+| `assets/js/i18n.js` | 课程内容渲染 3 处路径后调用 `wrapAllTablesWithScrollWrapper()` |
+| `assets/css/index.css` | 新增 `.table-scroll-wrapper` + 新手引导 `.first-run-guidance` 全套样式（含 light theme） |
+| `assets/css/glossary.css` | 新增 `#glossary-search-clear` 样式（含 light theme） |
+
+#### 三、 本地验证
+
+* JS 语法检查：`app.js` PASS / `glossary.js` PASS / `i18n.js` PASS
+* 新手引导：首页 content-card 前显示引导横幅，关闭按钮工作，"从 SQL 开始"/"从 IT Passport 开始"按钮调用 `switchSubject` + `loadLesson`
+* SQL 表格：`runPlaygroundQuery` 中结果表已加 `.table-scroll-wrapper` 外层
+* Glossary 清空：搜索框右侧 X 按钮，输入文字后可见，点击清空搜索，Escape 键也清空
+* 长表格包装：CBT `/` Coding `/` 课程内容渲染后均调用 `wrapAllTablesWithScrollWrapper()`
+
+#### 四、 Portable 打包
+
+| 项目 | 值 |
+| :--- | :--- |
+| **文件名** | `Study-Tools-Portable-v2026.6.12.zip` |
+| **路径** | `backups/Study-Tools-Portable-v2026.6.12.zip` |
+| **文件数** | 1794 |
+| **大小** | 287.62 MB |
+| **SHA256** | `9631c56bb1526f20a73c3a4f1a9dfbc03d84d7d20e43e18bd8fe0dc6bacb7867` |
+
+#### 五、 GitHub Release
+
+| 项目 | 值 |
+| :--- | :--- |
+| **Tag** | `v2026.6.12` |
+| **Title** | Study Tools Portable v2026.6.12 |
+| **Release URL** | https://github.com/bwins0668/it-study-tools/releases/tag/v2026.6.12 |
+| **上传文件** | `Study-Tools-Portable-v2026.6.12.zip` |
+
+#### 六、 双端状态
+
+| 项目 | 值 |
+| :--- | :--- |
+| 是否涉及 Windows 完整版 | **是** |
+| 是否涉及 Web 公开版 | **否** |
+| 双端是否已同步 | **关键体验基线已同步**（Web-only 3 项已说明原因） |
+| Windows commit | `7edd879` |
+| Web commit | `c26638c`（不变） |
+| Web 巡检 | 未运行（Web 未修改） |
+| Portable 文件名 | `Study-Tools-Portable-v2026.6.12.zip` |
+| SHA256 | `9631c56bb1526f20a73c3a4f1a9dfbc03d84d7d20e43e18bd8fe0dc6bacb7867` |
+| Release URL | https://github.com/bwins0668/it-study-tools/releases/tag/v2026.6.12 |
+
+#### 七、 P0/P1/P2
+
+| 级别 | 状态 |
+| :--- | :--- |
+| **P0** | 无 — 语法检查全部 PASS，核心功能未改动 |
+| **P1** | 无 — 同步后 UI 行为对齐 Web 基线 |
+| **P2** | 新手引导文案目前仅中日对照，后续可多语言精修；Windows 端缺少自动 smoke test |
+
+#### 八、 下一步建议
+
+**推荐 Round 14.6：术语表数据结构升级只读规划** 或 **韩语双端支持架构只读规划**。
+
+---
+
+### Round 14.5 Final Closeout — Windows UX Sync
+
+**Status: ✅ PASS**
+
+Windows complete version was updated and released as **v2026.6.12**.
+
+#### Synced from Web Round 14.2 UX batch one (4 items):
+
+| Issue | Description |
+| :--- | :--- |
+| UX-001 | First-run/home guidance banner |
+| UI-005 | SQL result table horizontal scrolling |
+| UX-006 | Glossary search clear (X) button |
+| UI-007 | Long/multi-column table responsive scroll wrapping |
+
+#### Not synced (3 items, platform-specific):
+
+| Issue | Reason |
+| :--- | :--- |
+| UI-002 | Desktop Windows shows no language-button wrapping on wide screens |
+| UX-004 | Windows does not use the Web Safe Mode code path |
+| UX-010 | Windows SQL uses local backend, no WASM loading flow |
+
+#### Modified Windows files:
+
+```
+index.html
+assets/js/app.js
+assets/js/glossary.js
+assets/js/i18n.js
+assets/css/index.css
+assets/css/glossary.css
+```
+
+#### Validation:
+
+| File | Syntax Check |
+| :--- | :--- |
+| app.js | PASS |
+| glossary.js | PASS |
+| i18n.js | PASS |
+| P0/P1 | none found |
+
+#### Release artifacts:
+
+| Item | Value |
+| :--- | :--- |
+| Portable zip | `Study-Tools-Portable-v2026.6.12.zip` |
+| SHA256 | `9631c56bb1526f20a73c3a4f1a9dfbc03d84d7d20e43e18bd8fe0dc6bacb7867` |
+| Release URL | https://github.com/bwins0668/it-study-tools/releases/tag/v2026.6.12 |
+| Windows commit | `7edd879` |
+| Web commit | `c26638c` (unchanged) |
+
+#### Next recommended round:
+
+1. **Round 14.6-A** (recommended): Glossary data structure upgrade read-only planning
+2. **Round 14.6-B** (alt): Korean dual-end language support architecture read-only planning
+
+**Recommendation**: start with **Round 14.6-A** (glossary) before Korean support to avoid glossary/search/fallback rework.
