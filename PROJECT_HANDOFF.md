@@ -1263,92 +1263,245 @@ ContentI18n.loadPack = function(subject, lang) {
 
 ### Round 14.3：双端同步基线审计 + 术语表扩充 / 韩语全面支持规划
 
+> **审计日期**：2026-06-12 | **执行模式**：只读规划，不修改 Web 或完整版源码
+
 #### 一、 当前双端基线
-* **Windows 完整版基线**：主项目最新 commit 为 `44e3af4`（处于完全 clean 状态）。
-* **Web 公开版基线**：Web 最新 commit 为 `c26638c`（处于完全 clean 状态）。
-* **自动化巡检结果**：`online_smoke_test.py` 在 `http://localhost:5173` 与线上环境运行均为 **30/30 PASS**。
+
+| 维度 | Windows 完整版（主项目） | Web 公开版 |
+| :--- | :--- | :--- |
+| **仓库路径** | `E:\项目\sql-learning-hub` | `E:\项目\sql-learning-hub-web-public` |
+| **当前分支** | `main` | `master` |
+| **最新 commit** | `fdd6bf9` | `c26638c` |
+| **远程跟踪** | `origin/main` | `origin/master` |
+| **工作区状态** | clean | clean |
+| **assetVersion** | N/A | `v2026.6.11-r14.2` |
+| **SW CACHE_NAME** | N/A | `study-tools-web-v2026-6-11-r14-2` |
+| **线上 smoke test** | N/A | **30/30 PASS** |
 
 #### 二、 Round 14.2 Web UX 修复边界复核
+
 * **审计结果**：**合格**，未发现越界修改。
-  1. `i18n.js` 只扩展了移动端自适应短标签与表格滑动容器的自动包装钩子，**未改动** ContentI18n 核心语言包懒加载及 fallback 判定逻辑。
-  2. `java_sandbox.js`/`python_sandbox.js` 仅优化了 Safe Mode 触发时的 UI 卡片警告样式与黄色 warning 徽章状态，**未破坏** Safe Mode 安全拦截策略。
-  3. `app.js` 只修改了新手引导、WASM loading 禁用、以及 SQL 结果表格横向滚动，**没有修改**课程大纲或答题逻辑。
-  4. 多语言 `data/i18n_content/*.js` 和课程源数据 `data/*.js` 均**完全未改动**。
-  5. `service-worker.js` 仅更新了 `CACHE_NAME` 以执行强刷缓存爆破。
+
+| 审计项 | 结论 | 说明 |
+| :--- | :--- | :--- |
+| `i18n.js` 是否只改 UI 文案 / 语言按钮 / 无障碍 | 合格 | 仅扩展移动端自适应短标签（JA/ZH/EN 缩写）、语言 tab 自适应渲染、以及表格溢出包装的自动钩子。**未改动** ContentI18n 懒加载核心及 fallback 判定逻辑。 |
+| `java_sandbox.js` / `python_sandbox.js` 是否只改 Safe Mode 样式 | 合格 | 仅将原红色 Error 输出替换为黄色 warning 卡片（`<div class=”safe-mode-warning”>`）。状态徽标由 `'ready'` 改为 `'warning'`。**未改变**安全拦截策略（仍 catch `”尚未配置”/”未配置”` 错误后返回，不执行代码）。 |
+| `app.js` 是否只改 onboarding / 表格滚动 / SQL loading | 合格 | 仅新增 `updateSqlRunButtonState()`、`dismissGuidance()`、`startWithSubject()`、`wrapAllTablesWithScrollWrapper()`。SQL 结果与 coding 题目验证仅附加 `<div class=”table-scroll-wrapper”>` 包裹。**未修改**课程大纲、答题判分、数据加载等核心逻辑。 |
+| `data/i18n_content/*.js` 是否未修改 | 未修改 | 20 个内容包**完全无变化**，仅 `manifest.json` 更新 assetVersion。 |
+| `data/*.js` 课程源数据是否未修改 | 未修改 | 课程源数据**完全无变化**。 |
+| `service-worker.js` 是否仅更新 CACHE_NAME | 合格 | 仅 `CACHE_NAME` 从 `r13-10` → `r14-2`。 |
+| `manifest.webmanifest` 是否由脚本正常更新 | 合格 | `assets/asset-manifest.json` 和 `data/i18n_content/manifest.json` 均统一更新至 `r14-2`。 |
+
+**是否存在越界风险**：**否**。所有改动均在 UX 修复范围内，课程内容、安全边界、懒加载架构均无变化。
 
 #### 三、 双端结构审计与差异表
 
 | 模块 | 主项目位置 | Web 位置 | 当前是否同步 | 差异 | 风险 |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| **术语表** | `data/glossary/it_terms.js`, `assets/js/glossary.js`, `assets/css/glossary.css` | 相同位置 | 否 | Web 版在 Round 14.2 增加了检索框一键清空 (X) 按钮及 CSS 调整，主项目尚未同步。 | 术语表交互体验在 PC 端与 Web 端不一致。 |
-| **多语言 UI** | `assets/js/i18n.js`, `assets/js/i18n-ui-dict.js`, `assets/js/content-i18n.js` | 相同位置 | 否 | 1. Web 版 `i18n.js` 支持移动端自适应短标签（JA/ZH/EN等）及考卷大表格溢出包装；<br>2. 首页的 HTML DOM 和副标题两端不同（Web 包含了新手引导横幅及 Web/PC版下载链接）。 | 首页功能排版分叉，主项目无法在窄屏下自适应短标签，且长表格有折行叠块隐患。 |
-| **内容包** | `data/i18n_content/` (20个 JS 内容包) | 相同位置，且拥有 `manifest.json` 索引 | 否 | 1. Web 版支持内容包动态懒加载，并通过 Manifest 控制校验；<br>2. 主项目在 `index.html` 底部通过 20 个 `<script>` 标签硬编码一次性全部强行载入。 | 主项目加载性能较差（首屏加载 20 个无用脚本），且缺少 Manifest 校验机制。 |
-| **Windows 独有** | 本地 DB (`data/study_ai.db`)、后端服务 (`server.py`, `study_ai.py`)、本地二进制与启动脚本 (`Study-Tools.exe`, `启动.bat` 等) | 无对应位置 | 否 (独有) | 完整版具有真实的 Java/Python 本地代码编译运行能力（通过本地 JDK/Python）以及本地 SQLite 读写能力。 | Web版由于沙箱限制，只能通过 Safe Mode 卡片进行模拟展示，无法编译执行代码。 |
-| **Web 独有** | 无对应位置 | `service-worker.js` (PWA)、`scripts/online_smoke_test.py` (巡检)、`assets/asset-manifest.json` (哈希缓存爆破) | 否 (独有) | Web版具备 Service Worker PWA离线缓存机制，通过 version.js 爆破缓存，并在前端使用 WASM 仿真运行 SQL。 | 桌面端无需 Service Worker 和 WASM 引擎，其缓存与运行均使用本地资源。 |
+| **术语表数据** | `data/glossary/it_terms.js`（30条，单文件） | 相同文件 | **是** | 两端文件内容完全一致（diff 无输出）。支持 id, category, level, exam_tags, ja/zh/en/my/vi/fr, aliases, related, example, source。 | — |
+| **术语表 JS** | `assets/js/glossary.js` | 相同位置 | **否** | Web 在 Round 14.2 新增：检索框 X 清空按钮、Escape 键快捷清空。 | 完整版缺少清空交互。 |
+| **术语表 CSS** | `assets/css/glossary.css` | 相同位置 | **否** | Web 新增 `.glossary-search-clear` 相关样式 | 样式差异。 |
+| **多语言 UI (i18n.js)** | `assets/js/i18n.js` | 相同位置 | **否** | Web 新增：移动端短标签包装 (`span.lang-tab-full/short`)、表格溢出包装钩子 (`window.wrapAllTablesWithScrollWrapper`) | 完整版窄屏下语言按钮可能折行。 |
+| **UI 字典** | `assets/js/i18n-ui-dict.js` | 相同位置 | **是** | 两端一致，未改动 | — |
+| **内容加载器** | `assets/js/content-i18n.js` | 相同位置 | **是** | 两端一致，未改动 | — |
+| **核心 app** | `assets/js/app.js` | 相同位置 | **否** | Web 新增：新手引导横幅（DOM + 交互）、SQL engine loading 置灰态、`wrapAllTablesWithScrollWrapper` 函数、CBT/Coding 题目渲染中调用表格包装。 | 完整版缺少新手引导体验；窄窗口无表格溢出滚动。 |
+| **首页 HTML** | `index.html` | 相同位置 | **否** | Web 新增：onboarding 引导 DOM、语言 tab 改为 `span.lang-tab-full/short` 结构、CSS/JS 引用版本号更新。 | 完整版首页缺少新手引导。 |
+| **内容包** | `data/i18n_content/`（20个 JS 文件） | 相同位置 + `manifest.json` | **是** | 两端 20 个文件完全一致（en/vi/my/fr × 5 科目）。Web 额外拥有 `manifest.json`。 | 主项目缺少 manifest 校验机制。 |
+| **Windows 独有** | 本地 DB、server.py、StudyAI、本地 JDK/Python 编译、启动脚本 | 无对应位置 | 平台独有 | — | — |
+| **Web 独有** | 无对应位置 | `service-worker.js`, `online_smoke_test.py`, `generate_asset_manifest.py`, `asset-manifest.json`, `WEB_PUBLIC_README.md`, WASM SQLite | 平台独有 | — | — |
 
 #### 四、 Round 14.2 修复同步 Windows 完整版判断
 
 | 问题 ID | Web 已修复 | 完整版是否需要同步 | 同步优先级 | 原因 / 实现说明 |
 | :--- | :--- | :--- | :--- | :--- |
-| **UX-001 首页新手引导** | 是 | 需要同步 | 中 | 降低 PC 端新用户的入门门槛，但提示文案和入口需微调（移除 Web 独有链接）。 |
-| **UI-002 移动端语言按钮** | 是 | 不需要 | 低 | Windows 完整版主要运行于桌面 PC 宽屏，无移动端折行挤压风险。 |
-| **UX-004 Safe Mode warning** | 是 | 不需要 | 无 | Windows 完整版自带本地运行后端，不会触发“尚未配置”的安全模拟卡片。 |
-| **UI-005 SQL 表格横向滚动** | 是 | 需要同步 | 高 | 即使在 PC 宽屏下，SQL 返回多列数据时依然有可能超出外框，增加外层 wrapper 可防止硬截断。 |
-| **UX-006 Glossary 清空按钮** | 是 | 需要同步 | 高 | 提升术语表在 PC 上的易用性，支持 Esc 键快捷清空。 |
-| **UI-007 移动端长表格挤压** | 是 | 需要同步 | 中 | 即使在 PC 端，小窗口运行或高 DPI 缩放时题干大表格仍有折行可能，同步包装器可增加排版容错。 |
-| **UX-010 SQL WASM loading** | 是 | 不需要 | 无 | 完整版为本地直连 SQLite 数据库，无前端 WASM 编译加载时延。 |
+| **UX-001 首页新手引导** | 是 | 需要同步 | **中** | 降低 PC 端新用户的入门门槛。但提示文案和按钮需微调（移除 Web 独有链接）。 |
+| **UI-002 移动端语言按钮** | 是 | **不需要** | 低 | Windows 完整版主要运行于桌面 PC 宽屏，无移动端折行挤压风险。 |
+| **UX-004 Safe Mode warning** | 是 | **不需要** | 无 | Windows 完整版自带本地运行后端，不会触发”尚未配置”的安全模拟卡片。该代码路径在完整版不会被调用。 |
+| **UI-005 SQL 表格横向滚动** | 是 | 需要同步 | **高** | 即使在 PC 宽屏下，SQL 返回多列数据时依然可能超出外框。增加外层 `div.table-scroll-wrapper` 可防止硬截断。 |
+| **UX-006 Glossary 清空按钮** | 是 | 需要同步 | **高** | 提升术语表在 PC 上的易用性（X 按钮 + Esc 键清空）。纯前端交互，无平台依赖。 |
+| **UI-007 移动端长表格挤压** | 是 | 需要同步 | **中** | 即使在 PC 端，小窗口运行或高 DPI 缩放时题干大表格仍有折行可能。同步 `wrapAllTablesWithScrollWrapper` 可增加排版容错。 |
+| **UX-010 SQL WASM loading** | 是 | **不需要** | 无 | 完整版为本地直连 SQLite 数据库（`tryInitSQLiteAdapter` 在 Windows 路径不同），无前端 WASM 编译加载时延。 |
+
+**需同步项汇总**：UX-001（中）、UI-005（高）、UX-006（高）、UI-007（中）
+**不需同步项汇总**：UI-002、UX-004、UX-010（平台独有）
 
 #### 五、 建立双端同步规则
-1. **开发顺序原则**：
-   * **内容/数据类修改**（课程、术语表、考试数据）：必须先在主项目（Windows 完整版）完成，再通过拷贝同步到 Web 公开版。
-   * **UI/交互类修改**：对于公共页面和组件（例如 Glossary、CBT 答题系统、Sandbox 界面），除非是平台独有特性（如 PWA、本地 JDK 编译），否则必须保证两端 HTML DOM 及 JS/CSS 实现完全同步。
-2. **术语表与多语言同步**：
-   * 扩充术语表或新增语言支持（如韩语）时，数据文件和 UI 字典必须一字不差地双端同步。
-3. **提交与最终报告规范**：
-   * 以后每轮的最终报告必须新增以下核对字段，说明双端同步状态：
-     - *是否涉及 Windows 完整版*
-     - *是否涉及 Web 公开版*
-     - *双端是否已同步*
-     - *未同步项及原因*
-     - *Windows commit*
-     - *Web commit*
-     - *双端验证结果*
+
+1. **内容/数据类修改**（课程、术语表、考试数据）：必须先在主项目（Windows 完整版）完成，再通过拷贝同步到 Web 公开版。禁止 Web-only 内容修改。
+
+2. **术语表与多语言同步**：扩充术语表或新增语言支持（如韩语）时，`data/glossary/it_terms.js` 和 `assets/js/i18n-ui-dict.js` 必须一字不差地双端同步。`data/i18n_content/` 内容包必须双端保持同一文件集。
+
+3. **UI/交互类修改**：对于 Glossary、CBT、Sandbox 等公共组件，除非是平台独有特性（PWA、本地 JDK），否则必须双端同步。Web-only 改动必须在 commit 或 round report 中写明 *Web-only* 原因。Windows-only 改动同样须注明。
+
+4. **术语表数据文件 `it_terms.js`**：**必须双端完全共用一份文件**。Web 端 `data/glossary/` 是该文件的官方位置，主项目通过拷贝保持同步。
+
+5. **最终报告规范**：每轮最终报告必须新增以下核对字段：
+   - 是否涉及 Windows 完整版
+   - 是否涉及 Web 公开版
+   - 双端是否已同步
+   - 未同步项及原因
+   - Windows commit
+   - Web commit
+   - 双端验证结果
 
 #### 六、 术语表大规模扩充只读规划
-1. **现状审计**：当前共 30 条 MVP 术语，采用单文件 `data/glossary/it_terms.js`，支持 category 分类（database, security 等）与 level 难度，字段结构完整，但无韩语（ko）支持。
-2. **字段扩展**：
-   * 计划在保持现有结构基础上，在语言字段中直接新增 `ko` 对象（例如 `ko: { term: "데이터베이스", explanation: "..." }`），并扁平化加入 `kana`（日文假名）和 `acronym`/`aliases`。
-3. **数据结构与加载优化**：
-   * **保留单文件**：在扩充到 300 条以内时，保留单文件 `it_terms.js`，避免拆分文件带来额外的动态网络请求。超过 500 条时考虑按 category 拆分。
-   * **Manifest 校验**：无须建立专有术语 Manifest，直接挂载到静态资源 Manifest 进行缓存爆破。
-   * **校验脚本**：建议在 `tools/verify_glossary.py` 编写 Python 核验逻辑，检测是否有重复的 `id`，以及多国语言字段是否补齐。
-   * **双端共用**：两端必须共用 `data/glossary/it_terms.js`。
 
-#### 四、 韩语全面支持只读规划
-1. **韩语表示**：语种代码为 `ko`，显示名称为 `한국어 / KO`。
-2. **命名与内容包**：
-   * 在 `data/i18n_content/` 中新增 5 个科目内容包：`sql_ko.js`, `itpass_ko.js`, `sg_ko.js`, `java_ko.js`, `python_ko.js`。
-   * Web 的 `data/i18n_content/manifest.json` 中 `totalPacks` 将由 20 增加为 25。
-3. **UI 字典支持**：
-   * 在 `assets/js/i18n-ui-dict.js` 中新增韩语翻译，涵盖科目选择、SQL 沙盒、Safe Mode 警告、答题卡、术语表、Loading 态及各类错误文案。
-4. **加载器支持**：
-   * Web 端 `assets/js/content-i18n.js` 的 `ContentI18n.loadPack` 逻辑支持韩语。
-   * Windows 完整版 `index.html` 底部静态引入 5 个 ko 内容包。
-5. **部署与缓存爆破**：
-   * 更新 `assetVersion`，爆破 Service Worker 的 `CACHE_NAME` 并重新生成 Web 静态资源清单。
-   * `online_smoke_test.py` 中新增 ko 的动态加载和切换核验测试用例。
-6. **分阶段实施路线推荐**：
-   * **Round 14.4**：双端同步 Round 14.2 Web UX 修复（对齐基线，防止基线分叉）。
-   * **Round 14.5**：韩语双端支持架构只读规划与 UI 字典双端对齐（新增 UI 韩语切换，不加课程内容）。
-   * **Round 14.6**：生成韩语内容包骨架 / 第一科（SQL）韩语试点。
-   * **Round 14.7**：五科韩语内容包全面生成与双端 Manifest 合并。
-   * **Round 14.8**：术语表大规模扩充与双端校验。
+##### 现状审计
 
-#### 五、 风险分级
-* **P0 风险**：韩语包缺失导致懒加载在 Web 运行时抛出 404；数据结构格式不一致导致一端解析崩溃。
-* **P1 风险**：两端韩语支持不对等（一端有，一端无）；术语表字段结构不统一；Round 14.2 UX 遗漏同步。
-* **P2 风险**：韩语翻译中的专有名词机器翻译存在偏差，需人工校对。
+| 维度 | 当前值 |
+| :--- | :--- |
+| **条目数** | **30 条**（MVP 阶段） |
+| **文件** | 单文件 `data/glossary/it_terms.js`（553 行，约 37KB） |
+| **当前字段** | `id`, `category`, `level`, `exam_tags`, `keepEnglish`, `ja`(term/kana/note), `zh`(term/explanation), `en`(term/explanation), `my`(term/explanation/needsReview), `vi`(term/explanation/needsReview), `fr`(term/explanation/needsReview), `aliases`, `related`, `example`, `source` |
+| **分类** | 支持（category 字段：database, security, programming 等） |
+| **难度等级** | 支持（level 字段：basic, intermediate） |
+| **支持语言** | ja, zh, en, my, vi, fr（**无 ko**） |
+| **韩语 (ko)** | **不支持** — 无 `ko` 字段 |
+| **同义词/缩写** | 支持 — 通过 `aliases` 数组实现（如 `[“DB”, “DBMS”]`），当前没有独立 `acronym` 字段 |
+| **考试标签** | 支持 — 通过 `exam_tags` 数组实现（如 `[“itpass”, “sg”, “sql”]`） |
+| **双端共用** | **是** — 两端 `it_terms.js` 文件内容一致（diff 无差异） |
 
-#### 六、 下一轮执行建议（Round 14.4 推荐）
-* **推荐方向**：**方案 A — Windows 完整版同步 Round 14.2 Web UX 修复**。
-* **原因**：为了遵循“双端同步”长期目标，必须先将 Web 在 Round 14.2 修复的 UX 问题同步回主项目，保证两端处于同一功能和交互基线，再在对齐的基线上安全地开展术语表扩充与韩语全面支持。
+##### 推荐目标字段方案
+
+建议保留现有结构范式，在语言维度扩展。推荐新增以下字段：
+
+| 字段 | 当前状态 | 推荐 | 说明 |
+| :--- | :--- | :--- | :--- |
+| `ko` 对象 | 缺失 | **新增** | `ko: { term: “...”, explanation: “...” }` |
+| `acronym` | 无独立字段 | **建议新增** | 如 `”RDBMS”`，与 `aliases` 分离，用于快速标识缩写 |
+| `short_definition_zh` | 无 | 可选（后期） | 用于 Glossary 列表摘要展示，避免长 explanation 占用空间 |
+| `short_definition_ja` | 无 | 可选（后期） | 同上 |
+| `short_definition_ko` | 无 | 可选（后期） | 同上（依赖韩语支持） |
+| `source_note` | 通过单字段 `source` | 维持现有 | 当前 `”project-glossary-v1”` 足够 |
+| `updated_at` | 无 | **建议新增** | ISO 8601 时间戳，便于追踪版本 |
+
+**现有字段中已满足需求的不应重复添加**：
+- `aliases` 已覆盖同义词和常用缩写 → 不再新建同义字段
+- `exam_tags` 已覆盖考试分类 → 不再新建 exam 字段
+- `related` 已覆盖关联术语 → 不再新建关联字段
+- `example` 已覆盖示例 → 不需要扩展
+- `detailed_explanation` 暂不需要 — 当前 `explanation` 在单语言对象内已足够
+
+##### 文件策略
+
+| 阶段 | 条目数 | 文件策略 |
+| :--- | :--- | :--- |
+| MVP → 短期（~200 条以内） | 30 → ~200 | **保留单文件 `it_terms.js`**，避免拆分增加请求数 |
+| 中期（200~500 条） | ~200~500 | 仍可单文件，约 1.5MB 以内 |
+| 长期（500 条以上） | 500+ | 考虑按 category 拆分为 `glossary_database.js`, `glossary_security.js` 等 |
+
+##### 校验脚本
+
+推荐在 `tools/verify_glossary.py` 建立 Python 校验脚本，校验项：
+- 重复 `id` 检测
+- 多国语言字段补齐检查（ja/zh/en 必须，my/vi/fr/ko 推荐）
+- `aliases`, `related`, `exam_tags` 合法性
+- 难度等级枚举值（basic/intermediate/advanced）
+
+##### Manifest 策略
+
+- 术语表单文件无须专有 Manifest，直接挂载到 `assets/asset-manifest.json` 进行缓存爆破
+- `online_smoke_test.py` 应新增 Glossary 数据完整性检查测试项
+
+#### 七、 韩语全面支持只读规划
+
+##### 语言标识
+
+| 属性 | 值 |
+| :--- | :--- |
+| 语种代码 | `ko` |
+| 区域代码 | `ko-KR` |
+| 显示名称 | `한국어 / KO` |
+| 排序位置 | 应在语言选择器中位于 English 之后、Vietnamese 之前（或按字母顺序排列） |
+
+##### 覆盖范围总表
+
+| 覆盖领域 | 当前状态 | 需改动文件 | 工作量评估 |
+| :--- | :--- | :--- | :--- |
+| UI 字典 | 无韩语 | `assets/js/i18n-ui-dict.js` | 中（需翻译数百条 UI 字符串） |
+| SQL 内容包 | 无 | `data/i18n_content/sql_ko.js` | 大（36 课 × 概念翻译） |
+| IT Passport 内容包 | 无 | `data/i18n_content/itpass_ko.js` | 大（85 题 × 题干/选项翻译） |
+| SG 内容包 | 无 | `data/i18n_content/sg_ko.js` | 大（44 题 × 翻译） |
+| Java 内容包 | 无 | `data/i18n_content/java_ko.js` | 大（115 课 × 翻译） |
+| Python 内容包 | 无 | `data/i18n_content/python_ko.js` | 最大（255 课 × 翻译） |
+| 内容 Manifest (Web) | totalPacks=20 | `data/i18n_content/manifest.json` → 25 | 小 |
+| 生成脚本 | 仅 en/vi/my/fr | `scripts/generate_asset_manifest.py` | 小 |
+| 巡检脚本 | 无 ko 测试 | `scripts/online_smoke_test.py` | 小 |
+| 语言选择器 (Web) | 无 KO | `index.html` + `i18n.js` | 小 |
+| 语言选择器 (完整版) | 无 KO | `index.html` + `i18n.js` | 小 |
+| 内容加载器 | 仅 en/vi/my/fr | `assets/js/content-i18n.js` | 小 |
+| assetVersion | r14.2 | 需更新至 r14.3+ | 小 |
+| SW CACHE_NAME | r14-2 | 需更新 | 小 |
+| 术语表 | 无 ko 字段 | `data/glossary/it_terms.js` | 中（30+ 条 × 韩语 term/explanation） |
+| Windows 离线可用性 | N/A | 打包产物需含 ko 内容包 | 小 |
+
+##### 内容包命名方案
+
+```
+data/i18n_content/sql_ko.js
+data/i18n_content/itpass_ko.js
+data/i18n_content/sg_ko.js
+data/i18n_content/java_ko.js
+data/i18n_content/python_ko.js
+```
+
+命名规则：`{subject}_{lang}.js`，与现有 en/vi/my/fr 模式一致。
+
+##### Manifest 与构建影响
+
+| 项目 | 当前值 | 变更后 |
+| :--- | :--- | :--- |
+| `totalPacks` | 20 | **25** |
+| `totalSubjects` | 5 | 不变 |
+| `generate_asset_manifest.py` 语言列表 | `[“en”,”vi”,”my”,”fr”]` | **追加 `”ko”`** |
+| `online_smoke_test.py` 测试用例 | en, vi, fr, ja | **追加 ko 动态加载测试** |
+
+##### 双端同步影响
+
+| 端 | 需改动文件 |
+| :--- | :--- |
+| **Web 公开版** | `index.html`, `i18n.js`, `content-i18n.js`, `i18n-ui-dict.js`, `data/i18n_content/` (+5), `manifest.json`, `service-worker.js`, `version.js`, `generate_asset_manifest.py`, `online_smoke_test.py` |
+| **Windows 完整版** | `index.html`, `i18n.js`, `i18n-ui-dict.js`, `data/i18n_content/` (+5) |
+| **双端共用** | `data/glossary/it_terms.js`（追加 ko 字段） |
+
+#### 八、 风险分级
+
+| 级别 | 风险 | 说明 |
+| :--- | :--- | :--- |
+| **P0** | 新语言导致页面无法加载 | 内容包命名错误或 Manifest 未更新导致 Web 懒加载 404 |
+| **P0** | 双端数据结构不一致导致一端崩溃 | 术语表字段升级破坏现有搜索逻辑 |
+| **P1** | Web 有韩语但完整版没有 | 双端支持不对等 |
+| **P1** | Manifest totalPacks 不一致 | 构建遗漏 |
+| **P1** | smoke test 未覆盖 ko | 巡检遗漏 |
+| **P1** | Round 14.2 UX 修复遗漏同步 | 基线与 Web 分叉 |
+| **P2** | 韩语翻译需要人工精校 | 机器翻译在 IT 专有名词上可能不准 |
+| **P2** | 术语表规模仍不够 | 30 条 MVP 对深度学习帮助有限 |
+| **P2** | 构建与同步仍需人工执行 | 缺少自动化同步脚本 |
+
+#### 九、 下一轮执行建议（Round 14.4 推荐）
+
+**推荐方向**：**Round 14.4 — Windows 完整版同步 Round 14.2 Web UX 修复**
+
+**原因**：
+- 当前 Round 14.2 是 Web-only UX 修复，主项目有 4 项遗漏（UX-001, UI-005, UX-006, UI-007）
+- 用户的长期目标是双端同步
+- 必须先处理双端基线不一致，再扩术语表和韩语
+- 否则后续会在不同基线上继续分叉
+
+**优先级路线图**：
+```
+Round 14.4 → 双端同步 R14.2 UX 修复（对齐基线）
+Round 14.5 → 韩语支持架构规划 + UI 字典对齐
+Round 14.6 → 韩语内容包骨架 / SQL 试点
+Round 14.7 → 五科韩语内容包全面生成 + Manifest 合并
+Round 14.8 → 术语表大规模扩充 + 双端校验脚本
+```
+
+**Round 14.4 需同步的具体项**：
+
+| 同步项 | 涉及文件（完整版） | 工作量 |
+| :--- | :--- | :--- |
+| UX-001 新手引导 | `index.html`（DOM）+ `assets/js/app.js`（函数） | 小 |
+| UI-005 SQL 表格横向滚动 | `assets/js/app.js`（wrapper 函数）+ `assets/css/index.css`（table-scroll-wrapper 样式） | 小 |
+| UX-006 Glossary 清空按钮 | `assets/js/glossary.js` + `assets/css/glossary.css` | 小 |
+| UI-007 长表格挤压 | `assets/js/app.js`（`wrapAllTablesWithScrollWrapper` 调用） | 小 |
