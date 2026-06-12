@@ -2212,12 +2212,12 @@ function runPlaygroundQuery() {
       countBadge.innerText = `${res.rows.length}行`;
       countBadge.style.display = "inline";
       
-      tableHtml += `<table class="result-table"><thead><tr>`;
+      tableHtml += `<div class="table-scroll-wrapper"><table class="result-table"><thead><tr>`;
       res.columns.forEach(col => {
         tableHtml += `<th>${col}</th>`;
       });
       tableHtml += `</tr></thead><tbody>`;
-      
+
       res.rows.forEach(row => {
         tableHtml += `<tr>`;
         row.forEach(cell => {
@@ -2225,7 +2225,7 @@ function runPlaygroundQuery() {
         });
         tableHtml += `</tr>`;
       });
-      tableHtml += `</tbody></table>`;
+      tableHtml += `</tbody></table></div>`;
     } else {
       countBadge.style.display = "none";
     }
@@ -3159,6 +3159,12 @@ function renderCbtQuestion() {
   });
   
   updateCbtNavigatorGridUI();
+  // Wrap tables for horizontal scroll
+  if (window.GlossaryWrapper && typeof window.GlossaryWrapper.wrapAllTables === "function") {
+    window.GlossaryWrapper.wrapAllTables();
+  } else {
+    wrapAllTablesWithScrollWrapper();
+  }
 }
 
 function selectCbtAnswer(oIdx) {
@@ -4190,6 +4196,12 @@ function renderCodingQuestion() {
   
   // Render navigator grid
   renderCodingNavigatorGrid();
+  // Wrap tables for horizontal scroll
+  if (window.GlossaryWrapper && typeof window.GlossaryWrapper.wrapAllTables === "function") {
+    window.GlossaryWrapper.wrapAllTables();
+  } else {
+    wrapAllTablesWithScrollWrapper();
+  }
 }
 
 // Render grid navigator indices
@@ -4751,6 +4763,55 @@ function toggleMinimizePdf() {
       btnIcon.className = "fa-solid fa-compress";
     }
   }
+}
+
+/* ====================================================
+   Onboarding Guidance (UX-001)
+   ==================================================== */
+
+function dismissGuidance() {
+  var guidance = document.getElementById('first-run-guidance');
+  if (guidance) {
+    guidance.style.display = 'none';
+  }
+}
+
+function startWithSubject(subject) {
+  switchSubject(subject);
+  if (subject === 'sql') {
+    loadLesson(1);
+  } else if (subject === 'itpass') {
+    loadItPassLesson(1);
+  }
+  dismissGuidance();
+}
+
+/* ====================================================
+   Table Scroll Wrapper (UI-005, UI-007)
+   ==================================================== */
+
+function wrapAllTablesWithScrollWrapper() {
+  var containers = [
+    document.getElementById('concept-ja-body'),
+    document.getElementById('concept-zh-body'),
+    document.getElementById('cbt-q-body-text'),
+    document.getElementById('eq-task-ja'),
+    document.getElementById('eq-task-zh'),
+    document.getElementById('quiz-feedback'),
+    document.querySelector('.quiz-section'),
+    document.querySelector('.eq-expected-box')
+  ];
+  containers.forEach(function (container) {
+    if (!container) return;
+    var tables = container.querySelectorAll('table');
+    tables.forEach(function (table) {
+      if (table.parentElement && table.parentElement.classList.contains('table-scroll-wrapper')) return;
+      var wrapper = document.createElement('div');
+      wrapper.className = 'table-scroll-wrapper';
+      table.parentNode.insertBefore(wrapper, table);
+      wrapper.appendChild(table);
+    });
+  });
 }
 
 /* ====================================================

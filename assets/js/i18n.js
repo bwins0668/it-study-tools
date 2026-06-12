@@ -719,6 +719,7 @@
       }
       titleJaEl.textContent = lesson.titleJa || "";
       conceptJaEl.innerHTML = renderOriginalConcept(lesson.conceptJa || "");
+      if (typeof wrapAllTablesWithScrollWrapper === "function") wrapAllTablesWithScrollWrapper();
       return;
     }
 
@@ -731,6 +732,7 @@
         conceptTargetEl.innerHTML = renderOriginalConcept(localized.concept || lesson.conceptZh || lesson.conceptJa || "");
         titleJaEl.textContent = lesson.titleJa || "";
         conceptJaEl.innerHTML = renderOriginalConcept(lesson.conceptJa || "");
+        if (typeof wrapAllTablesWithScrollWrapper === "function") wrapAllTablesWithScrollWrapper();
         return;
       }
     }
@@ -760,6 +762,7 @@
     titleTargetEl.textContent = cachedTitle || lesson.titleZh || lesson.titleJa || "";
     titleJaEl.textContent = lesson.titleJa || "";
     conceptTargetEl.innerHTML = sanitizeHtml(cachedConcept || renderOriginalConcept(lesson.conceptZh || lesson.conceptJa || ""));
+    if (typeof wrapAllTablesWithScrollWrapper === "function") wrapAllTablesWithScrollWrapper();
 
     try {
       const translated = await translateBatch([titleItem, conceptItem]);
@@ -770,6 +773,8 @@
       conceptTargetEl.innerHTML = sanitizeHtml(translated["lesson-concept"] || renderOriginalConcept(lesson.conceptZh || ""));
     } catch (error) {
       showI18nError(error);
+    } finally {
+      if (typeof wrapAllTablesWithScrollWrapper === "function") wrapAllTablesWithScrollWrapper();
     }
   }
 

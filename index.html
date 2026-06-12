@@ -182,6 +182,27 @@
 
       <!-- Center: Lesson Content -->
       <main class="lesson-content">
+
+        <!-- Onboarding Guidance Banner -->
+        <div class="first-run-guidance" id="first-run-guidance" style="position: relative;">
+          <div class="guidance-close-btn" onclick="dismissGuidance()" title="关闭提示 / 閉じる" aria-label="关闭提示">
+            <i class="fa-solid fa-xmark"></i>
+          </div>
+          <div class="guidance-content">
+            <div class="guidance-icon">
+              <i class="fa-solid fa-circle-info"></i>
+            </div>
+            <div class="guidance-text">
+              <span class="guidance-title">初めての方へ / 新手建议：</span>
+              <span class="guidance-desc">先选择上方科目 → 从左侧第 1 课开始 → 读完讲解并完成理解度测试 / 沙盒练习。</span>
+            </div>
+          </div>
+          <div class="guidance-actions">
+            <button class="guidance-btn" onclick="startWithSubject('sql')" title="开始学习 SQL"><i class="fa-solid fa-database"></i> 从 SQL 开始</button>
+            <button class="guidance-btn" onclick="startWithSubject('itpass')" title="开始学习 IT Passport"><i class="fa-solid fa-graduation-cap"></i> 从 IT Passport 开始</button>
+          </div>
+        </div>
+
         <div class="content-card">
           <!-- Lesson Header -->
           <div class="lesson-header">
@@ -1226,7 +1247,12 @@
         </button>
       </header>
       <div class="glossary-toolbar">
-        <input id="glossary-search" type="search" data-i18n-placeholder="glossary.searchPlaceholder" placeholder="搜索术语...">
+        <div style="position: relative; flex: 1; min-width: 180px; display: flex; align-items: center;">
+          <input id="glossary-search" type="search" data-i18n-placeholder="glossary.searchPlaceholder" placeholder="搜索术语..." style="flex: 1; padding-right: 32px;">
+          <button id="glossary-search-clear" type="button" style="display: none; position: absolute; right: 6px; background: transparent; border: none; color: var(--text-muted, #94a3b8); cursor: pointer; font-size: 14px; width: 24px; height: 24px; border-radius: 4px; align-items: center; justify-content: center; padding: 0;" aria-label="Clear search" title="Clear search">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
         <select id="glossary-category-filter" data-i18n-title="glossary.category">
           <option value="all" data-i18n="glossary.allCategories">全部</option>
           <option value="database" data-i18n="glossary.filterDatabase">数据库</option>

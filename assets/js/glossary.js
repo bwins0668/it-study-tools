@@ -249,10 +249,15 @@
     state.query = "";
     state.category = "all";
     state.selectedId = null;
+
+    var search = document.getElementById("glossary-search");
+    if (search) search.value = "";
+    var clearBtn = document.getElementById("glossary-search-clear");
+    if (clearBtn) clearBtn.style.display = "none";
+
     render();
 
     /* Focus search input */
-    var search = document.getElementById("glossary-search");
     if (search) setTimeout(function () { search.focus(); }, 100);
   }
 
@@ -306,10 +311,42 @@
 
     /* Search input */
     var search = document.getElementById("glossary-search");
+    var clearBtn = document.getElementById("glossary-search-clear");
+
+    function updateClearButtonVisibility() {
+      if (clearBtn) {
+        clearBtn.style.display = (search && search.value) ? "flex" : "none";
+      }
+    }
+
     if (search) {
       search.addEventListener("input", function (e) {
         state.query = e.target.value;
         state.selectedId = null;
+        updateClearButtonVisibility();
+        render();
+      });
+      search.addEventListener("keydown", function (e) {
+        if (e.key === "Escape" && search.value) {
+          e.stopPropagation();
+          search.value = "";
+          state.query = "";
+          state.selectedId = null;
+          updateClearButtonVisibility();
+          render();
+        }
+      });
+    }
+
+    if (clearBtn) {
+      clearBtn.addEventListener("click", function () {
+        if (search) {
+          search.value = "";
+          search.focus();
+        }
+        state.query = "";
+        state.selectedId = null;
+        updateClearButtonVisibility();
         render();
       });
     }
