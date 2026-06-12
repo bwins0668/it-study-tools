@@ -2720,4 +2720,75 @@ node tools/verify_glossary.js --web <path>
 - **Round 15.10** (recommended): 600 terms quality review, Web cache version update, Windows Portable repack, and GitHub Release.
 
 
+---
+
+### Round 15.10 — Glossary 600-Term Milestone Release
+
+**Status: ✅ PASS**
+
+#### Release summary
+
+| Item | Value |
+| :--- | :--- |
+| Version tag | `v2026.6.13-r15.10` |
+| Glossary milestone | **600 terms** |
+| Quality fixes | Fixed `instance.related`: replaced missing `constructor` reference with existing `java_constructor` |
+| Windows Portable | `Study-Tools-Portable-v2026.6.13-r15.10.zip` |
+| SHA256 | `facc0b1010321a9a94ebdb6eb33fa78c4a1f19c531fff43d28cc35c78e17381d` |
+| Web assetVersion | `v2026.6.13-r15.10` |
+| Web CACHE_NAME | `study-tools-web-v2026-6-13-r15-10` |
+| Web Branch / Target | `master` / `master` |
+| Web Smoke Test | PASS (local 19/19; online 15/15) |
+| Release notes language | Chinese (中文) |
+
+#### Changes this round
+
+| File | Change |
+| :--- | :--- |
+| `data/glossary/it_terms.js` | 600-term quality review; fixed one missing `related` reference |
+| **Web** `data/glossary/it_terms.js` | Synchronized with Windows version |
+| **Web** `assets/js/version.js` | assetVersion bumped to `v2026.6.13-r15.10` |
+| **Web** `assets/asset-manifest.json` | Generated with new file hashes & versions |
+| **Web** `data/i18n_content/manifest.json` | Generated with new file hashes & versions |
+| **Web** `service-worker.js` | CACHE_NAME bumped to `study-tools-web-v2026-6-13-r15-10` |
+
+#### Validation
+
+| Check | Result |
+| :--- | :--- |
+| `node tools/verify_glossary.js` (local + web) | PASS (0 errors, 0 warnings) |
+| Windows/Web SHA256 match | PASS (`fd73777851e269ceb3827ddc524aae5b3332c6f51599dac106317771b775b0e6`) |
+| Web `node --check` modified JS | PASS |
+| Web local smoke test | PASS (19/19) |
+| Web online smoke test | PASS (15/15) |
+| Windows Portable package | PASS |
+| GitHub Release | PASS |
+
+#### Git
+
+| Repo | Branch | Commit hash | Push |
+| :--- | :--- | :--- | :--- |
+| Windows | main | `42fb485` | ✅ |
+| Web | master | `8d27224` | ✅ |
+
+#### Release
+
+| Item | Value |
+| :--- | :--- |
+| Release URL | `https://github.com/bwins0668/it-study-tools/releases/tag/v2026.6.13-r15.10` |
+| Uploaded asset | `Study-Tools-Portable-v2026.6.13-r15.10.zip` |
+| Asset SHA256 | `facc0b1010321a9a94ebdb6eb33fa78c4a1f19c531fff43d28cc35c78e17381d` |
+
+#### Notes
+
+- No expansion to 700 terms.
+- No new terms.
+- No `ko` field.
+- No Korean UI.
+- No course data, backend, or sandbox changes.
+
+#### Next
+
+- **Round 15.11**: Expand glossary from 600 to 700 terms with sub-batch validation.
+- Or first do a deeper 600-term quality review / search experience optimization.
 
