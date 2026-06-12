@@ -2654,6 +2654,70 @@ node tools/verify_glossary.js --web <path>
 
 #### Next
 
-- **Round 15.9**: Expand glossary from 500 to 600 terms with sub-batch validation.
+- **Round 15.9** (completed): Expand glossary from 500 to 600 terms with sub-batch validation.
+- **Round 15.10** (recommended): 600 terms quality review, Web cache version update, Windows Portable repack, and GitHub Release.
+
+---
+
+### Round 15.9 — Glossary 600-Term Expansion (Batch 1-4)
+
+**Status: ✅ PASS**
+
+#### Expansion summary
+
+| Item | Value |
+| :--- | :--- |
+| Version tag | No tag (Deferred to Round 15.10) |
+| Glossary milestone | **600 terms** (0 errors, 0 warnings) |
+| Expansion size | +100 terms (500 -> 600) |
+| Validation batches | 25 + 25 + 25 + 25 incremental validation |
+| Windows Portable | No Portable generated (Deferred to Round 15.10) |
+| Web assetVersion | No version bump (Deferred to Round 15.10) |
+| Web Branch / Target | `master` |
+
+#### Category distribution of new terms (+100)
+
+| Field / Category | Count |
+| :--- | :--- |
+| IT Passport / SG / 项目管理 / 法务 | 12 |
+| SQL / Database | 12 |
+| Java | 10 |
+| Python | 10 |
+| Network | 10 |
+| Security | 12 |
+| System / OS / Hardware | 8 |
+| Web / API / HTTP | 8 |
+| Git / Dev Tools / Testing | 6 |
+| Cloud / DevOps | 6 |
+| Algorithm / Data Structure | 4 |
+| AI / Data / Automation | 2 |
+
+#### Changes this round
+
+| File | Change |
+| :--- | :--- |
+| `data/glossary/it_terms.js` | Expanded glossary from 500 to 600 terms |
+| **Web** `data/glossary/it_terms.js` | Synchronized with Windows version |
+
+#### Validation
+
+| Check | Result |
+| :--- | :--- |
+| `node tools/verify_glossary.js` (local + web) | PASS (0 errors, 0 warnings) |
+| Windows/Web SHA256 match | PASS (`fcdc70ba14d939a7b238381b3da639668b780e54fef0e78ca7fe0e76a515b405`) |
+| Web `node --check` all modified JS | PASS |
+| Web git status | `data/glossary/it_terms.js` modified |
+
+#### Git
+
+| Repo | Branch | Commit hash | Push |
+| :--- | :--- | :--- | :--- |
+| Windows | main | `[commit_hash]` | ✅ |
+| Web | master | `[commit_hash]` | ✅ |
+
+#### Next
+
+- **Round 15.10** (recommended): 600 terms quality review, Web cache version update, Windows Portable repack, and GitHub Release.
+
 
 
