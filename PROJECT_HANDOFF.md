@@ -2007,3 +2007,61 @@ Implemented `normalizeTerm()` compatibility layer in `assets/js/glossary.js` (bo
 2. **Round 14.10-B**: batch expand glossary terms to 100–150 entries.
 
 **Recommendation**: start with **14.10-A** (validation script) before large-scale term addition.
+
+---
+
+### Round 14.10-A — Glossary Data Validation Script
+
+**Status: ✅ PASS**
+
+#### Scope
+
+| Item | Value |
+| :--- | :--- |
+| New file | `tools/verify_glossary.js` |
+| `data/glossary/it_terms.js` modified | **NO** |
+| `assets/js/glossary.js` modified | **NO** |
+| Web public files modified | **NO** |
+| New glossary terms added | **NO** |
+| Korean UI added | **NO** |
+
+#### Validator checks
+
+| Check | Type |
+| :--- | :--- |
+| Duplicate IDs | error |
+| `id` exists and non-empty string | error |
+| `category` / `level` / `source` presence | error / warning |
+| `level` is `basic`/`intermediate`/`advanced` | warning |
+| `id` naming convention (lowercase snake/kebab) | warning |
+| `ja` / `zh` / `en` language objects with required subfields | error |
+| `my` / `vi` / `fr` / `ko` structure (if present) | error |
+| `aliases` / `related` / `exam_tags` / `examTags` / `skillTags` must be string[] | error |
+| `exam_tags` / `examTags` content consistency | error |
+| `related` references all exist in glossary | error |
+| v2 schema fields (`subcategory`, `examTags`, `skillTags`, `searchBoost`, `updatedAt`) | error |
+| v2 subcategory / skillTag naming convention | warning |
+| `updatedAt` format `YYYY-MM-DD` | warning |
+| Windows ↔ Web SHA256 consistency | error |
+
+#### CLI usage
+
+```
+node tools/verify_glossary.js         # checks both repos
+node tools/verify_glossary.js --no-web # skips web check
+node tools/verify_glossary.js --web <path>
+```
+
+#### Validation results
+
+| Run | Result |
+| :--- | :--- |
+| `node --check tools/verify_glossary.js` | PASS |
+| `node tools/verify_glossary.js` (local + web) | PASS (0 errors, 0 warnings) |
+| `node tools/verify_glossary.js --no-web` | PASS |
+| SHA256 match Windows ↔ Web | PASS (`4c58a6b3...`) |
+| Web `git status --short` | clean — no files modified |
+
+#### Next
+
+**Round 14.10-B**: batch expand glossary terms to 100–150 entries, running the validator before commit.
