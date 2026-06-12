@@ -1132,3 +1132,69 @@ ContentI18n.loadPack = function(subject, lang) {
   * **Round 13 阶段归档**。
   * 或自动版本构建注入规划。
   * 或多语言课程内容长期精校。
+
+### Round 13.15：Round 13 阶段归档 / Web 公开版稳定基线冻结
+
+* **基于主项目 Commit**：`8a27210`
+* **Web Commit**：`72410ee`
+
+#### 一、最终稳定基线
+
+* **主项目最新 Commit**：`8a27210` (docs: record web manifest stability review)
+* **Web 公开版最新 Commit**：`72410ee` (test: add static asset manifest checks)
+* **Web 线上 URL**：[https://study-tools-web-pages.pages.dev](https://study-tools-web-pages.pages.dev)
+* **主项目 Release URL**：[IT Study Tools Release v2026.6.11](https://github.com/bwins0668/it-study-tools/releases/tag/v2026.6.11)
+* **Web 版本号 (webVersion)**：`v2026.6.11`
+* **桌面版版本号 (desktopVersion)**：`v2026.6.11`
+* **静态资源版本号 (assetVersion)**：`v2026.6.11-r13.10`
+* **Service Worker 缓存名 (CACHE_NAME)**：`study-tools-web-v2026-6-11-r13-10`
+* **多语言外置内容包总数**：`20` 个 (覆盖 sql, itpass, sg, java, python 对应的 en, vi, my, fr 语言)
+* **自动化巡检覆盖度**：`online_smoke_test.py` 包含 `28/28` 项检测，线上验证运行 **全部通过 (ALL PASS)**。
+
+#### 二、Round 13 阶段性成果归档
+
+1. **多语言包按需懒加载 (Round 13.1 - 13.3)**
+   * 重构了 `index.html` 首屏加载结构，移除了原本强行在首屏加载的 20 个语言包 JS 标签。
+   * 开发了 `ContentI18n.loadPack()` 动态懒加载组件，在用户切换对应科目和语种时按需动态插入 `<script>` 资源，显著降低了首屏网络负载和 DOM 渲染开销。
+2. **Web 平台版本隔离显示 (Round 13.4)**
+   * 提炼了独立的 `assets/js/version.js`，实现与桌面主项目完全解耦的 Web 元数据管理与多处动态展示。
+3. **自动化线上巡检系统 (Round 13.5)**
+   * 采用 Playwright 开发了 `scripts/online_smoke_test.py`，支持网络请求、多语言加载、WASM 沙箱、Console JS P0 错误等全方位自动断言。
+4. **AI 翻译 API 降级与 405 降噪 (Round 13.6 - 13.7)**
+   * 识别并屏蔽了公网环境下对缺失 Functions API 路径（`/api/i18n/translate`）发起 POST 预检产生的 800+ 条 P2 405 Method Not Allowed 报错噪音，实现本地安全静默降级。
+5. **定制高规格 OG 社交分享预览 (Round 13.8)**
+   * 生成了 1200x630 分辨率的高清深色社交卡片图 `og-study-tools-v2026-6-11.png`，完成 Meta 标签注入及 Large Image 预览效果优化。
+6. **Query Version 静态资源 Cache Busting (Round 13.9 - 13.11)**
+   * 全局引入了 `assetVersion`。对核心 JS/CSS 资源和懒加载语言包自动拼接版本号查询参数，破除强缓存。
+   * 精细修改了 `service-worker.js` 的 `ignoreSearch` 缓存匹配逻辑，当 URL 带有 `?v=` 时进行精确匹配，实现版本升级即时击穿 Service Worker 旧缓存。
+7. **双 Manifest 资源清单与自动化构建索引 (Round 13.12 - 13.14)**
+   * 实现了 `scripts/generate_asset_manifest.py` 自动化 Python 构建脚本。
+   * 自动生成了 `assets/asset-manifest.json` 与 `data/i18n_content/manifest.json` 索引文件，声明了哈希、大小、总数、课程数，并完成 online_smoke_test 的只读核验集成。
+
+#### 三、明确未做与遗留事项
+
+* **未做运行时拦截校验**：双 Manifest 索引当前仅作为检测与巡检用途，尚未接入 `ContentI18n.loadPack` 运行时链条，亦未在 Service Worker 安装期间被解析以指导预缓存。
+* **内容哈希校验缺失**：浏览器未在 runtime 加载 JS 时对文件进行 SHA-256 强校验。
+* **版本号手动维护**：`assetVersion` 及 CACHE_NAME 仍需在发布时由开发者手动在 `version.js` 和 `service-worker.js` 中填入。
+
+#### 四、当前缺陷与风险状态
+
+* **P0 / P1**：无。
+* **P2 (建议后续优化)**：
+  - `assetVersion` 缺少构建时自动注入。
+  - Manifest 文件在资源修改后仍需手动运行 Python 脚本重新生成。
+  - 多语言课程内容由于机器翻译引入，个别词汇仍有进一步人工精校空间。
+
+#### 五、Web 稳定基线冻结建议
+
+* **代码冻结**：Web 公开版的核心逻辑（运行时 JS, Service Worker 等）已达到上线稳定态，在下一次大规模发版前建议进入冷冻状态，不进行非必要的重构。
+* **日常维护规范**：
+  1. 每次修改静态文件后，**必须**运行 `python scripts/generate_asset_manifest.py` 重新生成 manifests。
+  2. 每次发版部署前，**必须**运行 `python scripts/online_smoke_test.py` 确保 28/28 PASS。
+  3. 每次对 SW 进行调整后，**必须**测试“强刷”、“隐私窗口首次加载”及“清理站点数据重新进入”场景。
+
+#### 六、下一阶段展望 (Round 14.1)
+
+* **方向 A**：版本号与编译工具链自动构建注入设计。
+* **方向 B**：多语言课程数据人工逐行精校与更新。
+* **方向 C**：Windows 桌面主项目下一次小版本编译及安装包打包。
