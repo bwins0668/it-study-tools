@@ -1108,3 +1108,27 @@ ContentI18n.loadPack = function(subject, lang) {
 * **下一步建议**：
   * **Round 13.14** 持续观察线上 Manifest 状态。
   * 或规划多语言内容精校。
+
+### Round 13.14：Manifest / 内容包索引线上稳定性观察
+
+* **基于主项目 Commit**：`af89574`
+* **Web Commit**：`72410ee`
+* **assets/asset-manifest.json 线上检查结果**：**通过** (HTTP 200，JSON 解析合法，各个字段包含大小和 SHA-256 哈希且非空)。
+* **data/i18n_content/manifest.json 线上检查结果**：**通过** (HTTP 200，JSON 解析合法，包总数 `totalPacks = 20` 正确且字段完整)。
+* **属性与结构一致性校验**：
+  * `assetVersion`：线上 manifest 与 `version.js` 一致，为 `"v2026.6.11-r13.10"`。
+  * `webVersion` 与 `releaseVersion` 一致，为 `"v2026.6.11"`。
+  * 20 个翻译包包含的关键科目 (`sql/en`, `itpass/vi`, `sg/my`, `java/fr`, `python/fr`) 数据信息、课程计数、大小完全正确。
+* **缓存与刷新场景表现**：
+  * 普通访问和强刷（Ctrl + F5）均正常，浏览器不会展示或使用旧版 manifest 数据，这归功于 CACHE_NAME 升级及 ignoreSearch 部分精准放开。
+  * 隐私窗口和清理站点数据后，Service Worker 重新载入与初始化无任何阻断，动态加载多语言包完全正常。
+* **自动化巡检结果**：
+  * 线上运行 `python scripts/online_smoke_test.py` 结果：**28/28 PASS**。
+* **功能回归测试**：
+  * SQLite WASM 初始化正常，IT 术语表、Java/Python Web Safe Mode 沙箱降级方案等各项主要功能一切正常。
+* **P0/P1/P2**：无。
+* **当前结论**：Web 静态资源 Manifest 与内容包索引极其稳定，可在生产环境中继续发挥只读巡检和质量监控作用。
+* **下一步建议**：
+  * **Round 13 阶段归档**。
+  * 或自动版本构建注入规划。
+  * 或多语言课程内容长期精校。
