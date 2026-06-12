@@ -2542,5 +2542,65 @@ node tools/verify_glossary.js --web <path>
 
 #### Next
 
-- **Round 15.7** (recommended): Expand glossary from 400 to 500 terms with sub-batch validation.
-- **Round 15-K** (alt): Korean support architecture planning.
+- **Round 15.7** (completed): Expand glossary from 400 to 500 terms with sub-batch validation.
+- **Round 15.8** (recommended): 500 terms quality review, Web cache version update, Windows Portable repack, and GitHub Release.
+
+---
+
+### Round 15.7 — Glossary 500-Term Expansion (Batch 1-4)
+
+**Status: ✅ PASS**
+
+#### Scope
+
+| Item | Value |
+| :--- | :--- |
+| Glossary Milestone | **500 terms** (0 errors, 0 warnings) |
+| Total terms added this round | 100 (from 400 to 500) |
+| Batches | 4 batches (25 + 25 + 25 + 25 terms) |
+| `data/glossary/it_terms.js` modified | YES (Windows & Web) |
+| Runtime JS / UI modified | **NO** |
+| Web assetVersion / SW modified | **NO** |
+| Portable ZIP built | **NO** |
+| GitHub Release created | **NO** |
+| Korean fields/UI added | **NO** |
+
+#### New Terms Count by Category / Field
+
+| Category | Count | Proposed Target | Actual Added |
+| :--- | :--- | :--- | :--- |
+| IT Passport / SG | 14 | 14 | 14 |
+| SQL / Database | 12 | 12 | 12 |
+| Java | 12 | 12 | 12 |
+| Python | 12 | 12 | 12 |
+| Network | 10 | 10 | 10 |
+| Security | 12 | 12 | 12 |
+| System / OS / Hardware | 8 | 8 | 8 |
+| Web / API / HTTP | 8 | 8 | 8 |
+| Git / Dev Tools / Testing | 5 | 5 | 5 |
+| Cloud / DevOps | 5 | 5 | 5 |
+| Algorithm / Data Structure | 2 | 2 | 2 |
+| **Total** | **100** | **100** | **100** |
+
+#### Validation
+
+| Check | Result |
+| :--- | :--- |
+| `node tools/verify_glossary.js` (local + web) | PASS (0 errors, 0 warnings) |
+| Errors | 0 |
+| Warnings | 0 |
+| Duplicate IDs | none |
+| `related` references valid | all exist |
+| SHA256 match Windows ↔ Web | PASS (`1adc8f60453d2787a04342ebf7e35567419cd99fe4060ed348635ff42823bbd3`) |
+
+#### Git
+
+| Repo | Branch | Commit hash | Push |
+| :--- | :--- | :--- | :--- |
+| Windows | main | (to be committed) | ✅ |
+| Web | master | (to be committed) | ✅ |
+
+#### Next
+
+- **Round 15.8**: 500 terms quality review, Web cache version update, Windows Portable repack, and GitHub Release.
+
