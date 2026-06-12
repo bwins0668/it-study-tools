@@ -954,6 +954,36 @@ ContentI18n.loadPack = function(subject, lang) {
 * **下一步建议**：
   * **Round 13.9** 静态资源 Cache Busting 机制或 Manifest 索引规划。
 
+### Round 13.9：Web 静态资源 Cache Busting / Manifest 索引只读规划
+
+* **基于主项目 Commit**：`9edfa4a`
+* **Web Commit**：`d8a20c8`
+* **审计现状**：
+  * **Service Worker 缓存策略**：使用 `service-worker.js`，预缓存 `CORE_ASSETS`（包含主页面、icons 以及 Web SQL WASM 文件），采用 `stale-while-revalidate` 运行时缓存策略。
+  * **模糊缓存匹配**：在静态资源缓存拦截中，使用了 `caches.match(event.request, { ignoreSearch: true })`。这导致任何附加于静态资源 URL 上的 query 参数（如 `?v=...`）在 SW 缓存匹配中会被忽略，首次加载仍读取旧缓存，并在后台异步请求更新，需在下一次加载时才应用新资产。
+  * **硬编码与版本缺失**：
+    * `assets/js/i18n-ui-dict.js`, `assets/js/i18n.js`, `assets/js/content-i18n.js`, `assets/js/app.js` 等核心运行时 JS/CSS 引用均**无任何版本参数**，容易导致浏览器强缓存旧版文件。
+    * `content-i18n.js` 中的动态语言包懒加载路径 `data/i18n_content/{subject}_{lang}.js` 也**无版本参数**，导致 CDN 缓存或强缓存失效或过期不及时。
+    * `version.js` 中仅定义了 `webVersion` 和 `desktopVersion` 等基础元数据，缺少用于静态资源整体控制的统一 `assetVersion` 后缀。
+* **Cache Busting 方案对比**：
+  * **方案 A：Query Version (Query 参数缓存击穿)** — 在 `version.js` 中硬编码 `assetVersion`，在 `index.html` 的核心 JS/CSS 引用和 `content-i18n.js` 懒加载请求中拼接 `?v=[assetVersion]`。
+    * *优缺点*：最适合 Vanilla JS 项目，改动小、开发维护成本极低，能有效穿透浏览器 HTTP 强缓存与 CDN 缓存。
+  * **方案 B：Asset Manifest (静态资源配置索引)** — 新增 `asset-manifest.json` 自动记录每个资源的 MD5/SHA256 Hash 值。
+    * *优缺点*：最为先进，但由于项目无打包器（纯 Vanilla JS），手动维护 Hash 文件极易出错导致 404，不实用。
+  * **方案 C：只升级 Service Worker CACHE_NAME** — 仅在版本升级时将 SW 中的 `CACHE_NAME` 常量递增。
+    * *优缺点*：实现极其简单，但无法穿透浏览器层面的本地 HTTP 强缓存。
+* **推荐方案**：**方案 A (Query Version) + 方案 C (升级 SW CACHE_NAME) 组合策略**。
+* **风险评估**：
+  * **P0**：页面加载失败；SW 变更导致静态资源或 WASM (404) 缺失；多语言懒加载路径拼接拼错导致切换失效。
+  * **P1**：旧 SW 缓存使首屏出现旧版本（可通过 SW `skipWaiting` 和 `clients.claim` 减缓）；query 参数漏配；巡检脚本断言缺失。
+  * **P2**：manifest 索引未实现；版本号仍需手动硬编码维护。
+* **Round 13.10 执行建议**：
+  1. 在 `version.js` 中扩展 `assetVersion: "v2026.6.11-r13"`。
+  2. 在 `index.html` 的核心 JS/CSS（如 `i18n.js`, `app.js` 等）尾部追加 `?v=` 参数。
+  3. 修改 `content-i18n.js`，动态加载语言包 script 时追加 `?v=`。
+  4. 同步升级 `service-worker.js` 中的 `CACHE_NAME` 到 `study-tools-web-v7`。
+  5. 扩展 `online_smoke_test.py` 巡检脚本，增加对 `?v=` 版本参数完整性的正则表达式断言。
+
 
 
 
