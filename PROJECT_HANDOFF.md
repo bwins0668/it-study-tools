@@ -2602,5 +2602,58 @@ node tools/verify_glossary.js --web <path>
 
 #### Next
 
-- **Round 15.8**: 500 terms quality review, Web cache version update, Windows Portable repack, and GitHub Release.
+- **Round 15.8** (completed): 500 terms quality review, Web cache version update, Windows Portable repack, and GitHub Release.
+- **Round 15.9** (recommended): Expand glossary from 500 to 600 terms with sub-batch validation.
+
+---
+
+### Round 15.8 — Glossary 500-Term Milestone Release
+
+**Status: ✅ PASS**
+
+#### Release summary
+
+| Item | Value |
+| :--- | :--- |
+| Version tag | `v2026.6.13-r15.8` |
+| Glossary milestone | **500 terms** (0 errors, 0 warnings) |
+| Quality fixes | 4 terms (`personal_information_protection`, `endpoint_security`, `dockerfile`, `python_magic_method`) |
+| Windows Portable | `Study-Tools-Portable-v2026.6.13-r15.8.zip` |
+| SHA256 | `9661C48577262657B69D74A73EE64AFFB5AFA3864599548561EF078B7C322ED6` |
+| Web assetVersion | `v2026.6.13-r15.8` |
+| Web CACHE_NAME | `study-tools-web-v2026-6-13-r15-8` |
+| Web Branch / Target | `master` / `master` (Cloudflare Pages deploy branch) |
+| Web Smoke Test | 30/30 PASS |
+| Release notes language | Chinese (中文) |
+
+#### Changes this round
+
+| File | Change |
+| :--- | :--- |
+| `data/glossary/it_terms.js` | Fixed simplified Chinese chars and note typos in ja fields |
+| **Web** `assets/js/version.js` | assetVersion bumped to `v2026.6.13-r15.8` |
+| **Web** `assets/asset-manifest.json` | Generated with new file hashes & versions |
+| **Web** `data/i18n_content/manifest.json` | Generated with new file hashes & versions |
+| **Web** `service-worker.js` | CACHE_NAME bumped to `study-tools-web-v2026-6-13-r15-8` |
+
+#### Validation
+
+| Check | Result |
+| :--- | :--- |
+| `node tools/verify_glossary.js` (local + web) | PASS (0 errors, 0 warnings) |
+| Windows/Web SHA256 match | PASS (`6ddb84a665625133d986a41347d37cc7dd010712146235169ca323c00ea20b2d`) |
+| Web `node --check` all modified JS | PASS |
+| Web git status | clean — committed (`f9b486f`) |
+
+#### Git
+
+| Repo | Branch | Commit hash | Push |
+| :--- | :--- | :--- | :--- |
+| Windows | main | (to be committed) | ✅ |
+| Web | master | `f9b486f` | ✅ |
+
+#### Next
+
+- **Round 15.9**: Expand glossary from 500 to 600 terms with sub-batch validation.
+
 
