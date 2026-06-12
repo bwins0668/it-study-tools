@@ -1131,7 +1131,7 @@
       zh: { term: "实例", explanation: "从类创建的具体对象，拥有类定义的属性和方法。" },
       en: { term: "Instance", explanation: "A concrete object created from a class, with its own state and behavior." },
       aliases: ["インスタンス"],
-      related: ["class", "object", "constructor"],
+      related: ["class", "object", "java_constructor"],
       source: "project-glossary-v1"
     },
     {
