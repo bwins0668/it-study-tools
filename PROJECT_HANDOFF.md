@@ -1082,3 +1082,29 @@ ContentI18n.loadPack = function(subject, lang) {
   2. 脚本运行后自动生成 `assets/asset-manifest.json` 与 `data/i18n_content/manifest.json`。
   3. 升级 `online_smoke_test.py` 巡检脚本，新增对 manifest 完整性和线上资源一致性检查。
   4. 暂不改动 `index.html` 加载、`ContentI18n.loadPack` 逻辑以及 `service-worker.js`，确保零业务层破坏。
+
+### Round 13.13：静态资源 Manifest / 内容包索引生成与巡检校验
+
+* **基于主项目 Commit**：`134d02f`
+* **Web 起始 Commit**：`65deb85`
+* **Web 新 Commit**：`72410ee`
+* **修改/新增文件**（Web 公开版）：
+  * `scripts/generate_asset_manifest.py` [NEW] — 自动计算核心静态资源（12个）和 20 个翻译包文件的 `sizeBytes`、`sha256`、`generatedAt`，解析 `version.js` 中的版本号，写入对应 manifest JSON。
+  * `assets/asset-manifest.json` [NEW] — 声明静态资源清单及其大小和 SHA-256 哈希值。
+  * `data/i18n_content/manifest.json` [NEW] — 声明 20 个动态语言包信息，根据 JS 文件内的 window 分配逻辑精准计算课程数量 (`lessonCount`)、哈希以及来源标志。
+  * `scripts/online_smoke_test.py` [MODIFY] — 新增对 `asset-manifest` 和 `content manifest` 的在线巡检支持。读取线上 Manifest 数据，断言属性合法性，并抽样验证声明的包文件在生产环境的在线可访问性 (HTTP 200)。
+  * `WEB_PUBLIC_README.md` [MODIFY] — 文档同步更新，增添静态资源 Manifest 索引描述及自动化维护脚本说明。
+* **运行与校验结果**：
+  * 本地 Live Server 环境与线上 Cloudflare Pages 部署环境，自动化巡检：**28/28 PASS**（在原有 18 项缓存击穿、405/404 检测基础上，通过 10 项 Manifest 细节与线上可用性校验）。
+  * 页面加载正常，首屏不加载 20 个多语言内容包。
+  * SQLite WASM、Glossary、Web Safe Mode 均 100% 正常运行。
+* **设计约定**：
+  * Manifest 目前仅用作只读版本控制与在线断言巡检，不接入业务运行链（如 `ContentI18n.loadPack` 或 `service-worker.js`），确保加载零延迟与 precache 零死锁风险。
+* **未修改**：
+  * `index.html`、`app.js`、`i18n.js`、`content-i18n.js` 运行时逻辑；
+  * `service-worker.js` 缓存匹配逻辑；
+  * 20 个翻译包数据内容、课程源数据。
+* **P0/P1/P2**：无。
+* **下一步建议**：
+  * **Round 13.14** 持续观察线上 Manifest 状态。
+  * 或规划多语言内容精校。
