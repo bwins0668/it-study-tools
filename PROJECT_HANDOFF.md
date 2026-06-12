@@ -2065,3 +2065,51 @@ node tools/verify_glossary.js --web <path>
 #### Next
 
 **Round 14.10-B**: batch expand glossary terms to 100–150 entries, running the validator before commit.
+
+---
+
+### Round 14.10-B — Glossary Batch Expansion
+
+**Status: ✅ PASS**
+
+#### Scope
+
+| Item | Value |
+| :--- | :--- |
+| Original term count | 30 |
+| New terms added | **68** |
+| Final term count | **98** (restored `exception` + 67 new) |
+| `data/glossary/it_terms.js` modified | YES |
+| `assets/js/glossary.js` modified | **NO** |
+| `tools/verify_glossary.js` modified | **NO** |
+| Web public files modified | `data/glossary/it_terms.js` (identical copy) |
+| Korean UI added | **NO** |
+| `ko` fields added | **NO** |
+
+#### Distribution of added terms
+
+| Domain | Term count | Category |
+| :--- | :--- | :--- |
+| SQL / Database | 15 | `database` |
+| Programming / General | 15 | `programming` |
+| Java | 8 | `programming` (examTags: java) |
+| Python | 8 | `programming` (examTags: python) |
+| Network | 9 | `network` |
+| Security | 8 | `security` |
+| System / OS / Development | 6 | `system` |
+
+#### Data quality
+
+| Check | Result |
+| :--- | :--- |
+| `node tools/verify_glossary.js` (local + web) | PASS |
+| Errors | 0 |
+| Warnings | 0 |
+| Duplicate IDs | none |
+| `related` references valid | all exist |
+| `exam_tags` / `examTags` consistent | all match |
+| SHA256 match Windows ↔ Web | PASS (`fe7f1d38...`) |
+
+#### Next
+
+**Round 14.10-C**: glossary quality review and targeted polish, or **Round 14.11**: Windows/Web release sync.
