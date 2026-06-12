@@ -1038,4 +1038,47 @@ ContentI18n.loadPack = function(subject, lang) {
 * **P0/P1/P2**：无。
 * **当前结论**：Web Cache Busting 机制线上表现极其稳定，完美解决 stale-while-revalidate 缓存更新滞后及缓存击穿问题。
 * **下一步建议**：
-  * **Round 13.12** 静态资源 Manifest 索引规划，或自动版本号构建注入规划。
+  * **Round 13.12** 静态资源 Manifest / 内容包索引只读规划。
+
+### Round 13.12：静态资源 Manifest / 内容包索引只读规划
+
+* **基于主项目 Commit**：`eaa4139`
+* **Web Commit**：`65deb85`
+* **当前状态与分析**：
+  * Cache Busting 机制运行正常，但缺乏版本/大小/哈希的索引文件（Manifest），导致静态资源及 20 个动态语言包文件难以核对与校验。
+  * 引入 Manifest 索引文件可实现自动化完整性检查、动态包状态只读核验，并为后期更高级的精准离线预缓存打下基础。
+* **Manifest 设计与推荐结构**：
+  1. **静态资源索引（Asset Manifest）**：
+     * **建议路径**：`assets/asset-manifest.json`
+     * **字段规划**：
+       * `assetVersion`: 当前全局静态资源后缀版本号（如 `"v2026.6.11-r13.10"`）。
+       * `generatedAt`: 构建/生成时间戳。
+       * `webVersion`: 对应的主 Web 版本号。
+       * `releaseVersion`: 对应的 Release 版本号。
+       * `assets`: 资源列表数组。每一项包含：`path` (相对路径), `type` (类型), `version` (版本后缀), `sizeBytes` (大小), `sha256` (内容哈希), `cacheStrategy` (SW 缓存策略, 可选)。
+     * **覆盖核心文件**：`version.js`, `app.js`, `i18n.js`, `content-i18n.js`, `i18n-ui-dict.js`, `glossary.js`, `code-runner-api.js`, `index.css`, `glossary.css`, `og-study-tools-v2026-6-11.png`, `manifest.webmanifest`, `service-worker.js`。
+  2. **内容包索引（Content Pack Manifest）**：
+     * **建议路径**：`data/i18n_content/manifest.json`
+     * **字段规划**：
+       * `assetVersion`: 全局内容包匹配的版本号。
+       * `totalSubjects`: 科目总数 (5)。
+       * `totalLanguages`: 语言包总数 (4)。
+       * `totalPacks`: 包总数 (20)。
+       * `packs`: 语言包列表数组。每一项包含：`subject` (科目), `lang` (语言代码), `path` (包路径), `version` (版本后缀), `lessonCount` (包含的课程数), `sizeBytes` (文件大小), `sha256` (内容哈希), `sourceType` (生成类型: `manual` / `ai-assisted`)。
+     * **覆盖内容**：5个科目 (sql, itpass, sg, java, python) × 4种语言 (en, vi, my, fr) 共 20 个外置 JS 语言包。
+* **关键设计决策答复**：
+  1. **是否需要 hash**：是。SHA-256 哈希值可用于校验文件完整性，防止 CDN 节点传输损坏或客户端缓存损坏，首版应生成此哈希。
+  2. **是否需要自动生成脚本**：是。手写极易遗漏，且文件大小、课程数与哈希在文件修改后会自动发生变化。必须通过脚本自动化维护。
+  3. **是否应该由 Python 脚本生成**：是。使用 Python 脚本最为合适，可直接与现有的在线巡检系统脚本（Playwright）在同一个测试套件下运行，易于在本地/构建时调用。
+  4. **是否接入 ContentI18n.loadPack**：第一阶段**不建议**强依赖。因为如果 loader 强依赖该 manifest，会在首屏动态加载包时引入额外的串行 fetch manifest.json 的请求，可能影响响应时效或造成离线加载阻断。首阶段仅作元数据记录和自动化检测，loader 逻辑暂不改动。
+  5. **是否需要让 online_smoke_test.py 校验 manifest**：是。巡检脚本读取线上部署的 manifest，拉取列表中声明的资源并进行存在性 (HTTP 200) 与一致性 (Hash / 大小) 校验，保证 CDN 资源完全同步。
+  6. **是否需要让 Service Worker 使用 manifest**：第一阶段**不建议**。SW 在运行期预缓存需要极致的稳定性，动态读取外部 manifest 可能带来死锁或因断网更新失败导致 precache 损坏。继续维持现有 CACHE_NAME 精准击穿规则。
+* **风险评估 (P0/P1/P2)**：
+  * **P0**：若 loader 或 SW 强依赖 Manifest，可能导致多一次网络请求被卡死或离线无法读取。第一阶段采用“只读规划，业务逻辑不强依赖”以规避此风险。
+  * **P1**：手动维护极易导致版本或哈希与实际不一致；可通过自动生成脚本 `generate_asset_manifest.py` 与 smoke test 强制校验来解决。
+  * **P2**：首版 Manifest 仅用作巡检和一致性验证，不深度影响 runtime 行为，未来可考虑平滑演进。
+* **Round 13.13 落地建议（保守方案）**：
+  1. 在 Web 公开版新增 `scripts/generate_asset_manifest.py` 自动化 Python 脚本。
+  2. 脚本运行后自动生成 `assets/asset-manifest.json` 与 `data/i18n_content/manifest.json`。
+  3. 升级 `online_smoke_test.py` 巡检脚本，新增对 manifest 完整性和线上资源一致性检查。
+  4. 暂不改动 `index.html` 加载、`ContentI18n.loadPack` 逻辑以及 `service-worker.js`，确保零业务层破坏。
