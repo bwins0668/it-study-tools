@@ -2537,7 +2537,7 @@ node tools/verify_glossary.js --web <path>
 
 | Repo | Branch | Commit hash | Push |
 | :--- | :--- | :--- | :--- |
-| Windows | main | (To be committed) | (To be committed) |
+| Windows | main | `aeb2ef0` (and doc updates) | ✅ |
 | Web | master | `292b776` | ✅ |
 
 #### Next
