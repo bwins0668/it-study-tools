@@ -1832,3 +1832,46 @@ assets/css/glossary.css
 2. **Round 14.6-B** (alt): Korean dual-end language support architecture read-only planning
 
 **Recommendation**: start with **Round 14.6-A** (glossary) before Korean support to avoid glossary/search/fallback rework.
+
+---
+
+### Round 14.7 — Glossary Compatibility Layer
+
+**Status: ✅ PASS**
+
+Implemented `normalizeTerm()` compatibility layer in `assets/js/glossary.js` (both Windows and Web).
+
+#### Scope
+
+| Item | Value |
+| :--- | :--- |
+| **New function** | `normalizeTerm(term)` — pure function, returns new object, does NOT mutate original term |
+| **Batch helper** | `normalizeTerms(terms)` — maps `normalizeTerm` over array |
+| **Data layer** | `getTerms()` now returns normalized terms; `getTermById()` passes through `normalizeTerm` |
+| **Schema version** | `schemaVersion: "v1"` default for existing data |
+| **Future fields added** | `subcategory`, `examTags`, `skillTags`, `searchBoost`, `updatedAt` |
+| **Preserved fields** | `exam_tags`, `ja/zh/en/my/vi/fr`, `aliases`, `related`, `category`, `level`, `example`, `source` |
+| **ko support** | if present in future data, `normalizeTerm` preserves it — no forced empty ko |
+| **Data file** | `data/glossary/it_terms.js` — **NOT modified** |
+| **Search behavior** | unchanged — still searches `id`, `ja.term`, `zh.term`, `en.term`, `aliases` |
+| **Render behavior** | unchanged — same card layout and language display |
+| **Sort order** | unchanged — `searchBoost` field added but NOT used for ranking yet |
+| **Korean UI** | **NOT added** — no language button, no ko in normalizeLang |
+
+#### Modified files
+
+- `assets/js/glossary.js` (Windows): added `normalizeTerm` + `normalizeTerms`, updated `getTerms`/`getTermById`
+- `assets/js/glossary.js` (Web): same changes synced
+
+#### Validation
+
+| Check | Result |
+| :--- | :--- |
+| `node --check assets/js/glossary.js` (Windows) | PASS |
+| `node --check assets/js/glossary.js` (Web) | PASS |
+| `data/glossary/it_terms.js` modified | NO |
+| Course/sandbox/backend modified | NO |
+
+#### Next
+
+**Round 14.8**: migrate a small sample of glossary terms to v2 fields (schemaVersion, subcategory, skillTags) while keeping v1 compatibility.

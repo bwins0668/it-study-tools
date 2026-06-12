@@ -49,13 +49,67 @@
 
   /* ---- Data Access ---- */
 
+  /**
+   * normalizeTerm(term) — 术语表兼容层
+   * 将旧结构 (v1) 自动补齐到新结构 (v2) 的缺省字段。
+   * 纯函数：返回新对象，不修改原始 term。
+   * 旧结构：exam_tags, ja/zh/en/my/vi/fr(term+kana+note/explanation), aliases, related, category, level, example
+   * 新结构：schemaVersion, subcategory, examTags, skillTags, searchBoost, updatedAt, ko
+   */
+  function normalizeTerm(term) {
+    if (!term || typeof term !== "object") return term || {};
+    var normalized = {};
+
+    // 逐字段拷贝，避免直接 ...spread 在旧引擎上可能漏自有属性
+    var keys = Object.keys(term);
+    for (var i = 0; i < keys.length; i++) {
+      normalized[keys[i]] = term[keys[i]];
+    }
+
+    // ── 元数据 ──
+    normalized.schemaVersion = term.schemaVersion || "v1";
+    normalized.source = term.source || "project-glossary-v1";
+    normalized.updatedAt = term.updatedAt || "";
+
+    // ── 分类 ──
+    normalized.category = term.category || "uncategorized";
+    normalized.subcategory = term.subcategory || "";
+    normalized.level = term.level || "basic";
+
+    // ── 标签 ──
+    normalized.exam_tags = Array.isArray(term.exam_tags) ? term.exam_tags.slice() : [];
+    normalized.examTags = Array.isArray(term.examTags)
+      ? term.examTags.slice()
+      : normalized.exam_tags.slice();
+    normalized.skillTags = Array.isArray(term.skillTags) ? term.skillTags.slice() : [];
+
+    // ── 别名与关联 ──
+    normalized.aliases = Array.isArray(term.aliases) ? term.aliases.slice() : [];
+    normalized.related = Array.isArray(term.related) ? term.related.slice() : [];
+
+    // ── 搜索权重（留值，本轮不启用排序） ──
+    normalized.searchBoost = Number.isFinite(term.searchBoost) ? term.searchBoost : 1;
+
+    // ── 多语言 ──
+    // ja / zh / en / my / vi / fr 保留原结构不变
+    // ko 若存在则保留，不强行补空
+
+    return normalized;
+  }
+
+  function normalizeTerms(terms) {
+    if (!Array.isArray(terms)) return [];
+    return terms.map(normalizeTerm);
+  }
+
   function getTerms() {
-    return Array.isArray(window.IT_TERMS_GLOSSARY) ? window.IT_TERMS_GLOSSARY : [];
+    var rawTerms = Array.isArray(window.IT_TERMS_GLOSSARY) ? window.IT_TERMS_GLOSSARY : [];
+    return normalizeTerms(rawTerms);
   }
 
   function getTermById(id) {
     if (window.IT_TERMS_BY_ID && window.IT_TERMS_BY_ID[id]) {
-      return window.IT_TERMS_BY_ID[id];
+      return normalizeTerm(window.IT_TERMS_BY_ID[id]);
     }
     return getTerms().filter(function (t) { return t.id === id; })[0] || null;
   }
