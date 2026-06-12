@@ -933,6 +933,27 @@ ContentI18n.loadPack = function(subject, lang) {
 * **下一步建议**：
   * **Round 13.8** 定制 1200x630 OG 社交预览图片。
 
+### Round 13.8：定制 OG 图片 / 社交分享预览优化
+
+* **基于主项目 Commit**：`3fca089`
+* **Web 起始 Commit**：`9eb9026`
+* **Web 新 Commit**：`d8a20c8`
+* **新增/修改文件**：
+  * `assets/images/og-study-tools-v2026-6-11.png` (Web 公开版) [NEW] — 定制的 1200×630 像素 Open Graph 社交卡片。
+  * `index.html` (Web 公开版) [MODIFY] — 更新 `og:image` / `twitter:image` 指向新生成的绝对 URL，配置 `og:image:width` (1200) / `og:image:height` (630)，将 `twitter:card` 改为 `summary_large_image`。
+  * `WEB_PUBLIC_README.md` (Web 公开版) [MODIFY] — 记录 1200x630 OG 社交卡片专有逻辑说明。
+  * `README.md` (Web 公开版) [MODIFY] — 补充社交分享预览优化记录。
+* **实现方式**：
+  * 采用 Python + Pillow 配合 Segoe UI 字体，本地自动渲染深色科技感网格背景、发光装饰环与标题、版本 pill 标签以及多语言 badges，生成符合 1200x630 的高清 PNG 分享图。
+* **运行与验证结果**：
+  * 线上图片资源 `https://study-tools-web-pages.pages.dev/assets/images/og-study-tools-v2026-6-11.png` 经由浏览器 User-Agent 访问，HTTP **200** 正常响应。
+  * `scripts/online_smoke_test.py` 自动化巡检结果：**15/15 PASS**，控制台及网络核心资源 0 错误/404。
+  * 懒加载语言包渲染、SQL WASM、Glossary、Web Safe Mode、PWA 功能均 100% 正常。
+* **未修改**：内容包、课程源数据、核心 JS 逻辑、SW/PWA 二进制、WASM SQL 底层、PC 专用代码。
+* **P0/P1/P2**：无 P0/P1，社交预览图优化完成（原 P2 已解决）。
+* **下一步建议**：
+  * **Round 13.9** 静态资源 Cache Busting 机制或 Manifest 索引规划。
+
 
 
 
