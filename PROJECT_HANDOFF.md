@@ -910,6 +910,29 @@ ContentI18n.loadPack = function(subject, lang) {
   * 如需消除 405：Round 13.7 添加空 i18n/translate functions 或在 i18n.js 中无 API key 时跳过请求
   * 或直接进入 cache busting / manifest 索引规划
 
+### Round 13.7：消除 Web 端 /api/i18n/translate 405 preflight 噪音
+
+* **基于主项目 Commit**：`49f92f1`
+* **Web 起始 Commit**：`52533de`
+* **Web 新 Commit**：`9eb9026`
+* **修改文件**：
+  * `assets/js/i18n.js` (Web 公开版) — 引入 `isWebPublicRuntime()` 检测，在 Web 公开版运行环境自动跳过 POST `/api/i18n/translate` 调用，并在未匹配静态翻译时避免将文本重置为 "翻訳中…" 占位符。
+  * `scripts/online_smoke_test.py` (Web 公开版) — 增强 Playwright 网络层与响应拦截，移除了 console 对 405 报错的过滤规则，严格断言没有 translate API 发起及 405 请求产生。
+  * `WEB_PUBLIC_README.md` (Web 公开版) — 记录 Web 版 AI 翻译 API 静默降级专有行为。
+  * `README.md` (Web 公开版) — 新增极简说明。
+* **实现方式**：
+  * `isWebPublicRuntime()` 检测 `window.STUDY_TOOLS_VERSION` 及 `window.STUDY_TOOLS_VERSION.webUrl` 存在性。由于该结构仅在 Web 公开版的 `version.js` 中定义（主项目桌面版无此结构），可完美隔离 Web 与 Windows PC 运行逻辑。
+  * 若处于 Web 运行环境，`translateBatch()` 自动返回 `{}`（不发送网络请求），`renderPendingText()` 和 `renderPendingAttribute()` 返回原文本（不修改 DOM 内容为 "翻訳中…"），从而实现优雅的静默本地降级。
+* **运行结果**：
+  * **本地 / 线上 Smoke Test**：`15/15` 全部通过 (ALL PASS)，原 405 preflight 噪音完全消失，控制台 `Console: no P0 JS errors` 过滤后错误数为 0。
+  * 懒加载语言包渲染、SQL WASM、Glossary、Web Safe Mode 均 100% 正常。
+* **未修改**：内容包、课程源数据、`app.js`、`content-i18n.js`、SW/PWA、WASM SQL 底层、PC 专用代码。
+* **P0**：无
+* **P1**：无
+* **P2**：无 405 预检报错（已彻底修复解决）。
+* **下一步建议**：
+  * **Round 13.8** 定制 1200x630 OG 社交预览图片。
+
 
 
 
