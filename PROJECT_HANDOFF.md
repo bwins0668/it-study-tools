@@ -3599,8 +3599,94 @@ ode --check service-worker.js | PASS |
 
 #### Next
 
-- **Round 15.24** (recommended): 1500-term quality review and localization polish + Web cache update + Portable repack + GitHub Release
+- **Round 15.24** (completed): Glossary 1500-term quality review, localization polish, Web cache update, Portable repack, GitHub Release
 
+---
 
+### Round 15.24 - Glossary 1500 Quality Review, Web Cache Update & Release
 
+**Status: PASS**
 
+#### Scope
+
+- Performed quality review on 1500 terms (localization polish).
+- No expansion (remained at 1500 terms).
+- Updated Web cache version, service worker, manifests.
+- Repacked Portable client.
+- Created git tag v2026.6.13-r15.24 and GitHub Release.
+- **Note:** Round 15.23 was correctly documented (Batch 12: 1475 -> 1500 = 25 terms). No "38" error found to correct.
+
+#### Quality fixes
+
+- Conducted 1500-term quality review and localization polish pass.
+- No term additions or deletions.
+- No data corruption issues found.
+
+#### Final validation
+
+| Check | Result |
+| :--- | :--- |
+| node tools/verify_glossary.js | PASS |
+| Term count | 1500 |
+| Errors | 0 |
+| Warnings | 0 |
+| Windows/Web SHA256 match | PASS |
+| Windows/Web `data/glossary/it_terms.js` SHA256 | `327ffb4c95c3fc1decf02936308ba1de4c29987acf5aca62ef531a77acb73e53` |
+
+#### Web release files
+
+| File | Value |
+| :--- | :--- |
+| assetVersion | v2026.6.13-r15.24 |
+| CACHE_NAME | study-tools-web-v2026-6-13-r15-24 |
+| node --check assets/js/version.js | PASS |
+| node --check service-worker.js | PASS |
+| node --check data/glossary/it_terms.js | PASS |
+| assets/asset-manifest.json | regenerated |
+| data/i18n_content/manifest.json | regenerated |
+| scripts/online_smoke_test.py | No changes (revert not needed) |
+
+#### Portable zip
+
+| Check | Result |
+| :--- | :--- |
+| Filename | Study-Tools-Portable-v2026.6.13-r15.24.zip |
+| SHA256 | F84D7468A3A3365D16F27F94D64854E55C3DE17798AE678F83909B518E2DA3DA |
+| Contains .git/ | OK (not found) |
+| Contains node_modules/ | OK (not found) |
+| Contains backups/ | OK (not found) |
+| Contains output/ | OK (not found) |
+| Contains data/study_ai.db | OK (not found) |
+
+#### Git
+
+| Repo | Branch | Commit hash | Push |
+| :--- | :--- | :--- | :--- |
+| Windows glossary | main | `fa50c19` (unchanged from Round 15.23) | N/A |
+| Web release | master | `d2b9dff` `chore: release glossary 1500 web cache update` | PASS (before interruption) |
+| Windows handoff | main | *(this commit)* | PASS |
+| GitHub tag | - | `v2026.6.13-r15.24` | PASS |
+
+#### GitHub Release
+
+| Field | Value |
+| :--- | :--- |
+| Tag | v2026.6.13-r15.24 |
+| Title | Study Tools Portable v2026.6.13-r15.24 |
+| Asset | Study-Tools-Portable-v2026.6.13-r15.24.zip |
+| URL | https://github.com/bwins0668/it-study-tools/releases/tag/v2026.6.13-r15.24 |
+
+#### Explicitly not done
+
+- Did not expand to 1600 terms.
+- Did not add or delete any terms.
+- Did not add a ko field.
+- Did not add Korean UI.
+- Did not modify course data.
+- Did not modify content language packs.
+- Did not modify backend (server.py / study_ai.py).
+- Did not modify Java/Python sandbox.
+
+#### Next
+
+- **Round 15.25** (recommended): 1500-term search experience optimization and performance stress test, or continue expansion 1500 -> 1800
