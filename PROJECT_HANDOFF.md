@@ -5355,9 +5355,9 @@ Web:
 
 #### Git commits
 
-- **Windows Code Commit**: `(this commit; recorded by follow-up handoff commit)`
+- **Windows Code Commit**: `5c47030` (chore: validate Supabase setup preparation)
 - **Web Commit**: `d842e9c` (chore: sync Supabase setup preparation)
-- **Windows Handoff Commit**: `(follow-up handoff commit)`
+- **Windows Handoff Commit**: `(this commit: docs: record Round 17.4 handoff)`
 
 #### Explicitly not done
 
