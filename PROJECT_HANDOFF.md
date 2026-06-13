@@ -6411,3 +6411,65 @@ ode --check assets/js/sync-engine.js: PASS
 #### Next
 
 - **Round 19.3.3**: Further UI detail regression fixes, or **Round 19.4**: Bookmarks deletion sync and dual-device conflict testing.
+- **Round 19.3.2A (??)**: Double-end CSS consistency verification ? PASS.
+
+### Round 19.3.2A - ‘o’[ CSS ’ñŒðˆê’v«?? (2026-06-13)
+
+**Status**: PASS
+
+**Objective**: Confirm that Round 19.3.2 CSS fixes (ssets/css/index.css) were committed and pushed to both Windows and Web repos.
+
+#### Verification Results
+
+| Check | Result |
+|---|---|
+| Windows CSS SHA-256 | B267DE2A... |
+| Web CSS SHA-256 | B267DE2A... |
+| Hashes match | ? Identical |
+| Windows CSS latest commit | 5debceb fix: polish UI layout metrics regressions |
+| Web CSS latest commit | 96bb1f0 fix: sync UI layout metrics polish |
+
+#### Fix Content Verification (both repos)
+
+1. **html { overflow-x: hidden; }** ? line 41 ?
+2. **#glossary-open-btn in white-space:nowrap group** ? line 6680 ?
+3. **901-1199px playground min-width: 376px + padding: 20px 16px 20px 0** ? line 7332 ?
+4. **>=1200px playground padding: 24px 16px 24px 0** ? line 7345 ?
+
+#### JS Syntax Verification
+
+| File | Windows | Web |
+|---|---|---|
+| app.js | PASS | PASS |
+| auth-ui.js | PASS | PASS |
+| i18n-ui-dict.js | PASS | PASS |
+| sync-engine.js | PASS | PASS |
+
+#### Glossary
+
+- **Windows**: 1500 terms ?
+- **Web**: 1500 terms ?
+- **SHA256 match**: ?
+
+#### Commits
+
+- **Windows main**: 5debceb fix: polish UI layout metrics regressions (CSS diff)
+- **Windows main**: e963b9f docs: record Round 19.3.2 handoff
+- **Web master**: 96bb1f0 fix: sync UI layout metrics polish
+- **Windows handoff commit**: (this commit) docs: record Round 19.3.2A CSS consistency check
+
+#### Conclusion
+
+No patch commit needed. Both repos have identical CSS with all 4 Round 19.3.2 fixes applied. No additional file sync required.
+
+#### Explicitly Deferred Tasks (unchanged)
+
+- Bookmarks deletion sync and dual-device conflict testing.
+- User-customized translation UI audit.
+- User translation synchronization.
+- Course/term/wrong-question bookmarks synchronization.
+- Portable client packaging & new GitHub Release.
+
+#### Next
+
+- **Round 19.3.3**: Further UI detail regression fixes, or **Round 19.4**: Bookmarks deletion sync and dual-device conflict testing.
