@@ -37,10 +37,13 @@ EXCLUDE_DIRS = {
 }
 
 EXCLUDE_FILES = {
+    ".env",
+    ".env.local",
     ZIP_NAME,
     "Launcher.cs",
     "python_embed.zip",
     "study_ai.db",
+    "supabase-config.local.js",
     "SQL-Learning-Hub.exe",
     "SQL-Learning-Hub-Portable.zip",
     "_fix.py",
@@ -52,6 +55,8 @@ EXCLUDE_EXTENSIONS = {
     ".bak",
     ".cs",
     ".db",
+    ".log",
+    ".secret",
     ".sqlite",
     ".sqlite3",
     ".tmp",

@@ -3483,24 +3483,24 @@
 
   var USER_TRANSLATIONS_ROUND_20_2 = {
     "zh-CN": {
-      userTranslationSave: "??",
-      userTranslationCancel: "??",
-      userTranslationReset: "??",
-      userTranslationEdit: "????",
-      userTranslationCustomLabel: "???",
-      userTranslationTooLong: "????",
-      userTranslationInvalid: "??????",
-      userTranslationTextareaPlaceholder: "??????..."
+      userTranslationSave: "保存",
+      userTranslationCancel: "取消",
+      userTranslationReset: "重置",
+      userTranslationEdit: "编辑翻译",
+      userTranslationCustomLabel: "自定义",
+      userTranslationTooLong: "翻译内容过长",
+      userTranslationInvalid: "翻译不能为空",
+      userTranslationTextareaPlaceholder: "请输入翻译..."
     },
     "ja-JP": {
-      userTranslationSave: "??",
-      userTranslationCancel: "?????",
-      userTranslationReset: "????",
-      userTranslationEdit: "?????",
-      userTranslationCustomLabel: "????",
-      userTranslationTooLong: "????????",
-      userTranslationInvalid: "???????????",
-      userTranslationTextareaPlaceholder: "?????..."
+      userTranslationSave: "保存",
+      userTranslationCancel: "キャンセル",
+      userTranslationReset: "リセット",
+      userTranslationEdit: "翻訳を編集",
+      userTranslationCustomLabel: "カスタム",
+      userTranslationTooLong: "翻訳が長すぎます",
+      userTranslationInvalid: "翻訳を入力してください",
+      userTranslationTextareaPlaceholder: "翻訳を入力..."
     },
     "en-US": {
       userTranslationSave: "Save",
@@ -3513,44 +3513,44 @@
       userTranslationTextareaPlaceholder: "Enter your translation..."
     },
     "vi-VN": {
-      userTranslationSave: "Luu",
-      userTranslationCancel: "Huy",
-      userTranslationReset: "Dat lai",
-      userTranslationEdit: "Sua dich",
-      userTranslationCustomLabel: "Tuy chinh",
-      userTranslationTooLong: "Dich qua dai",
-      userTranslationInvalid: "Khong duoc de trong",
-      userTranslationTextareaPlaceholder: "Nhap ban dich..."
+      userTranslationSave: "Lưu",
+      userTranslationCancel: "Hủy",
+      userTranslationReset: "Đặt lại",
+      userTranslationEdit: "Sửa bản dịch",
+      userTranslationCustomLabel: "Tùy chỉnh",
+      userTranslationTooLong: "Bản dịch quá dài",
+      userTranslationInvalid: "Bản dịch không được để trống",
+      userTranslationTextareaPlaceholder: "Nhập bản dịch..."
     },
     "fr-FR": {
       userTranslationSave: "Enregistrer",
       userTranslationCancel: "Annuler",
-      userTranslationReset: "Reinitialiser",
+      userTranslationReset: "Réinitialiser",
       userTranslationEdit: "Modifier la traduction",
-      userTranslationCustomLabel: "Personnalise",
+      userTranslationCustomLabel: "Personnalisé",
       userTranslationTooLong: "Traduction trop longue",
-      userTranslationInvalid: "La traduction ne peut pas etre vide",
+      userTranslationInvalid: "La traduction ne peut pas être vide",
       userTranslationTextareaPlaceholder: "Entrez votre traduction..."
     },
     "my-MM": {
-      userTranslationSave: "uodK;wpf;",
-      userTranslationCancel: "ausmif;",
-      userTranslationReset: "a&mufao&;",
-      userTranslationEdit: "uGifhkuodK;csif;",
-      userTranslationCustomLabel: "&SdKifh",
-      userTranslationTooLong: "uGifhkwf&G,&SdKifh",
-      userTranslationInvalid: "uGifh ,ifwGuf? ,l&Sif",
-      userTranslationTextareaPlaceholder: "?l=ifh?uGifhcs&m..."
+      userTranslationSave: "သိမ်းမည်",
+      userTranslationCancel: "ပယ်ဖျက်မည်",
+      userTranslationReset: "မူလအတိုင်းပြန်ထားမည်",
+      userTranslationEdit: "ဘာသာပြန်ချက်ကို ပြင်ဆင်မည်",
+      userTranslationCustomLabel: "စိတ်ကြိုက်",
+      userTranslationTooLong: "ဘာသာပြန်ချက် ရှည်လွန်းသည်",
+      userTranslationInvalid: "ဘာသာပြန်ချက်ကို ထည့်သွင်းပါ",
+      userTranslationTextareaPlaceholder: "ဘာသာပြန်ချက်ကို ထည့်ပါ..."
     },
     "ko-KR": {
-      userTranslationSave: "oj",
-      userTranslationCancel: "h",
-      userTranslationReset: "r",
-      userTranslationEdit: "be",
-      userTranslationCustomLabel: "sa",
-      userTranslationTooLong: "be",
-      userTranslationInvalid: "be",
-      userTranslationTextareaPlaceholder: "be..."
+      userTranslationSave: "저장",
+      userTranslationCancel: "취소",
+      userTranslationReset: "초기화",
+      userTranslationEdit: "번역 편집",
+      userTranslationCustomLabel: "사용자 지정",
+      userTranslationTooLong: "번역이 너무 깁니다",
+      userTranslationInvalid: "번역을 입력하세요",
+      userTranslationTextareaPlaceholder: "번역을 입력하세요..."
     }
   };
 

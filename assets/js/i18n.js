@@ -1556,6 +1556,7 @@ function openUtEditor(el, origText, transText, ctx) {
   };
   pop = document.createElement('div');
   pop.className = 'ut-popup';
+  pop.setAttribute('data-i18n-skip', 'true');
   var tp = i18nT('auth.userTranslationTextareaPlaceholder', 'Your translation');
   var sl = i18nT('auth.userTranslationSave', 'Save');
   var cl = i18nT('auth.userTranslationCancel', 'Cancel');
