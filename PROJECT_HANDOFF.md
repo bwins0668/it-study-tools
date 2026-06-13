@@ -3417,7 +3417,66 @@ ode --check service-worker.js | PASS |
 
 #### Next
 
-- **Round 15.21**: 1100-term quality review and localization polish + Web cache update + Portable repack + GitHub Release
+- **Round 15.21** (completed): 1100-term quality review and localization polish + Web cache update + Portable repack + GitHub Release
+
+---
+
+### Round 15.21 - 1100-term Quality Review & Release
+
+**Status: PASS**
+
+#### Scope
+
+- Conducted a strict quality review and localization polish on all 1100 terms (0 fixes required).
+- Updated Web cache metadata to enforce browser cache reload.
+- Repackaged Windows Portable client.
+- Created Git Tag and GitHub Release.
+
+#### Final validation
+
+| Check | Result |
+| :--- | :--- |
+| node tools/verify_glossary.js | PASS |
+| Term count | 1100 |
+| Errors | 0 |
+| Warnings | 0 |
+| Windows/Web SHA256 match | PASS |
+| Windows/Web `data/glossary/it_terms.js` SHA256 | `35ca641b51b82733ec4e0d04b1b4bcc48d8c20ad9ed858578ec1b8f072f85a01` |
+| Web node --check assets/js/version.js | PASS |
+| Web node --check service-worker.js | PASS |
+| Web local smoke | PASS (30/30) |
+| Web online smoke | PASS (30/30) |
+
+#### Release info
+
+- **Web assetVersion**: `v2026.6.13-r15.21`
+- **Web CACHE_NAME**: `study-tools-web-v2026-6-13-r15-21`
+- **Portable zip filename**: `Study-Tools-Portable-v2026.6.13-r15.21.zip`
+- **Portable zip SHA256**: `6717baba60a4e583f56487dcf7ff5be73eeb7d8fcc026da7d4ce9682367c9101`
+- **GitHub Release URL**: `https://github.com/bwins0668/it-study-tools/releases/tag/v2026.6.13-r15.21`
+
+#### Git
+
+| Repo | Branch | Commit hash | Push |
+| :--- | :--- | :--- | :--- |
+| Windows glossary | main | [Unchanged in r15.21] | PASS |
+| Web glossary/cache | master | `ea9a360` | PASS |
+| Windows handoff | main | Recorded by `docs: record glossary 1100 release` | PASS |
+
+#### Explicitly not done
+
+- Did not expand to 1200 terms.
+- Did not add a ko field.
+- Did not add Korean UI.
+- Did not modify course data.
+- Did not modify content language packs.
+- Did not modify backend (server.py / study_ai.py).
+- Did not modify Java/Python sandbox.
+
+#### Next
+
+- **Round 15.22**: Begin 1100 -> 1200 term expansion, or 1100-term search experience optimization.
+
 
 
 
