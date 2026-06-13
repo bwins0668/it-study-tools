@@ -5229,9 +5229,9 @@ Web:
 
 #### Git commits
 
-- **Windows Code Commit**: `(this commit; recorded by the follow-up handoff commit)`
+- **Windows Code Commit**: `5051ee4` (feat: add Supabase auth preparation layer)
 - **Web Commit**: `41a8526` (feat: sync Supabase auth preparation layer)
-- **Windows Handoff Commit**: `(follow-up handoff commit)`
+- **Windows Handoff Commit**: `(this commit: docs: record Round 17.3 handoff)`
 
 #### Explicitly not done
 
