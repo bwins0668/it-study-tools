@@ -215,7 +215,10 @@ function validateTerms(terms, label) {
         hasError = true;
       }
       if (lk === "ko") {
-        var forbidden = ["PLACEHOLDER", "TODO", "TBD", "待翻译", "임시", "placeholder"];
+        var forbidden = [
+          "PLACEHOLDER", "TODO", "TBD", "待翻译", "placeholder",
+          "임시 번역", "임시 텍스트", "임시 설명", "임시값", "번역 필요", "나중에 번역"
+        ];
         for (var fi = 0; fi < forbidden.length; fi++) {
           var fb = forbidden[fi];
           if (val.term && val.term.indexOf(fb) !== -1) {

@@ -3895,5 +3895,54 @@ ode --check service-worker.js | PASS |
 
 #### Next
 
-- **Round 16.4** (recommended): Korean Glossary search experience, aliases optimization, smoke test coverage
+- **Round 16.4** (completed): Korean Glossary search experience, aliases optimization, smoke test coverage
+
+---
+
+### Round 16.4 - Korean Glossary Search UX, Aliases Optimization, and Smoke Test Coverage
+
+**Status: PASS**
+
+#### Scope
+
+- Optimized Korean search experience in `assets/js/glossary.js` with NFC normalization, space-insensitive matching, explanation searching, and weight-based sorting (ID > Term > Alias > Explanation).
+- Restored PWA suppression checks and dynamic content lazy loader (`loadPack`) in Web `i18n.js` and `content-i18n.js` to fix the regression introduced in Round 16.3's synchronization.
+- Relaxed the Korean glossary validator `tools/verify_glossary.js` to allow the legitimate Korean word `"임시"` (temporary) while continuing to block explicit placeholders.
+- Appended high-value Korean aliases (e.g., DB/데이터베이스 for database, 인증 for authentication) to 66 high-frequency terms in `data/glossary/it_terms.js`.
+- Expanded Playwright smoke test coverage in `scripts/online_smoke_test.py` to cover Korean language switching, 1500 terms verification, random term checks, Korean search cases, mobile viewport scrollability, and prevented local timeout failures by disabling service worker registration during test runs.
+- Total glossary term count remains exactly 1500. Consistent SHA256 matching across both repositories.
+
+#### Validation & Smoke Test Results
+
+| Check | Result | Detail |
+| :--- | :--- | :--- |
+| `node tools/verify_glossary.js` | **PASS** | 0 errors, 0 warnings (Both Windows/Web) |
+| Term count | 1500 | Unchanged |
+| Windows/Web `it_terms.js` SHA256 | `0ca85e48506cce9f2f40a9bafdc72b2098d24fe8b726ea5b38f64d2fab4f12e7` | **PASS** |
+| Windows/Web `glossary.js` SHA256 | `11eeb9c0c915a4c7c07671e8cd5ccec6ae2744c2dec2a1bb43fb49f58df698c2` | **PASS** |
+| Playwright Smoke Test | **PASS** | 39/39 passed, 0 failed, 0 P0 console errors, 0 network 404s |
+| `node --check` syntax check | **PASS** | Checked all modified JS files |
+
+#### Git
+
+| Repo | Commit hash | Message |
+| :--- | :--- | :--- |
+| Windows glossary | `(current commit)` | `feat: improve Korean glossary search and aliases` |
+| Web glossary | `(current commit)` | `feat: sync Korean glossary search improvements` |
+| Windows handoff | `(current commit)` | `feat: improve Korean glossary search and aliases` |
+
+#### Explicitly not done
+
+- Did not add or delete any terms (total count remains exactly 1500).
+- Did not add Korean content language packs.
+- Did not modify `data/i18n_content`.
+- Did not update Web cache version in `service-worker.js`.
+- Did not modify `assets/js/version.js` or manifests.
+- Did not repackage Portable client.
+- Did not create tag or GitHub Release.
+- Did not modify course data, backend, or sandbox.
+
+#### Next
+
+- **Round 16.5** (recommended): Korean content package strategy audit, or Korean support quality review + Web cache update + Portable repack + GitHub Release.
 

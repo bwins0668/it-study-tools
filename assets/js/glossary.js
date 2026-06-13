@@ -137,17 +137,28 @@
     var fields = [];
 
     function push(val) {
-      if (val != null && val !== "") fields.push(normalizeSearchToken(val));
+      if (val != null && val !== "") {
+        var norm = normalizeSearchToken(val).normalize("NFC");
+        fields.push(norm);
+        var noSpaces = norm.replace(/\s+/g, "");
+        if (noSpaces !== norm) {
+          fields.push(noSpaces);
+        }
+      }
     }
 
     // ── id ──
     push(term.id);
 
-    // ── 多语言 term ──
-    var langs = ["ja", "zh", "en", "ko"];
+    // ── 多语言 term & explanation ──
+    var langs = ["ja", "zh", "en", "ko", "my", "vi", "fr"];
     for (var i = 0; i < langs.length; i++) {
       var langBlock = term[langs[i]];
-      if (langBlock && langBlock.term) push(langBlock.term);
+      if (langBlock) {
+        if (langBlock.term) push(langBlock.term);
+        if (langBlock.explanation) push(langBlock.explanation);
+        if (langBlock.note) push(langBlock.note);
+      }
     }
 
     // ── aliases ──
@@ -193,13 +204,16 @@
 
   /**
    * termMatchesQuery(term, needle) — 检查术语是否匹配搜索词
-   * needle 已过 toLowerCase().trim()，搜索大小写不敏感。
+   * needle 已过 toLowerCase().trim().normalize('NFC')
    */
   function termMatchesQuery(term, needle) {
     if (!needle) return true;
     var fields = collectSearchFields(term);
+    var cleanNeedle = needle.replace(/\s+/g, "");
     for (var i = 0; i < fields.length; i++) {
-      if (fields[i].indexOf(needle) !== -1) return true;
+      var f = fields[i];
+      if (f.indexOf(needle) !== -1) return true;
+      if (cleanNeedle && f.replace(/\s+/g, "").indexOf(cleanNeedle) !== -1) return true;
     }
     return false;
   }
@@ -214,11 +228,83 @@
   }
 
   function filterTerms(terms, query, category) {
-    var needle = String(query || "").toLowerCase().trim();
-    return terms.filter(function (term) {
+    var needle = String(query || "").toLowerCase().trim().normalize("NFC");
+    var filtered = terms.filter(function (term) {
       if (category !== "all" && term.category !== category) return false;
       if (!needle) return true;
       return termMatchesQuery(term, needle);
+    });
+
+    if (!needle) return filtered;
+
+    var cleanNeedle = needle.replace(/\s+/g, "");
+
+    // Calculate score and sort
+    var scored = filtered.map(function (term) {
+      var score = 0;
+
+      // 1. Exact ID or clean ID match
+      var cleanId = String(term.id || "").toLowerCase().replace(/[_-]/g, " ");
+      if (cleanId === needle) {
+        score += 100;
+      } else if (cleanId.indexOf(needle) !== -1) {
+        score += 40;
+      }
+
+      // 2. Term matches (exact vs substring vs space-removed)
+      var langs = ["ja", "zh", "en", "ko"];
+      for (var l = 0; l < langs.length; l++) {
+        var langBlock = term[langs[l]];
+        if (langBlock && langBlock.term) {
+          var tVal = String(langBlock.term).toLowerCase().normalize("NFC");
+          var cleanT = tVal.replace(/\s+/g, "");
+          if (tVal === needle) {
+            score += 80;
+          } else if (tVal.indexOf(needle) !== -1 || (cleanNeedle && cleanT.indexOf(cleanNeedle) !== -1)) {
+            score += 30;
+          }
+        }
+      }
+
+      // 3. Alias matches
+      if (Array.isArray(term.aliases)) {
+        for (var a = 0; a < term.aliases.length; a++) {
+          var aliasVal = String(term.aliases[a]).toLowerCase().normalize("NFC");
+          var cleanA = aliasVal.replace(/\s+/g, "");
+          if (aliasVal === needle) {
+            score += 60;
+          } else if (aliasVal.indexOf(needle) !== -1 || (cleanNeedle && cleanA.indexOf(cleanNeedle) !== -1)) {
+            score += 25;
+          }
+        }
+      }
+
+      // 4. Explanation matches
+      for (var l = 0; l < langs.length; l++) {
+        var langBlock = term[langs[l]];
+        if (langBlock && langBlock.explanation) {
+          var eVal = String(langBlock.explanation).toLowerCase().normalize("NFC");
+          var cleanE = eVal.replace(/\s+/g, "");
+          if (eVal.indexOf(needle) !== -1 || (cleanNeedle && cleanE.indexOf(cleanNeedle) !== -1)) {
+            score += 10;
+          }
+        }
+      }
+
+      // Apply searchBoost
+      var boost = Number(term.searchBoost);
+      var searchBoost = Number.isFinite(boost) ? boost : 1;
+      score = score * searchBoost;
+
+      return { term: term, score: score };
+    });
+
+    scored.sort(function (a, b) {
+      return b.score - a.score;
+    });
+
+    return scored.map(function (item) {
+      return item.term;
     });
   }
 
