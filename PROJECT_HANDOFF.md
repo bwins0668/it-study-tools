@@ -5129,7 +5129,7 @@ Response: `{"status": "deleted"}`
 
 - **Windows Code Commit**: `7c0bf9d` (feat: add auth UI prototype and local user state)
 - **Web Commit**: `aaadc14` (feat: sync auth UI prototype)
-- **Windows Handoff Commit**: `(pending)` — current commit
+- **Windows Handoff Commit**: `e73815e` (docs: record auth UI prototype)
 
 #### Explicitly not done
 
