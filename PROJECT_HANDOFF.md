@@ -5043,3 +5043,108 @@ Response: `{"status": "deleted"}`
 #### Next
 
 - **Round 17.2** (recommended): Auth UI prototype — login/signup page, anonymous indicator, user menu in app header.
+
+---
+
+### Round 17.2 - Auth UI Prototype and Local User State
+
+**Status: PASS**
+
+#### Scope
+- Created `assets/js/auth-ui.js` on both Windows and Web repositories.
+- Extended `assets/js/sync-engine.js` with helper functions (`getSyncQueueSize`, `getLastSyncAt`, `setSyncEnabledLocal`, `isSyncEnabled`, `getDeviceSummary`).
+- Updated `assets/js/app.js` on both ends to call `StudyAuthUI.initAuthUI()` on DOMContentLoaded.
+- Updated `index.html` on both ends to load `auth-ui.js` after `sync-engine.js`.
+- Added auth UI CSS styles to `assets/css/index.css` on both ends.
+- **No real authentication implemented. No Supabase connection. No network requests.**
+
+#### auth-ui.js Feature Summary
+
+| Function | Purpose | Status |
+|:---|:---|:---|
+| `getLocalAuthState()` | Read auth state from localStorage | ✅ |
+| `setLocalAuthState(state)` | Persist auth state | ✅ |
+| `clearLocalAuthState()` | Clear all auth state | ✅ |
+| `setAnonymousMode()` | Reset to local anonymous mode | ✅ |
+| `setMockSignedInUser(profile)` | Set mock signed-in state for UI development | ✅ |
+| `openAuthPanel(mode)` | Open the auth panel dialog | ✅ |
+| `closeAuthPanel()` | Close the auth panel dialog | ✅ |
+| `renderUserMenu()` | Render user button in header toolbar | ✅ |
+| `getDisplayUserLabel()` | Get current user display label | ✅ |
+| `exportSnapshotAction()` | Export local data snapshot (JSON download) | ✅ |
+
+#### localStorage Auth Keys
+
+| Key | Purpose | Excludes |
+|:---|:---|:---|
+| `study_tools_auth_state` | Full auth state object | ✅ No passwords, tokens, or API keys |
+| `study_tools_mock_user` | Mock user profile (UI dev only) | ✅ No real email/password |
+
+#### Sync-engine.js Round 17.2 Additions
+
+| Function | Purpose |
+|:---|:---|
+| `getSyncQueueSize()` | Return number of events in sync queue |
+| `getLastSyncAt()` | Return last sync timestamp |
+| `setSyncEnabledLocal(enabled)` | Toggle sync enabled flag |
+| `isSyncEnabled()` | Check if sync is enabled |
+| `getDeviceSummary()` | Return device_id + sync_enabled + last_sync_at + queue_size |
+
+#### Auth UI Panel Content
+
+- Status display: "本地模式" (anonymous) or "已登录" (mock signed-in)
+- Notice: "同步功能开发中"
+- Device ID display (truncated with tooltip)
+- Pending sync count
+- Last sync timestamp
+- Privacy note: "不会上传数据"
+- Action buttons: "模拟登录状态" / "退出模拟登录" / "导出本地快照"
+
+#### Verification Results
+
+| Check | Result |
+|:---|:---|
+| `node --check` Windows sync-engine.js | ✅ PASS |
+| `node --check` Windows auth-ui.js | ✅ PASS |
+| `node --check` Windows app.js | ✅ PASS |
+| `node --check` Windows i18n-ui-dict.js | ✅ PASS |
+| `node --check` Web sync-engine.js | ✅ PASS |
+| `node --check` Web auth-ui.js | ✅ PASS |
+| `node --check` Web app.js | ✅ PASS |
+| `node --check` Web i18n-ui-dict.js | ✅ PASS |
+| `node tools/verify_glossary.js` | ✅ PASS, 1500 terms |
+
+#### Smoke Test Results
+
+1. ✅ Default auth state is `local_anonymous`
+2. ✅ `setMockSignedInUser` sets mode to `mock_signed_in`
+3. ✅ Mock display_name persists
+4. ✅ `setAnonymousMode` resets correctly
+5. ✅ `StudySync.getDeviceSummary()` is a function
+6. ✅ `StudySync.getSyncQueueSize()` is a function
+7. ✅ Sync queue tracks events correctly
+8. ✅ `getLastSyncAt()` returns null when unset
+
+#### Git & Handoff Commits
+
+- **Windows Code Commit**: `7c0bf9d` (feat: add auth UI prototype and local user state)
+- **Web Commit**: `aaadc14` (feat: sync auth UI prototype)
+- **Windows Handoff Commit**: `(pending)` — current commit
+
+#### Explicitly not done
+
+- Did not implement real login/authentication
+- Did not integrate Supabase SDK (no real connection)
+- Did not create real database
+- Did not implement cloud sync
+- Did not modify course data, glossary, i18n content, backend (`server.py`/`study_ai.py`), sandbox, version/service-worker
+- Did not package Portable
+- Did not create tag or Release
+- Did not add or delete terms (total remains 1500)
+- Did not modify `data/i18n_content` content packs
+- No real API keys, tokens, or passwords stored anywhere
+- No network requests generated
+
+#### Next
+
+- **Round 17.3** (recommended): Supabase Auth SDK integration prep and security configuration draft — or manual Supabase project creation guide.
