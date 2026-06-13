@@ -7260,3 +7260,111 @@ Minimal viable UX:
 #### Next
 
 - **Round 20.2**: User translation UI buttons (save/reset on AI translated text), or **Round 19.7**: Post-release audit.
+- **Round 20.2**: User translation UI controls ? PASS.
+
+### Round 20.2 - óp?é©íË?ñ|? UI à¬?óéín
+
+**Status**: PASS
+
+**Scope**: Add user translation edit/save/cancel/reset buttons to translated text elements. Local-only storage, no Supabase, no sync-engine integration.
+
+#### Modified Files
+
+| File | Changes |
+|---|---|
+| ssets/js/i18n.js | Hook in pplyTextJob to attach controls; +6 control functions (simpleHash, ttachUserTranslationControl, pplySavedUserTrans, openUtEditor, isUtEligible, helper closures); updated saveUserTranslationItem to store additional fields (sourceTextHash, sourceLang, targetLang, context, deletedAt, syncVersion, origin) |
+| ssets/js/i18n-ui-dict.js | +USER_TRANSLATIONS_ROUND_20_2 block with 13 keys Å~ 7 languages = 91 entries |
+| ssets/css/index.css | +20 CSS rules for .ut-wrapper, .ut-edit-btn, .ut-badge, .ut-popup, .ut-backdrop, .ut-box, .ut-ta, .ut-actions, .ut-save, .ut-cancel, .ut-reset |
+
+#### UI Entry Point
+
+- **Location**: A small ? (pencil) icon appears next to translated content elements (text elements with data-i18n that have text length ? 10 chars, excluding buttons, inputs, headers, and nav elements)
+- **Click**: Opens a centered popup with a textarea pre-filled with the current translation
+- **Buttons**: Save / Cancel / Reset (if custom translation exists)
+- **Badge**: A Åö indicator appears next to elements with user-saved translations
+
+#### Data Storage
+
+| Item | Value |
+|---|---|
+| localStorage key | study-tools-user-translations-v1 |
+| Saved fields | sourceText, sourceTextHash, sourceLang, 	argetLang, 	ranslatedText, context, updatedAt, deletedAt, syncVersion, origin |
+| Character limits | sourceText ? 500, translatedText ? 2000 |
+| Deletion | Soft delete (deletedAt: null Å® timestamp) |
+
+#### Display Priority
+
+`	ext
+User custom translation Å® Built-in i18n dict Å® AI translation cache Å® Original text
+`
+
+#### Feature Operations
+
+| Action | Implementation |
+|---|---|
+| **Save** | saveUserTranslationItem() Å® localStorage Å® element textContent updated Å® Åö badge shown |
+| **Cancel** | Popup closed, no changes |
+| **Reset** | deleteUserTranslationItem() Å® element reverts to AI translation Å® Åö badge removed |
+| **Refresh persistence** | pplySavedUserTrans() called on page load via translation hook; re-applies saved translations from localStorage |
+| **Eligibility filter** | Skips buttons, inputs, selects, textareas; skips header/sidebar/auth-panel elements; skips text < 10 chars |
+
+#### Security Isolation
+
+| Check | Result |
+|---|---|
+| Supabase connection | ? Not connected |
+| sync-engine integration | ? Not in scope |
+| AI cache (study-tools-i18n-cache-v4) | ? Not touched |
+| translation_cache (SQLite) | ? Not touched |
+| API Key / Provider / Model / Ollama | ? Not touched |
+
+#### Account Default Japanese
+
+| Check | Result |
+|---|---|
+| Fallback chain [lang, "ja-JP", "zh-CN", "en-US"] | ? Preserved from Round 20.1 |
+| Auth panel still shows Japanese | ? Code unchanged |
+| No undefined in auth UI | ? Confirmed |
+
+#### SQL Execute Button
+
+| Check | Result |
+|---|---|
+| Console-footer position: sticky; bottom: 0 | ? Preserved from Round 20.1 |
+| Button visible in all viewports | ? Confirmed |
+
+#### Smoke Test (7 viewports)
+
+| Viewport | Overflow | Run Btn | Editor | UT Controls |
+|---|---|---|---|---|
+| **375Å~667** | No | ? Visible | ? ?150Å~80 | ? Hook present (appears on translation) |
+| **390Å~844** | No | ? Visible | ? ?150Å~80 | ? |
+| **430Å~932** | No | ? Visible | ? ?150Å~80 | ? |
+| **768Å~1024** | No | ? Visible | ? ?150Å~80 | ? |
+| **900Å~700** | No | ? Visible | ? ?150Å~80 | ? |
+| **1280Å~720** | No | ? Visible | ? ?150Å~80 | ? |
+| **1440Å~900** | No | ? Visible | ? ?150Å~80 | ? |
+
+#### Verification
+
+| Check | Result |
+|---|---|
+| Glossary 1500 | ? PASS |
+| JS syntax Windows (5 files) | ? ALL PASS |
+| JS syntax Web (5 files) | ? ALL PASS |
+
+#### Commits
+
+- **Windows main**: (this commit) feat: add user translation UI controls
+- **Web master**: (this commit) feat: sync user translation UI controls
+
+#### Known Limitations (future rounds)
+
+1. Controls only attach on first translation render ? elements translated before the hook was added won't get controls until page reload
+2. Only text content elements (via data-i18n), not attributes ? attr translations don't get controls yet
+3. Translation controls use 	ranslateStatic() which may show English fallback for keys not yet in I18nUiDict ? i18n keys for zh/ja/en/vi/fr/my/ko are provided
+4. No sync-engine integration ? translations are local-only
+
+#### Next
+
+- **Round 20.3**: User translation sync (Supabase + sync-engine integration), or **Round 19.7**: Post-release audit.

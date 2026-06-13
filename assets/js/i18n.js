@@ -962,6 +962,11 @@
         textApplied.set(job.node, nextValue);
         textAppliedLang.set(job.node, translatedText ? targetLang : `pending:${targetLang}`);
         job.node.nodeValue = nextValue;
+        if (translatedText && job.node.parentElement && job.item) {
+          var origText = textOriginals.get(job.node) || "";
+          var ctx = (job.item && job.item.context) || "general";
+          attachUserTranslationControl(job.node.parentElement, origText, translatedText, ctx);
+        }
       };
       const applyAttrJob = (job, translatedText, japaneseText = "") => {
         if (!job.el.isConnected) return;
@@ -1442,7 +1447,18 @@
    function saveUserTranslationItem(sourceText, sourceLang, targetLang, translatedText, context) {
      var all = getUserTranslationsData();
      var key = String(sourceText) + "|" + String(sourceLang) + "|" + String(targetLang) + "|" + String(context || "");
-     all[key] = { translatedText: String(translatedText), updatedAt: new Date().toISOString() };
+     all[key] = {
+  sourceText: String(sourceText),
+  sourceTextHash: simpleHash(String(sourceText)),
+  sourceLang: String(sourceLang),
+  targetLang: String(targetLang),
+  translatedText: String(translatedText),
+  context: String(context || ""),
+  updatedAt: new Date().toISOString(),
+  deletedAt: null,
+  syncVersion: 1,
+  origin: "user"
+};
      try { localStorage.setItem(USER_TRANSLATIONS_KEY, JSON.stringify(all)); } catch (_) {}
    }
  
@@ -1470,7 +1486,120 @@
    window.getUserTranslationItem = getUserTranslationItem;
    window.getUserTranslationCount = getUserTranslationCount;
 
-  // Global helper functions
+  ﻿function simpleHash(str) {
+  var hash = 0;
+  for (var i = 0; i < str.length; i++) {
+    var chr = str.charCodeAt(i);
+    hash = ((hash << 5) - hash) + chr;
+    hash |= 0;
+  }
+  return Math.abs(hash).toString(16);
+}
+
+/* User translation UI controls (Round 20.2) */
+var UT_ATTR = "data-ut-attached";
+
+function isUtEligible(el) {
+  if (!el || !el.parentNode) return false;
+  var t = el.tagName;
+  if (t === 'BUTTON' || t === 'INPUT' || t === 'SELECT' || t === 'TEXTAREA') return false;
+  if (el.closest('.app-header') || el.closest('.app-sidebar') || el.closest('.auth-panel')) return false;
+  if (el.closest('.glossary-modal') || el.closest('.ut-wrapper')) return false;
+  return true;
+}
+
+function attachUserTranslationControl(el, origText, transText, ctx) {
+  if (!el || !document.body.contains(el) || el.hasAttribute(UT_ATTR)) return;
+  if (!isUtEligible(el) || !origText || origText.length < 10) return;
+  el.setAttribute(UT_ATTR, "true");
+  var wrapper = document.createElement('span');
+  wrapper.className = 'ut-wrapper';
+  el.parentNode.insertBefore(wrapper, el);
+  wrapper.appendChild(el);
+  var btn = document.createElement('button');
+  btn.className = 'ut-edit-btn';
+  btn.type = 'button';
+  btn.title = (typeof translateStatic === 'function' ? translateStatic('userTranslationEdit') : null) || 'Edit';
+  btn.textContent = '\u270E';
+  btn.addEventListener('click', function(e) {
+    e.stopPropagation();
+    openUtEditor(el, origText, transText, ctx || 'general');
+  });
+  wrapper.appendChild(btn);
+  applySavedUserTrans(el, origText, ctx || 'general');
+}
+
+function applySavedUserTrans(el, origText, ctx) {
+  var saved = getUserTranslationItem(origText, currentLang, currentLang, ctx);
+  if (saved && saved.translatedText && !saved.deletedAt) {
+    el.textContent = saved.translatedText;
+    if (!el.parentNode.querySelector('.ut-badge')) {
+      var badge = document.createElement('span');
+      badge.className = 'ut-badge';
+      badge.textContent = '\u2605';
+      el.parentNode.insertBefore(badge, el.nextSibling);
+    }
+  }
+}
+
+function openUtEditor(el, origText, transText, ctx) {
+  var pop = document.querySelector('.ut-popup');
+  if (pop) pop.remove();
+  var saved = getUserTranslationItem(origText, currentLang, currentLang, ctx);
+  var curText = (saved && !saved.deletedAt) ? saved.translatedText : transText;
+  var i18nT = function(k, fb) {
+    if (typeof translateStatic === 'function') {
+      var v = translateStatic(k);
+      if (v) return v;
+    }
+    return fb || k;
+  };
+  pop = document.createElement('div');
+  pop.className = 'ut-popup';
+  var tp = i18nT('userTranslationTextareaPlaceholder', 'Your translation');
+  var sl = i18nT('userTranslationSave', 'Save');
+  var cl = i18nT('userTranslationCancel', 'Cancel');
+  pop.innerHTML =
+    '<div class=\"ut-backdrop\"></div>' +
+    '<div class=\"ut-box\">' +
+      '<textarea class=\"ut-ta\" maxlength=\"2000\" placeholder=\"' + tp + '\">' + (curText || '') + '</textarea>' +
+      '<div class=\"ut-actions\">' +
+        '<button class=\"ut-save\" type=\"button\">' + sl + '</button>' +
+        '<button class=\"ut-cancel\" type=\"button\">' + cl + '</button>' +
+        ((saved && !saved.deletedAt) ? '<button class=\"ut-reset\" type=\"button\">' + i18nT('userTranslationReset', 'Reset') + '</button>' : '') +
+      '</div>' +
+    '</div>';
+  document.body.appendChild(pop);
+  pop.querySelector('.ut-cancel').addEventListener('click', function() { pop.remove(); });
+  pop.querySelector('.ut-save').addEventListener('click', function() {
+    var ta = pop.querySelector('.ut-ta');
+    var val = (ta.value || '').trim();
+    if (!val) { alert(i18nT('userTranslationInvalid', 'Cannot be empty')); return; }
+    if (val.length > 2000) { alert(i18nT('userTranslationTooLong', 'Too long')); return; }
+    saveUserTranslationItem(origText, currentLang, currentLang, val, ctx);
+    el.textContent = val;
+    if (!el.parentNode.querySelector('.ut-badge')) {
+      var b = document.createElement('span');
+      b.className = 'ut-badge';
+      b.textContent = '\u2605';
+      el.parentNode.insertBefore(b, el.nextSibling);
+    }
+    pop.remove();
+  });
+  var resetBtn = pop.querySelector('.ut-reset');
+  if (resetBtn) {
+    resetBtn.addEventListener('click', function() {
+      deleteUserTranslationItem(origText, currentLang, currentLang, ctx);
+      el.textContent = transText;
+      var badge = el.parentNode.querySelector('.ut-badge');
+      if (badge) badge.remove();
+      pop.remove();
+    });
+  }
+}
+
+
+// Global helper functions
   window.showToastKey = function (key, type = "info", params = null) {
     const msg = window.I18n ? window.I18n.t(key, params) : key;
     if (typeof window.showToast === "function") {

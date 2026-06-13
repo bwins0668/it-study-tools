@@ -3480,4 +3480,84 @@
        Object.assign(window.I18nUiDict[locale].auth, AUTH_SYNC_ROUND_19_5[locale]);
      }
    });
+
+  var USER_TRANSLATIONS_ROUND_20_2 = {
+    "zh-CN": {
+      userTranslationSave: "??",
+      userTranslationCancel: "??",
+      userTranslationReset: "??",
+      userTranslationEdit: "????",
+      userTranslationCustomLabel: "???",
+      userTranslationTooLong: "????",
+      userTranslationInvalid: "??????",
+      userTranslationTextareaPlaceholder: "??????..."
+    },
+    "ja-JP": {
+      userTranslationSave: "??",
+      userTranslationCancel: "?????",
+      userTranslationReset: "????",
+      userTranslationEdit: "?????",
+      userTranslationCustomLabel: "????",
+      userTranslationTooLong: "????????",
+      userTranslationInvalid: "???????????",
+      userTranslationTextareaPlaceholder: "?????..."
+    },
+    "en-US": {
+      userTranslationSave: "Save",
+      userTranslationCancel: "Cancel",
+      userTranslationReset: "Reset",
+      userTranslationEdit: "Edit translation",
+      userTranslationCustomLabel: "Custom",
+      userTranslationTooLong: "Translation too long",
+      userTranslationInvalid: "Translation cannot be empty",
+      userTranslationTextareaPlaceholder: "Enter your translation..."
+    },
+    "vi-VN": {
+      userTranslationSave: "Luu",
+      userTranslationCancel: "Huy",
+      userTranslationReset: "Dat lai",
+      userTranslationEdit: "Sua dich",
+      userTranslationCustomLabel: "Tuy chinh",
+      userTranslationTooLong: "Dich qua dai",
+      userTranslationInvalid: "Khong duoc de trong",
+      userTranslationTextareaPlaceholder: "Nhap ban dich..."
+    },
+    "fr-FR": {
+      userTranslationSave: "Enregistrer",
+      userTranslationCancel: "Annuler",
+      userTranslationReset: "Reinitialiser",
+      userTranslationEdit: "Modifier la traduction",
+      userTranslationCustomLabel: "Personnalise",
+      userTranslationTooLong: "Traduction trop longue",
+      userTranslationInvalid: "La traduction ne peut pas etre vide",
+      userTranslationTextareaPlaceholder: "Entrez votre traduction..."
+    },
+    "my-MM": {
+      userTranslationSave: "uodK;wpf;",
+      userTranslationCancel: "ausmif;",
+      userTranslationReset: "a&mufao&;",
+      userTranslationEdit: "uGifhkuodK;csif;",
+      userTranslationCustomLabel: "&SdKifh",
+      userTranslationTooLong: "uGifhkwf&G,&SdKifh",
+      userTranslationInvalid: "uGifh ,ifwGuf? ,l&Sif",
+      userTranslationTextareaPlaceholder: "?l=ifh?uGifhcs&m..."
+    },
+    "ko-KR": {
+      userTranslationSave: "oj",
+      userTranslationCancel: "h",
+      userTranslationReset: "r",
+      userTranslationEdit: "be",
+      userTranslationCustomLabel: "sa",
+      userTranslationTooLong: "be",
+      userTranslationInvalid: "be",
+      userTranslationTextareaPlaceholder: "be..."
+    }
+  };
+
+  Object.keys(USER_TRANSLATIONS_ROUND_20_2).forEach(function (locale) {
+    if (window.I18nUiDict[locale] && window.I18nUiDict[locale].auth) {
+      Object.assign(window.I18nUiDict[locale].auth, USER_TRANSLATIONS_ROUND_20_2[locale]);
+    }
+  });
+
 })();
