@@ -198,18 +198,18 @@
 
   function getSupabaseStatusLabel() {
     if (!window.StudySupabase || typeof window.StudySupabase.getStatus !== "function") {
-      return "SDK 未加载";
+      return t("auth.sdkMissing", "SDK 未加载");
     }
     var status = window.StudySupabase.getStatus();
     var labels = {
       not_configured: t("auth.supabaseNotConfigured", "Supabase 未配置"),
       sdk_missing: t("auth.sdkMissing", "SDK 未加载"),
-      disabled: "已配置但未启用",
-      initialization_error: "初始化失败",
+      disabled: t("auth.disabled", "已配置但未启用"),
+      initialization_error: t("auth.initializationError", "初始化失败"),
       ready_to_initialize: t("auth.supabaseConnected", "Supabase 已连接"),
       ready: t("auth.supabaseConnected", "Supabase 已连接"),
     };
-    return labels[status.code] || status.message || "未知";
+    return labels[status.code] || status.message || t("auth.unknown", "未知");
   }
 
   /* ── Panel ────────────────────────────────────────── */
@@ -286,6 +286,16 @@
     var lastSync = syncStatus ? syncStatus.last_sync_at : null;
     var deviceId = syncStatus ? syncStatus.device_id : (window.StudySync ? window.StudySync.getDeviceId() : "—");
 
+    // Extract sync summary details
+    var summaryDetails = syncSummary && syncSummary.summary ? syncSummary.summary : null;
+    var hasSyncSummary = Boolean(summaryDetails);
+    var progressPushed = summaryDetails ? summaryDetails.progress_pushed : 0;
+    var progressPulled = summaryDetails ? summaryDetails.progress_pulled : 0;
+    var quizPushed = summaryDetails ? summaryDetails.quiz_pushed : 0;
+    var conflictsResolved = summaryDetails ? summaryDetails.conflicts_resolved : 0;
+    var warnings = summaryDetails && summaryDetails.warnings ? summaryDetails.warnings : [];
+    var syncDuration = summaryDetails ? summaryDetails.duration_ms : 0;
+
     var isAnonymous = state.mode === "local_anonymous";
     var isMock = state.mode === "mock_signed_in";
     var isSupabaseUser = state.mode === "signed_in" && state.provider === "supabase";
@@ -299,108 +309,140 @@
           ? t("auth.syncFailed", "同步失败")
           : t("auth.syncStatus.local", "本地模式")));
 
+    // Build sync summary HTML if available (collapsible using details)
+    var summaryHtml = "";
+    if (hasSyncSummary && syncSummary.status === "success") {
+      var detailsList = "";
+      if (progressPushed) detailsList += '<li><i class="fa-solid fa-upload"></i> ' + esc(t("auth.progressPushed", "进度上传")) + ': ' + progressPushed + '</li>';
+      if (progressPulled) detailsList += '<li><i class="fa-solid fa-download"></i> ' + esc(t("auth.progressPulled", "进度下载")) + ': ' + progressPulled + '</li>';
+      if (quizPushed) detailsList += '<li><i class="fa-solid fa-clipboard-question"></i> ' + esc(t("auth.quizPushed", "测验结果")) + ': ' + quizPushed + '</li>';
+      if (conflictsResolved) detailsList += '<li><i class="fa-solid fa-code-merge"></i> ' + esc(t("auth.conflictsResolved", "已合并远端进度")) + ': ' + conflictsResolved + '</li>';
+
+      summaryHtml =
+        '<details class="auth-summary-details">' +
+          '<summary><i class="fa-solid fa-circle-info"></i> ' + esc(t("auth.syncSummaryTitle", "本次同步摘要")) +
+          (syncDuration ? ' (' + (syncDuration / 1000).toFixed(1) + 's)' : '') + '</summary>' +
+          '<ul>' + detailsList + '</ul>' +
+        '</details>';
+    } else if (syncSummary && syncSummary.status === "error") {
+      summaryHtml = '<div class="auth-notice sync-error"><i class="fa-solid fa-exclamation-circle"></i> ' + esc(t("auth.syncFailedDetail", "部分同步失败，请重试")) + '</div>';
+    }
+
     content.innerHTML =
       '<div class="auth-panel-header">' +
         '<h3 id="auth-panel-title">' + esc(t("auth.account", "账号")) + '</h3>' +
         '<button class="auth-panel-close-btn" data-auth-action="close" title="' + esc(t("auth.close", "关闭")) + '"><i class="fa-solid fa-xmark"></i></button>' +
       '</div>' +
       '<div class="auth-panel-body">' +
-        // Status section
-        '<div class="auth-status-section">' +
+        // A. Status Section
+        '<div class="auth-panel-section auth-status-section">' +
           '<div class="auth-status-row">' +
-            '<span class="auth-label">' + esc(t("auth.syncStatus.local", "状态")) + ':</span>' +
-            '<span class="auth-value auth-badge-' + (isAnonymous ? "local" : "synced") + '">' +
-              (isAnonymous ? esc(t("auth.localMode", "本地模式")) : esc(t("auth.syncStatus.synced", "已登录"))) +
+            '<span class="auth-label"><i class="fa-solid fa-user"></i> ' + esc(t("auth.currentUser", "当前用户")) + ':</span>' +
+            '<span class="auth-value auth-user-email" title="' + esc(isSupabaseUser ? state.email : "") + '">' +
+              esc(isSupabaseUser ? state.email : t("auth.notLoggedIn", "未登录")) +
             '</span>' +
           '</div>' +
           '<div class="auth-status-row">' +
-            '<span class="auth-label">Supabase:</span>' +
+            '<span class="auth-label"><i class="fa-solid fa-cloud"></i> Supabase:</span>' +
             '<span class="auth-value" data-i18n-skip="true">' + esc(getSupabaseStatusLabel()) + '</span>' +
           '</div>' +
           '<div class="auth-status-row">' +
-            '<span class="auth-label">' + esc(t("auth.currentUser", "当前用户")) + ':</span>' +
-            '<span class="auth-value">' + esc(isSupabaseUser ? state.email : t("auth.notLoggedIn", "未登录")) + '</span>' +
-          '</div>' +
-          '<div class="auth-status-row">' +
-            '<span class="auth-label">' + esc(t("auth.sync", "同步")) + ':</span>' +
-            '<span class="auth-value">' + esc(syncStateLabel) + '</span>' +
+            '<span class="auth-label"><i class="fa-solid fa-circle-question"></i> ' + esc(t("auth.sync", "同步")) + ':</span>' +
+            '<span class="auth-value auth-badge-' + (isAnonymous ? "local" : "synced") + '">' +
+              esc(isAnonymous ? t("auth.localMode", "本地模式") : t("auth.signedIn", "已登录")) +
+            '</span>' +
           '</div>' +
         '</div>' +
 
-        // Manual sync notice
-        '<div class="auth-notice">' +
-          '<i class="fa-solid fa-info-circle"></i> ' +
-          esc(t("auth.manualSyncOnly", "仅在点击立即同步后同步")) +
-        '</div>' +
-        '<div class="auth-privacy-note" data-i18n-skip="true">' +
-          '<i class="fa-solid fa-shield-halved"></i> Supabase 同步是可选功能；默认继续本地优先，不会自动同步。' +
-        '</div>' +
-
-        // Device info
-        '<div class="auth-info-section">' +
-          '<div class="auth-info-row"><span class="auth-label">' + esc(t("auth.deviceId", "设备 ID")) + ':</span>' +
-          '<span class="auth-value auth-device-id" title="' + esc(deviceId) + '">' + esc(deviceId ? deviceId.slice(0, 20) + "..." : "—") + '</span></div>' +
-          '<div class="auth-info-row"><span class="auth-label">' + esc(t("auth.pendingSync", "待同步")) + ':</span>' +
-          '<span class="auth-value">' + qSize + '</span></div>' +
-          '<div class="auth-info-row"><span class="auth-label">' + esc(t("auth.lastSync", "上次同步")) + ':</span>' +
-          '<span class="auth-value">' + (lastSync ? esc(lastSync) : "—") + '</span></div>' +
-        '</div>' +
-
-        // Privacy note
-        '<div class="auth-privacy-note">' +
-          '<i class="fa-solid fa-shield-halved"></i> ' +
-          esc(t("auth.syncScope", "只同步学习进度和设置")) +
-          '<br><i class="fa-solid fa-key"></i> ' +
-          esc(t("auth.noAiKeyUpload", "不会上传 AI Key")) +
-        '</div>' +
-
-        '<div class="auth-info-section">' +
-          '<button class="auth-btn auth-btn-primary" data-auth-action="manual-sync"' + (canManualSync ? "" : " disabled") + '>' +
-            '<i class="fa-solid fa-rotate"></i> ' +
-            esc(syncInProgress ? t("auth.syncingNow", "正在同步") : t("auth.syncNow", "立即同步")) +
-          '</button>' +
+        // B. Sync Section
+        '<div class="auth-panel-section auth-sync-section">' +
+          '<div class="auth-btn-row">' +
+            '<button class="auth-btn auth-btn-primary" data-auth-action="manual-sync"' + (canManualSync ? "" : " disabled") + '>' +
+              '<i class="fa-solid fa-rotate' + (syncInProgress ? " fa-spin" : "") + '"></i> ' +
+              esc(syncInProgress ? t("auth.syncingNow", "正在同步") : t("auth.syncNow", "立即同步")) +
+            '</button>' +
+          '</div>' +
           (!isSupabaseUser
-            ? '<div class="auth-notice">' + esc(t("auth.signInFirst", "请先登录")) + '</div>'
+            ? '<div class="auth-notice"><i class="fa-solid fa-lock"></i> ' + esc(t("auth.signInFirst", "请先登录")) + '</div>'
             : (!supabaseReady
-              ? '<div class="auth-notice">' + esc(t("auth.supabaseNotConfigured", "Supabase 未配置")) + '</div>'
+              ? '<div class="auth-notice"><i class="fa-solid fa-triangle-exclamation"></i> ' + esc(t("auth.supabaseNotConfigured", "Supabase 未配置")) + '</div>'
               : '')) +
-          (syncMessage ? '<div class="auth-notice" data-i18n-skip="true">' + esc(syncMessage) + '</div>' : '') +
+          (syncMessage ? '<div class="auth-notice sync-message-notice"><i class="fa-solid fa-circle-info"></i> ' + esc(syncMessage) + '</div>' : '') +
+          '<div class="auth-info-grid">' +
+            '<div class="auth-info-row">' +
+              '<span class="auth-label">' + esc(t("auth.pendingSync", "待同步")) + ':</span>' +
+              '<span class="auth-value">' + qSize + '</span>' +
+            '</div>' +
+            '<div class="auth-info-row">' +
+              '<span class="auth-label">' + esc(t("auth.lastSync", "上次同步")) + ':</span>' +
+              '<span class="auth-value">' + (lastSync ? esc(lastSync) : "—") + '</span>' +
+            '</div>' +
+            '<div class="auth-info-row">' +
+              '<span class="auth-label">' + esc(t("auth.deviceId", "设备 ID")) + ':</span>' +
+              '<span class="auth-value auth-device-id" title="' + esc(deviceId) + '">' + esc(deviceId ? deviceId.slice(0, 12) + "..." : "—") + '</span>' +
+            '</div>' +
+          '</div>' +
+          summaryHtml +
         '</div>' +
 
-        '<div class="auth-info-section">' +
-          '<div class="auth-label">' + esc(t("auth.magicLinkTitle", "使用 Magic Link 登录")) + '</div>' +
-          '<input class="auth-input" data-auth-input="email" type="email" autocomplete="email" placeholder="' + esc(t("auth.email", "邮箱")) + '">' +
-          '<button class="auth-btn auth-btn-primary" data-auth-action="magic-link"' + (supabaseReady ? "" : " disabled") + '>' +
-            esc(t("auth.sendMagicLink", "发送登录链接")) +
-          '</button>' +
-          '<div class="auth-label">' + esc(t("auth.passwordTest", "邮箱密码登录（测试功能）")) + '</div>' +
-          '<input class="auth-input" data-auth-input="password" type="password" autocomplete="current-password" placeholder="' + esc(t("auth.password", "密码")) + '">' +
-          '<button class="auth-btn auth-btn-secondary" data-auth-action="password-sign-in"' + (supabaseReady ? "" : " disabled") + '>' +
-            esc(t("auth.passwordSignIn", "邮箱密码登录（测试）")) +
-          '</button>' +
-          (authMessage ? '<div class="auth-notice" data-i18n-skip="true">' + esc(authMessage) + '</div>' : '') +
-        '</div>' +
-
-        // Action buttons
-        '<div class="auth-actions">' +
-          (isSupabaseUser ?
-            '<button class="auth-btn auth-btn-secondary" data-auth-action="supabase-sign-out">' +
-              '<i class="fa-solid fa-sign-out-alt"></i> ' + esc(t("auth.signOut", "登出")) +
-            '</button>' : '') +
-          '<button class="auth-btn auth-btn-secondary" data-auth-action="local">' +
-            esc(t("auth.continueLocal", "继续本地使用")) +
-          '</button>' +
-          (isMock ?
-            '<button class="auth-btn auth-btn-secondary" data-auth-action="sign-out">' +
-              '<i class="fa-solid fa-sign-out-alt"></i> ' + esc(t("auth.mockSignOut", "退出模拟登录")) +
-            '</button>' :
-            '<button class="auth-btn auth-btn-primary" data-auth-action="sign-in">' +
-              '<i class="fa-solid fa-user"></i> ' + esc(t("auth.mockSignIn", "模拟登录状态")) +
-            '</button>'
+        // C. Login Section
+        '<div class="auth-panel-section auth-login-section">' +
+          (!isSupabaseUser ?
+            '<div class="auth-login-form">' +
+              '<div class="auth-input-group">' +
+                '<input class="auth-input" data-auth-input="email" type="email" autocomplete="email" placeholder="' + esc(t("auth.email", "邮箱")) + '">' +
+              '</div>' +
+              '<div class="auth-btn-row">' +
+                '<button class="auth-btn auth-btn-primary" data-auth-action="magic-link"' + (supabaseReady ? "" : " disabled") + '>' +
+                  '<i class="fa-solid fa-envelope"></i> ' + esc(t("auth.sendMagicLink", "发送登录链接")) +
+                '</button>' +
+              '</div>' +
+              '<div class="auth-password-row">' +
+                '<span class="auth-password-test-label">' + esc(t("auth.passwordTest", "密码登录 (测试)")) + '</span>' +
+                '<div class="auth-input-with-button">' +
+                  '<input class="auth-input" data-auth-input="password" type="password" autocomplete="current-password" placeholder="' + esc(t("auth.password", "密码")) + '">' +
+                  '<button class="auth-btn auth-btn-secondary" data-auth-action="password-sign-in"' + (supabaseReady ? "" : " disabled") + '>' +
+                    esc(t("auth.passwordSignIn", "登录")) +
+                  '</button>' +
+                '</div>' +
+              '</div>' +
+            '</div>'
+            :
+            '<div class="auth-btn-row">' +
+              '<button class="auth-btn auth-btn-danger" data-auth-action="supabase-sign-out">' +
+                '<i class="fa-solid fa-sign-out-alt"></i> ' + esc(t("auth.signOut", "登出")) +
+              '</button>' +
+            '</div>'
           ) +
-          '<button class="auth-btn auth-btn-secondary" data-auth-action="export">' +
-            '<i class="fa-solid fa-download"></i> ' + esc(t("auth.exportSnapshot", "导出本地快照")) +
-          '</button>' +
+          (authMessage ? '<div class="auth-notice auth-message-notice"><i class="fa-solid fa-circle-info"></i> ' + esc(authMessage) + '</div>' : '') +
+          '<div class="auth-actions-row">' +
+            (isMock ?
+              '<button class="auth-btn auth-btn-secondary auth-btn-sm" data-auth-action="sign-out">' +
+                '<i class="fa-solid fa-sign-out-alt"></i> ' + esc(t("auth.mockSignOut", "退出模拟")) +
+              '</button>' :
+              '<button class="auth-btn auth-btn-secondary auth-btn-sm" data-auth-action="sign-in">' +
+                '<i class="fa-solid fa-user-secret"></i> ' + esc(t("auth.mockSignIn", "模拟登录")) +
+              '</button>'
+            ) +
+            '<button class="auth-btn auth-btn-secondary auth-btn-sm" data-auth-action="export" title="' + esc(t("auth.exportSnapshot", "导出快照")) + '">' +
+              '<i class="fa-solid fa-download"></i>' +
+            '</button>' +
+            '<button class="auth-btn auth-btn-secondary auth-btn-sm" data-auth-action="local">' +
+              esc(t("auth.continueLocal", "本地模式")) +
+            '</button>' +
+          '</div>' +
+        '</div>' +
+
+        // D. Privacy Section
+        '<div class="auth-panel-section auth-privacy-section">' +
+          '<div class="auth-privacy-title">' +
+            '<i class="fa-solid fa-shield-halved"></i> ' + esc(t("auth.syncIntro", "多设备同步进度及设置")) +
+          '</div>' +
+          '<ul class="auth-privacy-list">' +
+            '<li><i class="fa-solid fa-check"></i> ' + esc(t("auth.syncScope", "只同步学习进度和设置")) + '</li>' +
+            '<li><i class="fa-solid fa-key"></i> ' + esc(t("auth.noAiKeyUpload", "不会上传 AI Key")) + '</li>' +
+            '<li><i class="fa-solid fa-ban"></i> ' + esc(t("auth.noAutoSync", "当前不会自动同步")) + '</li>' +
+          '</ul>' +
         '</div>' +
       '</div>';
 
@@ -569,6 +611,15 @@
     }
     renderUserMenu();
     initSupabaseAuth();
+
+    // Listen for language change events to support instant (秒切) translation updates
+    document.addEventListener("i18n:languageChanged", function () {
+      renderUserMenu();
+      if (panelVisible) {
+        var panel = el("auth-panel");
+        if (panel) populateAuthPanel(panel, "language-change");
+      }
+    });
   }
 
   /* ── Utility esc ─────────────────────────────────── */

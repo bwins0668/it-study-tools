@@ -542,6 +542,7 @@
 
   function mergeRemoteProgress(rows) {
     var merged = 0;
+    var warnings = [];
     (rows || []).forEach(function (row) {
       if (!row || !COURSE_KEYS[row.subject] || row.deleted_at) return;
       var lessonId = toInteger(row.lesson_id);
@@ -550,24 +551,29 @@
       if (row.is_completed) {
         var completed = safeReadLS(COURSE_KEYS[row.subject]) || [];
         safeSet(COURSE_KEYS[row.subject], unionValues(completed, [lessonId]));
+        merged += 1;
       }
+      // Remote is_completed=false: do NOT remove local completion
+      // union merge only adds, never removes
 
       var indices = Array.isArray(row.quiz_completed_indices) ? row.quiz_completed_indices : [];
       if (indices.length) {
         var quizKey = row.subject + "_quiz_completed_" + lessonId;
-        safeSet(quizKey, unionValues(safeReadLS(quizKey) || [], indices));
+        var localIndices = safeReadLS(quizKey) || [];
+        safeSet(quizKey, unionValues(localIndices, indices));
+        merged += 1;
       }
 
       if (row.subject === "java" || row.subject === "python") {
         var detailKey = row.subject + "_progress_" + lessonId;
         var detail = safeReadLS(detailKey) || {};
+        // Only OR remote state — never clear local
         detail.quizDone = detail.quizDone === true || row.quiz_done === true;
         detail.codeRun = detail.codeRun === true || row.code_run === true;
         safeSet(detailKey, detail);
       }
-      merged += 1;
     });
-    return merged;
+    return { merged: merged, warnings: warnings };
   }
 
   async function pullLearningProgress(context) {
@@ -584,28 +590,27 @@
         .is("deleted_at", null);
       if (result && result.error) return syncError("progress_pull_failed", result.error.message, result.error);
       var data = result && result.data ? result.data : [];
-      return syncSuccess({ count: data.length, merged: mergeRemoteProgress(data) });
+      var mergeResult = mergeRemoteProgress(data);
+      return syncSuccess({ count: data.length, merged: mergeResult.merged, warnings: mergeResult.warnings });
     } catch (error) {
       var friendly = friendlyRemoteError(error, "progress_pull_failed");
       return syncError(friendly.code, friendly.message);
     }
   }
 
-  async function pushQuizResults(context) {
-    var ctx = context;
-    if (!ctx || !ctx.client) {
-      var checked = await getRemoteContext();
-      if (!checked.ok) return checked;
-      ctx = checked.data;
-    }
+  /**
+   * Build quiz rows from local progress for remote upsert.
+   * Uses push-and-continue rather than push-or-fail.
+   */
+  function collectQuizRows(userId) {
     var timestamp = nowISO();
-    var quizRows = [];
-    collectProgressRows(ctx.user.id).forEach(function (row) {
+    var rows = [];
+    collectProgressRows(userId).forEach(function (row) {
       (row.quiz_completed_indices || []).forEach(function (quizIndex) {
         var parsedIndex = toInteger(quizIndex);
         if (parsedIndex === null) return;
-        quizRows.push({
-          user_id: ctx.user.id,
+        rows.push({
+          user_id: userId,
           subject: row.subject,
           lesson_id: row.lesson_id,
           quiz_index: parsedIndex,
@@ -618,6 +623,17 @@
         });
       });
     });
+    return rows;
+  }
+
+  async function pushQuizResults(context) {
+    var ctx = context;
+    if (!ctx || !ctx.client) {
+      var checked = await getRemoteContext();
+      if (!checked.ok) return checked;
+      ctx = checked.data;
+    }
+    var quizRows = collectQuizRows(ctx.user.id);
     if (!quizRows.length) return syncSuccess({ count: 0 });
     try {
       var result = await ctx.client.from("quiz_results").upsert(quizRows, {
@@ -633,22 +649,39 @@
 
   function getSyncSummary() {
     var status = getSyncStatus();
+    var lastResult = safeGet(KEYS.LAST_SYNC_RESULT, null);
+    var summary = lastResult && lastResult.ok ? lastResult.data : null;
     return {
       status: runtimeStatus,
       running: manualSyncRunning,
       last_sync_at: status.last_sync_at,
       pending_count: status.queue_pending,
       failed_count: status.queue_failed,
-      last_result: safeGet(KEYS.LAST_SYNC_RESULT, null),
+      last_result: lastResult,
+      summary: summary ? {
+        started_at: summary.started_at,
+        finished_at: summary.finished_at,
+        duration_ms: summary.duration_ms,
+        device_registered: summary.device_registered || false,
+        settings_pushed: summary.settings_pushed || false,
+        settings_pulled: summary.settings_pulled || false,
+        progress_pushed: summary.progress_pushed || 0,
+        progress_pulled: summary.progress_pulled || 0,
+        quiz_pushed: summary.quiz_pushed || 0,
+        conflicts_detected: summary.conflicts_detected || 0,
+        conflicts_resolved: summary.conflicts_resolved || 0,
+        warnings: summary.warnings || [],
+      } : null,
       scope: ["user_settings", "learning_progress", "quiz_results"],
       automatic_sync: false,
     };
   }
 
   async function runManualSync() {
-    if (manualSyncRunning) return syncError("sync_in_progress", "A manual sync is already running.");
+    if (manualSyncRunning) return syncError("already_syncing", "A manual sync is already running. Please wait.");
     manualSyncRunning = true;
     runtimeStatus = "syncing";
+    var startedAt = nowISO();
     try {
       var checked = await getRemoteContext();
       if (!checked.ok) {
@@ -658,7 +691,11 @@
       }
 
       var context = checked.data;
-      var steps = [
+      var warnings = [];
+      var conflictsDetected = 0;
+      var conflictsResolved = 0;
+      var results = {};
+      var stepKeys = [
         ["device", registerDeviceRemote],
         ["settings_pull", pullUserSettings],
         ["progress_pull", pullLearningProgress],
@@ -666,32 +703,65 @@
         ["progress_push", pushLearningProgress],
         ["quiz_push", pushQuizResults],
       ];
-      var results = {};
-      for (var index = 0; index < steps.length; index += 1) {
-        var stepResult = await steps[index][1](context);
-        results[steps[index][0]] = stepResult;
+
+      var lastError = null;
+      for (var index = 0; index < stepKeys.length; index += 1) {
+        var stepName = stepKeys[index][0];
+        var stepFn = stepKeys[index][1];
+        var stepResult = await stepFn(context);
+        results[stepName] = stepResult;
         if (!stepResult.ok) {
-          runtimeStatus = "error";
-          var stopped = syncError(stepResult.error.code, stepResult.error.message, {
-            step: steps[index][0],
-            results: results,
-          });
-          safeSet(KEYS.LAST_SYNC_RESULT, stopped);
-          return stopped;
+          lastError = stepResult.error;
+          warnings.push(stepName + ": " + (stepResult.error.message || "failed"));
+          // Continue remaining steps despite failure — don't abort mid-sync
         }
       }
 
-      var completedAt = nowISO();
-      setLastSyncAt(completedAt);
+      var finishedAt = nowISO();
+      var durationMs = new Date(finishedAt).getTime() - new Date(startedAt).getTime();
+
+      // Count conflicts in progress merge
+      if (results.progress_pull && results.progress_pull.ok && results.progress_pull.data) {
+        conflictsDetected = results.progress_pull.data.count || 0;
+        conflictsResolved = results.progress_pull.data.merged || 0;
+      }
+
+      var summaryData = {
+        started_at: startedAt,
+        finished_at: finishedAt,
+        duration_ms: durationMs,
+        device_registered: results.device && results.device.ok,
+        settings_pushed: results.settings_push && results.settings_push.ok,
+        settings_pulled: results.settings_pull && results.settings_pull.ok,
+        progress_pushed: results.progress_push && results.progress_push.ok ? (results.progress_push.data && results.progress_push.data.count) || 0 : 0,
+        progress_pulled: results.progress_pull && results.progress_pull.ok ? (results.progress_pull.data && results.progress_pull.data.count) || 0 : 0,
+        quiz_pushed: results.quiz_push && results.quiz_push.ok ? (results.quiz_push.data && results.quiz_push.data.count) || 0 : 0,
+        conflicts_detected: conflictsDetected,
+        conflicts_resolved: conflictsResolved,
+        warnings: warnings,
+      };
+
+      if (lastError) {
+        runtimeStatus = "error";
+        var partial = syncError("sync_partial_failure", "Sync completed with errors.", {
+          step: null,
+          results: results,
+          summary: summaryData,
+        });
+        safeSet(KEYS.LAST_SYNC_RESULT, partial);
+        return partial;
+      }
+
+      setLastSyncAt(finishedAt);
       setSyncEnabled(true);
       runtimeStatus = "success";
-      var success = syncSuccess({ completed_at: completedAt, results: results });
+      var success = syncSuccess(summaryData);
       safeSet(KEYS.LAST_SYNC_RESULT, success);
       return success;
     } catch (error) {
       runtimeStatus = "error";
       var friendly = friendlyRemoteError(error, "manual_sync_failed");
-      var failed = syncError(friendly.code, friendly.message);
+      var failed = syncError(friendly.code, friendly.message, { started_at: startedAt });
       safeSet(KEYS.LAST_SYNC_RESULT, failed);
       return failed;
     } finally {

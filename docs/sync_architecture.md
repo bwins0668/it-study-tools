@@ -66,6 +66,60 @@ Round 17.6 adds an optional, user-triggered P0 synchronization path.
 
 The synchronization payload explicitly excludes AI API keys, AI provider/model settings, Ollama URLs, AI translation caches, chat messages, user translations, bookmarks, and service-worker data.
 
+### Round 17.9 Sync Conflict Handling & UX Patch
+
+Round 17.9 improves the manual sync reliability and user feedback without changing the sync strategy.
+
+**Conflict handling rules:**
+
+- **Course completion** (is_completed): union merge — local and remote completions are merged. Remote `is_completed: false` does NOT remove local completion.
+- **Quiz indices** (quiz_completed_indices): union merge — both local and remote completed question indices are combined. Empty remote array does NOT clear local non-empty array.
+- **Per-lesson detail** (quizDone, codeRun): OR merge — only adds flags, never clears them.
+- **User settings** (language, theme): LWW (last-write-wins) by `updated_at` timestamp. Invalid/empty remote values do NOT overwrite valid local values.
+- **Quiz results**: push-only with upsert conflict key `(user_id, subject, lesson_id, quiz_index, device_id)`.
+
+**Manual sync UX improvements:**
+
+- **Double-click protection**: calling `runManualSync()` while a sync is in progress returns `{error: {code: "already_syncing"}}` immediately.
+- **Sync summary**: after completion, the account panel shows structured summary: progress pushed/pulled count, quiz results count, conflicts resolved, duration in seconds.
+- **Partial failure**: if one step fails (e.g. quiz_push), remaining steps still complete. Warnings are collected and shown.
+- **Timing**: `started_at`, `finished_at`, `duration_ms` are recorded.
+- **last_sync_at**: updated on successful full sync only; partial failures do NOT update it.
+- **No data loss**: sync never removes local progress. Pull is `IS NULL` filtered for `deleted_at`.
+
+**i18n additions (Round 17.9):**
+
+- `alreadySyncing` — "Syncing, please wait"
+- `syncFailedDetail` — "Some sync steps failed, please retry"
+- `progressPushed`, `progressPulled`, `quizPushed` — sync step counts
+- `conflictsResolved` — "Merged remote progress"
+- `mergedRemote`, `localKept` — merge feedback
+- `noDataToSync` — "No data to sync"
+- `syncSummaryTitle` — "Sync summary"
+- `noAiDataUpload` — "AI data is never uploaded"
+
+### Round 17.10: Localized Auth UI & Layout Slimming
+
+Round 17.10 optimizes the Auth UI and sync panel layout for all 7 supported languages.
+
+- **Full Internationalization**: All user-visible strings are mapped to keys in `i18n-ui-dict.js` across 7 locales (`zh-CN`, `ja-JP`, `en-US`, `vi-VN`, `fr-FR`, `my-MM`, `ko-KR`).
+- **Instant Language Switching**: Listens to the `i18n:languageChanged` event. When the user changes the app's language, the auth panel header, buttons, badges, and sync summary immediately repaint in the new language without requiring page refresh or re-login.
+- **Layout Slimming**: Reorganizes the panel into 4 concise zones:
+  - **A. Status**: Current user email, Supabase SDK state, sync mode (local/synced).
+  - **B. Syncing**: Manual sync button, pending queue size, last synced timestamp, truncated Device ID, and a collapsible `<details>` panel for the recent sync summary.
+  - **C. Login**: Single email field sharing Magic Link and Test Password Login, Sign Out button (active only when logged in), and secondary actions (mock sign-in, snapshot export, continue local).
+  - **D. Privacy**: A clear bulleted list highlighting security guarantees (no automatic sync, only syncs progress and settings, never uploads AI keys).
+- **Responsive & Dark Mode**: Responsive adjustments for mobile view (hiding labels in header user button, limiting width, scrollable panel height), and high-contrast styling compatible with dark mode.
+
+All 7 languages (zh-CN, ja-JP, en-US, vi-VN, fr-FR, my-MM, ko-KR) are covered.
+
+**Not implemented yet (Round 17.9):**
+- Automatic/background sync (by design — manual only)
+- `user_translations` sync (not wired)
+- `bookmarks` sync (not wired)
+- Conflict resolution UI (merge conflicts shown in summary only)
+- Two-device sync testing
+
 1. **Anonymous local mode** (default, no change from today)  
    - All data in `localStorage`  
    - No account, no sync, fully offline
