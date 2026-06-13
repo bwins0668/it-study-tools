@@ -5955,3 +5955,77 @@ No changes to web-exclusive files this round (sync-engine.js, auth-ui.js, i18n-u
 #### Next
 
 - **Round 18.0**: Login/sync stable release — full smoke, final documentation, and version bump.
+
+---
+
+### Round 18.0 - 登录同步稳定版发布
+
+**Status: PASS**
+
+#### Scope
+- Performed full safety audit and smoke tests on Supabase Auth, manual syncing, device registration, and i18n instant switching.
+- Bumped Web version strings and generated new asset manifests.
+- Packaged Portable offline client (zip) and computed SHA256 signature.
+- Created Git tag `v2026.6.13-r18.0` and drafted the official GitHub Release with release notes.
+
+#### Modified files
+
+##### Windows
+- `docs/sync_architecture.md` (Updated release history table)
+- `PROJECT_HANDOFF.md` (This log entry)
+
+##### Web
+- `assets/js/version.js` (assetVersion: `v2026.6.13-r18.0`)
+- `service-worker.js` (CACHE_NAME: `study-tools-web-v2026-6-13-r18-0`)
+- `assets/asset-manifest.json` (Regenerated)
+- `data/i18n_content/manifest.json` (Regenerated)
+- `docs/sync_architecture.md` (Synched from Windows)
+
+#### Verification checks
+
+| Check | Result |
+|-------|--------|
+| Glossary count | 1500 ✓ (SHA256 match) |
+| main JS syntax (6 files) | All OK ✓ |
+| web JS syntax (5 files) | All OK ✓ |
+| `.gitignore` local config (main) | `.gitignore:15` ✓ |
+| `.gitignore` local config (web) | `.gitignore:39` ✓ |
+| Auto sync | OFF (manual only) ✓ |
+| AI sensitive data uploaded | NO ✓ |
+| `service_role` key used | NO ✓ |
+| Real keys in Git | NO ✓ |
+| `git add .` / `git add -A` | NO ✓ |
+
+#### Portable Client ZIP Verification
+
+| Check | Result |
+|-------|--------|
+| Filename | `Study-Tools-Portable-v2026.6.13-r18.0.zip` |
+| SHA256 | `A58D94A5F9AE9A4DA1847FAA8702609A5A223A690E30F806EAA14002C8FE30A0` |
+| Contains `.git/` | OK (not found) |
+| Contains `node_modules/` | OK (not found) |
+| Contains `backups/` | OK (not found) |
+| Contains `output/` | OK (not found) |
+| Contains `scratch/` | OK (not found) |
+| Contains `data/study_ai.db` | OK (not found) |
+| Contains `assets/js/supabase-config.local.js` | OK (not found) |
+
+#### Commits & Tag
+
+- **main**: `45f6771` docs: record login sync stable release
+- **web**: `8b16ea0` chore: release login sync stable web cache update
+- **PROJECT_HANDOFF.md**: *(this commit)* docs: record Round 18.0 handoff
+- **GitHub Tag / Release**: [v2026.6.13-r18.0](https://github.com/bwins0668/it-study-tools/releases/tag/v2026.6.13-r18.0)
+
+#### Explicitly not done
+
+- Did not implement automatic/background sync (by design).
+- Did not synchronize user_translations (not yet wired).
+- Did not synchronize bookmarks (not yet wired).
+- Did not synchronize AI caches, AI keys, provider/model settings, or Ollama URLs.
+- Did not test two-device sync.
+- Did not modify courses, glossary data, backend, sandbox, service-worker, manifest, or version.
+
+#### Next
+
+- **Round 18.1**: Post-release patch / bugfix, or **Round 19.0**: User translations & bookmarks sync audit.
