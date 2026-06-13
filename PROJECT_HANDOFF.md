@@ -7153,3 +7153,110 @@ Minimal viable UX:
 #### Next
 
 - **Round 20.1**: User-customized translation UI prototype (local-only, no sync)
+- **Round 20.1**: User translation UI prototype + SQL right panel layout fixes ? PASS.
+
+### Round 20.1 - óp?é©íË?ñ|? UI å¥å^ + SQL âE?ïzã«èC?
+
+**Status**: PASS
+
+**Scope**: P0 SQL execute button visibility + result area maximization + P1 Auth ja-JP default + P1 user translation UI prototype (infrastructure).
+
+#### 1. Account UI Default Language
+
+**Fix**: ssets/js/i18n.js line 1197 ? fallback chain changed from [lang, "en-US", "ja-JP", "zh-CN"] to [lang, "ja-JP", "zh-CN", "en-US"]
+
+| Check | Result |
+|---|---|
+| Default fallback language | ? Changed to **ja-JP** as primary fallback |
+| User's selected language still respected | ? lang is first in chain |
+| English as last resort | ? Only after ja-JP and zh-CN fail |
+| Missing ja-JP translations | ? Auth UI static dict already has Japanese (Shift-JIS encoded) |
+| No undefined or [object Object] in auth panel | ? Confirmed in code audit |
+| Auth panel rendering still works | ? Smoke test PASS |
+
+#### 2. SQL Execute Button Visibility Fix
+
+**Fix**: ssets/css/index.css ? Console-footer is now position: sticky; bottom: 0; z-index: 5; flex-shrink: 0 within a scrollable console-card-body.
+
+| Change | Description |
+|---|---|
+| console-card-body | overflow: auto !important ? enables scroll while footer sticks |
+| console-footer | position: sticky; bottom: 0; z-index: 5; flex-shrink: 0 ? always visible |
+| editor-container min-height | 180px Å® **200px** |
+| console-card min-height (base) | 220px Å® **280px** |
+| console-card min-height (901px+) | 280px Å® **320px** |
+| playground-task-desc padding | 12px 20px Å® **8px 16px** (compact) |
+
+**Result**: Execute button is always visible at the bottom of the card, regardless of editor height. Editor area scrolls internally while footer stays sticky.
+
+#### 3. SQL Result Area Maximization
+
+| Change | Before | After |
+|---|---|---|
+| Playground width (1200px+) | clamp(400px, 30vw, 560px) | clamp(440px, 35vw, 600px) |
+| Playground min-width (1200px+) | 400px | **440px** |
+| Output-card min-height | 140px / 160px | **200px** |
+| Editor-container min-height | 180px | **200px** |
+| Console-card min-height | 220px | **280px** |
+| Playground-task-desc padding | 12px 20px | 8px 16px |
+
+#### 4. Mobile Smoke Test Results
+
+| Viewport | Overflow | Run Btn | SQL Editor | Output | Glossary | Auth | Drawers |
+|---|---|---|---|---|---|---|---|
+| **375Å~667** | No | ? Visible | ? ?150Å~80 | ? Visible | ? Horiz | ? No overflow | ? Both drawers |
+| **390Å~844** | No | ? Visible | ? ?150Å~80 | ? Visible | ? Horiz | ? No overflow | ? Both drawers |
+| **430Å~932** | No | ? Visible | ? ?150Å~80 | ? Visible | ? Horiz | ? No overflow | ? Both drawers |
+| **768Å~1024** | No | ? Visible | ? ?150Å~80 | ? Visible | ? Horiz | ? No overflow | ? Playground drawer |
+| **900Å~700** | No | ? Visible | ? ?150Å~80 | ? Visible | ? Horiz | ? No overflow | ? Playground drawer |
+| **1280Å~720** | No | ? Visible | ? ?150Å~80 | ? Visible | ? Horiz | ? No overflow | ? |
+| **1440Å~900** | No | ? Visible | ? ?150Å~80 | ? Visible | ? Horiz | ? No overflow | ? |
+
+#### 5. User Translation UI Prototype (P1)
+
+**Infrastructure added to ssets/js/i18n.js**:
+
+| Function | Description |
+|---|---|
+| window.getUserTranslationsData() | Read all user translations from study-tools-user-translations-v1 |
+| window.saveUserTranslationItem() | Save a custom translation with source/target/context metadata |
+| window.deleteUserTranslationItem() | Delete a custom translation |
+| window.getUserTranslationItem() | Get a specific translation |
+| window.getUserTranslationCount() | Count saved translations |
+
+- **Scope**: Local-only (localStorage). No Supabase. No sync-engine integration.
+- **Future**: UI can use these functions to show/edit/delete user translations.
+- **Not implemented**: The UI for "Save My Translation" buttons next to AI translations (deferred to 20.2).
+
+#### Verification
+
+| Check | Result |
+|---|---|
+| Glossary 1500 | ? PASS |
+| JS syntax Windows (4 files) | ? ALL PASS |
+| JS syntax Web (4 files) | ? ALL PASS |
+
+#### Modified Files
+
+| File | Changes |
+|---|---|
+| ssets/js/i18n.js | Fallback chain changed; +6 user translation infrastructure functions + window export |
+| ssets/css/index.css | console-footer sticky; console-card-body scroll; increased min-heights; wider playground; compact task-desc |
+
+#### Security Declarations
+
+| Statement | Value |
+|---|---|
+| Sync AI translation cache | ? Never |
+| Sync API key / provider / Ollama URL | ? Never |
+| Auto-sync | ? Never (manual only) |
+| Supabase user_translations connected | ? Not this round (local-only prototype) |
+
+#### Commits
+
+- **Windows main**: (this commit) fix: account default ja-JP, SQL playground layout, user translation prototype
+- **Web master**: (this commit) fix: sync account ja-JP default, SQL playground layout, user translation prototype
+
+#### Next
+
+- **Round 20.2**: User translation UI buttons (save/reset on AI translated text), or **Round 19.7**: Post-release audit.

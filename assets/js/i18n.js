@@ -1194,7 +1194,7 @@
   function translateStatic(key, params) {
     if (!key) return "";
     const lang = normalizeLanguageCode(currentLang);
-    const fallbackChain = [lang, "en-US", "ja-JP", "zh-CN"];
+    const fallbackChain = [lang, "ja-JP", "zh-CN", "en-US"];
     let translated = null;
 
     function getNestedValue(obj, path) {
@@ -1429,6 +1429,46 @@
       return renderTargetText(source, translated);
     },
   };
+ 
+   /* User translation local storage (Round 20.1 prototype) */
+   var USER_TRANSLATIONS_KEY = "study-tools-user-translations-v1";
+ 
+   function getUserTranslationsData() {
+     try {
+       return JSON.parse(localStorage.getItem(USER_TRANSLATIONS_KEY) || "{}");
+     } catch (_) { return {}; }
+   }
+ 
+   function saveUserTranslationItem(sourceText, sourceLang, targetLang, translatedText, context) {
+     var all = getUserTranslationsData();
+     var key = String(sourceText) + "|" + String(sourceLang) + "|" + String(targetLang) + "|" + String(context || "");
+     all[key] = { translatedText: String(translatedText), updatedAt: new Date().toISOString() };
+     try { localStorage.setItem(USER_TRANSLATIONS_KEY, JSON.stringify(all)); } catch (_) {}
+   }
+ 
+   function deleteUserTranslationItem(sourceText, sourceLang, targetLang, context) {
+     var all = getUserTranslationsData();
+     var key = String(sourceText) + "|" + String(sourceLang) + "|" + String(targetLang) + "|" + String(context || "");
+     if (all[key]) { delete all[key]; }
+     try { localStorage.setItem(USER_TRANSLATIONS_KEY, JSON.stringify(all)); } catch (_) {}
+   }
+ 
+   function getUserTranslationItem(sourceText, sourceLang, targetLang, context) {
+     var all = getUserTranslationsData();
+     var key = String(sourceText) + "|" + String(sourceLang) + "|" + String(targetLang) + "|" + String(context || "");
+     return all[key] || null;
+   }
+ 
+   function getUserTranslationCount() {
+     var all = getUserTranslationsData();
+     return Object.keys(all).length;
+   }
+ 
+   window.getUserTranslationsData = getUserTranslationsData;
+   window.saveUserTranslationItem = saveUserTranslationItem;
+   window.deleteUserTranslationItem = deleteUserTranslationItem;
+   window.getUserTranslationItem = getUserTranslationItem;
+   window.getUserTranslationCount = getUserTranslationCount;
 
   // Global helper functions
   window.showToastKey = function (key, type = "info", params = null) {
