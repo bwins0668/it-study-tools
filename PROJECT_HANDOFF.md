@@ -6837,3 +6837,68 @@ ode_modules/, ackups/, supabase-config.local.js, .env, etc. |
 #### Next
 
 - **Round 19.6**: Bookmarks sync stable release, or **Round 20.0**: User-customized translation UI audit.
+- **Round 19.6**: Bookmarks sync stable release ? PASS.
+
+### Round 19.6 - Bookmarks “¯??’è”Å?•z (2026-06-13)
+
+**Status**: PASS
+
+**Release**: v2026.6.13-r19.6
+
+**Scope**: Bookmarks sync stable release. Pre-release verification, Web cache version update, Portable packaging, GitHub Release. Bundles r19.4 UI polish + r19.5 bookmark tombstone sync.
+
+#### Web Version
+
+- ssetVersion: v2026.6.13-r19.6
+- CACHE_NAME: study-tools-web-v2026-6-13-r19-6
+
+#### Release Artifact
+
+- **File**: Study-Tools-Portable-v2026.6.13-r19.6.zip
+- **Size**: 288.49 MB (1802 files)
+- **SHA256**: F964DD27783A5C2DA5B54ABB2E949813E699944E70D5F9D3A455070C4DDA7624
+- **Security**: No prohibited files
+- **GitHub Release**: (created below)
+
+#### Pre-Release Verification
+
+| Check | Result |
+|---|---|
+| Glossary 1500 (dual-end SHA match) | ? PASS |
+| JS syntax Windows (4 files) | ? ALL PASS |
+| JS syntax Web (4 files) | ? ALL PASS |
+
+#### Smoke
+
+- **Glossary**: 1500 ?
+- **Manual sync**: Only manual trigger ?
+- **Bookmark tombstone logic**: Present ?
+- **Soft delete (deleted_at)**: Present, no physical delete ?
+- **Auth UI summary**: Shows bookmark fields ?
+- **No user_translations sync**: Confirmed ?
+- **No AI cache/API key sync**: Confirmed ?
+- **No auto-sync**: Confirmed ?
+
+#### Security Declarations
+
+| Statement | Value |
+|---|---|
+| Physical delete of remote bookmarks | ? No (soft delete with deleted_at) |
+| Sync user translations | ? No |
+| Upload AI cache/API key | ? No |
+| Auto-sync | ? No (manual only) |
+| Real Supabase credentials committed | ? No |
+| Course/glossary/backend/sandbox modified | ? No |
+
+#### Commits
+
+- **Windows main (this round)**: (this commit) docs: record bookmarks sync stable release
+- **Windows main**: (previous) [848772](https://github.com/bwins0668/it-study-tools/commit/a848772) fix: support typing bookmark soft delete sync
+- **Web master (this round)**: [4ead0c3](https://github.com/bwins0668/study-tools-web/commit/4ead0c3) chore: release bookmarks sync web cache update
+- **Web master (previous)**: [d1bd78](https://github.com/bwins0668/study-tools-web/commit/fd1bd78) fix: sync typing bookmark soft delete support
+- **Git tag**: v2026.6.13-r19.6
+- **Release**: v2026.6.13-r19.6
+
+#### Next
+
+- **Round 19.7**: Post-release stability audit, or **Round 20.0**: User-customized translation UI audit.

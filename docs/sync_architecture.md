@@ -328,3 +328,4 @@ New summary counters reported in the Auth Panel:
 - Does NOT physically delete remote rows.
 - Does NOT sync AI translation cache or API keys.
 | **19.5** | Bookmark delete sync (tombstone) | Released |
+| **19.6** | Bookmarks sync stable release (v2026.6.13-r19.6) | Released |
