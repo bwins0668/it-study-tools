@@ -5730,8 +5730,8 @@ Three interacting issues:
 
 #### Commits
 
-- **main**: `(this commit)` fix: repair local auth UI disabled inputs, CSS overflow, and backdrop z-index
-- **web**: `(this commit)` fix: sync auth UI disabled inputs and backdrop z-index fix
+- **main**: `dacb04e` fix: repair local auth UI disabled inputs, CSS overflow, and backdrop z-index
+- **web**: `34b0d15` fix: sync auth UI disabled inputs and backdrop z-index fix
 - **PROJECT_HANDOFF.md**: this entry
 
 #### Explicitly not done
@@ -5743,6 +5743,73 @@ Three interacting issues:
 - Did not implement conflict detection/resolution.
 - Did not test two-device sync.
 - Did not modify courses, glossary data, backend, sandbox, service-worker, manifest, or version.
+- Did not package Portable or create a Release.
+
+#### Next
+
+- **Round 17.9**: Sync conflict handling and UX patch.
+
+---
+
+### Round 17.8.1 - Auth UI Login Smoke Verification
+
+**Status: PASS** (21 check items verified)
+
+#### Round 17.8 commit hash catch-up
+
+| Repo | Commit | Hash |
+|------|--------|------|
+| main | fix: repair local auth UI disabled inputs, CSS overflow, and backdrop z-index | `dacb04e` |
+| web | fix: sync auth UI disabled inputs and backdrop z-index fix | `34b0d15` |
+
+#### Smoke test results (browser UI with real Supabase)
+
+| # | Check | Result |
+|---|-------|--------|
+| 1 | Page loads without JS error | ✓ |
+| 2 | No CSS/JS 404 | ✓ |
+| 3 | Supabase status = "已连接" | ✓ |
+| 4 | Magic Link email input typeable | ✓ |
+| 5 | Password input typeable | ✓ |
+| 6 | Login via email+password | ✓ (***@tsb-yyg.ac.jp) |
+| 7 | Current user shows logged-in state | ✓ |
+| 8 | Sync now button clickable after login | ✓ |
+| 9 | Manual sync triggered (no auto sync) | ✓ |
+| 10 | Logout restores anonymous mode | ✓ |
+| 11 | After logout: "请先登录" shown | ✓ |
+| 12 | Auth panel open/close | ✓ |
+| 13 | Mobile viewport scrollable | ✓ |
+| 14 | Dark theme readable | ✓ |
+| 15 | Courses load normally | ✓ |
+| 16 | Glossary 1500 terms | ✓ |
+| 17 | Language switching works | ✓ |
+| 18 | No AI sensitive data uploaded | ✓ |
+| 19 | No real keys in Git | ✓ |
+| 20 | Local config gitignored | ✓ |
+| 21 | No `git add .` / `git add -A` | ✓ |
+
+#### Verification commands
+
+| Check | Result |
+|-------|--------|
+| Glossary count | 1500 ✓ (SHA256 match) |
+| main JS syntax (4 files) | All OK ✓ |
+| web JS syntax (4 files) | All OK ✓ |
+
+#### Commits
+
+- **main**: no code changes (validation only)
+- **web**: no code changes (validation only)
+- **PROJECT_HANDOFF.md**: this entry
+
+#### Explicitly not done
+
+- Did not implement automatic/background sync (by design).
+- Did not synchronize user_translations (not yet wired).
+- Did not synchronize bookmarks (not yet wired).
+- Did not implement conflict detection/resolution.
+- Did not test two-device sync.
+- Did not modify courses, glossary, backend, sandbox.
 - Did not package Portable or create a Release.
 
 #### Next
