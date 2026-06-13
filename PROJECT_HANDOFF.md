@@ -3944,5 +3944,63 @@ ode --check service-worker.js | PASS |
 
 #### Next
 
-- **Round 16.5** (recommended): Korean content package strategy audit, or Korean support quality review + Web cache update + Portable repack + GitHub Release.
+- **Round 16.5** (completed): Korean MVP support quality review + Web cache update + Portable repack + GitHub Release
+
+---
+
+### Round 16.5 - Korean MVP Support Release (Quality Review, Cache Update, Portable Repack & Release)
+
+**Status: PASS**
+
+#### Scope
+
+- Conducted a full quality review of the Korean MVP support (UI switching, 1500 glossary terms translation, Korean search UX, and high-frequency aliases), confirming all components function seamlessly.
+- Excluded Korean (`ko`) from dynamic pack loading in Web `content-i18n.js` to ensure the Korean mode runs without trying to request non-existent content packs (such as `python_ko.js`).
+- Restored and validated Web-only PWA and dynamic content pack loader (`loadPack`) logic in Web `i18n.js` and `content-i18n.js` to enable dynamic lazy-loading on Web while keeping Windows statically bundled in `index.html`.
+- Updated Web cache version: `assetVersion` in `assets/js/version.js` is set to `v2026.6.13-r16.5` and `CACHE_NAME` in `service-worker.js` is set to `study-tools-web-v2026-6-13-r16-5`.
+- Regenerated Web manifests (`assets/asset-manifest.json` and `data/i18n_content/manifest.json`) successfully via `python scripts/generate_asset_manifest.py`.
+- Packaged and verified the Windows Portable client zip `backups/Study-Tools-Portable-v2026.6.13-r16.5.zip`, confirming that it excludes all unnecessary files (`.git/`, `node_modules/`, `backups/`, `output/`, and `data/study_ai.db`).
+- Created Git tag `v2026.6.13-r16.5` and published the GitHub Release with the portable client zip.
+
+#### Verification & Smoke Test Results
+
+| Check | Result | Detail |
+| :--- | :--- | :--- |
+| `node tools/verify_glossary.js` | **PASS** | 0 errors, 0 warnings (Both Windows/Web) |
+| Term count | 1500 | Unchanged |
+| Windows/Web `it_terms.js` SHA256 | `0ca85e48506cce9f2f40a9bafdc72b2098d24fe8b726ea5b38f64d2fab4f12e7` | **PASS** |
+| Windows/Web `glossary.js` SHA256 | `11eeb9c0c915a4c7c07671e8cd5ccec6ae2744c2dec2a1bb43fb49f58df698c2` | **PASS** |
+| `assets/js/i18n-ui-dict.js` SHA256 | `D1DD7451B18A91893D654180CC29F05586EA87A156E8B4EA862064442949C7D6` | **PASS** |
+| Web `assetVersion` | `v2026.6.13-r16.5` | Updated |
+| Web `CACHE_NAME` | `study-tools-web-v2026-6-13-r16-5` | Updated |
+| Playwright Smoke Test | **PASS** | 39/39 passed, 0 failed, 0 P0 console errors, 0 network 404s (tested locally) |
+| Portable ZIP Name | `Study-Tools-Portable-v2026.6.13-r16.5.zip` | Verified |
+| Portable ZIP SHA256 | `4D5ED4A0B60F8FDA0B1562C901E5D75C251FF6731FBF84DA56D042BBC4209DC5` | Verified |
+| Portable ZIP Contents | **PASS** | Excluded `.git/`, `node_modules/`, `backups/`, `output/`, `data/study_ai.db` |
+
+#### Dual-End Differences and Rationale
+
+- **`assets/js/i18n.js`**: Web public version contains `isWebPublicRuntime()` check to skip calling the `/api/i18n/translate` AI translation endpoint (which is not available on Cloudflare Pages static hosting) and triggers dynamic content pack loading (`loadPack`) on language switches. Windows desktop version uses the local Python backend API and does not need lazy loading since it statically loads all packs.
+- **`assets/js/content-i18n.js`**: Web public version implements the asynchronous `loadPack` and `isPackLoaded` functions to inject content scripts (e.g. `data/i18n_content/sql_en.js?v=v2026.6.13-r16.5`) on-demand, whereas the Windows version statically includes all 20 packages in `index.html` to run in local offline mode.
+
+#### Git & Release Links
+
+| Target | Identifier / Hash | Detail / Link |
+| :--- | :--- | :--- |
+| Windows Handoff Commit | `(current commit)` | Docs update for Round 16.5 |
+| Windows Code Commit | `none` | No code changes on Windows repo this round |
+| Web Commit | `403af70` | Web cache release update |
+| GitHub Tag | `v2026.6.13-r16.5` | Created on both repositories |
+| GitHub Release | [Study Tools Portable v2026.6.13-r16.5](https://github.com/bwins0668/it-study-tools/releases/tag/v2026.6.13-r16.5) | Portable ZIP attached |
+
+#### Explicitly not done
+
+- Did not add or delete any terms (total count remains exactly 1500).
+- Did not add Korean content language packs (`data/i18n_content/*_ko.js`).
+- Did not modify dynamic translated course content.
+- Did not modify course data, Python/Java sandbox, or backend `server.py` / `study_ai.py`.
+
+#### Next
+
+- **Round 16.6** (recommended): Korean content package strategy audit, or **Round 17.0** (recommended): Glossary 1500 -> 1800 expansion.
 
