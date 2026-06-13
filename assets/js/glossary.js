@@ -23,6 +23,7 @@
     if (code === "default-ja-zh" || code === "zh" || code === "zh-cn") return "zh";
     if (code === "ja" || code === "ja-jp") return "ja";
     if (code === "en" || code === "en-us") return "en";
+    if (code === "ko" || code === "ko-kr") return "ko";
     if (code === "my" || code === "my-mm") return "my";
     if (code === "vi" || code === "vi-vn") return "vi";
     if (code === "fr" || code === "fr-fr") return "fr";
@@ -143,7 +144,7 @@
     push(term.id);
 
     // ── 多语言 term ──
-    var langs = ["ja", "zh", "en"];
+    var langs = ["ja", "zh", "en", "ko"];
     for (var i = 0; i < langs.length; i++) {
       var langBlock = term[langs[i]];
       if (langBlock && langBlock.term) push(langBlock.term);

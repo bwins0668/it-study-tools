@@ -9,6 +9,7 @@
     if (c === "default-ja-zh" || c === "zh" || c === "zh-cn") return "zh";
     if (c === "ja" || c === "ja-jp") return "ja";
     if (c === "en" || c === "en-us") return "en";
+    if (c === "ko" || c === "ko-kr") return "ko";
     if (c === "my" || c === "my-mm") return "my";
     if (c === "vi" || c === "vi-vn") return "vi";
     if (c === "fr" || c === "fr-fr") return "fr";

@@ -195,6 +195,7 @@ function validateTerms(terms, label) {
       { key: "ja", reqTerm: true, reqExpl: false },
       { key: "zh", reqTerm: true, reqExpl: true },
       { key: "en", reqTerm: true, reqExpl: true },
+      { key: "ko", reqTerm: true, reqExpl: true },
     ];
 
     for (var li = 0; li < langInfo.length; li++) {
@@ -229,7 +230,7 @@ function validateTerms(terms, label) {
     }
 
     // my / vi / fr (optional, but if present must be valid)
-    var optionalLangs = ["my", "vi", "fr", "ko"];
+    var optionalLangs = ["my", "vi", "fr"];
     for (var oi = 0; oi < optionalLangs.length; oi++) {
       var ok = optionalLangs[oi];
       var ov = term[ok];

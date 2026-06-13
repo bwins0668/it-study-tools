@@ -41,7 +41,8 @@
       aliases: ["DB", "DBMS"],
       related: ["sql", "table"],
       example: { sql: "CREATE DATABASE school;" },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "sql",
@@ -64,7 +65,8 @@
       aliases: ["Structured Query Language"],
       related: ["database", "table"],
       example: { sql: "SELECT * FROM students;" },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "table",
@@ -87,7 +89,8 @@
       aliases: ["テーブル"],
       related: ["database", "row", "column"],
       example: { sql: "CREATE TABLE students (id INT, name TEXT);" },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "row",
@@ -110,7 +113,8 @@
       aliases: ["レコード", "record"],
       related: ["table", "column"],
       example: { sql: "INSERT INTO students VALUES (1, 'Taro');\n-- 1行（レコード）を追加" },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "column",
@@ -133,7 +137,8 @@
       aliases: ["カラム", "field"],
       related: ["table", "row"],
       example: { sql: "ALTER TABLE students ADD COLUMN email TEXT;" },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "primary_key",
@@ -156,7 +161,8 @@
       aliases: ["PK", "主キー"],
       related: ["foreign_key", "table"],
       example: { sql: "CREATE TABLE users (id INTEGER PRIMARY KEY, name TEXT);" },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "foreign_key",
@@ -179,7 +185,8 @@
       aliases: ["FK", "外部キー"],
       related: ["primary_key", "table"],
       example: { sql: "CREATE TABLE orders (id INT, user_id INT REFERENCES users(id));" },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "index",
@@ -202,7 +209,8 @@
       aliases: ["インデックス"],
       related: ["database", "table"],
       example: { sql: "CREATE INDEX idx_name ON students (name);" },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "transaction",
@@ -225,7 +233,8 @@
       aliases: ["トランザクション"],
       related: ["database", "normalization"],
       example: { sql: "BEGIN TRANSACTION;\nUPDATE accounts SET balance = balance - 100;\nCOMMIT;" },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "normalization",
@@ -248,7 +257,8 @@
       aliases: ["正規化"],
       related: ["database", "table"],
       example: {},
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     // ======================================================================
@@ -275,7 +285,8 @@
       aliases: ["機密性"],
       related: ["integrity", "availability", "encryption"],
       example: {},
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "integrity",
@@ -298,7 +309,8 @@
       aliases: ["完全性"],
       related: ["confidentiality", "availability"],
       example: {},
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "availability",
@@ -321,7 +333,8 @@
       aliases: ["可用性"],
       related: ["confidentiality", "integrity"],
       example: {},
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "authentication",
@@ -344,7 +357,8 @@
       aliases: ["認証", "authn"],
       related: ["authorization"],
       example: { text: "ログイン時にパスワードで認証する。" },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "authorization",
@@ -367,7 +381,8 @@
       aliases: ["認可", "authz"],
       related: ["authentication"],
       example: { text: "管理者のみがデータ削除可能という認可設定。" },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "vulnerability",
@@ -390,7 +405,8 @@
       aliases: ["脆弱性"],
       related: ["risk_assessment", "malware"],
       example: {},
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "malware",
@@ -413,7 +429,8 @@
       aliases: ["マルウェア", "malicious software"],
       related: ["vulnerability", "encryption"],
       example: {},
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "encryption",
@@ -436,7 +453,8 @@
       aliases: ["暗号化"],
       related: ["confidentiality", "authentication"],
       example: {},
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "firewall",
@@ -459,7 +477,8 @@
       aliases: ["FW", "ファイアウォール"],
       related: ["ip_address"],
       example: {},
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "risk_assessment",
@@ -482,7 +501,8 @@
       aliases: ["リスク評価"],
       related: ["vulnerability"],
       example: {},
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     // ======================================================================
@@ -509,7 +529,8 @@
       aliases: ["IP", "アイピーアドレス"],
       related: ["dns", "firewall"],
       example: {},
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "dns",
@@ -532,7 +553,8 @@
       aliases: ["Domain Name System", "ドメイン名システム"],
       related: ["ip_address", "cloud_computing"],
       example: {},
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "client_server",
@@ -555,7 +577,8 @@
       aliases: ["C/S", "クライアントサーバモデル"],
       related: ["cloud_computing", "ip_address"],
       example: {},
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "cloud_computing",
@@ -578,7 +601,8 @@
       aliases: ["クラウド", "cloud"],
       related: ["client_server", "backup"],
       example: {},
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "backup",
@@ -601,7 +625,8 @@
       aliases: ["バックアップ"],
       related: ["availability", "cloud_computing"],
       example: {},
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     // ======================================================================
@@ -628,7 +653,8 @@
       aliases: ["変数"],
       related: ["function", "class"],
       example: { java: "int count = 10;", python: "count = 10" },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "function",
@@ -651,7 +677,8 @@
       aliases: ["関数", "メソッド", "method"],
       related: ["variable", "class", "exception"],
       example: { java: "public int add(int a, int b) { return a + b; }", python: "def add(a, b):\n    return a + b" },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "class",
@@ -674,7 +701,8 @@
       aliases: ["クラス"],
       related: ["object", "function", "variable"],
       example: { java: "class Student {\n  String name;\n  int age;\n}", python: "class Student:\n    def __init__(self, name):\n        self.name = name" },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "object",
@@ -697,7 +725,8 @@
       aliases: ["インスタンス", "instance"],
       related: ["class", "variable", "function"],
       example: { java: "Student s = new Student();", python: "s = Student()" },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     // ======================================================================
     // 新增：SQL / Database (id: 31-45)
@@ -719,7 +748,8 @@
       en: { term: "Query", explanation: "A request to retrieve or manipulate data from a database." },
       aliases: ["クエリ"],
       related: ["sql", "select_statement"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "select_statement",
@@ -738,7 +768,8 @@
       en: { term: "SELECT Statement", explanation: "The SQL statement used to retrieve data from a database table." },
       aliases: ["SELECT", "セレクト"],
       related: ["sql", "where_clause", "query"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "where_clause",
@@ -757,7 +788,8 @@
       en: { term: "WHERE Clause", explanation: "A clause used in SQL to filter records based on specified conditions." },
       aliases: ["WHERE"],
       related: ["select_statement", "query"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "join",
@@ -776,7 +808,8 @@
       en: { term: "JOIN", explanation: "An SQL operation that combines rows from two or more tables based on a related column." },
       aliases: ["結合", "テーブル結合"],
       related: ["inner_join", "left_join", "table", "foreign_key"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "inner_join",
@@ -795,7 +828,8 @@
       en: { term: "Inner Join", explanation: "A join that returns only rows with matching values in both tables." },
       aliases: ["INNER JOIN", "内部結合"],
       related: ["join", "left_join", "foreign_key"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "left_join",
@@ -814,7 +848,8 @@
       en: { term: "Left Join", explanation: "A join that returns all rows from the left table and matched rows from the right table." },
       aliases: ["LEFT JOIN", "左外部結合"],
       related: ["join", "inner_join", "foreign_key"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "group_by",
@@ -833,7 +868,8 @@
       en: { term: "GROUP BY Clause", explanation: "Groups rows that have the same values in specified columns, used with aggregate functions." },
       aliases: ["GROUP BY"],
       related: ["select_statement", "aggregate_function", "order_by"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "order_by",
@@ -852,7 +888,8 @@
       en: { term: "ORDER BY Clause", explanation: "Sorts query results in ascending or descending order based on specified columns." },
       aliases: ["ORDER BY"],
       related: ["select_statement", "group_by"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "aggregate_function",
@@ -871,7 +908,8 @@
       en: { term: "Aggregate Function", explanation: "A function that performs a calculation on a set of values and returns a single value." },
       aliases: ["COUNT", "SUM", "AVG", "集計関数"],
       related: ["group_by", "select_statement"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "null_value",
@@ -890,7 +928,8 @@
       en: { term: "NULL", explanation: "A special marker indicating that a value is missing or unknown in a database." },
       aliases: ["NULL", "ヌル値"],
       related: ["database", "data_type"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "constraint",
@@ -909,7 +948,8 @@
       en: { term: "Constraint", explanation: "A rule applied to table columns to enforce data integrity." },
       aliases: ["制約"],
       related: ["primary_key", "foreign_key", "unique_constraint"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "unique_constraint",
@@ -928,7 +968,8 @@
       en: { term: "Unique Constraint", explanation: "Ensures all values in a column or a group of columns are distinct." },
       aliases: ["UNIQUE", "一意制約"],
       related: ["constraint", "primary_key"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "commit",
@@ -947,7 +988,8 @@
       en: { term: "Commit", explanation: "The operation that permanently saves all changes made during a transaction." },
       aliases: ["コミット"],
       related: ["transaction", "rollback"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "rollback",
@@ -966,7 +1008,8 @@
       en: { term: "Rollback", explanation: "Reverts a transaction to the state before it began, undoing any changes." },
       aliases: ["ロールバック"],
       related: ["transaction", "commit"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "data_type",
@@ -985,7 +1028,8 @@
       en: { term: "Data Type", explanation: "Defines the kind of value a column can hold, such as integer, text, or date." },
       aliases: ["データ型", "型"],
       related: ["database", "table", "column"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     // ======================================================================
     // 新增：Programming / General (id: 46-60)
@@ -1007,7 +1051,8 @@
       en: { term: "Algorithm", explanation: "A step-by-step procedure or set of rules to solve a problem." },
       aliases: ["アルゴリズム"],
       related: ["variable", "function", "control_flow"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "constant",
@@ -1026,7 +1071,8 @@
       en: { term: "Constant", explanation: "A value that does not change during program execution." },
       aliases: ["定数"],
       related: ["variable", "function"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "parameter",
@@ -1045,7 +1091,8 @@
       en: { term: "Parameter", explanation: "A value passed to a function or method for processing." },
       aliases: ["引数", "パラメータ"],
       related: ["function", "return_value"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "return_value",
@@ -1064,7 +1111,8 @@
       en: { term: "Return Value", explanation: "The value that a function sends back to the caller after execution." },
       aliases: ["戻り値"],
       related: ["function", "parameter"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "control_flow",
@@ -1083,7 +1131,8 @@
       en: { term: "Control Flow", explanation: "The order in which individual statements and instructions are executed in a program." },
       aliases: ["制御構造", "制御フロー"],
       related: ["condition", "loop", "function"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "condition",
@@ -1102,7 +1151,8 @@
       en: { term: "Conditional", explanation: "A programming construct that executes different code based on whether a condition is true or false." },
       aliases: ["条件分岐", "if文"],
       related: ["control_flow", "loop", "data_type"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "loop",
@@ -1121,7 +1171,8 @@
       en: { term: "Loop", explanation: "A control structure that repeats a block of code until a condition is met." },
       aliases: ["ループ", "for文", "while文"],
       related: ["control_flow", "condition", "array"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "array",
@@ -1140,7 +1191,8 @@
       en: { term: "Array", explanation: "A data structure that stores a collection of elements, each identified by an index." },
       aliases: ["配列"],
       related: ["list", "variable", "loop"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "list",
@@ -1159,7 +1211,8 @@
       en: { term: "List", explanation: "An ordered, mutable collection of elements in Python." },
       aliases: ["リスト"],
       related: ["array", "python_list", "loop"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "dictionary",
@@ -1178,7 +1231,8 @@
       en: { term: "Dictionary", explanation: "A data structure that stores key-value pairs, allowing fast lookup by key." },
       aliases: ["辞書", "dict", "連想配列"],
       related: ["python_dict", "list", "object"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "encapsulation",
@@ -1197,7 +1251,8 @@
       en: { term: "Encapsulation", explanation: "Bundling data and methods together while restricting direct access to internal details." },
       aliases: ["カプセル化"],
       related: ["class", "object", "inheritance", "polymorphism"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "polymorphism",
@@ -1216,7 +1271,8 @@
       en: { term: "Polymorphism", explanation: "The ability of different objects to respond in their own way to the same message." },
       aliases: ["多態性", "ポリモーフィズム"],
       related: ["class", "inheritance", "encapsulation", "interface"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "debugging",
@@ -1235,7 +1291,8 @@
       en: { term: "Debugging", explanation: "The process of finding, analyzing, and fixing bugs in a program." },
       aliases: ["デバッグ"],
       related: ["testing", "exception"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     // ======================================================================
     // 新增：Java (id: 61-68)
@@ -1257,7 +1314,8 @@
       en: { term: "Static Keyword", explanation: "A keyword used to declare members that belong to the class itself, not to any instance." },
       aliases: ["static"],
       related: ["java_class", "instance", "java_constructor"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "instance",
@@ -1276,7 +1334,8 @@
       en: { term: "Instance", explanation: "A concrete object created from a class, with its own state and behavior." },
       aliases: ["インスタンス"],
       related: ["class", "object", "java_constructor"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "java_constructor",
@@ -1295,7 +1354,8 @@
       en: { term: "Constructor", explanation: "A special method automatically called when an object is created, used to initialize it." },
       aliases: ["コンストラクタ"],
       related: ["class", "instance", "object"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "interface",
@@ -1314,7 +1374,8 @@
       en: { term: "Interface", explanation: "A reference type containing only abstract methods that implementing classes must define." },
       aliases: ["インターフェース"],
       related: ["class", "inheritance", "polymorphism"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "access_modifier",
@@ -1333,7 +1394,8 @@
       en: { term: "Access Modifier", explanation: "Keywords that control the visibility and accessibility of classes, methods, and fields." },
       aliases: ["アクセス修飾子", "public", "private"],
       related: ["class", "encapsulation", "java_class"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "package",
@@ -1352,7 +1414,8 @@
       en: { term: "Package", explanation: "A namespace that organizes related classes and interfaces in Java." },
       aliases: ["パッケージ"],
       related: ["java_class", "import_statement", "package"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "inheritance",
@@ -1371,7 +1434,8 @@
       en: { term: "Inheritance", explanation: "A mechanism where one class derives properties and methods from another class." },
       aliases: ["継承"],
       related: ["class", "encapsulation", "polymorphism", "interface"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "java_class",
@@ -1390,7 +1454,8 @@
       en: { term: "Java Class", explanation: "The fundamental building block of Java programs, containing fields and methods." },
       aliases: ["クラス", "Java class"],
       related: ["object", "inheritance", "java_constructor", "instance"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     // ======================================================================
     // 新增：Python (id: 69-76)
@@ -1412,7 +1477,8 @@
       en: { term: "Python List", explanation: "A built-in mutable sequence type in Python that can hold elements of different types." },
       aliases: ["list", "リスト型"],
       related: ["list", "python_dict", "loop"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "python_dict",
@@ -1431,7 +1497,8 @@
       en: { term: "Python Dictionary", explanation: "A built-in mutable mapping type in Python that stores key-value pairs." },
       aliases: ["dict", "辞書型"],
       related: ["dictionary", "python_list"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "indentation",
@@ -1450,7 +1517,8 @@
       en: { term: "Indentation", explanation: "In Python, whitespace at the beginning of a line used to define code blocks." },
       aliases: ["インデント"],
       related: ["control_flow", "function"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "import_statement",
@@ -1469,7 +1537,8 @@
       en: { term: "Import Statement", explanation: "A statement used to load external libraries or modules into a program." },
       aliases: ["import", "インポート"],
       related: ["package", "import_statement", "python_module"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "lambda_function",
@@ -1488,7 +1557,8 @@
       en: { term: "Lambda Function", explanation: "An anonymous function defined with the `lambda` keyword for concise single-expression functions." },
       aliases: ["lambda", "ラムダ式"],
       related: ["function", "python_list"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "python_module",
@@ -1507,7 +1577,8 @@
       en: { term: "Python Module", explanation: "A file containing Python definitions and statements for reusable code." },
       aliases: ["モジュール"],
       related: ["import_statement", "function", "package"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "list_comprehension",
@@ -1526,7 +1597,8 @@
       en: { term: "List Comprehension", explanation: "A concise way to create lists in Python using a single expression with optional filtering." },
       aliases: ["リスト内包表記"],
       related: ["python_list", "loop", "condition"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "virtual_environment",
@@ -1545,7 +1617,8 @@
       en: { term: "Virtual Environment", explanation: "An isolated environment for Python projects to manage dependencies separately." },
       aliases: ["venv", "仮想環境"],
       related: ["python_module", "package"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     // ======================================================================
     // 新增：Network (id: 77-85)
@@ -1567,7 +1640,8 @@
       en: { term: "Subnet", explanation: "A logical subdivision of an IP network, improving address efficiency and security." },
       aliases: ["サブネット"],
       related: ["ip_address", "router"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "http",
@@ -1586,7 +1660,8 @@
       en: { term: "HTTP", explanation: "Hypertext Transfer Protocol — the foundation of data communication on the World Wide Web." },
       aliases: ["HTTP", "Hypertext Transfer Protocol"],
       related: ["https", "url", "client_server", "api"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "https",
@@ -1605,7 +1680,8 @@
       en: { term: "HTTPS", explanation: "HTTP over SSL/TLS — encrypts data between browser and server for secure communication." },
       aliases: ["HTTPS"],
       related: ["http", "encryption", "url"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "tcp",
@@ -1624,7 +1700,8 @@
       en: { term: "TCP", explanation: "Transmission Control Protocol — a connection-oriented, reliable transport layer protocol." },
       aliases: ["TCP", "Transmission Control Protocol"],
       related: ["ip_address", "udp", "http"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "udp",
@@ -1643,7 +1720,8 @@
       en: { term: "UDP", explanation: "User Datagram Protocol — a connectionless, fast but unreliable transport layer protocol." },
       aliases: ["UDP", "User Datagram Protocol"],
       related: ["ip_address", "tcp"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "router",
@@ -1662,7 +1740,8 @@
       en: { term: "Router", explanation: "A network device that forwards data packets between different networks based on IP addresses." },
       aliases: ["ルーター"],
       related: ["ip_address", "subnet", "router", "firewall"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "url",
@@ -1681,7 +1760,8 @@
       en: { term: "URL", explanation: "Uniform Resource Locator — a string that identifies the address of a resource on the internet." },
       aliases: ["URL"],
       related: ["http", "https", "dns"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "api",
@@ -1700,7 +1780,8 @@
       en: { term: "API", explanation: "Application Programming Interface — a set of rules enabling communication between software components." },
       aliases: ["API", "Application Programming Interface"],
       related: ["http", "rest_api", "client_server", "url"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "rest_api",
@@ -1719,7 +1800,8 @@
       en: { term: "REST API", explanation: "An API design style using HTTP methods (GET/POST/PUT/DELETE) to manipulate resources." },
       aliases: ["REST", "RESTful API"],
       related: ["api", "http", "client_server"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     // ======================================================================
     // 新增：Security (id: 86-93)
@@ -1741,7 +1823,8 @@
       en: { term: "Hashing", explanation: "Converting data into a fixed-length hash value for password storage and integrity verification." },
       aliases: ["ハッシュ化", "ハッシュ関数"],
       related: ["encryption", "authentication"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "phishing",
@@ -1760,7 +1843,8 @@
       en: { term: "Phishing", explanation: "A cyber attack that tricks users into revealing sensitive information via fake communications." },
       aliases: ["フィッシング", "フィッシング詐欺"],
       related: ["malware", "vulnerability"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "access_control",
@@ -1779,7 +1863,8 @@
       en: { term: "Access Control", explanation: "A security mechanism that restricts access to resources based on user identity and permissions." },
       aliases: ["アクセス制御"],
       related: ["authentication", "authorization", "firewall"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "multi_factor_authentication",
@@ -1798,7 +1883,8 @@
       en: { term: "Multi-Factor Authentication", explanation: "A security method requiring two or more verification factors to authenticate a user." },
       aliases: ["MFA", "多要素認証"],
       related: ["authentication", "authorization"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "sql_injection",
@@ -1817,7 +1903,8 @@
       en: { term: "SQL Injection", explanation: "A code injection technique where attackers insert malicious SQL into input fields." },
       aliases: ["SQLインジェクション"],
       related: ["sql", "vulnerability", "authentication"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "public_key",
@@ -1836,7 +1923,8 @@
       en: { term: "Public Key", explanation: "A cryptographic key that can be freely distributed, used with a corresponding private key." },
       aliases: ["公開鍵", "公開鍵暗号"],
       related: ["private_key", "encryption", "authentication"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "private_key",
@@ -1855,7 +1943,8 @@
       en: { term: "Private Key", explanation: "A secret key paired with a public key, used for decryption and digital signatures." },
       aliases: ["秘密鍵"],
       related: ["public_key", "encryption", "authentication"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "risk_management",
@@ -1874,7 +1963,8 @@
       en: { term: "Risk Management", explanation: "The process of identifying, assessing, and controlling threats to an organization." },
       aliases: ["リスク対応"],
       related: ["vulnerability", "firewall"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     // ======================================================================
     // 新增：System / OS / Development (id: 94-99)
@@ -1896,7 +1986,8 @@
       en: { term: "Operating System", explanation: "System software that manages computer hardware and software resources." },
       aliases: ["OS", "オペレーティングシステム"],
       related: ["process", "memory", "file_system"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "process",
@@ -1915,7 +2006,8 @@
       en: { term: "Process", explanation: "An instance of a running program that the OS manages with allocated resources." },
       aliases: ["プロセス"],
       related: ["thread", "operating_system", "memory"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "thread",
@@ -1934,7 +2026,8 @@
       en: { term: "Thread", explanation: "The smallest unit of execution within a process, enabling concurrent processing." },
       aliases: ["スレッド"],
       related: ["process", "operating_system"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "memory",
@@ -1953,7 +2046,8 @@
       en: { term: "Memory", explanation: "A hardware component that temporarily stores data and instructions for the CPU." },
       aliases: ["メモリ", "RAM", "主記憶"],
       related: ["process", "operating_system", "thread"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "file_system",
@@ -1972,7 +2066,8 @@
       en: { term: "File System", explanation: "The method OS uses to organize, store, and manage files on storage devices." },
       aliases: ["ファイルシステム"],
       related: ["operating_system", "memory"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "version_control",
@@ -1991,7 +2086,8 @@
       en: { term: "Version Control", explanation: "A system that tracks and manages changes to files over time, with Git being the industry standard." },
       aliases: ["バージョン管理", "VCS"],
       related: ["testing", "version_control", "debugging"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "testing",
@@ -2010,7 +2106,8 @@
       en: { term: "Testing", explanation: "The process of verifying software correctness and quality through various test levels." },
       aliases: ["テスト", "ソフトウェアテスト"],
       related: ["debugging", "version_control", "testing"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     // ======================================================================
     // restore: exception (was the 30th original term, got dropped during expansion)
@@ -2036,7 +2133,8 @@
       aliases: ["例外", "例外処理"],
       related: ["function", "class"],
       example: { java: "try {\n  int x = 1 / 0;\n} catch (ArithmeticException e) {\n  System.out.println(e);\n}", python: "try:\n    x = 1 / 0\nexcept ZeroDivisionError as e:\n    print(e)" },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     // ======================================================================
     // 新增：补齐到 100 条 (id: 99-100)
@@ -2058,7 +2156,8 @@
       en: { term: "Unit Test", explanation: "A test that verifies the smallest testable part of software in isolation." },
       aliases: ["単体テスト", "UT"],
       related: ["testing", "debugging"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "virtualization",
@@ -2077,7 +2176,8 @@
       en: { term: "Virtualization", explanation: "Technology that abstracts physical computing resources into logical ones for flexible allocation." },
       aliases: ["仮想化"],
       related: ["operating_system", "cloud_computing"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     // ======================================================================
@@ -2100,7 +2200,8 @@
       en: { term: "Information System", explanation: "A system that collects, processes, and stores information to support business operations and decision-making." },
       aliases: ["情報システム", "IS"],
       related: ["database", "operating_system", "client_server"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "business_process",
@@ -2119,7 +2220,8 @@
       en: { term: "Business Process", explanation: "A series of interconnected business activities that achieve a specific organizational goal." },
       aliases: ["ビジネスプロセス", "BP"],
       related: ["information_system", "cost_benefit_analysis"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "system_lifecycle",
@@ -2138,7 +2240,8 @@
       en: { term: "System Lifecycle", explanation: "The stages of a system from planning, design, construction, operation, to decommissioning." },
       aliases: ["システムライフサイクル", "SDLC"],
       related: ["information_system", "feasibility_study"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "feasibility_study",
@@ -2157,7 +2260,8 @@
       en: { term: "Feasibility Study", explanation: "An analysis conducted before system implementation to evaluate economic, technical, and operational viability." },
       aliases: ["フィージビリティ調査", "feasibility"],
       related: ["system_lifecycle", "cost_benefit_analysis"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "cost_benefit_analysis",
@@ -2176,7 +2280,8 @@
       en: { term: "Cost-Benefit Analysis", explanation: "A method to evaluate the return on investment by comparing costs and benefits in monetary terms." },
       aliases: ["費用便益分析", "CBA"],
       related: ["feasibility_study", "risk_assessment"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "service_level_agreement",
@@ -2195,7 +2300,8 @@
       en: { term: "Service Level Agreement", explanation: "An agreement between a service provider and a customer defining service quality metrics." },
       aliases: ["SLA", "サービスレベル合意書"],
       related: ["availability", "outsourcing"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "incident_management",
@@ -2214,7 +2320,8 @@
       en: { term: "Incident Management", explanation: "The process of responding to system failures and security incidents, with recovery as the top priority." },
       aliases: ["インシデント管理"],
       related: ["availability", "problem_management"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "problem_management",
@@ -2233,7 +2340,8 @@
       en: { term: "Problem Management", explanation: "The process of identifying root causes of incidents and preventing recurrence." },
       aliases: ["問題管理"],
       related: ["incident_management", "change_management"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "change_management",
@@ -2252,7 +2360,8 @@
       en: { term: "Change Management", explanation: "The process of planning, approving, implementing, and verifying system changes." },
       aliases: ["変更管理"],
       related: ["problem_management", "testing"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "maintainability",
@@ -2271,7 +2380,8 @@
       en: { term: "Maintainability", explanation: "A quality characteristic indicating how easy it is to modify or improve a system." },
       aliases: ["保守性"],
       related: ["reliability", "availability"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "reliability",
@@ -2290,7 +2400,8 @@
       en: { term: "Reliability", explanation: "The ability of a system to operate without failure, measured by MTBF." },
       aliases: ["信頼性"],
       related: ["availability", "maintainability"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "scalability",
@@ -2309,7 +2420,8 @@
       en: { term: "Scalability", explanation: "The ability of a system to increase capacity in response to growing load." },
       aliases: ["拡張性", "スケーラビリティ"],
       related: ["cloud_computing", "availability"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "outsourcing",
@@ -2328,7 +2440,8 @@
       en: { term: "Outsourcing", explanation: "A practice of delegating business operations to external vendors." },
       aliases: ["アウトソーシング", "委託"],
       related: ["service_level_agreement", "cloud_computing"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "compliance",
@@ -2347,7 +2460,8 @@
       en: { term: "Compliance", explanation: "Adhering to laws and regulations, including personal information protection and copyright laws." },
       aliases: ["コンプライアンス"],
       related: ["compliance", "privacy"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "privacy",
@@ -2366,7 +2480,8 @@
       en: { term: "Privacy", explanation: "Protection of personal information, covered by laws such as APPI." },
       aliases: ["プライバシー", "個人情報保護"],
       related: ["compliance", "confidentiality", "encryption"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "database_schema",
@@ -2385,7 +2500,8 @@
       en: { term: "Database Schema", explanation: "The logical structure of a database, including table relationships and constraints." },
       aliases: ["スキーマ"],
       related: ["database", "table", "constraint"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "composite_key",
@@ -2404,7 +2520,8 @@
       en: { term: "Composite Key", explanation: "A primary key composed of multiple columns combined together." },
       aliases: ["複合キー", "結合キー"],
       related: ["primary_key", "foreign_key", "constraint"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "referential_integrity",
@@ -2423,7 +2540,8 @@
       en: { term: "Referential Integrity", explanation: "A constraint ensuring foreign keys only reference valid values in the parent table." },
       aliases: ["参照整合性", "RI"],
       related: ["foreign_key", "constraint", "cascade_delete"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "cascade_delete",
@@ -2442,7 +2560,8 @@
       en: { term: "Cascade Delete", explanation: "Automatically deleting child rows when a parent row is deleted, maintaining referential integrity." },
       aliases: ["カスケード削除", "CASCADE"],
       related: ["foreign_key", "referential_integrity", "constraint"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "stored_procedure",
@@ -2461,7 +2580,8 @@
       en: { term: "Stored Procedure", explanation: "A precompiled set of SQL statements stored in the database for reuse and improved performance." },
       aliases: ["ストアドプロシージャ", "stored proc"],
       related: ["sql", "stored_procedure"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "subquery",
@@ -2480,7 +2600,8 @@
       en: { term: "Subquery", explanation: "A SELECT query nested inside another SQL statement, commonly used with IN or EXISTS." },
       aliases: ["副問合せ", "サブクエリ"],
       related: ["select_statement", "where_clause", "join"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "union_operator",
@@ -2499,7 +2620,8 @@
       en: { term: "UNION Operator", explanation: "Vertically combines results from two SELECT statements, removing duplicates by default." },
       aliases: ["UNION", "UNION演算子"],
       related: ["select_statement", "join"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "having_clause",
@@ -2518,7 +2640,8 @@
       en: { term: "HAVING Clause", explanation: "Filters aggregated results after GROUP BY, unlike WHERE which filters before grouping." },
       aliases: ["HAVING"],
       related: ["group_by", "where_clause", "aggregate_function"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "deadlock",
@@ -2537,7 +2660,8 @@
       en: { term: "Deadlock", explanation: "A situation where two or more transactions are blocked forever, each waiting for the other to release a resource." },
       aliases: ["デッドロック"],
       related: ["transaction"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "acid_properties",
@@ -2556,7 +2680,8 @@
       en: { term: "ACID Properties", explanation: "Four properties of transactions: Atomicity, Consistency, Isolation, Durability." },
       aliases: ["ACID"],
       related: ["transaction", "commit"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     // ======================================================================
@@ -2579,7 +2704,8 @@
       en: { term: "JVM", explanation: "Java Virtual Machine — runs compiled Java bytecode, enabling cross-platform execution." },
       aliases: ["JVM", "Java仮想マシン"],
       related: ["jdk", "bytecode", "memory"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "jdk",
@@ -2598,7 +2724,8 @@
       en: { term: "JDK", explanation: "Java Development Kit — a full development environment for building Java applications." },
       aliases: ["JDK", "Java Development Kit"],
       related: ["jvm", "jre", "java_class"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "jre",
@@ -2617,7 +2744,8 @@
       en: { term: "JRE", explanation: "Java Runtime Environment — provides the libraries and JVM needed to run Java programs." },
       aliases: ["JRE", "Java Runtime Environment"],
       related: ["jvm", "jdk"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "bytecode",
@@ -2636,7 +2764,8 @@
       en: { term: "Bytecode", explanation: "An intermediate code produced by compiling Java source, executed by the JVM." },
       aliases: ["バイトコード", "byte code"],
       related: ["jvm", "java_class"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "primitive_type",
@@ -2655,7 +2784,8 @@
       en: { term: "Primitive Type", explanation: "A basic data type in Java, such as int, char, boolean — there are 8 in total." },
       aliases: ["プリミティブ型", "基本型"],
       related: ["reference_type", "data_type", "variable"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "reference_type",
@@ -2674,7 +2804,8 @@
       en: { term: "Reference Type", explanation: "A Java type that holds a reference to an object, such as classes and arrays." },
       aliases: ["参照型"],
       related: ["primitive_type", "class", "object"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "override",
@@ -2693,7 +2824,8 @@
       en: { term: "Override", explanation: "Redefining a superclass method in a subclass with the same name and parameters." },
       aliases: ["オーバーライド", "overriding"],
       related: ["inheritance", "polymorphism", "java_class"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "overload",
@@ -2712,7 +2844,8 @@
       en: { term: "Overload", explanation: "Defining multiple methods with the same name but different parameters in the same class." },
       aliases: ["オーバーロード", "overloading"],
       related: ["override", "java_class"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "abstract_class",
@@ -2731,7 +2864,8 @@
       en: { term: "Abstract Class", explanation: "A class that cannot be instantiated, defined with the abstract keyword, may contain abstract methods." },
       aliases: ["抽象クラス"],
       related: ["class", "interface", "inheritance"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "final_keyword",
@@ -2750,7 +2884,8 @@
       en: { term: "Final Keyword", explanation: "A Java keyword that prevents variable reassignment, class inheritance, or method overriding." },
       aliases: ["final"],
       related: ["class", "variable", "java_class"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "try_catch",
@@ -2769,7 +2904,8 @@
       en: { term: "Try-Catch", explanation: "A basic exception handling construct that wraps risky code in a try block and catches exceptions in catch blocks." },
       aliases: ["try-catch", "例外処理"],
       related: ["exception", "function"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "enum_type",
@@ -2788,7 +2924,8 @@
       en: { term: "Enum Type", explanation: "A data type consisting of a fixed set of constants, defined with the enum keyword in Java." },
       aliases: ["enum", "列挙型"],
       related: ["class", "data_type"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "garbage_collection",
@@ -2807,7 +2944,8 @@
       en: { term: "Garbage Collection", explanation: "Automatic memory management by the JVM that reclaims memory from unused objects." },
       aliases: ["GC", "ガベコレ"],
       related: ["memory", "jvm", "object"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "collection_framework",
@@ -2826,7 +2964,8 @@
       en: { term: "Collection Framework", explanation: "A unified architecture in Java for representing and manipulating collections like List, Set, and Map." },
       aliases: ["コレクションフレームワーク"],
       related: ["list", "array", "java_class"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     // Python
     {
@@ -2846,7 +2985,8 @@
       en: { term: "Tuple", explanation: "An immutable sequence type in Python, defined with parentheses (), unlike lists it cannot be changed." },
       aliases: ["タプル", "tuple"],
       related: ["python_list", "list"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "python_set",
@@ -2865,7 +3005,8 @@
       en: { term: "Set", explanation: "An unordered collection of unique elements in Python, defined with set() or curly braces {}." },
       aliases: ["set", "集合型"],
       related: ["python_list", "python_dict", "data_type"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "slice",
@@ -2884,7 +3025,8 @@
       en: { term: "Slice", explanation: "An operation to extract a portion of a sequence using the syntax list[start:stop:step]." },
       aliases: ["スライス"],
       related: ["python_list", "array", "python_string"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "python_string",
@@ -2903,7 +3045,8 @@
       en: { term: "Python String", explanation: "The str type in Python, representing text data enclosed in single or double quotes." },
       aliases: ["str", "文字列型"],
       related: ["python_list", "slice", "variable"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "boolean_type",
@@ -2922,7 +3065,8 @@
       en: { term: "Boolean Type", explanation: "A data type with two values — True and False — used in conditional expressions." },
       aliases: ["bool", "真偽値"],
       related: ["data_type", "condition", "variable"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "class_definition",
@@ -2941,7 +3085,8 @@
       en: { term: "Class Definition", explanation: "Creating a class in Python using the class keyword, where self refers to the instance." },
       aliases: ["クラス定義"],
       related: ["class", "object", "class_definition", "self_parameter"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "self_parameter",
@@ -2960,7 +3105,8 @@
       en: { term: "Self Parameter", explanation: "The first parameter of Python instance methods, referring to the instance itself." },
       aliases: ["self"],
       related: ["class_definition", "class", "instance"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "decorator",
@@ -2979,7 +3125,8 @@
       en: { term: "Decorator", explanation: "A Python syntax using @ that extends the behavior of functions or methods without modifying their code." },
       aliases: ["デコレータ"],
       related: ["function", "python_module", "lambda_function"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "generator",
@@ -2998,7 +3145,8 @@
       en: { term: "Generator", explanation: "A function that yields values one at a time using the yield keyword, providing memory-efficient iteration." },
       aliases: ["ジェネレータ"],
       related: ["function", "loop"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "candidate_key",
@@ -3017,7 +3165,8 @@
       en: { term: "Candidate Key", explanation: "A minimal set of attributes that can uniquely identify any database record in a table." },
       aliases: ["candidate key"],
       related: ["primary_key", "foreign_key", "composite_key"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "view",
@@ -3036,7 +3185,8 @@
       en: { term: "View", explanation: "A virtual table in a database based on the result-set of an SQL statement." },
       aliases: ["仮想表", "virtual table"],
       related: ["table", "query", "select_statement"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "trigger",
@@ -3055,7 +3205,8 @@
       en: { term: "Trigger", explanation: "A database object that automatically executes in response to certain events on a table." },
       aliases: ["database trigger"],
       related: ["table", "stored_procedure"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "create_table",
@@ -3074,7 +3225,8 @@
       en: { term: "CREATE TABLE Statement", explanation: "An SQL Data Definition Language (DDL) statement used to create a new table in a database." },
       aliases: ["CREATE TABLE"],
       related: ["table", "alter_table", "drop_table", "constraint"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "alter_table",
@@ -3093,7 +3245,8 @@
       en: { term: "ALTER TABLE Statement", explanation: "An SQL statement used to add, delete, or modify columns and constraints in an existing table." },
       aliases: ["ALTER TABLE"],
       related: ["table", "create_table", "drop_table"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "drop_table",
@@ -3112,7 +3265,8 @@
       en: { term: "DROP TABLE Statement", explanation: "An SQL statement used to permanently remove a table definition and all its data from the database." },
       aliases: ["DROP TABLE"],
       related: ["table", "create_table", "alter_table"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "insert_statement",
@@ -3131,7 +3285,8 @@
       en: { term: "INSERT Statement", explanation: "An SQL Data Manipulation Language (DML) statement used to insert new records into a table." },
       aliases: ["INSERT"],
       related: ["table", "row", "update_statement", "delete_statement"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "update_statement",
@@ -3150,7 +3305,8 @@
       en: { term: "UPDATE Statement", explanation: "An SQL Data Manipulation Language (DML) statement used to modify existing records in a table." },
       aliases: ["UPDATE"],
       related: ["table", "where_clause", "insert_statement", "delete_statement"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "delete_statement",
@@ -3169,7 +3325,8 @@
       en: { term: "DELETE Statement", explanation: "An SQL Data Manipulation Language (DML) statement used to remove records from a table." },
       aliases: ["DELETE"],
       related: ["table", "where_clause", "insert_statement", "update_statement"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "this_keyword",
@@ -3188,7 +3345,8 @@
       en: { term: "This Keyword", explanation: "A reference variable in programming languages like Java that refers to the current object instance." },
       aliases: ["this"],
       related: ["object", "class", "super_keyword"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "super_keyword",
@@ -3207,7 +3365,8 @@
       en: { term: "Super Keyword", explanation: "A keyword used to refer to parent class (superclass) objects or constructors." },
       aliases: ["super"],
       related: ["inheritance", "class", "this_keyword"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "string_class",
@@ -3226,7 +3385,8 @@
       en: { term: "String Class", explanation: "A built-in class in Java representing character strings, which are immutable." },
       aliases: ["String"],
       related: ["data_type", "primitive_type", "reference_type"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "array_list",
@@ -3245,7 +3405,8 @@
       en: { term: "ArrayList Class", explanation: "A resizable-array implementation in Java's collection framework." },
       aliases: ["ArrayList"],
       related: ["collection_framework", "array", "list"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "hash_map",
@@ -3264,7 +3425,8 @@
       en: { term: "HashMap Class", explanation: "A hash table-based implementation of Java's Map interface, storing key-value pairs." },
       aliases: ["HashMap"],
       related: ["collection_framework", "dictionary", "hashing"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "generic_type",
@@ -3283,7 +3445,8 @@
       en: { term: "Generic Type", explanation: "A feature in programming languages that allows classes and methods to operate on parameterized types." },
       aliases: ["ジェネリクス", "generics"],
       related: ["collection_framework", "data_type"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "none_value",
@@ -3302,7 +3465,8 @@
       en: { term: "None Value", explanation: "A special constant in Python representing the absence of a value or a null object." },
       aliases: ["None", "null"],
       related: ["data_type", "null_value"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "for_loop",
@@ -3321,7 +3485,8 @@
       en: { term: "for Loop", explanation: "A control flow statement for specifying iteration, which allows code to be executed repeatedly." },
       aliases: ["for", "繰り返し"],
       related: ["loop", "while_loop", "control_flow"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "while_loop",
@@ -3340,7 +3505,8 @@
       en: { term: "while Loop", explanation: "A control flow statement that allows code to be executed repeatedly based on a given boolean condition." },
       aliases: ["while"],
       related: ["loop", "for_loop", "control_flow"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "yield_keyword",
@@ -3359,7 +3525,8 @@
       en: { term: "Yield Keyword", explanation: "A keyword used in Python generator functions to temporarily pause execution and return a value." },
       aliases: ["yield"],
       related: ["generator", "function"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "with_statement",
@@ -3378,7 +3545,8 @@
       en: { term: "With Statement", explanation: "A Python statement that simplifies exception handling by encapsulating common preparation and cleanup tasks." },
       aliases: ["with"],
       related: ["python_module", "exception"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "osi_model",
@@ -3397,7 +3565,8 @@
       en: { term: "OSI Model", explanation: "Open Systems Interconnection model — a conceptual framework that characterizes network communication into seven layers." },
       aliases: ["OSI参照モデル", "OSI reference model"],
       related: ["tcp", "udp", "router", "ip_address"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "application_layer",
@@ -3416,7 +3585,8 @@
       en: { term: "Application Layer", explanation: "The seventh layer of the OSI model, which provides communication protocols for user applications." },
       aliases: ["第七層", "Layer 7"],
       related: ["osi_model", "http", "https", "dns"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "transport_layer",
@@ -3435,7 +3605,8 @@
       en: { term: "Transport Layer", explanation: "The fourth layer of the OSI model, responsible for end-to-end communication and data flow control." },
       aliases: ["第四層", "Layer 4"],
       related: ["osi_model", "tcp", "udp"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "network_layer",
@@ -3454,7 +3625,8 @@
       en: { term: "Network Layer", explanation: "The third layer of the OSI model, responsible for packet routing and forwarding across different networks." },
       aliases: ["第三層", "Layer 3"],
       related: ["osi_model", "router", "ip_address"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "mac_address",
@@ -3473,7 +3645,8 @@
       en: { term: "MAC Address", explanation: "Media Access Control address — a unique physical identifier assigned to network interfaces." },
       aliases: ["物理アドレス", "physical address"],
       related: ["ip_address", "subnet"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "arp",
@@ -3492,7 +3665,8 @@
       en: { term: "ARP", explanation: "Address Resolution Protocol — a protocol used to map an IP address to a physical MAC address." },
       aliases: ["Address Resolution Protocol"],
       related: ["ip_address", "mac_address", "network_layer"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "dhcp",
@@ -3511,7 +3685,8 @@
       en: { term: "DHCP", explanation: "Dynamic Host Configuration Protocol — a network management protocol used to dynamically assign IP addresses." },
       aliases: ["Dynamic Host Configuration Protocol"],
       related: ["ip_address", "client_server", "application_layer"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "nat",
@@ -3530,7 +3705,8 @@
       en: { term: "NAT", explanation: "Network Address Translation — a method of mapping an IP address space into another by modifying network address information." },
       aliases: ["Network Address Translation"],
       related: ["ip_address", "router", "network_layer"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "vpn",
@@ -3549,7 +3725,8 @@
       en: { term: "VPN", explanation: "Virtual Private Network — a service that creates a safe, encrypted connection over a less secure network." },
       aliases: ["Virtual Private Network"],
       related: ["encryption", "network_layer"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "load_balancer",
@@ -3568,7 +3745,8 @@
       en: { term: "Load Balancer", explanation: "A device that distributes network or application traffic across a cluster of servers." },
       aliases: ["ロードバランサ", "load balancer"],
       related: ["reliability", "scalability"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "domain_name",
@@ -3587,7 +3765,8 @@
       en: { term: "Domain Name", explanation: "An identification string that defines a realm of administrative autonomy, authority, or control within the Internet." },
       aliases: ["ドメイン", "domain name"],
       related: ["dns", "ip_address", "url"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "tls",
@@ -3606,7 +3785,8 @@
       en: { term: "TLS", explanation: "Transport Layer Security — a cryptographic protocol designed to provide communications security over a computer network." },
       aliases: ["Transport Layer Security"],
       related: ["https", "encryption", "transport_layer"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "status_code",
@@ -3625,7 +3805,8 @@
       en: { term: "HTTP Status Code", explanation: "A 3-digit response code sent by a web server to indicate the outcome of an HTTP request." },
       aliases: ["ステータスコード", "status code"],
       related: ["http", "https", "url"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "get_method",
@@ -3644,7 +3825,8 @@
       en: { term: "GET Method", explanation: "An HTTP request method used to retrieve representation of a specified resource from the server." },
       aliases: ["GET", "GETリクエスト"],
       related: ["http", "post_method", "api"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "post_method",
@@ -3663,7 +3845,8 @@
       en: { term: "POST Method", explanation: "An HTTP request method used to send data to the server to create or update a resource." },
       aliases: ["POST", "POSTリクエスト"],
       related: ["http", "get_method", "api"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "cookie",
@@ -3682,7 +3865,8 @@
       en: { term: "Cookie", explanation: "A small piece of data stored on the user's computer by the web browser while browsing a website." },
       aliases: ["クッキー", "HTTP cookie"],
       related: ["session", "http"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "session",
@@ -3701,7 +3885,8 @@
       en: { term: "Session", explanation: "A semi-permanent interactive information interchange between two or more communicating devices." },
       aliases: ["セッション管理", "session"],
       related: ["cookie", "http"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "cors",
@@ -3720,7 +3905,8 @@
       en: { term: "CORS", explanation: "Cross-Origin Resource Sharing — a system consisting of transmitting HTTP headers, which determines whether browsers block frontend code from accessing cross-origin requests." },
       aliases: ["オリジン間リソース共有", "Cross-Origin Resource Sharing"],
       related: ["http", "api"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "symmetric_encryption",
@@ -3739,7 +3925,8 @@
       en: { term: "Symmetric Encryption", explanation: "An encryption method that uses the same key for both encrypting and decrypting data." },
       aliases: ["共通鍵暗号", "symmetric cryptography"],
       related: ["encryption", "asymmetric_encryption", "public_key"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "asymmetric_encryption",
@@ -3758,7 +3945,8 @@
       en: { term: "Asymmetric Encryption", explanation: "An encryption method that uses a public key to encrypt and a separate private key to decrypt data." },
       aliases: ["公開鍵暗号", "asymmetric cryptography"],
       related: ["encryption", "symmetric_encryption", "public_key", "private_key"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "brute_force_attack",
@@ -3777,7 +3965,8 @@
       en: { term: "Brute Force Attack", explanation: "A cryptographic trial-and-error method used to decode login credentials or encryption keys." },
       aliases: ["総当たり攻撃", "brute force attack"],
       related: ["phishing", "encryption"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "social_engineering",
@@ -3796,7 +3985,8 @@
       en: { term: "Social Engineering", explanation: "The psychological manipulation of people into performing actions or divulging confidential information." },
       aliases: ["ソーシャル・エンジニアリング", "social engineering"],
       related: ["phishing", "vulnerability"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "ransomware",
@@ -3815,7 +4005,8 @@
       en: { term: "Ransomware", explanation: "A type of malware that threatens to publish the victim's data or block access to it unless a ransom is paid." },
       aliases: ["身代金要求型ウイルス", "ransomware"],
       related: ["malware", "backup", "encryption"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "zero_day",
@@ -3834,7 +4025,8 @@
       en: { term: "Zero-Day Attack", explanation: "An attack that targets a software vulnerability that is unknown to the software developer." },
       aliases: ["ゼロデイ", "zero-day attack"],
       related: ["vulnerability"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "least_privilege",
@@ -3853,7 +4045,8 @@
       en: { term: "Least Privilege", explanation: "The principle of limiting user access rights to only what is strictly necessary to do their jobs." },
       aliases: ["最小特権", "principle of least privilege"],
       related: ["access_control", "authorization"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "kernel",
@@ -3872,7 +4065,8 @@
       en: { term: "Kernel", explanation: "The core program of an operating system, managing CPU, memory, and hardware devices." },
       aliases: ["OSカーネル", "kernel"],
       related: ["operating_system", "process", "thread"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "device_driver",
@@ -3891,7 +4085,8 @@
       en: { term: "Device Driver", explanation: "A program that controls a particular type of hardware device that is attached to a computer." },
       aliases: ["ドライバ", "device driver"],
       related: ["operating_system", "kernel"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "interrupt",
@@ -3910,7 +4105,8 @@
       en: { term: "Interrupt", explanation: "A signal to the processor emitted by hardware or software indicating an event that needs immediate attention." },
       aliases: ["割り込み", "interrupt"],
       related: ["operating_system", "process"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "cache_memory",
@@ -3929,7 +4125,8 @@
       en: { term: "Cache Memory", explanation: "A small, high-speed RAM unit located close to the CPU, used to store frequently accessed data." },
       aliases: ["キャッシュ", "cache memory"],
       related: ["memory"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "virtual_memory",
@@ -3948,7 +4145,8 @@
       en: { term: "Virtual Memory", explanation: "A memory management capability of an OS that uses hardware and software to allow a computer to compensate for physical memory shortages." },
       aliases: ["仮想メモリ", "virtual memory"],
       related: ["memory"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "ssd",
@@ -3967,7 +4165,8 @@
       en: { term: "SSD (Solid State Drive)", explanation: "A data storage device using integrated circuit assemblies as memory to store data persistently." },
       aliases: ["SSD", "solid state drive"],
       related: ["memory", "hdd"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "hdd",
@@ -3986,7 +4185,8 @@
       en: { term: "HDD (Hard Disk Drive)", explanation: "An electro-mechanical data storage device that uses magnetic storage to store and retrieve digital data." },
       aliases: ["HDD", "hard disk drive"],
       related: ["memory", "ssd"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "data_structure",
@@ -4005,7 +4205,8 @@
       en: { term: "Data Structure", explanation: "A specialized format for organizing, processing, retrieving and storing data." },
       aliases: ["データ構造", "data structure"],
       related: ["algorithm", "array", "list"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "stack",
@@ -4024,7 +4225,8 @@
       en: { term: "Stack", explanation: "A linear data structure that follows the Last In, First Out (LIFO) principle." },
       aliases: ["スタック", "stack"],
       related: ["data_structure", "array", "queue"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "queue",
@@ -4043,7 +4245,8 @@
       en: { term: "Queue", explanation: "A linear data structure that follows the First In, First Out (FIFO) principle." },
       aliases: ["キュー", "queue"],
       related: ["data_structure", "stack"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "linked_list",
@@ -4062,7 +4265,8 @@
       en: { term: "Linked List", explanation: "A linear collection of data elements whose order is not given by their physical placement in memory but by pointers." },
       aliases: ["ポインタ連結リスト", "linked list"],
       related: ["data_structure", "array"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "tree_structure",
@@ -4081,7 +4285,8 @@
       en: { term: "Tree Structure", explanation: "A hierarchical, non-linear data structure consisting of nodes connected by edges, with a single root node." },
       aliases: ["ツリー構造", "tree structure"],
       related: ["data_structure", "binary_tree"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "binary_tree",
@@ -4100,7 +4305,8 @@
       en: { term: "Binary Tree", explanation: "A tree data structure in which each node has at most two children, referred to as the left child and the right child." },
       aliases: ["バイナリツリー", "binary tree"],
       related: ["tree_structure", "data_structure"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "graph_structure",
@@ -4119,7 +4325,8 @@
       en: { term: "Graph Structure", explanation: "A non-linear data structure consisting of vertices (nodes) and edges that connect these vertices." },
       aliases: ["ネットワークグラフ", "graph structure"],
       related: ["data_structure", "tree_structure"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "hash_table",
@@ -4138,7 +4345,8 @@
       en: { term: "Hash Table", explanation: "A data structure that stores key-value pairs, using a hash function to compute an index into an array." },
       aliases: ["散列表", "hash table"],
       related: ["data_structure", "hashing"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "sorting_algorithm",
@@ -4157,7 +4365,8 @@
       en: { term: "Sorting Algorithm", explanation: "An algorithm that puts elements of a list in a certain order (e.g. numerical or alphabetical)." },
       aliases: ["ソートアルゴリズム", "sorting algorithm"],
       related: ["algorithm", "bubble_sort", "quick_sort"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "searching_algorithm",
@@ -4176,7 +4385,8 @@
       en: { term: "Searching Algorithm", explanation: "An algorithm for finding an item with specified properties within a collection of items." },
       aliases: ["サーチアルゴリズム", "searching algorithm"],
       related: ["algorithm", "linear_search", "binary_search"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "linear_search",
@@ -4195,7 +4405,8 @@
       en: { term: "Linear Search", explanation: "A method for finding an element within a list by sequentially checking each element until a match is found." },
       aliases: ["順次探索", "linear search"],
       related: ["searching_algorithm", "array"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "binary_search",
@@ -4214,7 +4425,8 @@
       en: { term: "Binary Search", explanation: "A search algorithm that finds the position of a target value within a sorted array by repeatedly halving the search interval." },
       aliases: ["二分法", "binary search"],
       related: ["searching_algorithm", "array", "sorting_algorithm"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "bubble_sort",
@@ -4233,7 +4445,8 @@
       en: { term: "Bubble Sort", explanation: "A simple sorting algorithm that repeatedly steps through the list, compares adjacent elements and swaps them if they are in the wrong order." },
       aliases: ["隣接交換法", "bubble sort"],
       related: ["sorting_algorithm", "array"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "selection_sort",
@@ -4252,7 +4465,8 @@
       en: { term: "Selection Sort", explanation: "An in-place comparison-based sorting algorithm that divides the input list into sorted and unsorted parts, repeatedly selecting the smallest element from the unsorted part." },
       aliases: ["基本選択法", "selection sort"],
       related: ["sorting_algorithm", "array"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "insertion_sort",
@@ -4271,7 +4485,8 @@
       en: { term: "Insertion Sort", explanation: "A simple sorting algorithm that builds the final sorted array one item at a time, inserting unsorted elements into their appropriate position." },
       aliases: ["基本挿入法", "insertion sort"],
       related: ["sorting_algorithm", "array"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "merge_sort",
@@ -4290,7 +4505,8 @@
       en: { term: "Merge Sort", explanation: "An efficient, comparison-based sorting algorithm that uses a divide-and-conquer strategy to split and merge lists." },
       aliases: ["併合ソート", "merge sort"],
       related: ["sorting_algorithm", "algorithm"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "quick_sort",
@@ -4309,7 +4525,8 @@
       en: { term: "Quick Sort", explanation: "A highly efficient sorting algorithm that uses a partitioning method to divide-and-conquer elements relative to a pivot." },
       aliases: ["高速区分ソート", "quick sort"],
       related: ["sorting_algorithm", "algorithm"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "time_complexity",
@@ -4328,7 +4545,8 @@
       en: { term: "Time Complexity", explanation: "A measure of the amount of time an algorithm takes to run as a function of the length of the input." },
       aliases: ["実行時間量", "time complexity"],
       related: ["algorithm", "sorting_algorithm"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "java_package_import",
@@ -4347,7 +4565,8 @@
       en: { term: "Java Package Import", explanation: "A statement that allows classes from a package to be referenced without their fully qualified names." },
       aliases: ["import宣言", "package import"],
       related: ["package", "import_statement"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "java_modifier",
@@ -4366,7 +4585,8 @@
       en: { term: "Java Modifier", explanation: "Keywords added to definitions to change their meaning or adjust their visibility and access rights." },
       aliases: ["修飾子", "modifier"],
       related: ["access_modifier", "class"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "public_keyword",
@@ -4385,7 +4605,8 @@
       en: { term: "public Keyword", explanation: "An access modifier that makes classes, methods, or variables accessible from any other class." },
       aliases: ["public", "public keyword"],
       related: ["access_modifier", "private_keyword"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "private_keyword",
@@ -4404,7 +4625,8 @@
       en: { term: "private Keyword", explanation: "An access modifier that restricts access to variables and methods to the class they are declared in." },
       aliases: ["private", "private keyword"],
       related: ["access_modifier", "public_keyword"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "protected_keyword",
@@ -4423,7 +4645,8 @@
       en: { term: "protected Keyword", explanation: "An access modifier that allows access within the same package and by subclasses in other packages." },
       aliases: ["protected", "protected keyword"],
       related: ["access_modifier", "public_keyword", "private_keyword"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "static_method",
@@ -4442,7 +4665,8 @@
       en: { term: "Static Method", explanation: "A method that belongs to the class rather than an instance of the class, called directly via the class name." },
       aliases: ["静的メソッド", "static method"],
       related: ["static_keyword", "function"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "instance_method",
@@ -4461,7 +4685,8 @@
       en: { term: "Instance Method", explanation: "A method that belongs to instances of a class and requires an object instantiation to be invoked." },
       aliases: ["非静的メソッド", "instance method"],
       related: ["instance", "function", "static_method"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "method_signature",
@@ -4480,7 +4705,8 @@
       en: { term: "Method Signature", explanation: "The combination of the method name and the parameter list (number, type, and order of parameters)." },
       aliases: ["シグネチャ", "method signature"],
       related: ["function", "parameter", "data_type"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "object_reference",
@@ -4499,7 +4725,8 @@
       en: { term: "Object Reference", explanation: "A value that addresses or points to an instantiated object in memory." },
       aliases: ["参照", "object reference"],
       related: ["reference_type", "object"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "null_pointer_exception",
@@ -4518,7 +4745,8 @@
       en: { term: "Null Pointer Exception", explanation: "A runtime exception thrown when an application attempts to use null where an object reference is required." },
       aliases: ["NullPointerException", "ヌルポ", "null pointer exception"],
       related: ["exception", "object_reference"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "java_try_finally",
@@ -4537,7 +4765,8 @@
       en: { term: "Java try-finally", explanation: "A construct used to ensure that clean-up code is executed, regardless of whether an exception is thrown or caught." },
       aliases: ["finallyブロック", "try-finally"],
       related: ["try_catch", "exception"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "java_lambda",
@@ -4556,7 +4785,8 @@
       en: { term: "Java Lambda Expression", explanation: "A short block of code which takes in parameters and returns a value, facilitating functional programming in Java." },
       aliases: ["ラムダ式", "lambda expression"],
       related: ["lambda_function"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "python_function",
@@ -4575,7 +4805,8 @@
       en: { term: "Python Function", explanation: "A reusable block of code in Python defined using the 'def' keyword." },
       aliases: ["Pythonの関数", "python function"],
       related: ["function"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "python_class",
@@ -4594,7 +4825,8 @@
       en: { term: "Python Class", explanation: "A blueprint for creating objects in Python, encapsulating state and behavior." },
       aliases: ["Pythonのクラス", "python class"],
       related: ["class", "class_definition"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "python_object",
@@ -4613,7 +4845,8 @@
       en: { term: "Python Object", explanation: "The basic entity that represents data and behavior in Python's runtime environment." },
       aliases: ["Pythonのオブジェクト", "python object"],
       related: ["object", "python_class"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "python_method",
@@ -4632,7 +4865,8 @@
       en: { term: "Python Method", explanation: "A function defined inside a Python class that operates on instances of that class." },
       aliases: ["クラス内メソッド", "python method"],
       related: ["function", "python_class", "self_parameter"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "python_property",
@@ -4651,7 +4885,8 @@
       en: { term: "Python Property", explanation: "A descriptor used to manage attributes, converting method calls into attribute access using @property." },
       aliases: ["属性デコレータ", "property"],
       related: ["decorator", "python_class"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "python_iterator",
@@ -4670,7 +4905,8 @@
       en: { term: "Python Iterator", explanation: "An object that contains a countable number of values and implements the iterator protocol." },
       aliases: ["反復子", "iterator"],
       related: ["python_iterable", "generator"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "python_iterable",
@@ -4689,7 +4925,8 @@
       en: { term: "Python Iterable", explanation: "Any Python object capable of returning its members one at a time, permitting iteration in a loop." },
       aliases: ["イテラブル", "iterable"],
       related: ["python_list", "python_iterator"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "python_exception_handling",
@@ -4708,7 +4945,8 @@
       en: { term: "Python Exception Handling", explanation: "The process of responding to unwanted or unexpected events during the execution of a Python program." },
       aliases: ["例外ハンドリング", "python exception handling"],
       related: ["exception", "python_try_except"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "python_try_except",
@@ -4727,7 +4965,8 @@
       en: { term: "Python try-except", explanation: "A statement block in Python used to catch and handle exceptions during runtime." },
       aliases: ["try-except", "python try-except"],
       related: ["try_catch", "python_exception_handling"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "python_file_io",
@@ -4746,7 +4985,8 @@
       en: { term: "Python File I/O", explanation: "The process of reading from and writing to files in Python using the open() function." },
       aliases: ["ファイル入出力", "python file io"],
       related: ["with_statement", "file_system"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "python_venv",
@@ -4765,7 +5005,8 @@
       en: { term: "venv Module", explanation: "A built-in Python module that provides support for creating lightweight virtual environments." },
       aliases: ["venv", "python venv"],
       related: ["virtual_environment"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "python_pip_install",
@@ -4784,7 +5025,8 @@
       en: { term: "pip Package Installer", explanation: "The package installer for Python, used to install and manage additional libraries not distributed with Python." },
       aliases: ["pip", "pip install"],
       related: ["python_venv"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "sql_alias",
@@ -4803,7 +5045,8 @@
       en: { term: "SQL Alias", explanation: "A temporary name given to a table or a column in an SQL query using the AS keyword." },
       aliases: ["ASキーワード", "sql alias"],
       related: ["sql", "select_statement"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "sql_expression",
@@ -4822,7 +5065,8 @@
       en: { term: "SQL Expression", explanation: "A combination of values, operators, and functions that evaluates to a value in SQL." },
       aliases: ["式", "sql expression"],
       related: ["sql", "column"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "sql_operator",
@@ -4841,7 +5085,8 @@
       en: { term: "SQL Operator", explanation: "A reserved word or character used in an SQL statement's WHERE clause to perform operations." },
       aliases: ["演算子", "sql operator"],
       related: ["sql", "comparison_operator", "logical_operator"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "comparison_operator",
@@ -4860,7 +5105,8 @@
       en: { term: "Comparison Operator", explanation: "An operator used to compare two values, returning a boolean result." },
       aliases: ["比較演算", "comparison operator"],
       related: ["sql_operator"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "logical_operator",
@@ -4879,7 +5125,8 @@
       en: { term: "Logical Operator", explanation: "An operator used to combine multiple conditional statements, returning true or false." },
       aliases: ["論理演算", "logical operator"],
       related: ["sql_operator"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "between_operator",
@@ -4898,7 +5145,8 @@
       en: { term: "BETWEEN Operator", explanation: "An operator used to filter the result set within a certain range (inclusive of boundaries)." },
       aliases: ["BETWEEN", "between operator"],
       related: ["sql_operator", "comparison_operator"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "in_operator",
@@ -4917,7 +5165,8 @@
       en: { term: "IN Operator", explanation: "An operator that allows you to specify multiple values in a WHERE clause, matching any value in the list." },
       aliases: ["IN", "in operator"],
       related: ["sql_operator", "comparison_operator"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "like_operator",
@@ -4936,7 +5185,8 @@
       en: { term: "LIKE Operator", explanation: "An operator used in a WHERE clause to search for a specified pattern in a column using wildcards." },
       aliases: ["LIKE", "like operator"],
       related: ["sql_operator", "comparison_operator"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "is_null",
@@ -4955,7 +5205,8 @@
       en: { term: "IS NULL Operator", explanation: "A comparison operator used in SQL to test for empty or NULL values." },
       aliases: ["IS NULL", "is null"],
       related: ["null_value", "sql_operator"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "scalar_function",
@@ -4974,7 +5225,8 @@
       en: { term: "Scalar Function", explanation: "A function in SQL that takes one or more input values and returns a single value." },
       aliases: ["スカラ関数", "scalar function"],
       related: ["function", "aggregate_function"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "query_optimizer",
@@ -4993,7 +5245,8 @@
       en: { term: "Query Optimizer", explanation: "A DBMS component that analyzes SQL statements and determines the most efficient way to execute them." },
       aliases: ["オプティマイザ", "query optimizer"],
       related: ["query", "execution_plan"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "execution_plan",
@@ -5012,7 +5265,8 @@
       en: { term: "Execution Plan", explanation: "The detailed physical sequence of steps determined by the DBMS to execute an SQL statement." },
       aliases: ["アクセスパス", "execution plan"],
       related: ["query", "query_optimizer"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "service_management",
@@ -5031,7 +5285,8 @@
       en: { term: "IT Service Management", explanation: "The implementation and management of quality IT services that meet the needs of the business." },
       aliases: ["ITSM", "service management"],
       related: ["itil", "service_level_agreement"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "itil",
@@ -5050,7 +5305,8 @@
       en: { term: "ITIL", explanation: "A set of detailed practices for IT service management (ITSM) that focuses on aligning IT services with the needs of business." },
       aliases: ["ITIL", "Information Technology Infrastructure Library"],
       related: ["service_management", "incident_management"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "help_desk",
@@ -5069,7 +5325,8 @@
       en: { term: "Help Desk", explanation: "A resource intended to provide the customer or user with information and support related to products and services." },
       aliases: ["サービスデスク", "help desk"],
       related: ["incident_management", "service_management"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "capacity_planning",
@@ -5088,7 +5345,8 @@
       en: { term: "Capacity Planning", explanation: "The process of estimating the storage, computer hardware, software and connection infrastructure resources required over a future period." },
       aliases: ["容量計画", "capacity planning"],
       related: ["system_lifecycle", "service_level_agreement"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "configuration_management",
@@ -5107,7 +5365,8 @@
       en: { term: "Configuration Management", explanation: "A process for establishing and maintaining consistency of a product's performance and functional attributes throughout its life." },
       aliases: ["構成アイテム管理", "configuration management"],
       related: ["change_management", "system_lifecycle"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "business_continuity_plan",
@@ -5126,7 +5385,8 @@
       en: { term: "Business Continuity Plan", explanation: "A document that outlines how a business will continue operating during an unplanned disruption in service." },
       aliases: ["BCP", "business continuity plan"],
       related: ["disaster_recovery", "rto", "rpo"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "disaster_recovery",
@@ -5145,7 +5405,8 @@
       en: { term: "Disaster Recovery", explanation: "A set of policies, tools and procedures to enable the recovery or continuation of vital technology infrastructure following a natural or human-induced disaster." },
       aliases: ["DR", "disaster recovery"],
       related: ["business_continuity_plan", "backup"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "rto",
@@ -5164,7 +5425,8 @@
       en: { term: "Recovery Time Objective", explanation: "The targeted duration of time and a service level within which a business process must be restored after a disaster." },
       aliases: ["目標復旧時間", "RTO"],
       related: ["business_continuity_plan", "rpo"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "rpo",
@@ -5183,7 +5445,8 @@
       en: { term: "Recovery Point Objective", explanation: "The maximum acceptable amount of data loss measured in time, representing the age of files that must be recovered from backup storage." },
       aliases: ["目標復旧時点", "RPO"],
       related: ["business_continuity_plan", "rto"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "quality_management",
@@ -5202,7 +5465,8 @@
       en: { term: "Quality Management", explanation: "The act of overseeing all activities and tasks that must be accomplished to maintain a desired level of excellence." },
       aliases: ["品質制御", "quality management"],
       related: ["pdca_cycle", "kpi"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "pdca_cycle",
@@ -5221,7 +5485,8 @@
       en: { term: "PDCA Cycle", explanation: "An iterative four-step management method used in business for the control and continuous improvement of processes and products." },
       aliases: ["デミングサイクル", "pdca"],
       related: ["quality_management", "kpi"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "kpi",
@@ -5240,7 +5505,8 @@
       en: { term: "Key Performance Indicator", explanation: "A quantifiable measure used to evaluate the success of an organization or employee in meeting objectives." },
       aliases: ["主要業績指標", "KPI"],
       related: ["quality_management", "pdca_cycle"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "roi",
@@ -5259,7 +5525,8 @@
       en: { term: "Return on Investment", explanation: "A ratio or percentage used to evaluate the efficiency or profitability of an investment." },
       aliases: ["投資回収率", "ROI"],
       related: ["cost_benefit_analysis", "tco"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "tco",
@@ -5278,7 +5545,8 @@
       en: { term: "Total Cost of Ownership", explanation: "A financial estimate intended to help buyers determine the direct and indirect costs of a product or system." },
       aliases: ["総コスト", "TCO"],
       related: ["cost_benefit_analysis", "roi"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "vulnerability_scan",
@@ -5297,7 +5565,8 @@
       en: { term: "Vulnerability Scan", explanation: "An automated process of identifying and reporting security weaknesses in network systems and applications." },
       aliases: ["セキュリティ診断", "vulnerability scan"],
       related: ["vulnerability", "security_patch"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "security_patch",
@@ -5316,7 +5585,8 @@
       en: { term: "Security Patch", explanation: "A software update designed to fix vulnerabilities and security bugs in an operating system or application." },
       aliases: ["修正パッチ", "security patch"],
       related: ["vulnerability", "vulnerability_scan"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "exploit",
@@ -5335,7 +5605,8 @@
       en: { term: "Exploit", explanation: "A piece of software, data, or sequence of commands that takes advantage of a bug or vulnerability to cause unintended behavior." },
       aliases: ["攻撃コード", "exploit"],
       related: ["vulnerability", "zero_day"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "privilege_escalation",
@@ -5354,7 +5625,8 @@
       en: { term: "Privilege Escalation", explanation: "The act of exploiting a bug or design flaw in a software system to gain elevated access to resources." },
       aliases: ["権限奪取", "privilege escalation"],
       related: ["vulnerability", "access_control"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "access_token",
@@ -5373,7 +5645,8 @@
       en: { term: "Access Token", explanation: "An object encasing the security credentials for a login session, used by APIs to verify authorization." },
       aliases: ["トークン", "access token"],
       related: ["authentication", "authorization", "refresh_token"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "refresh_token",
@@ -5392,7 +5665,8 @@
       en: { term: "Refresh Token", explanation: "A special token used to obtain a new access token when the current access token expires." },
       aliases: ["更新トークン", "refresh token"],
       related: ["access_token", "authentication"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "oauth",
@@ -5411,7 +5685,8 @@
       en: { term: "OAuth", explanation: "An open standard for access delegation, commonly used as a way for Internet users to grant websites or applications access to their information." },
       aliases: ["OAuth2.0", "oauth"],
       related: ["authorization", "access_token"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "dmz",
@@ -5430,7 +5705,8 @@
       en: { term: "DMZ (Demilitarized Zone)", explanation: "A physical or logical subnetwork that contains and exposes an organization's external-facing services to an untrusted network." },
       aliases: ["非武装地帯", "DMZ"],
       related: ["firewall", "ip_address"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "ids",
@@ -5449,7 +5725,8 @@
       en: { term: "IDS (Intrusion Detection System)", explanation: "A device or software application that monitors a network or systems for malicious activity or policy violations." },
       aliases: ["IDS", "Intrusion Detection System"],
       related: ["firewall", "ips"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "ips",
@@ -5468,7 +5745,8 @@
       en: { term: "IPS (Intrusion Prevention System)", explanation: "A network security technology that monitors network activities and actively blocks or prevents detected threats." },
       aliases: ["IPS", "Intrusion Prevention System"],
       related: ["firewall", "ids"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "ipv4",
@@ -5487,7 +5765,8 @@
       en: { term: "IPv4", explanation: "The fourth version of the Internet Protocol, utilizing 32-bit addresses to identify devices on a network." },
       aliases: ["IPv4", "IP version 4"],
       related: ["ip_address", "ipv6", "subnet_mask"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "ipv6",
@@ -5506,7 +5785,8 @@
       en: { term: "IPv6", explanation: "The most recent version of the Internet Protocol, utilizing 128-bit addresses to accommodate growing network demands." },
       aliases: ["IPv6", "IP version 6"],
       related: ["ip_address", "ipv4"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "subnet_mask",
@@ -5525,7 +5805,8 @@
       en: { term: "Subnet Mask", explanation: "A 32-bit number that masks an IP address, dividing the IP address into network address and host address." },
       aliases: ["ネットマスク", "subnet mask"],
       related: ["ip_address", "subnet"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "default_gateway",
@@ -5544,7 +5825,8 @@
       en: { term: "Default Gateway", explanation: "The node on a computer network that the network software uses when an IP address does not match any other routes." },
       aliases: ["ゲートウェイ", "default gateway"],
       related: ["router", "ip_address"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "routing",
@@ -5563,7 +5845,8 @@
       en: { term: "Routing", explanation: "The process of selecting a path for traffic in a network or between or across multiple networks." },
       aliases: ["経路制御", "routing"],
       related: ["router", "ip_address"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "icmp",
@@ -5582,7 +5865,8 @@
       en: { term: "ICMP", explanation: "Internet Control Message Protocol, used by network devices to send error messages and operational information." },
       aliases: ["ICMP", "Internet Control Message Protocol"],
       related: ["ip_address", "ping"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "ping",
@@ -5601,7 +5885,8 @@
       en: { term: "ping", explanation: "A computer network administration software utility used to test the reachability of a host on an Internet Protocol (IP) network." },
       aliases: ["ピン", "ピング", "ping command"],
       related: ["icmp", "ip_address"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "bandwidth",
@@ -5620,7 +5905,8 @@
       en: { term: "Bandwidth", explanation: "The maximum rate of data transfer across a given path or network connection." },
       aliases: ["通信帯域", "bandwidth"],
       related: ["ip_address"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "web_application",
@@ -5639,7 +5925,8 @@
       en: { term: "Web Application", explanation: "An application program that is stored on a remote server and delivered over the Internet through a browser interface." },
       aliases: ["Webアプリ", "web application"],
       related: ["api", "http"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "rest_endpoint",
@@ -5658,7 +5945,8 @@
       en: { term: "REST Endpoint", explanation: "A specific URL in a web API that represents a resource and handles incoming HTTP requests." },
       aliases: ["APIエンドポイント", "rest endpoint"],
       related: ["rest_api", "url"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "http_header",
@@ -5677,7 +5965,8 @@
       en: { term: "HTTP Header", explanation: "The component of an HTTP request or response message that passes additional metadata context about the request or response." },
       aliases: ["HTTPリクエストヘッダー", "http header"],
       related: ["http", "https"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "query_parameter",
@@ -5696,7 +5985,8 @@
       en: { term: "Query Parameter", explanation: "A set of key-value pairs appended to the end of a URL, starting with a question mark, used to pass parameters to the server." },
       aliases: ["URLパラメータ", "query parameter"],
       related: ["url", "api"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "response_code",
@@ -5715,7 +6005,8 @@
       en: { term: "HTTP Status Code", explanation: "A 3-digit number returned by a Web server to communicate the processing outcome of an HTTP request." },
       aliases: ["ステータスコード", "http status code"],
       related: ["status_code", "http"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "web_storage",
@@ -5734,7 +6025,8 @@
       en: { term: "Web Storage", explanation: "A web application software technology that allows websites to store data in a user's browser, comprising local and session storage." },
       aliases: ["HTML5ストレージ", "web storage"],
       related: ["cookie", "session"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "git_status",
@@ -5753,7 +6045,8 @@
       en: { term: "git status", explanation: "A Git command used to display the state of the working directory and the staging area." },
       aliases: ["git status", "status命令"],
       related: ["version_control"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "git_stash",
@@ -5772,7 +6065,8 @@
       en: { term: "git stash", explanation: "A Git command that temporarily shelves (or stashes) changes you've made to your working copy so you can work on something else." },
       aliases: ["git stash", "stash命令"],
       related: ["version_control"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "static_analysis",
@@ -5791,7 +6085,8 @@
       en: { term: "Static Analysis", explanation: "A method of computer program debugging that is done by examining the code without executing the program." },
       aliases: ["静的コード解析", "static analysis"],
       related: ["debugging", "testing"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "integration_testing",
@@ -5810,7 +6105,8 @@
       en: { term: "Integration Testing", explanation: "A level of software testing where individual units are combined and tested as a group to expose faults in interaction." },
       aliases: ["連結テスト", "integration testing"],
       related: ["testing", "unit_test"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "iaas",
@@ -5829,7 +6125,8 @@
       en: { term: "IaaS (Infrastructure as a Service)", explanation: "A form of cloud computing that delivers virtualized computing resources over the internet." },
       aliases: ["IaaS", "Infrastructure as a Service"],
       related: ["cloud_computing", "paas", "saas"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "paas",
@@ -5848,7 +6145,8 @@
       en: { term: "PaaS (Platform as a Service)", explanation: "A category of cloud computing services that provides a platform allowing customers to develop, run, and manage applications." },
       aliases: ["PaaS", "Platform as a Service"],
       related: ["cloud_computing", "iaas", "saas"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "saas",
@@ -5867,7 +6165,8 @@
       en: { term: "SaaS (Software as a Service)", explanation: "A software licensing and delivery model in which software is licensed on a subscription basis and centrally hosted." },
       aliases: ["SaaS", "Software as a Service"],
       related: ["cloud_computing", "iaas", "paas"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "container",
@@ -5886,7 +6185,8 @@
       en: { term: "Containerization", explanation: "A lightweight virtualization method that packages an application's code and all its dependencies so it runs quickly and reliably from one computing environment to another." },
       aliases: ["コンテナ仮想化", "container"],
       related: ["virtualization", "operating_system"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "business_model",
@@ -5905,7 +6205,8 @@
       en: { term: "Business Model", explanation: "A design for the successful operation of a business, identifying revenue sources, customer base, products, and details of financing." },
       aliases: ["business model","事業モデル"],
       related: ["information_system"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "value_chain",
@@ -5924,7 +6225,8 @@
       en: { term: "Value Chain", explanation: "A high-level model showing how businesses receive raw materials, add value to them through various processes, and sell finished products." },
       aliases: ["value chain","価値連鎖"],
       related: ["business_process"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "swot_analysis",
@@ -5943,7 +6245,8 @@
       en: { term: "SWOT Analysis", explanation: "A strategic planning framework used to identify and analyze an organization's Strengths, Weaknesses, Opportunities, and Threats." },
       aliases: ["SWOT","swot analysis"],
       related: ["risk_assessment"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "balanced_scorecard",
@@ -5962,7 +6265,8 @@
       en: { term: "Balanced Scorecard (BSC)", explanation: "A strategic management performance metric used to identify, improve, and control a business's various functions and resulting outcomes." },
       aliases: ["BSC","balanced scorecard"],
       related: ["kpi"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "business_requirement",
@@ -5981,7 +6285,8 @@
       en: { term: "Business Requirement", explanation: "A statement of the business need, goals, and objectives that must be addressed by a system or project." },
       aliases: ["業務要求","business requirements"],
       related: ["system_lifecycle"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "system_requirement",
@@ -6000,7 +6305,8 @@
       en: { term: "System Requirement", explanation: "The specific functional and non-functional specifications that describe what a system must do and how it must perform." },
       aliases: ["システム要求","system requirements"],
       related: ["system_lifecycle"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "functional_requirement",
@@ -6019,7 +6325,8 @@
       en: { term: "Functional Requirement", explanation: "A specification of a behavior or direct function that a system or component must be able to perform." },
       aliases: ["機能要件定義","functional requirement"],
       related: ["system_requirement"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "nonfunctional_requirement",
@@ -6038,7 +6345,8 @@
       en: { term: "Non-functional Requirement", explanation: "A requirement that specifies criteria that can be used to judge the operation of a system, rather than specific behaviors." },
       aliases: ["非機能要件定義","non-functional requirement"],
       related: ["system_requirement","confidentiality"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "user_acceptance",
@@ -6057,7 +6365,8 @@
       en: { term: "User Acceptance Testing (UAT)", explanation: "The final phase of software testing, where actual users test the software in real-world scenarios to ensure it meets business needs." },
       aliases: ["受入検査","UAT","user acceptance testing"],
       related: ["testing"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "service_catalog",
@@ -6076,7 +6385,8 @@
       en: { term: "Service Catalog", explanation: "A comprehensive list of information about the active IT services that an organization provides to its customers and users." },
       aliases: ["service catalog","サービスの一覧表"],
       related: ["service_management","itil"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "escalation",
@@ -6095,7 +6405,8 @@
       en: { term: "Escalation", explanation: "The process of transferring a customer issue, support ticket, or alert to a team member with more expertise or higher authority." },
       aliases: ["escalation","上位部門への引き継ぎ"],
       related: ["incident_management","help_desk"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "root_cause_analysis",
@@ -6114,7 +6425,8 @@
       en: { term: "Root Cause Analysis (RCA)", explanation: "A systematic process for identifying root causes of problems or events and an approach for responding to them." },
       aliases: ["RCA","root cause analysis"],
       related: ["problem_management"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "workaround",
@@ -6133,7 +6445,8 @@
       en: { term: "Workaround", explanation: "A temporary method for achieving a desired goal or service recovery when a software bug or system issue prevents normal operation." },
       aliases: ["回避策","workaround"],
       related: ["incident_management","problem_management"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "change_request",
@@ -6152,7 +6465,8 @@
       en: { term: "Request for Change (RFC)", explanation: "A formal proposal for an alteration to be made to a configuration item or system within the IT infrastructure." },
       aliases: ["RFC","request for change"],
       related: ["change_management"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "procurement_contract",
@@ -6171,7 +6485,8 @@
       en: { term: "Procurement Contract", explanation: "A legally binding agreement between a buyer and a seller for the acquisition of goods, services, or system construction." },
       aliases: ["procurement contract","調達の契約"],
       related: ["outsourcing"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "compliance_check",
@@ -6190,7 +6505,8 @@
       en: { term: "Compliance Check", explanation: "The process of verifying that operations, systems, and actions adhere to governing laws, industry standards, and internal regulations." },
       aliases: ["合规性审查","compliance checking"],
       related: ["compliance"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "database_instance",
@@ -6209,7 +6525,8 @@
       en: { term: "Database Instance", explanation: "The combination of memory structures and background processes that run a database management system." },
       aliases: ["DBインスタンス","database instance"],
       related: ["database"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "database_engine",
@@ -6228,7 +6545,8 @@
       en: { term: "Database Engine", explanation: "The underlying software component that a database management system uses to create, read, update, and delete data from a database." },
       aliases: ["ストレージエンジン","database engine"],
       related: ["database"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "database_connection",
@@ -6247,7 +6565,8 @@
       en: { term: "Database Connection", explanation: "A communication session established between an application and a database server to exchange commands and data." },
       aliases: ["DB接続","database connection"],
       related: ["database"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "connection_pool",
@@ -6266,7 +6585,8 @@
       en: { term: "Connection Pool", explanation: "A cache of database connections maintained so that the connections can be reused when future requests to the database are required." },
       aliases: ["接続プール","connection pooling"],
       related: ["database_connection"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "sql_transaction",
@@ -6285,7 +6605,8 @@
       en: { term: "SQL Transaction", explanation: "A sequence of database operations executed as a single logical unit of work, ensuring all succeed or none do." },
       aliases: ["トランザクション処理","sql transaction"],
       related: ["transaction","acid_properties"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "transaction_log",
@@ -6304,7 +6625,8 @@
       en: { term: "Transaction Log", explanation: "A history of database transactions, used to recover the database in the event of a crash or storage failure." },
       aliases: ["更新ログ","transaction log"],
       related: ["transaction","backup"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "savepoint",
@@ -6323,7 +6645,8 @@
       en: { term: "Savepoint", explanation: "A point inside a database transaction that allows rolling back part of the transaction rather than the entire process." },
       aliases: ["SAVEPOINT","savepoint statement"],
       related: ["transaction","rollback"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "first_normal_form",
@@ -6342,7 +6665,8 @@
       en: { term: "First Normal Form (1NF)", explanation: "A property of a relation in a database indicating that the domain of each attribute contains only atomic values." },
       aliases: ["1NF","first normal form"],
       related: ["normalization"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "second_normal_form",
@@ -6361,7 +6685,8 @@
       en: { term: "Second Normal Form (2NF)", explanation: "A state of a database relation that is in 1NF and contains no partial functional dependency of non-prime attributes on any candidate key." },
       aliases: ["2NF","second normal form"],
       related: ["normalization","first_normal_form"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "third_normal_form",
@@ -6380,7 +6705,8 @@
       en: { term: "Third Normal Form (3NF)", explanation: "A relation in 2NF where every non-prime attribute is non-transitively dependent on every candidate key." },
       aliases: ["3NF","third normal form"],
       related: ["normalization","second_normal_form"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "denormalization",
@@ -6399,7 +6725,8 @@
       en: { term: "Denormalization", explanation: "The process of adding redundant data to a normalized database in order to improve read performance." },
       aliases: ["反正規化","denormalization"],
       related: ["normalization"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "entity",
@@ -6418,7 +6745,8 @@
       en: { term: "Entity", explanation: "A distinct, identifiable thing, person, or concept in the real world that is modeled and stored in a database." },
       aliases: ["実体","entity"],
       related: ["database_schema"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "attribute",
@@ -6437,7 +6765,8 @@
       en: { term: "Attribute", explanation: "A database field or property that describes an characteristic of a specific database entity." },
       aliases: ["アトリビュート","属性"],
       related: ["entity","column"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "relationship",
@@ -6456,7 +6785,8 @@
       en: { term: "Relationship", explanation: "An association or correlation between two or more entities in a relational database model." },
       aliases: ["関連","relationship"],
       related: ["entity","foreign_key"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "java_main_method",
@@ -6475,7 +6805,8 @@
       en: { term: "Java main method", explanation: "The predefined entry point where a Java application starts executing, declared as static void main." },
       aliases: ["mainメソッド","main method"],
       related: ["java_class"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "java_compiler",
@@ -6494,7 +6825,8 @@
       en: { term: "Java Compiler", explanation: "The compiler program (javac) that translates Java source code into platform-independent Java bytecode." },
       aliases: ["javac","javacコマンド"],
       related: ["jvm","bytecode"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "classpath",
@@ -6513,7 +6845,8 @@
       en: { term: "Classpath", explanation: "A parameter in the Java Virtual Machine that tells the compiler and runtime where to look for user-defined classes and packages." },
       aliases: ["classpath","クラスパス設定"],
       related: ["java_class"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "jar_file",
@@ -6532,7 +6865,8 @@
       en: { term: "JAR File", explanation: "A package file format typically used to aggregate many Java class files and associated metadata into one archive file." },
       aliases: ["jar","JAR","Java Archive"],
       related: ["package"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "java_interface_implementation",
@@ -6551,7 +6885,8 @@
       en: { term: "Interface Implementation", explanation: "The mechanism in Java where a class uses the 'implements' keyword to fulfill the contract defined by an interface." },
       aliases: ["implements","インターフェースの実装"],
       related: ["interface","class"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "anonymous_class",
@@ -6570,7 +6905,8 @@
       en: { term: "Anonymous Class", explanation: "An inner class without a name in Java that is declared and instantiated at the same time." },
       aliases: ["匿名インナークラス","anonymous inner class"],
       related: ["class","interface"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "inner_class",
@@ -6589,7 +6925,8 @@
       en: { term: "Inner Class", explanation: "A class defined within another enclosing class in Java, allowing access to members of the outer class." },
       aliases: ["インナークラス","inner class"],
       related: ["class"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "static_block",
@@ -6608,7 +6945,8 @@
       en: { term: "Static Block", explanation: "A block of code declared with static keyword that is executed once when the class is loaded into memory." },
       aliases: ["staticブロック","static initialization block"],
       related: ["static_keyword"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "immutable_object",
@@ -6627,7 +6965,8 @@
       en: { term: "Immutable Object", explanation: "An object whose state cannot be modified after it is created, preventing unintended state side effects." },
       aliases: ["イミュータブルオブジェクト","immutable object"],
       related: ["object","final_keyword"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "equals_method",
@@ -6646,7 +6985,8 @@
       en: { term: "equals method", explanation: "A method in Java used to compare two objects for semantic equality, comparing values instead of memory references." },
       aliases: ["equals","equals()"],
       related: ["object_reference"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "hashcode_method",
@@ -6665,7 +7005,8 @@
       en: { term: "hashCode method", explanation: "A method that returns an integer hash code value for the object, used to support hash-based collections." },
       aliases: ["hashCode","hashCode()"],
       related: ["equals_method"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "java_exception",
@@ -6684,7 +7025,8 @@
       en: { term: "Java Exception", explanation: "An event or error that occurs during the execution of a Java program, represented as an instance of an Exception class." },
       aliases: ["Javaの例外","java exception"],
       related: ["exception","try_catch"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "python_module_import",
@@ -6703,7 +7045,8 @@
       en: { term: "Python Module Import", explanation: "The mechanism of bringing code from one Python module or library into another file using the import statement." },
       aliases: ["import","Pythonインポート"],
       related: ["import_statement","python_module"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "python_namespace",
@@ -6722,7 +7065,8 @@
       en: { term: "Python Namespace", explanation: "A system in Python that ensures object names are unique and can be referenced without conflict, mapping names to objects." },
       aliases: ["名前空間","python namespace"],
       related: ["variable"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "python_list_method",
@@ -6741,7 +7085,8 @@
       en: { term: "Python List Method", explanation: "Built-in functions available on Python list objects to manipulate elements, such as append, insert, or pop." },
       aliases: ["listメソッド","list methods"],
       related: ["python_list"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "python_dict_method",
@@ -6760,7 +7105,8 @@
       en: { term: "Python Dictionary Method", explanation: "Built-in functions available on Python dictionary objects to manage key-value pairs, such as keys, values, or get." },
       aliases: ["dictメソッド","dict methods"],
       related: ["python_dict"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "python_set_operation",
@@ -6779,7 +7125,8 @@
       en: { term: "Python Set Operation", explanation: "Mathematical operations like union, intersection, and difference performed natively on Python set objects." },
       aliases: ["集合演算","set operations"],
       related: ["python_set"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "python_string_method",
@@ -6798,7 +7145,8 @@
       en: { term: "Python String Method", explanation: "Built-in operations available on Python string objects, such as split, join, strip, or replace." },
       aliases: ["strメソッド","string methods"],
       related: ["python_string"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "python_exception",
@@ -6817,7 +7165,8 @@
       en: { term: "Python Exception", explanation: "An error detected during execution of a Python program, causing the program to raise an exception object." },
       aliases: ["Pythonの例外","python exception"],
       related: ["exception","python_try_except"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "value_error",
@@ -6836,7 +7185,8 @@
       en: { term: "ValueError", explanation: "A built-in Python exception raised when a function receives an argument that has the right type but an inappropriate value." },
       aliases: ["ValueError","バリューエラー"],
       related: ["python_exception"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "type_error",
@@ -6855,7 +7205,8 @@
       en: { term: "TypeError", explanation: "A built-in Python exception raised when an operation or function is applied to an object of inappropriate type." },
       aliases: ["TypeError","タイプエラー"],
       related: ["python_exception","data_type"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "key_error",
@@ -6874,7 +7225,8 @@
       en: { term: "KeyError", explanation: "A built-in Python exception raised when a dictionary key is not found in the set of existing keys." },
       aliases: ["KeyError","キーエラー"],
       related: ["python_exception","python_dict"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "index_error",
@@ -6893,7 +7245,8 @@
       en: { term: "IndexError", explanation: "A built-in Python exception raised when a sequence subscript is out of range." },
       aliases: ["IndexError","インデックスエラー"],
       related: ["python_exception","python_list"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "python_logging",
@@ -6912,7 +7265,8 @@
       en: { term: "Python Logging Module", explanation: "Python's built-in module for producing log messages with customized formatting and varying severity levels." },
       aliases: ["logging","ロギングモジュール"],
       related: ["debugging"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "aaa_security",
@@ -6931,7 +7285,8 @@
       en: { term: "AAA Framework", explanation: "An architectural framework for configuring system security services, representing Authentication, Authorization, and Accounting." },
       aliases: ["AAA","triple-A security"],
       related: ["authentication","authorization"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "password_hashing",
@@ -6950,7 +7305,8 @@
       en: { term: "Password Hashing", explanation: "The practice of transforming a plain-text password into a fixed-length string of characters using a one-way mathematical function." },
       aliases: ["パスワードハッシュ","password hashing"],
       related: ["hashing"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "salt_cryptography",
@@ -6969,7 +7325,8 @@
       en: { term: "Cryptographic Salt", explanation: "Random data used as an additional input to a one-way function that hashes data, a password, or a passphrase." },
       aliases: ["ソルト値","salt in cryptography"],
       related: ["password_hashing"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "key_management",
@@ -6988,7 +7345,8 @@
       en: { term: "Key Management", explanation: "The management of cryptographic keys in a cryptosystem, including key generation, exchange, storage, and replacement." },
       aliases: ["鍵の管理","key management"],
       related: ["encryption"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "secret_key",
@@ -7007,7 +7365,8 @@
       en: { term: "Secret Key (Symmetric Key)", explanation: "A piece of information used in symmetric cryptography to both encrypt and decrypt data, which must be kept secret." },
       aliases: ["秘密鍵 (共通鍵)","secret key","symmetric key"],
       related: ["symmetric_encryption"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "public_key_certificate",
@@ -7026,7 +7385,8 @@
       en: { term: "Public Key Certificate", explanation: "An electronic document used to prove the ownership of a public key, digitally signed by a Certificate Authority." },
       aliases: ["デジタル証明書","public key certificate","CA証明書"],
       related: ["asymmetric_encryption","public_key"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "certificate_chain",
@@ -7045,7 +7405,8 @@
       en: { term: "Certificate Chain", explanation: "A list of certificates containing an end-entity certificate and intermediate certificates that leads to a trusted root certificate." },
       aliases: ["信頼の鎖","certificate chain"],
       related: ["public_key_certificate"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "tls_handshake",
@@ -7064,7 +7425,8 @@
       en: { term: "TLS Handshake", explanation: "The protocol used by TLS to negotiate encryption algorithms, authenticate servers, and establish shared secrets." },
       aliases: ["TLS握手","tls handshake"],
       related: ["tls","https"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "trojan_horse",
@@ -7083,7 +7445,8 @@
       en: { term: "Trojan Horse", explanation: "A type of malware that misleads users of its true intent by masquerading as a legitimate, benign program." },
       aliases: ["トロイの木馬マルウェア","trojan horse"],
       related: ["malware"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "computer_worm",
@@ -7102,7 +7465,8 @@
       en: { term: "Computer Worm", explanation: "A standalone malware computer program that replicates itself in order to spread to other computers via networks." },
       aliases: ["ワーム","computer worm"],
       related: ["malware"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "botnet",
@@ -7121,7 +7485,8 @@
       en: { term: "Botnet", explanation: "A network of private computers infected with malicious software and controlled as a group without the owners' knowledge." },
       aliases: ["ボットネットワーク","botnet"],
       related: ["malware","brute_force_attack"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "ddos_attack",
@@ -7140,7 +7505,8 @@
       en: { term: "Distributed Denial of Service (DDoS)", explanation: "A cyber-attack in which multiple compromised computer systems attack a target server, causing a denial of service for users." },
       aliases: ["DDoS","ddos attack","分散DoS"],
       related: ["malware","botnet"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "lan",
@@ -7159,7 +7525,8 @@
       en: { term: "LAN (Local Area Network)", explanation: "A computer network that links devices within a limited geographical area such as a home, school, computer laboratory, office building." },
       aliases: ["LAN","local area network"],
       related: ["ip_address"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "wan",
@@ -7178,7 +7545,8 @@
       en: { term: "WAN (Wide Area Network)", explanation: "A telecommunications network that extends over a large geographical area for the primary purpose of computer networking." },
       aliases: ["WAN","wide area network"],
       related: ["lan"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "wlan",
@@ -7197,7 +7565,8 @@
       en: { term: "WLAN (Wireless Local Area Network)", explanation: "A wireless computer network that links two or more devices using wireless distribution method within a limited area." },
       aliases: ["WLAN","Wi-Fi","wireless LAN"],
       related: ["lan"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "vlan",
@@ -7216,7 +7585,8 @@
       en: { term: "VLAN (Virtual Local Area Network)", explanation: "Any broadcast domain that is partitioned and isolated in a computer network at the data link layer." },
       aliases: ["VLAN","virtual LAN"],
       related: ["lan","subnet"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "ethernet",
@@ -7235,7 +7605,8 @@
       en: { term: "Ethernet", explanation: "A family of wired computer networking technologies commonly used in local area networks (LAN) and wide area networks (WAN)." },
       aliases: ["イーサ規格","ethernet"],
       related: ["mac_address"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "network_switch",
@@ -7254,7 +7625,8 @@
       en: { term: "Network Switch", explanation: "A networking device that connects devices on a computer network by using packet switching to receive and forward data to the destination device." },
       aliases: ["L2スイッチ","スイッチングハブ","network switch"],
       related: ["mac_address","router"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "port_number",
@@ -7273,7 +7645,8 @@
       en: { term: "Port Number", explanation: "A logical address assigned to a specific process or application on a computer, used in transport layer protocols like TCP and UDP." },
       aliases: ["ポート番号","port number"],
       related: ["ip_address"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "well_known_port",
@@ -7292,7 +7665,8 @@
       en: { term: "Well-known Port", explanation: "Port numbers in the range of 0 to 1023 assigned by IANA for standard, widely-used internet services and protocols." },
       aliases: ["ウェルノウンポート","well-known ports"],
       related: ["port_number"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "three_way_handshake",
@@ -7311,7 +7685,8 @@
       en: { term: "Three-way Handshake", explanation: "A process used in a TCP/IP network to make a connection between a client and a server, involving SYN, SYN-ACK, and ACK packets." },
       aliases: ["3ウェイ・ハンドシェイク","three-way handshake"],
       related: ["tcp"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "udp_datagram",
@@ -7330,7 +7705,8 @@
       en: { term: "UDP Datagram", explanation: "A basic transfer unit associated with the User Datagram Protocol, containing source/destination ports, length, checksum, and payload." },
       aliases: ["データグラム","udp datagram"],
       related: ["udp"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "cpu",
@@ -7349,7 +7725,8 @@
       en: { term: "CPU (Central Processing Unit)", explanation: "The primary component of a computer that acts as its 'brain,' performing arithmetic, logical, control and input/output operations specified by instructions." },
       aliases: ["プロセッサ","中央処理装置","CPU"],
       related: ["memory"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "gpu",
@@ -7368,7 +7745,8 @@
       en: { term: "GPU (Graphics Processing Unit)", explanation: "A specialized electronic circuit designed to manipulate and alter memory to accelerate the creation of images, and run parallel compute-intensive tasks." },
       aliases: ["グラフィックボード","グラフィックスプロセッサ","GPU"],
       related: ["cpu"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "ram",
@@ -7387,7 +7765,8 @@
       en: { term: "RAM (Random Access Memory)", explanation: "A form of computer memory that can be read and changed in any order, typically used to store working data and machine code." },
       aliases: ["メインメモリ","主記憶装置","RAM"],
       related: ["memory","rom"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "rom",
@@ -7406,7 +7785,8 @@
       en: { term: "ROM (Read-Only Memory)", explanation: "A type of non-volatile memory used in computers and other electronic devices, which cannot be easily modified after creation." },
       aliases: ["リードオンリーメモリ","ROM"],
       related: ["memory","ram"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "operating_system_kernel",
@@ -7425,7 +7805,8 @@
       en: { term: "OS Kernel", explanation: "The core component of an operating system, managing the system's resources and the communication between hardware and software." },
       aliases: ["カーネル","kernel"],
       related: ["operating_system","kernel"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "system_call",
@@ -7444,7 +7825,8 @@
       en: { term: "System Call", explanation: "The programmatic way in which a computer program requests a service from the kernel of the operating system it is executed on." },
       aliases: ["システム呼び出し","system call"],
       related: ["operating_system_kernel"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "daemon_process",
@@ -7463,7 +7845,8 @@
       en: { term: "Daemon Process", explanation: "A computer program that runs as a background process, rather than being under the direct control of an interactive user." },
       aliases: ["常駐プロセス","daemon","デーモン"],
       related: ["process"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "log_rotation",
@@ -7482,7 +7865,8 @@
       en: { term: "Log Rotation", explanation: "An automated process in system administration where log files are archived, renamed, and deleted when they grow too large or old." },
       aliases: ["ログローテ","log rotation"],
       related: ["backup"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "http_cookie",
@@ -7501,7 +7885,8 @@
       en: { term: "HTTP Cookie", explanation: "A small piece of data stored on the user's computer by the web browser while browsing a website, to remember stateful information." },
       aliases: ["クッキー","Cookie","HTTP cookie"],
       related: ["cookie","session"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "same_origin_policy",
@@ -7520,7 +7905,8 @@
       en: { term: "Same-Origin Policy", explanation: "A critical security mechanism implemented by browsers that restricts how a document or script loaded from one origin can interact with a resource from another origin." },
       aliases: ["同一生成元ポリシー","same-origin policy"],
       related: ["cors"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "csrf_token",
@@ -7539,7 +7925,8 @@
       en: { term: "CSRF Token", explanation: "A unique, secret, and unpredictable value generated by the server-side application to defend against Cross-Site Request Forgery attacks." },
       aliases: ["CSRF対策トークン","anti-CSRF token"],
       related: ["session"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "bearer_token",
@@ -7558,7 +7945,8 @@
       en: { term: "Bearer Token", explanation: "A security token that grants access to whoever holds it, sent in the HTTP Authorization header." },
       aliases: ["Bearerトークン","bearer token"],
       related: ["access_token"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "webhook",
@@ -7577,7 +7965,8 @@
       en: { term: "Webhook", explanation: "A method of altering the behavior of a web page or web application with custom callbacks, triggered by events." },
       aliases: ["ウェブフック","webhook"],
       related: ["api"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "http_cache",
@@ -7596,7 +7985,8 @@
       en: { term: "HTTP Cache", explanation: "A temporary storage area that holds web page resources for subsequent requests, reducing server load and rendering delay." },
       aliases: ["ブラウザキャッシュ","http cache"],
       related: ["http"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "git_init",
@@ -7615,7 +8005,8 @@
       en: { term: "git init", explanation: "A Git command used to create a new, empty Git repository or reinitialize an existing one in the current directory." },
       aliases: ["git init","リポジトリ初期化"],
       related: ["version_control"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "git_commit_hash",
@@ -7634,7 +8025,8 @@
       en: { term: "Git Commit Hash", explanation: "A unique 40-character checksum (SHA-1 value) generated by Git to identify a specific commit." },
       aliases: ["SHA-1ハッシュ","commit hash"],
       related: ["version_control"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "smoke_test",
@@ -7653,7 +8045,8 @@
       en: { term: "Smoke Testing", explanation: "A preliminary software testing method to check that the most crucial functions of a program work, but not in details." },
       aliases: ["スモークテスト","smoke testing"],
       related: ["testing"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "end_to_end_test",
@@ -7672,7 +8065,8 @@
       en: { term: "End-to-End Testing (E2E)", explanation: "A software testing methodology that tests the entire software application flow from start to finish in a real-world scenario." },
       aliases: ["E2Eテスト","end-to-end testing"],
       related: ["testing","unit_test"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "public_cloud",
@@ -7691,7 +8085,8 @@
       en: { term: "Public Cloud", explanation: "Cloud computing services offered by third-party providers over the public Internet, making them available to anyone who wants to purchase them." },
       aliases: ["共有クラウド","public cloud"],
       related: ["cloud_computing"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "private_cloud",
@@ -7710,7 +8105,8 @@
       en: { term: "Private Cloud", explanation: "Cloud infrastructure operated solely for a single organization, whether managed internally or by a third party, and hosted internally or externally." },
       aliases: ["専用クラウド","private cloud"],
       related: ["cloud_computing","public_cloud"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "hybrid_cloud",
@@ -7729,7 +8125,8 @@
       en: { term: "Hybrid Cloud", explanation: "A computing environment that combines a public cloud and a private cloud, allowing data and applications to be shared between them." },
       aliases: ["ハイブリッド","hybrid cloud"],
       related: ["cloud_computing","public_cloud","private_cloud"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "rolling_update",
@@ -7748,7 +8145,8 @@
       en: { term: "Rolling Update", explanation: "A deployment strategy that updates a service by gradually replacing old instances of the application with new ones without downtime." },
       aliases: ["段階的デプロイ","rolling update"],
       related: ["container"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "stable_sort",
@@ -7767,7 +8165,8 @@
       en: { term: "Stable Sort", explanation: "A sorting algorithm is stable if it preserves the relative order of equal keys in the sorted output as they were in the input." },
       aliases: ["安定ソート","stable sorting"],
       related: ["sorting_algorithm"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "in_place_sort",
@@ -7786,7 +8185,8 @@
       en: { term: "In-place Sort", explanation: "A sorting algorithm that does not require extra memory space relative to the size of the array, sorting within the input structure." },
       aliases: ["内部ソート","in-place sorting"],
       related: ["sorting_algorithm"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "project_manager",
@@ -7805,7 +8205,8 @@
       en: { term: "Project Manager", explanation: "The person responsible for leading a project from inception to execution, monitoring, and closing." },
       aliases: ["PM"],
       related: ["system_lifecycle"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "project_scope",
@@ -7824,7 +8225,8 @@
       en: { term: "Project Scope", explanation: "The detailed specification of work and deliverables required to complete a project successfully." },
       aliases: ["スコープ"],
       related: ["project_manager","system_lifecycle"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "scope_creep",
@@ -7843,7 +8245,8 @@
       en: { term: "Scope Creep", explanation: "Uncontrolled expansion of project scope without adjustments to time, cost, and resources." },
       aliases: ["範囲の肥大化"],
       related: ["project_scope","change_management"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "work_breakdown_structure",
@@ -7862,7 +8265,8 @@
       en: { term: "Work Breakdown Structure", explanation: "A hierarchical decomposition of the total scope of work to be carried out by the project team." },
       aliases: ["WBS","作業分解構成図"],
       related: ["project_scope","project_manager"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "database_migration",
@@ -7881,7 +8285,8 @@
       en: { term: "Database Migration", explanation: "The process of moving data from one or more source databases to target databases." },
       aliases: ["DB移行"],
       related: ["database_schema","database_connection"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "schema_migration",
@@ -7900,7 +8305,8 @@
       en: { term: "Schema Migration", explanation: "The management of incremental, reversible changes to relational database schemas." },
       aliases: ["スキーマ管理","schema versioning"],
       related: ["database_schema","database_migration"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "data_migration",
@@ -7919,7 +8325,8 @@
       en: { term: "Data Migration", explanation: "The process of transferring data between data storage systems, data formats, or computer systems." },
       aliases: ["データマイグレーション"],
       related: ["database_migration"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "java_polymorphism",
@@ -7938,7 +8345,8 @@
       en: { term: "Java Polymorphism", explanation: "The ability in Java for different classes to respond to the same method call in their own unique way." },
       aliases: ["ポリモーフィズム","多相性"],
       related: ["polymorphism","java_inheritance","override"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "java_encapsulation",
@@ -7957,7 +8365,8 @@
       en: { term: "Java Encapsulation", explanation: "The practice of wrapping data (variables) and code acting on data (methods) together as a single unit in Java." },
       aliases: ["カプセル化"],
       related: ["encapsulation"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "java_inheritance",
@@ -7976,7 +8385,8 @@
       en: { term: "Java Inheritance", explanation: "A mechanism in Java where a new class (subclass) inherits properties and behaviors from an existing class (superclass)." },
       aliases: ["継承"],
       related: ["inheritance","java_polymorphism","super_keyword"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "python_inheritance",
@@ -7995,7 +8405,8 @@
       en: { term: "Python Inheritance", explanation: "The mechanism by which a Python class can inherit attributes and methods from one or parent classes." },
       aliases: ["Python継承"],
       related: ["inheritance","python_super"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "python_super",
@@ -8014,7 +8425,8 @@
       en: { term: "Python super() Function", explanation: "A built-in Python function that returns a proxy object, allowing delegation of method calls to parent classes." },
       aliases: ["super()"],
       related: ["python_inheritance"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "python_magic_method",
@@ -8033,7 +8445,8 @@
       en: { term: "Python Magic Methods", explanation: "Special methods in Python beginning and ending with double underscores, defining object behavior for built-in operations." },
       aliases: ["特殊メソッド","dunder methods"],
       related: ["python_class"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "network_topology",
@@ -8052,7 +8465,8 @@
       en: { term: "Network Topology", explanation: "The physical or logical arrangement of nodes and connections in a network." },
       aliases: ["接続形態","topology"],
       related: ["star_topology","bus_topology"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "star_topology",
@@ -8071,7 +8485,8 @@
       en: { term: "Star Topology", explanation: "A network topology where all nodes are individually connected to a central hub or switch." },
       aliases: ["スター型接続"],
       related: ["network_topology","network_switch"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "bus_topology",
@@ -8090,7 +8505,8 @@
       en: { term: "Bus Topology", explanation: "A network topology where all devices are connected to a single central cable, called the bus." },
       aliases: ["バス型接続"],
       related: ["network_topology"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "zero_trust",
@@ -8109,7 +8525,8 @@
       en: { term: "Zero Trust", explanation: "A security framework requiring all users to be authenticated, authorized, and validated before being granted access." },
       aliases: ["ゼロトラストネットワーク","Zero Trust Architecture"],
       related: ["defense_in_depth","multi_factor_authentication"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "defense_in_depth",
@@ -8128,7 +8545,8 @@
       en: { term: "Defense in Depth", explanation: "An information security strategy integrating multiple layers of security controls throughout an IT system." },
       aliases: ["深層防御","multilayer defense"],
       related: ["zero_trust","firewall"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "endpoint_security",
@@ -8147,7 +8565,8 @@
       en: { term: "Endpoint Security", explanation: "An approach to protecting computer networks that are remotely bridged to client devices." },
       aliases: ["端末セキュリティ"],
       related: ["malware","vulnerability_scan"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "computer_architecture",
@@ -8166,7 +8585,8 @@
       en: { term: "Computer Architecture", explanation: "The conceptual design and operational structure of a computer system." },
       aliases: ["コンピュータ構成","computer organization"],
       related: ["cpu","ram"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "cpu_core",
@@ -8185,7 +8605,8 @@
       en: { term: "CPU Core", explanation: "The physical execution unit within a central processing unit (CPU) that reads and executes instructions." },
       aliases: ["プロセッサコア","core"],
       related: ["cpu"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "http_method",
@@ -8204,7 +8625,8 @@
       en: { term: "HTTP Method", explanation: "The set of request methods to indicate the desired action to be performed for a given resource." },
       aliases: ["リクエストメソッド","HTTP request method"],
       related: ["http","http_get"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "http_get",
@@ -8223,7 +8645,8 @@
       en: { term: "HTTP GET Method", explanation: "The HTTP method used to request data from a specified resource." },
       aliases: ["GETリクエスト","get_method"],
       related: ["http_method"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "source_code",
@@ -8242,7 +8665,8 @@
       en: { term: "Source Code", explanation: "Any collection of code, with or without comments, written using a human-readable programming language." },
       aliases: ["ソース","source file"],
       related: ["version_control","git_init"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "cloud_provider",
@@ -8261,7 +8685,8 @@
       en: { term: "Cloud Provider", explanation: "A third-party company that offers cloud-based platform, infrastructure, application, or storage services." },
       aliases: ["クラウド事業者","cloud service provider"],
       related: ["cloud_computing","iaas","paas","saas"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "risk_register",
@@ -8280,7 +8705,8 @@
       en: { term: "Risk Register", explanation: "A document used for identifying, analyzing, and managing risks throughout the project lifecycle." },
       aliases: ["リスクログ","Risk Log"],
       related: ["change_management"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "issue_log",
@@ -8299,7 +8725,8 @@
       en: { term: "Issue Log", explanation: "A project document where all the issues are recorded and tracked to resolution." },
       aliases: ["イシューログ","Issue Register"],
       related: ["risk_register","change_management"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "stakeholder_analysis",
@@ -8318,7 +8745,8 @@
       en: { term: "Stakeholder Analysis", explanation: "A process of systematically gathering and analyzing qualitative and quantitative information to determine whose interests should be considered." },
       aliases: ["利害関係者分析"],
       related: ["project_manager"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "nondisclosure_agreement",
@@ -8337,7 +8765,8 @@
       en: { term: "Non-Disclosure Agreement", explanation: "A legal contract between parties to protect confidential information shared during business discussions." },
       aliases: ["NDA","守秘義務契約"],
       related: ["compliance_check"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "data_dictionary",
@@ -8356,7 +8785,8 @@
       en: { term: "Data Dictionary", explanation: "A centralized repository of metadata containing definitions of database structure, tables, and columns." },
       aliases: ["データディクショナリ"],
       related: ["database_schema"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "metadata",
@@ -8375,7 +8805,8 @@
       en: { term: "Metadata", explanation: "Data that provides information about other data, describing its structure, origin, or usage." },
       aliases: ["付帯情報"],
       related: ["data_dictionary","database_schema"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "data_integrity",
@@ -8394,7 +8825,8 @@
       en: { term: "Data Integrity", explanation: "The maintenance of, and the assurance of the accuracy and consistency of, data over its entire life-cycle." },
       aliases: ["データインテグリティ"],
       related: ["referential_integrity"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "java_constructor_overload",
@@ -8413,7 +8845,8 @@
       en: { term: "Java Constructor Overloading", explanation: "Defining multiple constructors within a Java class with different parameter lists." },
       aliases: ["コンストラクタの多重定義"],
       related: ["java_constructor","overload"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "java_access_level",
@@ -8432,7 +8865,8 @@
       en: { term: "Java Access Level", explanation: "The accessibility of classes, methods, and variables in Java controlled by access modifiers." },
       aliases: ["アクセス修飾子レベル"],
       related: ["access_modifier","java_encapsulation"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "java_static_variable",
@@ -8451,7 +8885,8 @@
       en: { term: "Java Static Variable", explanation: "A class-level variable in Java marked with static, shared among all instances of that class." },
       aliases: ["クラス変数","static変数"],
       related: ["static_keyword"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "python_eq_method",
@@ -8470,7 +8905,8 @@
       en: { term: "Python __eq__ Method", explanation: "A special Python method called to compare two objects for equality using the == operator." },
       aliases: ["__eq__"],
       related: ["python_magic_method"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "python_str_method",
@@ -8489,7 +8925,8 @@
       en: { term: "Python __str__ Method", explanation: "A special Python method that returns an informal, human-readable string representation of an object." },
       aliases: ["__str__"],
       related: ["python_magic_method"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "python_repr_method",
@@ -8508,7 +8945,8 @@
       en: { term: "Python __repr__ Method", explanation: "A special Python method that returns an official string representation of an object, ideally usable to recreate it." },
       aliases: ["__repr__"],
       related: ["python_magic_method","python_str_method"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "mesh_topology",
@@ -8527,7 +8965,8 @@
       en: { term: "Mesh Topology", explanation: "A network setup where each computer and network device is interconnected with one another." },
       aliases: ["フルメッシュ","網の目状接続"],
       related: ["network_topology"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "network_segment",
@@ -8546,7 +8985,8 @@
       en: { term: "Network Segment", explanation: "A portion of a computer network that is separated from other portions by network devices like routers." },
       aliases: ["セグメント","segment"],
       related: ["subnet"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "default_route",
@@ -8565,7 +9005,8 @@
       en: { term: "Default Route", explanation: "The packet forwarding path configuration used when no explicit route is match for a destination IP." },
       aliases: ["デフォルトゲートウェイルート"],
       related: ["routing","default_gateway"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "vulnerability_assessment",
@@ -8584,7 +9025,8 @@
       en: { term: "Vulnerability Assessment", explanation: "A systematic review of security weaknesses in an information system." },
       aliases: ["脆弱性診断","vulnerability scan-assessment"],
       related: ["vulnerability_scan","endpoint_security"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "phishing_email",
@@ -8603,7 +9045,8 @@
       en: { term: "Phishing Email", explanation: "A fraudulent email sent to trick the recipient into revealing sensitive credentials or information." },
       aliases: ["詐欺メール"],
       related: ["phishing"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "spear_phishing",
@@ -8622,7 +9065,8 @@
       en: { term: "Spear Phishing", explanation: "A targeted phishing method where emails are customized for a specific person or organization." },
       aliases: ["標的型メール攻撃","spear phishing attack"],
       related: ["phishing_email"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "cpu_thread",
@@ -8641,7 +9085,8 @@
       en: { term: "CPU Thread", explanation: "A virtual or logical core that allows a single physical CPU core to execute multiple processes concurrently." },
       aliases: ["論理プロセッサ","logical core"],
       related: ["cpu_core","process"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "memory_leak",
@@ -8660,7 +9105,8 @@
       en: { term: "Memory Leak", explanation: "A failure in a program to release discarded memory, causing performance degradation or crashes." },
       aliases: ["メモリ流出"],
       related: ["memory"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "http_post",
@@ -8679,7 +9125,8 @@
       en: { term: "HTTP POST Method", explanation: "The HTTP method used to send data to a server to create or update a resource." },
       aliases: ["POSTリクエスト","post_method"],
       related: ["http_method","http_get"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "http_put",
@@ -8698,7 +9145,8 @@
       en: { term: "HTTP PUT Method", explanation: "The HTTP method used to replace all current representations of the target resource with the request payload." },
       aliases: ["PUTリクエスト","put_method"],
       related: ["http_method","http_post"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "source_control",
@@ -8717,7 +9165,8 @@
       en: { term: "Source Control", explanation: "The practice of tracking and managing changes to software code over time using specialized systems." },
       aliases: ["バージョン管理システム","source code management","SCM"],
       related: ["version_control"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "compute_instance",
@@ -8736,7 +9185,8 @@
       en: { term: "Compute Instance", explanation: "A virtual server running on a cloud provider's infrastructure, initialized from an OS image." },
       aliases: ["クラウドインスタンス","VM instance"],
       related: ["cloud_computing"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "personal_information_protection",
@@ -8755,7 +9205,8 @@
       en: { term: "Personal Information Protection", explanation: "The legal and technical frameworks to protect personal data from unauthorized access or leakage." },
       aliases: ["個人情報保護法"],
       related: ["privacy"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "privacy_mark",
@@ -8774,7 +9225,8 @@
       en: { term: "PrivacyMark", explanation: "A Japanese certification mark granted to enterprises that have established appropriate systems for protecting personal information." },
       aliases: ["Pマーク"],
       related: ["personal_information_protection"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "corporate_governance",
@@ -8793,7 +9245,8 @@
       en: { term: "Corporate Governance", explanation: "The system of rules, practices, and processes by which a firm is directed and controlled." },
       aliases: ["企業統治"],
       related: ["compliance_check"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "backup_strategy",
@@ -8812,7 +9265,8 @@
       en: { term: "Backup Strategy", explanation: "A systematic plan defining backup frequency, storage locations, and restore procedures to prevent data loss." },
       aliases: ["バックアップポリシー"],
       related: ["backup"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "full_backup",
@@ -8831,7 +9285,8 @@
       en: { term: "Full Backup", explanation: "A backup process where all selected files and data are copied completely to storage." },
       aliases: ["完全バックアップ"],
       related: ["backup_strategy","backup"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "incremental_backup",
@@ -8850,7 +9305,8 @@
       en: { term: "Incremental Backup", explanation: "A backup type that saves only the files that have changed since the last backup of any type." },
       aliases: ["インクリメンタルバックアップ"],
       related: ["backup_strategy","full_backup"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "java_instance_variable",
@@ -8869,7 +9325,8 @@
       en: { term: "Java Instance Variable", explanation: "A variable declared in a Java class but outside any method, with values unique to each instance." },
       aliases: ["メンバー変数","フィールド","instance field"],
       related: ["java_class","java_static_variable"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "java_final_class",
@@ -8888,7 +9345,8 @@
       en: { term: "Java Final Class", explanation: "A class declared with the final keyword in Java, which cannot be inherited by any other class." },
       aliases: ["継承禁止クラス"],
       related: ["final_keyword","java_class"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "java_abstract_method",
@@ -8907,7 +9365,8 @@
       en: { term: "Java Abstract Method", explanation: "A method declared with the abstract keyword in Java, without an implementation, to be overridden by subclasses." },
       aliases: ["abstractメソッド"],
       related: ["abstract_class","override"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "python_property_decorator",
@@ -8926,7 +9385,8 @@
       en: { term: "Python @property Decorator", explanation: "A built-in decorator in Python that allows a method to be accessed like an attribute." },
       aliases: ["property()","プロパティ属性"],
       related: ["decorator","python_class"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "python_staticmethod",
@@ -8945,7 +9405,8 @@
       en: { term: "Python @staticmethod Decorator", explanation: "A decorator that defines a static method in Python, which does not receive implicit self or cls arguments." },
       aliases: ["staticmethod()"],
       related: ["decorator","static_keyword"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "python_classmethod",
@@ -8964,7 +9425,8 @@
       en: { term: "Python @classmethod Decorator", explanation: "A decorator that defines a class method in Python, which receives the class object as its first argument." },
       aliases: ["classmethod()"],
       related: ["decorator","python_staticmethod"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "static_route",
@@ -8983,7 +9445,8 @@
       en: { term: "Static Route", explanation: "A manually configured routing entry in a router's routing table." },
       aliases: ["静的ルーティング","固定経路設定"],
       related: ["routing","default_route"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "dynamic_routing",
@@ -9002,7 +9465,8 @@
       en: { term: "Dynamic Routing", explanation: "A process where routers dynamically adjust routing table entries in response to network changes." },
       aliases: ["動的ルーティング"],
       related: ["routing","static_route"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "credential_stuffing",
@@ -9021,7 +9485,8 @@
       en: { term: "Credential Stuffing", explanation: "A cyberattack where automated tools are used to test stolen credentials against different websites." },
       aliases: ["撞库","credential stuffing attack"],
       related: ["brute_force_attack"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "session_hijacking",
@@ -9040,7 +9505,8 @@
       en: { term: "Session Hijacking", explanation: "An attack where an active user session is intercepted and taken over by an unauthorized user." },
       aliases: ["セッション乗っ取り"],
       related: ["session","cookie"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "cross_site_scripting",
@@ -9059,7 +9525,8 @@
       en: { term: "Cross-Site Scripting", explanation: "A web security vulnerability that allows an attacker to compromise the interactions users have with a vulnerable application." },
       aliases: ["XSS"],
       related: ["cookie","session_hijacking"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "stack_memory",
@@ -9078,7 +9545,8 @@
       en: { term: "Stack Memory", explanation: "The portion of memory used for static memory allocation and thread execution, operating in a LIFO order." },
       aliases: ["スタックメモリ","call stack"],
       related: ["memory","stack"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "heap_memory",
@@ -9097,7 +9565,8 @@
       en: { term: "Heap Memory", explanation: "A region of memory used for dynamic memory allocation, managed manually or via garbage collection." },
       aliases: ["ヒープメモリ"],
       related: ["memory","stack_memory"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "http_delete",
@@ -9116,7 +9585,8 @@
       en: { term: "HTTP DELETE Method", explanation: "The HTTP method used to delete a resource identified by a specific URL." },
       aliases: ["DELETEリクエスト","delete_method"],
       related: ["http_method","http_post"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "http_patch",
@@ -9135,7 +9605,8 @@
       en: { term: "HTTP PATCH Method", explanation: "The HTTP method used to apply partial modifications to a resource." },
       aliases: ["PATCHリクエスト","patch_method"],
       related: ["http_method","http_put"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "working_tree",
@@ -9154,7 +9625,8 @@
       en: { term: "Working Tree", explanation: "The directory on your local file system where you edit the source files managed by Git." },
       aliases: ["作業ディレクトリ","working directory"],
       related: ["version_control"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "staging_area",
@@ -9173,7 +9645,8 @@
       en: { term: "Staging Area", explanation: "A intermediate file directory or index where Git stores changes before committing them." },
       aliases: ["インデックス","Git index","stage"],
       related: ["working_tree","git_commit_hash"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "virtual_network",
@@ -9192,7 +9665,8 @@
       en: { term: "Virtual Network", explanation: "A logically isolated, software-defined network built on top of physical infrastructure." },
       aliases: ["VPC","Virtual Private Cloud"],
       related: ["cloud_computing","vlan"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "algorithm_design",
@@ -9211,7 +9685,8 @@
       en: { term: "Algorithm Design", explanation: "The process of defining the steps and sequences of tasks required to solve a problem programmatically." },
       aliases: ["アルゴリズム考案"],
       related: ["algorithm"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "it_governance",
@@ -9230,7 +9705,8 @@
       en: { term: "IT Governance", explanation: "The framework ensuring that a firm's IT resources are aligned with its business goals and strategies." },
       aliases: ["IT統治"],
       related: ["corporate_governance"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "system_audit",
@@ -9249,7 +9725,8 @@
       en: { term: "System Audit", explanation: "An independent evaluation of a firm's information systems to assess security, efficiency, and compliance." },
       aliases: ["情報システム監査"],
       related: ["it_governance","compliance_check"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "audit_trail_review",
@@ -9268,7 +9745,8 @@
       en: { term: "Audit Trail Review", explanation: "The process of verifying chronological logs of system activities to trace transactions and security events." },
       aliases: ["監査証跡レビュー","audit log verification"],
       related: ["system_audit"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "differential_backup",
@@ -9287,7 +9765,8 @@
       en: { term: "Differential Backup", explanation: "A backup method that copies all files that have changed since the last full backup." },
       aliases: ["ディファレンシャルバックアップ"],
       related: ["full_backup","incremental_backup"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "optimistic_lock",
@@ -9306,7 +9785,8 @@
       en: { term: "Optimistic Locking", explanation: "A concurrency control method that checks for conflicts at commit time, rather than locking records upon read." },
       aliases: ["楽観的排他制御"],
       related: ["transaction"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "pessimistic_lock",
@@ -9325,7 +9805,8 @@
       en: { term: "Pessimistic Locking", explanation: "A concurrency control method that locks records upon retrieval to prevent other transactions from modifying them." },
       aliases: ["悲観的排他制御"],
       related: ["optimistic_lock","deadlock"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "java_interface_method",
@@ -9344,7 +9825,8 @@
       en: { term: "Java Interface Method", explanation: "A method declared within a Java interface, typically public abstract, to be implemented by classes." },
       aliases: ["インターフェースの宣言メソッド"],
       related: ["interface","java_abstract_method"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "java_collection_list",
@@ -9363,7 +9845,8 @@
       en: { term: "Java List Interface", explanation: "A subtype of Collection in Java representing an ordered sequence of elements that allows duplicates." },
       aliases: ["Listコレクション","java.util.List"],
       related: ["collection_framework","array_list"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "java_collection_map",
@@ -9382,7 +9865,8 @@
       en: { term: "Java Map Interface", explanation: "An object in Java that maps keys to values, which cannot contain duplicate keys." },
       aliases: ["Mapコレクション","java.util.Map"],
       related: ["collection_framework","hash_map"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "python_exception_class",
@@ -9401,7 +9885,8 @@
       en: { term: "Python Exception Class", explanation: "A class in Python used to represent errors, which must inherit from the base Exception class." },
       aliases: ["例外型"],
       related: ["python_exception","type_error"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "python_custom_exception",
@@ -9420,7 +9905,8 @@
       en: { term: "Python Custom Exception", explanation: "A user-defined error type created by subclassing Python's built-in Exception class." },
       aliases: ["独自例外クラス"],
       related: ["python_exception_class"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "python_environment_variable",
@@ -9439,7 +9925,8 @@
       en: { term: "Python Environment Variable", explanation: "An external configuration variable managed by the operating system and accessed via os.environ in Python." },
       aliases: ["os.environ"],
       related: ["python_module"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "private_ip_address",
@@ -9458,7 +9945,8 @@
       en: { term: "Private IP Address", explanation: "An IP address reserved for internal use within a local area network (LAN) and not routable on the public internet." },
       aliases: ["ローカルIPアドレス","プライベートIP"],
       related: ["ip_address","public_ip_address"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "public_ip_address",
@@ -9477,7 +9965,8 @@
       en: { term: "Public IP Address", explanation: "A globally unique IP address assigned to a device allowing direct communication over the internet." },
       aliases: ["グローバルIP","パブリックIP"],
       related: ["ip_address","private_ip_address"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "sql_injection_attack",
@@ -9496,7 +9985,8 @@
       en: { term: "SQL Injection Attack", explanation: "An exploit where an attacker inserts malicious SQL statements into entry fields for execution." },
       aliases: ["SQL注入攻击","SQLインジェクション"],
       related: ["sql_injection"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "key_rotation",
@@ -9515,7 +10005,8 @@
       en: { term: "Key Rotation", explanation: "The practice of periodically replacing older cryptographic keys with newly generated ones." },
       aliases: ["キーローテーション"],
       related: ["secret_key","key_management"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "data_masking",
@@ -9534,7 +10025,8 @@
       en: { term: "Data Masking", explanation: "The process of obscuring specific data elements within a data set to protect sensitive information." },
       aliases: ["データ隠蔽","masking"],
       related: ["confidentiality","privacy"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "disk_partition",
@@ -9553,7 +10045,8 @@
       en: { term: "Disk Partition", explanation: "A logical division of a hard disk drive, allowing the operating system to treat it as multiple separate drives." },
       aliases: ["パーティション分割","drive partition"],
       related: ["file_system"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "symbolic_link",
@@ -9572,7 +10065,8 @@
       en: { term: "Symbolic Link", explanation: "A special file that points to another file or directory by its absolute or relative path." },
       aliases: ["ソフトリンク","symlink"],
       related: ["file_system"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "request_url",
@@ -9591,7 +10085,8 @@
       en: { term: "Request URL", explanation: "The network address specified by a web client to request a resource from a server." },
       aliases: ["リクエストURI","request endpoint"],
       related: ["url","query_parameter"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "cors_policy",
@@ -9610,7 +10105,8 @@
       en: { term: "CORS Policy", explanation: "Cross-Origin Resource Sharing policy, configuring access permissions for web apps running on different domains." },
       aliases: ["CORSルール","CORS設定"],
       related: ["cors","same_origin_policy"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "merge_conflict",
@@ -9629,7 +10125,8 @@
       en: { term: "Merge Conflict", explanation: "An event that occurs when Git is unable to resolve differences in code between two merging branches." },
       aliases: ["衝突","conflict"],
       related: ["version_control"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "security_group",
@@ -9648,7 +10145,8 @@
       en: { term: "Security Group", explanation: "A stateful virtual firewall that controls inbound and outbound traffic for cloud instances." },
       aliases: ["クラウドファイアウォール","Security Group rule"],
       related: ["cloud_computing","firewall"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "dockerfile",
@@ -9667,7 +10165,8 @@
       en: { term: "Dockerfile", explanation: "A text document that contains all the commands a user could call on the command line to assemble a container image." },
       aliases: ["Dockerイメージ構成ファイル"],
       related: ["container"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "binary_search_tree",
@@ -9686,7 +10185,8 @@
       en: { term: "Binary Search Tree", explanation: "A binary tree data structure where each node's left child is smaller and right child is larger than the node." },
       aliases: ["二分検索ツリー","BST"],
       related: ["tree_structure","binary_search"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "project_charter",
@@ -9705,7 +10205,8 @@
       en: { term: "Project Charter", explanation: "A document issued by the project initiator or sponsor that formally authorizes the existence of a project." },
       aliases: ["憲章"],
       related: ["project_manager"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "project_baseline",
@@ -9724,7 +10225,8 @@
       en: { term: "Project Baseline", explanation: "The approved plan for a project plus or minus approved changes, used to compare with actual progress." },
       aliases: ["ベースライン"],
       related: ["project_scope"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "project_constraint",
@@ -9743,7 +10245,8 @@
       en: { term: "Project Constraint", explanation: "Any restriction or limitation that affects the performance of a project, such as scope, time, or cost." },
       aliases: ["制約事項"],
       related: ["project_baseline"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "database_partitioning",
@@ -9762,7 +10265,8 @@
       en: { term: "Database Partitioning", explanation: "The process of dividing a very large table or index into smaller, more manageable physical pieces." },
       aliases: ["テーブル分割","partitioning"],
       related: ["database_schema"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "horizontal_partitioning",
@@ -9781,7 +10285,8 @@
       en: { term: "Horizontal Partitioning", explanation: "Dividing a database table by storing different rows in separate partitions." },
       aliases: ["シャージング","horizontal division"],
       related: ["database_partitioning"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "vertical_partitioning",
@@ -9800,7 +10305,8 @@
       en: { term: "Vertical Partitioning", explanation: "Dividing a database table by storing different columns in separate partitions." },
       aliases: ["列分割","vertical division"],
       related: ["database_partitioning"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "java_reflection",
@@ -9819,7 +10325,8 @@
       en: { term: "Java Reflection", explanation: "The ability of a Java program to examine and modify its structure and behavior at runtime." },
       aliases: ["反射"],
       related: ["java_class"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "java_serialization",
@@ -9838,7 +10345,8 @@
       en: { term: "Java Serialization", explanation: "The process of converting the state of an object in Java into a byte stream." },
       aliases: ["シリアライズ","直列化"],
       related: ["java_class"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "java_deserialization",
@@ -9857,7 +10365,8 @@
       en: { term: "Java Deserialization", explanation: "The reverse process of serialization, recreating a Java object from a byte stream." },
       aliases: ["デシリアライズ","逆直列化"],
       related: ["java_serialization"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "pip_freeze",
@@ -9876,7 +10385,8 @@
       en: { term: "pip freeze Command", explanation: "A pip command that outputs installed packages and their versions in a format suitable for a requirements file." },
       aliases: ["pip freeze"],
       related: ["python_venv"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "requirements_txt",
@@ -9895,7 +10405,8 @@
       en: { term: "requirements.txt", explanation: "A text file in Python projects listing all external package dependencies and versions required for execution." },
       aliases: ["依存パッケージリスト"],
       related: ["python_venv","pip_freeze"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "network_protocol",
@@ -9914,7 +10425,8 @@
       en: { term: "Network Protocol", explanation: "An established set of rules that determine how data is transmitted between different devices in a network." },
       aliases: ["通信プロトコル","protocol"],
       related: ["network_topology"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "tcp_ip_model",
@@ -9933,7 +10445,8 @@
       en: { term: "TCP/IP Model", explanation: "A conceptual framework split into four layers, representing the standard protocols used on the internet." },
       aliases: ["TCP/IP 4層モデル","internet protocol suite"],
       related: ["osi_model","network_protocol"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "physical_layer",
@@ -9952,7 +10465,8 @@
       en: { term: "Physical Layer", explanation: "The first and lowest layer in the OSI reference model, dealing with physical and electrical transmission of raw bits." },
       aliases: ["第1層","OSI L1"],
       related: ["osi_model"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "secure_by_design",
@@ -9971,7 +10485,8 @@
       en: { term: "Secure by Design", explanation: "An approach where software and systems are designed from the ground up to be secure, minimizing vulnerabilities." },
       aliases: ["設計段階セキュリティ"],
       related: ["system_lifecycle"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "privacy_by_design",
@@ -9990,7 +10505,8 @@
       en: { term: "Privacy by Design", explanation: "A framework that calls for privacy to be taken into account throughout the entire engineering design process." },
       aliases: ["プライバシー優先設計"],
       related: ["secure_by_design","privacy"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "security_review",
@@ -10009,7 +10525,8 @@
       en: { term: "Security Review", explanation: "A process of reviewing system designs, configurations, or architectures to identify potential security holes." },
       aliases: ["セキュリティ監査レビュー"],
       related: ["secure_by_design","compliance_check"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "preemptive_multitasking",
@@ -10028,7 +10545,8 @@
       en: { term: "Preemptive Multitasking", explanation: "A multitasking method where the operating system decides when to switch from one process to another, preempting the running task." },
       aliases: ["強制割り込みマルチタスク"],
       related: ["operating_system_kernel","thread"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "cooperative_multitasking",
@@ -10047,7 +10565,8 @@
       en: { term: "Cooperative Multitasking", explanation: "A multitasking method where a running program must voluntarily yield CPU control to allow other tasks to run." },
       aliases: ["協調的マルチタスク","非プリエンプティブマルチタスク"],
       related: ["preemptive_multitasking"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "html_element",
@@ -10066,7 +10585,8 @@
       en: { term: "HTML Element", explanation: "An individual component of an HTML document, consisting of a start tag, content, and an end tag." },
       aliases: ["HTMLタグノード","DOM要素"],
       related: ["web_application"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "html_tag",
@@ -10085,7 +10605,8 @@
       en: { term: "HTML Tag", explanation: "A markup command enclosed in angle brackets (like <p>) telling the browser how to render text structures." },
       aliases: ["タグ","markup tag"],
       related: ["html_element"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "remote_repository",
@@ -10104,7 +10625,8 @@
       en: { term: "Remote Repository", explanation: "A version control repository hosted on a remote server or network, used for sharing code among developers." },
       aliases: ["リモート","remote repo"],
       related: ["version_control"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "upstream_repository",
@@ -10123,7 +10645,8 @@
       en: { term: "Upstream Repository", explanation: "The original or source repository from which a clone or fork was created." },
       aliases: ["フォーク元リポジトリ","upstream"],
       related: ["remote_repository"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "cloud_resource",
@@ -10142,7 +10665,8 @@
       en: { term: "Cloud Resource", explanation: "Any physical or virtual component within a cloud environment, such as virtual machines, databases, or object storage." },
       aliases: ["クラウド資産"],
       related: ["cloud_computing"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "constant_time",
@@ -10161,7 +10685,8 @@
       en: { term: "Constant Time Complexity", explanation: "An algorithm whose execution time is independent of the input size, denoted as O(1)." },
       aliases: ["定数時間","O(1)"],
       related: ["time_complexity"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "project_closure",
@@ -10180,7 +10705,8 @@
       en: { term: "Project Closure", explanation: "The final stage of a project, involving handing over deliverables and releasing project resources." },
       aliases: ["プロジェクトクローズ"],
       related: ["system_lifecycle"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "lessons_learned",
@@ -10199,7 +10725,8 @@
       en: { term: "Lessons Learned", explanation: "The knowledge gained during a project which shows how project events were addressed or should be addressed in the future." },
       aliases: ["レッスンズラーンド"],
       related: ["project_closure","project_manager"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "service_request",
@@ -10218,7 +10745,8 @@
       en: { term: "Service Request", explanation: "A formal request from a user for something to be provided, such as information, advice, or password reset." },
       aliases: ["リクエスト"],
       related: ["service_level_agreement","incident_management"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "sharding",
@@ -10237,7 +10765,8 @@
       en: { term: "Sharding", explanation: "A database partitioning method that separates very large databases into smaller, faster, more easily managed parts called data shards." },
       aliases: ["シャード分割","database sharding"],
       related: ["horizontal_partitioning"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "read_replica",
@@ -10256,7 +10785,8 @@
       en: { term: "Read Replica", explanation: "A read-only clone of a primary database instance, used to handle read-heavy traffic and reduce primary load." },
       aliases: ["読み取り専用レプリカ"],
       related: ["database_instance","backup"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "primary_database",
@@ -10275,7 +10805,8 @@
       en: { term: "Primary Database", explanation: "The main database instance in a replication setup that handles all write operations." },
       aliases: ["マスタDB","主DB"],
       related: ["read_replica","database_instance"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "java_io",
@@ -10294,7 +10825,8 @@
       en: { term: "Java I/O", explanation: "The package in Java containing classes that handle input and output streams for reading and writing data." },
       aliases: ["java.io","阻塞型IO"],
       related: ["java_class"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "java_nio",
@@ -10313,7 +10845,8 @@
       en: { term: "Java NIO", explanation: "A new I/O API for Java providing non-blocking, buffer-oriented input and output operations." },
       aliases: ["java.nio","非ブロッキングIO"],
       related: ["java_io"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "pypi",
@@ -10332,7 +10865,8 @@
       en: { term: "PyPI (Python Package Index)", explanation: "The official third-party software repository for Python, hosting libraries and packages." },
       aliases: ["Python Package Index"],
       related: ["python_venv"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "python_typing",
@@ -10351,7 +10885,8 @@
       en: { term: "Python Typing", explanation: "The support for type hints in Python, enabling developer-defined type annotations for variables and functions." },
       aliases: ["Type Hints","型ヒント"],
       related: ["type_error"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "data_link_layer",
@@ -10370,7 +10905,8 @@
       en: { term: "Data Link Layer", explanation: "The second layer of the OSI model, responsible for transferring data between adjacent network nodes." },
       aliases: ["第2層","OSI L2"],
       related: ["physical_layer"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "network_firewall",
@@ -10389,7 +10925,8 @@
       en: { term: "Network Firewall", explanation: "A network security device that monitors and filters incoming and outgoing network traffic based on rules." },
       aliases: ["FW","境界防御"],
       related: ["firewall"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "incident_report",
@@ -10408,7 +10945,8 @@
       en: { term: "Incident Report", explanation: "A formal document detailing a security breach, system outage, or unexpected operational event." },
       aliases: ["障害報告書"],
       related: ["incident_management"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "totp",
@@ -10427,7 +10965,8 @@
       en: { term: "Time-based One-Time Password", explanation: "An algorithm that computes a one-time password from a shared secret key and the current time." },
       aliases: ["TOTP","ワンタイムパスワード"],
       related: ["multi_factor_authentication"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "mfa_app",
@@ -10446,7 +10985,8 @@
       en: { term: "MFA Application", explanation: "An app installed on a user device to generate one-time verification codes for multi-factor authentication." },
       aliases: ["認証アプリ","Authenticator app"],
       related: ["totp","multi_factor_authentication"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "page_table",
@@ -10465,7 +11005,8 @@
       en: { term: "Page Table", explanation: "The data structure used by a virtual memory system in a computer OS to store the mapping between virtual and physical addresses." },
       aliases: ["ページ対応表"],
       related: ["virtual_memory"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "paging",
@@ -10484,7 +11025,8 @@
       en: { term: "Paging", explanation: "A memory management scheme by which a computer stores and retrieves data from secondary storage for use in main memory in fixed-size blocks called pages." },
       aliases: ["ページング","paging method"],
       related: ["page_table","virtual_memory"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "semantic_html",
@@ -10503,7 +11045,8 @@
       en: { term: "Semantic HTML", explanation: "The use of HTML markup that reinforces the semantics, or meaning, of the information in webpages rather than merely to define its presentation." },
       aliases: ["意味構造マークアップ","semantic markup"],
       related: ["html_element"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "css_box_model",
@@ -10522,7 +11065,8 @@
       en: { term: "CSS Box Model", explanation: "A conceptual box wrapping every HTML element, comprised of margins, borders, padding, and the actual content." },
       aliases: ["ボックスモデル","box model"],
       related: ["web_application"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "protected_branch",
@@ -10541,7 +11085,8 @@
       en: { term: "Protected Branch", explanation: "A branch in a Git repository configured to prevent force pushes, deletion, or unapproved commits." },
       aliases: ["ブランチ保護","branch protection"],
       related: ["version_control"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "build_log",
@@ -10560,7 +11105,8 @@
       en: { term: "Build Log", explanation: "A chronological output stream generated by compiler or build tools recording the build process." },
       aliases: ["ビルド結果出力"],
       related: ["version_control"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "resource_group",
@@ -10579,7 +11125,8 @@
       en: { term: "Resource Group", explanation: "A logical container on cloud platforms that holds related resources for an application's lifecycle." },
       aliases: ["リソースフォルダ"],
       related: ["cloud_resource"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "ingress_controller",
@@ -10598,7 +11145,8 @@
       en: { term: "Ingress Controller", explanation: "An application in a Kubernetes cluster that manages external access to the services in a cluster, typically HTTP/HTTPS traffic." },
       aliases: ["Kubernetes Ingress","イングレス"],
       related: ["load_balancer","container"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "linear_time",
@@ -10617,7 +11165,8 @@
       en: { term: "Linear Time Complexity", explanation: "An algorithm whose execution time grows in direct proportion to the size of the input data, denoted as O(n)." },
       aliases: ["線形時間","O(n)"],
       related: ["time_complexity","constant_time"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "machine_learning",
@@ -10636,7 +11185,8 @@
       en: { term: "Machine Learning", explanation: "A branch of artificial intelligence where algorithms build a model based on sample data to make predictions or decisions." },
       aliases: ["ML","マシンラーニング"],
       related: ["algorithm"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "supplier_management",
@@ -10655,7 +11205,8 @@
       en: { term: "Supplier Management", explanation: "The process of managing relations and contracts with third-party IT suppliers and vendors." },
       aliases: ["供給者管理","ベンダー管理"],
       related: ["outsourcing"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "license_management",
@@ -10674,7 +11225,8 @@
       en: { term: "License Management", explanation: "The administrative practice of documenting and tracking software licenses to ensure legal compliance." },
       aliases: ["SAM","ソフトウェア資産管理"],
       related: ["compliance_check"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "software_license",
@@ -10693,7 +11245,8 @@
       en: { term: "Software License", explanation: "A legal instrument governing the use or redistribution of software." },
       aliases: ["使用許諾契約","EULA"],
       related: ["license_management"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "failover",
@@ -10712,7 +11265,8 @@
       en: { term: "Failover", explanation: "A backup operational mode in which the functions of a primary system component are assumed by secondary system component." },
       aliases: ["自動切り替え","系切り替え"],
       related: ["availability","database_instance"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "database_availability",
@@ -10731,7 +11285,8 @@
       en: { term: "Database Availability", explanation: "The proportion of time a database system is running and fully accessible for users." },
       aliases: ["DB可用性"],
       related: ["failover","availability"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "covering_index",
@@ -10750,7 +11305,8 @@
       en: { term: "Covering Index", explanation: "An index that contains all the columns needed to satisfy the query, avoiding table read lookup." },
       aliases: ["カバードインデックス","index covering"],
       related: ["index","composite_key"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "java_date_time_api",
@@ -10769,7 +11325,8 @@
       en: { term: "Java Date-Time API", explanation: "The immutable, thread-safe date and time framework introduced in Java 8 (java.time package)." },
       aliases: ["java.time","Java 8 Date API"],
       related: ["java_class"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "java_regular_expression",
@@ -10788,7 +11345,8 @@
       en: { term: "Java Regular Expression", explanation: "The regular expression parsing support in Java using Pattern and Matcher classes." },
       aliases: ["java.util.regex","Java正規表現"],
       related: ["java_class"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "python_async",
@@ -10807,7 +11365,8 @@
       en: { term: "Python Asynchronous Programming", explanation: "The asynchronous programming implementation in Python based on the asyncio library and event loops." },
       aliases: ["asyncio","Python非同期"],
       related: ["thread"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "python_await",
@@ -10826,7 +11385,8 @@
       en: { term: "Python await Keyword", explanation: "The Python keyword used to suspend execution of a coroutine until the awaited task completes." },
       aliases: ["await"],
       related: ["python_async"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "python_coroutine",
@@ -10845,7 +11405,8 @@
       en: { term: "Python Coroutine", explanation: "A specialized generator-like object in Python defined with async def that can yield execution back to the caller." },
       aliases: ["コルーチン","coroutine"],
       related: ["python_await"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "session_layer",
@@ -10864,7 +11425,8 @@
       en: { term: "Session Layer", explanation: "The fifth layer of the OSI model, which controls the dialogues (connections) between computers." },
       aliases: ["第5層","OSI L5"],
       related: ["osi_model"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "presentation_layer",
@@ -10883,7 +11445,8 @@
       en: { term: "Presentation Layer", explanation: "The sixth layer of the OSI model, which translates data between the application layer and network formats (handling encryption, encoding, etc.)." },
       aliases: ["第6層","OSI L6"],
       related: ["osi_model","session_layer"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "otp",
@@ -10902,7 +11465,8 @@
       en: { term: "One-Time Password", explanation: "A password that is valid for only one login session or transaction on a computer system." },
       aliases: ["OTP","使い捨てパスワード"],
       related: ["totp","multi_factor_authentication"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "hardware_token",
@@ -10921,7 +11485,8 @@
       en: { term: "Hardware Token", explanation: "A physical device used to authorize access to network services, often displaying OTPs." },
       aliases: ["セキュリティトークン","OTPトークン"],
       related: ["multi_factor_authentication"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "recovery_code",
@@ -10940,7 +11505,8 @@
       en: { term: "Recovery Code", explanation: "A static backup code generated during MFA setup to log in if the primary MFA device is lost." },
       aliases: ["リカバリーコード","バックアップコード"],
       related: ["multi_factor_authentication","totp"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "user_mode",
@@ -10959,7 +11525,8 @@
       en: { term: "User Mode", explanation: "A non-privileged execution mode for user applications where direct hardware access is restricted." },
       aliases: ["非特権モード","非特権状態"],
       related: ["operating_system_kernel"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "kernel_mode",
@@ -10978,7 +11545,8 @@
       en: { term: "Kernel Mode", explanation: "The privileged execution mode of the CPU, giving the OS kernel unrestricted access to all system resources." },
       aliases: ["特権モード","スーパーバイザモード"],
       related: ["user_mode"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "css_flexbox",
@@ -10997,7 +11565,8 @@
       en: { term: "CSS Flexbox", explanation: "A one-dimensional layout model in CSS for distributing space and aligning elements in containers." },
       aliases: ["フレックスボックスレイアウト","flexible box"],
       related: ["css_box_model"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "dom_event",
@@ -11016,7 +11585,8 @@
       en: { term: "DOM Event", explanation: "An signal generated by user interaction or browser state changes (click, load) inside the Document Object Model." },
       aliases: ["イベントオブジェクト","JSイベント"],
       related: ["web_application"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "pull_request_template",
@@ -11035,7 +11605,8 @@
       en: { term: "Pull Request Template", explanation: "A predefined markdown template that populates the pull request description box when created." },
       aliases: ["PRテンプレート","PR template"],
       related: ["protected_branch"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "code_owner",
@@ -11054,7 +11625,8 @@
       en: { term: "Code Owner", explanation: "A configuration (CODEOWNERS) defining which teams or individual users are responsible for approving changes in specific paths." },
       aliases: ["CODEOWNERS","コードの責任者"],
       related: ["protected_branch"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "access_policy",
@@ -11073,7 +11645,8 @@
       en: { term: "Access Policy", explanation: "A configured rule set defining who or what is allowed to access specific system objects or APIs." },
       aliases: ["アクセス規則ポリシー"],
       related: ["authorization"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "managed_identity",
@@ -11092,7 +11665,8 @@
       en: { term: "Managed Identity", explanation: "A system on cloud platforms providing an automatically managed identity for applications to authenticate to services without embedding keys." },
       aliases: ["マネージドID認証","managed identity credentials"],
       related: ["access_policy","cloud_resource"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "logarithmic_time",
@@ -11111,7 +11685,8 @@
       en: { term: "Logarithmic Time Complexity", explanation: "An algorithm whose execution time grows logarithmically with the input data size, denoted as O(log n)." },
       aliases: ["対数時間","O(log n)"],
       related: ["time_complexity","linear_time"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "project_assumption",
@@ -11130,7 +11705,8 @@
       en: { term: "Project Assumption", explanation: "Factors in a project that are considered to be true, real, or certain without proof or demonstration." },
       aliases: ["仮定条件","assumption"],
       related: ["project_constraint","project_charter"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "progress_report",
@@ -11149,7 +11725,8 @@
       en: { term: "Progress Report", explanation: "A document written to describe the current status, achievements, and challenges of an ongoing project." },
       aliases: ["ステータスレポート","progress status"],
       related: ["project_charter","project_closure"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "sensitive_information",
@@ -11168,7 +11745,8 @@
       en: { term: "Sensitive Information", explanation: "Data that must be protected from unauthorized access to safeguard the privacy or security of an individual or organization." },
       aliases: ["センシティブ情報","sensitive data"],
       related: ["privacy","confidentiality"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "operating_system_process",
@@ -11187,7 +11765,8 @@
       en: { term: "Operating System Process", explanation: "An active instance of a computer program that is being executed by the operating system, with its own memory space." },
       aliases: ["プロセス","OS process"],
       related: ["process","thread"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "command_argument",
@@ -11206,7 +11785,8 @@
       en: { term: "Command-Line Argument", explanation: "Information passed to a program when it is started from a command-line interface." },
       aliases: ["引数","cmd arguments"],
       related: ["operating_system_process","user_mode"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "cloud_monitoring",
@@ -11225,7 +11805,8 @@
       en: { term: "Cloud Monitoring", explanation: "The process of reviewing and managing the operational workflow and processes within a cloud infrastructure." },
       aliases: ["クラウドモニタリング"],
       related: ["cloud_computing","cloud_resource"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "database_scalability",
@@ -11244,7 +11825,8 @@
       en: { term: "Database Scalability", explanation: "The capacity of a database system to handle growing amounts of data or users by scaling resource capacities." },
       aliases: ["DB拡張性"],
       related: ["database","read_replica"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "database_performance",
@@ -11263,7 +11845,8 @@
       en: { term: "Database Performance", explanation: "A measure of the speed and efficiency with which a database system processes query operations." },
       aliases: ["DB性能","database performance tuning"],
       related: ["database","query"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "prepared_query",
@@ -11282,7 +11865,8 @@
       en: { term: "Prepared Statement", explanation: "A database feature used to execute the same or similar SQL statements repeatedly with high efficiency and security." },
       aliases: ["プリペアドステートメント","prepared statement"],
       related: ["sql_injection","query"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "java_file_class",
@@ -11301,7 +11885,8 @@
       en: { term: "Java File Class", explanation: "An abstract representation of file and directory pathnames in java.io package used for file system interactions." },
       aliases: ["java.io.File","Fileクラス"],
       related: ["java_class","java_io"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "java_heap",
@@ -11320,7 +11905,8 @@
       en: { term: "Java Heap Memory", explanation: "The memory allocation pool in JVM used to store dynamically allocated runtime objects and instance variables." },
       aliases: ["JVMヒープ","heap memory"],
       related: ["java_stack","heap_memory"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "java_stack",
@@ -11339,7 +11925,8 @@
       en: { term: "Java Stack Memory", explanation: "The runtime memory stack allocated per thread in JVM, storing method call frames and local variables." },
       aliases: ["JVMスタック","thread stack"],
       related: ["java_heap","stack_memory"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "python_virtual_environment",
@@ -11358,7 +11945,8 @@
       en: { term: "Python Virtual Environment", explanation: "An isolated environment created for Python projects, allowing separate package dependencies and settings." },
       aliases: ["venv","python venv"],
       related: ["python_module","pypi"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "python_package_index",
@@ -11377,7 +11965,8 @@
       en: { term: "Python Package Index", explanation: "The official third-party software repository for Python packages, widely accessed using the pip tool." },
       aliases: ["PyPI","python package repository"],
       related: ["pypi","python_virtual_environment"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "python_import_path",
@@ -11396,7 +11985,8 @@
       en: { term: "Python Import Path", explanation: "A list of directory paths that Python searches when importing modules, stored in sys.path." },
       aliases: ["sys.path","search path"],
       related: ["python_module","python_virtual_environment"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "css_grid",
@@ -11415,7 +12005,8 @@
       en: { term: "CSS Grid Layout", explanation: "A two-dimensional grid-based layout system in CSS, resolving complex structural page design issues." },
       aliases: ["グリッドレイアウト","CSS Grid"],
       related: ["css_flexbox","css_box_model"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "javascript_promise",
@@ -11434,7 +12025,8 @@
       en: { term: "JavaScript Promise", explanation: "An object representing the eventual completion or failure of an asynchronous operation in JavaScript." },
       aliases: ["Promise","JS Promise"],
       related: ["web_application","dom_event"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "quadratic_time",
@@ -11453,7 +12045,8 @@
       en: { term: "Quadratic Time Complexity", explanation: "An algorithm whose execution time grows in proportion to the square of the input data size, denoted as O(n^2)." },
       aliases: ["O(n^2)","二次時間"],
       related: ["time_complexity","linear_time"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "supervised_learning",
@@ -11472,7 +12065,8 @@
       en: { term: "Supervised Learning", explanation: "A type of machine learning where the model is trained on a labeled dataset consisting of input-output pairs." },
       aliases: ["教示あり学習"],
       related: ["machine_learning"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "ip_packet",
@@ -11491,7 +12085,8 @@
       en: { term: "IP Packet", explanation: "A formatted unit of data carried by a packet-switched network at the Network Layer (Layer 3) of the OSI model." },
       aliases: ["パケット","IP datagram"],
       related: ["ip_address","tcp_segment"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "tcp_segment",
@@ -11510,7 +12105,8 @@
       en: { term: "TCP Segment", explanation: "The unit of end-to-end transmission in the TCP protocol, operating at the Transport Layer (Layer 4) of the OSI model." },
       aliases: ["セグメント","TCP segment"],
       related: ["ip_packet","port_number"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "dns_resolver",
@@ -11529,7 +12125,8 @@
       en: { term: "DNS Resolver", explanation: "A server designed to receive domain name queries from clients and resolve them into corresponding IP addresses." },
       aliases: ["フルサービスリゾルバ","recursive resolver"],
       related: ["dns","ip_address"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "dependency_vulnerability",
@@ -11548,7 +12145,8 @@
       en: { term: "Dependency Vulnerability", explanation: "A security vulnerability introduced into a software application through its third-party library dependencies." },
       aliases: ["依存ライブラリの脆弱性","library vulnerability"],
       related: ["vulnerability","sbom"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "sbom",
@@ -11567,7 +12165,8 @@
       en: { term: "Software Bill of Materials", explanation: "A formal, structured record containing the details and supply chain relationships of various components used in building software." },
       aliases: ["SBOM","ソフトウェア部品構成表"],
       related: ["dependency_vulnerability","vulnerability"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "code_security_review",
@@ -11586,7 +12185,8 @@
       en: { term: "Secure Code Review", explanation: "The process of auditing software source code to identify security vulnerabilities and poor coding practices prior to release." },
       aliases: ["セキュアコード監査","secure code review"],
       related: ["security_review","vulnerability"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "availability_zone",
@@ -11605,7 +12205,8 @@
       en: { term: "Availability Zone", explanation: "An isolated location within a cloud region designed to improve availability and fault tolerance." },
       aliases: ["AZ"],
       related: ["cloud_computing","availability"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "auto_scaling",
@@ -11624,7 +12225,8 @@
       en: { term: "Auto Scaling", explanation: "A mechanism that automatically adjusts computing resources based on demand or monitoring metrics." },
       aliases: ["autoscaling"],
       related: ["cloud_monitoring","database_scalability"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "docker_image",
@@ -11643,7 +12245,8 @@
       en: { term: "Docker Image", explanation: "A read-only template used to create containers, including application code, runtime, libraries, and configuration." },
       aliases: ["container image"],
       related: ["container","dockerfile"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "container_orchestration",
@@ -11662,7 +12265,8 @@
       en: { term: "Container Orchestration", explanation: "The automated management of container deployment, scheduling, scaling, networking, and recovery." },
       aliases: ["orchestration"],
       related: ["container","auto_scaling"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "ci_pipeline",
@@ -11681,7 +12285,8 @@
       en: { term: "CI Pipeline", explanation: "An automated sequence of build, test, and analysis steps triggered by code changes." },
       aliases: ["continuous integration pipeline"],
       related: ["unit_test","pull_request_template"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "cd_pipeline",
@@ -11700,7 +12305,8 @@
       en: { term: "CD Pipeline", explanation: "An automated workflow for delivering or deploying validated build artifacts to target environments." },
       aliases: ["continuous delivery pipeline","continuous deployment pipeline"],
       related: ["ci_pipeline","release_management"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "release_management",
@@ -11719,7 +12325,8 @@
       en: { term: "Release Management", explanation: "The discipline of planning, validating, approving, and delivering software changes to users." },
       aliases: ["release process"],
       related: ["cd_pipeline","progress_report"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "blue_green_deployment",
@@ -11738,7 +12345,8 @@
       en: { term: "Blue-Green Deployment", explanation: "A deployment strategy that switches traffic between two production-like environments to reduce release risk." },
       aliases: ["blue green deployment"],
       related: ["release_management","rollback"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "canary_release",
@@ -11757,7 +12365,8 @@
       en: { term: "Canary Release", explanation: "A release strategy that exposes a new version to a small subset of users or traffic before wider rollout." },
       aliases: ["canary deployment"],
       related: ["release_management","cloud_monitoring"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "feature_flag",
@@ -11776,7 +12385,8 @@
       en: { term: "Feature Flag", explanation: "A configuration switch that enables or disables a feature without changing or redeploying code." },
       aliases: ["feature toggle"],
       related: ["canary_release","web_application"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "observability",
@@ -11795,7 +12405,8 @@
       en: { term: "Observability", explanation: "The ability to understand a system internal state through external signals such as logs, metrics, and traces." },
       aliases: ["observable systems"],
       related: ["cloud_monitoring","log_aggregation"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "log_aggregation",
@@ -11814,7 +12425,8 @@
       en: { term: "Log Aggregation", explanation: "The process of collecting logs from multiple systems into a centralized location for search and analysis." },
       aliases: ["centralized logging"],
       related: ["observability","cloud_monitoring"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "distributed_tracing",
@@ -11833,7 +12445,8 @@
       en: { term: "Distributed Tracing", explanation: "A technique for tracking a request as it flows through multiple services in a distributed system." },
       aliases: ["request tracing"],
       related: ["observability","api"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "api_gateway",
@@ -11852,7 +12465,8 @@
       en: { term: "API Gateway", explanation: "A component that acts as a single entry point for API requests and handles routing, authentication, and traffic control." },
       aliases: ["gateway"],
       related: ["api","rest_api"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "rate_limiting",
@@ -11871,7 +12485,8 @@
       en: { term: "Rate Limiting", explanation: "A technique that limits the number of requests allowed within a given time window." },
       aliases: ["request throttling"],
       related: ["api_gateway","availability"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "oauth2",
@@ -11890,7 +12505,8 @@
       en: { term: "OAuth 2.0", explanation: "An authorization framework that allows delegated access to protected resources without sharing user passwords." },
       aliases: ["OAuth2"],
       related: ["authorization","api"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "openid_connect",
@@ -11909,7 +12525,8 @@
       en: { term: "OpenID Connect", explanation: "An identity layer built on OAuth 2.0 for authenticating users and sharing identity information." },
       aliases: ["OIDC"],
       related: ["oauth2","authentication"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "single_sign_on",
@@ -11928,7 +12545,8 @@
       en: { term: "Single Sign-On", explanation: "An authentication mechanism that allows users to access multiple services after one login." },
       aliases: ["SSO"],
       related: ["openid_connect","authentication"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "serverless_computing",
@@ -11947,7 +12565,8 @@
       en: { term: "Serverless Computing", explanation: "A cloud computing model where developers run code without managing servers directly." },
       aliases: ["serverless"],
       related: ["cloud_computing","function_as_a_service"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "function_as_a_service",
@@ -11966,7 +12585,8 @@
       en: { term: "Function as a Service", explanation: "A serverless service model where small functions run in response to events." },
       aliases: ["FaaS"],
       related: ["serverless_computing","webhook"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "cloud_region",
@@ -11985,7 +12605,8 @@
       en: { term: "Cloud Region", explanation: "A geographic area where a cloud provider operates data centers and cloud services." },
       aliases: ["region"],
       related: ["cloud_computing","availability_zone"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "cloud_storage",
@@ -12004,7 +12625,8 @@
       en: { term: "Cloud Storage", explanation: "A service that stores and retrieves data over a network, usually provided by a cloud provider." },
       aliases: ["online storage"],
       related: ["cloud_computing","object_storage"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "object_storage",
@@ -12023,7 +12645,8 @@
       en: { term: "Object Storage", explanation: "A storage model that manages data as objects with keys and metadata, often used for large-scale unstructured data." },
       aliases: ["blob storage"],
       related: ["cloud_storage","database_scalability"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "health_check",
@@ -12042,7 +12665,8 @@
       en: { term: "Health Check", explanation: "A periodic test used to determine whether a server, instance, or service is healthy." },
       aliases: ["liveness check"],
       related: ["availability","load_balancer"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "infrastructure_as_code",
@@ -12061,7 +12685,8 @@
       en: { term: "Infrastructure as Code", explanation: "The practice of defining and managing infrastructure configuration with code." },
       aliases: ["IaC"],
       related: ["configuration_management","cloud_computing"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "data_lake",
@@ -12080,7 +12705,8 @@
       en: { term: "Data Lake", explanation: "A large-scale repository that stores structured and unstructured data in a near-raw form." },
       aliases: ["data lake"],
       related: ["cloud_storage","object_storage"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "data_warehouse",
@@ -12099,7 +12725,8 @@
       en: { term: "Data Warehouse", explanation: "A database platform that integrates and stores business data for analysis and reporting." },
       aliases: ["DWH"],
       related: ["database","data_lake"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "etl",
@@ -12118,7 +12745,8 @@
       en: { term: "Extract Transform Load", explanation: "A data integration process that extracts data, transforms it, and loads it into a target system." },
       aliases: ["Extract Transform Load"],
       related: ["data_pipeline","data_warehouse"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "data_pipeline",
@@ -12137,7 +12765,8 @@
       en: { term: "Data Pipeline", explanation: "An automated sequence of steps for collecting, transforming, storing, and delivering data." },
       aliases: ["pipeline"],
       related: ["etl","data_quality"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "data_catalog",
@@ -12156,7 +12785,8 @@
       en: { term: "Data Catalog", explanation: "A metadata system used to discover, describe, and govern data assets." },
       aliases: ["metadata catalog"],
       related: ["data_lineage","data_quality"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "data_quality",
@@ -12175,7 +12805,8 @@
       en: { term: "Data Quality", explanation: "The degree to which data is accurate, complete, consistent, timely, and fit for use." },
       aliases: ["quality of data"],
       related: ["data_catalog","integrity"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "data_lineage",
@@ -12194,7 +12825,8 @@
       en: { term: "Data Lineage", explanation: "Information that tracks where data comes from, how it changes, and where it is used." },
       aliases: ["lineage"],
       related: ["data_catalog","data_pipeline"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "database_sharding",
@@ -12213,7 +12845,8 @@
       en: { term: "Database Sharding", explanation: "A scaling technique that partitions data across multiple databases or nodes using a shard key." },
       aliases: ["sharding"],
       related: ["database_scalability","database_performance"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "query_plan",
@@ -12232,7 +12865,8 @@
       en: { term: "Query Execution Plan", explanation: "The strategy chosen by a DBMS to execute a SQL query, including access paths and join order." },
       aliases: ["execution plan"],
       related: ["sql","index"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "materialized_view",
@@ -12251,7 +12885,8 @@
       en: { term: "Materialized View", explanation: "A database object that stores query results physically to speed up repeated access." },
       aliases: ["materialised view"],
       related: ["query_plan","index"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "write_ahead_log",
@@ -12270,7 +12905,8 @@
       en: { term: "Write-Ahead Log", explanation: "A log written before data pages are changed, used to support durability and crash recovery." },
       aliases: ["WAL"],
       related: ["transaction_log","recovery_code"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "isolation_level",
@@ -12289,7 +12925,8 @@
       en: { term: "Isolation Level", explanation: "A database setting that defines how visible concurrent transaction changes are to each other." },
       aliases: ["transaction isolation"],
       related: ["deadlock","sql"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "acid",
@@ -12308,7 +12945,8 @@
       en: { term: "ACID Properties", explanation: "The transaction properties of atomicity, consistency, isolation, and durability." },
       aliases: ["ACID"],
       related: ["isolation_level","integrity"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "eventual_consistency",
@@ -12327,7 +12965,8 @@
       en: { term: "Eventual Consistency", explanation: "A consistency model where replicas may differ temporarily but converge when no new updates occur." },
       aliases: ["eventual consistency"],
       related: ["database_scalability","distributed_tracing"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "idempotency",
@@ -12346,7 +12985,8 @@
       en: { term: "Idempotency", explanation: "The property that repeating the same operation produces the same result as executing it once." },
       aliases: ["idempotent operation"],
       related: ["api","http"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "contract_test",
@@ -12365,7 +13005,8 @@
       en: { term: "Contract Test", explanation: "A test that verifies whether services follow agreed API contracts and message formats." },
       aliases: ["contract testing"],
       related: ["api","integration_test"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "integration_test",
@@ -12384,7 +13025,8 @@
       en: { term: "Integration Test", explanation: "A test that verifies interactions among multiple modules, components, or services." },
       aliases: ["integration testing"],
       related: ["unit_test","contract_test"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "test_fixture",
@@ -12403,7 +13045,8 @@
       en: { term: "Test Fixture", explanation: "A prepared test setup such as data, state, mocks, or environment required before running tests." },
       aliases: ["fixture"],
       related: ["unit_test","integration_test"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "mock_object",
@@ -12422,7 +13065,8 @@
       en: { term: "Mock Object", explanation: "A test object that replaces a real dependency and allows controlled behavior or call verification." },
       aliases: ["mock"],
       related: ["unit_test","test_fixture"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "test_coverage",
@@ -12441,7 +13085,8 @@
       en: { term: "Test Coverage", explanation: "A metric showing how much code or logic is exercised by tests." },
       aliases: ["coverage"],
       related: ["unit_test","testing"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "lint",
@@ -12460,7 +13105,8 @@
       en: { term: "Lint", explanation: "A static code check that detects style issues, potential errors, or suspicious patterns." },
       aliases: ["linter"],
       related: ["static_analysis","code_formatting"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "code_formatting",
@@ -12479,7 +13125,8 @@
       en: { term: "Code Formatting", explanation: "The process of arranging code style such as indentation, spaces, and line breaks according to rules." },
       aliases: ["formatter"],
       related: ["lint","static_analysis"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "technical_debt",
@@ -12498,7 +13145,8 @@
       en: { term: "Technical Debt", explanation: "Design or implementation compromises that increase future maintenance or change cost." },
       aliases: ["tech debt"],
       related: ["project_assumption","code_security_review"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "refactoring",
@@ -12517,7 +13165,8 @@
       en: { term: "Refactoring", explanation: "Improving internal code structure without changing externally visible behavior." },
       aliases: ["code cleanup"],
       related: ["technical_debt","unit_test"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "regression_test",
@@ -12536,7 +13185,8 @@
       en: { term: "Regression Test", explanation: "A test that checks whether existing functionality still works after changes." },
       aliases: ["regression testing"],
       related: ["unit_test","integration_test"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "privileged_access_management",
@@ -12555,7 +13205,8 @@
       en: { term: "Privileged Access Management", explanation: "Security controls for authorizing, monitoring, and auditing high-privilege account access." },
       aliases: ["PAM"],
       related: ["least_privilege","authorization"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "identity_provider",
@@ -12574,7 +13225,8 @@
       en: { term: "Identity Provider", explanation: "A system that authenticates users and provides identity information to applications." },
       aliases: ["IdP"],
       related: ["single_sign_on","authentication"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "saml",
@@ -12593,7 +13245,8 @@
       en: { term: "Security Assertion Markup Language", explanation: "An XML-based standard for exchanging authentication and authorization data between parties." },
       aliases: ["Security Assertion Markup Language"],
       related: ["identity_provider","single_sign_on"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "csrf",
@@ -12612,7 +13265,8 @@
       en: { term: "Cross-Site Request Forgery", explanation: "An attack that tricks an authenticated browser into sending an unintended request." },
       aliases: ["CSRF"],
       related: ["authentication","web_application"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "xss",
@@ -12631,7 +13285,8 @@
       en: { term: "Cross-Site Scripting", explanation: "An attack that injects malicious scripts into web pages viewed by other users." },
       aliases: ["XSS"],
       related: ["web_application","vulnerability"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "command_injection",
@@ -12650,7 +13305,8 @@
       en: { term: "Command Injection", explanation: "A vulnerability where attacker-controlled input causes unintended operating system commands to execute." },
       aliases: ["OS command injection"],
       related: ["vulnerability","code_security_review"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "path_traversal",
@@ -12669,7 +13325,8 @@
       en: { term: "Path Traversal", explanation: "An attack that manipulates file paths to access files outside the intended directory." },
       aliases: ["directory traversal"],
       related: ["vulnerability","code_security_review"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "security_token",
@@ -12688,7 +13345,8 @@
       en: { term: "Security Token", explanation: "A credential representing authentication or authorization information used to access services." },
       aliases: ["token"],
       related: ["oauth2","authorization"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "certificate_authority",
@@ -12707,7 +13365,8 @@
       en: { term: "Certificate Authority", explanation: "A trusted entity that issues digital certificates binding public keys to identities." },
       aliases: ["CA"],
       related: ["encryption","public_key_infrastructure"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "public_key_infrastructure",
@@ -12726,7 +13385,8 @@
       en: { term: "Public Key Infrastructure", explanation: "A framework for managing public-key certificates, trust, and certificate revocation." },
       aliases: ["PKI"],
       related: ["certificate_authority","encryption"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "dns_spoofing",
@@ -12745,7 +13405,8 @@
       en: { term: "DNS Spoofing", explanation: "An attack that forges DNS responses to redirect users to malicious or incorrect IP addresses." },
       aliases: ["DNS cache poisoning"],
       related: ["dns","dns_resolver"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "arp_spoofing",
@@ -12764,7 +13425,8 @@
       en: { term: "ARP Spoofing", explanation: "A LAN attack that falsifies ARP mappings to intercept or redirect traffic." },
       aliases: ["ARP poisoning"],
       related: ["packet_sniffing","ip_packet"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "packet_sniffing",
@@ -12783,7 +13445,8 @@
       en: { term: "Packet Sniffing", explanation: "Capturing and analyzing packets traveling across a network." },
       aliases: ["sniffing"],
       related: ["ip_packet","tcp_segment"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "intrusion_detection_system",
@@ -12802,7 +13465,8 @@
       en: { term: "Intrusion Detection System", explanation: "A security system that monitors activity and alerts on suspicious or malicious behavior." },
       aliases: ["IDS"],
       related: ["firewall","security_information_event_management"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "intrusion_prevention_system",
@@ -12821,7 +13485,8 @@
       en: { term: "Intrusion Prevention System", explanation: "A security system that detects and actively blocks suspicious or malicious traffic." },
       aliases: ["IPS"],
       related: ["intrusion_detection_system","firewall"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "security_information_event_management",
@@ -12840,7 +13505,8 @@
       en: { term: "Security Information and Event Management", explanation: "A system that aggregates and analyzes logs and security events for monitoring and incident response." },
       aliases: ["SIEM"],
       related: ["log_aggregation","incident_response_plan"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "endpoint_detection_response",
@@ -12859,7 +13525,8 @@
       en: { term: "Endpoint Detection and Response", explanation: "A security solution for monitoring endpoint behavior and responding to threats." },
       aliases: ["EDR"],
       related: ["endpoint_security","malware"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "data_loss_prevention",
@@ -12878,7 +13545,8 @@
       en: { term: "Data Loss Prevention", explanation: "Controls that detect and prevent sensitive data from leaving an organization improperly." },
       aliases: ["DLP"],
       related: ["sensitive_information","confidentiality"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "backup_rotation",
@@ -12897,7 +13565,8 @@
       en: { term: "Backup Rotation", explanation: "An operational policy for keeping and rotating backup generations over time." },
       aliases: ["backup generations"],
       related: ["backup","disaster_recovery_plan"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "disaster_recovery_plan",
@@ -12916,7 +13585,8 @@
       en: { term: "Disaster Recovery Plan", explanation: "A plan defining how systems are restored after a disaster or major outage." },
       aliases: ["DRP"],
       related: ["backup_rotation","rto"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "incident_response_plan",
@@ -12935,7 +13605,8 @@
       en: { term: "Incident Response Plan", explanation: "A plan for detecting, containing, investigating, recovering from, and reporting security incidents." },
       aliases: ["IR plan"],
       related: ["security_information_event_management","risk_assessment"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "vulnerability_scanning",
@@ -12954,7 +13625,8 @@
       en: { term: "Vulnerability Scanning", explanation: "Automated checking for known vulnerabilities in systems, applications, or dependencies." },
       aliases: ["vulnerability scan"],
       related: ["vulnerability","dependency_vulnerability"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "patch_management",
@@ -12973,7 +13645,8 @@
       en: { term: "Patch Management", explanation: "The process of evaluating, applying, and verifying software patches and updates." },
       aliases: ["patching"],
       related: ["vulnerability_scanning","security_patch"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "threat_modeling",
@@ -12992,7 +13665,8 @@
       en: { term: "Threat Modeling", explanation: "A security analysis method for identifying assets, threats, attackers, and mitigations during design." },
       aliases: ["threat model"],
       related: ["risk_assessment","attack_surface"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "attack_surface",
@@ -13011,7 +13685,8 @@
       en: { term: "Attack Surface", explanation: "The set of entry points, interfaces, features, configurations, and dependencies that attackers may target." },
       aliases: ["attack surface area"],
       related: ["threat_modeling","vulnerability_scanning"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "java_record",
@@ -13030,7 +13705,8 @@
       en: { term: "Java Record", explanation: "A Java feature for concisely declaring data carrier classes with generated methods." },
       aliases: ["record class"],
       related: ["java_class","object"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "java_sealed_class",
@@ -13049,7 +13725,8 @@
       en: { term: "Java Sealed Class", explanation: "A Java class feature that explicitly restricts which classes may extend or implement it." },
       aliases: ["sealed class"],
       related: ["java_class","inheritance"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "java_lambda_expression",
@@ -13068,7 +13745,8 @@
       en: { term: "Java Lambda Expression", explanation: "A concise syntax for representing behavior that can be passed to functional interfaces." },
       aliases: ["lambda"],
       related: ["interface","java_class"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "java_stream_api",
@@ -13087,7 +13765,8 @@
       en: { term: "Java Stream API", explanation: "A Java API for declarative processing of data sequences using operations such as filter, map, and reduce." },
       aliases: ["stream"],
       related: ["java_lambda_expression","java_class"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "java_optional",
@@ -13106,7 +13785,8 @@
       en: { term: "Java Optional", explanation: "A wrapper class used to explicitly represent a value that may or may not be present." },
       aliases: ["Optional"],
       related: ["java_class","null_pointer_exception"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "java_generic_type",
@@ -13125,7 +13805,8 @@
       en: { term: "Java Generic Type", explanation: "A mechanism for parameterizing classes or methods with types to improve type safety." },
       aliases: ["generics"],
       related: ["java_class","object"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "java_annotation",
@@ -13144,7 +13825,8 @@
       en: { term: "Java Annotation", explanation: "A Java metadata mechanism attached to code elements for compilers, tools, or frameworks." },
       aliases: ["annotation"],
       related: ["java_class","object"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "java_exception_handling",
@@ -13163,7 +13845,8 @@
       en: { term: "Java Exception Handling", explanation: "The mechanism for catching and handling runtime errors using try, catch, finally, and related constructs." },
       aliases: ["try catch"],
       related: ["java_class","exception"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "python_context_manager",
@@ -13182,7 +13865,8 @@
       en: { term: "Python Context Manager", explanation: "A Python object or protocol used with with statements to manage resource setup and cleanup." },
       aliases: ["with statement"],
       related: ["python_file_io","python_exception_handling"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "python_generator",
@@ -13201,7 +13885,8 @@
       en: { term: "Python Generator", explanation: "A Python iterator-like construct that yields values lazily using yield." },
       aliases: ["generator"],
       related: ["python_iterator","python_function"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "python_decorator",
@@ -13220,7 +13905,8 @@
       en: { term: "Python Decorator", explanation: "A Python syntax and pattern for wrapping functions or classes with additional behavior." },
       aliases: ["decorator"],
       related: ["python_function","python_module"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "python_type_hint",
@@ -13239,7 +13925,8 @@
       en: { term: "Python Type Hint", explanation: "A Python annotation that documents expected types for variables, parameters, and return values." },
       aliases: ["type annotation"],
       related: ["python_function","static_analysis"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "python_dataclass",
@@ -13258,7 +13945,8 @@
       en: { term: "Python Dataclass", explanation: "A Python feature that reduces boilerplate for classes mainly used to store data." },
       aliases: ["dataclasses"],
       related: ["python_class","object"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "python_list_comprehension",
@@ -13277,7 +13965,8 @@
       en: { term: "Python List Comprehension", explanation: "A concise Python syntax for creating lists from iterables, optionally with filtering." },
       aliases: ["list comprehension"],
       related: ["python_list","python_iterator"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "python_asyncio",
@@ -13296,7 +13985,8 @@
       en: { term: "Python asyncio", explanation: "A Python standard library framework for asynchronous I/O using async and await." },
       aliases: ["asyncio"],
       related: ["python_coroutine","python_generator"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "priority_queue",
@@ -13315,7 +14005,8 @@
       en: { term: "Priority Queue", explanation: "A data structure that removes elements based on priority rather than insertion order." },
       aliases: ["heap queue"],
       related: ["data_structure","algorithm"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "graph_traversal",
@@ -13334,7 +14025,8 @@
       en: { term: "Graph Traversal", explanation: "The process of visiting vertices and edges of a graph according to an algorithm." },
       aliases: ["graph search"],
       related: ["algorithm","data_structure"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "breadth_first_search",
@@ -13353,7 +14045,8 @@
       en: { term: "Breadth-First Search", explanation: "A graph traversal algorithm that explores vertices level by level from a starting point." },
       aliases: ["BFS"],
       related: ["graph_traversal","queue"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "depth_first_search",
@@ -13372,7 +14065,8 @@
       en: { term: "Depth-First Search", explanation: "A graph traversal algorithm that explores as far as possible along a branch before backtracking." },
       aliases: ["DFS"],
       related: ["graph_traversal","stack"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "dynamic_programming",
@@ -13391,7 +14085,8 @@
       en: { term: "Dynamic Programming", explanation: "An algorithm design technique that solves overlapping subproblems and reuses their results." },
       aliases: ["DP"],
       related: ["algorithm","memoization"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "memoization",
@@ -13410,7 +14105,8 @@
       en: { term: "Memoization", explanation: "An optimization technique that caches function results to avoid repeated computation." },
       aliases: ["memoisation"],
       related: ["dynamic_programming","cache_eviction"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "cache_eviction",
@@ -13429,7 +14125,8 @@
       en: { term: "Cache Eviction", explanation: "A policy for deciding which cached data to remove when cache capacity is limited." },
       aliases: ["eviction policy"],
       related: ["memoization","lru_cache"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "lru_cache",
@@ -13448,7 +14145,8 @@
       en: { term: "Least Recently Used Cache", explanation: "A cache policy that evicts the item that has not been used for the longest time." },
       aliases: ["LRU"],
       related: ["cache_eviction","memoization"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "process_scheduler",
@@ -13467,7 +14165,8 @@
       en: { term: "Process Scheduler", explanation: "An operating system component that decides which process or thread runs on the CPU." },
       aliases: ["scheduler"],
       related: ["operating_system_process","thread"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "context_switch",
@@ -13486,7 +14185,8 @@
       en: { term: "Context Switch", explanation: "The process of saving and restoring execution state when switching CPU execution between processes or threads." },
       aliases: ["task switch"],
       related: ["process_scheduler","thread"],
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "stakeholder_register",
@@ -13509,7 +14209,8 @@
       aliases: ["stakeholder list"],
       related: ["project_assumption","progress_report"],
       example: { text: "Record each stakeholder role before project kickoff." },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "project_initiation_document",
@@ -13532,7 +14233,8 @@
       aliases: ["PID"],
       related: ["project_assumption","progress_report"],
       example: { text: "Use a project initiation document to align scope and sponsors." },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "risk_owner",
@@ -13555,7 +14257,8 @@
       aliases: ["risk assignee"],
       related: ["risk_assessment","project_assumption"],
       example: { text: "Assign a risk owner for each high-priority project risk." },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "risk_register_entry",
@@ -13578,7 +14281,8 @@
       aliases: ["risk entry"],
       related: ["risk_owner","risk_assessment"],
       example: { text: "Update the risk register entry after mitigation work." },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "change_control_board",
@@ -13601,7 +14305,8 @@
       aliases: ["CCB"],
       related: ["release_management","project_assumption"],
       example: { text: "Submit major scope changes to the change control board." },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "procurement_management",
@@ -13624,7 +14329,8 @@
       aliases: ["purchasing management"],
       related: ["project_assumption","risk_assessment"],
       example: { text: "Procurement management includes vendor selection and contract review." },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "sla_monitoring",
@@ -13647,7 +14353,8 @@
       aliases: ["service level monitoring"],
       related: ["availability","cloud_monitoring"],
       example: { text: "SLA monitoring tracks uptime and response time targets." },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "compliance_audit",
@@ -13670,7 +14377,8 @@
       aliases: ["regulatory audit"],
       related: ["access_policy","risk_assessment"],
       example: { text: "A compliance audit may review access logs and retention records." },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "data_retention_policy",
@@ -13693,7 +14401,8 @@
       aliases: ["retention policy"],
       related: ["sensitive_information","compliance_audit"],
       example: { text: "Set a data retention policy for logs and personal data." },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "privacy_impact_assessment",
@@ -13716,7 +14425,8 @@
       aliases: ["PIA"],
       related: ["personal_information_protection","risk_assessment"],
       example: { text: "Run a privacy impact assessment before launching a new data service." },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "intellectual_property_rights",
@@ -13739,7 +14449,8 @@
       aliases: ["IP rights"],
       related: ["software_license_compliance","access_policy"],
       example: { text: "Respect intellectual property rights when reusing source code." },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "software_license_compliance",
@@ -13762,7 +14473,8 @@
       aliases: ["license compliance"],
       related: ["sbom","intellectual_property_rights"],
       example: { text: "Check software license compliance before release." },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "logical_schema",
@@ -13785,7 +14497,8 @@
       aliases: ["logical data model"],
       related: ["database","table"],
       example: { text: "Design the logical schema before choosing physical indexes." },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "normalized_design",
@@ -13808,7 +14521,8 @@
       aliases: ["normalized schema"],
       related: ["normalization","logical_schema"],
       example: { text: "A normalized design separates customers and orders into related tables." },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "database_index_selectivity",
@@ -13831,7 +14545,8 @@
       aliases: ["index selectivity"],
       related: ["index","database_performance"],
       example: { text: "High index selectivity can make a query faster." },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "optimizer_statistics",
@@ -13854,7 +14569,8 @@
       aliases: ["database statistics"],
       related: ["query_plan","database_index_selectivity"],
       example: { text: "Update optimizer statistics after loading a large table." },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "transaction_isolation",
@@ -13877,7 +14593,8 @@
       aliases: ["isolation"],
       related: ["isolation_level","acid"],
       example: { text: "Transaction isolation helps prevent inconsistent reads." },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "dirty_read",
@@ -13900,7 +14617,8 @@
       aliases: ["uncommitted read"],
       related: ["transaction_isolation","isolation_level"],
       example: { text: "A dirty read may disappear if the other transaction rolls back." },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "phantom_read",
@@ -13923,7 +14641,8 @@
       aliases: ["phantom row"],
       related: ["transaction_isolation","isolation_level"],
       example: { text: "A phantom read can occur when a new matching row appears." },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "database_routine",
@@ -13946,7 +14665,8 @@
       aliases: ["routine"],
       related: ["sql","database_trigger"],
       example: { text: "A database routine can encapsulate repeated business logic." },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "database_trigger",
@@ -13969,7 +14689,8 @@
       aliases: ["trigger"],
       related: ["database_routine","table"],
       example: { text: "A trigger can write an audit row after an update." },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "cursor",
@@ -13992,7 +14713,8 @@
       aliases: ["database cursor"],
       related: ["sql","database_routine"],
       example: { text: "Use a cursor only when set-based SQL is not practical." },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "database_backup",
@@ -14015,7 +14737,8 @@
       aliases: ["DB backup"],
       related: ["backup","disaster_recovery_plan"],
       example: { text: "Schedule a database backup before maintenance." },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "point_in_time_recovery",
@@ -14038,7 +14761,8 @@
       aliases: ["PITR"],
       related: ["database_backup","write_ahead_log"],
       example: { text: "Use point-in-time recovery to restore data before accidental deletion." },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "java_jvm",
@@ -14061,7 +14785,8 @@
       aliases: ["JVM"],
       related: ["java_class","object"],
       example: { text: "The JVM runs compiled Java bytecode." },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "java_bytecode",
@@ -14084,7 +14809,8 @@
       aliases: ["bytecode"],
       related: ["java_jvm","java_class"],
       example: { text: "Java source code is compiled into Java bytecode." },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "java_garbage_collection",
@@ -14107,7 +14833,8 @@
       aliases: ["GC"],
       related: ["java_jvm","memory"],
       example: { text: "Garbage collection reduces manual memory management in Java." },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "java_thread",
@@ -14130,7 +14857,8 @@
       aliases: ["thread"],
       related: ["thread","java_jvm"],
       example: { text: "A Java thread can run background processing." },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "java_synchronized",
@@ -14153,7 +14881,8 @@
       aliases: ["synchronized"],
       related: ["java_thread","thread"],
       example: { text: "Use synchronized to protect a shared counter." },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "java_interface_default_method",
@@ -14176,7 +14905,8 @@
       aliases: ["default method"],
       related: ["interface","java_class"],
       example: { text: "A default method can provide shared behavior in an interface." },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "java_enum",
@@ -14199,7 +14929,8 @@
       aliases: ["enum"],
       related: ["java_class","constant"],
       example: { text: "Use an enum for fixed states such as ACTIVE and DISABLED." },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "java_package",
@@ -14222,7 +14953,8 @@
       aliases: ["package"],
       related: ["java_class","python_module"],
       example: { text: "A Java package groups related service classes." },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "java_build_tool",
@@ -14245,7 +14977,8 @@
       aliases: ["build tool"],
       related: ["ci_pipeline","java_jvm"],
       example: { text: "A Java build tool can create a runnable JAR file." },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "java_unit_test",
@@ -14268,7 +15001,8 @@
       aliases: ["JUnit test"],
       related: ["unit_test","java_class"],
       example: { text: "A Java unit test verifies a method return value." },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "python_package",
@@ -14291,7 +15025,8 @@
       aliases: ["package"],
       related: ["python_module","python_package_index"],
       example: { text: "A Python package can contain multiple modules." },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "python_wheel",
@@ -14314,7 +15049,8 @@
       aliases: ["wheel"],
       related: ["python_package","python_package_index"],
       example: { text: "Install a Python wheel with pip." },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "python_pip",
@@ -14337,7 +15073,8 @@
       aliases: ["pip installer"],
       related: ["python_package_index","python_package"],
       example: { text: "pip install requests downloads a package." },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "python_poetry",
@@ -14360,7 +15097,8 @@
       aliases: ["python poetry"],
       related: ["python_package","python_virtual_environment"],
       example: { text: "Poetry can create a lock file for dependencies." },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "python_global_interpreter_lock",
@@ -14383,7 +15121,8 @@
       aliases: ["GIL"],
       related: ["python_coroutine","thread"],
       example: { text: "The GIL affects CPU-bound multithreaded Python code." },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "python_virtualenv_activation",
@@ -14406,7 +15145,8 @@
       aliases: ["venv activation"],
       related: ["python_virtual_environment","python_pip"],
       example: { text: "Activate the virtual environment before installing packages." },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "python_traceback",
@@ -14429,7 +15169,8 @@
       aliases: ["traceback"],
       related: ["python_exception_handling","python_logging"],
       example: { text: "Read the traceback to find the failing line." },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "python_log_level",
@@ -14452,7 +15193,8 @@
       aliases: ["log level"],
       related: ["python_logging","log_aggregation"],
       example: { text: "Set the log level to INFO in production." },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "python_testing_pytest",
@@ -14475,7 +15217,8 @@
       aliases: ["pytest framework"],
       related: ["unit_test","python_package"],
       example: { text: "Run pytest to execute Python test files." },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "python_requirements_lock",
@@ -14498,7 +15241,8 @@
       aliases: ["lock file"],
       related: ["requirements_txt","python_pip"],
       example: { text: "Use a lock file to reproduce package versions." },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "cidr_notation",
@@ -14521,7 +15265,8 @@
       aliases: ["CIDR"],
       related: ["ip_address","subnet"],
       example: { text: "192.168.1.0/24 is CIDR notation." },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "gateway_router",
@@ -14544,7 +15289,8 @@
       aliases: ["default router"],
       related: ["router","ip_address"],
       example: { text: "A gateway router sends traffic to the Internet." },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "network_address_translation",
@@ -14567,7 +15313,8 @@
       aliases: ["NAT"],
       related: ["ip_address","router"],
       example: { text: "NAT lets many devices share one public IP address." },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "layer2_vlan",
@@ -14590,7 +15337,8 @@
       aliases: ["VLAN segment"],
       related: ["ip_address","lan"],
       example: { text: "A VLAN separates office and guest traffic." },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "vpn_tunnel",
@@ -14613,7 +15361,8 @@
       aliases: ["VPN connection"],
       related: ["encryption","ip_packet"],
       example: { text: "A VPN tunnel protects remote access traffic." },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "mtu",
@@ -14636,7 +15385,8 @@
       aliases: ["MTU"],
       related: ["ip_packet","tcp_segment"],
       example: { text: "A wrong MTU can cause packet fragmentation." },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "network_latency",
@@ -14659,7 +15409,8 @@
       aliases: ["latency"],
       related: ["ip_packet","availability"],
       example: { text: "High network latency can slow web applications." },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "jitter",
@@ -14682,7 +15433,8 @@
       aliases: ["delay variation"],
       related: ["network_latency","ip_packet"],
       example: { text: "High jitter can make voice calls unstable." },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "packet_loss",
@@ -14705,7 +15457,8 @@
       aliases: ["lost packets"],
       related: ["ip_packet","network_latency"],
       example: { text: "Packet loss can cause retransmission and poor quality." },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "qos",
@@ -14728,7 +15481,8 @@
       aliases: ["QoS"],
       related: ["jitter","packet_loss"],
       example: { text: "QoS can prioritize voice traffic over downloads." },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "security_baseline",
@@ -14751,7 +15505,8 @@
       aliases: ["baseline"],
       related: ["access_policy","system_hardening"],
       example: { text: "Apply a security baseline to new servers." },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "system_hardening",
@@ -14774,7 +15529,8 @@
       aliases: ["hardening"],
       related: ["security_baseline","attack_surface"],
       example: { text: "System hardening may disable unused network ports." },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "vulnerability_management",
@@ -14797,7 +15553,8 @@
       aliases: ["vuln management"],
       related: ["vulnerability_scanning","patch_management"],
       example: { text: "Vulnerability management prioritizes critical findings first." },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "penetration_test",
@@ -14820,7 +15577,8 @@
       aliases: ["pentest"],
       related: ["vulnerability","threat_modeling"],
       example: { text: "A penetration test can validate real-world attack paths." },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "security_awareness_training",
@@ -14843,7 +15601,8 @@
       aliases: ["awareness training"],
       related: ["phishing_simulation","access_policy"],
       example: { text: "Security awareness training explains suspicious email signs." },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "phishing_simulation",
@@ -14866,7 +15625,8 @@
       aliases: ["phishing drill"],
       related: ["security_awareness_training","phishing"],
       example: { text: "Run a phishing simulation to improve reporting behavior." },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "ransomware_recovery",
@@ -14889,7 +15649,8 @@
       aliases: ["ransomware restore"],
       related: ["ransomware","backup_rotation"],
       example: { text: "Ransomware recovery depends on tested backups." },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "cryptographic_key_rotation",
@@ -14912,7 +15673,8 @@
       aliases: ["key rotation"],
       related: ["key_management","secrets_rotation"],
       example: { text: "Rotate cryptographic keys after a security incident." },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "secrets_rotation",
@@ -14935,7 +15697,8 @@
       aliases: ["secret rotation"],
       related: ["security_token","token_expiration"],
       example: { text: "Secrets rotation reduces damage from leaked credentials." },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "audit_log",
@@ -14958,7 +15721,8 @@
       aliases: ["audit trail"],
       related: ["access_policy","compliance_audit"],
       example: { text: "An audit log records administrator sign-in events." },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "non_repudiation",
@@ -14981,7 +15745,8 @@
       aliases: ["nonrepudiation"],
       related: ["encryption","audit_log"],
       example: { text: "Digital signatures support non-repudiation." },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "token_expiration",
@@ -15004,7 +15769,8 @@
       aliases: ["token lifetime"],
       related: ["security_token","oauth2"],
       example: { text: "Short token expiration limits credential misuse." },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "firmware",
@@ -15027,7 +15793,8 @@
       aliases: ["device firmware"],
       related: ["device_driver","kernel_mode"],
       example: { text: "Firmware updates can fix hardware security issues." },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "hardware_interrupt",
@@ -15050,7 +15817,8 @@
       aliases: ["interrupt"],
       related: ["process_scheduler","device_driver"],
       example: { text: "A keyboard press can generate a hardware interrupt." },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "kernel_panic",
@@ -15073,7 +15841,8 @@
       aliases: ["kernel crash"],
       related: ["kernel_mode","operating_system"],
       example: { text: "A kernel panic may require a system restart." },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "page_fault",
@@ -15096,7 +15865,8 @@
       aliases: ["memory fault"],
       related: ["virtual_memory","memory"],
       example: { text: "A page fault may load data from disk into memory." },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "swap_space",
@@ -15119,7 +15889,8 @@
       aliases: ["swap"],
       related: ["memory","virtual_memory"],
       example: { text: "Swap space can prevent failure when memory is full." },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "file_descriptor",
@@ -15142,7 +15913,8 @@
       aliases: ["fd"],
       related: ["operating_system_process","python_file_io"],
       example: { text: "A process uses file descriptors for open files." },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "raid",
@@ -15165,7 +15937,8 @@
       aliases: ["Redundant Array of Independent Disks"],
       related: ["database_backup","availability"],
       example: { text: "RAID 1 mirrors data across two disks." },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "ups",
@@ -15188,7 +15961,8 @@
       aliases: ["UPS"],
       related: ["availability","firmware"],
       example: { text: "A UPS gives servers time to shut down safely." },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "http_request_header",
@@ -15211,7 +15985,8 @@
       aliases: ["request header"],
       related: ["http","api"],
       example: { text: "An HTTP request header can include Authorization." },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "cookie_attribute",
@@ -15234,7 +16009,8 @@
       aliases: ["cookie flag"],
       related: ["http_cookie","security_token"],
       example: { text: "Set the HttpOnly cookie attribute for session cookies." },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "origin_header",
@@ -15257,7 +16033,8 @@
       aliases: ["Origin"],
       related: ["http_request_header","same_origin_policy"],
       example: { text: "Browsers send the Origin header during CORS requests." },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "cors_preflight",
@@ -15280,7 +16057,8 @@
       aliases: ["preflight request"],
       related: ["origin_header","api"],
       example: { text: "A CORS preflight request checks allowed methods and headers." },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "websocket",
@@ -15303,7 +16081,8 @@
       aliases: ["web socket"],
       related: ["http","web_application"],
       example: { text: "A chat app can use WebSocket for real-time messages." },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "graphql",
@@ -15326,7 +16105,8 @@
       aliases: ["GraphQL API"],
       related: ["api","web_application"],
       example: { text: "A GraphQL query can request a user name and posts together." },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "api_versioning",
@@ -15349,7 +16129,8 @@
       aliases: ["versioned API"],
       related: ["api","release_management"],
       example: { text: "Use API versioning when changing response fields." },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "pagination",
@@ -15372,7 +16153,8 @@
       aliases: ["paging"],
       related: ["api","database"],
       example: { text: "Pagination returns the first 50 records instead of all records." },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "git_rebase",
@@ -15395,7 +16177,8 @@
       aliases: ["rebase"],
       related: ["pull_request_template","ci_pipeline"],
       example: { text: "Use git rebase to update a feature branch." },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "git_cherry_pick",
@@ -15418,7 +16201,8 @@
       aliases: ["cherry-pick"],
       related: ["git_rebase","release_management"],
       example: { text: "Cherry-pick a hotfix commit into a release branch." },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "git_tag",
@@ -15441,7 +16225,8 @@
       aliases: ["tag"],
       related: ["release_management","semantic_versioning"],
       example: { text: "Create a Git tag for a published release." },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "semantic_versioning",
@@ -15464,7 +16249,8 @@
       aliases: ["SemVer"],
       related: ["release_management","git_tag"],
       example: { text: "Version 2.1.3 follows semantic versioning." },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "snapshot_test",
@@ -15487,7 +16273,8 @@
       aliases: ["snapshot testing"],
       related: ["regression_test","test_fixture"],
       example: { text: "A snapshot test can detect unexpected UI output changes." },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "mutation_test",
@@ -15510,7 +16297,8 @@
       aliases: ["mutation testing"],
       related: ["test_coverage","unit_test"],
       example: { text: "Mutation testing checks whether tests fail for injected faults." },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "cloud_cost_management",
@@ -15533,7 +16321,8 @@
       aliases: ["FinOps"],
       related: ["cloud_monitoring","cloud_budget_alert"],
       example: { text: "Cloud cost management identifies unused resources." },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "cloud_budget_alert",
@@ -15556,7 +16345,8 @@
       aliases: ["budget alert"],
       related: ["cloud_cost_management","cloud_monitoring"],
       example: { text: "A cloud budget alert warns before monthly spend exceeds the limit." },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "infrastructure_drift",
@@ -15579,7 +16369,8 @@
       aliases: ["configuration drift"],
       related: ["infrastructure_as_code","configuration_management"],
       example: { text: "Infrastructure drift can appear after manual console changes." },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "service_mesh",
@@ -15602,7 +16393,8 @@
       aliases: ["mesh"],
       related: ["container_orchestration","sidecar_proxy"],
       example: { text: "A service mesh can provide mutual TLS between services." },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "sidecar_proxy",
@@ -15625,7 +16417,8 @@
       aliases: ["sidecar"],
       related: ["service_mesh","container"],
       example: { text: "A sidecar proxy can collect request metrics." },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "container_registry",
@@ -15648,7 +16441,8 @@
       aliases: ["image registry"],
       related: ["docker_image","container"],
       example: { text: "Push a container image to a container registry." },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "trie",
@@ -15671,7 +16465,8 @@
       aliases: ["prefix tree"],
       related: ["data_structure","algorithm"],
       example: { text: "A trie can support autocomplete suggestions." },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "bloom_filter",
@@ -15694,7 +16489,8 @@
       aliases: ["probabilistic filter"],
       related: ["hash_table","data_structure"],
       example: { text: "A Bloom filter may return false positives but not false negatives." },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "topological_sort",
@@ -15717,7 +16513,8 @@
       aliases: ["toposort"],
       related: ["graph_traversal","algorithm"],
       example: { text: "Topological sort can order build tasks by dependency." },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "union_find",
@@ -15740,7 +16537,8 @@
       aliases: ["disjoint set union"],
       related: ["data_structure","algorithm"],
       example: { text: "Union-Find can detect connected components." },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "prompt_engineering",
@@ -15763,7 +16561,8 @@
       aliases: ["prompt design"],
       related: ["machine_learning","project_assumption"],
       example: { text: "Prompt engineering can specify role, task, and constraints." },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "robotic_process_automation",
@@ -15786,7 +16585,8 @@
       aliases: ["RPA"],
       related: ["machine_learning","project_assumption"],
       example: { text: "RPA can copy invoice data between systems." },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "data_governance_policy",
@@ -15809,7 +16609,8 @@
       aliases: ["data governance rules"],
       related: ["data_quality","compliance"],
       example: { text: "A data governance policy defines who can approve changes to customer master data." },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "acceptance_criteria",
@@ -15832,7 +16633,8 @@
       aliases: ["definition of acceptance"],
       related: ["project_baseline","project_closure"],
       example: { text: "Acceptance criteria can state the required response time and supported browsers." },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "contract_clause",
@@ -15855,7 +16657,8 @@
       aliases: ["contract provision"],
       related: ["software_license_compliance","compliance"],
       example: { text: "A confidentiality clause limits how project information may be shared." },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "data_subject_request",
@@ -15878,7 +16681,8 @@
       aliases: ["DSR"],
       related: ["personal_information_protection","privacy"],
       example: { text: "A user asks the company to export all stored personal data." },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "database_failover",
@@ -15901,7 +16705,8 @@
       aliases: ["DB failover"],
       related: ["database_availability","database_backup"],
       example: { text: "A standby database becomes primary after a node failure." },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "schema_versioning",
@@ -15924,7 +16729,8 @@
       aliases: ["database schema version"],
       related: ["database_schema","database_migration"],
       example: { text: "Version 12 adds an index and a new nullable column." },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "connection_pooling",
@@ -15947,7 +16753,8 @@
       aliases: ["DB connection pool"],
       related: ["prepared_query","query_plan"],
       example: { text: "A web application borrows and returns database connections from a pool." },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "java_module_system",
@@ -15970,7 +16777,8 @@
       aliases: ["JPMS"],
       related: ["java_package","java_class"],
       example: { java: "module app.core { requires java.sql; }" },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "java_var_keyword",
@@ -15993,7 +16801,8 @@
       aliases: ["var"],
       related: ["variable","java_optional"],
       example: { java: "var count = 10;" },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "java_switch_expression",
@@ -16016,7 +16825,8 @@
       aliases: ["switch expression"],
       related: ["control_flow","java_lambda_expression"],
       example: { java: "String label = switch (code) { case 1 -> \"one\"; default -> \"other\"; };" },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "python_f_string",
@@ -16039,7 +16849,8 @@
       aliases: ["formatted string literal"],
       related: ["python_string","python_function"],
       example: { python: "name = \"Ada\"\nprint(f\"Hello {name}\")" },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "python_walrus_operator",
@@ -16062,7 +16873,8 @@
       aliases: ["assignment expression"],
       related: ["python_function","variable"],
       example: { python: "if (n := len(items)) > 0:\n    print(n)" },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "python_match_statement",
@@ -16085,7 +16897,8 @@
       aliases: ["pattern matching"],
       related: ["control_flow","python_dataclass"],
       example: { python: "match status:\n    case 200:\n        print(\"ok\")" },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "ipv6_address",
@@ -16108,7 +16921,8 @@
       aliases: ["IPv6"],
       related: ["ip_address","network_protocol"],
       example: { text: "2001:db8::1 is an IPv6 documentation address." },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "ipv6_prefix",
@@ -16131,7 +16945,8 @@
       aliases: ["prefix length"],
       related: ["subnet","ip_address"],
       example: { text: "2001:db8::/32 is an IPv6 prefix." },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "spanning_tree_protocol",
@@ -16154,7 +16969,8 @@
       aliases: ["STP"],
       related: ["data_link_layer","layer2_vlan"],
       example: { text: "STP can block a redundant switch link to avoid a loop." },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "credential_hashing",
@@ -16177,7 +16993,8 @@
       aliases: ["password hash storage"],
       related: ["hashing","authentication"],
       example: { text: "A login system stores salted password hashes instead of passwords." },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "security_incident",
@@ -16200,7 +17017,8 @@
       aliases: ["information security incident"],
       related: ["incident_response_plan","incident_report"],
       example: { text: "Unauthorized access to a production server is a security incident." },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "vulnerability_disclosure",
@@ -16223,7 +17041,8 @@
       aliases: ["responsible disclosure"],
       related: ["vulnerability","vulnerability_management"],
       example: { text: "A researcher reports a flaw through the vendor disclosure process." },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "bootloader",
@@ -16246,7 +17065,8 @@
       aliases: ["bootstrap loader"],
       related: ["operating_system","firmware"],
       example: { text: "The bootloader loads the kernel into memory." },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "system_timer",
@@ -16269,7 +17089,8 @@
       aliases: ["timer interrupt"],
       related: ["kernel","process_scheduler"],
       example: { text: "A system timer interrupt can trigger scheduler decisions." },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "http_cache_control",
@@ -16292,7 +17113,8 @@
       aliases: ["Cache-Control header"],
       related: ["http","http_request_header"],
       example: { text: "Cache-Control: no-store prevents storing a response." },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "json_web_token",
@@ -16315,7 +17137,8 @@
       aliases: ["JWT"],
       related: ["security_token","oauth2"],
       example: { text: "A JWT can contain user identity and token expiration claims." },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "test_double",
@@ -16338,7 +17161,8 @@
       aliases: ["mock", "stub", "fake"],
       related: ["unit_test","mock_object"],
       example: { text: "A test double replaces a payment gateway during unit tests." },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "kubernetes_namespace",
@@ -16361,7 +17185,8 @@
       aliases: ["K8s namespace"],
       related: ["container_orchestration","resource_group"],
       example: { text: "A namespace can separate dev and production Kubernetes resources." },
-      source: "project-glossary-v1"
+      source: "project-glossary-v1",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -16385,7 +17210,8 @@
       aliases: ["Change Management"],
       related: [],
       example: {"text":"Submit a RFC (Request for Change) before deploying code."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -16409,7 +17235,8 @@
       aliases: ["BIA"],
       related: [],
       example: {"text":"BIA determines the Recovery Time Objective (RTO) for IT infrastructure."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -16433,7 +17260,8 @@
       aliases: ["NDA","Non-Disclosure Agreement"],
       related: [],
       example: {"text":"Signing an NDA before sharing the system blueprint."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -16457,7 +17285,8 @@
       aliases: ["Seeding"],
       related: ["database"],
       example: {"text":"Run `npm run db:seed` to insert default user roles into the database."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -16481,7 +17310,8 @@
       aliases: ["DB replication"],
       related: ["database"],
       example: {"text":"Setting up master-slave replication to offload read queries."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -16505,7 +17335,8 @@
       aliases: ["Optimistic Concurrency Control"],
       related: ["database"],
       example: {"text":"Optimistic locking is implemented using a version field in the table."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -16529,7 +17360,8 @@
       aliases: ["Optional","java.util.Optional"],
       related: [],
       example: {"text":"Optional<String> name = Optional.ofNullable(getName());"},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -16553,7 +17385,8 @@
       aliases: ["Functional Interface","@FunctionalInterface"],
       related: [],
       example: {"text":"Runnable and Comparator are examples of functional interfaces."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -16577,7 +17410,8 @@
       aliases: ["Anonymous Inner Class"],
       related: [],
       example: {"text":"Runnable r = new Runnable() { public void run() {} };"},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -16601,7 +17435,8 @@
       aliases: ["Dict comprehension"],
       related: [],
       example: {"python":"squares = {x: x**2 for x in range(5)}"},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -16625,7 +17460,8 @@
       aliases: ["Generator","yield"],
       related: [],
       example: {"python":"def count_up(n): \n    for i in range(n):\n        yield i"},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -16649,7 +17485,8 @@
       aliases: ["Decorators","@decorator"],
       related: [],
       example: {"python":"@my_decorator\ndef hello():\n    print('hello')"},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -16673,7 +17510,8 @@
       aliases: ["BGP"],
       related: [],
       example: {"text":"BGP is the protocol that makes the core internet routing system work."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -16697,7 +17535,8 @@
       aliases: ["DHCP"],
       related: [],
       example: {"text":"Home routers typically run a DHCP server to assign IP addresses."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -16721,7 +17560,8 @@
       aliases: ["PAT","NAPT","IP Masquerading"],
       related: [],
       example: {"text":"PAT allows your entire home network to share one public IP address from your ISP."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -16745,7 +17585,8 @@
       aliases: ["Federated Authentication","Identity Federation"],
       related: [],
       example: {"text":"Login using Google credentials on third-party sites."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -16769,7 +17610,8 @@
       aliases: ["Zero Trust","ZTA"],
       related: [],
       example: {"text":"Implementing ZTA requires verifying both device health and user ID on every API request."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -16793,7 +17635,8 @@
       aliases: ["Ransomware"],
       related: [],
       example: {"text":"WannaCry is one of the most famous examples of ransomware attacks."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -16817,7 +17660,8 @@
       aliases: ["Virtual Memory","Paging"],
       related: [],
       example: {"text":"Paging errors can cause disk thrashing under low virtual memory conditions."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -16841,7 +17685,8 @@
       aliases: ["CPU Scheduling","Task Scheduler"],
       related: [],
       example: {"text":"Round-robin is a common time-sliced process scheduling algorithm."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -16865,7 +17710,8 @@
       aliases: ["REST","RESTful"],
       related: ["api"],
       example: {"text":"A RESTful API uses GET to fetch data and POST to create it."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -16889,7 +17735,8 @@
       aliases: ["SPA"],
       related: [],
       example: {"text":"React and Vue are commonly used to build Single Page Applications."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -16913,7 +17760,8 @@
       aliases: ["reflog","git reflog"],
       related: [],
       example: {"text":"Run `git reflog` to find a commit hash lost after a hard reset."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -16937,7 +17785,8 @@
       aliases: ["Immutable Servers"],
       related: [],
       example: {"text":"Immutable infrastructure minimizes configuration drift in production environments."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -16961,7 +17810,8 @@
       aliases: ["AVL Tree","Self-Balancing Binary Search Tree"],
       related: [],
       example: {"text":"An AVL tree performs search, insertion, and deletion operations in O(log n) time."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -16985,7 +17835,8 @@
       aliases: ["SLR"],
       related: ["service_level_agreement"],
       example: {"text":"SLR specifies that the database uptime must be 99.9%."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -17009,7 +17860,8 @@
       aliases: ["Power-Interest Grid"],
       related: [],
       example: {"text":"Use the stakeholder matrix to identify who needs to receive weekly reports."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -17033,7 +17885,8 @@
       aliases: ["QA Plan"],
       related: [],
       example: {"text":"The QA plan dictates code reviews and automation testing frequencies."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -17057,7 +17910,8 @@
       aliases: ["Pessimistic Concurrency Control"],
       related: ["database","optimistic_locking"],
       example: {"sql":"SELECT * FROM orders WHERE id = 1 FOR UPDATE;"},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -17081,7 +17935,8 @@
       aliases: ["RC Isolation Level"],
       related: ["database"],
       example: {"sql":"SET TRANSACTION ISOLATION LEVEL READ COMMITTED;"},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -17105,7 +17960,8 @@
       aliases: ["RR Isolation Level"],
       related: ["database","read_committed"],
       example: {"sql":"SET TRANSACTION ISOLATION LEVEL REPEATABLE READ;"},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -17129,7 +17985,8 @@
       aliases: ["Java Records","Record Type"],
       related: [],
       example: {"text":"public record Point(int x, int y) {}"},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -17153,7 +18010,8 @@
       aliases: ["Garbage Collection","GC"],
       related: [],
       example: {"text":"System.gc() requests the JVM to run the Garbage Collector, though execution is not guaranteed."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -17177,7 +18035,8 @@
       aliases: ["Java Reflection","java.lang.reflect"],
       related: [],
       example: {"text":"Class<?> clazz = Class.forName('com.example.User');"},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -17201,7 +18060,8 @@
       aliases: ["Pipenv","Pipfile"],
       related: [],
       example: {"text":"Run `pipenv install requests` to install a library within a managed environment."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -17225,7 +18085,8 @@
       aliases: ["with statement","Context Manager Syntax"],
       related: [],
       example: {"python":"with open('file.txt', 'r') as f:\n    content = f.read()"},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -17249,7 +18110,8 @@
       aliases: ["Type Hints","typing module"],
       related: [],
       example: {"python":"def greet(name: str) -> str:\n    return 'Hello ' + name"},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -17273,7 +18135,8 @@
       aliases: ["VLAN","IEEE 802.1Q"],
       related: [],
       example: {"text":"Assigning office computers and public WiFi clients to different VLANs for security."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -17297,7 +18160,8 @@
       aliases: ["SDN","OpenFlow"],
       related: [],
       example: {"text":"SDN allows enterprise admins to configure virtual network fabrics dynamically."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -17321,7 +18185,8 @@
       aliases: ["Ring Network","Token Ring"],
       related: [],
       example: {"text":"FDDI is an optical standard that uses double ring topologies for fault tolerance."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -17345,7 +18210,8 @@
       aliases: ["Preventing SQLi","Parameterized Queries"],
       related: ["sql"],
       example: {"text":"Always use placeholders in SQL statements rather than string concatenation."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -17369,7 +18235,8 @@
       aliases: ["XSS Prevention","Output Encoding"],
       related: [],
       example: {"text":"HTML entity encoding is the primary XSS defense mechanism."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -17393,7 +18260,8 @@
       aliases: ["Phishing","Email Phishing"],
       related: [],
       example: {"text":"We conducted a phishing campaign simulation to train employees on security awareness."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -17417,7 +18285,8 @@
       aliases: ["Mounting","mount point"],
       related: [],
       example: {"text":"Mounting the USB drive to /media/usb on Linux."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -17441,7 +18310,8 @@
       aliases: ["SSD","Flash storage"],
       related: [],
       example: {"text":"Upgrading from an HDD to an SSD significantly increases system boot speeds."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -17465,7 +18335,8 @@
       aliases: ["CDN"],
       related: [],
       example: {"text":"We use a CDN to cache product images and decrease loading times globally."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -17489,7 +18360,8 @@
       aliases: ["CORS","Cross-Origin Requests"],
       related: [],
       example: {"text":"Missing Access-Control-Allow-Origin header triggers a CORS error in the browser."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -17513,7 +18385,8 @@
       aliases: ["CI Pipeline","Continuous Integration"],
       related: [],
       example: {"text":"We configured GitHub Actions as our CI pipeline to run unit tests on every pull request."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -17537,7 +18410,8 @@
       aliases: ["Cloud Native"],
       related: [],
       example: {"text":"Building microservices using Spring Boot and Docker is a common way to deploy cloud native applications."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -17561,7 +18435,8 @@
       aliases: ["Hash Table","Hash Map"],
       related: [],
       example: {"text":"JavaScript objects and Python dictionaries are implemented internally using hash tables."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -17585,7 +18460,8 @@
       aliases: ["SIT","Integration Testing"],
       related: [],
       example: {"text":"We conduct SIT to check if the payment gateway talks to the order management system correctly."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -17609,7 +18485,8 @@
       aliases: ["CPM","Critical Path Analysis"],
       related: [],
       example: {"text":"Delaying database migration on the critical path will delay the software launch date."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -17633,7 +18510,8 @@
       aliases: ["Procurement Review"],
       related: [],
       example: {"text":"We carried out a procurement audit to ensure fair competition among the cloud providers."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -17657,7 +18535,8 @@
       aliases: ["SQL Cursor"],
       related: ["database"],
       example: {"sql":"DECLARE employee_cursor CURSOR FOR SELECT name FROM employees;"},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -17681,7 +18560,8 @@
       aliases: ["Subject-oriented DB"],
       related: ["database"],
       example: {"text":"The marketing team has its own data mart containing customer email click rates."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -17705,7 +18585,8 @@
       aliases: ["Virtual Table","SQL View"],
       related: ["database"],
       example: {"sql":"CREATE VIEW active_users AS SELECT id, name FROM users WHERE status = 'active';"},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -17729,7 +18610,8 @@
       aliases: ["ExecutorService","Thread Pool"],
       related: [],
       example: {"text":"ExecutorService executor = Executors.newFixedThreadPool(10);"},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -17753,7 +18635,8 @@
       aliases: ["ClassLoader","Dynamic Loading"],
       related: [],
       example: {"text":"ClassLoader loader = MyClass.class.getClassLoader();"},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -17777,7 +18660,8 @@
       aliases: ["Dunder Methods","Special Methods"],
       related: [],
       example: {"python":"class Book:\n    def __init__(self, title):\n        self.title = title"},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -17801,7 +18685,8 @@
       aliases: ["asyncio","async/await"],
       related: [],
       example: {"python":"import asyncio\nasync def main():\n    await asyncio.sleep(1)"},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -17825,7 +18710,8 @@
       aliases: ["TCP"],
       related: [],
       example: {"text":"Web browsing (HTTP) and file transfers (FTP) require the reliability of TCP."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -17849,7 +18735,8 @@
       aliases: ["UDP"],
       related: ["transmission_control_protocol"],
       example: {"text":"DNS lookup queries and VoIP streaming applications run on top of UDP."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -17873,7 +18760,8 @@
       aliases: ["HIDS"],
       related: [],
       example: {"text":"We installed HIDS to alert us if any system configuration file is modified on the production server."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -17897,7 +18785,8 @@
       aliases: ["IPS Rules","Intrusion Rules"],
       related: [],
       example: {"text":"We updated the intrusion prevention policy to automatically block IPs scanning open ports."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -17921,7 +18810,8 @@
       aliases: ["SOAR"],
       related: [],
       example: {"text":"Deploying SOAR playbooks allowed our SOC team to isolate compromised hosts within seconds."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -17945,7 +18835,8 @@
       aliases: ["CPU","Processor"],
       related: [],
       example: {"text":"The server upgraded to a 64-core CPU to handle massive user requests."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -17969,7 +18860,8 @@
       aliases: ["RAM","Main Memory"],
       related: [],
       example: {"text":"Running Docker containers requires a substantial amount of RAM."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -17993,7 +18885,8 @@
       aliases: ["Session Management","State Management"],
       related: [],
       example: {"text":"Session state management is often handled using Redis to share sessions across clusters."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -18017,7 +18910,8 @@
       aliases: ["ws://","wss://"],
       related: [],
       example: {"text":"Chat applications use the WebSocket protocol for instant message delivery without polling."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -18041,7 +18935,8 @@
       aliases: ["JUnit","pytest","Testing Framework"],
       related: [],
       example: {"text":"We use JUnit in Java to assert that calculations return correct values."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -18065,7 +18960,8 @@
       aliases: ["Linting","Static Analysis"],
       related: [],
       example: {"text":"SonarQube is a leading platform for static code analysis."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -18089,7 +18985,8 @@
       aliases: ["containerd","CRI"],
       related: [],
       example: {"text":"Docker uses containerd as its low-level container runtime."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -18113,7 +19010,8 @@
       aliases: ["BaaS","Mobile Backend as a Service","MBaaS"],
       related: [],
       example: {"text":"Firebase is a popular Backend as a Service platform that developers use for rapid prototyping."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -18137,7 +19035,8 @@
       aliases: ["Shortest Path First"],
       related: [],
       example: {"text":"Dijkstra's algorithm is commonly used in network routing protocols like OSPF."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -18161,7 +19060,8 @@
       aliases: ["BPA","Workflow Automation"],
       related: [],
       example: {"text":"We achieved BPA by automating our invoice approval pipeline."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -18185,7 +19085,8 @@
       aliases: ["KPI"],
       related: [],
       example: {"text":"Our target KPI is to decrease client page load time by 20%."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -18209,7 +19110,8 @@
       aliases: ["Scope Management"],
       related: [],
       example: {"text":"Scope management avoids scope creep by referencing the WBS."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -18233,7 +19135,8 @@
       aliases: ["ROI"],
       related: [],
       example: {"text":"Upgrading the server hardware yielded a 150% ROI over two years."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -18257,7 +19160,8 @@
       aliases: ["Deadlock"],
       related: ["database"],
       example: {"text":"Deadlock detection mechanism aborts one transaction to resolve the conflict."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -18281,7 +19185,8 @@
       aliases: ["Dirty Read"],
       related: ["database","read_committed"],
       example: {"sql":"Dirty read happens when isolation level is set to READ UNCOMMITTED."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -18305,7 +19210,8 @@
       aliases: ["Unrepeatable Read"],
       related: ["database","repeatable_read"],
       example: {"sql":"SET TRANSACTION ISOLATION LEVEL READ COMMITTED prevents dirty reads but allows non-repeatable reads."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -18329,7 +19235,8 @@
       aliases: ["JVM"],
       related: [],
       example: {"text":"The JVM manages application memory and performs garbage collection."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -18353,7 +19260,8 @@
       aliases: ["JIT Compiler","JIT"],
       related: ["java_virtual_machine"],
       example: {"text":"JIT compiler dynamically optimizes Java application hot spots during runtime."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -18377,7 +19285,8 @@
       aliases: ["Bytecode",".class file"],
       related: ["java_virtual_machine"],
       example: {"text":"Java bytecode achieves the write once, run anywhere write principle."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -18401,7 +19310,8 @@
       aliases: ["GIL","Global Interpreter Lock"],
       related: [],
       example: {"text":"Due to the GIL, CPU-bound Python tasks run faster with multiprocessing rather than multithreading."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -18425,7 +19335,8 @@
       aliases: ["pyc file","__pycache__"],
       related: [],
       example: {"text":"Python caches compiled bytecode in the __pycache__ directory."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -18449,7 +19360,8 @@
       aliases: ["list.append","list.pop"],
       related: [],
       example: {"python":"my_list = [1, 2]\nmy_list.append(3)\nmy_list.pop()"},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -18473,7 +19385,8 @@
       aliases: ["DNS"],
       related: [],
       example: {"text":"DNS resolves www.example.com to 93.184.216.34."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -18497,7 +19410,8 @@
       aliases: ["HTTP"],
       related: [],
       example: {"text":"HTTP requests consist of methods like GET, POST, and response status codes."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -18521,7 +19435,8 @@
       aliases: ["SSL"],
       related: [],
       example: {"text":"Although we still say SSL certificate, we are actually using TLS for security."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -18545,7 +19460,8 @@
       aliases: ["Symmetric Encryption","Private Key Cryptography"],
       related: [],
       example: {"text":"AES and DES are well-known examples of symmetric key encryption algorithms."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -18569,7 +19485,8 @@
       aliases: ["Asymmetric Encryption","Public Key Cryptography"],
       related: ["symmetric_key_encryption"],
       example: {"text":"Asymmetric encryption solves the key distribution problem inherent in symmetric systems."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -18593,7 +19510,8 @@
       aliases: ["PKI","Public Key Infrastructure"],
       related: ["asymmetric_key_encryption"],
       example: {"text":"PKI architecture ensures secure SSL/TLS connections on the web."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -18617,7 +19535,8 @@
       aliases: ["Microkernel"],
       related: ["operating_system"],
       example: {"text":"Minix and QNX are real-world operating systems using microkernel architecture."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -18641,7 +19560,8 @@
       aliases: ["Booting","System Startup"],
       related: ["operating_system","bootloader"],
       example: {"text":"The system boot process reads the master boot record (MBR) to find the kernel location."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -18665,7 +19585,8 @@
       aliases: ["SOP","Same-Origin Policy"],
       related: ["cross_origin_resource_sharing"],
       example: {"text":"SOP blocks an AJAX request from domain A to domain B unless CORS is configured."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -18689,7 +19610,8 @@
       aliases: ["JWT structure","JSON Web Token"],
       related: ["json_web_token"],
       example: {"text":"JWT format represents claims as a JSON object that is digitally signed."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -18713,7 +19635,8 @@
       aliases: ["Git","VCS"],
       related: [],
       example: {"text":"We use Git version control to collaborate on the project."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -18737,7 +19660,8 @@
       aliases: ["Provisioning"],
       related: [],
       example: {"text":"Infrastructure provisioning can be automated using Terraform."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -18761,7 +19685,8 @@
       aliases: ["Bubble Sort"],
       related: ["algorithm"],
       example: {"text":"Bubble sort has an average and worst-case time complexity of O(n^2)."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -18785,7 +19710,8 @@
       aliases: ["CSF"],
       related: ["key_performance_indicator"],
       example: {"text":"Clear user requirements was identified as the primary CSF for our software development project."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -18809,7 +19735,8 @@
       aliases: ["TCO"],
       related: [],
       example: {"text":"Cloud migration reduced our IT hardware TCO by 30%."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -18833,7 +19760,8 @@
       aliases: ["ERP"],
       related: [],
       example: {"text":"Our company implemented an SAP ERP system to unify accounting and inventory."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -18857,7 +19785,8 @@
       aliases: ["Phantom Read"],
       related: ["database","repeatable_read"],
       example: {"sql":"Phantom reads are only prevented in the SERIALIZABLE isolation level in standard SQL."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -18881,7 +19810,8 @@
       aliases: ["ACID Properties","ACID compliance"],
       related: ["database"],
       example: {"text":"Relational databases enforce ACID transactions to prevent data corruption."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -18905,7 +19835,8 @@
       aliases: ["DB Index","Index object"],
       related: ["database","table"],
       example: {"sql":"CREATE INDEX idx_user_email ON users(email);"},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -18929,7 +19860,8 @@
       aliases: ["G1 GC","Garbage-First Garbage Collector"],
       related: ["java_garbage_collector"],
       example: {"text":"Enable G1 GC in JVM using option: -XX:+UseG1GC"},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -18953,7 +19885,8 @@
       aliases: ["Abstract Class","abstract keyword"],
       related: [],
       example: {"text":"public abstract class Animal { public abstract void makeSound(); }"},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -18977,7 +19910,8 @@
       aliases: ["Default Methods","Interface Evolution"],
       related: [],
       example: {"text":"public interface MyInterface { default void log(String msg) { System.out.println(msg); } }"},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -19001,7 +19935,8 @@
       aliases: ["dict.get","dict.keys"],
       related: [],
       example: {"python":"my_dict = {'a': 1}\nmy_dict.get('b', 0)\nmy_dict.keys()"},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -19025,7 +19960,8 @@
       aliases: ["try-except","raise Exception"],
       related: [],
       example: {"python":"try:\n    res = 1 / 0\nexcept ZeroDivisionError:\n    res = 0"},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -19049,7 +19985,8 @@
       aliases: ["virtualenv","venv"],
       related: ["python_pipenv"],
       example: {"text":"Run `virtualenv venv` to create a new folder containing a fresh Python setup."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -19073,7 +20010,8 @@
       aliases: ["TLS"],
       related: ["secure_sockets_layer"],
       example: {"text":"HTTPS runs HTTP over a connection encrypted by TLS."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -19097,7 +20035,8 @@
       aliases: ["VPN"],
       related: [],
       example: {"text":"Employees use a VPN to access internal office databases from home."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -19121,7 +20060,8 @@
       aliases: ["WPA2","WPA3","Wireless Encryption"],
       related: [],
       example: {"text":"WPA3 Wi-Fi security protects against offline dictionary attacks."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -19145,7 +20085,8 @@
       aliases: ["DSS","Digital Signature"],
       related: ["asymmetric_key_encryption"],
       example: {"text":"DSS uses public key cryptography to prove the sender's identity."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -19169,7 +20110,8 @@
       aliases: ["RA"],
       related: ["pki_architecture"],
       example: {"text":"The registration authority validates passports before the CA signs their public key certificate."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -19193,7 +20135,8 @@
       aliases: ["AES","Rijndael"],
       related: ["symmetric_key_encryption"],
       example: {"text":"AES supports key sizes of 128, 192, and 256 bits."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -19217,7 +20160,8 @@
       aliases: ["FAT","FAT32"],
       related: ["operating_system"],
       example: {"text":"Format the USB drive as FAT32 to ensure it works on both Windows and macOS."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -19241,7 +20185,8 @@
       aliases: ["NTFS"],
       related: ["operating_system","file_allocation_table"],
       example: {"text":"NTFS supports file permissions and larger file volumes than FAT32."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -19265,7 +20210,8 @@
       aliases: ["Transient cookies","Session Cookies"],
       related: ["session_state_management"],
       example: {"text":"Session cookies are used to store shopping cart items while browsing."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -19289,7 +20235,8 @@
       aliases: ["RESTful API"],
       related: ["representational_state_transfer","api"],
       example: {"text":"Our server provides RESTful web services returning JSON payloads."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -19313,7 +20260,8 @@
       aliases: ["Merge Conflict","git merge"],
       related: ["git_version_control"],
       example: {"text":"We need to edit the file manually and mark resolved to fix the git merge conflict."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -19337,7 +20285,8 @@
       aliases: ["Containers","Docker containers"],
       related: ["container_runtime"],
       example: {"text":"Docker is the industry standard for containerization technology."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -19361,7 +20310,8 @@
       aliases: ["Quicksort"],
       related: ["algorithm","bubble_sort_algorithm"],
       example: {"text":"Quick sort is generally much faster than bubble sort in practice."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -19385,7 +20335,8 @@
       aliases: ["CRM"],
       related: [],
       example: {"text":"We use a CRM platform to track sales leads and customer support tickets."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -19409,7 +20360,8 @@
       aliases: ["SCM"],
       related: [],
       example: {"text":"SCM integration reduced component warehousing costs by 15%."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -19433,7 +20385,8 @@
       aliases: ["SLA Violation","SLA Failure"],
       related: ["service_level_agreement"],
       example: {"text":"A database outage lasting over 2 hours resulted in an SLA breach."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -19457,7 +20410,8 @@
       aliases: ["B-Tree","B+Tree Index"],
       related: ["database","database_indexes"],
       example: {"sql":"Default indexes in MySQL InnoDB tables are B-Tree indexes."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -19481,7 +20435,8 @@
       aliases: ["Business Key"],
       related: ["database","table"],
       example: {"sql":"Using user_email as a natural key in the users table."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -19505,7 +20460,8 @@
       aliases: ["Artificial Key","Synthetic Key"],
       related: ["database","table","natural_key"],
       example: {"sql":"An AUTO_INCREMENT integer id is a common example of a surrogate key."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -19529,7 +20485,8 @@
       aliases: ["Thread.State","Thread lifecycle"],
       related: ["java_thread_pool"],
       example: {"text":"We can check a thread's current state using the thread.getState() method."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -19553,7 +20510,8 @@
       aliases: ["ConcurrentHashMap","java.util.concurrent.ConcurrentHashMap"],
       related: ["hash_table_structure"],
       example: {"text":"ConcurrentHashMap<String, Integer> map = new ConcurrentHashMap<>();"},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -19577,7 +20535,8 @@
       aliases: ["ClassNotFoundException class"],
       related: ["java_class_loader"],
       example: {"text":"ClassNotFoundException occurs if the database JDBC driver JAR is missing from the classpath."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -19601,7 +20560,8 @@
       aliases: ["pytest"],
       related: ["unit_testing_framework"],
       example: {"python":"def test_add():\n    assert add(1, 2) == 3"},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -19625,7 +20585,8 @@
       aliases: ["List slicing","slice notation"],
       related: ["python_list_methods"],
       example: {"python":"numbers = [0, 1, 2, 3]\nsubset = numbers[1:3]  # [1, 2]"},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -19649,7 +20610,8 @@
       aliases: ["List & Dict comprehensions"],
       related: ["python_dict_comprehension"],
       example: {"python":"evens = [x for x in range(10) if x % 2 == 0]"},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -19673,7 +20635,8 @@
       aliases: ["RIP"],
       related: [],
       example: {"text":"RIP protocol has a maximum hop count limit of 15 to prevent routing loops."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -19697,7 +20660,8 @@
       aliases: ["OSPF"],
       related: ["dijkstras_algorithm"],
       example: {"text":"OSPF is highly scalable compared to distance-vector protocols like RIP."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -19721,7 +20685,8 @@
       aliases: ["ICMP"],
       related: [],
       example: {"text":"Ping command uses ICMP Echo Request and Echo Reply messages."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -19745,7 +20710,8 @@
       aliases: ["RSA"],
       related: ["asymmetric_key_encryption"],
       example: {"text":"RSA keys are typically 2048 or 4096 bits long for modern secure applications."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -19769,7 +20735,8 @@
       aliases: ["SHA-256","Secure Hash Algorithm 256"],
       related: [],
       example: {"text":"SHA-256 is used in Bitcoin to verify transactions and mine blocks."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -19793,7 +20760,8 @@
       aliases: ["Buffer Overflow","Stack overflow exploit"],
       related: [],
       example: {"text":"C and C++ programs are historically susceptible to buffer overflow vulnerabilities."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -19817,7 +20785,8 @@
       aliases: ["Device Driver","Driver"],
       related: ["operating_system"],
       example: {"text":"You must install the latest graphics device driver to run high-performance 3D applications."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -19841,7 +20810,8 @@
       aliases: ["DMA"],
       related: ["operating_system"],
       example: {"text":"High-speed network cards and NVMe drives rely heavily on DMA channels."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -19865,7 +20835,8 @@
       aliases: ["GraphQL query","GraphQL API"],
       related: ["api"],
       example: {"text":"GraphQL enables client apps to query multiple resources in a single HTTP request."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -19889,7 +20860,8 @@
       aliases: ["SOAP"],
       related: ["api"],
       example: {"text":"Unlike REST, SOAP protocols require rigid WSDL contracts."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -19913,7 +20885,8 @@
       aliases: ["git rebase","rebase"],
       related: ["git_version_control"],
       example: {"text":"Use `git rebase -i` to squash multiple local commits before pushing."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -19937,7 +20910,8 @@
       aliases: ["K8s","Kubernetes"],
       related: ["container_runtime","containerization_technology"],
       example: {"text":"Kubernetes orchestration manages the lifecycle of pods across nodes."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -19961,7 +20935,8 @@
       aliases: ["Sequential Search","Linear Search"],
       related: ["algorithm"],
       example: {"text":"Linear search is used when the array is unsorted."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -19985,7 +20960,8 @@
       aliases: ["EVM","Earned Value Analysis"],
       related: [],
       example: {"text":"Earned value management showed that our project is currently behind schedule and over budget."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -20009,7 +20985,8 @@
       aliases: ["SWOT Analysis","SWOT Grid"],
       related: [],
       example: {"text":"The team created a SWOT matrix to outline marketing tactics."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -20033,7 +21010,8 @@
       aliases: ["UAT","Acceptance Testing"],
       related: [],
       example: {"text":"We received sign-off from the clients after the successful system acceptance test."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -20057,7 +21035,8 @@
       aliases: ["Normalization","1NF","2NF","3NF"],
       related: ["database"],
       example: {"sql":"First normal form requires that all attributes contain atomic values."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -20081,7 +21060,8 @@
       aliases: ["Denormalization"],
       related: ["database","database_normalization"],
       example: {"sql":"We used denormalization by storing product_name directly in the sales table to avoid joins."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -20105,7 +21085,8 @@
       aliases: ["Backup Strategy","Full Backup","Incremental Backup"],
       related: ["database"],
       example: {"text":"A standard backup strategy involves a weekly full backup and daily incremental backups."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -20129,7 +21110,8 @@
       aliases: ["NPE","NullPointer"],
       related: ["java_optional_class"],
       example: {"text":"Using Java 8 Optional can help developers avoid NullPointerException."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -20153,7 +21135,8 @@
       aliases: ["__init__","dunder init"],
       related: ["python_magic_methods"],
       example: {"python":"class Dog:\n    def __init__(self, name):\n        self.name = name"},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -20177,7 +21160,8 @@
       aliases: ["ARP"],
       related: [],
       example: {"text":"ARP request is broadcasted to all machines in the local LAN."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -20201,7 +21185,8 @@
       aliases: ["CSRF","Session Riding"],
       related: [],
       example: {"text":"Adding unique anti-CSRF tokens to form submissions mitigates CSRF attacks."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -20225,7 +21210,8 @@
       aliases: ["DoS","Syn Flood"],
       related: [],
       example: {"text":"A DoS attack flooded our web server, causing CPU utilization to reach 100%."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -20249,7 +21235,8 @@
       aliases: ["MitM","Eavesdropping"],
       related: [],
       example: {"text":"Public unprotected Wi-Fi access points are common vectors for man-in-the-middle attacks."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -20273,7 +21260,8 @@
       aliases: ["Interrupt Service Routine","ISR"],
       related: ["operating_system"],
       example: {"text":"Keystrokes trigger an interrupt handling routine to process inputs immediately."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -20297,7 +21285,8 @@
       aliases: ["CPU Cache","L1/L2/L3 Cache"],
       related: ["operating_system"],
       example: {"text":"L1 cache is the fastest but smallest part of the cache memory hierarchy."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -20321,7 +21310,8 @@
       aliases: ["WAF"],
       related: [],
       example: {"text":"We set up a cloud-based WAF to mitigate layer 7 DDoS attacks."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -20345,7 +21335,8 @@
       aliases: ["CSP Header","Content-Security-Policy"],
       related: ["cross_site_scripting_defense"],
       example: {"text":"Adding a Content-Security-Policy header blocks execution of unauthorized inline scripts."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -20369,7 +21360,8 @@
       aliases: ["CD Pipeline","Continuous Delivery"],
       related: ["continuous_integration_pipeline"],
       example: {"text":"A continuous delivery pipeline ensures our software is always ready to release to clients."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -20393,7 +21385,8 @@
       aliases: ["TDD"],
       related: ["unit_testing_framework"],
       example: {"text":"Following TDD helps developers design cleaner APIs."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -20417,7 +21410,8 @@
       aliases: ["BDD","Given-When-Then"],
       related: ["test_driven_development"],
       example: {"text":"Cucumber is a famous BDD framework using Gherkin syntax."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -20441,7 +21435,8 @@
       aliases: ["Public/Private/Hybrid Cloud"],
       related: [],
       example: {"text":"A hybrid cloud deployment model combines public cloud resources with private on-premise servers."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -20465,7 +21460,8 @@
       aliases: ["DevOps phases"],
       related: ["continuous_integration_pipeline"],
       example: {"text":"Automating tests is crucial at the testing stage of the DevOps lifecycle."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -20489,7 +21485,8 @@
       aliases: ["Canary release"],
       related: [],
       example: {"text":"We routed 5% of web traffic to the canary deployment to verify there were no memory leaks."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -20513,7 +21510,8 @@
       aliases: ["Binary Tree"],
       related: ["algorithm"],
       example: {"text":"A binary search tree is a sorted binary tree structure."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -20537,7 +21535,8 @@
       aliases: ["Machine Learning","ML basics"],
       related: [],
       example: {"text":"Supervised and unsupervised learning are the main paradigms in machine learning basics."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
 
     {
@@ -20561,7 +21560,8 @@
       aliases: ["AI","Artificial Intelligence"],
       related: ["machine_learning_basics"],
       example: {"text":"Modern artificial intelligence concepts include natural language processing and computer vision."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "agile_manifesto",
@@ -20584,7 +21584,8 @@
       aliases: ["Agile Declaration"],
       related: [],
       example: {"text":"The Agile Manifesto prioritizes individuals and interactions over processes and tools."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "information_technology_infrastructure_library",
@@ -20607,7 +21608,8 @@
       aliases: ["ITIL"],
       related: [],
       example: {"text":"ITIL version 4 shifts the focus toward value co-creation."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "service_desk",
@@ -20630,7 +21632,8 @@
       aliases: ["SPOC","Help Desk"],
       related: ["information_technology_infrastructure_library"],
       example: {"text":"Our service desk resolves 80% of network connectivity issues on the first call."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "critical_path_analysis",
@@ -20653,7 +21656,8 @@
       aliases: ["CPA","Critical Path Method"],
       related: [],
       example: {"text":"Critical path analysis revealed that testing delay will push back our product release by two weeks."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "project_risk_register",
@@ -20676,7 +21680,8 @@
       aliases: ["Risk Register","Risk Log"],
       related: [],
       example: {"text":"We updated the project risk register when the key software component failed the performance test."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "gantt_chart_tool",
@@ -20699,7 +21704,8 @@
       aliases: ["Gantt Chart","Bar Chart Schedule"],
       related: ["critical_path_analysis"],
       example: {"text":"The project manager shared the Gantt chart tool link so that the stakeholders can view milestones."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "optimistic_concurrency_control",
@@ -20722,7 +21728,8 @@
       aliases: ["OCC","Optimistic Locking"],
       related: [],
       example: {"sql":"Optimistic locking in application code is often implemented using a version integer column."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "pessimistic_concurrency_control",
@@ -20745,7 +21752,8 @@
       aliases: ["PCC","Pessimistic Locking"],
       related: ["optimistic_concurrency_control"],
       example: {"sql":"SELECT ... FOR UPDATE is a classic implementation of pessimistic locking in SQL."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "read_write_splitting",
@@ -20768,7 +21776,8 @@
       aliases: ["Read-Write Split"],
       related: [],
       example: {"text":"Read-write splitting protects the primary database server from being overwhelmed by reporting queries."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "concurrency_anomaly_lost_update",
@@ -20791,7 +21800,8 @@
       aliases: ["Lost Update"],
       related: ["pessimistic_concurrency_control","optimistic_concurrency_control"],
       example: {"sql":"Using the Repeatable Read isolation level prevents certain lost update anomalies."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "concurrency_anomaly_dirty_write",
@@ -20814,7 +21824,8 @@
       aliases: ["Dirty Write"],
       related: ["concurrency_anomaly_lost_update"],
       example: {"sql":"Almost all database engines enforce dirty write prevention by holding write locks until transaction completion."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "database_savepoint",
@@ -20837,7 +21848,8 @@
       aliases: ["SAVEPOINT"],
       related: [],
       example: {"sql":"SAVEPOINT my_marker; ... ROLLBACK TO SAVEPOINT my_marker;"},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "java_lambda_expressions",
@@ -20860,7 +21872,8 @@
       aliases: ["Lambda Expression"],
       related: [],
       example: {"java":"List<String> list = Arrays.asList(\"A\", \"B\");\nlist.forEach(item -> System.out.println(item));"},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "java_synchronized_keyword",
@@ -20883,7 +21896,8 @@
       aliases: ["synchronized block"],
       related: [],
       example: {"java":"public synchronized void increment() {\n    count++;\n}"},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "java_volatile_keyword",
@@ -20906,7 +21920,8 @@
       aliases: ["volatile variable"],
       related: ["java_synchronized_keyword"],
       example: {"java":"private volatile boolean running = true;"},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "java_concurrency_utilities",
@@ -20929,7 +21944,8 @@
       aliases: ["java.util.concurrent","JUC"],
       related: [],
       example: {"java":"ExecutorService executor = Executors.newFixedThreadPool(10);"},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "java_garbage_collection_cms",
@@ -20952,7 +21968,8 @@
       aliases: ["CMS Collector","Concurrent Mark Sweep"],
       related: [],
       example: {"text":"CMS garbage collector is deprecated in modern JDKs, replaced by G1 and ZGC."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "python_generators",
@@ -20975,7 +21992,8 @@
       aliases: ["yield generator"],
       related: [],
       example: {"python":"def count_up_to(x):\n    n = 1\n    while n <= x:\n        yield n\n        n += 1"},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "python_decorators",
@@ -20998,7 +22016,8 @@
       aliases: ["@decorator syntax"],
       related: [],
       example: {"python":"def log_call(func):\n    def wrapper(*args, **kwargs):\n        print('Calling', func.__name__)\n        return func(*args, **kwargs)\n    return wrapper"},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "python_set_comprehension",
@@ -21021,7 +22040,8 @@
       aliases: ["Set comprehension"],
       related: [],
       example: {"python":"squares_set = {x**2 for x in [1, 2, 2, 3]}"},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "python_args_kwargs",
@@ -21044,7 +22064,8 @@
       aliases: ["*args","**kwargs"],
       related: [],
       example: {"python":"def show(*args, **kwargs):\n    print(args, kwargs)"},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "python_iterators",
@@ -21067,7 +22088,8 @@
       aliases: ["iterator protocol"],
       related: ["python_generators"],
       example: {"python":"my_iter = iter([1, 2])\nprint(next(my_iter))"},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "network_address_port_translation",
@@ -21090,7 +22112,8 @@
       aliases: ["NAPT","IP Masquerade","PAT"],
       related: [],
       example: {"text":"Home routers use NAPT to share a single ISP internet connection among multiple devices."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "transmission_control_protocol_three_way_handshake",
@@ -21113,7 +22136,8 @@
       aliases: ["Three-way handshake"],
       related: [],
       example: {"text":"A TCP three-way handshake establishes sequential tracking numbers for both ends."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "transmission_control_protocol_four_way_teardown",
@@ -21136,7 +22160,8 @@
       aliases: ["Four-way handshake","TCP connection termination"],
       related: ["transmission_control_protocol_three_way_handshake"],
       example: {"text":"TCP four-way teardown requires a TIME-WAIT state to ensure all stray packets are discarded."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "domain_name_system_sec",
@@ -21159,7 +22184,8 @@
       aliases: ["DNSSEC"],
       related: [],
       example: {"text":"Deploying DNSSEC helps mitigate DNS cache poisoning attacks."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "network_packet_loss",
@@ -21182,7 +22208,8 @@
       aliases: ["Packet loss"],
       related: [],
       example: {"text":"High network packet loss causes audio dropouts during VoIP calls."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "network_latency_delay",
@@ -21205,7 +22232,8 @@
       aliases: ["Network latency","Network delay"],
       related: ["network_packet_loss"],
       example: {"text":"Online gaming requires low network latency delay for optimal responsiveness."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "subnet_mask_notation",
@@ -21228,7 +22256,8 @@
       aliases: ["Subnet Mask","CIDR notation"],
       related: [],
       example: {"text":"The subnet mask notation 255.255.255.0 corresponds to a /24 prefix."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "ping_utility_tool",
@@ -21251,7 +22280,8 @@
       aliases: ["ping command","Ping tool"],
       related: ["network_latency_delay"],
       example: {"text":"We used the ping utility tool to diagnose whether the router was online."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "traceroute_diagnostic_tool",
@@ -21274,7 +22304,8 @@
       aliases: ["traceroute command","tracert"],
       related: ["ping_utility_tool"],
       example: {"text":"Running the traceroute diagnostic tool showed where the packet was being dropped."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "address_resolution_protocol_cache",
@@ -21297,7 +22328,8 @@
       aliases: ["ARP Cache","ARP Table"],
       related: [],
       example: {"text":"We cleared the ARP cache on the server after replacing the network interface card."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "zero_trust_security_model",
@@ -21320,7 +22352,8 @@
       aliases: ["Zero Trust Architecture","ZTA"],
       related: [],
       example: {"text":"Implementing a zero trust security model requires multi-factor authentication and strict access controls."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "ransomware_malware",
@@ -21343,7 +22376,8 @@
       aliases: ["Ransomware","crypto-malware"],
       related: [],
       example: {"text":"Regular offline backups are the best defense against ransomware malware outbreaks."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "phishing_scam",
@@ -21366,7 +22400,8 @@
       aliases: ["phishing email","Phishing attack"],
       related: ["social_engineering_attack"],
       example: {"text":"The phishing scam email looked exactly like a official update notice from the bank."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "social_engineering_attack",
@@ -21389,7 +22424,8 @@
       aliases: ["social engineering"],
       related: ["phishing_scam"],
       example: {"text":"Social engineering attacks, like shoulder surfing, bypass highly secure firewalls by targeting humans."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "cross_site_scripting_attack",
@@ -21412,7 +22448,8 @@
       aliases: ["XSS attack","Cross-site Scripting"],
       related: [],
       example: {"text":"Cross-site scripting attacks can be prevented by converting output characters into HTML entities."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "advanced_persistent_threat",
@@ -21435,7 +22472,8 @@
       aliases: ["APT attack","Targeted cyber attack"],
       related: ["zero_trust_security_model"],
       example: {"text":"Government organizations are primary targets for state-sponsored advanced persistent threats."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "virtual_memory_paging",
@@ -21458,7 +22496,8 @@
       aliases: ["paging mechanism","page allocation"],
       related: [],
       example: {"text":"Virtual memory paging allows running large applications even on systems with limited physical RAM."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "page_fault_exception",
@@ -21481,7 +22520,8 @@
       aliases: ["page fault","hard fault"],
       related: ["virtual_memory_paging"],
       example: {"text":"A high rate of page fault exceptions can lead to thrashing, drastically slowing down the OS."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "operating_system_scheduler",
@@ -21504,7 +22544,8 @@
       aliases: ["OS scheduler","process scheduler"],
       related: [],
       example: {"text":"The operating system scheduler ensures fair sharing of CPU time among running applications."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "context_switching_overhead",
@@ -21527,7 +22568,8 @@
       aliases: ["context switch cost","switching overhead"],
       related: ["operating_system_scheduler"],
       example: {"text":"Having too many active threads causes high context switching overhead, degrading overall performance."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "cors_mechanism",
@@ -21550,7 +22592,8 @@
       aliases: ["CORS","Cross-Origin Resource Sharing"],
       related: [],
       example: {"text":"Our API server rejects requests from local web apps unless we configure CORS headers properly."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "websocket_protocol",
@@ -21573,7 +22616,8 @@
       aliases: ["WS protocol","WebSockets"],
       related: [],
       example: {"text":"Chat applications utilize the WebSocket protocol to deliver messages with sub-millisecond delay."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "server_sent_events",
@@ -21596,7 +22640,8 @@
       aliases: ["SSE","EventSource API"],
       related: ["websocket_protocol"],
       example: {"text":"For dashboard graphs updating once per minute, server-sent events are simpler to deploy than WebSockets."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "git_stash_command",
@@ -21619,7 +22664,8 @@
       aliases: ["git stash","shelving changes"],
       related: [],
       example: {"git":"git stash save 'WIP details'; git checkout master;"},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "git_reflog_history",
@@ -21642,7 +22688,8 @@
       aliases: ["git reflog","reference logs"],
       related: ["git_stash_command"],
       example: {"git":"If you lose a commit during a bad rebase, use git reflog to find its SHA-1 hash."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "integration_testing_stage",
@@ -21665,7 +22712,8 @@
       aliases: ["integration testing","system integration test"],
       related: [],
       example: {"text":"Integration testing stage reveals interface mismatches between the database service and the backend."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "regression_testing_stage",
@@ -21688,7 +22736,8 @@
       aliases: ["regression testing","non-regression testing"],
       related: ["integration_testing_stage"],
       example: {"text":"Automated test suites are highly effective for running repetitive tests in the regression testing stage."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "git_squash_commit",
@@ -21711,7 +22760,8 @@
       aliases: ["squash commit","git merge --squash"],
       related: ["git_reflog_history"],
       example: {"git":"We perform a git squash commit during pull request merges to keep a clean commit history."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "copyright_protection",
@@ -21734,7 +22784,8 @@
       aliases: ["Copyright","author's right"],
       related: [],
       example: {"text":"Software code is protected by copyright protection immediately upon its creation."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "patent_right",
@@ -21757,7 +22808,8 @@
       aliases: ["Patent","exclusive utility right"],
       related: ["copyright_protection"],
       example: {"text":"Our technology team filed a patent right application for the new database query optimizer."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "unfair_competition_prevention_act",
@@ -21780,7 +22832,8 @@
       aliases: ["UCPA","unfair competition law"],
       related: ["patent_right"],
       example: {"text":"Under the Unfair Competition Prevention Act, stealing a competitor's customer list is illegal."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "product_liability_act",
@@ -21803,7 +22856,8 @@
       aliases: ["PL Act","Strict liability law"],
       related: [],
       example: {"text":"The Product Liability Act applies to software when it is embedded in physical hardware like cars."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "act_on_the_protection_of_personal_information",
@@ -21826,7 +22880,8 @@
       aliases: ["APPI","Personal Information Protection Law"],
       related: [],
       example: {"text":"Our user database updates comply with the Act on the Protection of Personal Information guidelines."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "non_disclosure_agreement",
@@ -21849,7 +22904,8 @@
       aliases: ["NDA","Confidentiality Agreement"],
       related: ["unfair_competition_prevention_act"],
       example: {"text":"All external contractors must sign a non-disclosure agreement before accessing the codebase."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "distributed_database",
@@ -21872,7 +22928,8 @@
       aliases: ["DDB","Distributed DBMS"],
       related: ["read_write_splitting"],
       example: {"text":"A distributed database improves fault tolerance and read access speed in local regions."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "nosql_key_value_store",
@@ -21895,7 +22952,8 @@
       aliases: ["KVS","Key-Value Database"],
       related: ["distributed_database"],
       example: {"text":"NoSQL key-value stores are ideal for managing user session states and temporary caches."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "nosql_document_store",
@@ -21918,7 +22976,8 @@
       aliases: ["Document Database","JSON database"],
       related: ["nosql_key_value_store"],
       example: {"text":"MongoDB is a widely used NoSQL document store that supports flexible schemas."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "nosql_column_family_store",
@@ -21941,7 +23000,8 @@
       aliases: ["Wide Column Store","Columnar Database"],
       related: ["nosql_document_store"],
       example: {"text":"NoSQL column-family stores like Cassandra are designed to handle petabytes of structured log data."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "nosql_graph_database",
@@ -21964,7 +23024,8 @@
       aliases: ["Graph Database"],
       related: ["nosql_document_store"],
       example: {"text":"Social networks use a NoSQL graph database to trace friendships and recommend mutual connections."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "cap_theorem",
@@ -21987,7 +23048,8 @@
       aliases: ["Brewer's theorem"],
       related: ["distributed_database"],
       example: {"text":"NoSQL databases often prioritize availability and partition tolerance over immediate consistency, referencing the CAP theorem."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "java_weak_reference",
@@ -22010,7 +23072,8 @@
       aliases: ["WeakReference"],
       related: ["java_concurrency_utilities"],
       example: {"java":"WeakReference<MyCache> ref = new WeakReference<>(new MyCache());"},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "java_jdbc_driver",
@@ -22033,7 +23096,8 @@
       aliases: ["JDBC Driver","database driver in Java"],
       related: ["read_write_splitting"],
       example: {"java":"Class.forName(\"com.mysql.cj.jdbc.Driver\");"},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "java_annotation_type",
@@ -22056,7 +23120,8 @@
       aliases: ["Annotation","Java Annotations"],
       related: [],
       example: {"java":"@Override\npublic String toString() { return \"Custom\"; }"},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "java_generic_types",
@@ -22079,7 +23144,8 @@
       aliases: ["Generics","Parameterized Types in Java"],
       related: ["java_annotation_type"],
       example: {"java":"List<String> names = new ArrayList<>();"},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "java_marker_interface",
@@ -22102,7 +23168,8 @@
       aliases: ["Marker Interface","Tagging Interface"],
       related: ["java_generic_types"],
       example: {"java":"public class User implements java.io.Serializable {}"},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "python_f_strings",
@@ -22125,7 +23192,8 @@
       aliases: ["f-string","Formatted string literals"],
       related: [],
       example: {"python":"name = 'World'\nprint(f'Hello, {name}!')"},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "python_list_pop",
@@ -22148,7 +23216,8 @@
       aliases: ["list.pop","pop() in Python"],
       related: [],
       example: {"python":"my_list = [10, 20]\nlast_item = my_list.pop()"},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "python_lambda_syntax",
@@ -22171,7 +23240,8 @@
       aliases: ["lambda expression","Python anonymous function"],
       related: ["python_f_strings"],
       example: {"python":"square = lambda x: x ** 2\nprint(square(4))"},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "python_docstring",
@@ -22194,7 +23264,8 @@
       aliases: ["docstrings","triple quote comment in Python"],
       related: [],
       example: {"python":"def add(a, b):\n    \"\"\"Return the sum of a and b.\"\"\"\n    return a + b"},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "python_pep8_style",
@@ -22217,7 +23288,8 @@
       aliases: ["PEP8","PEP 8"],
       related: ["python_docstring"],
       example: {"text":"Linting tools like flake8 check if your source code follows the PEP 8 style guide."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "smoke_testing_stage",
@@ -22240,7 +23312,8 @@
       aliases: ["smoke test","build verification testing"],
       related: ["regression_testing_stage"],
       example: {"text":"The pipeline runs a smoke testing stage automatically after container deployment."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "rolling_deployment_strategy",
@@ -22263,7 +23336,8 @@
       aliases: ["rolling update","phased release"],
       related: [],
       example: {"text":"We configured our Kubernetes deployment to use a rolling deployment strategy with maxSurge=1."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "microservices_architecture",
@@ -22286,7 +23360,8 @@
       aliases: ["microservices","micro-services"],
       related: ["rolling_deployment_strategy"],
       example: {"text":"Switching to a microservices architecture allowed our payment team to deploy updates without redeploying the shop application."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "endpoint_detection_and_response",
@@ -22309,7 +23384,8 @@
       aliases: ["EDR"],
       related: ["zero_trust_security_model"],
       example: {"text":"We installed an EDR agent on all employee laptops to trace advanced persistent threats."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "security_information_and_event_management",
@@ -22332,7 +23408,8 @@
       aliases: ["SIEM"],
       related: ["endpoint_detection_and_response"],
       example: {"text":"Our SIEM solution triggered an alert when multiple failed login attempts occurred across ten different servers."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "identity_and_access_management",
@@ -22355,7 +23432,8 @@
       aliases: ["IAM","Identity Access Management"],
       related: ["zero_trust_security_model"],
       example: {"text":"We configured IAM roles in AWS to grant developers write access only to the sandbox repository."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "sql_injection_prevention",
@@ -22378,7 +23456,8 @@
       aliases: ["prevent SQLi","parameterized queries defensive coding"],
       related: [],
       example: {"sql":"Using prepared statements is the most reliable way of SQL injection prevention."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "cross_site_scripting_prevention",
@@ -22401,7 +23480,8 @@
       aliases: ["prevent XSS","HTML sanitization coding"],
       related: [],
       example: {"text":"Converting < to &lt; is a fundamental step in cross-site scripting prevention."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "buffer_overflow_prevention",
@@ -22424,7 +23504,8 @@
       aliases: ["prevent buffer overflow","ASLR memory protection"],
       related: [],
       example: {"text":"Compiler options like stack canaries are automated tools for buffer overflow prevention."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "direct_memory_access_controller",
@@ -22447,7 +23528,8 @@
       aliases: ["DMAC","DMA controller"],
       related: [],
       example: {"text":"The network card offloads data transmission to the direct memory access controller to reduce CPU load."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "raid_levels_config",
@@ -22470,7 +23552,8 @@
       aliases: ["RAID config","redundant array of independent disks"],
       related: ["direct_memory_access_controller"],
       example: {"text":"A RAID 5 levels config provides single-drive failure protection with parity data."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "solid_state_drive_structure",
@@ -22493,7 +23576,8 @@
       aliases: ["SSD","Solid State Drive"],
       related: ["raid_levels_config"],
       example: {"text":"The solid state drive structure lacks moving parts, making it more durable than traditional HDDs."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "hard_disk_drive_structure",
@@ -22516,7 +23600,8 @@
       aliases: ["HDD","Hard Disk Drive"],
       related: ["solid_state_drive_structure"],
       example: {"text":"Physical shocks can damage the delicate platters inside the hard disk drive structure."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "http_status_codes_2xx",
@@ -22539,7 +23624,8 @@
       aliases: ["HTTP 2xx","HTTP 200 OK"],
       related: [],
       example: {"text":"The server returns HTTP status codes 2xx when resources are successfully retrieved."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "http_status_codes_3xx",
@@ -22562,7 +23648,8 @@
       aliases: ["HTTP 3xx","HTTP Redirect"],
       related: ["http_status_codes_2xx"],
       example: {"text":"HTTP status codes 3xx tell search engines to update their link index to the new URL."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "http_status_codes_4xx",
@@ -22585,7 +23672,8 @@
       aliases: ["HTTP 4xx","client error status codes"],
       related: ["http_status_codes_3xx"],
       example: {"text":"A broken link typically returns HTTP status codes 4xx, specifically 404 Not Found."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "http_status_codes_5xx",
@@ -22608,7 +23696,8 @@
       aliases: ["HTTP 5xx","server error status codes"],
       related: ["http_status_codes_4xx"],
       example: {"text":"We checked the backend server logs when users reported seeing HTTP status codes 5xx."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "http_cookies_cookies",
@@ -22631,7 +23720,8 @@
       aliases: ["Cookies","HTTP Cookie"],
       related: ["cors_mechanism"],
       example: {"text":"The Secure and HttpOnly flags should be configured on sensitive HTTP cookies."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "container_runtime_engine",
@@ -22654,7 +23744,8 @@
       aliases: ["container runtime","CRI"],
       related: [],
       example: {"text":"Kubernetes uses the CRI protocol to communicate with the local container runtime engine."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "infrastructure_as_code_tools",
@@ -22677,7 +23768,8 @@
       aliases: ["IaC","Infrastructure as Code"],
       related: ["container_runtime_engine"],
       example: {"text":"We use Terraform as our primary infrastructure as code tools to spin up cloud environments."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "rolling_update_strategy",
@@ -22700,7 +23792,8 @@
       aliases: ["rolling update strategy","K8s rolling update"],
       related: ["infrastructure_as_code_tools"],
       example: {"text":"By default, Kubernetes uses a rolling update strategy to replace pod instances."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "chaos_engineering_principles",
@@ -22723,7 +23816,8 @@
       aliases: ["chaos engineering","resilience testing"],
       related: ["rolling_update_strategy"],
       example: {"text":"We applied chaos engineering principles by randomly killing pods using Chaos Mesh."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "stack_data_structure",
@@ -22746,7 +23840,8 @@
       aliases: ["LIFO stack","stack memory structure"],
       related: [],
       example: {"text":"A browser's history is managed using a stack data structure to handle the back button."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "queue_data_structure",
@@ -22769,7 +23864,8 @@
       aliases: ["FIFO queue","message queue structure"],
       related: ["stack_data_structure"],
       example: {"text":"Printer tasks are processed sequentially using a queue data structure."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "binary_search_algorithm",
@@ -22792,7 +23888,8 @@
       aliases: ["binary search","dichotomic search"],
       related: ["queue_data_structure"],
       example: {"text":"Binary search algorithm is much faster than linear search for large sorted collections."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "depth_first_search_dfs",
@@ -22815,7 +23912,8 @@
       aliases: ["DFS","Depth-First Search"],
       related: ["binary_search_algorithm"],
       example: {"text":"We used a depth-first search algorithm implemented with a stack to find cycles in the graph."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "deep_learning_concepts",
@@ -22838,7 +23936,8 @@
       aliases: ["Deep Learning","DL concepts"],
       related: [],
       example: {"text":"Deep learning concepts power modern computer vision and generative language models."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
     {
       id: "neural_network_layers",
@@ -22861,7 +23960,8 @@
       aliases: ["NN layers","hidden layers"],
       related: ["deep_learning_concepts"],
       example: {"text":"Adding more hidden neural network layers allows the model to learn more complex decision boundaries."},
-      source: "project-glossary-v2"
+      source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
     },
   {
     id: "responsibility_assignment_matrix",
@@ -22920,8 +24020,9 @@
     example: {
       text: "We updated the responsibility assignment matrix to clarify who is accountable for SQL database replication tasks."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "critical_chain_project_management",
     category: "project",
@@ -22978,8 +24079,9 @@
     example: {
       text: "Using critical chain project management helped us deliver the software update three weeks ahead of schedule."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "business_portfolio_analysis",
     category: "project",
@@ -23036,8 +24138,9 @@
     example: {
       text: "Management carried out a business portfolio analysis and decided to focus on cloud database solutions."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "configuration_management_database",
     category: "project",
@@ -23094,8 +24197,9 @@
     example: {
       text: "We registered the new database servers in our configuration management database."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "business_process_reengineering",
     category: "project",
@@ -23152,8 +24256,9 @@
     example: {
       text: "The consulting firm suggested business process reengineering to automate invoice matching."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "knowledge_management",
     category: "project",
@@ -23210,8 +24315,9 @@
     example: {
       text: "We set up a central wiki platform to improve knowledge management within the DevOps team."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "lean_startup",
     category: "project",
@@ -23266,8 +24372,9 @@
     example: {
       text: "Our engineering team used the lean startup model to validate the new dashboard feature."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "matrix_organization",
     category: "project",
@@ -23322,8 +24429,9 @@
     example: {
       text: "In our matrix organization, developers consult their functional head for career development but report to project leads daily."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "corporate_identity",
     category: "project",
@@ -23380,8 +24488,9 @@
     example: {
       text: "The marketing team created a new design system to refresh our corporate identity."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "product_lifecycle_management",
     category: "project",
@@ -23438,8 +24547,9 @@
     example: {
       text: "Automotive companies rely heavily on product lifecycle management software to sync global engineering designs."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "service_level_management",
     category: "project",
@@ -23496,8 +24606,9 @@
     example: {
       text: "Monthly uptime reviews are a critical part of our team's service level management routine."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "organizational_breakdown_structure",
     category: "project",
@@ -23554,8 +24665,9 @@
     example: {
       text: "We mapped the work breakdown structure to the organizational breakdown structure to assign coding responsibilities."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "database_federation",
     category: "database",
@@ -23610,8 +24722,9 @@
     example: {
       text: "Our reporting engine queries a database federation that aggregates data from sales and logistics systems."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "write_ahead_logging",
     category: "database",
@@ -23666,8 +24779,9 @@
     example: {
       text: "PostgreSQL uses write-ahead logging to guarantee crash recovery without losing committed transactions."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "database_sharding_key",
     category: "database",
@@ -23722,8 +24836,9 @@
     example: {
       text: "Choosing user_id as the database sharding key ensures all orders from a single user reside in the same partition."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "database_connection_pooling",
     category: "database",
@@ -23778,8 +24893,9 @@
     example: {
       text: "We configured a database connection pooling size of 50 to prevent connection timeouts under load."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "slow_query_log",
     category: "database",
@@ -23832,8 +24948,9 @@
     example: {
       text: "Analyzing the slow query log revealed a missing composite index on the orders table."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "database_clustering",
     category: "database",
@@ -23888,8 +25005,9 @@
     example: {
       text: "We set up active-passive database clustering to minimize downtime during hardware failures."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "base_consistency_model",
     category: "database",
@@ -23945,8 +25063,9 @@
     example: {
       text: "NoSQL databases often opt for the BASE consistency model to achieve high scale."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "database_indexing_btree",
     category: "database",
@@ -24001,8 +25120,9 @@
     example: {
       text: "Adding a B-Tree indexing on the creation date significantly speeded up our chronological query."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "foreign_key_constraint",
     category: "database",
@@ -24057,8 +25177,9 @@
     example: {
       text: "A foreign key constraint prevents us from inserting an order for a customer ID that does not exist."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "database_transaction_isolation",
     category: "database",
@@ -24113,8 +25234,9 @@
     example: {
       text: "We changed the database transaction isolation level to Repeatable Read to prevent dirty reads."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "write_skew_anomaly",
     category: "database",
@@ -24169,8 +25291,9 @@
     example: {
       text: "Write skew anomaly allowed two doctors to go off-call simultaneously because the validation checked active schedules concurrently."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "lost_update_anomaly",
     category: "database",
@@ -24225,8 +25348,9 @@
     example: {
       text: "We applied pessimistic locking to avoid the lost update anomaly on the ticket reservation count."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "java_compiler_tool",
     category: "java",
@@ -24281,8 +25405,10 @@
     example: {
       text: "Run 'javac Main.java' in the command line to invoke the Java compiler tool."
     },
-    source: "project-glossary-v2"
-  },  {
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
+    {
     id: "java_native_interface_jni",
     category: "java",
     level: "advanced",
@@ -24336,8 +25462,9 @@
     example: {
       text: "We used the Java Native Interface to access high-performance graphics hardware directly."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "java_garbage_collection_process",
     category: "java",
@@ -24393,8 +25520,9 @@
     example: {
       text: "Tuning the Java garbage collection process parameters helped us reduce application pause time."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "java_class_loader_mechanism",
     category: "java",
@@ -24449,8 +25577,9 @@
     example: {
       text: "We implemented a custom class loader mechanism to decrypt Java class bytes before executing them."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "java_reflection_mechanism",
     category: "java",
@@ -24505,8 +25634,9 @@
     example: {
       text: "Spring framework uses the Java reflection mechanism to inject dependencies into class properties."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "java_annotation_metadata",
     category: "java",
@@ -24561,8 +25691,9 @@
     example: {
       text: "The @Override java annotation metadata tells the compiler that the method is overriding a parent method."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "java_executor_framework",
     category: "java",
@@ -24618,8 +25749,9 @@
     example: {
       text: "We utilized the java executor framework with a fixed thread pool of ten to handle incoming socket requests."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "java_servlet_api",
     category: "java",
@@ -24674,8 +25806,9 @@
     example: {
       text: "Historically, the java servlet api served as the bedrock for modern Java enterprise web frameworks."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "java_spring_framework",
     category: "java",
@@ -24730,8 +25863,9 @@
     example: {
       text: "We configured our database transaction management using the java spring framework's declarative annotations."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "java_maven_build",
     category: "java",
@@ -24787,8 +25921,9 @@
     example: {
       text: "Adding the database driver coordinates in the java maven build file imports the JAR automatically."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "python_package_installer_pip",
     category: "python",
@@ -24843,8 +25978,9 @@
     example: {
       text: "We used the python package installer pip to add the PostgreSQL driver to our deployment environment."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "python_decorator_pattern",
     category: "python",
@@ -24900,8 +26036,9 @@
     example: {
       text: "We created a custom python decorator pattern called @log_query to record SQL execution times."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "python_generator_yield",
     category: "python",
@@ -24957,8 +26094,9 @@
     example: {
       text: "A python generator yield is perfect for streaming millions of rows from a database table."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "python_interpreter_engine",
     category: "python",
@@ -25014,8 +26152,9 @@
     example: {
       text: "When you run a script, the python interpreter engine parses syntax and runs the bytecode loop."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "python_asyncio_framework",
     category: "python",
@@ -25070,8 +26209,9 @@
     example: {
       text: "We used the python asyncio framework to run twenty independent API calls in parallel."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "python_dunder_methods",
     category: "python",
@@ -25127,8 +26267,9 @@
     example: {
       text: "Implementing the __len__ python dunder method allows the class instance to support the built-in len() function."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "python_pandas_library",
     category: "python",
@@ -25183,8 +26324,9 @@
     example: {
       text: "We loaded the SQL query results directly into a python pandas library DataFrame to compute correlation coefficients."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "python_numpy_library",
     category: "python",
@@ -25239,8 +26381,9 @@
     example: {
       text: "The machine learning algorithm converts image pixels into a python numpy library array first."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "python_poetry_tool",
     category: "python",
@@ -25295,8 +26438,9 @@
     example: {
       text: "We migrated our dependency specification to python poetry tool to avoid library version mismatches."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "python_docstring_format",
     category: "python",
@@ -25351,8 +26495,9 @@
     example: {
       text: "We updated the python docstring format on all database access functions to include param types."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "ospf_routing_protocol",
     category: "network",
@@ -25409,8 +26554,9 @@
     example: {
       text: "Our core enterprise switches are configured with the ospf routing protocol to route traffic dynamically."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "reverse_address_resolution_protocol",
     category: "network",
@@ -25467,8 +26613,9 @@
     example: {
       text: "Modern setups use DHCP instead of the reverse address resolution protocol because DHCP is more robust."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "dynamic_routing_protocol",
     category: "network",
@@ -25525,8 +26672,9 @@
     example: {
       text: "We configured a dynamic routing protocol to ensure our packets find an alternate route if the primary WAN line fails."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "network_time_protocol",
     category: "network",
@@ -25583,8 +26731,9 @@
     example: {
       text: "Database clustering requires the network time protocol to prevent write timestamp overlaps."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "simple_network_management_protocol",
     category: "network",
@@ -25641,8 +26790,9 @@
     example: {
       text: "We configured simple network management protocol traps to notify us immediately when a switch port goes down."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "virtual_private_network_vpn",
     category: "network",
@@ -25699,8 +26849,10 @@
     example: {
       text: "Remote developers must connect to the corporate virtual private network vpn to access the staging database."
     },
-    source: "project-glossary-v2"
-  },  {
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
+    {
     id: "subnet_mask_config",
     category: "network",
     level: "basic",
@@ -25757,8 +26909,9 @@
     example: {
       text: "A class C IP address typical uses 255.255.255.0 as its subnet mask config."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "transmission_control_protocol_handshake",
     category: "network",
@@ -25816,8 +26969,9 @@
     example: {
       text: "We optimized TCP socket creation because the transmission control protocol handshake takes time over sat connections."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "domain_name_resolution_process",
     category: "network",
@@ -25875,8 +27029,9 @@
     example: {
       text: "Domain name resolution process queries local caches first before querying root DNS servers."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "packet_filtering_firewall",
     category: "network",
@@ -25933,8 +27088,9 @@
     example: {
       text: "Our router acts as a packet filtering firewall that drops all incoming Telnet connection requests."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "cross_site_scripting_xss",
     category: "security",
@@ -25991,8 +27147,9 @@
     example: {
       text: "Sanitizing user-submitted comment inputs is vital to prevent cross site scripting xss attacks."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "malware_ransomware_threat",
     category: "security",
@@ -26049,8 +27206,9 @@
     example: {
       text: "Offline backups are the best defense against a devastating malware ransomware threat."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "phishing_attack_method",
     category: "security",
@@ -26107,8 +27265,9 @@
     example: {
       text: "We trained employees to inspect email sender domains carefully to thwart phishing attack method attempts."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "multifactor_authentication_mfa",
     category: "security",
@@ -26167,8 +27326,9 @@
     example: {
       text: "Enforcing multifactor authentication mfa reduced account hijacking cases to almost zero."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "identity_provider_idp",
     category: "security",
@@ -26225,8 +27385,9 @@
     example: {
       text: "We configured our SaaS application to trust Microsoft Azure AD as our primary identity provider idp."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "symmetric_key_cryptography",
     category: "security",
@@ -26284,8 +27445,9 @@
     example: {
       text: "We use symmetric key cryptography for local database storage encryption to maintain fast read speeds."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "asymmetric_key_cryptography",
     category: "security",
@@ -26343,8 +27505,9 @@
     example: {
       text: "Asymmetric key cryptography is used in SSH to authenticate developers without sending passwords."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "advanced_encryption_standard_aes",
     category: "security",
@@ -26402,8 +27565,9 @@
     example: {
       text: "We configure AES-256 for symmetric encrypting of backups containing sensitive customer table dumps."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "secure_hash_algorithm_sha",
     category: "security",
@@ -26461,8 +27625,9 @@
     example: {
       text: "We store password hashes generated via SHA-256 with salts in our user database."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "transport_layer_security_tls",
     category: "security",
@@ -26520,8 +27685,9 @@
     example: {
       text: "The web browser displays a padlock icon when the server connection uses transport layer security tls."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "distributed_denial_of_service_ddos",
     category: "security",
@@ -26579,8 +27745,9 @@
     example: {
       text: "We enabled a cloud scrubbing service to absorb the distributed denial of service ddos attack on our SQL APIs."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "intrusion_prevention_system_ips",
     category: "security",
@@ -26637,8 +27804,9 @@
     example: {
       text: "An intrusion prevention system ips can automatically update firewall rules when it detects port scanning."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "read_only_memory_rom",
     category: "system",
@@ -26695,8 +27863,9 @@
     example: {
       text: "The system bootloader is typically stored in a read only memory rom chip on the motherboard."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "arithmetic_logic_unit_alu",
     category: "system",
@@ -26753,8 +27922,9 @@
     example: {
       text: "When computing index offsets, the CPU coordinates the arithmetic logic unit alu to perform binary additions."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "direct_memory_access_dma",
     category: "system",
@@ -26811,8 +27981,9 @@
     example: {
       text: "Using direct memory access dma allows network cards to buffer high-speed database packet streams directly in RAM."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "virtual_memory_system",
     category: "system",
@@ -26870,8 +28041,9 @@
     example: {
       text: "When physical RAM is exhausted, the virtual memory system swaps database pages to the SSD."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "interrupt_handling_process",
     category: "system",
@@ -26929,8 +28101,9 @@
     example: {
       text: "Network card packet arrivals trigger an interrupt handling process in the operating system kernel."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "kernel_space_user_space",
     category: "system",
@@ -26987,8 +28160,9 @@
     example: {
       text: "A context switch occurs when the database transitions from user space to kernel space to write disk blocks."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "hard_disk_drive_hdd",
     category: "system",
@@ -27046,8 +28220,9 @@
     example: {
       text: "Compared to modern SSDs, a hard disk drive hdd exhibits slower random read performance."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "bios_firmware_system",
     category: "system",
@@ -27105,8 +28280,9 @@
     example: {
       text: "The bios firmware system performs a power-on self-test before reading the master boot record."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "grpc_framework",
     category: "web",
@@ -27163,8 +28339,10 @@
     example: {
       text: "Our internal microservices communicate using the grpc_framework to minimize JSON parsing overhead."
     },
-    source: "project-glossary-v2"
-  },  {
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
+    {
     id: "representational_state_transfer_rest",
     category: "web",
     level: "intermediate",
@@ -27221,8 +28399,9 @@
     example: {
       text: "We designed a representational state transfer rest API to expose our SQL tables to mobile clients."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "hypertext_transfer_protocol_secure_https",
     category: "web",
@@ -27279,8 +28458,9 @@
     example: {
       text: "All login portals must enforce hypertext transfer protocol secure https to prevent password eavesdropping."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "session_cookie_management",
     category: "web",
@@ -27337,8 +28517,9 @@
     example: {
       text: "Proper session cookie management requires setting HttpOnly and Secure flags to block XSS access."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "cross_origin_resource_sharing_cors",
     category: "web",
@@ -27395,8 +28576,9 @@
     example: {
       text: "We updated the cross origin resource sharing cors settings on the API server to allow our web public domain access."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "server_side_rendering_ssr",
     category: "web",
@@ -27453,8 +28635,9 @@
     example: {
       text: "We implemented server side rendering ssr in Next.js to improve loading times and search engine indexing."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "web_application_firewall_waf",
     category: "web",
@@ -27511,8 +28694,9 @@
     example: {
       text: "We configured a web application firewall waf to automatically block suspicious SQL query parameters."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "json_web_token_jwt",
     category: "web",
@@ -27569,8 +28753,9 @@
     example: {
       text: "After a successful login, the server returns a signed json web token jwt to the client."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "git_cherry_pick_operation",
     category: "git",
@@ -27627,8 +28812,9 @@
     example: {
       text: "We used git cherry_pick_operation to apply the critical SQL patch commit directly to the release branch."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "mock_object_testing",
     category: "git",
@@ -27686,8 +28872,9 @@
     example: {
       text: "We used mock object testing to simulate database query return values without launching a live SQL instance."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "integration_testing_level",
     category: "git",
@@ -27744,8 +28931,9 @@
     example: {
       text: "During integration testing level, we verified that the Java service saves the user payload to the SQL DB successfully."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "regression_testing_type",
     category: "git",
@@ -27803,8 +28991,9 @@
     example: {
       text: "We ran a suite of automated API test scripts as a regression testing type after migrating database drivers."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "continuous_integration_ci",
     category: "git",
@@ -27861,8 +29050,9 @@
     example: {
       text: "Our continuous integration ci server rejects pull requests if any unit test fails."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "integrated_development_environment_ide",
     category: "git",
@@ -27919,8 +29109,9 @@
     example: {
       text: "Modern integrated development environment ide tools provide smart auto-completions using neural network models."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "infrastructure_as_code_iac",
     category: "cloud",
@@ -27977,8 +29168,9 @@
     example: {
       text: "Writing our database schema deployments as infrastructure as code iac makes environment setup repeatable."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "serverless_computing_architecture",
     category: "cloud",
@@ -28037,8 +29229,9 @@
     example: {
       text: "We migrated our database cleanup script to serverless computing architecture to avoid keeping a VM running 24/7."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "hypervisor_virtualization",
     category: "cloud",
@@ -28097,8 +29290,9 @@
     example: {
       text: "VMware ESXi is a bare-metal hypervisor virtualization tool widely used in data centers."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "cloud_computing_saas",
     category: "cloud",
@@ -28155,8 +29349,9 @@
     example: {
       text: "Our issue tracking web tool operates on a cloud computing saas subscription model."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "cloud_computing_paas",
     category: "cloud",
@@ -28213,8 +29408,9 @@
     example: {
       text: "Deploying our Java app to a cloud computing paas allowed us to focus on SQL code rather than OS updates."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "cloud_computing_iaas",
     category: "cloud",
@@ -28271,8 +29467,9 @@
     example: {
       text: "We rented five virtual machines from a cloud computing iaas provider to build a custom DB cluster."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "binary_search_tree_bst",
     category: "algorithm",
@@ -28329,8 +29526,9 @@
     example: {
       text: "A binary search tree_bst allows search, insertion, and deletion operations to run in logarithmic time on average."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "insertion_sort_algorithm",
     category: "algorithm",
@@ -28387,8 +29585,9 @@
     example: {
       text: "The insertion sort algorithm is highly efficient for sorting nearly sorted datasets."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "breadth_first_search_bfs",
     category: "algorithm",
@@ -28445,8 +29644,9 @@
     example: {
       text: "We implemented a breadth first search bfs using a queue to find the shortest path in an unweighted routing graph."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "dijkstra_shortest_path",
     category: "algorithm",
@@ -28504,8 +29704,9 @@
     example: {
       text: "The routing daemon runs dijkstra shortest path algorithm to recalculate the optimal packet forward path."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "machine_learning_supervised",
     category: "automation",
@@ -28562,8 +29763,9 @@
     example: {
       text: "We used machine learning supervised models to classify SQL query logs into malicious or safe categories."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "natural_language_processing_nlp",
     category: "automation",
@@ -28620,8 +29822,10 @@
     example: {
       text: "Generative search agents rely heavily on natural language processing nlp to translate user prompts into SQL queries."
     },
-    source: "project-glossary-v2"
-  },  {
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
+    {
     id: "service_portfolio_management",
     category: "project",
     level: "intermediate",
@@ -28677,8 +29881,9 @@
     example: {
       text: "Service portfolio management evaluates the business case for new SQL support offerings."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "service_catalog_management",
     category: "project",
@@ -28733,8 +29938,9 @@
     example: {
       text: "We added the cloud database backup utility to our service catalog management system."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "capacity_management_process",
     category: "project",
@@ -28791,8 +29997,9 @@
     example: {
       text: "Our capacity management process triggered an alert to scale up SSD storage before it reached 90% capacity."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "availability_management_process",
     category: "project",
@@ -28849,8 +30056,9 @@
     example: {
       text: "Database clustering configuration falls under the design phase of availability management process."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "it_service_continuity_management",
     category: "project",
@@ -28907,8 +30115,9 @@
     example: {
       text: "The cross-region database backup schedule is verified annually under IT service continuity management."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "information_security_management_system",
     category: "project",
@@ -28966,8 +30175,9 @@
     example: {
       text: "Earning the ISO 27001 certificate proves that our database server operations follow a strict information security management system."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "incident_management_process",
     category: "project",
@@ -29024,8 +30234,9 @@
     example: {
       text: "We followed the incident management process to reboot the SQL service immediately after it crashed."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "problem_management_process",
     category: "project",
@@ -29082,8 +30293,9 @@
     example: {
       text: "Our problem management process team identified a slow SQL JOIN query as the root cause of the memory leaks."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "release_and_deployment_management",
     category: "project",
@@ -29138,8 +30350,9 @@
     example: {
       text: "Automated CI/CD pipelines have accelerated the release and deployment management process."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "service_asset_and_configuration_management",
     category: "project",
@@ -29196,8 +30409,9 @@
     example: {
       text: "We verified server license ownership using the tools provided by our service asset and configuration management framework."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "request_fulfilment_process",
     category: "project",
@@ -29254,8 +30468,9 @@
     example: {
       text: "The service desk team resolved the password reset request following the request fulfilment process."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "access_management_process",
     category: "project",
@@ -29312,8 +30527,9 @@
     example: {
       text: "Revoking SQL write access for an employee who transferred departments is handled by our access management process."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "continual_service_improvement",
     category: "project",
@@ -29370,8 +30586,9 @@
     example: {
       text: "We initiated a continual service improvement cycle to reduce latency on DB API responses."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "deming_cycle_pdca",
     category: "project",
@@ -29429,8 +30646,9 @@
     example: {
       text: "The security team uses the Deming cycle to review and upgrade our threat protection rules every quarter."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "total_quality_management_tqm",
     category: "project",
@@ -29487,8 +30705,9 @@
     example: {
       text: "Total quality management tqm guidelines require setting up feedback loops with both end users and QA engineers."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "six_sigma_methodology",
     category: "project",
@@ -29546,8 +30765,9 @@
     example: {
       text: "We used Six Sigma methodology tools to identify the cause of packet loss in the router gateway."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "kaizen_continuous_improvement",
     category: "project",
@@ -29605,8 +30825,9 @@
     example: {
       text: "Conducting a brief weekly retro helped our development team embrace the Kaizen philosophy."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "just_in_time_production",
     category: "project",
@@ -29664,8 +30885,9 @@
     example: {
       text: "Just-in-time production rules prevent us from deploying costly redundant cloud compute nodes before customer traffic rises."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "kanban_board_system",
     category: "project",
@@ -29722,8 +30944,9 @@
     example: {
       text: "We set up a digital kanban board system in our project space to track SQL optimization tasks."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "corporate_social_responsibility_csr",
     category: "project",
@@ -29781,8 +31004,9 @@
     example: {
       text: "Recycling old hardware in our data centers is part of our corporate social responsibility csr initiative."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "business_model_canvas",
     category: "project",
@@ -29839,8 +31063,9 @@
     example: {
       text: "We used the business model canvas to design the pricing tiers of our new SQL translation software."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "swot_analysis_framework",
     category: "project",
@@ -29897,8 +31122,9 @@
     example: {
       text: "A SWOT analysis framework helped us recognize that our SQL tool's offline capacity is a huge strength."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "porter_five_forces_model",
     category: "project",
@@ -29956,8 +31182,9 @@
     example: {
       text: "We used Porter's five forces model to evaluate the threat of new database startup entries."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "boston_consulting_group_matrix",
     category: "project",
@@ -30016,8 +31243,9 @@
     example: {
       text: "The board looked at the BCG matrix and decided to reinvest Cash Cow profits into Star AI projects."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "product_portfolio_management",
     category: "project",
@@ -30074,8 +31302,9 @@
     example: {
       text: "Regular product portfolio management reviews prevent redundant software services from co-existing."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "key_goal_indicator_kgi",
     category: "project",
@@ -30132,8 +31361,10 @@
     example: {
       text: "Our KGI for the SQL learning app is to achieve 10,000 monthly active users by year-end."
     },
-    source: "project-glossary-v2"
-  },  {
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
+    {
     id: "critical_success_factor_csf",
     category: "project",
     level: "intermediate",
@@ -30189,8 +31420,9 @@
     example: {
       text: "Ensuring 99.99% database uptime is a critical success factor csf for our financial app launch."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "enterprise_resource_planning_erp",
     category: "project",
@@ -30247,8 +31479,9 @@
     example: {
       text: "Integrating our SQL database with the corporate enterprise resource planning erp system synchronized customer accounts."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "supply_chain_management_scm",
     category: "project",
@@ -30305,8 +31538,9 @@
     example: {
       text: "Adopting supply chain management scm software reduced our raw component inventory holding time by 40%."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "customer_relationship_management_crm",
     category: "project",
@@ -30363,8 +31597,9 @@
     example: {
       text: "We migrated customer database records to a cloud-based customer relationship management crm software."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "business_to_business_b2b",
     category: "project",
@@ -30422,8 +31657,9 @@
     example: {
       text: "Our SQL licensing service is exclusively designed for business to business b2b software companies."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "business_to_consumer_b2c",
     category: "project",
@@ -30481,8 +31717,9 @@
     example: {
       text: "We developed a mobile payment app designed for the business to consumer b2c retail market."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "consumer_to_consumer_c2c",
     category: "project",
@@ -30540,8 +31777,9 @@
     example: {
       text: "Online auction sites are the most famous examples of the consumer to consumer c2c business model."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "earned_value_management_evm",
     category: "project",
@@ -30598,8 +31836,9 @@
     example: {
       text: "Using earned value management evm, the project manager determined that we are under budget but slightly behind schedule."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "project_management_body_of_knowledge",
     category: "project",
@@ -30657,8 +31896,9 @@
     example: {
       text: "Our team structure aligns closely with the project management body of knowledge guidelines."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "gantt_chart_scheduling",
     category: "project",
@@ -30715,8 +31955,9 @@
     example: {
       text: "We updated the gantt chart scheduling to account for three days of backend integration delays."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "database_normalization_1nf",
     category: "database",
@@ -30771,8 +32012,9 @@
     example: {
       text: "To satisfy the database normalization 1nf rule, we split the multi-valued phone_numbers string into individual rows."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "database_normalization_2nf",
     category: "database",
@@ -30827,8 +32069,9 @@
     example: {
       text: "We achieved database normalization 2nf by moving order details into a separate table to resolve partial dependencies."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "database_normalization_3nf",
     category: "database",
@@ -30883,8 +32126,9 @@
     example: {
       text: "Moving the manager_name field out of the department_id mapping satisfies database normalization 3nf."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "database_normalization_bcnf",
     category: "database",
@@ -30940,8 +32184,9 @@
     example: {
       text: "We restructured the course-instructor schedule table to conform to database normalization bcnf."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "referential_integrity_rule",
     category: "database",
@@ -30996,8 +32241,9 @@
     example: {
       text: "Our database engine enforced the referential integrity rule, blocking us from deleting a customer who has pending orders."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "entity_relationship_diagram_erd",
     category: "database",
@@ -31053,8 +32299,9 @@
     example: {
       text: "The engineering team reviewed the entity relationship diagram erd to plan the new database migrations."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "database_schema_definition",
     category: "database",
@@ -31109,8 +32356,9 @@
     example: {
       text: "We updated the database schema definition to add a verified_at timestamp to the users table."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "database_data_dictionary",
     category: "database",
@@ -31166,8 +32414,9 @@
     example: {
       text: "Querying the database data dictionary system tables retrieves the maximum length allowed for the varchar columns."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "structured_query_language_ddl",
     category: "database",
@@ -31222,8 +32471,9 @@
     example: {
       text: "CREATE TABLE is one of the most common structured query language ddl statements."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "structured_query_language_dml",
     category: "database",
@@ -31278,8 +32528,9 @@
     example: {
       text: "Adding new student records requires writing a structured query language dml statement like INSERT INTO."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "structured_query_language_dcl",
     category: "database",
@@ -31334,8 +32585,9 @@
     example: {
       text: "The administrator runs a structured query language dcl command to GRANT select permissions to the developer."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "database_transaction_savepoint",
     category: "database",
@@ -31391,8 +32643,9 @@
     example: {
       text: "We set a database transaction savepoint before updating the user balance to revert easily if the subsequent order insert fails."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "database_concurrency_lock_shared",
     category: "database",
@@ -31448,8 +32701,9 @@
     example: {
       text: "We used a database concurrency lock shared to read customer invoices while preventing other threads from modifying them."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "database_concurrency_lock_exclusive",
     category: "database",
@@ -31505,8 +32759,9 @@
     example: {
       text: "An database concurrency lock exclusive is held during the UPDATE statement to safeguard account debit routines."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "database_concurrency_lock_intent",
     category: "database",
@@ -31562,8 +32817,10 @@
     example: {
       text: "The database engine automatically places a database concurrency lock intent on the table before granting a row-level write lock."
     },
-    source: "project-glossary-v2"
-  },  {
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
+    {
     id: "optimistic_concurrency_control_occ",
     category: "database",
     level: "intermediate",
@@ -31618,8 +32875,9 @@
     example: {
       text: "We configured optimistic concurrency control occ in Hibernate to avoid DB thread starvation."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "pessimistic_concurrency_control_pcc",
     category: "database",
@@ -31675,8 +32933,9 @@
     example: {
       text: "Pessimistic concurrency control pcc is essential for bank account transfers to guarantee zero balance anomalies."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "database_indexing_hash",
     category: "database",
@@ -31731,8 +32990,9 @@
     example: {
       text: "Memory engine tables in MySQL use hash indexing by default."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "database_indexing_clustered",
     category: "database",
@@ -31787,8 +33047,9 @@
     example: {
       text: "The primary key of an InnoDB table automatically acts as a database indexing clustered key."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "database_indexing_nonclustered",
     category: "database",
@@ -31844,8 +33105,9 @@
     example: {
       text: "We created a database indexing nonclustered key on the email column to optimize user login lookups."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "database_query_execution_plan",
     category: "database",
@@ -31902,8 +33164,9 @@
     example: {
       text: "Looking at the database query execution plan, we noticed it was doing a full table scan instead of using our index."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "database_table_scan_full",
     category: "database",
@@ -31959,8 +33222,9 @@
     example: {
       text: "A missing index on user_status caused a database table scan full, blocking the CPU queue."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "database_index_scan_full",
     category: "database",
@@ -32015,8 +33279,9 @@
     example: {
       text: "The query planner performed a database index scan full because the SELECT list requested fields covered by the composite index."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "database_index_seek",
     category: "database",
@@ -32071,8 +33336,9 @@
     example: {
       text: "We optimized the query, turning the slow scan into a fast database index seek."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "database_join_nested_loop",
     category: "database",
@@ -32127,8 +33393,9 @@
     example: {
       text: "The database planner selected database_join_nested_loop join because the orders table has a primary key index."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "database_join_hash",
     category: "database",
@@ -32183,8 +33450,9 @@
     example: {
       text: "For complex analytical reports, PostgreSQL often employs a database_join_hash join to crunch millions of records."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "database_join_sort_merge",
     category: "database",
@@ -32240,8 +33508,9 @@
     example: {
       text: "If the database indexing clustered keys already sort both tables, a database_join_sort_merge join is selected automatically."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "database_backup_full",
     category: "database",
@@ -32296,8 +33565,9 @@
     example: {
       text: "We perform a database backup full every Sunday night during low-traffic hours."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "database_backup_incremental",
     category: "database",
@@ -32352,8 +33622,9 @@
     example: {
       text: "We configure database backup incremental runs every 6 hours to minimize data loss risk."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "database_backup_differential",
     category: "database",
@@ -32408,8 +33679,9 @@
     example: {
       text: "A database backup differential is scheduled nightly, so recovery only requires Sunday's full file and yesterday's file."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "database_recovery_point_objective",
     category: "database",
@@ -32464,8 +33736,9 @@
     example: {
       text: "Our business continuity team set a database recovery point objective of 1 hour for financial transaction tables."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "database_recovery_time_objective",
     category: "database",
@@ -32520,8 +33793,9 @@
     example: {
       text: "To meet a database recovery time objective of 15 minutes, we implemented automated failover scripts."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "database_point_in_time_recovery",
     category: "database",
@@ -32576,8 +33850,9 @@
     example: {
       text: "Database point in time recovery pitr saved us after a developer mistakenly ran a DELETE statement without a WHERE clause."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "database_two_phase_commit",
     category: "database",
@@ -32632,8 +33907,9 @@
     example: {
       text: "We configured database two phase commit for bank transfers involving separate SQL instances."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "database_three_phase_commit",
     category: "database",
@@ -32688,8 +33964,9 @@
     example: {
       text: "The database three phase commit algorithm reduces split-brain locking risks in distributed cluster topologies."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "cap_theorem_distributed",
     category: "database",
@@ -32744,8 +34021,9 @@
     example: {
       text: "According to the cap theorem distributed, during a network split we must choose between database consistency and availability."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "java_object_oriented_encapsulation",
     category: "java",
@@ -32800,8 +34078,9 @@
     example: {
       text: "We achieved java object oriented encapsulation by making member variables private and exposing public getters."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "java_object_oriented_inheritance",
     category: "java",
@@ -32857,8 +34136,9 @@
     example: {
       text: "In Java, every class implicitly uses java object oriented inheritance from the root Object class."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "java_object_oriented_polymorphism",
     category: "java",
@@ -32914,8 +34194,10 @@
     example: {
       text: "Using java object oriented polymorphism, the program calls draw() on a Shape interface without knowing if it's a Circle or Rectangle."
     },
-    source: "project-glossary-v2"
-  },  {
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
+    {
     id: "java_interface_contract",
     category: "java",
     level: "basic",
@@ -32969,8 +34251,9 @@
     example: {
       text: "We defined a ConnectionPool java interface contract to standardize different database client plugins."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "java_static_nested_class",
     category: "java",
@@ -33025,8 +34308,9 @@
     example: {
       text: "The Builder pattern is often implemented using a java_static_nested_class inside the target class."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "java_package_namespace",
     category: "java",
@@ -33081,8 +34365,9 @@
     example: {
       text: "We import classes from the java_package_namespace called java.util.concurrent to use thread pools."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "java_access_modifier_private",
     category: "java",
@@ -33137,8 +34422,9 @@
     example: {
       text: "Using the java_access_modifier_private on the password field prevents unauthorized classes from reading it."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "java_access_modifier_protected",
     category: "java",
@@ -33193,8 +34479,9 @@
     example: {
       text: "We declared the DB connection factory method using java_access_modifier_protected so subclass extensions can override it."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "java_access_modifier_public",
     category: "java",
@@ -33249,8 +34536,9 @@
     example: {
       text: "We exposed the SQL connection manager class constructor using the java_access_modifier_public."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "java_keyword_static",
     category: "java",
@@ -33306,8 +34594,9 @@
     example: {
       text: "Utility functions like Math.max() are marked with the java_keyword_static modifier."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "java_keyword_final",
     category: "java",
@@ -33362,8 +34651,9 @@
     example: {
       text: "We marked the database configuration path as a java_keyword_final String to prevent runtime alteration."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "java_string_immutable",
     category: "java",
@@ -33419,8 +34709,9 @@
     example: {
       text: "Due to java_string_immutable, concatenating a string actually creates a brand new String object under the hood."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "java_string_builder_buffer",
     category: "java",
@@ -33476,8 +34767,9 @@
     example: {
       text: "We swapped the legacy loop concatenation with a java_string_builder_buffer implementation to save memory."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "java_collections_arraylist",
     category: "java",
@@ -33532,8 +34824,9 @@
     example: {
       text: "We fetched the rows from SQL and loaded them into a java_collections_arraylist of custom Java objects."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "java_collections_hashmap",
     category: "java",
@@ -33588,8 +34881,9 @@
     example: {
       text: "We used a java_collections_hashmap to cache active user sessions in memory using user_id as the key."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "java_collections_linkedlist",
     category: "java",
@@ -33644,8 +34938,9 @@
     example: {
       text: "We implemented a Queue using java_collections_linkedlist since it implements the Deque interface."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "java_collections_hashset",
     category: "java",
@@ -33700,8 +34995,9 @@
     example: {
       text: "To filter out duplicate transaction codes, we dumped them into a java_collections_hashset."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "java_exception_checked",
     category: "java",
@@ -33756,8 +35052,9 @@
     example: {
       text: "SQLException is a java_exception_checked, meaning we must wrap database connection calls in try-catch."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "java_exception_unchecked",
     category: "java",
@@ -33813,8 +35110,9 @@
     example: {
       text: "NullPointerException is a classic java_exception_unchecked resulting from programming errors."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "java_try_catch_finally",
     category: "java",
@@ -33869,8 +35167,9 @@
     example: {
       text: "We used a java_try_catch_finally block to close the database statement even if a SQLException occurred."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "java_try_with_resources",
     category: "java",
@@ -33926,8 +35225,9 @@
     example: {
       text: "Using java_try_with_resources ensures that our database connection closes automatically without needing a finally block."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "java_generics_type_safety",
     category: "java",
@@ -33983,8 +35283,9 @@
     example: {
       text: "Java generics type safety allows us to define List<String> to ensure only String elements are inserted."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "java_functional_interface_annotation",
     category: "java",
@@ -34039,8 +35340,9 @@
     example: {
       text: "The Runnable interface is marked with the java_functional_interface_annotation to allow thread lambda declarations."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "java_functional_interfaces",
     category: "java",
@@ -34095,8 +35397,9 @@
     example: {
       text: "We passed a Predicate from the java_functional_interfaces collection to filter user records dynamically."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "java_stream_terminal_operations",
     category: "java",
@@ -34152,8 +35455,10 @@
     example: {
       text: "We used collect(Collectors.toList()) as one of the java_stream_terminal_operations to convert the queried database records."
     },
-    source: "project-glossary-v2"
-  },  {
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
+    {
     id: "java_thread_states_enum",
     category: "java",
     level: "advanced",
@@ -34207,8 +35512,9 @@
     example: {
       text: "We checked java_thread_states_enum to debug why our DB connection worker was stuck in WAITING state."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "java_deadlock_detection",
     category: "java",
@@ -34263,8 +35569,9 @@
     example: {
       text: "JVM built-in java_deadlock_detection identified that Thread A held the user connection while waiting for Thread B."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "java_happens_before_guarantee",
     category: "java",
@@ -34320,8 +35627,9 @@
     example: {
       text: "Unlocking a monitor always has a java_happens_before_guarantee relationship before subsequent acquisitions of the same monitor."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "java_reentrant_lock",
     category: "java",
@@ -34376,8 +35684,9 @@
     example: {
       text: "We preferred java_reentrant_lock to synchronized blocks because we needed tryLock() with timeout."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "java_atomic_variables",
     category: "java",
@@ -34433,8 +35742,9 @@
     example: {
       text: "Using java_atomic_variables for the hit counter eliminated the synchronized synchronization overhead."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "python_dynamic_typing",
     category: "python",
@@ -34489,8 +35799,9 @@
     example: {
       text: "Because of python_dynamic_typing, a variable can reference an integer, then later refer to a SQL query string."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "python_strongly_typed",
     category: "python",
@@ -34545,8 +35856,9 @@
     example: {
       text: "Python is python_strongly_typed, so running 'age' + 25 throws a TypeError."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "python_data_type_list",
     category: "python",
@@ -34601,8 +35913,9 @@
     example: {
       text: "We stored the query field values in a python_data_type_list to process them sequentially."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "python_data_type_tuple",
     category: "python",
@@ -34657,8 +35970,9 @@
     example: {
       text: "We used a python_data_type_tuple to return both coordinate points from the geography calculator."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "python_data_type_dict",
     category: "python",
@@ -34714,8 +36028,9 @@
     example: {
       text: "We parsed the database configuration JSON into a python_data_type_dict for quick access."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "python_data_type_set",
     category: "python",
@@ -34770,8 +36085,9 @@
     example: {
       text: "Converting the user role array to a python_data_type_set automatically eliminated duplicates."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "python_list_methods_append",
     category: "python",
@@ -34826,8 +36142,9 @@
     example: {
       text: "We used python_list_methods_append to collect records returned by our SQL cursor loop."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "python_dict_methods_get",
     category: "python",
@@ -34882,8 +36199,9 @@
     example: {
       text: "Using python_dict_methods_get allows us to set fallback configuration options easily."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "python_mutable_vs_immutable",
     category: "python",
@@ -34938,8 +36256,9 @@
     example: {
       text: "Knowing python_mutable_vs_immutable is crucial, as using a list as a dictionary key causes a TypeError."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "python_lambda_function",
     category: "python",
@@ -34995,8 +36314,9 @@
     example: {
       text: "We passed a python_lambda_function to sorted() to sort our database dictionary list by query count."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "python_map_filter_reduce",
     category: "python",
@@ -35051,8 +36371,9 @@
     example: {
       text: "Using python_map_filter_reduce is often faster than standard for-loops in native Python runtimes."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "python_shallow_vs_deep_copy",
     category: "python",
@@ -35107,8 +36428,9 @@
     example: {
       text: "We used copy.deepcopy() under python_shallow_vs_deep_copy rules to duplicate our nested database mock dict safely."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "python_comprehension_set",
     category: "python",
@@ -35163,8 +36485,9 @@
     example: {
       text: "Using python_comprehension_set allows us to quickly extract unique category tags from our glossary list."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "python_comprehension_dict",
     category: "python",
@@ -35219,8 +36542,9 @@
     example: {
       text: "A python_comprehension_dict makes mapping database row IDs to index objects extremely concise."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "python_iterator_protocol",
     category: "python",
@@ -35275,8 +36599,9 @@
     example: {
       text: "Implementing the python_iterator_protocol allows our custom database cursor to be iterated directly in a for-loop."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "python_iterable_object",
     category: "python",
@@ -35331,8 +36656,9 @@
     example: {
       text: "A database query result proxy is a python_iterable_object that yields row tuples."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "python_exception_handling_try",
     category: "python",
@@ -35388,8 +36714,9 @@
     example: {
       text: "We wrapped the database cursor execution in a python_exception_handling_try to gracefully catch connection drops."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "python_keyword_with",
     category: "python",
@@ -35444,8 +36771,9 @@
     example: {
       text: "Opening files using the python_keyword_with statement guarantees they close even if an exception occurs."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "python_context_manager_protocol",
     category: "python",
@@ -35500,8 +36828,10 @@
     example: {
       text: "We implemented the python_context_manager_protocol on our custom SQL connection class to auto-commit transactions."
     },
-    source: "project-glossary-v2"
-  },  {
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
+    {
     id: "python_namespace_resolution_legb",
     category: "python",
     level: "intermediate",
@@ -35556,8 +36886,9 @@
     example: {
       text: "Understanding the python_namespace_resolution_legb is key to avoiding UnboundLocalError during execution."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "python_module_import_system",
     category: "python",
@@ -35613,8 +36944,9 @@
     example: {
       text: "The python_module_import_system caches loaded modules in sys.modules to prevent multiple executions."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "python_virtual_environment_venv",
     category: "python",
@@ -35669,8 +37001,9 @@
     example: {
       text: "We initialized a python_virtual_environment_venv using 'python -m venv .venv' before installing Django."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "python_package_manager_pipenv",
     category: "python",
@@ -35725,8 +37058,9 @@
     example: {
       text: "The python_package_manager_pipenv tool automatically creates virtual environments and tracks locks."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "python_unit_testing_unittest",
     category: "python",
@@ -35782,8 +37116,9 @@
     example: {
       text: "We subclassed unittest.TestCase in our python_unit_testing_unittest file to verify the SQL parser module."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "python_unittest_mock",
     category: "python",
@@ -35839,8 +37174,9 @@
     example: {
       text: "We used python_unittest_mock to stub the PostgreSQL connection pool during offline tests."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "python_web_framework_django",
     category: "python",
@@ -35895,8 +37231,9 @@
     example: {
       text: "The startup opted for the python_web_framework_django framework because it provides a secure admin dashboard immediately."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "python_web_framework_flask",
     category: "python",
@@ -35951,8 +37288,9 @@
     example: {
       text: "We implemented our REST APIs using the python_web_framework_flask because it requires minimal boilerplate."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "python_fastapi_framework",
     category: "python",
@@ -36007,8 +37345,9 @@
     example: {
       text: "The microservice is powered by the python_fastapi_framework to leverage native async database clients."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "python_object_oriented_class",
     category: "python",
@@ -36063,8 +37402,9 @@
     example: {
       text: "We defined a User record manager using the python_object_oriented_class syntax."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "python_dunder_init_method",
     category: "python",
@@ -36120,8 +37460,9 @@
     example: {
       text: "We bind the database client parameter inside the class using the python_dunder_init_method."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "osi_model_physical_layer",
     category: "network",
@@ -36179,8 +37520,9 @@
     example: {
       text: "Ethernet cables, hubs, and fiber optic transceivers operate at the osi_model_physical_layer."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "osi_model_data_link_layer",
     category: "network",
@@ -36238,8 +37580,9 @@
     example: {
       text: "Network switches and network interface cards analyze headers at the osi_model_data_link_layer."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "osi_model_network_layer",
     category: "network",
@@ -36297,8 +37640,9 @@
     example: {
       text: "Routers forward packets between subnets by analyzing headers at the osi_model_network_layer."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "osi_model_transport_layer",
     category: "network",
@@ -36356,8 +37700,9 @@
     example: {
       text: "Port numbers, TCP handshake, and sequence tracking exist at the osi_model_transport_layer."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "osi_model_session_layer",
     category: "network",
@@ -36415,8 +37760,9 @@
     example: {
       text: "Session checkpoints and RPC call controls are managed at the osi_model_session_layer."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "osi_model_presentation_layer",
     category: "network",
@@ -36474,8 +37820,9 @@
     example: {
       text: "JPEG formatting and TLS/SSL cryptographic translation are conceptualized at the osi_model_presentation_layer."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "osi_model_application_layer",
     category: "network",
@@ -36533,8 +37880,9 @@
     example: {
       text: "Web browsers fetch pages using HTTP, which is an protocol residing at the osi_model_application_layer."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "tcp_ip_protocol_suite",
     category: "network",
@@ -36592,8 +37940,9 @@
     example: {
       text: "Every modern operating system implements the tcp_ip_protocol_suite natively inside its kernel space."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "internet_protocol_version_4",
     category: "network",
@@ -36651,8 +38000,10 @@
     example: {
       text: "The local loopback IP address in internet_protocol_version_4 is defined as 127.0.0.1."
     },
-    source: "project-glossary-v2"
-  },  {
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
+    {
     id: "internet_protocol_version_6",
     category: "network",
     level: "intermediate",
@@ -36709,8 +38060,9 @@
     example: {
       text: "Large ISPs are migrating their backbones to internet_protocol_version_6 to accommodate billions of IoT devices."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "ip_address_classful_routing",
     category: "network",
@@ -36768,8 +38120,9 @@
     example: {
       text: "Modern routers no longer use ip_address_classful_routing due to its high address waste rate."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "classless_inter_domain_routing",
     category: "network",
@@ -36827,8 +38180,9 @@
     example: {
       text: "We configured the VPC subnet with classless_inter_domain_routing block 10.0.0.0/16."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "private_ip_address_range",
     category: "network",
@@ -36886,8 +38240,9 @@
     example: {
       text: "Make sure you allocate a sub-segment from the private_ip_address_range to the database servers."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "loopback_ip_address",
     category: "network",
@@ -36946,8 +38301,9 @@
     example: {
       text: "We tested the Web server locally using the loopback_ip_address before releasing it to staging."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "mac_address_filtering",
     category: "network",
@@ -37005,8 +38361,9 @@
     example: {
       text: "Although mac_address_filtering adds a layer of security, hackers can easily bypass it by spoofing their MAC address."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "ethernet_frame_format",
     category: "network",
@@ -37064,8 +38421,9 @@
     example: {
       text: "We analyzed the captured traffic in Wireshark to inspect the preamble of the ethernet_frame_format."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "address_resolution_protocol_arp",
     category: "network",
@@ -37123,8 +38481,9 @@
     example: {
       text: "A host sends an ARP broadcast request to obtain the MAC address associated with the default gateway."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "transmission_control_protocol_tcp",
     category: "network",
@@ -37181,8 +38540,9 @@
     example: {
       text: "Database query connections and file transfers rely on transmission_control_protocol_tcp for message delivery."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "user_datagram_protocol_udp",
     category: "network",
@@ -37239,8 +38599,9 @@
     example: {
       text: "Voice over IP (VoIP) and online gaming choose user_datagram_protocol_udp over TCP to minimize latency."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "tcp_window_sliding_flow_control",
     category: "network",
@@ -37298,8 +38659,9 @@
     example: {
       text: "We optimized the tcp_window_sliding_flow_control settings on Linux servers to support high-throughput data replication."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "tcp_congestion_control_algorithm",
     category: "network",
@@ -37357,8 +38719,9 @@
     example: {
       text: "TCP BBR is a modern tcp_congestion_control_algorithm developed by Google that measures bottleneck bandwidth."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "domain_name_system_query_recursive",
     category: "network",
@@ -37416,8 +38779,9 @@
     example: {
       text: "Most client operating systems submit a domain_name_system_query_recursive to their local resolver."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "domain_name_system_query_iterative",
     category: "network",
@@ -37475,8 +38839,9 @@
     example: {
       text: "Local DNS servers resolve public domains by performing a series of domain_name_system_query_iterative steps across root servers."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "hypertext_transfer_protocol_http",
     category: "network",
@@ -37534,8 +38899,9 @@
     example: {
       text: "Traditional hypertext_transfer_protocol_http transmits credentials in plaintext, which is insecure."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "dynamic_host_configuration_protocol_dhcp",
     category: "network",
@@ -37593,8 +38959,9 @@
     example: {
       text: "Our office Wi-Fi router runs a dynamic_host_configuration_protocol_dhcp server to lease IP addresses to employees."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "routing_information_protocol_rip",
     category: "network",
@@ -37652,8 +39019,9 @@
     example: {
       text: "Because of its slow convergence and hop count limit, routing_information_protocol_rip has been replaced by OSPF in enterprise networks."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "border_gateway_protocol_bgp",
     category: "network",
@@ -37711,8 +39079,9 @@
     example: {
       text: "A configuration error in border_gateway_protocol_bgp propagation can take entire web platforms offline globally."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "network_address_translation_nat",
     category: "network",
@@ -37769,8 +39138,9 @@
     example: {
       text: "We set up static network_address_translation_nat to map our database server to a dedicated external IP."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "port_address_translation_pat",
     category: "network",
@@ -37829,8 +39199,9 @@
     example: {
       text: "Most consumer routers utilize port_address_translation_pat to allow all home devices to access the internet simultaneously."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "virtual_local_area_network_vlan",
     category: "network",
@@ -37888,8 +39259,10 @@
     example: {
       text: "We configured a separate virtual_local_area_network_vlan for database communications to isolate SQL database traffic from corporate desktops."
     },
-    source: "project-glossary-v2"
-  },  {
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
+    {
     id: "confidentiality_integrity_availability",
     category: "security",
     level: "basic",
@@ -37946,8 +39319,9 @@
     example: {
       text: "Any security policy must seek to balance the parameters of the confidentiality_integrity_availability."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "authentication_verification",
     category: "security",
@@ -38005,8 +39379,9 @@
     example: {
       text: "Multi-factor authentication_verification significantly improves security compared to password-only access."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "authorization_access_control",
     category: "security",
@@ -38064,8 +39439,9 @@
     example: {
       text: "The system checked the user's role during authorization_access_control and blocked access to the SQL database configuration."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "non_repudiation_security",
     category: "security",
@@ -38122,8 +39498,9 @@
     example: {
       text: "Using digital signatures on contracts provides non_repudiation_security in legal transactions."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "malware_computer_virus",
     category: "security",
@@ -38181,8 +39558,9 @@
     example: {
       text: "We ran a full scan because a legacy host was infected by an executable file containing a malware_computer_virus."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "malware_computer_worm",
     category: "security",
@@ -38240,8 +39618,9 @@
     example: {
       text: "The malware_computer_worm spread rapidly through the office subnet by exploiting an unpatched SMB vulnerability."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "malware_trojan_horse",
     category: "security",
@@ -38299,8 +39678,9 @@
     example: {
       text: "The utility we downloaded contained a malware_trojan_horse that installed a keylogger."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "malware_spyware_adware",
     category: "security",
@@ -38358,8 +39738,9 @@
     example: {
       text: "Anti-malware tools detect and remove malware_spyware_adware to protect user privacy and improve machine performance."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "social_engineering_shoulder_surfing",
     category: "security",
@@ -38417,8 +39798,9 @@
     example: {
       text: "Using privacy filter screens on laptops helps mitigate the risk of social_engineering_shoulder_surfing in public spaces."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "social_engineering_dumpster_diving",
     category: "security",
@@ -38476,8 +39858,9 @@
     example: {
       text: "We mandate cross-cut shredding for all operational drafts to prevent social_engineering_dumpster_diving."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "social_engineering_spoofing",
     category: "security",
@@ -38535,8 +39918,9 @@
     example: {
       text: "Deploying SPF, DKIM, and DMARC prevents email-based social_engineering_spoofing."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "phishing_spear_phishing",
     category: "security",
@@ -38594,8 +39978,9 @@
     example: {
       text: "Our CEO was targeted with a sophisticated phishing_spear_phishing attempt disguised as a subpoena from local courts."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "phishing_whaling_attack",
     category: "security",
@@ -38653,8 +40038,9 @@
     example: {
       text: "A whaling attack often mimics legitimate legal subpoenas or urgent board resolutions to pressure the CFO into approving wire transfers."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "man_in_the_middle_mitm",
     category: "security",
@@ -38712,8 +40098,9 @@
     example: {
       text: "Enforcing HTTPS with strict certificate checking blocks any attempts at man_in_the_middle_mitm."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "replay_attack_method",
     category: "security",
@@ -38771,8 +40158,9 @@
     example: {
       text: "Using timestamps or challenge-response nonces prevents replay_attack_method on API endpoints."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "denial_of_service_dos_attack",
     category: "security",
@@ -38831,8 +40219,9 @@
     example: {
       text: "The network was hit by a massive distributed denial_of_service_dos_attack that saturated all downstream ISP links."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "parameterized_query_security",
     category: "security",
@@ -38890,8 +40279,9 @@
     example: {
       text: "Always use a parameterized_query_security library when writing SQL commands that handle dynamic Web search bars."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "input_sanitization_xss",
     category: "security",
@@ -38950,8 +40340,9 @@
     example: {
       text: "Without proper input_sanitization_xss, arbitrary JavaScript injected into a comments section will run inside other users' browsers."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "cross_site_request_forgery_csrf",
     category: "security",
@@ -39010,8 +40401,9 @@
     example: {
       text: "Adding anti-CSRF synchronizer tokens to forms is the industry-standard way to defend against cross_site_request_forgery_csrf."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "zero_day_vulnerability",
     category: "security",
@@ -39069,8 +40461,9 @@
     example: {
       text: "The security team isolated the affected servers immediately because a new zero_day_vulnerability in the library was being actively exploited."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "stack_buffer_overflow_exploit",
     category: "security",
@@ -39129,8 +40522,9 @@
     example: {
       text: "C programmers should use safe alternatives like strncpy instead of strcpy to prevent stack_buffer_overflow_exploit vulnerability."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "brute_force_attack_prevention",
     category: "security",
@@ -39188,8 +40582,9 @@
     example: {
       text: "We configured brute_force_attack_prevention on our SSH server by blocking IPs after three failed login attempts."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "intrusion_detection_system_ids",
     category: "security",
@@ -39248,8 +40643,9 @@
     example: {
       text: "While our intrusion_detection_system_ids flags anomalies, the IPS is configured to actually block the malicious IP address."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "symmetric_encryption_des",
     category: "security",
@@ -39307,8 +40703,9 @@
     example: {
       text: "We migrated our database encryption parameters away from symmetric_encryption_des to AES-256."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "symmetric_encryption_3des",
     category: "security",
@@ -39367,8 +40764,10 @@
     example: {
       text: "Legacy banking terminals still support symmetric_encryption_3des for backward compatibility, but are slowly phasing it out."
     },
-    source: "project-glossary-v2"
-  },  {
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
+    {
     id: "asymmetric_encryption_rsa",
     category: "security",
     level: "intermediate",
@@ -39425,8 +40824,9 @@
     example: {
       text: "We generated a 2048-bit asymmetric_encryption_rsa keypair to encrypt the API payload."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "asymmetric_encryption_ecc",
     category: "security",
@@ -39484,8 +40884,9 @@
     example: {
       text: "Modern mobile browsers prefer TLS cipher suites using asymmetric_encryption_ecc because of their lower CPU overhead."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "diffie_hellman_key_exchange",
     category: "security",
@@ -39543,8 +40944,9 @@
     example: {
       text: "The TLS handshake uses diffie_hellman_key_exchange to establish a temporary symmetric session key."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "cryptographic_salt_value",
     category: "security",
@@ -39602,8 +41004,9 @@
     example: {
       text: "Always combine the user's password with a unique, cryptographically secure cryptographic_salt_value before running SHA-256."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "digital_signature_mechanism",
     category: "security",
@@ -39661,8 +41064,9 @@
     example: {
       text: "We verified the authenticity of the update package by validating its digital_signature_mechanism."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "digital_certificate_ssl_tls",
     category: "security",
@@ -39721,8 +41125,9 @@
     example: {
       text: "Web browsers display a security warning if the website's digital_certificate_ssl_tls is expired or self-signed."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "public_key_infrastructure_pki",
     category: "security",
@@ -39779,8 +41184,9 @@
     example: {
       text: "Enterprise security depends on a well-maintained public_key_infrastructure_pki to issue internal certificates."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "certificate_authority_ca_role",
     category: "security",
@@ -39838,8 +41244,9 @@
     example: {
       text: "We requested a wildcard certificate from a public certificate_authority_ca_role to secure all our subdomains."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "security_policy_governance",
     category: "security",
@@ -39897,8 +41304,9 @@
     example: {
       text: "Every new hire is required to read and sign the corporate security_policy_governance during onboarding."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "access_control_list_acl",
     category: "security",
@@ -39957,8 +41365,9 @@
     example: {
       text: "We updated the router's access_control_list_acl to deny all incoming traffic from the untrusted subnet."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "least_privilege_principle",
     category: "security",
@@ -40016,8 +41425,9 @@
     example: {
       text: "By following the least_privilege_principle, database accounts for web apps should not have database creation permissions."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "von_neumann_architecture",
     category: "system",
@@ -40075,8 +41485,9 @@
     example: {
       text: "The CPU bottleneck created by sharing a single bus for instructions and data is known as the von_neumann_architecture bottleneck."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "central_processing_unit_cpu",
     category: "system",
@@ -40135,8 +41546,9 @@
     example: {
       text: "Our server has a high-core-count central_processing_unit_cpu to handle thousands of concurrent SQL transactions."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "control_unit_cpu",
     category: "system",
@@ -40194,8 +41606,9 @@
     example: {
       text: "The control_unit_cpu fetches the next program counter instruction and generates routing signals for the registers."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "registers_cpu_cache",
     category: "system",
@@ -40255,8 +41668,9 @@
     example: {
       text: "The CPU accumulator is a special registers_cpu_cache used to store the results of the arithmetic logic unit."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "cache_memory_l1_l2_l3",
     category: "system",
@@ -40317,8 +41731,9 @@
     example: {
       text: "A high cache_memory_l1_l2_l3 hit rate prevents the CPU from waiting for the slower system RAM."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "random_access_memory_ram",
     category: "system",
@@ -40377,8 +41792,9 @@
     example: {
       text: "Adding more random_access_memory_ram lets the operating system run multiple heavy services concurrently without swapping to disk."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "static_random_access_memory_sram",
     category: "system",
@@ -40436,8 +41852,9 @@
     example: {
       text: "Because it does not require capacitor refreshing, static_random_access_memory_sram latency is measured in nanoseconds."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "dynamic_random_access_memory_dram",
     category: "system",
@@ -40495,8 +41912,9 @@
     example: {
       text: "Modern computer mainboards employ DDR5 dynamic_random_access_memory_dram modules."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "solid_state_drive_ssd",
     category: "system",
@@ -40555,8 +41973,9 @@
     example: {
       text: "We replaced our server storage array with enterprise solid_state_drive_ssd modules to handle high-IOPS database operations."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "graphics_processing_unit_gpu",
     category: "system",
@@ -40615,8 +42034,9 @@
     example: {
       text: "Training deep neural networks requires a high-performance cluster of enterprise graphics_processing_unit_gpu chips."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "operating_system_structure",
     category: "system",
@@ -40674,8 +42094,9 @@
     example: {
       text: "Modern kernel-based designs ensure that faults in user apps cannot crash the core operating_system_structure."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "operating_system_process_control_block",
     category: "system",
@@ -40733,8 +42154,9 @@
     example: {
       text: "When performing context switching, the OS saves the current CPU state into the active operating_system_process_control_block."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "operating_system_thread",
     category: "system",
@@ -40793,8 +42215,9 @@
     example: {
       text: "To maximize Web request throughput, our backend spawns an independent operating_system_thread per incoming TCP socket."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "process_scheduling_algorithm",
     category: "system",
@@ -40853,8 +42276,10 @@
     example: {
       text: "Interactive shells rely on a round-robin process_scheduling_algorithm to provide responsive feedback to user keystrokes."
     },
-    source: "project-glossary-v2"
-  },  {
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
+    {
     id: "process_state_transitions",
     category: "system",
     level: "intermediate",
@@ -40912,8 +42337,9 @@
     example: {
       text: "An I/O interrupt triggers one of the process_state_transitions, moving it from Blocked to Ready."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "system_deadlock_conditions",
     category: "system",
@@ -40971,8 +42397,9 @@
     example: {
       text: "Ensuring an ordering of lock acquisition breaks the circular wait of the system_deadlock_conditions."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "virtual_memory_translation_lookaside_buffer",
     category: "system",
@@ -41030,8 +42457,9 @@
     example: {
       text: "A virtual_memory_translation_lookaside_buffer miss forces the MMU to query the multi-level page table in main RAM."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "virtual_memory_segmentation",
     category: "system",
@@ -41089,8 +42517,9 @@
     example: {
       text: "Unlike paging, virtual_memory_segmentation is visible to the programmer and supports modular protection flags."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "page_replacement_algorithm_lru",
     category: "system",
@@ -41148,8 +42577,9 @@
     example: {
       text: "The OS implemented a page_replacement_algorithm_lru queue to keep hot database records cached in high-speed RAM."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "page_fault_handling",
     category: "system",
@@ -41208,8 +42638,9 @@
     example: {
       text: "Frequent page_fault_handling and disk swapping degrade system performance, causing severe thrashing."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "device_driver_architecture",
     category: "system",
@@ -41267,8 +42698,9 @@
     example: {
       text: "When installing a new network card, you must install the appropriate device_driver_architecture for the OS to communicate with it."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "polling_input_output",
     category: "system",
@@ -41326,8 +42758,9 @@
     example: {
       text: "Although simple to write, polling_input_output wastes many CPU cycles compared to interrupt-driven I/O."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "basic_input_output_system_uefi",
     category: "system",
@@ -41386,8 +42819,9 @@
     example: {
       text: "We configured the server's basic_input_output_system_uefi to boot from the network PXE interface instead of the local disk."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "redundant_array_of_independent_disks",
     category: "system",
@@ -41449,8 +42883,9 @@
     example: {
       text: "We set up RAID 5 using redundant_array_of_independent_disks to survive a single drive failure without any database downtime."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "world_wide_web_consortium",
     category: "web",
@@ -41507,8 +42942,9 @@
     example: {
       text: "We checked the validator hosted by the world_wide_web_consortium to ensure our HTML templates were fully compliant."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "uniform_resource_identifier",
     category: "web",
@@ -41566,8 +43002,9 @@
     example: {
       text: "The XML schema definition namespace is defined as a uniform_resource_identifier rather than an actual webpage address."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "uniform_resource_locator",
     category: "web",
@@ -41626,8 +43063,9 @@
     example: {
       text: "We updated the API uniform_resource_locator to point to the secure HTTPS server."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "hypertext_markup_language_html",
     category: "web",
@@ -41686,8 +43124,9 @@
     example: {
       text: "We built our landing page template by writing clean semantic hypertext_markup_language_html tags."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "cascading_style_sheets_css",
     category: "web",
@@ -41746,8 +43185,9 @@
     example: {
       text: "We applied cascading_style_sheets_css rule overlays to style our database dashboard with dark mode properties."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "javascript_scripting_language",
     category: "web",
@@ -41806,8 +43246,9 @@
     example: {
       text: "Our glossary table is rendered dynamically using client-side javascript_scripting_language code."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "document_object_model_dom",
     category: "web",
@@ -41866,8 +43307,9 @@
     example: {
       text: "We performance-optimized the application by minimizing direct writes to the document_object_model_dom tree."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "http_request_method_get",
     category: "web",
@@ -41925,8 +43367,9 @@
     example: {
       text: "Web browsers utilize the http_request_method_get when you enter a URL in the address bar."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "http_request_method_post",
     category: "web",
@@ -41984,8 +43427,9 @@
     example: {
       text: "Submitting the register form executes an http_request_method_post with the username and password in the request body."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "http_request_method_put",
     category: "web",
@@ -42043,8 +43487,9 @@
     example: {
       text: "We updated the profile record with an http_request_method_put containing the complete updated User JSON."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "http_request_method_delete",
     category: "web",
@@ -42102,8 +43547,9 @@
     example: {
       text: "We sent an http_request_method_delete to /api/users/42 to remove the user from the SQL database."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "http_status_code_200_ok",
     category: "web",
@@ -42161,8 +43607,9 @@
     example: {
       text: "The API returned an http_status_code_200_ok alongside the requested glossary entries."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "http_status_code_301_moved",
     category: "web",
@@ -42220,8 +43667,9 @@
     example: {
       text: "We set up an http_status_code_301_moved from HTTP to HTTPS to ensure all legacy links are redirected securely."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "http_status_code_400_bad",
     category: "web",
@@ -42279,8 +43727,9 @@
     example: {
       text: "If you omit the password string in the JSON payload, the authentication API returns an http_status_code_400_bad."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "http_status_code_401_unauthorized",
     category: "web",
@@ -42338,8 +43787,10 @@
     example: {
       text: "If you provide an expired token, the server responds with an http_status_code_401_unauthorized."
     },
-    source: "project-glossary-v2"
-  },  {
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
+    {
     id: "http_status_code_403_forbidden",
     category: "web",
     level: "basic",
@@ -42396,8 +43847,9 @@
     example: {
       text: "Trying to access administrative console folders directly will trigger an http_status_code_403_forbidden."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "http_status_code_404_not_found",
     category: "web",
@@ -42455,8 +43907,9 @@
     example: {
       text: "We set up a custom catch-all route to display a friendly user page instead of the default browser http_status_code_404_not_found error."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "http_status_code_500_internal",
     category: "web",
@@ -42515,8 +43968,9 @@
     example: {
       text: "A Python traceback or unhandled database crash usually results in an http_status_code_500_internal returned to the frontend."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "http_status_code_503_unavailable",
     category: "web",
@@ -42574,8 +44028,9 @@
     example: {
       text: "During flash sales, server instances scale up automatically to prevent returning an http_status_code_503_unavailable."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "single_page_application_spa",
     category: "web",
@@ -42633,8 +44088,9 @@
     example: {
       text: "We built the dashboard as a single_page_application_spa using React to ensure a highly responsive user experience."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "soap_protocol_web_services",
     category: "web",
@@ -42692,8 +44148,9 @@
     example: {
       text: "While modern APIs prefer JSON over REST, legacy enterprise integrations still rely on soap_protocol_web_services."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "graphql_query_language_api",
     category: "web",
@@ -42750,8 +44207,9 @@
     example: {
       text: "We adopted graphql_query_language_api to combine multiple REST API requests into a single network round-trip."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "web_server_nginx_apache",
     category: "web",
@@ -42811,8 +44269,9 @@
     example: {
       text: "We deployed Nginx as our primary web_server_nginx_apache to handle HTTPS redirection and static asset serving."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "reverse_proxy_server",
     category: "web",
@@ -42870,8 +44329,9 @@
     example: {
       text: "We configured Nginx as a reverse_proxy_server to protect our SQL DB application servers from direct Internet access."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "version_control_system_vcs",
     category: "git",
@@ -42930,8 +44390,9 @@
     example: {
       text: "Using a version_control_system_vcs is mandatory for managing enterprise SQL schema deployment scripts."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "git_repository_local_remote",
     category: "git",
@@ -42990,8 +44451,9 @@
     example: {
       text: "We pushed our local changes to the GitHub git_repository_local_remote server."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "git_commit_history",
     category: "git",
@@ -43050,8 +44512,9 @@
     example: {
       text: "Analyzing the git_commit_history helped us locate the exact date when the SQL parser error was introduced."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "git_branching_model",
     category: "git",
@@ -43110,8 +44573,9 @@
     example: {
       text: "We adopted a strict trunk-based git_branching_model to deploy changes to production daily."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "git_merge_conflict_resolution",
     category: "git",
@@ -43170,8 +44634,9 @@
     example: {
       text: "We spent two hours on git_merge_conflict_resolution after merging the massive backend refactor branch."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "git_rebase_workflow",
     category: "git",
@@ -43229,8 +44694,9 @@
     example: {
       text: "Using a git_rebase_workflow before opening a pull request keeps our main commit branch extremely clean."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "git_clone_pull_push",
     category: "git",
@@ -43289,8 +44755,9 @@
     example: {
       text: "First, you must execute a git_clone_pull_push clone command to set up the local repository on your workstation."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "unit_testing_level_dev",
     category: "git",
@@ -43348,8 +44815,9 @@
     example: {
       text: "Writing robust unit_testing_level_dev cases ensures that later refactoring doesn't break individual system methods."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "integration_testing_level_dev",
     category: "git",
@@ -43407,8 +44875,9 @@
     example: {
       text: "We configured our database connectors to run during integration_testing_level_dev to verify connection pool limits."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "system_testing_level_dev",
     category: "git",
@@ -43466,8 +44935,9 @@
     example: {
       text: "Our system_testing_level_dev procedures include performance benchmarks under simulated user loads."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "acceptance_testing_level",
     category: "git",
@@ -43526,8 +44996,9 @@
     example: {
       text: "We deployed the code to a staging environment so key customers could complete their acceptance_testing_level check."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "regression_testing_maintenance",
     category: "git",
@@ -43585,8 +45056,9 @@
     example: {
       text: "We automate our regression_testing_maintenance suite inside the CI pipeline to run on every commit."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "black_box_testing_method",
     category: "git",
@@ -43644,8 +45116,9 @@
     example: {
       text: "The QA analyst conducted black_box_testing_method by entering invalid SQL injection strings in the username form."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "white_box_testing_method",
     category: "git",
@@ -43704,8 +45177,9 @@
     example: {
       text: "We performed white_box_testing_method to ensure that all catch blocks in our SQL driver classes were traversed during simulation."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "static_code_analysis_tool",
     category: "git",
@@ -43765,8 +45239,9 @@
     example: {
       text: "Our pipeline executes a static_code_analysis_tool to enforce formatting consistency and prevent SQL syntax vulnerabilities before merging."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "dynamic_code_analysis_tool",
     category: "git",
@@ -43826,8 +45301,10 @@
     example: {
       text: "We used a dynamic_code_analysis_tool to profile the thread safety of the database pool during concurrent requests."
     },
-    source: "project-glossary-v2"
-  },  {
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
+    {
     id: "bug_tracking_system_issue",
     category: "git",
     level: "basic",
@@ -43886,8 +45363,9 @@
     example: {
       text: "We registered the SQL database connection error in our bug_tracking_system_issue tracker."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "continuous_deployment_cd_dev",
     category: "git",
@@ -43945,8 +45423,9 @@
     example: {
       text: "Our server configuration enables continuous_deployment_cd_dev to push updates directly to staging when PRs are merged."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "cloud_computing_characteristics",
     category: "cloud",
@@ -44004,8 +45483,9 @@
     example: {
       text: "Rapid elasticity is one of the key cloud_computing_characteristics that allowed our Web app to survive the traffic spike."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "infrastructure_as_service_iaas",
     category: "cloud",
@@ -44062,8 +45542,9 @@
     example: {
       text: "AWS EC2 and Google Compute Engine are classic examples of infrastructure_as_service_iaas."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "platform_as_service_paas",
     category: "cloud",
@@ -44120,8 +45601,9 @@
     example: {
       text: "Heroku and AWS Elastic Beanstalk are well-known platform_as_service_paas options that simplify application deployment."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "software_as_service_saas",
     category: "cloud",
@@ -44178,8 +45660,9 @@
     example: {
       text: "Google Workspace is a popular software_as_service_saas suite that integrates email, documents, and spreadsheets."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "public_cloud_deployment",
     category: "cloud",
@@ -44236,8 +45719,9 @@
     example: {
       text: "Our startup decided to host our database servers on a public_cloud_deployment to save on initial hardware costs."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "private_cloud_deployment",
     category: "cloud",
@@ -44294,8 +45778,9 @@
     example: {
       text: "Large banks prefer a private_cloud_deployment due to regulatory requirements and strict data residency policies."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "hybrid_cloud_deployment",
     category: "cloud",
@@ -44352,8 +45837,9 @@
     example: {
       text: "We implemented a hybrid_cloud_deployment, keeping sensitive patient SQL databases in our private database and using the public cloud for web scaling."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "cloud_virtualization_technology",
     category: "cloud",
@@ -44412,8 +45898,9 @@
     example: {
       text: "The hypervisor uses cloud_virtualization_technology to multiplex CPU and memory channels to different guest operating systems."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "docker_containerization",
     category: "cloud",
@@ -44471,8 +45958,9 @@
     example: {
       text: "Using docker_containerization solved the 'it works on my machine' issue during developer handoff."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "container_orchestration_system",
     category: "cloud",
@@ -44531,8 +46019,9 @@
     example: {
       text: "We configured our deployment yaml on a container_orchestration_system to handle auto-healing and rollbacks."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "continuous_integration_ci_pipeline",
     category: "cloud",
@@ -44590,8 +46079,9 @@
     example: {
       text: "Our continuous_integration_ci_pipeline runs eslint and mocha test suits on GitHub Actions."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "continuous_delivery_cd_pipeline",
     category: "cloud",
@@ -44648,8 +46138,9 @@
     example: {
       text: "While continuous deployment deploys automatically, continuous_delivery_cd_pipeline guarantees the build is deployable but waits for business approval."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "infrastructure_as_code_terraform",
     category: "cloud",
@@ -44708,8 +46199,9 @@
     example: {
       text: "We migrated our cloud setup to infrastructure_as_code_terraform to ensure our staging and production environments are identical."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "configuration_management_ansible",
     category: "cloud",
@@ -44767,8 +46259,9 @@
     example: {
       text: "We wrote an Ansible playbook to automate the configuration_management_ansible of our PostgreSQL cluster."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "devops_culture_collaboration",
     category: "cloud",
@@ -44825,8 +46318,9 @@
     example: {
       text: "Embracing devops_culture_collaboration helped break down the silos between our database administrators and software engineers."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "microservices_architecture_pattern",
     category: "cloud",
@@ -44885,8 +46379,9 @@
     example: {
       text: "We migrated our monolith application to the microservices_architecture_pattern to allow different teams to deploy SQL updates independently."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "load_balancer_cloud",
     category: "cloud",
@@ -44945,8 +46440,9 @@
     example: {
       text: "Our cloud load_balancer_cloud automatically routes SQL database read queries to dynamic read-replicas."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "auto_scaling_cloud_resources",
     category: "cloud",
@@ -45005,8 +46501,9 @@
     example: {
       text: "During the product launch event, auto_scaling_cloud_resources spun up 15 new container instances within minutes."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "big_o_notation_complexity",
     category: "algorithm",
@@ -45065,8 +46562,9 @@
     example: {
       text: "Using a nested loop to search the glossary table results in a time complexity of big_o_notation_complexity O(N^2)."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "linear_data_structure_array",
     category: "algorithm",
@@ -45124,8 +46622,9 @@
     example: {
       text: "We loaded the static glossary list into a contiguous linear_data_structure_array to enable index searches."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "linear_data_structure_linkedlist",
     category: "algorithm",
@@ -45184,8 +46683,9 @@
     example: {
       text: "Implementing the queue using a linear_data_structure_linkedlist avoids array resizing costs."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "data_structure_stack_lifo",
     category: "algorithm",
@@ -45244,8 +46744,9 @@
     example: {
       text: "The browser's undo-redo stack and function recursion call stacks are based on the data_structure_stack_lifo design."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "data_structure_queue_fifo",
     category: "algorithm",
@@ -45304,8 +46805,9 @@
     example: {
       text: "We implemented a database query buffer using the data_structure_queue_fifo to process SQL write operations sequentially."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "data_structure_tree_root",
     category: "algorithm",
@@ -45365,8 +46867,9 @@
     example: {
       text: "Relational database index systems typically use B+ trees, which is a specialized variant of the data_structure_tree_root."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "data_structure_graph_networks",
     category: "algorithm",
@@ -45425,8 +46928,9 @@
     example: {
       text: "Social network connections and routing tables are modeled internally using a data_structure_graph_networks structure."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "linear_search_algorithm_basic",
     category: "algorithm",
@@ -45484,8 +46988,9 @@
     example: {
       text: "If the list is unsorted, linear_search_algorithm_basic is our only choice to find the target element."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "binary_search_algorithm_sorted",
     category: "algorithm",
@@ -45543,8 +47048,9 @@
     example: {
       text: "To search the sorted glossary IDs quickly, the application utilizes binary_search_algorithm_sorted to reduce retrieval time."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "bubble_sort_algorithm_basic",
     category: "algorithm",
@@ -45602,8 +47108,9 @@
     example: {
       text: "Because bubble_sort_algorithm_basic has poor performance on large datasets, it is primarily used for teaching programming basics."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "quick_sort_algorithm_fast",
     category: "algorithm",
@@ -45661,8 +47168,9 @@
     example: {
       text: "Standard language libraries compile default sorting behaviors using quick_sort_algorithm_fast implementations."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "dijkstra_shortest_path_graph",
     category: "algorithm",
@@ -45720,8 +47228,9 @@
     example: {
       text: "Dynamic routing protocols like OSPF use dijkstra_shortest_path_graph inside the link-state database calculations."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "artificial_intelligence_ml_dl",
     category: "automation",
@@ -45781,8 +47290,9 @@
     example: {
       text: "Understanding the hierarchy of artificial_intelligence_ml_dl helps clarify that not all AI models are deep learning neural networks."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "machine_learning_concepts_basic",
     category: "automation",
@@ -45841,8 +47351,9 @@
     example: {
       text: "We optimized our GPU server parameters to speed up the training phase of our machine_learning_concepts_basic script."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "supervised_learning_models",
     category: "automation",
@@ -45900,8 +47411,9 @@
     example: {
       text: "We trained a supervised_learning_models algorithm to categorize database logs using historic DBA labels."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "unsupervised_learning_models",
     category: "automation",
@@ -45959,8 +47471,9 @@
     example: {
       text: "We used unsupervised_learning_models like K-Means to segment database users based on access behavior without predefined roles."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "reinforcement_learning_models",
     category: "automation",
@@ -46018,8 +47531,9 @@
     example: {
       text: "Autonomous vehicles and game-playing AIs (like AlphaGo) heavily rely on reinforcement_learning_models to plan actions."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
   {
     id: "deep_learning_neural_networks",
     category: "automation",
@@ -46079,8 +47593,9 @@
     example: {
       text: "LLMs like GPT are built using deep_learning_neural_networks using transformer architectures containing billions of parameters."
     },
-    source: "project-glossary-v2"
-  },
+    source: "project-glossary-v2",
+      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+    },
 ];
 
   // Build lookup by ID
