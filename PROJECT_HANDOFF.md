@@ -2978,3 +2978,85 @@ node tools/verify_glossary.js --web <path>
 #### Next
 
 - **Round 15.14**: 800-term quality review and localization polish + Web cache update + Portable repack + GitHub Release.
+
+---
+
+### Round 15.14 - Glossary 800 Quality Release
+
+**Status: PASS**
+
+#### Scope
+
+- Kept glossary at **800** terms.
+- Performed strict 800-term quality review and localization polish.
+- Updated Web cache/version metadata for release.
+- Repacked Windows Portable.
+- Created Git tag and GitHub Release.
+
+#### Quality fixes
+
+| Count | Detail |
+| :--- | :--- |
+| 24 | Added missing v2 metadata to legacy terms: `examTags`, `subcategory`, `skillTags`, `searchBoost`, `schemaVersion`, `updatedAt`. |
+
+Fixed legacy IDs:
+
+`sql`, `foreign_key`, `index`, `transaction`, `normalization`, `confidentiality`, `integrity`, `availability`, `authentication`, `authorization`, `vulnerability`, `malware`, `encryption`, `firewall`, `risk_assessment`, `ip_address`, `dns`, `client_server`, `cloud_computing`, `backup`, `variable`, `function`, `class`, `object`.
+
+#### Final validation
+
+| Check | Result |
+| :--- | :--- |
+| `node tools/verify_glossary.js` | PASS |
+| Term count | 800 |
+| Errors | 0 |
+| Warnings | 0 |
+| Windows/Web SHA256 match | PASS |
+| Windows/Web `data/glossary/it_terms.js` SHA256 | `70b8cf22cf63151ff7e0345512565de9e97f1373b351e197479e0c3abd84dbf0` |
+| Web `node --check assets/js/version.js` | PASS |
+| Web `node --check service-worker.js` | PASS |
+| Web `node --check data/glossary/it_terms.js` | PASS |
+| Web local smoke | PASS (12/12) |
+| Web online smoke | PASS (11/11) |
+
+#### Web release metadata
+
+| Item | Value |
+| :--- | :--- |
+| Web assetVersion | `v2026.6.13-r15.14` |
+| Web CACHE_NAME | `study-tools-web-v2026-6-13-r15-14` |
+| Web commit | `101587f` |
+| Web branch / deploy branch | `master` / `master` |
+
+#### Portable
+
+| Item | Value |
+| :--- | :--- |
+| Portable zip | `Study-Tools-Portable-v2026.6.13-r15.14.zip` |
+| Portable SHA256 | `7916d05cfc8d908fff3782b9634572da4f449aa69879fbf09f0e2c002c9f1a03` |
+| Zip content check | PASS; no `.git/`, `node_modules/`, `backups/`, `output/`, or `data/study_ai.db` |
+
+#### Git and Release
+
+| Item | Value |
+| :--- | :--- |
+| Windows glossary commit | `0ff5d4d` |
+| Windows handoff commit | Recorded by `docs: record glossary 800 release` |
+| Tag | `v2026.6.13-r15.14` |
+| GitHub Release | `https://github.com/bwins0668/it-study-tools/releases/tag/v2026.6.13-r15.14` |
+| Release notes language | Chinese |
+
+#### Explicitly not done
+
+- Did not expand to 900 terms.
+- Did not add new terms.
+- Did not add a `ko` field.
+- Did not add Korean UI.
+- Did not modify course data.
+- Did not modify content language packs.
+- Did not modify backend (`server.py` / `study_ai.py`).
+- Did not modify Java/Python sandbox.
+
+#### Next
+
+- **Round 15.15**: Glossary 800 -> 900 expansion.
