@@ -219,10 +219,20 @@
     if (panelVisible) return;
     panelVisible = true;
 
+    var backdrop = el("auth-panel-backdrop");
+    if (!backdrop) {
+      backdrop = document.createElement("div");
+      backdrop.className = "auth-panel-backdrop";
+      backdrop.id = "auth-panel-backdrop";
+      backdrop.addEventListener("click", closeAuthPanel);
+      document.body.appendChild(backdrop);
+    }
+    backdrop.hidden = false;
+    backdrop.style.display = "block";
+
     var panel = el("auth-panel");
     if (!panel) {
       panel = createAuthPanel();
-      document.body.appendChild(panel);
     }
     panel.hidden = false;
     panel.style.display = "block";
@@ -233,6 +243,11 @@
 
   function closeAuthPanel() {
     panelVisible = false;
+    var backdrop = el("auth-panel-backdrop");
+    if (backdrop) {
+      backdrop.hidden = true;
+      backdrop.style.display = "none";
+    }
     var panel = el("auth-panel");
     if (panel) {
       panel.hidden = true;
@@ -241,11 +256,6 @@
   }
 
   function createAuthPanel() {
-    var backdrop = document.createElement("div");
-    backdrop.className = "auth-panel-backdrop";
-    backdrop.id = "auth-panel-backdrop";
-    backdrop.addEventListener("click", closeAuthPanel);
-
     var panel = document.createElement("aside");
     panel.className = "auth-panel";
     panel.id = "auth-panel";
@@ -254,13 +264,12 @@
     panel.setAttribute("aria-labelledby", "auth-panel-title");
     panel.hidden = true;
 
-    panel.appendChild(backdrop);
-
     var content = document.createElement("div");
     content.className = "auth-panel-content";
     content.id = "auth-panel-content";
     panel.appendChild(content);
 
+    document.body.appendChild(panel);
     return panel;
   }
 
@@ -360,12 +369,12 @@
 
         '<div class="auth-info-section">' +
           '<div class="auth-label">' + esc(t("auth.magicLinkTitle", "使用 Magic Link 登录")) + '</div>' +
-          '<input class="auth-input" data-auth-input="email" type="email" autocomplete="email" placeholder="' + esc(t("auth.email", "邮箱")) + '"' + (supabaseReady ? "" : " disabled") + '>' +
+          '<input class="auth-input" data-auth-input="email" type="email" autocomplete="email" placeholder="' + esc(t("auth.email", "邮箱")) + '">' +
           '<button class="auth-btn auth-btn-primary" data-auth-action="magic-link"' + (supabaseReady ? "" : " disabled") + '>' +
             esc(t("auth.sendMagicLink", "发送登录链接")) +
           '</button>' +
           '<div class="auth-label">' + esc(t("auth.passwordTest", "邮箱密码登录（测试功能）")) + '</div>' +
-          '<input class="auth-input" data-auth-input="password" type="password" autocomplete="current-password" placeholder="' + esc(t("auth.password", "密码")) + '"' + (supabaseReady ? "" : " disabled") + '>' +
+          '<input class="auth-input" data-auth-input="password" type="password" autocomplete="current-password" placeholder="' + esc(t("auth.password", "密码")) + '">' +
           '<button class="auth-btn auth-btn-secondary" data-auth-action="password-sign-in"' + (supabaseReady ? "" : " disabled") + '>' +
             esc(t("auth.passwordSignIn", "邮箱密码登录（测试）")) +
           '</button>' +

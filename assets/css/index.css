@@ -6867,24 +6867,27 @@ body.i18n-active :where(
 .auth-panel-backdrop {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.4);
+  background: rgba(0,0,0,0.5);
   z-index: 899;
 }
 .auth-panel {
   position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   z-index: 900;
   width: 380px;
   max-width: 90vw;
+  /* Center using flexbox on a fullscreen wrapper approach is fragile;
+     instead use explicit top/left and let overflow scroll naturally */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 .auth-panel-content {
   background: var(--bg-secondary);
   border: 1px solid var(--border-color);
   border-radius: 12px;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.4);
-  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+  max-height: 85vh;
+  overflow-y: auto;
 }
 .auth-panel-header {
   display: flex;
@@ -6989,6 +6992,29 @@ body.i18n-active :where(
   align-items: center;
   gap: 6px;
   opacity: 0.7;
+}
+.auth-input {
+  display: block;
+  width: 100%;
+  padding: 8px 12px;
+  margin-bottom: 8px;
+  background: rgba(0,0,0,0.3);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  color: var(--text-main);
+  font-size: 13px;
+  font-family: inherit;
+  box-sizing: border-box;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.auth-input:focus {
+  border-color: var(--neon-cyan);
+  box-shadow: 0 0 6px var(--neon-cyan-glow);
+}
+.auth-input:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
 }
 .auth-actions {
   display: flex;

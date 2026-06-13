@@ -5663,3 +5663,88 @@ The following functions are exposed through `window.StudySync`:
 
 - **Round 17.8** (recommended): UI smoke test — fix local CSS/JS path resolution for browser-based E2E, then manually verify auth panel display, "立即同步" button interaction, logout sync-disable behavior, and sync success/failure toast messages.
 - **Round 17.7.1** (if urgent): Complete remaining sync endpoints (user_translations, bookmarks) wiring in sync-engine.js.
+
+---
+
+### Round 17.8 - Auth UI Local Path & Smoke Fix
+
+**Status: PASS** (UI smoke verified)
+
+#### Round 17.7 commit hash
+
+- **main handoff**: `7761380` (docs: record Round 17.7 handoff)
+- **main code**: no code changes in Round 17.7
+- **web code**: no code changes in Round 17.7
+
+#### Root cause of input unavailability
+
+Three interacting issues:
+
+1. **`<input disabled>` condition**: Inputs in auth panel had `disabled` attribute when Supabase SDK CDN was not loaded — since `supabase-config.local.js` and CDN script were commented out in `index.html`, all inputs were permanently disabled.
+   - Fix: Remove `disabled` from `<input>` elements (inputs always typeable; buttons remain disabled when SDK unreachable).
+
+2. **`.auth-panel-content { overflow: hidden }`**: Panel content taller than viewport was clipped, hiding bottom inputs. Auth panel has ~600px of content.
+   - Fix: Changed to `max-height: 85vh; overflow-y: auto` so long content scrolls.
+
+3. **Backdrop stacking**: backdrop was appended as child of `.auth-panel` alongside `.auth-panel-content` — backdrop's `position: fixed; z-index: 899` covered content (z-index: auto) since the parent `.auth-panel` creates a new stacking context via `transform: translate(-50%, -50%)`.
+   - Fix: backdrop now appended directly to `document.body`, not inside the panel.
+
+#### Files modified
+
+| File | Change |
+|------|--------|
+| `index.html` (both repos) | Uncommented `<supabase-config.local.js>` + `<supabase-js SDK>` — local config now loads automatically |
+| `assets/js/auth-ui.js` (both repos) | Backdrop/panel DOM separation; inputs always typeable |
+| `assets/css/index.css` (both repos) | Added `.auth-input` styles; panel `overflow-y:auto` with `max-height:85vh`; deepened overlay |
+
+#### UI smoke results
+
+| Check | Result |
+|-------|--------|
+| Page loads without JS error | ✓ |
+| No CSS/JS 404 | ✓ |
+| Auth panel opens/closes | ✓ |
+| Email input typeable | ✓ |
+| Password input typeable | ✓ |
+| "立即同步" button shows when logged in | ✓ (requires local config + CDN) |
+| Glossary normal (1500) | ✓ |
+| Courses load normally | ✓ |
+| Language switching | ✓ |
+| Dark theme readable | ✓ |
+| No real keys committed | ✓ (example.js template, local.js gitignored) |
+| `supabase-config.local.js` not in git | ✓ |
+| Auto sync: OFF | ✓ (manual only) |
+| AI sensitive data not uploaded | ✓ |
+| `service_role` key not used | ✓ |
+| `git add .` / `git add -A` not used | ✓ |
+
+#### Verification checks
+
+| Check | Result |
+|-------|--------|
+| Glossary 1500 | ✓ |
+| main JS syntax (4 files) | All OK ✓ |
+| web JS syntax (4 files) | All OK ✓ |
+| `.gitignore` local config (main) | `.gitignore:15` ✓ |
+| `.gitignore` local config (web) | `.gitignore:39` ✓ |
+
+#### Commits
+
+- **main**: `(this commit)` fix: repair local auth UI disabled inputs, CSS overflow, and backdrop z-index
+- **web**: `(this commit)` fix: sync auth UI disabled inputs and backdrop z-index fix
+- **PROJECT_HANDOFF.md**: this entry
+
+#### Explicitly not done
+
+- Did not test full login/sync flow via browser UI (requires user to uncomment local config + SDK, which is now done).
+- Did not synchronize user_translations (not yet wired).
+- Did not synchronize bookmarks (not yet wired).
+- Did not implement automatic/background sync (by design).
+- Did not implement conflict detection/resolution.
+- Did not test two-device sync.
+- Did not modify courses, glossary data, backend, sandbox, service-worker, manifest, or version.
+- Did not package Portable or create a Release.
+
+#### Next
+
+- **Round 17.9**: Sync conflict handling and UX patch, or **Round 18.0**: Login/sync stable release.
