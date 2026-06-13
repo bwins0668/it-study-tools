@@ -1,11 +1,11 @@
 /**
- * Study Tools Sync Engine — v0.1 (Round 17.1)
+ * Study Tools Sync Engine - Round 17.6.
  *
- * Local-only sync foundation:
+ * Local-first sync foundation:
  *  - device ID generation & persistence
  *  - sync queue management (localStorage-backed)
  *  - local progress snapshot & export
- *  - no network calls, no Supabase dependency
+ *  - explicit manual Supabase sync for P0 learning data
  *
  * Exposed globally as `window.StudySync`.
  */
@@ -19,6 +19,8 @@
     LAST_SYNC_AT:   "study_tools_last_sync_at",
     SYNC_ENABLED:   "study_tools_sync_enabled",
     QUEUE_VERSION:  "study_tools_queue_version",
+    SETTINGS_UPDATED_AT: "study_tools_settings_updated_at",
+    LAST_SYNC_RESULT: "study_tools_last_sync_result",
   };
 
   var SCHEMA_VERSION = 1;
@@ -38,6 +40,10 @@
 
   function safeRemove(key) {
     try { localStorage.removeItem(key); } catch (_) {}
+  }
+
+  function safeSetRaw(key, value) {
+    try { localStorage.setItem(key, String(value)); } catch (_) {}
   }
 
   function nowISO() {
@@ -272,6 +278,427 @@
     safeSet(KEYS.SYNC_ENABLED, !!enabled);
   }
 
+  var manualSyncRunning = false;
+  var runtimeStatus = "idle";
+
+  function syncError(code, message, details) {
+    return {
+      ok: false,
+      error: {
+        name: "StudySyncError",
+        code: code,
+        message: message,
+        details: details || null,
+      },
+    };
+  }
+
+  function syncSuccess(data) {
+    return { ok: true, data: data || {} };
+  }
+
+  function friendlyRemoteError(error, fallbackCode) {
+    return {
+      code: error && error.code ? error.code : fallbackCode,
+      message: error && error.message ? error.message : "Supabase sync failed.",
+    };
+  }
+
+  async function getRemoteContext() {
+    var api = window.StudySupabase;
+    if (!api || typeof api.getCurrentUser !== "function") {
+      return syncError("not_configured", "Supabase is not configured.");
+    }
+
+    var user = await api.getCurrentUser();
+    var status = typeof api.getStatus === "function"
+      ? api.getStatus()
+      : { code: "not_configured", ready: false };
+    if (status.code === "not_configured") return syncError("not_configured", "Supabase is not configured.");
+    if (status.code === "disabled") return syncError("disabled", "Supabase is disabled.");
+    if (status.code === "sdk_missing") return syncError("sdk_missing", "Supabase SDK is not loaded.");
+    if (!status.ready && status.code === "ready_to_initialize" && typeof api.initClient === "function") {
+      api.initClient();
+      status = api.getStatus();
+    }
+    if (!status.ready) return syncError(status.code || "not_ready", status.message || "Supabase is not ready.");
+    if (!user) return syncError("not_authenticated", "Please sign in before syncing.");
+
+    var client = api.getClient();
+    if (!client || typeof client.from !== "function") {
+      return syncError("client_unavailable", "Supabase client is unavailable.");
+    }
+    return syncSuccess({ api: api, client: client, user: user });
+  }
+
+  function getRemoteDeviceId() {
+    var localId = getOrCreateDeviceId();
+    return localId.indexOf("st-") === 0 ? localId.slice(3) : localId;
+  }
+
+  function getDeviceType() {
+    return window.STUDY_TOOLS_WEB_PUBLIC ? "web" : "windows";
+  }
+
+  async function registerDeviceRemote(context) {
+    var ctx = context;
+    if (!ctx || !ctx.client) {
+      var checked = await getRemoteContext();
+      if (!checked.ok) return checked;
+      ctx = checked.data;
+    }
+    try {
+      var timestamp = nowISO();
+      var result = await ctx.client.from("devices").upsert({
+        id: getRemoteDeviceId(),
+        user_id: ctx.user.id,
+        device_name: getDeviceType() + " browser",
+        device_type: getDeviceType(),
+        last_sync_at: timestamp,
+        updated_at: timestamp,
+        is_deleted: false,
+        deleted_at: null,
+      }, { onConflict: "id" });
+      if (result && result.error) return syncError("device_register_failed", result.error.message, result.error);
+      return syncSuccess({ device_id: getRemoteDeviceId() });
+    } catch (error) {
+      var friendly = friendlyRemoteError(error, "device_register_failed");
+      return syncError(friendly.code, friendly.message);
+    }
+  }
+
+  function normalizeSettings(settings) {
+    settings = settings || {};
+    return {
+      language: typeof settings.language === "string" && settings.language
+        ? settings.language
+        : "default-ja-zh",
+      theme: settings.theme === "light" ? "light" : "dark",
+    };
+  }
+
+  async function pushUserSettings(context) {
+    var ctx = context;
+    if (!ctx || !ctx.client) {
+      var checked = await getRemoteContext();
+      if (!checked.ok) return checked;
+      ctx = checked.data;
+    }
+    var settings = normalizeSettings(getLocalUserSettings());
+    var timestamp = nowISO();
+    try {
+      var result = await ctx.client.from("user_settings").upsert({
+        user_id: ctx.user.id,
+        language: settings.language,
+        theme: settings.theme,
+        updated_at: timestamp,
+        sync_version: SCHEMA_VERSION,
+      }, { onConflict: "user_id" });
+      if (result && result.error) return syncError("settings_push_failed", result.error.message, result.error);
+      safeSet(KEYS.SETTINGS_UPDATED_AT, timestamp);
+      return syncSuccess({ count: 1, updated_at: timestamp });
+    } catch (error) {
+      var friendly = friendlyRemoteError(error, "settings_push_failed");
+      return syncError(friendly.code, friendly.message);
+    }
+  }
+
+  async function pullUserSettings(context) {
+    var ctx = context;
+    if (!ctx || !ctx.client) {
+      var checked = await getRemoteContext();
+      if (!checked.ok) return checked;
+      ctx = checked.data;
+    }
+    try {
+      var result = await ctx.client.from("user_settings")
+        .select("language,theme,updated_at")
+        .eq("user_id", ctx.user.id)
+        .maybeSingle();
+      if (result && result.error) return syncError("settings_pull_failed", result.error.message, result.error);
+      if (!result || !result.data) return syncSuccess({ count: 0, merged: false });
+
+      var remote = normalizeSettings(result.data);
+      var remoteAt = result.data.updated_at || "";
+      var localAt = safeGet(KEYS.SETTINGS_UPDATED_AT, null) || "";
+      if (!localAt || remoteAt > localAt) {
+        safeSetRaw("study-tools-language", remote.language);
+        safeSetRaw("study-tools-theme", remote.theme);
+        safeSet(KEYS.SETTINGS_UPDATED_AT, remoteAt || nowISO());
+        return syncSuccess({ count: 1, merged: true });
+      }
+      return syncSuccess({ count: 1, merged: false });
+    } catch (error) {
+      var friendly = friendlyRemoteError(error, "settings_pull_failed");
+      return syncError(friendly.code, friendly.message);
+    }
+  }
+
+  var COURSE_KEYS = {
+    sql: "sql_hub_completed",
+    itpass: "itpass_completed_lessons",
+    sg: "sg_completed_lessons",
+    java: "java_completed_lessons",
+    python: "python_completed_lessons",
+  };
+
+  function unionValues(left, right) {
+    var seen = {};
+    return (left || []).concat(right || []).filter(function (value) {
+      var key = String(value);
+      if (seen[key]) return false;
+      seen[key] = true;
+      return true;
+    });
+  }
+
+  function toInteger(value) {
+    var parsed = Number(value);
+    return Number.isInteger(parsed) ? parsed : null;
+  }
+
+  function newProgressRow(userId, subject, lessonId) {
+    return {
+      user_id: userId,
+      subject: subject,
+      lesson_id: lessonId,
+      is_completed: false,
+      quiz_done: false,
+      code_run: false,
+      quiz_completed_indices: [],
+      device_id: getRemoteDeviceId(),
+      deleted_at: null,
+    };
+  }
+
+  function collectProgressRows(userId) {
+    var rows = {};
+    Object.keys(COURSE_KEYS).forEach(function (subject) {
+      var completed = safeReadLS(COURSE_KEYS[subject]) || [];
+      completed.forEach(function (lessonId) {
+        var id = toInteger(lessonId);
+        if (id === null) return;
+        var key = subject + ":" + id;
+        rows[key] = rows[key] || newProgressRow(userId, subject, id);
+        rows[key].is_completed = true;
+      });
+    });
+
+    try {
+      for (var index = 0; index < localStorage.length; index += 1) {
+        var storageKey = localStorage.key(index);
+        var quizMatch = storageKey && storageKey.match(/^(sql|itpass|sg|java|python)_quiz_completed_(\d+)$/);
+        if (quizMatch) {
+          var quizSubject = quizMatch[1];
+          var quizLessonId = Number(quizMatch[2]);
+          var quizRowKey = quizSubject + ":" + quizLessonId;
+          rows[quizRowKey] = rows[quizRowKey] || newProgressRow(userId, quizSubject, quizLessonId);
+          rows[quizRowKey].quiz_completed_indices = unionValues(
+            rows[quizRowKey].quiz_completed_indices,
+            safeReadLS(storageKey) || []
+          );
+          rows[quizRowKey].quiz_done = rows[quizRowKey].quiz_completed_indices.length > 0;
+        }
+
+        var detailMatch = storageKey && storageKey.match(/^(java|python)_progress_(\d+)$/);
+        if (detailMatch) {
+          var detailSubject = detailMatch[1];
+          var detailLessonId = Number(detailMatch[2]);
+          var detailRowKey = detailSubject + ":" + detailLessonId;
+          var detail = safeReadLS(storageKey) || {};
+          rows[detailRowKey] = rows[detailRowKey] || newProgressRow(userId, detailSubject, detailLessonId);
+          rows[detailRowKey].quiz_done = rows[detailRowKey].quiz_done || detail.quizDone === true;
+          rows[detailRowKey].code_run = detail.codeRun === true;
+        }
+      }
+    } catch (_) {}
+
+    return Object.keys(rows).map(function (key) {
+      rows[key].updated_at = nowISO();
+      return rows[key];
+    });
+  }
+
+  async function pushLearningProgress(context) {
+    var ctx = context;
+    if (!ctx || !ctx.client) {
+      var checked = await getRemoteContext();
+      if (!checked.ok) return checked;
+      ctx = checked.data;
+    }
+    var rows = collectProgressRows(ctx.user.id);
+    if (!rows.length) return syncSuccess({ count: 0 });
+    try {
+      var result = await ctx.client.from("learning_progress").upsert(rows, {
+        onConflict: "user_id,subject,lesson_id",
+      });
+      if (result && result.error) return syncError("progress_push_failed", result.error.message, result.error);
+      return syncSuccess({ count: rows.length });
+    } catch (error) {
+      var friendly = friendlyRemoteError(error, "progress_push_failed");
+      return syncError(friendly.code, friendly.message);
+    }
+  }
+
+  function mergeRemoteProgress(rows) {
+    var merged = 0;
+    (rows || []).forEach(function (row) {
+      if (!row || !COURSE_KEYS[row.subject] || row.deleted_at) return;
+      var lessonId = toInteger(row.lesson_id);
+      if (lessonId === null) return;
+
+      if (row.is_completed) {
+        var completed = safeReadLS(COURSE_KEYS[row.subject]) || [];
+        safeSet(COURSE_KEYS[row.subject], unionValues(completed, [lessonId]));
+      }
+
+      var indices = Array.isArray(row.quiz_completed_indices) ? row.quiz_completed_indices : [];
+      if (indices.length) {
+        var quizKey = row.subject + "_quiz_completed_" + lessonId;
+        safeSet(quizKey, unionValues(safeReadLS(quizKey) || [], indices));
+      }
+
+      if (row.subject === "java" || row.subject === "python") {
+        var detailKey = row.subject + "_progress_" + lessonId;
+        var detail = safeReadLS(detailKey) || {};
+        detail.quizDone = detail.quizDone === true || row.quiz_done === true;
+        detail.codeRun = detail.codeRun === true || row.code_run === true;
+        safeSet(detailKey, detail);
+      }
+      merged += 1;
+    });
+    return merged;
+  }
+
+  async function pullLearningProgress(context) {
+    var ctx = context;
+    if (!ctx || !ctx.client) {
+      var checked = await getRemoteContext();
+      if (!checked.ok) return checked;
+      ctx = checked.data;
+    }
+    try {
+      var result = await ctx.client.from("learning_progress")
+        .select("subject,lesson_id,is_completed,quiz_done,code_run,quiz_completed_indices,updated_at,deleted_at")
+        .eq("user_id", ctx.user.id)
+        .is("deleted_at", null);
+      if (result && result.error) return syncError("progress_pull_failed", result.error.message, result.error);
+      var data = result && result.data ? result.data : [];
+      return syncSuccess({ count: data.length, merged: mergeRemoteProgress(data) });
+    } catch (error) {
+      var friendly = friendlyRemoteError(error, "progress_pull_failed");
+      return syncError(friendly.code, friendly.message);
+    }
+  }
+
+  async function pushQuizResults(context) {
+    var ctx = context;
+    if (!ctx || !ctx.client) {
+      var checked = await getRemoteContext();
+      if (!checked.ok) return checked;
+      ctx = checked.data;
+    }
+    var timestamp = nowISO();
+    var quizRows = [];
+    collectProgressRows(ctx.user.id).forEach(function (row) {
+      (row.quiz_completed_indices || []).forEach(function (quizIndex) {
+        var parsedIndex = toInteger(quizIndex);
+        if (parsedIndex === null) return;
+        quizRows.push({
+          user_id: ctx.user.id,
+          subject: row.subject,
+          lesson_id: row.lesson_id,
+          quiz_index: parsedIndex,
+          is_correct: true,
+          attempt_count: 1,
+          answered_at: timestamp,
+          updated_at: timestamp,
+          device_id: getRemoteDeviceId(),
+          deleted_at: null,
+        });
+      });
+    });
+    if (!quizRows.length) return syncSuccess({ count: 0 });
+    try {
+      var result = await ctx.client.from("quiz_results").upsert(quizRows, {
+        onConflict: "user_id,subject,lesson_id,quiz_index,device_id",
+      });
+      if (result && result.error) return syncError("quiz_push_failed", result.error.message, result.error);
+      return syncSuccess({ count: quizRows.length });
+    } catch (error) {
+      var friendly = friendlyRemoteError(error, "quiz_push_failed");
+      return syncError(friendly.code, friendly.message);
+    }
+  }
+
+  function getSyncSummary() {
+    var status = getSyncStatus();
+    return {
+      status: runtimeStatus,
+      running: manualSyncRunning,
+      last_sync_at: status.last_sync_at,
+      pending_count: status.queue_pending,
+      failed_count: status.queue_failed,
+      last_result: safeGet(KEYS.LAST_SYNC_RESULT, null),
+      scope: ["user_settings", "learning_progress", "quiz_results"],
+      automatic_sync: false,
+    };
+  }
+
+  async function runManualSync() {
+    if (manualSyncRunning) return syncError("sync_in_progress", "A manual sync is already running.");
+    manualSyncRunning = true;
+    runtimeStatus = "syncing";
+    try {
+      var checked = await getRemoteContext();
+      if (!checked.ok) {
+        runtimeStatus = "error";
+        safeSet(KEYS.LAST_SYNC_RESULT, checked);
+        return checked;
+      }
+
+      var context = checked.data;
+      var steps = [
+        ["device", registerDeviceRemote],
+        ["settings_pull", pullUserSettings],
+        ["progress_pull", pullLearningProgress],
+        ["settings_push", pushUserSettings],
+        ["progress_push", pushLearningProgress],
+        ["quiz_push", pushQuizResults],
+      ];
+      var results = {};
+      for (var index = 0; index < steps.length; index += 1) {
+        var stepResult = await steps[index][1](context);
+        results[steps[index][0]] = stepResult;
+        if (!stepResult.ok) {
+          runtimeStatus = "error";
+          var stopped = syncError(stepResult.error.code, stepResult.error.message, {
+            step: steps[index][0],
+            results: results,
+          });
+          safeSet(KEYS.LAST_SYNC_RESULT, stopped);
+          return stopped;
+        }
+      }
+
+      var completedAt = nowISO();
+      setLastSyncAt(completedAt);
+      setSyncEnabled(true);
+      runtimeStatus = "success";
+      var success = syncSuccess({ completed_at: completedAt, results: results });
+      safeSet(KEYS.LAST_SYNC_RESULT, success);
+      return success;
+    } catch (error) {
+      runtimeStatus = "error";
+      var friendly = friendlyRemoteError(error, "manual_sync_failed");
+      var failed = syncError(friendly.code, friendly.message);
+      safeSet(KEYS.LAST_SYNC_RESULT, failed);
+      return failed;
+    } finally {
+      manualSyncRunning = false;
+    }
+  }
+
   /* ── Public API ──────────────────────────────────── */
   var SyncEngine = {
     getOrCreateDeviceId:  getOrCreateDeviceId,
@@ -292,6 +719,14 @@
     setSyncEnabledLocal:  setSyncEnabledLocal,
     isSyncEnabled:        isSyncEnabled,
     getDeviceSummary:     getDeviceSummary,
+    registerDeviceRemote: registerDeviceRemote,
+    pushUserSettings:     pushUserSettings,
+    pullUserSettings:     pullUserSettings,
+    pushLearningProgress: pushLearningProgress,
+    pullLearningProgress: pullLearningProgress,
+    pushQuizResults:      pushQuizResults,
+    runManualSync:        runManualSync,
+    getSyncSummary:       getSyncSummary,
     _keys:                KEYS,
   };
 

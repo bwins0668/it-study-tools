@@ -1,5 +1,5 @@
 -- ============================================================
--- Study Tools - Supabase DB Init Draft (Round 17.4 review)
+-- Study Tools - Supabase DB Init Draft (Round 17.6 review)
 --
 -- Purpose:  DDL draft for sync tables. NOT executed yet.
 -- Schema:   public
@@ -109,6 +109,8 @@ CREATE TABLE IF NOT EXISTS public.quiz_results (
 
 CREATE INDEX idx_qr_user_subject ON public.quiz_results(user_id, subject, lesson_id);
 CREATE INDEX idx_qr_user_answered ON public.quiz_results(user_id, answered_at);
+CREATE UNIQUE INDEX IF NOT EXISTS uq_quiz_results_manual_sync
+  ON public.quiz_results(user_id, subject, lesson_id, quiz_index, device_id);
 
 COMMENT ON TABLE public.quiz_results IS 'Raw per-question results for history and analytics';
 

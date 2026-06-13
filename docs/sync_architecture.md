@@ -50,6 +50,22 @@ We **do not self-host passwords**. Auth is delegated to **Supabase Auth** (built
 - A real authenticated user maps to local auth mode `signed_in` with `sync_enabled: false`.
 - No learning table is queried or mutated, and the local sync queue is not pushed or pulled.
 
+### Round 17.6 Manual Learning Sync
+
+Round 17.6 adds an optional, user-triggered P0 synchronization path.
+
+- Sync starts only from the account panel's **Sync now** button.
+- A valid Supabase configuration, loaded SDK, initialized client, and authenticated user are required before table access.
+- The device is registered or updated before data synchronization.
+- `user_settings` synchronizes only the language and theme whitelist. Remote settings use last-write-wins timestamps and invalid values fall back to local safe defaults.
+- `learning_progress` is pulled and union-merged into local course completions and quiz indices before the merged local snapshot is pushed.
+- `quiz_results` is push-only in this round and uses a deterministic conflict key to avoid duplicate manual-sync rows.
+- Pull never removes local completion data and never performs destructive deletes.
+- Errors stop the current manual run and return friendly local result objects.
+- There is no timer, background listener, login-triggered sync, or automatic retry.
+
+The synchronization payload explicitly excludes AI API keys, AI provider/model settings, Ollama URLs, AI translation caches, chat messages, user translations, bookmarks, and service-worker data.
+
 1. **Anonymous local mode** (default, no change from today)  
    - All data in `localStorage`  
    - No account, no sync, fully offline
@@ -70,9 +86,9 @@ We **do not self-host passwords**. Auth is delegated to **Supabase Auth** (built
 |:---|:---|:---|
 | **Sync** | Lesson completions, quiz results, per-lesson progress | LWW + Union Merge |
 | **Sync** | Language preference, theme | LWW |
-| **Sync** | Bookmarks / favorites | LWW |
-| **Sync** | Japanese typing history | Append-only merge |
-| **Sync** | User custom translations | LWW |
+| **Later** | Bookmarks / favorites | Not included in Round 17.6 |
+| **Later** | Japanese typing history | Not included in Round 17.6 |
+| **Later** | User custom translations | Not included in Round 17.6 |
 | **Do NOT sync** | AI API key (sessionStorage) | Never uploaded |
 | **Do NOT sync** | AI provider config (provider, model, Ollama URL) | Per-device |
 | **Do NOT sync** | AI translation cache (~500KB) | Regeneratable |
@@ -130,7 +146,7 @@ Full DDL: `tools/init_supabase.sql`
 
 | File | Role |
 |:---|:---|
-| `assets/js/sync-engine.js` | Sync engine (local only) |
+| `assets/js/sync-engine.js` | Local-first engine with explicit manual P0 sync |
 | `tools/init_supabase.sql` | Supabase DDL draft |
 | `docs/sync_architecture.md` | This document |
 
@@ -138,7 +154,7 @@ Full DDL: `tools/init_supabase.sql`
 
 | File | Role |
 |:---|:---|
-| `assets/js/sync-engine.js` | Sync engine (local only, identical to Windows) |
+| `assets/js/sync-engine.js` | Local-first engine with explicit manual P0 sync |
 | `docs/sync_architecture.md` | This document |
 
 ## Upcoming Rounds
@@ -149,6 +165,6 @@ Full DDL: `tools/init_supabase.sql`
 | **17.3** | Supabase Auth preparation layer, disabled config template, no-network adapter |
 | **17.4** | Manual project/config validation, optional SDK loading slot, RLS draft review |
 | **17.5** | Minimal Supabase Auth integration: session, Magic Link, test password login, sign-out |
-| **17.6** | Learning progress push/pull architecture, or 17.5.1 Auth UX patch |
-| **17.7** | Conflict resolution, offline queue edge cases, sync status indicator |
+| **17.6** | Manual device/settings/progress sync foundation |
+| **17.7** | Conflict handling and real two-device testing, or 17.6.1 manual-sync UX patch |
 | **17.8** | Stable release: Web cache update + Portable repack + tag + Release |

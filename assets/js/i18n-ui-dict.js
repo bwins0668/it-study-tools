@@ -2909,4 +2909,55 @@
       Object.assign(window.I18nUiDict[locale].auth, AUTH_ROUND_17_5[locale]);
     }
   });
+
+  var SYNC_ROUND_17_6 = {
+    "zh-CN": {
+      syncNow: "立即同步", syncingNow: "正在同步", syncSuccess: "同步成功", syncFailed: "同步失败",
+      signInFirst: "请先登录", supabaseNotConfigured: "Supabase 未配置", lastSync: "上次同步",
+      pendingSync: "待同步", syncScope: "只同步学习进度和设置", noAiKeyUpload: "不会上传 AI Key",
+      manualSyncOnly: "仅在点击“立即同步”后同步"
+    },
+    "ja-JP": {
+      syncNow: "今すぐ同期", syncingNow: "同期中", syncSuccess: "同期成功", syncFailed: "同期失敗",
+      signInFirst: "先にログインしてください", supabaseNotConfigured: "Supabase は未設定です", lastSync: "最終同期",
+      pendingSync: "同期待ち", syncScope: "学習進捗と設定のみ同期します", noAiKeyUpload: "AI Key はアップロードしません",
+      manualSyncOnly: "「今すぐ同期」を押した場合のみ同期します"
+    },
+    "en-US": {
+      syncNow: "Sync now", syncingNow: "Syncing", syncSuccess: "Sync successful", syncFailed: "Sync failed",
+      signInFirst: "Please sign in first", supabaseNotConfigured: "Supabase not configured", lastSync: "Last sync",
+      pendingSync: "Pending", syncScope: "Only learning progress and settings are synced", noAiKeyUpload: "AI keys are never uploaded",
+      manualSyncOnly: "Sync runs only when you click Sync now"
+    },
+    "vi-VN": {
+      syncNow: "Đồng bộ ngay", syncingNow: "Đang đồng bộ", syncSuccess: "Đồng bộ thành công", syncFailed: "Đồng bộ thất bại",
+      signInFirst: "Vui lòng đăng nhập trước", supabaseNotConfigured: "Supabase chưa được cấu hình", lastSync: "Lần đồng bộ cuối",
+      pendingSync: "Đang chờ", syncScope: "Chỉ đồng bộ tiến độ học và cài đặt", noAiKeyUpload: "Không tải AI Key lên",
+      manualSyncOnly: "Chỉ đồng bộ khi bạn bấm Đồng bộ ngay"
+    },
+    "fr-FR": {
+      syncNow: "Synchroniser", syncingNow: "Synchronisation", syncSuccess: "Synchronisation réussie", syncFailed: "Échec de la synchronisation",
+      signInFirst: "Connectez-vous d'abord", supabaseNotConfigured: "Supabase non configuré", lastSync: "Dernière synchronisation",
+      pendingSync: "En attente", syncScope: "Seuls la progression et les réglages sont synchronisés", noAiKeyUpload: "Les clés IA ne sont jamais envoyées",
+      manualSyncOnly: "La synchronisation démarre uniquement avec le bouton Synchroniser"
+    },
+    "my-MM": {
+      syncNow: "ယခု စင့်ခ်လုပ်ရန်", syncingNow: "စင့်ခ်လုပ်နေသည်", syncSuccess: "စင့်ခ်အောင်မြင်သည်", syncFailed: "စင့်ခ်မအောင်မြင်ပါ",
+      signInFirst: "ဦးစွာ အကောင့်ဝင်ပါ", supabaseNotConfigured: "Supabase ကို မသတ်မှတ်ရသေးပါ", lastSync: "နောက်ဆုံး စင့်ခ်",
+      pendingSync: "စောင့်ဆိုင်းနေသည်", syncScope: "သင်ယူမှုတိုးတက်မှုနှင့် ဆက်တင်များကိုသာ စင့်ခ်လုပ်သည်", noAiKeyUpload: "AI Key ကို မတင်ပါ",
+      manualSyncOnly: "ယခု စင့်ခ်လုပ်ရန်ကို နှိပ်မှသာ စင့်ခ်လုပ်သည်"
+    },
+    "ko-KR": {
+      syncNow: "지금 동기화", syncingNow: "동기화 중", syncSuccess: "동기화 성공", syncFailed: "동기화 실패",
+      signInFirst: "먼저 로그인하세요", supabaseNotConfigured: "Supabase가 구성되지 않음", lastSync: "마지막 동기화",
+      pendingSync: "대기 중", syncScope: "학습 진도와 설정만 동기화합니다", noAiKeyUpload: "AI Key를 업로드하지 않습니다",
+      manualSyncOnly: "지금 동기화를 눌렀을 때만 동기화합니다"
+    }
+  };
+
+  Object.keys(SYNC_ROUND_17_6).forEach(function (locale) {
+    if (window.I18nUiDict[locale] && window.I18nUiDict[locale].auth) {
+      Object.assign(window.I18nUiDict[locale].auth, SYNC_ROUND_17_6[locale]);
+    }
+  });
 })();
