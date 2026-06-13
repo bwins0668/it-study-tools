@@ -1,0 +1,117 @@
+# Study Tools — Cross-Device Sync Architecture
+
+## Overview
+
+This document describes the architecture, data model, and roadmap for adding user login and cross-device sync to the Study Tools project.
+
+## Round 17.1 Goal
+
+Establish the **local-only sync foundation**: device ID, sync queue, local progress snapshot, and Supabase SQL DDL draft.  
+No real login, no cloud sync, no UI changes.
+
+## Authentication Strategy
+
+We **do not self-host passwords**. Auth is delegated to **Supabase Auth** (built-in):
+
+1. **Anonymous local mode** (default, no change from today)  
+   - All data in `localStorage`  
+   - No account, no sync, fully offline
+
+2. **Anonymous cloud mode** (optional upgrade)  
+   - Supabase `signInAnonymously()`  
+   - Sync starts automatically  
+   - User can upgrade later to permanent account
+
+3. **Permanent account** (optional upgrade)  
+   - Email + password, Google OAuth, or GitHub OAuth  
+   - Anonymous data linked to permanent identity  
+   - Full cross-device sync
+
+### Data Sync Scope
+
+| Sync | Data | Strategy |
+|:---|:---|:---|
+| **Sync** | Lesson completions, quiz results, per-lesson progress | LWW + Union Merge |
+| **Sync** | Language preference, theme | LWW |
+| **Sync** | Bookmarks / favorites | LWW |
+| **Sync** | Japanese typing history | Append-only merge |
+| **Sync** | User custom translations | LWW |
+| **Do NOT sync** | AI API key (sessionStorage) | Never uploaded |
+| **Do NOT sync** | AI provider config (provider, model, Ollama URL) | Per-device |
+| **Do NOT sync** | AI translation cache (~500KB) | Regeneratable |
+| **Do NOT sync** | Active exam state (in-memory) | Ephemeral |
+| **Do NOT sync** | Service Worker cache | Auto-managed |
+| **Do NOT sync** | Local SQLite analytics (mastery %) | Recomputable from raw events |
+
+## localStorage Sync Queue Structure
+
+### Keys
+
+| Key | Type | Purpose |
+|:---|:---|:---|
+| `study_tools_device_id` | UUID string | Unique device identifier, generated once |
+| `study_tools_sync_queue` | JSON array | Pending/failed sync events |
+| `study_tools_last_sync_at` | ISO 8601 string | Last successful full sync timestamp |
+| `study_tools_sync_enabled` | boolean | Whether cloud sync is enabled for this device |
+
+### Queue Event Schema
+
+```json
+{
+  "id": "evt-1718200000-a1b2c3",
+  "type": "progress_update",
+  "payload": { "subject": "sql", "lesson_id": 12, "is_completed": true },
+  "device_id": "st-550e8400-e29b-41d4-a716-446655440000",
+  "created_at": "2026-06-13T10:00:00.000Z",
+  "updated_at": "2026-06-13T10:00:00.000Z",
+  "status": "pending",
+  "retry_count": 0,
+  "schema_version": 1,
+  "priority": 0
+}
+```
+
+Status values: `pending` | `done` | `failed`
+
+## Supabase Tables
+
+| Table | Purpose | Key FK |
+|:---|:---|:---|
+| `devices` | Registered user devices | `user_id → auth.users` |
+| `user_settings` | UI preferences | `user_id → auth.users` (PK) |
+| `learning_progress` | Per-lesson completion state | `(user_id, subject, lesson_id)` unique |
+| `quiz_results` | Raw per-question results | `user_id → auth.users` |
+| `user_translations` | User-customised dictionary | `(user_id, source_text, target_lang)` unique |
+| `bookmarks` | User favorites | `(user_id, type, ref)` unique |
+| `sync_log` | Operation audit trail | `user_id → auth.users` |
+
+Full DDL: `tools/init_supabase.sql`
+
+## File Map
+
+### Windows (E:\项目\sql-learning-hub)
+
+| File | Role |
+|:---|:---|
+| `assets/js/sync-engine.js` | Sync engine (local only) |
+| `tools/init_supabase.sql` | Supabase DDL draft |
+| `docs/sync_architecture.md` | This document |
+
+### Web (E:\项目\sql-learning-hub-web-public)
+
+| File | Role |
+|:---|:---|
+| `assets/js/sync-engine.js` | Sync engine (local only, identical to Windows) |
+| `docs/sync_architecture.md` | This document |
+
+## Upcoming Rounds
+
+| Round | Scope |
+|:---|:---|
+| **17.2** | Auth UI prototype: login/signup page, anonymous indicator, user menu |
+| **17.3** | Supabase SDK integration, real cloud connection, basic push/pull |
+| **17.4** | Learning progress sync between devices |
+| **17.5** | Settings, translations, bookmarks sync |
+| **17.6** | Windows sync engine (Python), dual-write to local SQLite |
+| **17.7** | Conflict resolution, offline queue edge cases, sync status indicator |
+| **17.8** | Stable release: Web cache update + Portable repack + tag + Release |
