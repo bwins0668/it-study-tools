@@ -102,7 +102,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Start heartbeat to keep local server alive
   startHeartbeat();
-  
+
+  // Initialize auth UI (try/catch — feature may not exist)
+  try { if (window.StudyAuthUI) window.StudyAuthUI.initAuthUI(); }
+  catch (_) { console.warn("[App] AuthUI init skipped"); }
+
   // Trigger initial subject setup (SQL) so that the sub-header and all widgets are correctly initialized on load
   currentSubject = "";
   switchSubject('sql');

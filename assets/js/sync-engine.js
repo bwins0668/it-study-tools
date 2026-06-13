@@ -140,6 +140,33 @@
     safeSet(KEYS.SYNC_QUEUE, []);
   }
 
+  /* ── Helper functions (Round 17.2 additions) ────── */
+
+  function getSyncQueueSize() {
+    return getSyncQueue().length;
+  }
+
+  function getLastSyncAt() {
+    return safeGet(KEYS.LAST_SYNC_AT, null);
+  }
+
+  function setSyncEnabledLocal(enabled) {
+    safeSet(KEYS.SYNC_ENABLED, !!enabled);
+  }
+
+  function isSyncEnabled() {
+    return safeGet(KEYS.SYNC_ENABLED, false);
+  }
+
+  function getDeviceSummary() {
+    return {
+      device_id:      getDeviceId(),
+      sync_enabled:   isSyncEnabled(),
+      last_sync_at:   getLastSyncAt(),
+      queue_size:     getSyncQueueSize(),
+    };
+  }
+
   /* ── Progress & settings readers (read-only) ─────── */
 
   function safeReadLS(key) {
@@ -260,6 +287,11 @@
     exportLocalSyncSnapshot: exportLocalSyncSnapshot,
     setLastSyncAt:        setLastSyncAt,
     setSyncEnabled:       setSyncEnabled,
+    getSyncQueueSize:     getSyncQueueSize,
+    getLastSyncAt:        getLastSyncAt,
+    setSyncEnabledLocal:  setSyncEnabledLocal,
+    isSyncEnabled:        isSyncEnabled,
+    getDeviceSummary:     getDeviceSummary,
     _keys:                KEYS,
   };
 

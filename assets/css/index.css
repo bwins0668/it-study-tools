@@ -6838,3 +6838,203 @@ body.i18n-active :where(
   white-space: pre-line;
 }
 
+/* ====== Auth UI Styles (Round 17.2) ====== */
+.auth-user-btn {
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.12);
+  color: var(--text-muted);
+  padding: 5px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: var(--transition-smooth);
+  white-space: nowrap;
+  margin-right: 6px;
+}
+.auth-user-btn:hover {
+  border-color: var(--neon-cyan);
+  color: var(--neon-cyan);
+  box-shadow: 0 0 6px var(--neon-cyan-glow);
+}
+.auth-user-icon {
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+}
+.auth-panel-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  z-index: 899;
+}
+.auth-panel {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 900;
+  width: 380px;
+  max-width: 90vw;
+}
+.auth-panel-content {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+  overflow: hidden;
+}
+.auth-panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border-color);
+}
+.auth-panel-header h3 {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--neon-cyan);
+  margin: 0;
+}
+.auth-panel-close-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 18px;
+  cursor: pointer;
+  padding: 4px;
+  transition: var(--transition-smooth);
+}
+.auth-panel-close-btn:hover {
+  color: var(--neon-cyan);
+}
+.auth-panel-body {
+  padding: 20px;
+}
+.auth-status-section {
+  margin-bottom: 16px;
+}
+.auth-status-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+}
+.auth-label {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+.auth-value {
+  font-size: 13px;
+  color: var(--text-main);
+}
+.auth-badge-local {
+  color: var(--text-muted);
+  font-size: 12px;
+  padding: 2px 8px;
+  border-radius: 4px;
+  background: rgba(255,255,255,0.06);
+}
+.auth-badge-synced {
+  color: var(--success-color);
+  font-size: 12px;
+  padding: 2px 8px;
+  border-radius: 4px;
+  background: rgba(34,197,94,0.1);
+}
+.auth-notice {
+  background: rgba(250,204,21,0.08);
+  border: 1px solid rgba(250,204,21,0.2);
+  border-radius: 6px;
+  padding: 10px 12px;
+  font-size: 12px;
+  color: #facc15;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+.auth-notice i {
+  margin-top: 2px;
+}
+.auth-info-section {
+  margin-bottom: 16px;
+  background: rgba(255,255,255,0.03);
+  border-radius: 6px;
+  padding: 10px 12px;
+}
+.auth-info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4px 0;
+  font-size: 12px;
+}
+.auth-device-id {
+  font-family: 'Fira Code', 'Consolas', monospace;
+  font-size: 11px;
+  color: var(--text-muted);
+  max-width: 160px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.auth-privacy-note {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  opacity: 0.7;
+}
+.auth-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.auth-btn {
+  padding: 8px 14px;
+  border-radius: 6px;
+  font-size: 13px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: var(--transition-smooth);
+  border: 1px solid transparent;
+  justify-content: center;
+}
+.auth-btn-primary {
+  background: rgba(0,240,255,0.08);
+  border-color: rgba(0,240,255,0.2);
+  color: var(--neon-cyan);
+}
+.auth-btn-primary:hover {
+  background: rgba(0,240,255,0.15);
+  box-shadow: 0 0 8px var(--neon-cyan-glow);
+}
+.auth-btn-secondary {
+  background: rgba(255,255,255,0.03);
+  border-color: rgba(255,255,255,0.1);
+  color: var(--text-muted);
+}
+.auth-btn-secondary:hover {
+  background: rgba(255,255,255,0.06);
+  border-color: rgba(255,255,255,0.2);
+  color: var(--text-main);
+}
+@media (max-width: 600px) {
+  .auth-user-btn {
+    padding: 5px 7px;
+    font-size: 11px;
+  }
+  .auth-user-label {
+    display: none;
+  }
+  .auth-panel {
+    width: 95vw;
+  }
+}
