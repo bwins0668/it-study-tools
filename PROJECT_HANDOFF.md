@@ -6473,3 +6473,96 @@ No patch commit needed. Both repos have identical CSS with all 4 Round 19.3.2 fi
 #### Next
 
 - **Round 19.3.3**: Further UI detail regression fixes, or **Round 19.4**: Bookmarks deletion sync and dual-device conflict testing.
+- **Round 19.3.2A (??)**: Double-end CSS consistency verification ? PASS.
+- **Round 19.4**: UI polish stable release ? PASS.
+
+### Round 19.4 - UI ?‰»?’è”Å?•z (2026-06-13)
+
+**Status**: PASS
+
+**Release**: v2026.6.13-r19.4
+
+**Scope**: UI polish stable release. Pre-release verification, Web cache version update, Portable packaging, GitHub Release. No new features, no bookmarks deletion sync, no user translation UI, no auto-sync.
+
+#### Modified Files
+
+- **Web**: ssets/js/version.js, service-worker.js, ssets/asset-manifest.json, data/i18n_content/manifest.json
+- **Windows**: PROJECT_HANDOFF.md
+
+#### Web Version
+
+- ssetVersion: v2026.6.13-r19.4
+- CACHE_NAME: study-tools-web-v2026-6-13-r19-4
+
+#### Release Artifact
+
+- **File**: Study-Tools-Portable-v2026.6.13-r19.4.zip
+- **Size**: 288.49 MB (1802 files)
+- **SHA256**: 1AB6E0F2D901C3957E5E95C56588553D8BFBB3410552C80FCF37F3CD60A33632
+- **Security**: No prohibited files (no .git/, 
+ode_modules/, ackups/, supabase-config.local.js, etc.)
+- **GitHub Release**: https://github.com/bwins0668/it-study-tools/releases/tag/v2026.6.13-r19.4
+
+#### Pre-Release Verification
+
+| Check | Result |
+|---|---|
+| Glossary (Windows) | 1500 terms PASS |
+| Glossary (Web) | 1500 terms PASS |
+| SHA256 match | PASS |
+| JS syntax (Windows 4 files) | PASS |
+| JS syntax (Web 4 files) | PASS |
+
+#### UI Smoke Test Summary
+
+| Viewport | Result | Key Checks |
+|---|---|---|
+| 1920x1080 | PASS | Playground 560px, SQL editor 504px, run btn visible, no overflow |
+| 1366x768 | PASS | Playground 410px, SQL editor 354px, no overflow |
+| 1200x800 | PASS | Playground 400px, SQL editor 344px, glossary horizontal |
+| 1000x800 | PASS | Playground 376px, SQL editor 320px, no overflow |
+| 900x800 | PASS | Playground drawer toggle visible, editor + run btn accessible |
+| 720x800 | PASS | Sidebar + playground drawers, no overflow |
+| 390x844 | PASS | Auth panel ? vp-16, glossary not vertical, drawers usable |
+
+- **Horizontal overflow**: None in any viewport (confirmed with html { overflow-x: hidden })
+- **SQL Playground**: Desktop visible, editor ? 200~100px all viewports
+- **Execute button**: Visible and clickable all viewports
+- **Output area**: Visible all viewports
+- **Glossary button**: Horizontal (not vertical) at all widths > 900px
+- **Auth panel**: No overflow at any viewport
+- **900px drawer**: Playground off-canvas drawer works, toggle visible
+- **720px drawer**: Sidebar off-canvas drawer works, toggle visible
+- **Glossary**: 1500 terms (SHA256 match)
+- **No auto-sync**: Confirmed (manual sync only)
+- **No AI data upload**: Confirmed
+
+#### Explicitly Deferred Tasks (unchanged)
+
+- Bookmarks deletion sync and dual-device conflict testing.
+- User-customized translation UI audit.
+- User translation synchronization.
+- Course/term/wrong-question bookmarks synchronization.
+- Portable client packaging & new GitHub Release. ? ? Done (this round)
+
+#### Security Declarations
+
+- Not auto-sync
+- No bookmarks deletion sync
+- No user translation UI
+- No AI cache/API key uploaded
+- No course/glossary/backend/sandbox modifications
+
+#### Commits
+
+- **Windows main**: 5debceb fix: polish UI layout metrics regressions
+- **Windows main**: e963b9f docs: record Round 19.3.2 handoff
+- **Windows main**: 31eb30d docs: record Round 19.3.2A CSS consistency check
+- **Windows main (this round)**: (this commit) docs: record UI polish stable release
+- **Web master**: 4d3667e chore: release UI polish web cache update
+- **Git tag**: 2026.6.13-r19.4
+- **Release**: v2026.6.13-r19.4 at [GitHub](https://github.com/bwins0668/it-study-tools/releases/tag/v2026.6.13-r19.4)
+
+#### Next
+
+- **Round 19.4.1**: Post-release stability audit, or **Round 19.5**: Bookmarks deletion sync and dual-device conflict testing.
