@@ -3533,7 +3533,73 @@ ode --check service-worker.js | PASS |
 
 #### Next
 
-- **Round 15.23** (recommended): 1200-term quality review and localization polish + Web cache update + Portable repack + GitHub Release
+- **Round 15.23** (completed): Glossary 1200 -> 1500 Expansion
+
+---
+
+### Round 15.23 - Glossary 1200 -> 1500 Expansion
+
+**Status: PASS**
+
+#### Scope
+
+- Expanded glossary from 1200 terms to 1500 terms (added 300 terms in 12 batches of 25).
+- Automatically filtered out invalid non-existent IDs in related fields and synchronized exam_tags / examTags arrays.
+- Normalized all line endings of `it_terms.js` to LF (\n) to prevent dual-end SHA256 mismatches caused by Windows autocrlf.
+- Did not perform any Web cache update, Portable repackaging, or GitHub Release tag generation.
+
+#### Batch execution log
+
+- **Batch 1**: 1200 -> 1225, validator PASS
+- **Batch 2**: 1225 -> 1250, validator PASS
+- **Batch 3**: 1250 -> 1275, validator PASS
+- **Batch 4**: 1275 -> 1300, validator PASS
+- **Batch 5**: 1300 -> 1325, validator PASS
+- **Batch 6**: 1325 -> 1350, validator PASS
+- **Batch 7**: 1350 -> 1375, validator PASS
+- **Batch 8**: 1375 -> 1400, validator PASS
+- **Batch 9**: 1400 -> 1425, validator PASS
+- **Batch 10**: 1425 -> 1450, validator PASS
+- **Batch 11**: 1450 -> 1475, validator PASS
+- **Batch 12**: 1475 -> 1500, validator PASS
+
+#### Final validation
+
+| Check | Result |
+| :--- | :--- |
+| node tools/verify_glossary.js | PASS |
+| Term count | 1500 |
+| Errors | 0 |
+| Warnings | 0 |
+| Windows/Web SHA256 match | PASS |
+| Windows/Web `data/glossary/it_terms.js` SHA256 | `327ffb4c95c3fc1decf02936308ba1de4c29987acf5aca62ef531a77acb73e53` |
+| Web node --check data/glossary/it_terms.js | PASS |
+
+#### Git
+
+| Repo | Branch | Commit hash | Push |
+| :--- | :--- | :--- | :--- |
+| Windows glossary | main | Recorded by `feat: expand glossary to 1500 terms` | PASS |
+| Web glossary | master | Recorded by `feat: sync glossary 1500 terms` | PASS |
+| Windows handoff | main | Recorded by `docs: record glossary 1500 expansion` | PASS |
+
+#### Explicitly not done
+
+- Did not update Web cache version.
+- Did not modify version.js / service-worker.js.
+- Did not modify asset-manifest.json / i18n_content/manifest.json metadata.
+- Did not repackage Portable client.
+- Did not create tag or GitHub Release.
+- Did not add a ko field.
+- Did not add Korean UI.
+- Did not modify course data.
+- Did not modify content language packs.
+- Did not modify backend (server.py / study_ai.py).
+- Did not modify Java/Python sandbox.
+
+#### Next
+
+- **Round 15.24** (recommended): 1500-term quality review and localization polish + Web cache update + Portable repack + GitHub Release
 
 
 
