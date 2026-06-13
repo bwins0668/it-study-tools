@@ -15,6 +15,7 @@
   <link rel="stylesheet" href="assets/css/japanese-typing.css?v=20260606_v2">
   <link rel="stylesheet" href="assets/css/ai_learning.css?v=20260608_v2">
   <link rel="stylesheet" href="assets/css/glossary.css?v=20260611_v1">
+  <link rel="stylesheet" href="assets/css/coding-typing.css?v=round21.2">
 </head>
 <body>
 
@@ -53,6 +54,9 @@
         </button>
         <button class="subject-tab" id="subject-tab-typing" onclick="switchSubject('typing')">
           <i class="fa-solid fa-keyboard"></i> <span data-i18n="nav.typing">日本語タイピング</span>
+        </button>
+        <button class="subject-tab" id="subject-tab-coding-typing" onclick="switchSubject('coding-typing')">
+          <i class="fa-solid fa-laptop-code"></i> <span data-i18n="nav.codingTyping">编程打字</span>
         </button>
       </div>
 
@@ -1239,6 +1243,108 @@
     </main>
   </section>
 
+  <!-- Coding Typing Hub -->
+  <section class="coding-typing-hub" id="coding-typing-hub" aria-label="编程打字" data-i18n-aria-label="nav.codingTyping">
+    <aside class="ct-panel ct-library-panel">
+      <h2 class="ct-title" data-i18n="codingTyping.title">编程打字练习</h2>
+      <p class="ct-subtitle" data-i18n="codingTyping.subtitle">通过打字练习掌握编程语法。选择语言和类别开始练习。</p>
+
+      <!-- Language selector -->
+      <div class="ct-field">
+        <label data-i18n="codingTyping.language">选择语言</label>
+        <div class="ct-lang-tabs" id="ct-lang-tabs">
+          <button class="ct-lang-tab active" data-lang="python" onclick="CodingTyping.filterLang('python')"><i class="fab fa-python"></i> Python</button>
+          <button class="ct-lang-tab" data-lang="java" onclick="CodingTyping.filterLang('java')"><i class="fab fa-java"></i> Java</button>
+          <button class="ct-lang-tab" data-lang="sql" onclick="CodingTyping.filterLang('sql')"><i class="fa-solid fa-database"></i> SQL</button>
+          <button class="ct-lang-tab" data-lang="symbol" onclick="CodingTyping.filterLang('symbol')"><i class="fa-solid fa-code"></i> Symbols</button>
+        </div>
+      </div>
+
+      <!-- Category filter -->
+      <div class="ct-field">
+        <label data-i18n="codingTyping.category">类别过滤</label>
+        <div class="ct-cat-list" id="ct-cat-list"></div>
+      </div>
+
+      <!-- Item list -->
+      <div class="ct-field">
+        <label><span data-i18n="codingTyping.exerciseList">练习列表</span> <span id="ct-item-count"></span></label>
+      </div>
+      <div class="ct-item-list" id="ct-item-list"></div>
+    </aside>
+
+    <main class="ct-panel ct-main-panel">
+      <!-- Toolbar -->
+      <div class="ct-toolbar">
+        <button class="ct-primary-btn" onclick="CodingTyping.randomItem()">
+          <i class="fa-solid fa-shuffle"></i> <span data-i18n="codingTyping.random">随机一题</span>
+        </button>
+        <button class="ct-secondary-btn" onclick="CodingTyping.nextItem()">
+          <i class="fa-solid fa-forward"></i> <span data-i18n="codingTyping.next">下一题</span>
+        </button>
+        <button class="ct-secondary-btn" onclick="CodingTyping.restart()">
+          <i class="fa-solid fa-rotate-left"></i> <span data-i18n="codingTyping.restart">重来</span>
+        </button>
+        <span class="ct-toolbar-spacer"></span>
+        <label class="ct-opt-label">
+          <input type="checkbox" id="ct-normalize-fullwidth" checked onchange="CodingTyping.toggleNormalize()">
+          <span data-i18n="codingTyping.normalizeFullWidth">全角→半角</span>
+        </label>
+        <label class="ct-opt-label">
+          <input type="checkbox" id="ct-lenient-indent" checked onchange="CodingTyping.toggleLenientIndent()">
+          <span data-i18n="codingTyping.lenientIndent">缩进宽容</span>
+        </label>
+      </div>
+
+      <!-- Workspace -->
+      <div class="ct-workspace">
+        <!-- Target code display -->
+        <div class="ct-code-section">
+          <div class="ct-code-header">
+            <span class="ct-code-label" data-i18n="codingTyping.code">目标代码</span>
+            <span class="ct-item-meta" id="ct-item-meta"></span>
+          </div>
+          <pre class="ct-code-display" id="ct-code-display"></pre>
+        </div>
+
+        <!-- Title / Explanation / Focus / Hint -->
+        <div class="ct-info-section">
+          <h3 class="ct-item-title" id="ct-item-title"></h3>
+          <div class="ct-explanation" id="ct-explanation"></div>
+          <div class="ct-focus" id="ct-focus"></div>
+          <div class="ct-hint" id="ct-hint"></div>
+        </div>
+
+        <!-- User input -->
+        <div class="ct-input-section">
+          <label data-i18n="codingTyping.input">输入区</label>
+          <textarea class="ct-textarea" id="ct-textarea" spellcheck="false" autocomplete="off" placeholder="在此输入目标代码..." data-i18n-placeholder="codingTyping.inputPlaceholder"></textarea>
+        </div>
+
+        <!-- Live character comparison -->
+        <div class="ct-compare-section" id="ct-compare-section">
+          <div class="ct-compare-display" id="ct-compare-display"></div>
+        </div>
+
+        <!-- Stats -->
+        <div class="ct-stats">
+          <div class="ct-stat"><span data-i18n="codingTyping.speed">CPM</span><strong id="ct-stat-cpm">0</strong></div>
+          <div class="ct-stat"><span data-i18n="codingTyping.accuracy">正确率</span><strong id="ct-stat-accuracy">100%</strong></div>
+          <div class="ct-stat"><span data-i18n="codingTyping.progress">进度</span><strong id="ct-stat-progress">0/0</strong></div>
+          <div class="ct-stat"><span data-i18n="codingTyping.time">用时</span><strong id="ct-stat-time">00:00</strong></div>
+          <div class="ct-stat"><span data-i18n="codingTyping.errors">错误</span><strong id="ct-stat-errors">0</strong></div>
+        </div>
+
+        <!-- Complete message -->
+        <div class="ct-result" id="ct-result" style="display:none;">
+          <h3 data-i18n="codingTyping.complete">完成！</h3>
+          <p id="ct-result-summary"></p>
+          <button class="ct-primary-btn" onclick="CodingTyping.randomItem()" data-i18n="codingTyping.continueRandom">继续随机练习</button>
+        </div>
+      </div>
+    </main>
+  </section>
+
   <!-- Glossary Modal -->
   <div id="glossary-modal" class="glossary-modal" hidden>
     <div class="glossary-backdrop" data-glossary-close></div>
@@ -1291,6 +1397,12 @@
   <script src="data/japanese_typing_library.js?v=20260606_v1"></script>
   <script src="data/japanese_typing_expansion.js?v=20260606_v1"></script>
   <script src="assets/js/japanese_typing.js?v=20260606_v1"></script>
+  <script src="data/coding_typing/coding_symbols.js?v=round21.2"></script>
+  <script src="data/coding_typing/python_basics.js?v=round21.2"></script>
+  <script src="data/coding_typing/java_basics.js?v=round21.2"></script>
+  <script src="data/coding_typing/sql_basics.js?v=round21.2"></script>
+  <script src="data/coding_typing/_index.js?v=round21.2"></script>
+  <script src="assets/js/coding_typing.js?v=round21.2"></script>
   <script src="assets/js/i18n-ui-dict.js?v=round17.5"></script>
   <script src="assets/js/i18n.js?v=20260609_global_pair_v12"></script>
   <script src="assets/js/content-i18n.js"></script>

@@ -1,4 +1,4 @@
-// Study Tools static UI multilingual dictionary
+﻿// Study Tools static UI multilingual dictionary
 (function () {
   "use strict";
 
@@ -34,6 +34,7 @@
         itpass: "ITパスポート対策",
         sg: "情報セキュリティマネジメント対策",
         typing: "日本語タイピング",
+        codingTyping: "プログラミングタイピング",
         sqlChallenge: "総合ランダム挑戦"
       },
       subnav: {
@@ -352,6 +353,7 @@
         itpass: "IT Passport 备考",
         sg: "SG 备考",
         typing: "日本语打字",
+        codingTyping: "编程打字",
         sqlChallenge: "综合随机挑战"
       },
       subnav: {
@@ -670,6 +672,7 @@
         itpass: "IT Passport",
         sg: "SG Exam",
         typing: "Japanese Typing",
+        codingTyping: "Coding Typing",
         sqlChallenge: "Random Challenge"
       },
       subnav: {
@@ -988,6 +991,7 @@
         itpass: "IT Passport ပြင်ဆင်မှု",
         sg: "SG စာမေးပွဲ ပြင်ဆင်မှု",
         typing: "ဂျပန်စာ Typing",
+        codingTyping: "ကိုဒ်ရိုကြင်း",
         sqlChallenge: "ကျပန်းစိန်ခေါ်မှု"
       },
       subnav: {
@@ -1306,6 +1310,7 @@
         itpass: "Luyện thi IT Passport",
         sg: "Luyện thi SG",
         typing: "Gõ tiếng Nhật",
+        codingTyping: "Gõ mã nguồn",
         sqlChallenge: "Thử thách ngẫu nhiên"
       },
       subnav: {
@@ -1624,6 +1629,7 @@
         itpass: "IT Passport",
         sg: "Examen SG",
         typing: "Saisie japonaise",
+        codingTyping: "Frappe de code",
         sqlChallenge: "Défi aléatoire"
       },
       subnav: {
@@ -1942,6 +1948,7 @@
         itpass: "IT 패스포트 대비",
         sg: "SG 대비",
         typing: "일본어 타자",
+        codingTyping: "코딩 타자",
         sqlChallenge: "랜덤 도전"
       },
       subnav: {
@@ -2261,6 +2268,7 @@
       itpass: "IT Passport 备考 / ITパスポート対策",
       sg: "SG 备考 / 情報セキュリティマネジメント対策",
       typing: "日本语打字 / 日本語タイピング",
+      codingTyping: "编程打字 / プログラミングタイピング",
       sqlChallenge: "综合随机挑战 / 総合ランダム挑戦"
     },
     subnav: {
@@ -2558,6 +2566,7 @@
         itpass: "IT 패스포트 대비",
         sg: "SG 대비",
         typing: "일본어 타자",
+        codingTyping: "코딩 타자",
         sqlChallenge: "랜덤 도전"
       },
       subnav: {

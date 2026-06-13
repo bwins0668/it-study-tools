@@ -1,4 +1,4 @@
-// App controller for SQL & IT Passport Multi-Subject Learning Portal
+﻿// App controller for SQL & IT Passport Multi-Subject Learning Portal
 
 // Subject & Navigation state
 let currentSubject = 'sql'; // 'sql' | 'itpass' | 'java' | 'sg' | 'python'
@@ -284,6 +284,7 @@ function switchSubject(subject) {
 
   currentSubject = subject;
   if (window.TypingHub) window.TypingHub.close();
+  if (window.CodingTyping && typeof window.CodingTyping.close === 'function') window.CodingTyping.close();
 
   // Hide all exam layouts and restore default textbook/workspace view by default
   const cbtContainer = document.getElementById("cbt-exam-container");
@@ -309,6 +310,7 @@ function switchSubject(subject) {
   document.getElementById("subject-tab-sg").classList.toggle("active", subject === "sg");
   document.getElementById("subject-tab-python").classList.toggle("active", subject === "python");
   document.getElementById("subject-tab-typing").classList.toggle("active", subject === "typing");
+  document.getElementById("subject-tab-coding-typing").classList.toggle("active", subject === "coding-typing");
   
   // Update header content  // Clear body mode classes
   document.body.classList.remove('mode-java');
@@ -330,6 +332,14 @@ function switchSubject(subject) {
     if (mainTitle) {
       mainTitle.setAttribute("data-i18n", "nav.typing");
       mainTitle.innerText = I18n.t("nav.typing");
+    }
+  } else if (subject === "coding-typing") {
+    if (window.CodingTyping && typeof window.CodingTyping.open === 'function') {
+      window.CodingTyping.open();
+    }
+    if (mainTitle) {
+      mainTitle.setAttribute("data-i18n", "nav.codingTyping");
+      mainTitle.innerText = I18n.t("nav.codingTyping");
     }
   } else if (subject === "sql") {
     logoIcon.className = "fa-solid fa-database logo-icon";
