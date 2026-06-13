@@ -1,0 +1,884 @@
+// Coding Typing Practice - SQL Basics (30 items)
+window.CODING_TYPING_DATA_SQL = [
+  {
+    "id": "sql-select-001",
+    "language": "sql",
+    "level": 1,
+    "category": "select",
+    "title": {
+      "zh-CN": "SELECT 所有列",
+      "ja-JP": "SELECT 全列",
+      "en-US": "SELECT all columns"
+    },
+    "code": "SELECT * FROM users;",
+    "explanation": {
+      "zh-CN": "* 表示选择所有列。FROM 后面跟表名。",
+      "ja-JP": "* は全列を選択します。FROM の後にテーブル名を書きます。"
+    },
+    "focus": [
+      "SELECT 关键字",
+      "* 通配符",
+      "FROM 表名",
+      "分号"
+    ],
+    "hint": {
+      "zh-CN": "关键字用大写。* 是通配符。",
+      "ja-JP": "キーワードは大文字。* は全列を表すワイルドカード。"
+    },
+    "sandboxRunnable": true,
+    "expectedOutput": "",
+    "difficulty": 1,
+    "estimatedTime": 8,
+    "source": "builtin"
+  },
+  {
+    "id": "sql-select-002",
+    "language": "sql",
+    "level": 1,
+    "category": "select",
+    "title": {
+      "zh-CN": "SELECT 指定列",
+      "ja-JP": "SELECT 指定列",
+      "en-US": "SELECT specific columns"
+    },
+    "code": "SELECT name, age FROM employees;",
+    "explanation": {
+      "zh-CN": "SELECT 后列出列名，用逗号分隔。",
+      "ja-JP": "SELECT の後に列名をカンマ区切りで列挙します。"
+    },
+    "focus": [
+      "列名列举",
+      "逗号分隔",
+      "多列顺序"
+    ],
+    "hint": {
+      "zh-CN": "列名之间用逗号分隔，最后一个列名后不要逗号。",
+      "ja-JP": "列名はカンマで区切ります。最後の列名の後ろにはカンマを付けません。"
+    },
+    "sandboxRunnable": true,
+    "expectedOutput": "",
+    "difficulty": 1,
+    "estimatedTime": 10,
+    "source": "builtin"
+  },
+  {
+    "id": "sql-select-003",
+    "language": "sql",
+    "level": 1,
+    "category": "select",
+    "title": {
+      "zh-CN": "SELECT DISTINCT",
+      "ja-JP": "SELECT DISTINCT",
+      "en-US": "SELECT DISTINCT"
+    },
+    "code": "SELECT DISTINCT city FROM customers;",
+    "explanation": {
+      "zh-CN": "DISTINCT 去除重复行。",
+      "ja-JP": "DISTINCT は重複を除去します。"
+    },
+    "focus": [
+      "DISTINCT 位置",
+      "去重效果"
+    ],
+    "hint": {
+      "zh-CN": "DISTINCT 紧跟在 SELECT 后面。",
+      "ja-JP": "DISTINCT は SELECT の直後に置きます。"
+    },
+    "sandboxRunnable": true,
+    "expectedOutput": "",
+    "difficulty": 1,
+    "estimatedTime": 10,
+    "source": "builtin"
+  },
+  {
+    "id": "sql-select-004",
+    "language": "sql",
+    "level": 1,
+    "category": "select",
+    "title": {
+      "zh-CN": "SELECT 别名 AS",
+      "ja-JP": "SELECT 別名 AS",
+      "en-US": "SELECT with alias"
+    },
+    "code": "SELECT name AS 名前, age AS 年齢 FROM users;",
+    "explanation": {
+      "zh-CN": "AS 给列取别名。",
+      "ja-JP": "AS で列に別名を付けます。"
+    },
+    "focus": [
+      "AS 关键字",
+      "别名在原名之后"
+    ],
+    "hint": {
+      "zh-CN": "AS 写在列名后面，后面跟别名。",
+      "ja-JP": "AS は列名の後に書き、その後に別名を書きます。"
+    },
+    "sandboxRunnable": true,
+    "expectedOutput": "",
+    "difficulty": 2,
+    "estimatedTime": 12,
+    "source": "builtin"
+  },
+  {
+    "id": "sql-where-001",
+    "language": "sql",
+    "level": 2,
+    "category": "where",
+    "title": {
+      "zh-CN": "WHERE 条件过滤",
+      "ja-JP": "WHERE 条件フィルター",
+      "en-US": "WHERE condition"
+    },
+    "code": "SELECT * FROM products WHERE price > 100;",
+    "explanation": {
+      "zh-CN": "WHERE 用于过滤记录。",
+      "ja-JP": "WHERE はレコードをフィルタリングします。"
+    },
+    "focus": [
+      "WHERE 位置（FROM 后）",
+      "比较运算符",
+      "条件表达式"
+    ],
+    "hint": {
+      "zh-CN": "WHERE 写在 FROM 之后。条件中列名在左。",
+      "ja-JP": "WHERE は FROM の後に書きます。条件では列名を左に。"
+    },
+    "sandboxRunnable": true,
+    "expectedOutput": "",
+    "difficulty": 2,
+    "estimatedTime": 12,
+    "source": "builtin"
+  },
+  {
+    "id": "sql-where-002",
+    "language": "sql",
+    "level": 2,
+    "category": "where",
+    "title": {
+      "zh-CN": "WHERE 字符串等值",
+      "ja-JP": "WHERE 文字列等価",
+      "en-US": "WHERE string equality"
+    },
+    "code": "SELECT * FROM users WHERE name = 'Alice';",
+    "explanation": {
+      "zh-CN": "SQL 字符串值用单引号。",
+      "ja-JP": "SQL では文字列値は一重引用符です。"
+    },
+    "focus": [
+      "单引号字符串",
+      "等号比较"
+    ],
+    "hint": {
+      "zh-CN": "SQL 中字符串用单引号，不是双引号。",
+      "ja-JP": "SQL では文字列は一重引用符、二重引用符ではありません。"
+    },
+    "sandboxRunnable": true,
+    "expectedOutput": "",
+    "difficulty": 2,
+    "estimatedTime": 10,
+    "source": "builtin"
+  },
+  {
+    "id": "sql-where-003",
+    "language": "sql",
+    "level": 2,
+    "category": "where",
+    "title": {
+      "zh-CN": "WHERE AND 多条件",
+      "ja-JP": "WHERE AND 複数条件",
+      "en-US": "WHERE with AND"
+    },
+    "code": "SELECT * FROM orders WHERE amount > 50 AND status = 'shipped';",
+    "explanation": {
+      "zh-CN": "AND 连接两个条件，都必须为真。",
+      "ja-JP": "AND は2つの条件を結合し、両方とも真である必要があります。"
+    },
+    "focus": [
+      "AND 连接",
+      "列名和值匹配"
+    ],
+    "hint": {
+      "zh-CN": "两个条件用 AND 连接，字符串值用单引号。",
+      "ja-JP": "2つの条件を AND で接続します。文字列値は一重引用符。"
+    },
+    "sandboxRunnable": true,
+    "expectedOutput": "",
+    "difficulty": 2,
+    "estimatedTime": 12,
+    "source": "builtin"
+  },
+  {
+    "id": "sql-where-004",
+    "language": "sql",
+    "level": 2,
+    "category": "where",
+    "title": {
+      "zh-CN": "WHERE OR 条件",
+      "ja-JP": "WHERE OR 条件",
+      "en-US": "WHERE with OR"
+    },
+    "code": "SELECT * FROM students WHERE grade = 'A' OR grade = 'B';",
+    "explanation": {
+      "zh-CN": "OR 任意一个条件为真即返回。",
+      "ja-JP": "OR はどちらかの条件が真の場合に結果を返します。"
+    },
+    "focus": [
+      "OR 连接",
+      "重复列名的写法"
+    ],
+    "hint": {
+      "zh-CN": "每侧都要写完整条件，不要写成 grade='A' OR 'B'。",
+      "ja-JP": "各条件は完全に書きます。grade='A' OR 'B' とは書きません。"
+    },
+    "sandboxRunnable": true,
+    "expectedOutput": "",
+    "difficulty": 2,
+    "estimatedTime": 12,
+    "source": "builtin"
+  },
+  {
+    "id": "sql-order-001",
+    "language": "sql",
+    "level": 2,
+    "category": "order",
+    "title": {
+      "zh-CN": "ORDER BY 排序",
+      "ja-JP": "ORDER BY 並び替え",
+      "en-US": "ORDER BY sorting"
+    },
+    "code": "SELECT * FROM products ORDER BY price DESC;",
+    "explanation": {
+      "zh-CN": "ORDER BY 排序，ASC 升序（默认），DESC 降序。",
+      "ja-JP": "ORDER BY は結果を並び替えます。ASC 昇順、DESC 降順。"
+    },
+    "focus": [
+      "ORDER BY 位置",
+      "DESC 降序",
+      "ASC 升序"
+    ],
+    "hint": {
+      "zh-CN": "ORDER BY 写在 WHERE 之后。默认升序。",
+      "ja-JP": "ORDER BY は WHERE の後に書きます。デフォルトは昇順。"
+    },
+    "sandboxRunnable": true,
+    "expectedOutput": "",
+    "difficulty": 2,
+    "estimatedTime": 12,
+    "source": "builtin"
+  },
+  {
+    "id": "sql-order-002",
+    "language": "sql",
+    "level": 2,
+    "category": "order",
+    "title": {
+      "zh-CN": "ORDER BY 多列",
+      "ja-JP": "ORDER BY 複数列",
+      "en-US": "ORDER BY multiple columns"
+    },
+    "code": "SELECT name, age FROM employees ORDER BY age DESC, name ASC;",
+    "explanation": {
+      "zh-CN": "ORDER BY 可以跟多个列，按优先级排序。",
+      "ja-JP": "ORDER BY の後に複数の列を優先順に指定できます。"
+    },
+    "focus": [
+      "逗号分隔",
+      "每列独立指定升降序"
+    ],
+    "hint": {
+      "zh-CN": "每列后面可以单独指定 ASC 或 DESC。",
+      "ja-JP": "各列の後に ASC または DESC を個別に指定できます。"
+    },
+    "sandboxRunnable": true,
+    "expectedOutput": "",
+    "difficulty": 2,
+    "estimatedTime": 15,
+    "source": "builtin"
+  },
+  {
+    "id": "sql-order-003",
+    "language": "sql",
+    "level": 2,
+    "category": "order",
+    "title": {
+      "zh-CN": "WHERE 与 ORDER BY 组合",
+      "ja-JP": "WHERE と ORDER BY 組み合わせ",
+      "en-US": "WHERE with ORDER BY"
+    },
+    "code": "SELECT * FROM orders WHERE total > 50 ORDER BY created_at DESC;",
+    "explanation": {
+      "zh-CN": "WHERE 在前过滤行，ORDER BY 在后排序。",
+      "ja-JP": "WHERE が先にフィルター、ORDER BY が後に並び替え。"
+    },
+    "focus": [
+      "WHERE 在前",
+      "ORDER BY 在最后"
+    ],
+    "hint": {
+      "zh-CN": "SQL 子句顺序：SELECT FROM WHERE ORDER BY。",
+      "ja-JP": "SQL 句の順序：SELECT FROM WHERE ORDER BY。"
+    },
+    "sandboxRunnable": true,
+    "expectedOutput": "",
+    "difficulty": 2,
+    "estimatedTime": 15,
+    "source": "builtin"
+  },
+  {
+    "id": "sql-group-001",
+    "language": "sql",
+    "level": 3,
+    "category": "group",
+    "title": {
+      "zh-CN": "GROUP BY 分组",
+      "ja-JP": "GROUP BY グループ化",
+      "en-US": "GROUP BY aggregation"
+    },
+    "code": "SELECT department, COUNT(*) FROM employees GROUP BY department;",
+    "explanation": {
+      "zh-CN": "GROUP BY 按某列分组，与聚合函数一起使用。",
+      "ja-JP": "GROUP BY は列でグループ化し、集約関数と一緒に使います。"
+    },
+    "focus": [
+      "GROUP BY 位置",
+      "聚合函数 COUNT"
+    ],
+    "hint": {
+      "zh-CN": "GROUP BY 写在 WHERE 之后。",
+      "ja-JP": "GROUP BY は WHERE の後に書きます。"
+    },
+    "sandboxRunnable": true,
+    "expectedOutput": "",
+    "difficulty": 3,
+    "estimatedTime": 18,
+    "source": "builtin"
+  },
+  {
+    "id": "sql-group-002",
+    "language": "sql",
+    "level": 3,
+    "category": "group",
+    "title": {
+      "zh-CN": "GROUP BY 多个聚合",
+      "ja-JP": "GROUP BY 複数集約",
+      "en-US": "Multiple aggregates"
+    },
+    "code": "SELECT department, COUNT(*) AS emp_count, AVG(salary) AS avg_salary FROM employees GROUP BY department;",
+    "explanation": {
+      "zh-CN": "一个 GROUP BY 中可以包含多个聚合函数。",
+      "ja-JP": "1つの GROUP BY に複数の集約関数を含められます。"
+    },
+    "focus": [
+      "多聚合函数",
+      "别名"
+    ],
+    "hint": {
+      "zh-CN": "COUNT(*) 统计行数，AVG(salary) 计算平均值。",
+      "ja-JP": "COUNT(*) は行数、AVG(salary) は平均値を計算します。"
+    },
+    "sandboxRunnable": true,
+    "expectedOutput": "",
+    "difficulty": 3,
+    "estimatedTime": 20,
+    "source": "builtin"
+  },
+  {
+    "id": "sql-group-003",
+    "language": "sql",
+    "level": 3,
+    "category": "group",
+    "title": {
+      "zh-CN": "GROUP BY 多列",
+      "ja-JP": "GROUP BY 複数列",
+      "en-US": "GROUP BY multiple columns"
+    },
+    "code": "SELECT city, status, COUNT(*) FROM orders GROUP BY city, status;",
+    "explanation": {
+      "zh-CN": "GROUP BY 后面可以跟多个列。",
+      "ja-JP": "GROUP BY の後に複数の列を指定できます。"
+    },
+    "focus": [
+      "多列分组",
+      "分组层次"
+    ],
+    "hint": {
+      "zh-CN": "SELECT 中所有非聚合列必须在 GROUP BY 中。",
+      "ja-JP": "SELECT 内のすべての非集約列は GROUP BY に含める必要があります。"
+    },
+    "sandboxRunnable": true,
+    "expectedOutput": "",
+    "difficulty": 3,
+    "estimatedTime": 18,
+    "source": "builtin"
+  },
+  {
+    "id": "sql-having-001",
+    "language": "sql",
+    "level": 3,
+    "category": "having",
+    "title": {
+      "zh-CN": "HAVING 过滤分组",
+      "ja-JP": "HAVING グループフィルター",
+      "en-US": "HAVING filter groups"
+    },
+    "code": "SELECT department, COUNT(*) FROM employees GROUP BY department HAVING COUNT(*) > 5;",
+    "explanation": {
+      "zh-CN": "HAVING 过滤分组后的结果。",
+      "ja-JP": "HAVING はグループ化後の結果をフィルタリングします。"
+    },
+    "focus": [
+      "HAVING 位置",
+      "WHERE vs HAVING"
+    ],
+    "hint": {
+      "zh-CN": "HAVING 只能与 GROUP BY 一起使用。",
+      "ja-JP": "HAVING は GROUP BY と一緒にのみ使えます。"
+    },
+    "sandboxRunnable": true,
+    "expectedOutput": "",
+    "difficulty": 3,
+    "estimatedTime": 20,
+    "source": "builtin"
+  },
+  {
+    "id": "sql-having-002",
+    "language": "sql",
+    "level": 3,
+    "category": "having",
+    "title": {
+      "zh-CN": "HAVING 多条件",
+      "ja-JP": "HAVING 複数条件",
+      "en-US": "HAVING multiple conditions"
+    },
+    "code": "SELECT department, AVG(salary) FROM employees GROUP BY department HAVING AVG(salary) > 40000 AND COUNT(*) >= 3;",
+    "explanation": {
+      "zh-CN": "HAVING 支持 AND/OR 连接多个聚合条件。",
+      "ja-JP": "HAVING は AND/OR で複数の集約条件を接続できます。"
+    },
+    "focus": [
+      "多条件 HAVING",
+      "AND 连接聚合"
+    ],
+    "hint": {
+      "zh-CN": "HAVING 中的条件只能引用聚合函数或 GROUP BY 中的列。",
+      "ja-JP": "HAVING 内の条件は集約関数か GROUP BY 内の列のみ参照できます。"
+    },
+    "sandboxRunnable": true,
+    "expectedOutput": "",
+    "difficulty": 3,
+    "estimatedTime": 22,
+    "source": "builtin"
+  },
+  {
+    "id": "sql-join-001",
+    "language": "sql",
+    "level": 3,
+    "category": "join",
+    "title": {
+      "zh-CN": "INNER JOIN",
+      "ja-JP": "INNER JOIN",
+      "en-US": "INNER JOIN"
+    },
+    "code": "SELECT * FROM orders INNER JOIN customers ON orders.customer_id = customers.id;",
+    "explanation": {
+      "zh-CN": "INNER JOIN 返回两个表中匹配的行。",
+      "ja-JP": "INNER JOIN は2つのテーブルで一致する行を返します。"
+    },
+    "focus": [
+      "INNER JOIN 语法",
+      "ON 连接条件",
+      "表名.列名"
+    ],
+    "hint": {
+      "zh-CN": "JOIN 条件用 ON，不用 WHERE。",
+      "ja-JP": "JOIN の条件は ON を使い、WHERE は使いません。"
+    },
+    "sandboxRunnable": true,
+    "expectedOutput": "",
+    "difficulty": 3,
+    "estimatedTime": 22,
+    "source": "builtin"
+  },
+  {
+    "id": "sql-join-002",
+    "language": "sql",
+    "level": 3,
+    "category": "join",
+    "title": {
+      "zh-CN": "LEFT JOIN",
+      "ja-JP": "LEFT JOIN",
+      "en-US": "LEFT JOIN"
+    },
+    "code": "SELECT * FROM customers LEFT JOIN orders ON customers.id = orders.customer_id;",
+    "explanation": {
+      "zh-CN": "LEFT JOIN 返回左表所有行，不匹配用 NULL。",
+      "ja-JP": "LEFT JOIN は左テーブルのすべての行を返します。一致しない場合は NULL。"
+    },
+    "focus": [
+      "LEFT JOIN 关键字",
+      "左表全部保留"
+    ],
+    "hint": {
+      "zh-CN": "LEFT JOIN 左边的表是主表，所有行都会保留。",
+      "ja-JP": "LEFT JOIN の左側のテーブルが主テーブルです。"
+    },
+    "sandboxRunnable": true,
+    "expectedOutput": "",
+    "difficulty": 3,
+    "estimatedTime": 20,
+    "source": "builtin"
+  },
+  {
+    "id": "sql-join-003",
+    "language": "sql",
+    "level": 4,
+    "category": "join",
+    "title": {
+      "zh-CN": "多表 JOIN",
+      "ja-JP": "複数テーブル JOIN",
+      "en-US": "Multiple table JOIN"
+    },
+    "code": "SELECT e.name, d.name AS dept\nFROM employees e\nJOIN departments d ON e.dept_id = d.id\nJOIN projects p ON e.id = p.lead_id;",
+    "explanation": {
+      "zh-CN": "可以连续 JOIN 多个表，使用表别名。",
+      "ja-JP": "複数のテーブルを連続で JOIN できます。テーブル別名を使用。"
+    },
+    "focus": [
+      "多行 SQL 格式",
+      "表别名",
+      "多个 JOIN"
+    ],
+    "hint": {
+      "zh-CN": "每个 JOIN 都要有自己的 ON 条件。",
+      "ja-JP": "各 JOIN には独立した ON 条件が必要です。"
+    },
+    "sandboxRunnable": true,
+    "expectedOutput": "",
+    "difficulty": 4,
+    "estimatedTime": 30,
+    "source": "builtin"
+  },
+  {
+    "id": "sql-join-004",
+    "language": "sql",
+    "level": 4,
+    "category": "join",
+    "title": {
+      "zh-CN": "SELF JOIN 自连接",
+      "ja-JP": "SELF JOIN 自己結合",
+      "en-US": "SELF JOIN"
+    },
+    "code": "SELECT e1.name AS employee, e2.name AS manager\nFROM employees e1\nJOIN employees e2 ON e1.manager_id = e2.id;",
+    "explanation": {
+      "zh-CN": "SELF JOIN 是表与自身连接。使用不同别名。",
+      "ja-JP": "SELF JOIN はテーブル自身との結合です。異なる別名を使用。"
+    },
+    "focus": [
+      "同一表别名 x2",
+      "各自列限定"
+    ],
+    "hint": {
+      "zh-CN": "同一个表起两个不同的别名。",
+      "ja-JP": "同じテーブルに2つの別名を付けます。"
+    },
+    "sandboxRunnable": true,
+    "expectedOutput": "",
+    "difficulty": 4,
+    "estimatedTime": 30,
+    "source": "builtin"
+  },
+  {
+    "id": "sql-insert-001",
+    "language": "sql",
+    "level": 2,
+    "category": "insert",
+    "title": {
+      "zh-CN": "INSERT INTO 插入",
+      "ja-JP": "INSERT INTO 挿入",
+      "en-US": "INSERT INTO values"
+    },
+    "code": "INSERT INTO users (name, email) VALUES ('Bob', 'bob@example.com');",
+    "explanation": {
+      "zh-CN": "INSERT 向表添加新行。字符串值用单引号。",
+      "ja-JP": "INSERT はテーブルに新しい行を追加します。文字列値は一重引用符。"
+    },
+    "focus": [
+      "INSERT INTO 语法",
+      "列名列表",
+      "VALUES 关键字"
+    ],
+    "hint": {
+      "zh-CN": "列名写在表名后的括号内，值在 VALUES 后。",
+      "ja-JP": "列名はテーブル名の後の括弧内に、値は VALUES の後。"
+    },
+    "sandboxRunnable": true,
+    "expectedOutput": "",
+    "difficulty": 2,
+    "estimatedTime": 15,
+    "source": "builtin"
+  },
+  {
+    "id": "sql-insert-002",
+    "language": "sql",
+    "level": 2,
+    "category": "insert",
+    "title": {
+      "zh-CN": "INSERT 全列简写",
+      "ja-JP": "INSERT 全列省略形",
+      "en-US": "INSERT all columns"
+    },
+    "code": "INSERT INTO users VALUES (1, 'Alice', 'alice@example.com');",
+    "explanation": {
+      "zh-CN": "不指定列名需要按顺序提供所有列的值。",
+      "ja-JP": "列名を指定しない場合、定義順にすべての列の値を提供します。"
+    },
+    "focus": [
+      "无列名简写",
+      "值顺序一致"
+    ],
+    "hint": {
+      "zh-CN": "不写列名时，值顺序必须与表结构列顺序一致。",
+      "ja-JP": "列名省略時は値の順序をテーブル構造に合わせます。"
+    },
+    "sandboxRunnable": true,
+    "expectedOutput": "",
+    "difficulty": 2,
+    "estimatedTime": 12,
+    "source": "builtin"
+  },
+  {
+    "id": "sql-insert-003",
+    "language": "sql",
+    "level": 3,
+    "category": "insert",
+    "title": {
+      "zh-CN": "INSERT SELECT",
+      "ja-JP": "INSERT SELECT",
+      "en-US": "INSERT from SELECT"
+    },
+    "code": "INSERT INTO archive_orders\nSELECT * FROM orders WHERE created_at < '2024-01-01';",
+    "explanation": {
+      "zh-CN": "INSERT SELECT 将查询结果插入目标表。",
+      "ja-JP": "INSERT SELECT は検索結果をターゲットテーブルに挿入します。"
+    },
+    "focus": [
+      "SELECT 子查询",
+      "列匹配"
+    ],
+    "hint": {
+      "zh-CN": "INSERT 和 SELECT 的列必须匹配。",
+      "ja-JP": "INSERT と SELECT の列を一致させる必要があります。"
+    },
+    "sandboxRunnable": true,
+    "expectedOutput": "",
+    "difficulty": 3,
+    "estimatedTime": 22,
+    "source": "builtin"
+  },
+  {
+    "id": "sql-update-001",
+    "language": "sql",
+    "level": 2,
+    "category": "update",
+    "title": {
+      "zh-CN": "UPDATE 更新",
+      "ja-JP": "UPDATE 更新",
+      "en-US": "UPDATE statement"
+    },
+    "code": "UPDATE users SET age = 26 WHERE name = 'Alice';",
+    "explanation": {
+      "zh-CN": "UPDATE 修改表中的数据。务必写 WHERE！",
+      "ja-JP": "UPDATE はテーブルのデータを変更します。必ず WHERE を書きましょう！"
+    },
+    "focus": [
+      "UPDATE 表名",
+      "SET 列 = 值",
+      "WHERE 条件"
+    ],
+    "hint": {
+      "zh-CN": "务必写 WHERE 条件，否则会更新全表！",
+      "ja-JP": "必ず WHERE 条件を書きましょう！忘れると全テーブルが更新されます！"
+    },
+    "sandboxRunnable": true,
+    "expectedOutput": "",
+    "difficulty": 2,
+    "estimatedTime": 12,
+    "source": "builtin"
+  },
+  {
+    "id": "sql-update-002",
+    "language": "sql",
+    "level": 2,
+    "category": "update",
+    "title": {
+      "zh-CN": "UPDATE 多列",
+      "ja-JP": "UPDATE 複数列",
+      "en-US": "UPDATE multiple columns"
+    },
+    "code": "UPDATE products SET price = 29.99, stock = 100 WHERE id = 5;",
+    "explanation": {
+      "zh-CN": "UPDATE 可以同时更新多个列。",
+      "ja-JP": "UPDATE は複数の列を同時に更新できます。"
+    },
+    "focus": [
+      "SET 多列逗号分隔",
+      "WHERE 定位行"
+    ],
+    "hint": {
+      "zh-CN": "SET 后面可以跟多个列=值对，用逗号分隔。",
+      "ja-JP": "SET の後に複数の「列=値」をカンマで区切ります。"
+    },
+    "sandboxRunnable": true,
+    "expectedOutput": "",
+    "difficulty": 2,
+    "estimatedTime": 12,
+    "source": "builtin"
+  },
+  {
+    "id": "sql-delete-001",
+    "language": "sql",
+    "level": 2,
+    "category": "delete",
+    "title": {
+      "zh-CN": "DELETE 删除行",
+      "ja-JP": "DELETE 行削除",
+      "en-US": "DELETE statement"
+    },
+    "code": "DELETE FROM users WHERE id = 10;",
+    "explanation": {
+      "zh-CN": "DELETE 用于删除表中的行。务必写 WHERE！",
+      "ja-JP": "DELETE はテーブルの行を削除します。必ず WHERE を書きましょう！"
+    },
+    "focus": [
+      "DELETE FROM 语法",
+      "WHERE 条件"
+    ],
+    "hint": {
+      "zh-CN": "务必写 WHERE！不写会删除全表！",
+      "ja-JP": "必ず WHERE を書きましょう！忘れると全データが削除されます！"
+    },
+    "sandboxRunnable": true,
+    "expectedOutput": "",
+    "difficulty": 2,
+    "estimatedTime": 12,
+    "source": "builtin"
+  },
+  {
+    "id": "sql-delete-002",
+    "language": "sql",
+    "level": 2,
+    "category": "delete",
+    "title": {
+      "zh-CN": "DELETE 多条件",
+      "ja-JP": "DELETE 複数条件",
+      "en-US": "DELETE with conditions"
+    },
+    "code": "DELETE FROM orders WHERE status = 'cancelled' AND created_at < '2024-01-01';",
+    "explanation": {
+      "zh-CN": "DELETE 可以使用 AND/OR 组合条件。",
+      "ja-JP": "DELETE は AND/OR で複数の条件を組み合わせられます。"
+    },
+    "focus": [
+      "AND 多条件",
+      "条件精确性"
+    ],
+    "hint": {
+      "zh-CN": "多个条件用 AND 连接，确保只删除目标数据。",
+      "ja-JP": "複数の条件を AND で接続し、対象データのみ削除します。"
+    },
+    "sandboxRunnable": true,
+    "expectedOutput": "",
+    "difficulty": 2,
+    "estimatedTime": 15,
+    "source": "builtin"
+  },
+  {
+    "id": "sql-count-001",
+    "language": "sql",
+    "level": 1,
+    "category": "count",
+    "title": {
+      "zh-CN": "COUNT 统计行数",
+      "ja-JP": "COUNT 行数カウント",
+      "en-US": "COUNT rows"
+    },
+    "code": "SELECT COUNT(*) FROM students;",
+    "explanation": {
+      "zh-CN": "COUNT 返回指定列的行数。",
+      "ja-JP": "COUNT は指定された列の行数を返します。"
+    },
+    "focus": [
+      "COUNT 语法",
+      "括号",
+      "* 代表所有行"
+    ],
+    "hint": {
+      "zh-CN": "COUNT(*) 统计所有行。",
+      "ja-JP": "COUNT(*) ですべての行をカウントします。"
+    },
+    "sandboxRunnable": true,
+    "expectedOutput": "",
+    "difficulty": 1,
+    "estimatedTime": 8,
+    "source": "builtin"
+  },
+  {
+    "id": "sql-like-001",
+    "language": "sql",
+    "level": 2,
+    "category": "like",
+    "title": {
+      "zh-CN": "LIKE 模糊匹配",
+      "ja-JP": "LIKE 曖昧検索",
+      "en-US": "LIKE pattern"
+    },
+    "code": "SELECT * FROM users WHERE name LIKE 'A%';",
+    "explanation": {
+      "zh-CN": "LIKE 用 % 表示任意字符，_ 表示单个字符。",
+      "ja-JP": "LIKE はパターンマッチングに使います。% は任意の文字。"
+    },
+    "focus": [
+      "LIKE 关键字",
+      "% 通配符"
+    ],
+    "hint": {
+      "zh-CN": "'A%' = 以 A 开头，'%A' = 以 A 结尾。",
+      "ja-JP": "'A%' = A で始まる、'%A' = A で終わる。"
+    },
+    "sandboxRunnable": true,
+    "expectedOutput": "",
+    "difficulty": 2,
+    "estimatedTime": 12,
+    "source": "builtin"
+  },
+  {
+    "id": "sql-limit-001",
+    "language": "sql",
+    "level": 1,
+    "category": "limit",
+    "title": {
+      "zh-CN": "LIMIT 限制行数",
+      "ja-JP": "LIMIT 行数制限",
+      "en-US": "LIMIT clause"
+    },
+    "code": "SELECT * FROM products ORDER BY price DESC LIMIT 10;",
+    "explanation": {
+      "zh-CN": "LIMIT 限制返回的行数。",
+      "ja-JP": "LIMIT は返される行数を制限します。"
+    },
+    "focus": [
+      "LIMIT 位置",
+      "数字参数",
+      "与 ORDER BY 结合"
+    ],
+    "hint": {
+      "zh-CN": "LIMIT 写在所有子句的后面。",
+      "ja-JP": "LIMIT は他のすべての句の最後に書きます。"
+    },
+    "sandboxRunnable": true,
+    "expectedOutput": "",
+    "difficulty": 1,
+    "estimatedTime": 10,
+    "source": "builtin"
+  }
+];
