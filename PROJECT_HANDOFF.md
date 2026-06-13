@@ -5465,3 +5465,125 @@ Web:
 #### Next
 
 - **Round 17.6:** learning-progress push/pull architecture integration, or **Round 17.5.1:** Auth login experience patch.
+
+---
+
+### Round 17.6 - Manual Learning Progress Sync Foundation
+
+**Status: PASS**
+
+#### Modified files
+
+Windows:
+
+- `assets/js/sync-engine.js`
+- `assets/js/auth-ui.js`
+- `assets/js/i18n-ui-dict.js`
+- `docs/sync_architecture.md`
+- `docs/supabase_setup.md`
+- `tools/init_supabase.sql`
+- `PROJECT_HANDOFF.md`
+
+Web:
+
+- `assets/js/sync-engine.js`
+- `assets/js/auth-ui.js`
+- `assets/js/i18n-ui-dict.js`
+- `docs/sync_architecture.md`
+- `docs/supabase_setup.md`
+
+`assets/js/supabase-client.js` and `.gitignore` were reviewed but did not require modification.
+
+#### Manual sync API
+
+The following functions are exposed through `window.StudySync`:
+
+- `registerDeviceRemote()`
+- `pushUserSettings()`
+- `pullUserSettings()`
+- `pushLearningProgress()`
+- `pullLearningProgress()`
+- `pushQuizResults()`
+- `runManualSync()`
+- `getSyncSummary()`
+
+#### Data scope and behavior
+
+- Sync scope is limited to `devices`, `user_settings`, `learning_progress`, and push-only `quiz_results`.
+- Every remote operation requires a configured, enabled Supabase client and an authenticated Supabase user.
+- Missing configuration, disabled configuration, missing SDK, missing session, table/RLS errors, and network errors return friendly result objects.
+- Manual synchronization starts only from the account panel's **Sync now** button.
+- **Automatic/background synchronization:** No.
+- Learning completion and quiz-index pull use union merge and never remove local progress.
+- Settings use timestamp-based LWW for the language/theme whitelist and retain safe local defaults.
+- No destructive delete is implemented.
+- The account panel shows current sync status, last sync time, pending queue count, manual-sync progress, and result messages.
+- Duplicate clicks are blocked while a manual run is active.
+
+#### Security boundary
+
+- AI API keys, AI provider/model settings, Ollama URLs, AI translation caches, chat messages, and user translations are never included in sync payloads.
+- No real Supabase URL, anon key, `service_role` key, JWT, token, or password was committed.
+- **Local `assets/js/supabase-config.local.js`:** Does not exist.
+- `git check-ignore -v assets/js/supabase-config.local.js`: PASS in both repositories.
+- No real Supabase project or real user data was contacted during validation.
+
+#### SQL review
+
+- Existing `devices`, `user_settings`, `learning_progress`, and `quiz_results` fields support the Round 17.6 payload.
+- Added a unique quiz-result index on `(user_id, subject, lesson_id, quiz_index, device_id)` for idempotent manual upsert.
+- Existing per-user RLS policies remain unchanged.
+- The SQL draft was not executed against a real database.
+
+#### Verification results
+
+| Check | Result |
+|:---|:---|
+| Windows `node tools/verify_glossary.js` | PASS, 1500 terms |
+| Windows sync/client/Auth/i18n syntax checks | PASS |
+| Web sync/client/Auth/i18n syntax checks | PASS |
+| Seven-locale synchronization text assertions | PASS |
+| Missing-config fail-closed smoke | PASS, 0 table requests |
+| Fake authenticated SDK manual-sync smoke | PASS |
+| Remote progress union merge smoke | PASS |
+| Allowed table scope assertion | PASS, four tables only |
+| AI key/provider/cache/chat payload scan | PASS, none uploaded |
+| Real secret pattern scan | PASS |
+| Windows/Web mirrored-file SHA256 checks | PASS |
+| `git diff --check` | PASS |
+
+#### Browser smoke results
+
+- Windows and Web pages opened normally with no JavaScript console errors.
+- With no local Supabase configuration, the **Sync now** button is visible and disabled.
+- The account panel displays the current status, last sync, pending count, login requirement, P0 data scope, and AI Key protection message.
+- Auth, mock-login, and local-use controls remained available.
+- Course content rendered normally.
+- Glossary opened normally and reported 1500 terms.
+- Language switching completed without JavaScript errors.
+- No real Supabase Auth, table, sync API, or learning-data request was made.
+
+#### Cloud sync status
+
+- The optional manual cloud-sync foundation is implemented and fake-client tested.
+- It was not tested against a real Supabase project because no local configuration or non-sensitive test environment exists.
+- No real learning data was uploaded or downloaded.
+
+#### Git commits
+
+- **Windows Code Commit**: `f4b83f3` (feat: add manual learning progress sync foundation)
+- **Web Commit**: `107f654` (feat: sync manual learning progress sync foundation)
+- **Windows Handoff Commit**: `(this commit: docs: record Round 17.6 handoff)`
+
+#### Explicitly not done
+
+- Did not implement automatic synchronization.
+- Did not synchronize user translations.
+- Did not synchronize AI caches, AI keys, provider/model settings, Ollama URLs, or chat messages.
+- Did not implement account deletion.
+- Did not package Portable or create a Release.
+- Did not modify courses, glossary data, backend, sandbox, service worker, manifest, or version.
+
+#### Next
+
+- **Round 17.7:** synchronization conflict handling and real two-device testing, or **Round 17.6.1:** manual synchronization experience patch.
