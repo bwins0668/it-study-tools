@@ -3779,4 +3779,147 @@
     }
   });
 
+
+  var CODING_TYPING_ROUND_21_4 = {
+    "zh-CN": {
+      level: "难度",
+      difficultyFilter: "难度过滤",
+      allDifficulties: "全部难度",
+      historyFilter: "历史筛选",
+      allLanguages: "全部语言",
+      records: "条",
+      totalCompleted: "总完成次数",
+      averageCpm: "平均CPM",
+      bestCpm: "最高CPM",
+      averageAccuracy: "平均正确率",
+      totalPracticeTime: "总练习时间",
+      favoriteLanguage: "最常练语言",
+      commonMistakes: "常错字符Top 10",
+      clearHistory: "清空历史",
+      clearHistoryConfirm: "确认清空编程打字历史记录？此操作不可恢复。",
+      historyCleared: "历史记录已清空",
+      noMistakes: "暂无错误记录"
+    },
+    "ja-JP": {
+      level: "難易度",
+      difficultyFilter: "難易度フィルター",
+      allDifficulties: "すべての難易度",
+      historyFilter: "履歴フィルター",
+      allLanguages: "すべての言語",
+      records: "件",
+      totalCompleted: "総完了回数",
+      averageCpm: "平均CPM",
+      bestCpm: "最高CPM",
+      averageAccuracy: "平均正確率",
+      totalPracticeTime: "総練習時間",
+      favoriteLanguage: "最も練習した言語",
+      commonMistakes: "よく間違える文字Top 10",
+      clearHistory: "履歴を消去",
+      clearHistoryConfirm: "プログラミングタイピングの履歴を消去しますか？この操作は元に戻せません。",
+      historyCleared: "履歴を消去しました",
+      noMistakes: "エラー記録なし"
+    },
+    "en-US": {
+      level: "Level",
+      difficultyFilter: "Difficulty",
+      allDifficulties: "All Levels",
+      historyFilter: "History Filter",
+      allLanguages: "All Languages",
+      records: "records",
+      totalCompleted: "Total Completed",
+      averageCpm: "Average CPM",
+      bestCpm: "Best CPM",
+      averageAccuracy: "Avg Accuracy",
+      totalPracticeTime: "Total Practice Time",
+      favoriteLanguage: "Most Practiced",
+      commonMistakes: "Common Mistakes Top 10",
+      clearHistory: "Clear History",
+      clearHistoryConfirm: "Clear coding typing history? This cannot be undone.",
+      historyCleared: "History cleared",
+      noMistakes: "No mistakes recorded"
+    },
+    "ko-KR": {
+      level: "난이도",
+      difficultyFilter: "난이도 필터",
+      allDifficulties: "모든 난이도",
+      historyFilter: "기록 필터",
+      allLanguages: "모든 언어",
+      records: "건",
+      totalCompleted: "총 완료 횟수",
+      averageCpm: "평균 CPM",
+      bestCpm: "최고 CPM",
+      averageAccuracy: "평균 정확도",
+      totalPracticeTime: "총 연습 시간",
+      favoriteLanguage: "가장 많이 연습한 언어",
+      commonMistakes: "자주 틀리는 문자 Top 10",
+      clearHistory: "기록 삭제",
+      clearHistoryConfirm: "코딩 타이핑 기록을 삭제하시겠습니까? 이 작업은 되돌릴 수 없습니다.",
+      historyCleared: "기록이 삭제되었습니다",
+      noMistakes: "오류 기록 없음"
+    },
+    "vi-VN": {
+      level: "Độ khó",
+      difficultyFilter: "Lọc độ khó",
+      allDifficulties: "Tất cả cấp độ",
+      historyFilter: "Lọc lịch sử",
+      allLanguages: "Tất cả ngôn ngữ",
+      records: "bản ghi",
+      totalCompleted: "Tổng số hoàn thành",
+      averageCpm: "CPM trung bình",
+      bestCpm: "CPM cao nhất",
+      averageAccuracy: "Độ chính xác TB",
+      totalPracticeTime: "Tổng thời gian luyện",
+      favoriteLanguage: "Ngôn ngữ yêu thích",
+      commonMistakes: "Lỗi thường gặp Top 10",
+      clearHistory: "Xóa lịch sử",
+      clearHistoryConfirm: "Xóa lịch sử gõ code? Không thể hoàn tác.",
+      historyCleared: "Đã xóa lịch sử",
+      noMistakes: "Không có lỗi"
+    },
+    "my-MM": {
+      level: "အခက်အခဲ",
+      difficultyFilter: "အခက်အခဲစစ်ထုတ်",
+      allDifficulties: "အားလုံးအဆင့်",
+      historyFilter: "မှတ်တမ်းစစ်ထုတ်",
+      allLanguages: "ဘာသာစကားအားလုံး",
+      records: "ခု",
+      totalCompleted: "စုစုပေါင်းပြီးဆုံး",
+      averageCpm: "ပျမ်းမျှ CPM",
+      bestCpm: "အကောင်းဆုံး CPM",
+      averageAccuracy: "ပျမ်းမျှတိကျမှု",
+      totalPracticeTime: "စုစုပေါင်းလေ့ကျင့်ချိန်",
+      favoriteLanguage: "အများဆုံးလေ့ကျင့်",
+      commonMistakes: "အမှားများသောစာလုံး Top 10",
+      clearHistory: "မှတ်တမ်းဖျက်မည်",
+      clearHistoryConfirm: "ကုဒ်ရိုက်ခြင်းမှတ်တမ်းကိုဖျက်မလား? ပြန်ပြင်မရပါ။",
+      historyCleared: "မှတ်တမ်းဖျက်ပြီး",
+      noMistakes: "အမှားမရှိပါ"
+    },
+    "fr-FR": {
+      level: "Difficulté",
+      difficultyFilter: "Filtre de difficulté",
+      allDifficulties: "Tous les niveaux",
+      historyFilter: "Filtre historique",
+      allLanguages: "Toutes les langues",
+      records: "enreg.",
+      totalCompleted: "Total terminé",
+      averageCpm: "CPM moyen",
+      bestCpm: "Meilleur CPM",
+      averageAccuracy: "Précision moyenne",
+      totalPracticeTime: "Temps total",
+      favoriteLanguage: "Langue favorite",
+      commonMistakes: "Erreurs fréquentes Top 10",
+      clearHistory: "Effacer historique",
+      clearHistoryConfirm: "Effacer l'historique de frappe? Irréversible.",
+      historyCleared: "Historique effacé",
+      noMistakes: "Aucune erreur"
+    }
+  };
+
+  Object.keys(CODING_TYPING_ROUND_21_4).forEach(function (locale) {
+    if (window.I18nUiDict[locale] && window.I18nUiDict[locale].codingTyping) {
+      Object.assign(window.I18nUiDict[locale].codingTyping, CODING_TYPING_ROUND_21_4[locale]);
+    }
+  });
 })();
+

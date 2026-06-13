@@ -1266,6 +1266,18 @@
         <div class="ct-cat-list" id="ct-cat-list"></div>
       </div>
 
+      <!-- Difficulty filter -->
+      <div class="ct-field">
+        <label data-i18n="codingTyping.difficultyFilter">难度过滤</label>
+        <div class="ct-diff-list" id="ct-diff-list">
+          <button class="ct-diff-btn active" data-diff="all" onclick="CodingTyping.filterDiff('all')"><span data-i18n="codingTyping.allDifficulties">全部</span></button>
+          <button class="ct-diff-btn" data-diff="1" onclick="CodingTyping.filterDiff('1')">Lv.1</button>
+          <button class="ct-diff-btn" data-diff="2" onclick="CodingTyping.filterDiff('2')">Lv.2</button>
+          <button class="ct-diff-btn" data-diff="3" onclick="CodingTyping.filterDiff('3')">Lv.3</button>
+          <button class="ct-diff-btn" data-diff="4" onclick="CodingTyping.filterDiff('4')">Lv.4</button>
+          <button class="ct-diff-btn" data-diff="5" onclick="CodingTyping.filterDiff('5')">Lv.5</button>
+        </div>
+      </div>
       <!-- Item list -->
       <div class="ct-field">
         <label><span data-i18n="codingTyping.exerciseList">练习列表</span> <span id="ct-item-count"></span></label>
@@ -1335,7 +1347,39 @@
           <div class="ct-stat"><span data-i18n="codingTyping.errors">错误</span><strong id="ct-stat-errors">0</strong></div>
         </div>
 
-        <!-- Complete message (JS generated) -->\r\n        <div class="ct-result" id="ct-result" style="display:none;"></div>\r\n\r\n        <!-- Error chars -->\r\n        <div class="ct-error-chars" id="ct-error-chars" style="display:none;"></div>\r\n\r\n        <!-- Shortcut help -->\r\n        <div class="ct-shortcut-help" id="ct-shortcut-help"></div>\r\n\r\n        <!-- Recent history -->\r\n        <div class="ct-history-list" id="ct-history-list"></div>\r\n      </div>\r\n    </main>\r\n  </section>\r\n\r\n  <!-- Glossary Modal -->
+        <!-- Complete message (JS generated) -->\r\n        <div class="ct-result" id="ct-result" style="display:none;"></div>\r\n\r\n        <!-- Error chars -->\r\n        <div class="ct-error-chars" id="ct-error-chars" style="display:none;"></div>\r\n\r\n        <!-- Shortcut help -->\r\n        <div class="ct-shortcut-help" id="ct-shortcut-help"></div>\r\n\r\n        <!-- Stats summary -->
+        <div class="ct-stats-summary" id="ct-stats-summary"></div>
+
+        <!-- Common mistakes (cross-session) -->
+        <div class="ct-common-mistakes" id="ct-common-mistakes"></div>
+
+        <!-- History filter controls -->
+        <div class="ct-history-controls" id="ct-history-controls">
+          <h4 data-i18n="codingTyping.historyFilter">历史筛选</h4>
+          <div class="ct-history-filter-row">
+            <select id="ct-hist-lang" class="ct-hist-select">
+              <option value="all" data-i18n="codingTyping.allLanguages">全部语言</option>
+              <option value="python">Python</option>
+              <option value="java">Java</option>
+              <option value="sql">SQL</option>
+              <option value="symbol">Symbols</option>
+            </select>
+            <select id="ct-hist-cat" class="ct-hist-select">
+              <option value="all" data-i18n="codingTyping.allCategories">全部类别</option>
+            </select>
+            <select id="ct-hist-diff" class="ct-hist-select">
+              <option value="all" data-i18n="codingTyping.allDifficulties">全部难度</option>
+              <option value="1">Lv.1</option>
+              <option value="2">Lv.2</option>
+              <option value="3">Lv.3</option>
+              <option value="4">Lv.4</option>
+              <option value="5">Lv.5</option>
+            </select>
+          </div>
+          <button class="ct-clear-history-btn" onclick="CodingTyping.clearHistory()" data-i18n="codingTyping.clearHistory">清空历史</button>
+        </div>
+
+        <!-- Recent history -->\r\n        <div class="ct-history-list" id="ct-history-list"></div>\r\n      </div>\r\n    </main>\r\n  </section>\r\n\r\n  <!-- Glossary Modal -->
   <div id="glossary-modal" class="glossary-modal" hidden>
     <div class="glossary-backdrop" data-glossary-close></div>
     <section class="glossary-dialog" role="dialog" aria-modal="true" aria-labelledby="glossary-title">
@@ -1427,3 +1471,4 @@
   <script src="assets/js/ai_assistant.js?v=20260608_global_target"></script>
 </body>
 </html>
+

@@ -557,3 +557,180 @@ body[data-theme="light"] .ct-secondary-btn {
 body[data-theme="light"] .ct-stat strong {
   color: var(--text-main, #1e293b);
 }
+
+/* Stats summary cards */
+.ct-stats-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 8px;
+  margin-bottom: 16px;
+}
+.ct-stat-card {
+  background: var(--bg-card, #1e293b);
+  border: 1px solid var(--border-color, #334155);
+  border-radius: 6px;
+  padding: 10px;
+  text-align: center;
+}
+.ct-stat-card-label {
+  display: block;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--text-muted, #94a3b8);
+  margin-bottom: 4px;
+}
+.ct-stat-card-value {
+  display: block;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-main, #e2e8f0);
+}
+
+/* History filters */
+.ct-history-controls {
+  margin-top: 12px;
+  padding: 10px;
+  background: var(--bg-card, #1e293b);
+  border: 1px solid var(--border-color, #334155);
+  border-radius: 6px;
+}
+.ct-history-controls h4 {
+  margin: 0 0 8px;
+  font-size: 13px;
+  color: var(--text-main, #e2e8f0);
+}
+.ct-history-filter-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+.ct-hist-select {
+  padding: 4px 8px;
+  border: 1px solid var(--border-color, #334155);
+  border-radius: 4px;
+  background: var(--bg-main, #0f172a);
+  color: var(--text-main, #e2e8f0);
+  font-size: 12px;
+  min-width: 100px;
+}
+.ct-clear-history-btn {
+  padding: 5px 12px;
+  border: 1px solid #ef4444;
+  border-radius: 4px;
+  background: transparent;
+  color: #ef4444;
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 600;
+}
+.ct-clear-history-btn:hover {
+  background: #ef4444;
+  color: #fff;
+}
+.ct-history-count {
+  font-size: 11px;
+  color: var(--text-muted, #94a3b8);
+  font-weight: 400;
+}
+
+/* Common mistakes cross-session */
+.ct-common-mistakes {
+  margin-top: 12px;
+}
+.ct-common-mistakes-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+.ct-mistake-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 2px 8px;
+  background: var(--bg-card, #1e293b);
+  border: 1px solid var(--border-color, #334155);
+  border-radius: 4px;
+  font-size: 12px;
+  color: #f87171;
+}
+.ct-mistake-tag code {
+  font-family: 'Fira Code', monospace;
+  font-size: 12px;
+  color: #f87171;
+}
+.ct-mistake-tag small {
+  font-size: 10px;
+  color: var(--text-muted, #94a3b8);
+}
+
+/* Difficulty filter buttons */
+.ct-diff-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+.ct-diff-btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border: 1px solid var(--border-color, #334155);
+  border-radius: 4px;
+  background: var(--bg-card, #1e293b);
+  color: var(--text-main, #cbd5e1);
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 600;
+}
+.ct-diff-btn.active {
+  background: var(--accent, #6366f1);
+  color: #fff;
+  border-color: var(--accent, #6366f1);
+}
+
+/* History list adjustments */
+.ct-history-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Light theme */
+body[data-theme="light"] .ct-stat-card {
+  background: var(--bg-card, #ffffff);
+  border-color: var(--border-color, #e2e8f0);
+}
+body[data-theme="light"] .ct-stat-card-value {
+  color: var(--text-main, #1e293b);
+}
+body[data-theme="light"] .ct-history-controls {
+  background: var(--bg-card, #ffffff);
+  border-color: var(--border-color, #e2e8f0);
+}
+body[data-theme="light"] .ct-hist-select {
+  background: var(--bg-main, #f8fafc);
+  border-color: var(--border-color, #e2e8f0);
+  color: var(--text-main, #334155);
+}
+body[data-theme="light"] .ct-mistake-tag {
+  background: var(--bg-card, #ffffff);
+}
+body[data-theme="light"] .ct-diff-btn {
+  background: var(--bg-card, #ffffff);
+  border-color: var(--border-color, #e2e8f0);
+  color: var(--text-main, #334155);
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .ct-stats-cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .ct-history-filter-row {
+    flex-direction: column;
+  }
+  .ct-hist-select {
+    width: 100%;
+  }
+}
