@@ -120,9 +120,20 @@ All 7 languages (zh-CN, ja-JP, en-US, vi-VN, fr-FR, my-MM, ko-KR) are covered.
 
 ### Round 19.0: User Translations & Bookmarks Sync Audit
 Round 19.0 performs a read-only architecture audit of user-defined translations and favorites/bookmarks. It concludes that:
-- `user_translations` has no UI yet, so sync is postponed.
+- At the time of the Round 19.0 audit, `user_translations` had no UI, so sync was postponed. This is a historical conclusion; see the Round 20.5 status below.
 - `bookmarks` currently only exists as a "Favorites" list in the Japanese Typing module (stored in localStorage key `study-tools-japanese-typing-v1`).
 - Syncing bookmarks is safe and feasible via manual union merge without destructive deletion.
+
+### Round 20.5: Local User Translation UI Stable Status
+
+As of Round 20.5, the user-defined translation UI has completed its local-only workflow:
+
+- Supports edit, save, cancel, and reset.
+- Persists locally under `study-tools-user-translations-v1` and restores after refresh.
+- Reset removes the matching local record from `study-tools-user-translations-v1`; no remote row is deleted or uploaded because Supabase sync is not connected.
+- The local UI is not connected to the Supabase `user_translations` table.
+- The local UI is not included in `sync-engine.js` payloads or queues.
+- AI translation cache (`study-tools-i18n-cache-v4`), AI API keys, provider/model settings, and Ollama configuration remain excluded from synchronization.
 
 ### Round 19.1: Typing Bookmarks Manual Sync
 Round 19.1 implements manual sync for Japanese typing favorites (bookmarks) under a union merge strategy.

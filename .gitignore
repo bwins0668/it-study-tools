@@ -1,6 +1,7 @@
 backups/
 jdk/
 output/
+node_modules/
 .playwright-cli/
 .study-tools-browser-profile/
 chrome-release-check-profile/
