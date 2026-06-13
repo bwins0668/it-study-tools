@@ -113,12 +113,26 @@ Round 17.10 optimizes the Auth UI and sync panel layout for all 7 supported lang
 
 All 7 languages (zh-CN, ja-JP, en-US, vi-VN, fr-FR, my-MM, ko-KR) are covered.
 
-**Not implemented yet (Round 17.9):**
+**Not implemented yet (Round 19.1):**
 - Automatic/background sync (by design — manual only)
 - `user_translations` sync (not wired)
-- `bookmarks` sync (not wired)
-- Conflict resolution UI (merge conflicts shown in summary only)
 - Two-device sync testing
+
+### Round 19.0: User Translations & Bookmarks Sync Audit
+Round 19.0 performs a read-only architecture audit of user-defined translations and favorites/bookmarks. It concludes that:
+- `user_translations` has no UI yet, so sync is postponed.
+- `bookmarks` currently only exists as a "Favorites" list in the Japanese Typing module (stored in localStorage key `study-tools-japanese-typing-v1`).
+- Syncing bookmarks is safe and feasible via manual union merge without destructive deletion.
+
+### Round 19.1: Typing Bookmarks Manual Sync
+Round 19.1 implements manual sync for Japanese typing favorites (bookmarks) under a union merge strategy.
+- **Data Source**: Stored locally in localStorage under the key `study-tools-japanese-typing-v1`, as the `favorites` array of strings or numbers.
+- **Supabase Table Mapping**: Map local favorites to rows in the `bookmarks` table with `bookmark_type = 'typing_article'` and `reference_id = favorite_id`.
+- **Merge Strategy**: Union Merge (并集合并).
+  - Local favorites + remote bookmarks are combined and de-duplicated.
+  - Numbers and strings are normalized to prevent type mismatches.
+  - Remote empty array does NOT clear the local active list, ensuring local data safety.
+- **Integration**: Placed into the manual sync pipeline via `pullBookmarks` and `pushBookmarks`. Results are recorded in the Auth Panel sync summary details.
 
 1. **Anonymous local mode** (default, no change from today)  
    - All data in `localStorage`  
@@ -220,4 +234,5 @@ Full DDL: `tools/init_supabase.sql`
 | **17.9** | Sync conflict handling and UX patch | Released |
 | **17.10** | Localized Auth UI & Layout Slimming | Released |
 | **18.0** | Stable release: Web cache update + Portable repack + tag + Release | Released |
-| **19.0** | (Proposed) User translations & bookmarks sync audit | Planned |
+| **19.0** | User translations & bookmarks sync architecture audit | Completed |
+| **19.1** | Typing bookmarks manual sync | Released |

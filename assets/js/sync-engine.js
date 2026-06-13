@@ -647,6 +647,122 @@
     }
   }
 
+  /* ── Bookmarks Sync (Round 19.1) ─────────────────── */
+  function getTypingFavorites() {
+    try {
+      var key = "study-tools-japanese-typing-v1";
+      var saved = JSON.parse(localStorage.getItem(key) || "{}");
+      return Array.isArray(saved.favorites) ? saved.favorites : [];
+    } catch (_) {
+      return [];
+    }
+  }
+
+  function setTypingFavorites(favorites) {
+    try {
+      var key = "study-tools-japanese-typing-v1";
+      var saved = {};
+      try {
+        saved = JSON.parse(localStorage.getItem(key) || "{}");
+      } catch (_) {}
+      saved.favorites = Array.isArray(favorites) ? favorites : [];
+      localStorage.setItem(key, JSON.stringify(saved));
+    } catch (_) {}
+  }
+
+  function collectBookmarksForSync(userId) {
+    var favorites = getTypingFavorites();
+    var timestamp = nowISO();
+    return favorites.map(function (id) {
+      return {
+        user_id: userId,
+        bookmark_type: "typing_article",
+        reference_id: String(id),
+        label: "",
+        created_at: timestamp,
+        updated_at: timestamp,
+        deleted_at: null,
+      };
+    });
+  }
+
+  async function pushBookmarks(context) {
+    var ctx = context;
+    if (!ctx || !ctx.client) {
+      var checked = await getRemoteContext();
+      if (!checked.ok) return checked;
+      ctx = checked.data;
+    }
+    var rows = collectBookmarksForSync(ctx.user.id);
+    if (!rows.length) return syncSuccess({ count: 0 });
+    try {
+      var result = await ctx.client.from("bookmarks").upsert(rows, {
+        onConflict: "user_id,bookmark_type,reference_id",
+      });
+      if (result && result.error) return syncError("bookmarks_push_failed", result.error.message, result.error);
+      return syncSuccess({ count: rows.length });
+    } catch (error) {
+      var friendly = friendlyRemoteError(error, "bookmarks_push_failed");
+      return syncError(friendly.code, friendly.message);
+    }
+  }
+
+  function mergeBookmarks(remoteBookmarks) {
+    var local = getTypingFavorites();
+    var seen = {};
+    var merged = [];
+    local.forEach(function (id) {
+      var sid = String(id);
+      if (!seen[sid]) {
+        seen[sid] = true;
+        merged.push(id);
+      }
+    });
+
+    var remoteAdded = 0;
+    (remoteBookmarks || []).forEach(function (row) {
+      if (!row || row.bookmark_type !== "typing_article" || row.deleted_at) return;
+      var rid = String(row.reference_id);
+      if (!seen[rid]) {
+        seen[rid] = true;
+        var num = Number(rid);
+        if (!isNaN(num) && String(num) === rid) {
+          merged.push(num);
+        } else {
+          merged.push(rid);
+        }
+        remoteAdded += 1;
+      }
+    });
+
+    if (remoteAdded > 0) {
+      setTypingFavorites(merged);
+    }
+    return { count: remoteBookmarks.length, merged: remoteAdded };
+  }
+
+  async function pullBookmarks(context) {
+    var ctx = context;
+    if (!ctx || !ctx.client) {
+      var checked = await getRemoteContext();
+      if (!checked.ok) return checked;
+      ctx = checked.data;
+    }
+    try {
+      var result = await ctx.client.from("bookmarks")
+        .select("bookmark_type,reference_id,deleted_at")
+        .eq("user_id", ctx.user.id)
+        .is("deleted_at", null);
+      if (result && result.error) return syncError("bookmarks_pull_failed", result.error.message, result.error);
+      var data = result && result.data ? result.data : [];
+      var mergeResult = mergeBookmarks(data);
+      return syncSuccess({ count: data.length, merged: mergeResult.merged });
+    } catch (error) {
+      var friendly = friendlyRemoteError(error, "bookmarks_pull_failed");
+      return syncError(friendly.code, friendly.message);
+    }
+  }
+
   function getSyncSummary() {
     var status = getSyncStatus();
     var lastResult = safeGet(KEYS.LAST_SYNC_RESULT, null);
@@ -668,11 +784,14 @@
         progress_pushed: summary.progress_pushed || 0,
         progress_pulled: summary.progress_pulled || 0,
         quiz_pushed: summary.quiz_pushed || 0,
+        bookmarks_pushed: summary.bookmarks_pushed || 0,
+        bookmarks_pulled: summary.bookmarks_pulled || 0,
+        bookmarks_merged: summary.bookmarks_merged || 0,
         conflicts_detected: summary.conflicts_detected || 0,
         conflicts_resolved: summary.conflicts_resolved || 0,
         warnings: summary.warnings || [],
       } : null,
-      scope: ["user_settings", "learning_progress", "quiz_results"],
+      scope: ["user_settings", "learning_progress", "quiz_results", "bookmarks"],
       automatic_sync: false,
     };
   }
@@ -699,9 +818,11 @@
         ["device", registerDeviceRemote],
         ["settings_pull", pullUserSettings],
         ["progress_pull", pullLearningProgress],
+        ["bookmarks_pull", pullBookmarks],
         ["settings_push", pushUserSettings],
         ["progress_push", pushLearningProgress],
         ["quiz_push", pushQuizResults],
+        ["bookmarks_push", pushBookmarks],
       ];
 
       var lastError = null;
@@ -736,6 +857,9 @@
         progress_pushed: results.progress_push && results.progress_push.ok ? (results.progress_push.data && results.progress_push.data.count) || 0 : 0,
         progress_pulled: results.progress_pull && results.progress_pull.ok ? (results.progress_pull.data && results.progress_pull.data.count) || 0 : 0,
         quiz_pushed: results.quiz_push && results.quiz_push.ok ? (results.quiz_push.data && results.quiz_push.data.count) || 0 : 0,
+        bookmarks_pushed: results.bookmarks_push && results.bookmarks_push.ok ? (results.bookmarks_push.data && results.bookmarks_push.data.count) || 0 : 0,
+        bookmarks_pulled: results.bookmarks_pull && results.bookmarks_pull.ok ? (results.bookmarks_pull.data && results.bookmarks_pull.data.count) || 0 : 0,
+        bookmarks_merged: results.bookmarks_pull && results.bookmarks_pull.ok ? (results.bookmarks_pull.data && results.bookmarks_pull.data.merged) || 0 : 0,
         conflicts_detected: conflictsDetected,
         conflicts_resolved: conflictsResolved,
         warnings: warnings,
@@ -795,6 +919,9 @@
     pushLearningProgress: pushLearningProgress,
     pullLearningProgress: pullLearningProgress,
     pushQuizResults:      pushQuizResults,
+    pushBookmarks:        pushBookmarks,
+    pullBookmarks:        pullBookmarks,
+    mergeBookmarks:       mergeBookmarks,
     runManualSync:        runManualSync,
     getSyncSummary:       getSyncSummary,
     _keys:                KEYS,

@@ -6145,3 +6145,65 @@ No changes to web-exclusive files this round (sync-engine.js, auth-ui.js, i18n-u
 
 #### Next
 - **Round 19.1**: 打字收藏 bookmarks 的手动同步网络实现。
+
+---
+
+### Round 19.1 - 日语打字收藏 bookmarks 手动同步
+
+**Status: PASS**
+
+#### Modified files
+
+##### Windows
+- `assets/js/sync-engine.js` (Implemented bookmarks sync functions, integrated into `runManualSync()` and `getSyncSummary()`, exported public API)
+- `assets/js/auth-ui.js` (Rendered bookmarks sync status, counts and merged details, added privacy notices in Section D)
+- `assets/js/i18n-ui-dict.js` (Added bookmarks sync strings for all 7 languages)
+- `docs/sync_architecture.md` (Updated release history and R19.1 design details)
+- `PROJECT_HANDOFF.md` (This entry)
+
+##### Web
+- `assets/js/sync-engine.js` (Synched from Windows)
+- `assets/js/auth-ui.js` (Synched from Windows)
+- `assets/js/i18n-ui-dict.js` (Synched from Windows)
+- `docs/sync_architecture.md` (Synched from Windows)
+
+#### Synchronization Details
+- **Sync Scope**: `typing_article` bookmarks only.
+- **LocalStorage Key**: `study-tools-japanese-typing-v1` -> `favorites` array.
+- **Supabase Mapping**: `bookmark_type = 'typing_article'`, `reference_id = favorite_id`.
+- **Added Functions in `sync-engine.js`**:
+  - `getTypingFavorites()`
+  - `setTypingFavorites(favorites)`
+  - `collectBookmarksForSync(userId)`
+  - `pushBookmarks(context)`
+  - `pullBookmarks(context)`
+  - `mergeBookmarks(remoteBookmarks)`
+- **Merge Strategy**: Union Merge (并集合并).
+  - De-duplicates items using a string lookup, and correctly sanitizes ID types (number/string) for backward compatibility.
+  - Remote empty array does NOT clear local favorites.
+  - No destructive deletes performed (safe local preservation).
+
+#### Verification Checks
+
+| Check | Result |
+|-------|--------|
+| Glossary count | 1500 ✓ (SHA256 match) |
+| main JS syntax (6 files) | All OK ✓ |
+| web JS syntax (5 files) | All OK ✓ |
+| File consistency | All matched exactly (except index.css styles) |
+| Leakage Audit | No sensitive API keys, email addresses, database passwords, or auth tokens committed |
+| Ignored Configs | `supabase-config.local.js` correctly excluded |
+
+#### Commits
+- **Windows main**: `(this commit)` feat: add manual typing bookmarks sync
+- **Web master**: `(this commit)` feat: sync manual typing bookmarks sync
+
+#### Explicitly not done
+- Did not synchronize user translations (postponed due to absence of UI).
+- Did not synchronize course lesson bookmarks or glossary bookmarks.
+- Did not synchronize AI caches, AI keys, provider settings, or Ollama configs.
+- Did not enable automatic or background sync.
+- Did not package Portable client or create a new Release.
+
+#### Next
+- **Round 19.2**: Bookmarks deletion sync and dual-device testing, or **Round 20.0**: User-customized translation UI architecture audit.

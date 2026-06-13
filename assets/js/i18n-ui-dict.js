@@ -3322,9 +3322,67 @@
     }
   };
 
+  var AUTH_SYNC_ROUND_19_1 = {
+    "zh-CN": {
+      bookmarksPushed: "收藏上传",
+      bookmarksPulled: "收藏下载",
+      bookmarksMerged: "收藏已合并",
+      onlySyncTypingBookmarks: "当前仅同步日语打字收藏",
+      noAiCacheUpload: "不会上传 AI 翻译缓存"
+    },
+    "ja-JP": {
+      bookmarksPushed: "お気に入りアップロード",
+      bookmarksPulled: "お気に入りダウンロード",
+      bookmarksMerged: "お気に入りマージ完了",
+      onlySyncTypingBookmarks: "現在は日本語タイピングのお気に入りのみ同期します",
+      noAiCacheUpload: "AI翻訳キャッシュはアップロードしません"
+    },
+    "en-US": {
+      bookmarksPushed: "Favorites uploaded",
+      bookmarksPulled: "Favorites downloaded",
+      bookmarksMerged: "Favorites merged",
+      onlySyncTypingBookmarks: "Currently only syncing Japanese typing favorites",
+      noAiCacheUpload: "AI translation cache is never uploaded"
+    },
+    "vi-VN": {
+      bookmarksPushed: "Đã tải lên yêu thích",
+      bookmarksPulled: "Đã tải xuống yêu thích",
+      bookmarksMerged: "Đã gộp yêu thích",
+      onlySyncTypingBookmarks: "Hiện tại chỉ đồng bộ hóa các yêu thích gõ tiếng Nhật",
+      noAiCacheUpload: "Không bao giờ tải lên bộ nhớ đệm dịch AI"
+    },
+    "fr-FR": {
+      bookmarksPushed: "Favoris téléversés",
+      bookmarksPulled: "Favoris téléchargés",
+      bookmarksMerged: "Favoris fusionnés",
+      onlySyncTypingBookmarks: "Actuellement, seule la synchronisation des favoris de dactylographie japonaise est prise en charge",
+      noAiCacheUpload: "Le cache de traduction IA n'est jamais téléversé"
+    },
+    "my-MM": {
+      bookmarksPushed: "အကြိုက်ဆုံးများ စင့်ခ်လုပ်ခဲ့သည်",
+      bookmarksPulled: "အကြိုက်ဆုံးများ ရယူခဲ့သည်",
+      bookmarksMerged: "အကြိုက်ဆုံးများ ပေါင်းစည်းခဲ့သည်",
+      onlySyncTypingBookmarks: "လက်ရှိတွင် ဂျပန်စာရိုက်အကြိုက်ဆုံးများကိုသာ စင့်ခ်လုပ်နိုင်ပါသည်",
+      noAiCacheUpload: "AI ဘာသာပြန်ကက်ရှ်ကို လုံးဝတင်မည်မဟုတ်ပါ"
+    },
+    "ko-KR": {
+      bookmarksPushed: "즐겨찾기 업로드됨",
+      bookmarksPulled: "즐겨찾기 다운로드됨",
+      bookmarksMerged: "즐겨찾기 병합됨",
+      onlySyncTypingBookmarks: "현재 일본어 타자 즐겨찾기만 동기화됩니다",
+      noAiCacheUpload: "AI 번역 캐시는 업로드되지 않습니다"
+    }
+  };
+
   Object.keys(AUTH_SYNC_ROUND_17_10).forEach(function (locale) {
     if (window.I18nUiDict[locale] && window.I18nUiDict[locale].auth) {
       Object.assign(window.I18nUiDict[locale].auth, AUTH_SYNC_ROUND_17_10[locale]);
+    }
+  });
+
+  Object.keys(AUTH_SYNC_ROUND_19_1).forEach(function (locale) {
+    if (window.I18nUiDict[locale] && window.I18nUiDict[locale].auth) {
+      Object.assign(window.I18nUiDict[locale].auth, AUTH_SYNC_ROUND_19_1[locale]);
     }
   });
 })();

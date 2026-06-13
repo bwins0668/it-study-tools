@@ -292,6 +292,9 @@
     var progressPushed = summaryDetails ? summaryDetails.progress_pushed : 0;
     var progressPulled = summaryDetails ? summaryDetails.progress_pulled : 0;
     var quizPushed = summaryDetails ? summaryDetails.quiz_pushed : 0;
+    var bookmarksPushed = summaryDetails ? summaryDetails.bookmarks_pushed : 0;
+    var bookmarksPulled = summaryDetails ? summaryDetails.bookmarks_pulled : 0;
+    var bookmarksMerged = summaryDetails ? summaryDetails.bookmarks_merged : 0;
     var conflictsResolved = summaryDetails ? summaryDetails.conflicts_resolved : 0;
     var warnings = summaryDetails && summaryDetails.warnings ? summaryDetails.warnings : [];
     var syncDuration = summaryDetails ? summaryDetails.duration_ms : 0;
@@ -316,6 +319,9 @@
       if (progressPushed) detailsList += '<li><i class="fa-solid fa-upload"></i> ' + esc(t("auth.progressPushed", "进度上传")) + ': ' + progressPushed + '</li>';
       if (progressPulled) detailsList += '<li><i class="fa-solid fa-download"></i> ' + esc(t("auth.progressPulled", "进度下载")) + ': ' + progressPulled + '</li>';
       if (quizPushed) detailsList += '<li><i class="fa-solid fa-clipboard-question"></i> ' + esc(t("auth.quizPushed", "测验结果")) + ': ' + quizPushed + '</li>';
+      if (bookmarksPushed) detailsList += '<li><i class="fa-solid fa-star-of-life"></i> ' + esc(t("auth.bookmarksPushed", "收藏上传")) + ': ' + bookmarksPushed + '</li>';
+      if (bookmarksPulled) detailsList += '<li><i class="fa-solid fa-star-half-stroke"></i> ' + esc(t("auth.bookmarksPulled", "收藏下载")) + ': ' + bookmarksPulled + '</li>';
+      if (bookmarksMerged) detailsList += '<li><i class="fa-solid fa-star"></i> ' + esc(t("auth.bookmarksMerged", "收藏已合并")) + ': ' + bookmarksMerged + '</li>';
       if (conflictsResolved) detailsList += '<li><i class="fa-solid fa-code-merge"></i> ' + esc(t("auth.conflictsResolved", "已合并远端进度")) + ': ' + conflictsResolved + '</li>';
 
       summaryHtml =
@@ -440,7 +446,9 @@
           '</div>' +
           '<ul class="auth-privacy-list">' +
             '<li><i class="fa-solid fa-check"></i> ' + esc(t("auth.syncScope", "只同步学习进度和设置")) + '</li>' +
+            '<li><i class="fa-solid fa-star"></i> ' + esc(t("auth.onlySyncTypingBookmarks", "当前仅同步日语打字收藏")) + '</li>' +
             '<li><i class="fa-solid fa-key"></i> ' + esc(t("auth.noAiKeyUpload", "不会上传 AI Key")) + '</li>' +
+            '<li><i class="fa-solid fa-triangle-exclamation"></i> ' + esc(t("auth.noAiCacheUpload", "不会上传 AI 翻译缓存")) + '</li>' +
             '<li><i class="fa-solid fa-ban"></i> ' + esc(t("auth.noAutoSync", "当前不会自动同步")) + '</li>' +
           '</ul>' +
         '</div>' +
