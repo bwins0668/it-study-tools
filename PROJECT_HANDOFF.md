@@ -3360,6 +3360,64 @@ ode --check service-worker.js | PASS |
 
 #### Next
 
-- **Round 15.20**: Begin 1000 -> 1100 term expansion, or 1000-term search experience optimization.
+- **Round 15.20** (completed): Begin 1000 -> 1100 term expansion, or 1000-term search experience optimization.
+
+---
+
+### Round 15.20 - Glossary 1000 -> 1100 Expansion
+
+**Status: PASS**
+
+#### Scope
+
+- Expanded glossary from 1000 terms to 1100 terms (added 100 terms in 4 batches of 25).
+- Automatically filtered out invalid non-existent IDs in related fields and synchronized exam_tags / examTags arrays.
+- Did not perform any Web cache update, Portable repackaging, or GitHub Release tag generation.
+
+#### Batch execution log
+
+- **Batch 1**: 1000 -> 1025, validator PASS (SHA256: `9697d9db6146a5ecc721a0f275244e75b0327955551ac0da7323f6a793435a85`)
+- **Batch 2**: 1025 -> 1050, validator PASS (SHA256: `ae2448778d4693b81dc44b78d61935383068d98d80a3007fb4cdc812b13ed9cd`)
+- **Batch 3**: 1050 -> 1075, validator PASS (SHA256: `c0c50c97705a84b23a810493b271a92bbcf55ff2806355314e29093872aa71c2`)
+- **Batch 4**: 1075 -> 1100, validator PASS (SHA256: `35ca641b51b82733ec4e0d04b1b4bcc48d8c20ad9ed858578ec1b8f072f85a01`)
+
+#### Final validation
+
+| Check | Result |
+| :--- | :--- |
+| node tools/verify_glossary.js | PASS |
+| Term count | 1100 |
+| Errors | 0 |
+| Warnings | 0 |
+| Windows/Web SHA256 match | PASS |
+| Windows/Web data/glossary/it_terms.js SHA256 | `35ca641b51b82733ec4e0d04b1b4bcc48d8c20ad9ed858578ec1b8f072f85a01` |
+| Web node --check data/glossary/it_terms.js | PASS |
+
+#### Git
+
+| Repo | Branch | Commit hash | Push |
+| :--- | :--- | :--- | :--- |
+| Windows glossary | main | `6e24415` | PASS |
+| Web glossary | master | `0b3a2c0` | PASS |
+| Windows handoff | main | Recorded by `docs: record glossary 1100 expansion` | PASS |
+
+#### Explicitly not done
+
+- Did not update Web cache version.
+- Did not modify version.js / service-worker.js.
+- Did not modify asset-manifest.json / i18n_content/manifest.json metadata.
+- Did not repackage Portable client.
+- Did not create tag or GitHub Release.
+- Did not add a ko field.
+- Did not add Korean UI.
+- Did not modify course data.
+- Did not modify content language packs.
+- Did not modify backend (server.py / study_ai.py).
+- Did not modify Java/Python sandbox.
+
+#### Next
+
+- **Round 15.21**: 1100-term quality review and localization polish + Web cache update + Portable repack + GitHub Release
+
 
 
