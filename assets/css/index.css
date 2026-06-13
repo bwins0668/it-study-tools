@@ -1488,27 +1488,15 @@ body[data-theme="light"] .guidance-btn:hover {
   color: var(--error-color);
 }
 
-/* Responsiveness */
-@media (max-width: 1200px) {
-  .app-body {
-    flex-direction: column;
-    overflow-y: auto;
-  }
-  .app-sidebar {
-    width: 100%;
-    height: 240px;
-    border-right: none;
-    border-bottom: 1px solid var(--border-color);
-  }
-  .playground-section {
-    padding: 20px;
-  }
+/* Responsiveness overrides for R19.2 off-canvas design */
+@media (max-width: 900px) {
   .output-card.maximized {
     width: 96vw;
     top: 2vh;
     height: 94vh;
   }
 }
+
 
 /* Height-based optimizations to reduce scrolling on smaller screens */
 @media (max-height: 850px) {
@@ -7244,15 +7232,252 @@ body.i18n-active :where(
   color: var(--error-color);
 }
 
-@media (max-width: 600px) {
-  .auth-user-btn {
-    padding: 5px 7px;
-    font-size: 11px;
+/* ==========================================================================
+   Round 19.2: UI decluttering, details summary styling & drawer system
+   ========================================================================== */
+
+/* 1. Header Actions Grouping */
+.header-actions-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+/* 2. Mobile toggles (hidden on desktop) */
+.mobile-toggle-btn {
+  display: none;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: var(--text-muted);
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  transition: var(--transition-smooth);
+}
+.mobile-toggle-btn:hover {
+  border-color: var(--neon-cyan);
+  color: var(--neon-cyan);
+  box-shadow: 0 0 6px var(--neon-cyan-glow);
+}
+
+/* 3. Backdrop for mobile off-canvas drawer */
+.mobile-backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  top: 64px;
+  background: rgba(3, 7, 18, 0.6);
+  backdrop-filter: blur(4px);
+  z-index: 840;
+}
+body.mobile-sidebar-open .mobile-backdrop,
+body.mobile-playground-open .mobile-backdrop {
+  display: block;
+}
+
+/* 4. Fine-tune three columns visual weight & borders on desktop */
+@media (min-width: 901px) {
+  .app-sidebar {
+    width: clamp(220px, 16vw, 260px);
+    background: rgba(18, 24, 36, 0.4);
+    border-right: 1px solid rgba(255, 255, 255, 0.05);
   }
-  .auth-user-label {
-    display: none;
+  .lesson-content {
+    flex: 1.3;
+    padding: 24px;
+    background: rgba(10, 14, 23, 0.2);
   }
-  .auth-panel {
-    width: 95vw;
+  .playground-section {
+    flex: 0.7;
+    padding: 24px 24px 24px 0;
+  }
+  .content-card,
+  .playground-card {
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
   }
 }
+
+/* 5. Auth Panel Details & summary styles */
+.auth-device-details,
+.auth-password-details {
+  margin-top: 8px;
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 8px 12px;
+}
+.auth-details-summary,
+.auth-password-summary {
+  cursor: pointer;
+  color: var(--neon-cyan);
+  font-size: 12px;
+  font-weight: 500;
+  outline: none;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  user-select: none;
+}
+.auth-details-summary::-webkit-details-marker,
+.auth-password-summary::-webkit-details-marker {
+  display: none;
+}
+.auth-device-details .auth-info-grid {
+  margin-top: 8px;
+}
+.auth-password-details .auth-password-row {
+  margin-top: 8px;
+}
+.auth-bottom-actions-section {
+  background: rgba(255, 255, 255, 0.01);
+  padding: 12px 20px !important;
+  border-top: 1px solid var(--border-color);
+}
+.auth-actions-row {
+  display: flex;
+  gap: 8px;
+  margin-top: 0 !important;
+}
+.auth-actions-row .auth-btn {
+  flex: 1;
+  font-size: 11px;
+  padding: 8px 10px;
+  height: 34px;
+  min-height: 34px;
+  white-space: nowrap;
+}
+.auth-panel-content::-webkit-scrollbar {
+  width: 4px;
+}
+.auth-panel-content::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 2px;
+}
+.auth-panel-content::-webkit-scrollbar-thumb:hover {
+  background: var(--neon-cyan);
+}
+
+/* 6. Breakpoint media query rules */
+
+/* <= 900px: Playground off-canvas drawer */
+@media (max-width: 900px) {
+  .playground-section {
+    position: fixed;
+    top: 64px;
+    right: 0;
+    bottom: 0;
+    width: 450px;
+    max-width: 90vw;
+    z-index: 850;
+    background: #080d1a;
+    border-left: 1px solid var(--border-color);
+    padding: 16px;
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+  }
+  body.mobile-playground-open .playground-section {
+    transform: translateX(0);
+  }
+  #mobile-playground-toggle {
+    display: inline-flex;
+  }
+  .reset-all-btn span,
+  #glossary-open-btn span {
+    display: none; /* Hide labels, show only icons */
+  }
+  .reset-all-btn,
+  #glossary-open-btn {
+    padding: 8px;
+    min-width: 36px;
+    height: 36px;
+    justify-content: center;
+  }
+  .app-body {
+    flex-direction: row;
+    overflow: hidden;
+  }
+  .lesson-content {
+    flex: 1;
+    padding: 16px;
+  }
+}
+
+/* <= 720px: Sidebar off-canvas drawer */
+@media (max-width: 720px) {
+  .app-sidebar {
+    position: fixed;
+    top: 64px;
+    left: 0;
+    bottom: 0;
+    width: 280px;
+    max-width: 80vw;
+    z-index: 860;
+    background: #080d1a;
+    border-right: 1px solid var(--border-color);
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+  }
+  body.mobile-sidebar-open .app-sidebar {
+    transform: translateX(0);
+  }
+  #mobile-sidebar-toggle {
+    display: inline-flex;
+  }
+  #language-switcher .language-toggle-text {
+    display: none; /* Hide language switcher text on mobile */
+  }
+  .auth-user-btn .auth-user-label {
+    display: none; /* Hide account text label */
+  }
+  .auth-user-btn {
+    padding: 8px;
+    min-width: 36px;
+    height: 36px;
+    justify-content: center;
+  }
+}
+
+/* <= 520px: Header and Auth panel compactness */
+@media (max-width: 520px) {
+  .app-header {
+    padding: 8px 12px;
+    min-height: 56px;
+  }
+  .header-logo {
+    flex: 0 0 auto;
+    min-width: 0;
+    gap: 8px;
+  }
+  .logo-text h1 {
+    font-size: 15px;
+  }
+  .logo-text span {
+    display: none;
+  }
+  .mobile-toggle-btn {
+    width: 32px;
+    height: 32px;
+    font-size: 14px;
+  }
+  .header-actions-right {
+    gap: 6px;
+  }
+  .header-actions-right button,
+  .language-toggle-btn {
+    height: 32px;
+    min-width: 32px;
+    padding: 6px !important;
+  }
+  .auth-panel {
+    width: calc(100vw - 24px);
+    margin: 12px;
+  }
+}
+

@@ -3385,4 +3385,42 @@
       Object.assign(window.I18nUiDict[locale].auth, AUTH_SYNC_ROUND_19_1[locale]);
     }
   });
+
+  var AUTH_SYNC_ROUND_19_2 = {
+    "zh-CN": {
+      deviceAndSyncDetails: "设备与同步详情",
+      passwordTestTitle: "使用密码登录 (仅测试/开发)"
+    },
+    "ja-JP": {
+      deviceAndSyncDetails: "デバイス・同期詳細",
+      passwordTestTitle: "パスワードでログイン (テスト・開発専用)"
+    },
+    "en-US": {
+      deviceAndSyncDetails: "Device & Sync Details",
+      passwordTestTitle: "Sign in with password (test/dev only)"
+    },
+    "vi-VN": {
+      deviceAndSyncDetails: "Chi tiết thiết bị & đồng bộ",
+      passwordTestTitle: "Đăng nhập bằng mật khẩu (chỉ dùng thử/phát triển)"
+    },
+    "fr-FR": {
+      deviceAndSyncDetails: "Détails de l'appareil et de la synchronisation",
+      passwordTestTitle: "Connexion avec mot de passe (test/dév uniquement)"
+    },
+    "my-MM": {
+      deviceAndSyncDetails: "စက်ပစ္စည်းနှင့် စင့်ခ်လုပ်ခြင်း အသေးစိတ်",
+      passwordTestTitle: "စကားဝှက်ဖြင့် ဝင်ရောက်ရန် (စမ်းသပ်/ဖွံ့ဖြိုးမှုသာ)"
+    },
+    "ko-KR": {
+      deviceAndSyncDetails: "기기 및 동기화 상세 정보",
+      passwordTestTitle: "비밀번호로 로그인 (테스트/개발용)"
+    }
+  };
+
+  Object.keys(AUTH_SYNC_ROUND_19_2).forEach(function (locale) {
+    if (window.I18nUiDict[locale] && window.I18nUiDict[locale].auth) {
+      Object.assign(window.I18nUiDict[locale].auth, AUTH_SYNC_ROUND_19_2[locale]);
+    }
+  });
 })();
+

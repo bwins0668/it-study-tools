@@ -374,20 +374,25 @@
               ? '<div class="auth-notice"><i class="fa-solid fa-triangle-exclamation"></i> ' + esc(t("auth.supabaseNotConfigured", "Supabase 未配置")) + '</div>'
               : '')) +
           (syncMessage ? '<div class="auth-notice sync-message-notice"><i class="fa-solid fa-circle-info"></i> ' + esc(syncMessage) + '</div>' : '') +
-          '<div class="auth-info-grid">' +
-            '<div class="auth-info-row">' +
-              '<span class="auth-label">' + esc(t("auth.pendingSync", "待同步")) + ':</span>' +
-              '<span class="auth-value">' + qSize + '</span>' +
+          '<details class="auth-device-details">' +
+            '<summary class="auth-details-summary">' +
+              '<i class="fa-solid fa-gears"></i> ' + esc(t("auth.deviceAndSyncDetails", "设备与同步详情")) +
+            '</summary>' +
+            '<div class="auth-info-grid">' +
+              '<div class="auth-info-row">' +
+                '<span class="auth-label">' + esc(t("auth.pendingSync", "待同步")) + ':</span>' +
+                '<span class="auth-value">' + qSize + '</span>' +
+              '</div>' +
+              '<div class="auth-info-row">' +
+                '<span class="auth-label">' + esc(t("auth.lastSync", "上次同步")) + ':</span>' +
+                '<span class="auth-value">' + (lastSync ? esc(lastSync) : "—") + '</span>' +
+              '</div>' +
+              '<div class="auth-info-row">' +
+                '<span class="auth-label">' + esc(t("auth.deviceId", "设备 ID")) + ':</span>' +
+                '<span class="auth-value auth-device-id" title="' + esc(deviceId) + '">' + esc(deviceId ? deviceId.slice(0, 12) + "..." : "—") + '</span>' +
+              '</div>' +
             '</div>' +
-            '<div class="auth-info-row">' +
-              '<span class="auth-label">' + esc(t("auth.lastSync", "上次同步")) + ':</span>' +
-              '<span class="auth-value">' + (lastSync ? esc(lastSync) : "—") + '</span>' +
-            '</div>' +
-            '<div class="auth-info-row">' +
-              '<span class="auth-label">' + esc(t("auth.deviceId", "设备 ID")) + ':</span>' +
-              '<span class="auth-value auth-device-id" title="' + esc(deviceId) + '">' + esc(deviceId ? deviceId.slice(0, 12) + "..." : "—") + '</span>' +
-            '</div>' +
-          '</div>' +
+          '</details>' +
           summaryHtml +
         '</div>' +
 
@@ -403,15 +408,19 @@
                   '<i class="fa-solid fa-envelope"></i> ' + esc(t("auth.sendMagicLink", "发送登录链接")) +
                 '</button>' +
               '</div>' +
-              '<div class="auth-password-row">' +
-                '<span class="auth-password-test-label">' + esc(t("auth.passwordTest", "密码登录 (测试)")) + '</span>' +
-                '<div class="auth-input-with-button">' +
-                  '<input class="auth-input" data-auth-input="password" type="password" autocomplete="current-password" placeholder="' + esc(t("auth.password", "密码")) + '">' +
-                  '<button class="auth-btn auth-btn-secondary" data-auth-action="password-sign-in"' + (supabaseReady ? "" : " disabled") + '>' +
-                    esc(t("auth.passwordSignIn", "登录")) +
-                  '</button>' +
+              '<details class="auth-password-details">' +
+                '<summary class="auth-password-summary">' +
+                  '<i class="fa-solid fa-key"></i> ' + esc(t("auth.passwordTestTitle", "使用密码登录 (仅测试/开发)")) +
+                '</summary>' +
+                '<div class="auth-password-row">' +
+                  '<div class="auth-input-with-button">' +
+                    '<input class="auth-input" data-auth-input="password" type="password" autocomplete="current-password" placeholder="' + esc(t("auth.password", "密码")) + '">' +
+                    '<button class="auth-btn auth-btn-secondary" data-auth-action="password-sign-in"' + (supabaseReady ? "" : " disabled") + '>' +
+                      esc(t("auth.passwordSignIn", "登录")) +
+                    '</button>' +
+                  '</div>' +
                 '</div>' +
-              '</div>' +
+              '</details>' +
             '</div>'
             :
             '<div class="auth-btn-row">' +
@@ -421,22 +430,6 @@
             '</div>'
           ) +
           (authMessage ? '<div class="auth-notice auth-message-notice"><i class="fa-solid fa-circle-info"></i> ' + esc(authMessage) + '</div>' : '') +
-          '<div class="auth-actions-row">' +
-            (isMock ?
-              '<button class="auth-btn auth-btn-secondary auth-btn-sm" data-auth-action="sign-out">' +
-                '<i class="fa-solid fa-sign-out-alt"></i> ' + esc(t("auth.mockSignOut", "退出模拟")) +
-              '</button>' :
-              '<button class="auth-btn auth-btn-secondary auth-btn-sm" data-auth-action="sign-in">' +
-                '<i class="fa-solid fa-user-secret"></i> ' + esc(t("auth.mockSignIn", "模拟登录")) +
-              '</button>'
-            ) +
-            '<button class="auth-btn auth-btn-secondary auth-btn-sm" data-auth-action="export" title="' + esc(t("auth.exportSnapshot", "导出快照")) + '">' +
-              '<i class="fa-solid fa-download"></i>' +
-            '</button>' +
-            '<button class="auth-btn auth-btn-secondary auth-btn-sm" data-auth-action="local">' +
-              esc(t("auth.continueLocal", "本地模式")) +
-            '</button>' +
-          '</div>' +
         '</div>' +
 
         // D. Privacy Section
@@ -451,6 +444,26 @@
             '<li><i class="fa-solid fa-triangle-exclamation"></i> ' + esc(t("auth.noAiCacheUpload", "不会上传 AI 翻译缓存")) + '</li>' +
             '<li><i class="fa-solid fa-ban"></i> ' + esc(t("auth.noAutoSync", "当前不会自动同步")) + '</li>' +
           '</ul>' +
+        '</div>' +
+
+        // E. Bottom Actions Section (Secondary)
+        '<div class="auth-panel-section auth-bottom-actions-section">' +
+          '<div class="auth-actions-row">' +
+            (isMock ?
+              '<button class="auth-btn auth-btn-secondary auth-btn-sm" data-auth-action="sign-out">' +
+                '<i class="fa-solid fa-sign-out-alt"></i> ' + esc(t("auth.mockSignOut", "退出模拟")) +
+              '</button>' :
+              '<button class="auth-btn auth-btn-secondary auth-btn-sm" data-auth-action="sign-in">' +
+                '<i class="fa-solid fa-user-secret"></i> ' + esc(t("auth.mockSignIn", "模拟登录")) +
+              '</button>'
+            ) +
+            '<button class="auth-btn auth-btn-secondary auth-btn-sm" data-auth-action="export" title="' + esc(t("auth.exportSnapshot", "导出快照")) + '">' +
+              '<i class="fa-solid fa-download"></i> ' + esc(t("auth.exportSnapshot", "导出快照")) +
+            '</button>' +
+            '<button class="auth-btn auth-btn-secondary auth-btn-sm" data-auth-action="local">' +
+              esc(t("auth.continueLocal", "本地模式")) +
+            '</button>' +
+          '</div>' +
         '</div>' +
       '</div>';
 

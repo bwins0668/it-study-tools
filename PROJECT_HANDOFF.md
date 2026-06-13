@@ -6207,3 +6207,71 @@ No changes to web-exclusive files this round (sync-engine.js, auth-ui.js, i18n-u
 
 #### Next
 - **Round 19.2**: Bookmarks deletion sync and dual-device testing, or **Round 20.0**: User-customized translation UI architecture audit.
+
+---
+
+### Round 19.2 - 整体 UI 减负与移动端布局优化
+
+**Status: PASS**
+
+#### Modified files
+
+##### Windows
+- `index.html` (Added mobile bar toggles and backdrop, grouped header action elements)
+- `assets/css/index.css` (Implemented off-canvas drawers for sidebar/playground, unified buttons/paddings, styled details tags, optimized for mobile screens)
+- `assets/js/auth-ui.js` (Collapsed device and password login sections inside details tags, rearranged secondary mock actions to bottom)
+- `assets/js/app.js` (Added toggle window methods, close drawers automatically upon lesson select)
+- `assets/js/i18n-ui-dict.js` (Added translation keys for details summary sections in all 7 languages)
+- `docs/sync_architecture.md` (Updated release history and R19.2 details)
+- `PROJECT_HANDOFF.md` (This entry)
+
+##### Web
+- `index.html` (Synched from Windows)
+- `assets/css/index.css` (Synched from Windows)
+- `assets/js/auth-ui.js` (Synched from Windows)
+- `assets/js/app.js` (Synched from Windows)
+- `assets/js/i18n-ui-dict.js` (Synched from Windows)
+- `docs/sync_architecture.md` (Synched from Windows)
+
+#### Layout & Optimizations
+- **Breakpoints**:
+  - **`<= 900px`**: Right playground panel becomes an off-canvas drawer sliding from the right.
+  - **`<= 720px`**: Left sidebar becomes an off-canvas drawer sliding from the left.
+  - **`<= 520px`**: Header buttons show icon-only, Auth Panel is full-width with safe margins.
+- **Backdrop**: Added `.mobile-backdrop` with dark background and 2px blur. Clicking backdrop automatically closes all drawers.
+- **Drawer Auto-close**: Selecting a lesson link in SQL, Java, Python, IT Passport, or SG automatically closes the mobile sidebar drawer.
+- **Auth Panel Slimming**:
+  - Device info (Device ID, Last Sync, Pending Sync) wrapped inside `<details>` element.
+  - Test password sign-in controls wrapped inside `<details>` element.
+  - Mock sign-in, Continue Locally, and Export buttons moved to secondary bottom action section.
+  - Device ID sliced to 12 characters, email truncated using CSS ellipsis text overflow.
+  - Thin rounded custom scrollbars applied to the panel.
+- **Aesthetic Decluttering**:
+  - Flex ratio adjusted on desktop: Sidebar `clamp(220px, 16vw, 260px)`, reading space `flex: 1.3`, playground `flex: 0.7`.
+  - Thick card borders replaced with thin semi-transparent rules (`rgba(255, 255, 255, 0.05)`).
+  - Softer box shadows and responsive margins.
+
+#### Verification Checks
+
+| Check | Result |
+|-------|--------|
+| Glossary count | 1500 ✓ (SHA256 match) |
+| main JS syntax (6 files) | All OK ✓ |
+| web JS syntax (5 files) | All OK ✓ |
+| File consistency | All matched exactly (synced Windows & Web) |
+| Leakage Audit | No sensitive API keys, email addresses, database passwords, or auth tokens committed |
+| Ignored Configs | `supabase-config.local.js` correctly excluded |
+
+#### Commits
+- **Windows main**: `(this commit)` fix: reduce UI density and improve mobile layout
+- **Web master**: `(this commit)` fix: sync UI density and mobile layout polish
+
+#### Explicitly not done
+- Did not implement bookmarks deletion sync or conflict resolution testing (postponed).
+- Did not audit user-customized translation UI (postponed).
+- Did not add automatic/background synchronization.
+- Did not package Portable client or create a new Release.
+
+#### Next
+- **Round 19.3**: UI regression testing/patches, or **Round 19.4**: bookmarks deletion sync and dual-device conflict tests.
+

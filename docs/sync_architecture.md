@@ -236,3 +236,5 @@ Full DDL: `tools/init_supabase.sql`
 | **18.0** | Stable release: Web cache update + Portable repack + tag + Release | Released |
 | **19.0** | User translations & bookmarks sync architecture audit | Completed |
 | **19.1** | Typing bookmarks manual sync | Released |
+| **19.2** | UI Decluttering & Mobile Layout Optimization | Released |
+

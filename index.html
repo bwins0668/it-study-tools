@@ -24,6 +24,9 @@
     <!-- Header Panel -->
     <header class="app-header">
       <div class="header-logo">
+        <button id="mobile-sidebar-toggle" class="mobile-toggle-btn" onclick="toggleMobileSidebar()" title="目录" data-i18n-title="sidebar.unitList">
+          <i class="fa-solid fa-bars"></i>
+        </button>
         <i class="fa-solid fa-graduation-cap logo-icon" id="main-logo-icon"></i>
         <div class="logo-text">
           <h1 id="main-title-text">Study Tools</h1>
@@ -53,8 +56,6 @@
         </button>
       </div>
 
-
-
       <!-- Header Challenge Widget (SQL only) -->
       <div class="header-challenge" id="header-challenge">
         <button class="header-challenge-btn-start" id="challenge-start-btn" onclick="startCrossChallenge()">
@@ -72,6 +73,10 @@
         </div>
       </div>
 
+      <button id="mobile-playground-toggle" class="mobile-toggle-btn" onclick="toggleMobilePlayground()" title="沙盒" data-i18n-title="sandbox.playground">
+        <i class="fa-solid fa-terminal"></i>
+      </button>
+
       <button class="theme-toggle-btn" id="theme-toggle-btn" onclick="toggleTheme()" title="切换浅色/深色模式" aria-label="切换浅色或深色模式" data-i18n-title="common.themeToggle" data-i18n-aria-label="common.themeToggle">
         <i class="fa-solid fa-sun"></i>
       </button>
@@ -85,6 +90,7 @@
         <i class="fa-solid fa-rotate-left"></i> <span data-i18n="common.resetProgress">重置进度</span>
       </button>
     </header>
+
 
     <!-- Sub-Header Bar (Visible in SQL mode to toggle Textbook vs Mock Exam) -->
     <div class="sub-header-bar" id="sql-sub-header" style="display: none;">
@@ -151,6 +157,7 @@
 
     <!-- Main Workspace -->
     <div class="app-body" id="main-app-body">
+      <div class="mobile-backdrop" id="mobile-backdrop" onclick="closeMobileDrawers()"></div>
 
       <!-- Sidebar: Lessons List -->
       <aside class="app-sidebar">

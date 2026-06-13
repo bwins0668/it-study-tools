@@ -8,6 +8,20 @@ let sqlSubMode = 'lessons'; // 'lessons' | 'exam'
 let pythonSubMode = 'lessons'; // 'lessons' | 'exam'
 let javaSubMode = 'lessons'; // 'lessons' | 'exam'
 
+// Mobile navigation drawers toggle helpers
+window.toggleMobileSidebar = function() {
+  document.body.classList.toggle('mobile-sidebar-open');
+  document.body.classList.remove('mobile-playground-open');
+};
+window.toggleMobilePlayground = function() {
+  document.body.classList.toggle('mobile-playground-open');
+  document.body.classList.remove('mobile-sidebar-open');
+};
+window.closeMobileDrawers = function() {
+  document.body.classList.remove('mobile-sidebar-open', 'mobile-playground-open');
+};
+
+
 // SQL Hub original state
 let currentLessonId = 1;
 let completedLessons = [];
@@ -991,6 +1005,7 @@ function switchJavaBook(book) {
 
 // Load Java lesson into content panel
 function loadJavaLesson(id) {
+  document.body.classList.remove('mobile-sidebar-open');
   if (typeof JAVA_LESSONS === 'undefined') return;
   const lesson = JAVA_LESSONS.find(l => l.id === id);
   if (!lesson) return;
@@ -1241,6 +1256,7 @@ function getLessonLocalizedText(subject, lesson) {
 
 // Load Lesson Details into Content Panel
 function loadLesson(id) {
+  document.body.classList.remove('mobile-sidebar-open');
   const lesson = SQL_LESSONS.find(l => l.id === id);
   if (!lesson) return;
 
@@ -1298,6 +1314,7 @@ function loadLesson(id) {
 
 // Load IT Passport Lesson details into Center
 function loadItPassLesson(id) {
+  document.body.classList.remove('mobile-sidebar-open');
   const lesson = IT_PASSPORT_LESSONS.find(l => l.id === id);
   if (!lesson) return;
   
@@ -1385,6 +1402,7 @@ function loadItPassLesson(id) {
 
 // Load SG Lesson details into Center
 function loadSgLesson(id) {
+  document.body.classList.remove('mobile-sidebar-open');
   const lesson = SG_LESSONS.find(l => l.id === id);
   if (!lesson) return;
   
@@ -3615,6 +3633,7 @@ function selectPythonLesson(id) {
 }
 
 function loadPythonLesson(id) {
+  document.body.classList.remove('mobile-sidebar-open');
   if (typeof PYTHON_LESSONS === 'undefined') return;
   const lesson = PYTHON_LESSONS.find(l => l.id === id);
   if (!lesson) return;
