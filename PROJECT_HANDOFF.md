@@ -3239,6 +3239,67 @@ Fixed legacy IDs:
 
 #### Next
 
-- **Round 15.18**: Begin 900 -> 1000 term expansion (Batch 1: 900 -> 925).
+- **Round 15.18** (completed): Glossary 900 -> 1000 Expansion
+- **Round 15.19** (recommended): 1000-term quality review and localization polish + Web cache update + Portable repack + GitHub Release
+
+---
+
+### Round 15.18 - Glossary 900 -> 1000 Expansion
+
+**Status: PASS**
+
+#### Scope
+
+- Expanded glossary from 900 terms to 1000 terms (added 100 terms in 4 batches of 25).
+- Automatically filtered out invalid non-existent IDs in 
+elated fields and synchronized exam_tags / examTags arrays.
+- Replaced duplicate pdca_cycle (which existed at #264) with earned_value_management.
+
+#### Batch execution log
+
+- **Batch 1**: 900 -> 925, validator PASS
+- **Batch 2**: 925 -> 950, validator PASS
+- **Batch 3**: 950 -> 975, validator PASS
+- **Batch 4**: 975 -> 1000, validator PASS
+
+#### Final validation
+
+| Check | Result |
+| :--- | :--- |
+| 
+ode tools/verify_glossary.js | PASS |
+| Term count | 1000 |
+| Errors | 0 |
+| Warnings | 0 |
+| Windows/Web SHA256 match | PASS |
+| Windows/Web data/glossary/it_terms.js SHA256 | c58023da580fbd3eed0d5706f48546c4669ff51c4b59971a6c7f3a32607b0f1d |
+| Web 
+ode --check data/glossary/it_terms.js | PASS |
+
+#### Git
+
+| Repo | Branch | Commit hash | Push |
+| :--- | :--- | :--- | :--- |
+| Windows glossary | main | 5b36dbd | PASS |
+| Web glossary | master | 3d81149 | PASS |
+| Windows handoff | main | Recorded by docs: record glossary 1000 expansion | PASS |
+
+#### Explicitly not done
+
+- Did not update Web cache version.
+- Did not modify ersion.js / service-worker.js.
+- Did not modify sset-manifest.json / i18n_content/manifest.json metadata.
+- Did not repackage Portable client.
+- Did not create tag or GitHub Release.
+- Did not add a ko field.
+- Did not add Korean UI.
+- Did not modify course data.
+- Did not modify content language packs.
+- Did not modify backend (server.py / study_ai.py).
+- Did not modify Java/Python sandbox.
+
+#### Next
+
+- **Round 15.19**: 1000-term quality review and localization polish + Web cache update + Portable repack + GitHub Release
 
 
