@@ -134,6 +134,21 @@ Round 19.1 implements manual sync for Japanese typing favorites (bookmarks) unde
   - Remote empty array does NOT clear the local active list, ensuring local data safety.
 - **Integration**: Placed into the manual sync pipeline via `pullBookmarks` and `pushBookmarks`. Results are recorded in the Auth Panel sync summary details.
 
+### Round 19.2: UI Decluttering & Mobile Layout Optimization
+Round 19.2 optimizes the visual layout and declutters the workspace:
+- **Header Actions Grouping**: Consolidated top-right header buttons into a single flex container, hiding labels on smaller screen widths.
+- **Off-Canvas Drawers**: Shifted left sidebar (directory) and right SQL Playground to off-canvas drawers on mobile/tablet viewports (breakpoints <= 720px and <= 900px).
+- **Softer Borders & Shadows**: Reduced border weights and applied subtle, semi-transparent glows for improved dark mode aesthetics.
+- **Auth Panel Slimming**: Wrapped test password login and device/sync metadata in folding `<details>` elements for a cleaner account modal.
+
+### Round 19.3.1: SQL Playground Desktop Width Regression Fix
+Round 19.3.1 resolves desktop UI regressions introduced in Round 19.2:
+- **Desktop Squeeze Fix**: Splitting `min-width: 901px` into range-specific queries:
+  - `901px - 1199px`: Sidebar clamp to `200px - 240px`, SQL Playground clamp to `360px - 420px` (min-width `360px`).
+  - `>= 1200px`: Sidebar clamp to `220px - 280px`, SQL Playground clamp to `400px - 560px` (min-width `400px`).
+- **SQL Editor Heights**: Ensured `.editor-container` minimum height is at least `150px` (using `!important` to override animation overrides), and console cards have a minimum height of `280px` to guarantee execute button visibility.
+- **Title Wrapping Prevention**: Applied `white-space: nowrap`, `overflow: hidden`, and `text-overflow: ellipsis` to playground headers to stop character-by-character vertical text wrapping under narrow viewports. Protected button flex shrinking via `flex-shrink: 0`.
+
 1. **Anonymous local mode** (default, no change from today)  
    - All data in `localStorage`  
    - No account, no sync, fully offline
@@ -237,4 +252,5 @@ Full DDL: `tools/init_supabase.sql`
 | **19.0** | User translations & bookmarks sync architecture audit | Completed |
 | **19.1** | Typing bookmarks manual sync | Released |
 | **19.2** | UI Decluttering & Mobile Layout Optimization | Released |
+| **19.3.1** | SQL Playground desktop width regression fix | Released |
 
