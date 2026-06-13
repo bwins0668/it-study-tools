@@ -156,3 +156,37 @@ WITH CHECK (auth.uid() = user_id)
 ```
 
 应使用两个独立测试用户验证互相无法读取、插入、更新或删除对方数据。完成这项隔离测试前，不得进入真实登录或云同步阶段。
+
+## Round 17.5 最小 Auth 接入
+
+本轮支持会话检测、Magic Link、测试性邮箱密码登录和登出，但仍不上传或下载任何学习数据。
+
+### 启用步骤
+
+1. 手动创建 Supabase 项目，并在 **Authentication > Providers** 启用 Email。
+2. 复制 `supabase-config.example.js` 为 ignored 的 `supabase-config.local.js`。
+3. 只在 local 文件填写 Project URL 和 anon public key，确认不是 `service_role`。
+4. 完成 RLS 检查后，将 local 配置改为 `enabled: true`。
+5. 在 `index.html` 中取消 local config 与 Supabase SDK 两处注释。
+6. 保持加载顺序：local config、SDK、`supabase-client.js`、`auth-ui.js`。
+
+SDK 加载失败、离线、配置缺失或 `enabled: false` 时，应用继续以本地模式运行。
+
+### Magic Link
+
+Magic Link 是推荐入口。它调用 Supabase SDK 的 `signInWithOtp()`，不会要求或保存密码。发送后应检查邮箱，并通过同一浏览器打开登录链接。
+
+在 Supabase Dashboard 的 **Authentication > URL Configuration** 中配置允许的 Site URL 和 Redirect URLs。不要使用不受自己控制的回调地址。
+
+### 邮箱密码登录
+
+邮箱密码入口仅用于测试已启用的 Email provider：
+
+- 密码只作为当前 SDK 调用参数使用。
+- 页面不会把密码写入 localStorage、sessionStorage 或自定义配置。
+- token/session 仅由 Supabase SDK 的内置 session 机制管理。
+- 正式产品体验仍需后续补丁和安全复核。
+
+### 数据边界
+
+Round 17.5 不调用任何学习数据表，不读取或写入 `learning_progress`、`quiz_results`、`bookmarks` 等表，也不启用 `StudySync` 云端 push/pull。

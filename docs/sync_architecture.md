@@ -42,6 +42,14 @@ Preparation files:
 
 We **do not self-host passwords**. Auth is delegated to **Supabase Auth** (built-in):
 
+### Round 17.5 Minimal Auth Boundary
+
+- Auth-only SDK calls are allowed after explicit local configuration and SDK loading.
+- Supported operations: session/user detection, Magic Link, test email/password sign-in, auth-state listener, and sign-out.
+- Passwords are never persisted by Study Tools; sessions remain owned by the Supabase SDK.
+- A real authenticated user maps to local auth mode `signed_in` with `sync_enabled: false`.
+- No learning table is queried or mutated, and the local sync queue is not pushed or pulled.
+
 1. **Anonymous local mode** (default, no change from today)  
    - All data in `localStorage`  
    - No account, no sync, fully offline
@@ -140,7 +148,7 @@ Full DDL: `tools/init_supabase.sql`
 | **17.2** | Auth UI prototype: login/signup page, anonymous indicator, user menu |
 | **17.3** | Supabase Auth preparation layer, disabled config template, no-network adapter |
 | **17.4** | Manual project/config validation, optional SDK loading slot, RLS draft review |
-| **17.5** | Minimal real Supabase Auth integration after manual project creation, or defer until the project exists |
-| **17.6** | Windows sync engine (Python), dual-write to local SQLite |
+| **17.5** | Minimal Supabase Auth integration: session, Magic Link, test password login, sign-out |
+| **17.6** | Learning progress push/pull architecture, or 17.5.1 Auth UX patch |
 | **17.7** | Conflict resolution, offline queue edge cases, sync status indicator |
 | **17.8** | Stable release: Web cache update + Portable repack + tag + Release |

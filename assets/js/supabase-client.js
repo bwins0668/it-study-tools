@@ -1,5 +1,5 @@
 /**
- * Study Tools Supabase adapter (Round 17.4).
+ * Study Tools Supabase Auth adapter (Round 17.5).
  *
  * This layer is inert unless a complete config explicitly enables it and the
  * Supabase browser SDK is already available. It never stores credentials.
@@ -89,13 +89,26 @@
     return localError(status.code, status.message);
   }
 
+  function friendlyError(error, fallbackCode) {
+    if (!error) return null;
+    return {
+      name: error.name || "StudySupabaseError",
+      code: error.code || fallbackCode || "supabase_error",
+      message: error.message || "Supabase authentication failed."
+    };
+  }
+
   async function getCurrentSession() {
     var activeClient = client || initClient();
     if (!activeClient || !activeClient.auth || typeof activeClient.auth.getSession !== "function") {
       return null;
     }
-    var result = await activeClient.auth.getSession();
-    return result && result.data ? result.data.session || null : null;
+    try {
+      var result = await activeClient.auth.getSession();
+      return result && result.data ? result.data.session || null : null;
+    } catch (_) {
+      return null;
+    }
   }
 
   async function getCurrentUser() {
@@ -103,8 +116,12 @@
     if (!activeClient || !activeClient.auth || typeof activeClient.auth.getUser !== "function") {
       return null;
     }
-    var result = await activeClient.auth.getUser();
-    return result && result.data ? result.data.user || null : null;
+    try {
+      var result = await activeClient.auth.getUser();
+      return result && result.data ? result.data.user || null : null;
+    } catch (_) {
+      return null;
+    }
   }
 
   async function signInWithEmail(email, password) {
@@ -115,7 +132,33 @@
         error: unavailableError()
       };
     }
-    return activeClient.auth.signInWithPassword({ email: email, password: password });
+    try {
+      var result = await activeClient.auth.signInWithPassword({ email: email, password: password });
+      if (result && result.error) result.error = friendlyError(result.error, "sign_in_failed");
+      return result;
+    } catch (error) {
+      return { data: { user: null, session: null }, error: friendlyError(error, "sign_in_failed") };
+    }
+  }
+
+  async function signInWithMagicLink(email) {
+    var activeClient = client || initClient();
+    if (!activeClient || !activeClient.auth || typeof activeClient.auth.signInWithOtp !== "function") {
+      return {
+        data: { user: null, session: null },
+        error: unavailableError()
+      };
+    }
+    try {
+      var result = await activeClient.auth.signInWithOtp({
+        email: email,
+        options: { emailRedirectTo: window.location ? window.location.href.split("#")[0] : undefined }
+      });
+      if (result && result.error) result.error = friendlyError(result.error, "magic_link_failed");
+      return result;
+    } catch (error) {
+      return { data: { user: null, session: null }, error: friendlyError(error, "magic_link_failed") };
+    }
   }
 
   async function signOut() {
@@ -123,7 +166,13 @@
     if (!activeClient || !activeClient.auth || typeof activeClient.auth.signOut !== "function") {
       return { error: unavailableError() };
     }
-    return activeClient.auth.signOut();
+    try {
+      var result = await activeClient.auth.signOut();
+      if (result && result.error) result.error = friendlyError(result.error, "sign_out_failed");
+      return result;
+    } catch (error) {
+      return { error: friendlyError(error, "sign_out_failed") };
+    }
   }
 
   function onAuthStateChange(callback) {
@@ -138,7 +187,14 @@
         error: unavailableError()
       };
     }
-    return activeClient.auth.onAuthStateChange(callback);
+    try {
+      return activeClient.auth.onAuthStateChange(callback);
+    } catch (error) {
+      return {
+        data: { subscription: { unsubscribe: function () {} } },
+        error: friendlyError(error, "auth_listener_failed")
+      };
+    }
   }
 
   window.StudySupabase = {
@@ -151,6 +207,7 @@
     getCurrentSession: getCurrentSession,
     getCurrentUser: getCurrentUser,
     signInWithEmail: signInWithEmail,
+    signInWithMagicLink: signInWithMagicLink,
     signOut: signOut,
     onAuthStateChange: onAuthStateChange
   };

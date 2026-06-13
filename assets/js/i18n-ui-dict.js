@@ -2845,4 +2845,68 @@
       }
     }
   };
+  var AUTH_ROUND_17_5 = {
+    "zh-CN": {
+      magicLinkTitle: "使用 Magic Link 登录", sendMagicLink: "发送登录链接", email: "邮箱",
+      password: "密码", passwordTest: "邮箱密码登录（测试功能）", passwordSignIn: "邮箱密码登录（测试）",
+      signOut: "登出", currentUser: "当前用户", supabaseConnected: "Supabase 已连接",
+      supabaseNotConfigured: "Supabase 未配置", sdkMissing: "SDK 未加载", signInSuccess: "登录成功",
+      signInFailed: "登录失败", checkEmail: "请检查邮箱", noLearningSync: "当前不会同步学习数据",
+      emailRequired: "请输入邮箱", credentialsRequired: "请输入邮箱和密码"
+    },
+    "ja-JP": {
+      magicLinkTitle: "Magic Link でログイン", sendMagicLink: "ログインリンクを送信", email: "メールアドレス",
+      password: "パスワード", passwordTest: "メール・パスワードログイン（テスト）", passwordSignIn: "メールでログイン（テスト）",
+      signOut: "ログアウト", currentUser: "現在のユーザー", supabaseConnected: "Supabase 接続済み",
+      supabaseNotConfigured: "Supabase 未設定", sdkMissing: "SDK 未読み込み", signInSuccess: "ログイン成功",
+      signInFailed: "ログイン失敗", checkEmail: "メールを確認してください", noLearningSync: "学習データは現在同期されません",
+      emailRequired: "メールアドレスを入力してください", credentialsRequired: "メールアドレスとパスワードを入力してください"
+    },
+    "en-US": {
+      magicLinkTitle: "Sign in with Magic Link", sendMagicLink: "Send sign-in link", email: "Email",
+      password: "Password", passwordTest: "Email/password sign-in (test)", passwordSignIn: "Sign in with password (test)",
+      signOut: "Sign out", currentUser: "Current user", supabaseConnected: "Supabase connected",
+      supabaseNotConfigured: "Supabase not configured", sdkMissing: "SDK not loaded", signInSuccess: "Sign-in successful",
+      signInFailed: "Sign-in failed", checkEmail: "Please check your email", noLearningSync: "Learning data is not currently synced",
+      emailRequired: "Enter your email", credentialsRequired: "Enter your email and password"
+    },
+    "vi-VN": {
+      magicLinkTitle: "Đăng nhập bằng Magic Link", sendMagicLink: "Gửi liên kết đăng nhập", email: "Email",
+      password: "Mật khẩu", passwordTest: "Đăng nhập email/mật khẩu (thử nghiệm)", passwordSignIn: "Đăng nhập bằng mật khẩu (thử nghiệm)",
+      signOut: "Đăng xuất", currentUser: "Người dùng hiện tại", supabaseConnected: "Đã kết nối Supabase",
+      supabaseNotConfigured: "Chưa cấu hình Supabase", sdkMissing: "SDK chưa tải", signInSuccess: "Đăng nhập thành công",
+      signInFailed: "Đăng nhập thất bại", checkEmail: "Vui lòng kiểm tra email", noLearningSync: "Dữ liệu học tập hiện chưa được đồng bộ",
+      emailRequired: "Vui lòng nhập email", credentialsRequired: "Vui lòng nhập email và mật khẩu"
+    },
+    "fr-FR": {
+      magicLinkTitle: "Connexion avec Magic Link", sendMagicLink: "Envoyer le lien de connexion", email: "E-mail",
+      password: "Mot de passe", passwordTest: "Connexion e-mail/mot de passe (test)", passwordSignIn: "Se connecter avec le mot de passe (test)",
+      signOut: "Se déconnecter", currentUser: "Utilisateur actuel", supabaseConnected: "Supabase connecté",
+      supabaseNotConfigured: "Supabase non configuré", sdkMissing: "SDK non chargé", signInSuccess: "Connexion réussie",
+      signInFailed: "Échec de la connexion", checkEmail: "Veuillez vérifier votre e-mail", noLearningSync: "Les données d’apprentissage ne sont pas synchronisées actuellement",
+      emailRequired: "Saisissez votre e-mail", credentialsRequired: "Saisissez votre e-mail et votre mot de passe"
+    },
+    "my-MM": {
+      magicLinkTitle: "Magic Link ဖြင့် ဝင်မည်", sendMagicLink: "ဝင်ရောက်ရန် လင့်ခ်ပို့မည်", email: "အီးမေးလ်",
+      password: "စကားဝှက်", passwordTest: "အီးမေးလ်/စကားဝှက် ဝင်ရောက်မှု (စမ်းသပ်)", passwordSignIn: "စကားဝှက်ဖြင့် ဝင်မည် (စမ်းသပ်)",
+      signOut: "ထွက်မည်", currentUser: "လက်ရှိအသုံးပြုသူ", supabaseConnected: "Supabase ချိတ်ဆက်ပြီး",
+      supabaseNotConfigured: "Supabase မသတ်မှတ်ရသေး", sdkMissing: "SDK မတင်ရသေး", signInSuccess: "ဝင်ရောက်မှု အောင်မြင်သည်",
+      signInFailed: "ဝင်ရောက်မှု မအောင်မြင်ပါ", checkEmail: "အီးမေးလ်ကို စစ်ဆေးပါ", noLearningSync: "သင်ယူမှုဒေတာကို လောလောဆယ် မစင့်ခ်ပါ",
+      emailRequired: "အီးမေးလ်ထည့်ပါ", credentialsRequired: "အီးမေးလ်နှင့် စကားဝှက်ထည့်ပါ"
+    },
+    "ko-KR": {
+      magicLinkTitle: "Magic Link로 로그인", sendMagicLink: "로그인 링크 보내기", email: "이메일",
+      password: "비밀번호", passwordTest: "이메일/비밀번호 로그인(테스트)", passwordSignIn: "비밀번호로 로그인(테스트)",
+      signOut: "로그아웃", currentUser: "현재 사용자", supabaseConnected: "Supabase 연결됨",
+      supabaseNotConfigured: "Supabase 미설정", sdkMissing: "SDK 미로드", signInSuccess: "로그인 성공",
+      signInFailed: "로그인 실패", checkEmail: "이메일을 확인하세요", noLearningSync: "현재 학습 데이터는 동기화되지 않습니다",
+      emailRequired: "이메일을 입력하세요", credentialsRequired: "이메일과 비밀번호를 입력하세요"
+    }
+  };
+
+  Object.keys(AUTH_ROUND_17_5).forEach(function (locale) {
+    if (window.I18nUiDict[locale] && window.I18nUiDict[locale].auth) {
+      Object.assign(window.I18nUiDict[locale].auth, AUTH_ROUND_17_5[locale]);
+    }
+  });
 })();

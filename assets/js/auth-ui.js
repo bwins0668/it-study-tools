@@ -35,6 +35,8 @@
   };
 
   var supabaseAdapterLoading = null;
+  var authMessage = "";
+  var authSubscription = null;
 
   function ensureSupabaseAdapter() {
     if (window.StudySupabase) return Promise.resolve(window.StudySupabase);
@@ -170,6 +172,23 @@
     closeAuthPanel();
   }
 
+  function setSupabaseSignedInUser(user) {
+    if (!user) return;
+    setLocalAuthState({
+      mode: "signed_in",
+      user_id: user.id || null,
+      email: user.email || null,
+      display_name: user.email || t("auth.account", "账号"),
+      provider: "supabase",
+      sync_enabled: false,
+      last_sync_at: null,
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString(),
+    });
+    renderUserMenu();
+    if (panelVisible) populateAuthPanel(el("auth-panel"), "auth-refresh");
+  }
+
   function getDisplayUserLabel() {
     var state = getLocalAuthState();
     if (!state || state.mode === "local_anonymous") {
@@ -184,12 +203,12 @@
     }
     var status = window.StudySupabase.getStatus();
     var labels = {
-      not_configured: "未配置",
-      sdk_missing: "SDK 未加载",
+      not_configured: t("auth.supabaseNotConfigured", "Supabase 未配置"),
+      sdk_missing: t("auth.sdkMissing", "SDK 未加载"),
       disabled: "已配置但未启用",
       initialization_error: "初始化失败",
-      ready_to_initialize: "可初始化",
-      ready: "已就绪",
+      ready_to_initialize: t("auth.supabaseConnected", "Supabase 已连接"),
+      ready: t("auth.supabaseConnected", "Supabase 已连接"),
     };
     return labels[status.code] || status.message || "未知";
   }
@@ -258,6 +277,8 @@
 
     var isAnonymous = state.mode === "local_anonymous";
     var isMock = state.mode === "mock_signed_in";
+    var isSupabaseUser = state.mode === "signed_in" && state.provider === "supabase";
+    var supabaseReady = window.StudySupabase && window.StudySupabase.getStatus().ready;
 
     content.innerHTML =
       '<div class="auth-panel-header">' +
@@ -276,6 +297,10 @@
           '<div class="auth-status-row">' +
             '<span class="auth-label">Supabase:</span>' +
             '<span class="auth-value" data-i18n-skip="true">' + esc(getSupabaseStatusLabel()) + '</span>' +
+          '</div>' +
+          '<div class="auth-status-row">' +
+            '<span class="auth-label">' + esc(t("auth.currentUser", "当前用户")) + ':</span>' +
+            '<span class="auth-value">' + esc(isSupabaseUser ? state.email : t("auth.notLoggedIn", "未登录")) + '</span>' +
           '</div>' +
         '</div>' +
 
@@ -301,11 +326,32 @@
         // Privacy note
         '<div class="auth-privacy-note">' +
           '<i class="fa-solid fa-shield-halved"></i> ' +
-          esc(t("auth.noUpload", "不会上传数据")) +
+          esc(t("auth.noLearningSync", "当前不会同步学习数据")) +
+        '</div>' +
+
+        '<div class="auth-info-section">' +
+          '<div class="auth-label">' + esc(t("auth.magicLinkTitle", "使用 Magic Link 登录")) + '</div>' +
+          '<input class="auth-input" data-auth-input="email" type="email" autocomplete="email" placeholder="' + esc(t("auth.email", "邮箱")) + '"' + (supabaseReady ? "" : " disabled") + '>' +
+          '<button class="auth-btn auth-btn-primary" data-auth-action="magic-link"' + (supabaseReady ? "" : " disabled") + '>' +
+            esc(t("auth.sendMagicLink", "发送登录链接")) +
+          '</button>' +
+          '<div class="auth-label">' + esc(t("auth.passwordTest", "邮箱密码登录（测试功能）")) + '</div>' +
+          '<input class="auth-input" data-auth-input="password" type="password" autocomplete="current-password" placeholder="' + esc(t("auth.password", "密码")) + '"' + (supabaseReady ? "" : " disabled") + '>' +
+          '<button class="auth-btn auth-btn-secondary" data-auth-action="password-sign-in"' + (supabaseReady ? "" : " disabled") + '>' +
+            esc(t("auth.passwordSignIn", "邮箱密码登录（测试）")) +
+          '</button>' +
+          (authMessage ? '<div class="auth-notice" data-i18n-skip="true">' + esc(authMessage) + '</div>' : '') +
         '</div>' +
 
         // Action buttons
         '<div class="auth-actions">' +
+          (isSupabaseUser ?
+            '<button class="auth-btn auth-btn-secondary" data-auth-action="supabase-sign-out">' +
+              '<i class="fa-solid fa-sign-out-alt"></i> ' + esc(t("auth.signOut", "登出")) +
+            '</button>' : '') +
+          '<button class="auth-btn auth-btn-secondary" data-auth-action="local">' +
+            esc(t("auth.continueLocal", "继续本地使用")) +
+          '</button>' +
           (isMock ?
             '<button class="auth-btn auth-btn-secondary" data-auth-action="sign-out">' +
               '<i class="fa-solid fa-sign-out-alt"></i> ' + esc(t("auth.mockSignOut", "退出模拟登录")) +
@@ -328,6 +374,10 @@
     var signInButton = qs('[data-auth-action="sign-in"]', content);
     var signOutButton = qs('[data-auth-action="sign-out"]', content);
     var exportButton = qs('[data-auth-action="export"]', content);
+    var localButton = qs('[data-auth-action="local"]', content);
+    var magicLinkButton = qs('[data-auth-action="magic-link"]', content);
+    var passwordButton = qs('[data-auth-action="password-sign-in"]', content);
+    var supabaseSignOutButton = qs('[data-auth-action="supabase-sign-out"]', content);
 
     if (closeButton) closeButton.addEventListener("click", closeAuthPanel);
     if (signInButton) {
@@ -337,6 +387,61 @@
     }
     if (signOutButton) signOutButton.addEventListener("click", setAnonymousMode);
     if (exportButton) exportButton.addEventListener("click", exportSnapshotAction);
+    if (localButton) localButton.addEventListener("click", setAnonymousMode);
+    if (magicLinkButton) magicLinkButton.addEventListener("click", handleMagicLink);
+    if (passwordButton) passwordButton.addEventListener("click", handlePasswordSignIn);
+    if (supabaseSignOutButton) supabaseSignOutButton.addEventListener("click", handleSupabaseSignOut);
+  }
+
+  function getAuthInput(name) {
+    var input = qs('[data-auth-input="' + name + '"]', el("auth-panel-content"));
+    return input ? input.value.trim() : "";
+  }
+
+  function refreshAuthPanel(message) {
+    authMessage = message || "";
+    if (panelVisible) populateAuthPanel(el("auth-panel"), "auth-message");
+  }
+
+  async function handleMagicLink() {
+    var email = getAuthInput("email");
+    if (!email) return refreshAuthPanel(t("auth.emailRequired", "请输入邮箱"));
+    var result = await window.StudySupabase.signInWithMagicLink(email);
+    refreshAuthPanel(result && result.error ? t("auth.signInFailed", "登录失败") + ": " + result.error.message : t("auth.checkEmail", "请检查邮箱"));
+  }
+
+  async function handlePasswordSignIn() {
+    var email = getAuthInput("email");
+    var passwordInput = qs('[data-auth-input="password"]', el("auth-panel-content"));
+    var password = passwordInput ? passwordInput.value : "";
+    if (!email || !password) return refreshAuthPanel(t("auth.credentialsRequired", "请输入邮箱和密码"));
+    var result = await window.StudySupabase.signInWithEmail(email, password);
+    password = "";
+    if (passwordInput) passwordInput.value = "";
+    if (result && result.data && result.data.user) setSupabaseSignedInUser(result.data.user);
+    refreshAuthPanel(result && result.error ? t("auth.signInFailed", "登录失败") + ": " + result.error.message : t("auth.signInSuccess", "登录成功"));
+  }
+
+  async function handleSupabaseSignOut() {
+    var result = await window.StudySupabase.signOut();
+    if (result && result.error) return refreshAuthPanel(result.error.message);
+    setAnonymousMode();
+  }
+
+  async function initSupabaseAuth() {
+    var api = await ensureSupabaseAdapter();
+    if (!api) return;
+    if (api.getStatus().code === "ready_to_initialize") api.initClient();
+    if (!api.getStatus().ready) return;
+    var user = await api.getCurrentUser();
+    if (user) setSupabaseSignedInUser(user);
+    if (!authSubscription) {
+      var listener = api.onAuthStateChange(function (event, session) {
+        if (session && session.user) setSupabaseSignedInUser(session.user);
+        else if (event === "SIGNED_OUT") setAnonymousMode();
+      });
+      authSubscription = listener && listener.data ? listener.data.subscription : null;
+    }
   }
 
   function renderUserMenu() {
@@ -404,7 +509,7 @@
       console.warn("[AuthUI] StudySync not found, auth UI will be limited");
     }
     renderUserMenu();
-    ensureSupabaseAdapter();
+    initSupabaseAuth();
   }
 
   /* ── Utility esc ─────────────────────────────────── */
