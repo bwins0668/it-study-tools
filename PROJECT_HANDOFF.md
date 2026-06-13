@@ -6029,3 +6029,42 @@ No changes to web-exclusive files this round (sync-engine.js, auth-ui.js, i18n-u
 #### Next
 
 - **Round 18.1**: Post-release patch / bugfix, or **Round 19.0**: User translations & bookmarks sync audit.
+
+---
+
+### Round 18.1 - 登录同步稳定版发布后稳定性审计与补丁
+
+**Status: PASS**
+
+#### Audit Summary
+- **Type**: Read-only stability and security audit.
+- **Bugs Found**: None.
+- **Files Repaired**: None.
+- **Web Live Site Status**: Checked. `assetVersion` is `v2026.6.13-r18.0` and `CACHE_NAME` is `study-tools-web-v2026-6-13-r18-0`. Service worker cache-clearing works correctly. Manifest files are normal.
+- **Portable ZIP Hash**: Verified. SHA256 of `Study-Tools-Portable-v2026.6.13-r18.0.zip` matches the target `A58D94A5F9AE9A4DA1847FAA8702609A5A223A690E30F806EAA14002C8FE30A0`.
+- **Portable ZIP Structure**: Inspected. Contains no `.git/`, `node_modules/`, `backups/`, `output/`, `scratch/`, `study_ai.db`, or `supabase-config.local.js`.
+- **Security Check**:
+  - `supabase-config.local.js` is correctly git-ignored at line 15 (Windows) and line 39 (Web) and is NOT tracked.
+  - `supabase-config.example.js` is a clean template without URL/key parameters.
+  - Recent Git logs have been audited and contain no real API credentials or secrets.
+
+#### Verification & Smoke Tests
+- **Verification commands**: Passed. `tools/verify_glossary.js` returned PASS with exactly 1500 terms. Syntax checks for all Javascript files on both Windows and Web repos returned PASS with no syntax errors.
+- **Functional Smoke**: All checked features (mock login, panel responsive design, 7-language switching, settings/progress sync union merge rules, Magic Link input handling, etc.) are stable and correct. No AI-sensitive keys or caches are uploaded or sync'd.
+
+#### Commits
+- **Windows main**: `(this commit)` docs: record post-release stability audit
+- **Web master**: `none` (no code changes needed, already aligned)
+- **GitHub Release / Release tag**: [v2026.6.13-r18.0](https://github.com/bwins0668/it-study-tools/releases/tag/v2026.6.13-r18.0)
+
+#### Explicitly Not Done (By Design)
+- Did not add any new features.
+- Did not enable automatic or background sync.
+- Did not synchronize user translations.
+- Did not synchronize bookmarks.
+- Did not synchronize AI keys, AI translation caches, or Ollama settings.
+- Did not modify course data, glossary data, backend core logic, or sandbox environments.
+- Did not repackage Portable or create a new Release.
+
+#### Next
+- **Round 19.0**: User translations & bookmarks sync architecture audit.
