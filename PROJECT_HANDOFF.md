@@ -4058,7 +4058,7 @@ ode --check service-worker.js | PASS |
 
 #### Git & Handoff Commits
 
-- **Windows Handoff Commit**: `60f4e8e` (docs: record language stabilization)
+- **Windows Handoff Commit**: `a06206a` (docs: fix handoff commit hash in record)
 - **Windows Code Commit**: `070798c` (fix: stabilize language switching and fallback behavior)
 - **Web Commit**: `f5c6b7f` (fix: stabilize web language preheating and fallback behavior)
 
