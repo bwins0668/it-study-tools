@@ -6273,5 +6273,67 @@ No changes to web-exclusive files this round (sync-engine.js, auth-ui.js, i18n-u
 - Did not package Portable client or create a new Release.
 
 #### Next
-- **Round 19.3**: UI regression testing/patches, or **Round 19.4**: bookmarks deletion sync and dual-device conflict tests.
+- **Round 19.3.1**: SQL Playground desktop width regression fix.
+
+---
+
+### Round 19.3.1 - SQL Playground 右栏宽度回归修复
+
+**Status: PASS**
+
+#### Modified files
+
+##### Windows
+- `assets/css/index.css` (Adjusted desktop media queries for range-specific widths and added header nowrap protections)
+- `docs/sync_architecture.md` (Updated release history and R19.3.1 details)
+- `PROJECT_HANDOFF.md` (This entry)
+
+##### Web
+- `assets/css/index.css` (Synched from Windows)
+- `docs/sync_architecture.md` (Synched from Windows)
+
+#### Problem & Root Cause
+In Round 19.2, `.playground-section` was assigned a flex ratio of `0.7` relative to the reading content (`1.3`) without any `min-width` constraint under `@media (min-width: 901px)`. This caused the right-hand panel to shrink severely on desktop screens below 1366px (shrinking to ~260px at 1000px). Additionally, the lack of `white-space: nowrap` and `text-overflow: ellipsis` on playground header spans caused the titles to wrap vertically character-by-character, and the SQL editor minimum height of 100px allowed the container to squish and hide the execute button.
+
+#### Solutions & Visual Results
+- **Desktop Range-Specific Queries**:
+  - **`901px - 1199px`**: Left sidebar: `200px - 240px`, SQL Playground: `360px - 420px` (min-width `360px`). Lesson content takes the rest.
+  - **`>= 1200px`**: Left sidebar: `220px - 280px`, SQL Playground: `400px - 560px` (min-width `400px`). Lesson content takes the rest.
+- **SQL Editor Height & Button Visibility**:
+  - Editor container min-height set to `150px !important`.
+  - Console card min-height set to `280px !important` on desktop, guaranteeing execution button is never pushed off-screen.
+- **Title Wrapping Protections**:
+  - Nowrap and text-overflow ellipsis applied to all console/schema/output headers, tab headers, and action containers. Buttons and tab selections are protected from shrinking.
+
+#### Verification Checks & Width Results
+
+- **1920x1080**: Left sidebar 280px, SQL Playground width 560px, titles do not wrap, editor, execution button, and terminal result area are fully visible.
+- **1366x768**: SQL Playground width 410px, SQL input writable, execute button visible, no horizontal scrollbars on page.
+- **1000px**: 3-column layout remains clean, SQL Playground width 360px, elements are not compressed.
+- **900px**: Off-canvas drawer triggers correctly, drawer toggle button is visible, backdrop acts as close trigger.
+- **390px**: Mobile layout is fully responsive, drawer can be pulled out and used without horizontal overflow.
+- **SQL Input/Run Button/Result Terminal**: Visible in all viewports.
+- **Glossary count**: 1500 (remains unchanged, SHA256 matches exactly).
+- **Node --check JS syntax**: Checked 4 JS files, all passed syntax checks.
+
+#### Security & Policy Declarations
+- **New Sync Features**: None.
+- **Auto-Sync**: None (manual sync only).
+- **AI config / cache upload**: None.
+- **Real Supabase credentials / API keys / URL committed**: None.
+
+#### Commits
+- **Windows main**: `01bf7aefe33815193333d9b92cb38765832fed0b`
+- **Web master**: `bb2450ef663e6f4d0a63fc5be4eab35c09f316c5`
+- **Windows handoff commit**: `(this commit)` docs: record Round 19.3.1 handoff
+
+#### Explicitly Deferred Tasks
+- Bookmarks deletion sync and dual-device conflict testing.
+- User-customized translation UI audit.
+- User translation synchronization.
+- Course/term/wrong-question bookmarks synchronization.
+- Portable client packaging & new GitHub Release.
+
+#### Next
+- **Round 19.3.2**: Header/Sidebar minor detail regressions, or **Round 19.4**: Bookmarks deletion sync and dual-device conflict testing.
 
