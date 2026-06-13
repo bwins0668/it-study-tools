@@ -1465,14 +1465,28 @@
    function deleteUserTranslationItem(sourceText, sourceLang, targetLang, context) {
      var all = getUserTranslationsData();
      var key = String(sourceText) + "|" + String(sourceLang) + "|" + String(targetLang) + "|" + String(context || "");
-     if (all[key]) { delete all[key]; }
+     var now = new Date().toISOString();
+     var existing = all[key] || {};
+     all[key] = {
+       sourceText: String(existing.sourceText || sourceText),
+       sourceTextHash: existing.sourceTextHash || simpleHash(String(sourceText)),
+       sourceLang: String(existing.sourceLang || sourceLang),
+       targetLang: String(existing.targetLang || targetLang),
+       translatedText: String(existing.translatedText || ""),
+       context: String(existing.context || context || ""),
+       updatedAt: now,
+       deletedAt: now,
+       syncVersion: 1,
+       origin: "user"
+     };
      try { localStorage.setItem(USER_TRANSLATIONS_KEY, JSON.stringify(all)); } catch (_) {}
    }
  
    function getUserTranslationItem(sourceText, sourceLang, targetLang, context) {
      var all = getUserTranslationsData();
      var key = String(sourceText) + "|" + String(sourceLang) + "|" + String(targetLang) + "|" + String(context || "");
-     return all[key] || null;
+     var item = all[key] || null;
+     return item && !item.deletedAt ? item : null;
    }
  
    function getUserTranslationCount() {

@@ -130,7 +130,7 @@ As of Round 20.5, the user-defined translation UI has completed its local-only w
 
 - Supports edit, save, cancel, and reset.
 - Persists locally under `study-tools-user-translations-v1` and restores after refresh.
-- Reset removes the matching local record from `study-tools-user-translations-v1`; no remote row is deleted or uploaded because Supabase sync is not connected.
+- Reset preserves the matching local record as a tombstone with `deletedAt` and `updatedAt`; no remote row is deleted or uploaded because Supabase sync is not connected.
 - The local UI is not connected to the Supabase `user_translations` table.
 - The local UI is not included in `sync-engine.js` payloads or queues.
 - AI translation cache (`study-tools-i18n-cache-v4`), AI API keys, provider/model settings, and Ollama configuration remain excluded from synchronization.
