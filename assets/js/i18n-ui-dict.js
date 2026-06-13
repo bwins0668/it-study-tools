@@ -70,7 +70,7 @@
         symbols: "記号",
         normalizeFullWidth: "全角→半角",
         lenientIndent: "インデント寛容",
-        shortcutHelp: "ショートカット: Alt+N 次 / Alt+R 再 / Alt+S 随机",
+        sendToSandbox: "サンドボックスに送信",        runInSandbox: "サンドボックスで実行",        sandboxUnavailable: "サンドボックス利用不可",        sentToSandbox: "サンドボックスに送信しました",        openSandbox: "サンドボックスを開く",        shortcutHelp: "ショートカット: Alt+N 次 / Alt+R 再 / Alt+S 随机",
         summaryLine: "CPM: {cpm} | 正確率: {acc}% | エラー: {err} | 時間: {time}"
       },
       subnav: {
@@ -425,7 +425,7 @@
         symbols: "符号",
         normalizeFullWidth: "全角→半角",
         lenientIndent: "缩进宽容",
-        shortcutHelp: "快捷键: Alt+N 下一题 / Alt+R 重来 / Alt+S 随机",
+        sendToSandbox: "发送到沙盒",        runInSandbox: "在沙盒中运行",        sandboxUnavailable: "沙盒不可用",        sentToSandbox: "已发送到沙盒",        openSandbox: "打开沙盒",        shortcutHelp: "快捷键: Alt+N 下一题 / Alt+R 重来 / Alt+S 随机",
         summaryLine: "CPM: {cpm} | 正确率: {acc}% | 错误: {err} | 用时: {time}"
       },
       subnav: {
@@ -780,7 +780,7 @@
         symbols: "Symbols",
         normalizeFullWidth: "Fullwidth→Halfwidth",
         lenientIndent: "Lenient Indent",
-        shortcutHelp: "Shortcuts: Alt+N Next / Alt+R Restart / Alt+S Random",
+        sendToSandbox: "Send to Sandbox",        runInSandbox: "Run in Sandbox",        sandboxUnavailable: "Sandbox unavailable",        sentToSandbox: "Sent to sandbox",        openSandbox: "Open sandbox",        shortcutHelp: "Shortcuts: Alt+N Next / Alt+R Restart / Alt+S Random",
         summaryLine: "CPM: {cpm} | Accuracy: {acc}% | Errors: {err} | Time: {time}"
       },
       subnav: {
@@ -1116,7 +1116,7 @@
         continueRandom: "ဆက်လုပ်ရန်",
         python: "Python", java: "Java", sql: "SQL", symbols: "သင်္ကေတ",
         normalizeFullWidth: "အပြည့်→တစ်ဝက်", lenientIndent: "အင်တင်အာလျော့",
-        shortcutHelp: "Alt+N နောက် / Alt+R ပြန်စ / Alt+S ကျပန်း",
+        sendToSandbox: "Send to Sandbox",        runInSandbox: "Run in Sandbox",        sandboxUnavailable: "Sandbox unavailable",        sentToSandbox: "Sent to sandbox",        openSandbox: "Open sandbox",        shortcutHelp: "Alt+N နောက် / Alt+R ပြန်စ / Alt+S ကျပန်း",
         summaryLine: "CPM: {cpm} | တိကျမှု: {acc}% | အမှား: {err} | အချိန်: {time}"
       },
       subnav: {
@@ -1452,7 +1452,7 @@
         continueRandom: "Tiếp tục ngẫu nhiên",
         python: "Python", java: "Java", sql: "SQL", symbols: "Ký hiệu",
         normalizeFullWidth: "Toàn→Bán sừng", lenientIndent: "Thụt lề linh hoạt",
-        shortcutHelp: "Phím tắt: Alt+N Tiếp / Alt+R Làm lại / Alt+S Ngẫu nhiên",
+        sendToSandbox: "Send to Sandbox",        runInSandbox: "Run in Sandbox",        sandboxUnavailable: "Sandbox unavailable",        sentToSandbox: "Sent to sandbox",        openSandbox: "Open sandbox",        shortcutHelp: "Phím tắt: Alt+N Tiếp / Alt+R Làm lại / Alt+S Ngẫu nhiên",
         summaryLine: "CPM: {cpm} | Độ chính xác: {acc}% | Lỗi: {err} | TG: {time}"
       },
       subnav: {
@@ -1788,7 +1788,7 @@
         continueRandom: "Continuer aléatoire",
         python: "Python", java: "Java", sql: "SQL", symbols: "Symboles",
         normalizeFullWidth: "Pleine→Demi-chasse", lenientIndent: "Indentation souple",
-        shortcutHelp: "Raccourcis: Alt+N Suivant / Alt+R Reco. / Alt+S Aléatoire",
+        sendToSandbox: "Send to Sandbox",        runInSandbox: "Run in Sandbox",        sandboxUnavailable: "Sandbox unavailable",        sentToSandbox: "Sent to sandbox",        openSandbox: "Open sandbox",        shortcutHelp: "Raccourcis: Alt+N Suivant / Alt+R Reco. / Alt+S Aléatoire",
         summaryLine: "CPM: {cpm} | Précision: {acc}% | Err: {err} | Temps: {time}"
       },
       subnav: {
@@ -2124,7 +2124,7 @@
         continueRandom: "랜덤 연습 계속",
         python: "Python", java: "Java", sql: "SQL", symbols: "기호",
         normalizeFullWidth: "전각→반각", lenientIndent: "들여쓰기 허용",
-        shortcutHelp: "단축키: Alt+N 다음 / Alt+R 다시 / Alt+S 랜덤",
+        sendToSandbox: "Send to Sandbox",        runInSandbox: "Run in Sandbox",        sandboxUnavailable: "Sandbox unavailable",        sentToSandbox: "Sent to sandbox",        openSandbox: "Open sandbox",        shortcutHelp: "단축키: Alt+N 다음 / Alt+R 다시 / Alt+S 랜덤",
         summaryLine: "CPM: {cpm} | 정확도: {acc}% | 오류: {err} | 시간: {time}"
       },
       subnav: {
@@ -2479,7 +2479,7 @@
       symbols: "符号 / 記号",
       normalizeFullWidth: "全角→半角 / 全角→半角",
       lenientIndent: "缩进宽容 / インデント寛容",
-      shortcutHelp: "快捷键: Alt+N 下一题 / Alt+R 重来 / Alt+S 随机 / 快捷键: Alt+N 次の問題 / Alt+R やり直し / Alt+S ランダム"
+      sendToSandbox: "发送到沙盒 / サンドボックスに送信",      runInSandbox: "在沙盒中运行 / サンドボックスで実行",      sandboxUnavailable: "沙盒不可用 / サンドボックス利用不可",      sentToSandbox: "已发送到沙盒 / サンドボックスに送信しました",      openSandbox: "打开沙盒 / サンドボックスを開く",      shortcutHelp: "快捷键: Alt+N 下一题 / Alt+R 重来 / Alt+S 随机 / 快捷键: Alt+N 次の問題 / Alt+R やり直し / Alt+S ランダム"
     },
     subnav: {
       lessons: "教科书与演练沙盒 / テキスト・演習",
