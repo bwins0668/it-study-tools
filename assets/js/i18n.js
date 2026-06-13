@@ -949,6 +949,20 @@
 
       const applyTextJob = (job, translatedText, japaneseText = "") => {
         if (!job.node.isConnected) return;
+        /* Check user translation first — highest display priority */
+        var guardEl = job.node.parentElement;
+        var guardOrig = textOriginals.get(job.node) || "";
+        if (guardOrig && guardEl && job.item) {
+          var guardCtx = (job.item && job.item.context) || "general";
+          var guardSaved = getUserTranslationItem(guardOrig, currentLang, currentLang, guardCtx);
+          if (guardSaved && guardSaved.translatedText && !guardSaved.deletedAt) {
+            job.node.nodeValue = guardSaved.translatedText;
+            textApplied.set(job.node, guardSaved.translatedText);
+            textAppliedLang.set(job.node, targetLang);
+            attachUserTranslationControl(guardEl, guardOrig, guardSaved.translatedText, guardCtx);
+            return;
+          }
+        }
         const nextValue = translatedText
           ? renderTargetText(
               textOriginals.get(job.node),
@@ -1523,8 +1537,11 @@ function isUtEligible(el) {
 }
 
 function attachUserTranslationControl(el, origText, transText, ctx) {
-  if (!el || !document.body.contains(el) || el.hasAttribute(UT_ATTR)) return;
+  if (!el || !document.body.contains(el)) return;
   if (!isUtEligible(el) || !origText || origText.length < 10) return;
+  /* Always re-apply saved user translation, even when already attached */
+  applySavedUserTrans(el, origText, ctx || 'general');
+  if (el.hasAttribute(UT_ATTR)) return;
   el.setAttribute(UT_ATTR, "true");
   var wrapper = document.createElement('span');
   wrapper.className = 'ut-wrapper';
@@ -1540,7 +1557,6 @@ function attachUserTranslationControl(el, origText, transText, ctx) {
     openUtEditor(el, origText, transText, ctx || 'general');
   });
   wrapper.appendChild(btn);
-  applySavedUserTrans(el, origText, ctx || 'general');
 }
 
 function applySavedUserTrans(el, origText, ctx) {
