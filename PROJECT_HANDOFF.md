@@ -5129,7 +5129,7 @@ Response: `{"status": "deleted"}`
 
 - **Windows Code Commit**: `7c0bf9d` (feat: add auth UI prototype and local user state)
 - **Web Commit**: `aaadc14` (feat: sync auth UI prototype)
-- **Windows Handoff Commit**: `be2a40d` (docs: fix handoff hash for round 17.2)
+- **Windows Handoff Commit**: `0552855` (docs: correct handoff hash to be2a40d)
 
 #### Explicitly not done
 
