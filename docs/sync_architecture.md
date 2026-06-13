@@ -211,14 +211,13 @@ Full DDL: `tools/init_supabase.sql`
 | `assets/js/sync-engine.js` | Local-first engine with explicit manual P0 sync |
 | `docs/sync_architecture.md` | This document |
 
-## Upcoming Rounds
+## Upcoming Rounds / Release History
 
-| Round | Scope |
-|:---|:---|
-| **17.2** | Auth UI prototype: login/signup page, anonymous indicator, user menu |
-| **17.3** | Supabase Auth preparation layer, disabled config template, no-network adapter |
-| **17.4** | Manual project/config validation, optional SDK loading slot, RLS draft review |
-| **17.5** | Minimal Supabase Auth integration: session, Magic Link, test password login, sign-out |
-| **17.6** | Manual device/settings/progress sync foundation |
-| **17.7** | Conflict handling and real two-device testing, or 17.6.1 manual-sync UX patch |
-| **17.8** | Stable release: Web cache update + Portable repack + tag + Release |
+| Round | Scope | Status |
+|:---|:---|:---|
+| **17.5** | Minimal Supabase Auth integration: session, Magic Link, test password login, sign-out | Released |
+| **17.6** | Manual device/settings/progress sync foundation | Released |
+| **17.9** | Sync conflict handling and UX patch | Released |
+| **17.10** | Localized Auth UI & Layout Slimming | Released |
+| **18.0** | Stable release: Web cache update + Portable repack + tag + Release | Released |
+| **19.0** | (Proposed) User translations & bookmarks sync audit | Planned |
