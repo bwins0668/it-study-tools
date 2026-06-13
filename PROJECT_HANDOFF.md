@@ -2848,3 +2848,77 @@ node tools/verify_glossary.js --web <path>
 
 - **Round 15.12**: 700-term quality review and localization polish.
 - Or prepare the next release round with Web cache update, Portable packaging, and GitHub Release.
+
+---
+
+### Round 15.12 — Glossary 700-Term Quality Release
+
+**Status: ✅ PASS**
+
+#### Release summary
+
+| Item | Value |
+| :--- | :--- |
+| Version tag | `v2026.6.13-r15.12` |
+| Glossary milestone | **700 terms** |
+| Quality fixes | None; strict review found no `data/glossary/it_terms.js` changes required |
+| Windows Portable | `Study-Tools-Portable-v2026.6.13-r15.12.zip` |
+| SHA256 | `e45d236a80ce679b87c4e80303e29b9e407f345388912f8322e705f1cc92dec5` |
+| Web assetVersion | `v2026.6.13-r15.12` |
+| Web CACHE_NAME | `study-tools-web-v2026-6-13-r15-12` |
+| Web Branch / Target | `master` / `master` |
+| Web Smoke Test | PASS (local 18/18; online 13/13) |
+| Release notes language | Chinese (中文) |
+
+#### Changes this round
+
+| File | Change |
+| :--- | :--- |
+| `data/glossary/it_terms.js` | 700-term quality review; no data changes required |
+| **Web** `assets/js/version.js` | assetVersion bumped to `v2026.6.13-r15.12` |
+| **Web** `assets/asset-manifest.json` | Generated with new file hashes & versions |
+| **Web** `data/i18n_content/manifest.json` | Generated with new file hashes & versions |
+| **Web** `service-worker.js` | CACHE_NAME bumped to `study-tools-web-v2026-6-13-r15-12` |
+
+#### Validation
+
+| Check | Result |
+| :--- | :--- |
+| `node tools/verify_glossary.js` (local + web) | PASS (700 terms, 0 errors, 0 warnings) |
+| Windows/Web SHA256 match | PASS (`2556d4e268923328fc8a3befbd29a52e9407a5e86fe020291442ade413dbc285`) |
+| Round 15.11 added-label stability | PASS (100/100 keep English technical labels) |
+| Added `ko` field | None |
+| Web `node --check` modified JS | PASS |
+| Web local smoke test | PASS (18/18) |
+| Web online smoke test | PASS (13/13) |
+| Windows Portable package | PASS |
+| Portable zip content check | PASS; no `.git/`, `node_modules/`, `backups/`, `output/`, or `data/study_ai.db` |
+| GitHub Release | PASS |
+
+#### Git
+
+| Repo | Branch | Commit hash | Push |
+| :--- | :--- | :--- | :--- |
+| Windows glossary | main | No new glossary commit; latest remains `e2cb705` | ✅ |
+| Web | master | `c758b2d` | ✅ |
+
+#### Release
+
+| Item | Value |
+| :--- | :--- |
+| Release URL | `https://github.com/bwins0668/it-study-tools/releases/tag/v2026.6.13-r15.12` |
+| Uploaded asset | `Study-Tools-Portable-v2026.6.13-r15.12.zip` |
+| Asset SHA256 | `e45d236a80ce679b87c4e80303e29b9e407f345388912f8322e705f1cc92dec5` |
+
+#### Notes
+
+- No expansion to 800 terms.
+- No new terms.
+- No `ko` field.
+- No Korean UI.
+- No course data, content language pack, backend, sandbox, or `data/study_ai.db` changes.
+
+#### Next
+
+- **Round 15.13**: Optional deeper localization polish for selected high-impact 700-term entries.
+- Or begin the next glossary expansion only after a new round explicitly authorizes it.
