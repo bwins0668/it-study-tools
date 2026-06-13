@@ -22862,7 +22862,5766 @@
       related: ["deep_learning_concepts"],
       example: {"text":"Adding more hidden neural network layers allows the model to learn more complex decision boundaries."},
       source: "project-glossary-v2"
-    }
+    },
+  {
+    id: "responsibility_assignment_matrix",
+    category: "project",
+    level: "intermediate",
+    subcategory: "project-management",
+    exam_tags: [
+      "itpass",
+      "sg"
+    ],
+    examTags: [
+      "itpass",
+      "sg"
+    ],
+    skillTags: [
+      "project-management",
+      "governance"
+    ],
+    searchBoost: 1.1,
+    schemaVersion: "v2",
+    updatedAt: "2026-06-13",
+    keepEnglish: true,
+    ja: {
+      term: "責任分担マトリクス (RACI)",
+      kana: "セキニンブンタンマトリクス",
+      note: "プロジェクトの各タスクにおけるメンバーの役割（実行、説明、支援、報告など）を明記した表。"
+    },
+    zh: {
+      term: "职责分配矩阵",
+      explanation: "项目管理中用以明确各阶段任务与团队成员间角色关系的二维图表，常使用 RACI 模型定义执行、问责、咨询和知会职责。"
+    },
+    en: {
+      term: "Responsibility Assignment Matrix",
+      explanation: "A grid that shows the project resources assigned to each work package, defining roles and responsibilities clearly."
+    },
+    my: {
+      term: "တာဝန်ပေးအပ်မှုဇယား",
+      explanation: "ပရောဂျက်၏ လုပ်ငန်းဆောင်တာများတွင် အဖွဲ့ဝင်တစ်ဦးစီ၏ တာဝန်ဝတ္တရားများနှင့် အခန်းကဏ္ဍများကို သတ်မှတ်ဖော်ပြသည့် ဇယား (RACI)။",
+      needsReview: true
+    },
+    vi: {
+      term: "Ma trận phân bổ trách nhiệm",
+      explanation: "Biểu đồ trực quan hóa mối quan hệ giữa các thành viên dự án và công việc cần hoàn thành, định rõ vai trò RACI.",
+      needsReview: true
+    },
+    fr: {
+      term: "Matrice de répartition des responsabilités",
+      explanation: "Un tableau croisant les tâches d'un projet et les rôles des différents intervenants (RACI).",
+      needsReview: true
+    },
+    aliases: [
+      "RAM",
+      "RACI Matrix"
+    ],
+    related: [],
+    example: {
+      text: "We updated the responsibility assignment matrix to clarify who is accountable for SQL database replication tasks."
+    },
+    source: "project-glossary-v2"
+  },
+  {
+    id: "critical_chain_project_management",
+    category: "project",
+    level: "advanced",
+    subcategory: "project-management",
+    exam_tags: [
+      "itpass",
+      "sg"
+    ],
+    examTags: [
+      "itpass",
+      "sg"
+    ],
+    skillTags: [
+      "scheduling",
+      "project-controls"
+    ],
+    searchBoost: 1.1,
+    schemaVersion: "v2",
+    updatedAt: "2026-06-13",
+    keepEnglish: true,
+    ja: {
+      term: "クリティカルチェーン・プロジェクトマネジメント",
+      kana: "クリティカルチェーンプロジェクトマネジメント",
+      note: "リソースの競合や制約条件を考慮し、バッファを管理してプロジェクト期間を短縮するスケジューリング管理手法。"
+    },
+    zh: {
+      term: "关键链项目管理",
+      explanation: "一种考虑了人力、物理资源限制的项目管理计划与控制手法，通过在关键路径任务后设置项目和输入缓冲区来防止延期。"
+    },
+    en: {
+      term: "Critical Chain Project Management",
+      explanation: "A method of planning and managing projects that puts more emphasis on the resources required to execute tasks."
+    },
+    my: {
+      term: "အရေးပါသော ကွင်းဆက် ပရောဂျက်စီမံခန့်ခွဲမှု",
+      explanation: "သယံဇာတ ကန့်သတ်ချက်များကို ထည့်သွင်းစဉ်းစားပြီး buffer များကို အသုံးချကာ စီမံခန့်ခွဲသည့် နည်းလမ်း (CCPM)။",
+      needsReview: true
+    },
+    vi: {
+      term: "Quản lý dự án chuỗi găng",
+      explanation: "Phương pháp lập kế hoạch và quản lý dự án tập trung vào tính khả dụng của tài nguyên và quản lý bộ đệm.",
+      needsReview: true
+    },
+    fr: {
+      term: "Gestion de projet par la chaîne critique",
+      explanation: "Méthode de planification de projet axée sur la gestion des ressources et l'utilisation de tampons de temps.",
+      needsReview: true
+    },
+    aliases: [
+      "CCPM"
+    ],
+    related: [],
+    example: {
+      text: "Using critical chain project management helped us deliver the software update three weeks ahead of schedule."
+    },
+    source: "project-glossary-v2"
+  },
+  {
+    id: "business_portfolio_analysis",
+    category: "project",
+    level: "intermediate",
+    subcategory: "project-management",
+    exam_tags: [
+      "itpass",
+      "sg"
+    ],
+    examTags: [
+      "itpass",
+      "sg"
+    ],
+    skillTags: [
+      "business-strategy",
+      "investment"
+    ],
+    searchBoost: 1.1,
+    schemaVersion: "v2",
+    updatedAt: "2026-06-13",
+    keepEnglish: true,
+    ja: {
+      term: "事業ポートフォリオ分析",
+      kana: "ジギョウポートフォリオブンセキ",
+      note: "自社の事業や製品群を市場成長率や市場シェアなどの観点から分析し、最適な経営資源配分を決定する手法。"
+    },
+    zh: {
+      term: "业务组合分析",
+      explanation: "企业对自身所运营的多个业务单元或产品线进行综合评估，以决定投资优先级、资源调配和业务撤退战略的方法。"
+    },
+    en: {
+      term: "Business Portfolio Analysis",
+      explanation: "A process where management evaluates the products and businesses that make up the company to allocate resources."
+    },
+    my: {
+      term: "လုပ်ငန်းစုစုစည်းမှု ဆန်းစစ်ခြင်း",
+      explanation: "ကုမ္ပဏီတစ်ခု၏ စီးပွားရေးလုပ်ငန်းများနှင့် ထုတ်ကုန်စုစုစည်းမှုကို သယံဇာတခွဲဝေရန် ဆန်းစစ်အကဲဖြတ်ခြင်း။",
+      needsReview: true
+    },
+    vi: {
+      term: "Phân tích danh mục đầu tư kinh doanh",
+      explanation: "Quá trình đánh giá hiệu quả của các đơn vị kinh doanh hoặc dòng sản phẩm để tối ưu hóa nguồn lực phân bổ.",
+      needsReview: true
+    },
+    fr: {
+      term: "Analyse de portefeuille d'activités",
+      explanation: "Évaluation stratégique des différents domaines d'activité d'une entreprise pour orienter les investissements.",
+      needsReview: true
+    },
+    aliases: [
+      "Portfolio Analysis"
+    ],
+    related: [],
+    example: {
+      text: "Management carried out a business portfolio analysis and decided to focus on cloud database solutions."
+    },
+    source: "project-glossary-v2"
+  },
+  {
+    id: "configuration_management_database",
+    category: "project",
+    level: "advanced",
+    subcategory: "legal-and-ethics",
+    exam_tags: [
+      "itpass",
+      "sg"
+    ],
+    examTags: [
+      "itpass",
+      "sg"
+    ],
+    skillTags: [
+      "service-management",
+      "operations"
+    ],
+    searchBoost: 1.1,
+    schemaVersion: "v2",
+    updatedAt: "2026-06-13",
+    keepEnglish: true,
+    ja: {
+      term: "構成管理データベース (CMDB)",
+      kana: "コウセイカンリデータベース",
+      note: "ITサービス管理において、ハードウェア、ソフトウェア、文書などの構成品目 (CI) とその関連性を統合管理するデータベース。"
+    },
+    zh: {
+      term: "配置管理数据库",
+      explanation: "ITIL 服务管理中用于存储 IT 基础设施中所有配置项（CI）的属性、配置以及它们之间关联关系的统一数据库，简称 CMDB。"
+    },
+    en: {
+      term: "Configuration Management Database",
+      explanation: "A database used to store information about configuration items and their relationships in an IT infrastructure."
+    },
+    my: {
+      term: "ဖွဲ့စည်းပုံစီမံခန့်ခွဲမှု ဒေတာဘေ့စ် (CMDB)",
+      explanation: "IT အဆောက်အအုံအတွင်းရှိ စက်ပစ္စည်း၊ ဆော့ဖ်ဝဲလ်များနှင့် ၎င်းတို့၏ ဆက်နွယ်မှုများကို သိုလှောင်သည့် ဒေတာဘေ့စ်။",
+      needsReview: true
+    },
+    vi: {
+      term: "Cơ sở dữ liệu quản lý cấu hình",
+      explanation: "Kho lưu trữ thông tin về các hạng mục cấu hình (CI) và mối quan hệ giữa chúng trong hạ tầng công nghệ thông tin.",
+      needsReview: true
+    },
+    fr: {
+      term: "Base de données de gestion de configuration",
+      explanation: "Une base de données (CMDB) regroupant tous les éléments de configuration d'un système informatique.",
+      needsReview: true
+    },
+    aliases: [
+      "CMDB"
+    ],
+    related: [],
+    example: {
+      text: "We registered the new database servers in our configuration management database."
+    },
+    source: "project-glossary-v2"
+  },
+  {
+    id: "business_process_reengineering",
+    category: "project",
+    level: "advanced",
+    subcategory: "project-management",
+    exam_tags: [
+      "itpass",
+      "sg"
+    ],
+    examTags: [
+      "itpass",
+      "sg"
+    ],
+    skillTags: [
+      "process-improvement",
+      "business-transformation"
+    ],
+    searchBoost: 1.1,
+    schemaVersion: "v2",
+    updatedAt: "2026-06-13",
+    keepEnglish: true,
+    ja: {
+      term: "業務プロセス再設計 (BPR)",
+      kana: "ギョウムプロセスサイセッケイ",
+      note: "企業の目標を達成するために、既存の業務組織やビジネスプロセスを根本的に見直し、再設計する手法。"
+    },
+    zh: {
+      term: "业务流程重组",
+      explanation: "对企业业务流程进行根本性的重新思考和彻底的重新设计，以显著提高效率、质量、成本和响应速度，简称 BPR。"
+    },
+    en: {
+      term: "Business Process Reengineering",
+      explanation: "The radical redesign of core business processes to achieve dramatic improvements in productivity and quality."
+    },
+    my: {
+      term: "လုပ်ငန်းစဉ် အခြေခံမှပြန်လည်ပြင်ဆင်ခြင်း",
+      explanation: "ကုန်ထုတ်စွမ်းအားနှင့် အရည်အသွေးများ သိသာစွာတိုးတက်စေရန် လုပ်ငန်းစဉ်များကို အခြေခံကျကျ ပြန်လည်ဒီဇိုင်းဆွဲခြင်း။",
+      needsReview: true
+    },
+    vi: {
+      term: "Tái cấu trúc quy trình kinh doanh",
+      explanation: "Thiết kế lại căn bản các quy trình cốt lõi của doanh nghiệp nhằm cải thiện vượt bậc năng suất và chất lượng.",
+      needsReview: true
+    },
+    fr: {
+      term: "Réingénierie des processus d'affaires",
+      explanation: "La refonte radicale des processus d'une entreprise pour obtenir des gains de performance spectaculaires.",
+      needsReview: true
+    },
+    aliases: [
+      "BPR"
+    ],
+    related: [],
+    example: {
+      text: "The consulting firm suggested business process reengineering to automate invoice matching."
+    },
+    source: "project-glossary-v2"
+  },
+  {
+    id: "knowledge_management",
+    category: "project",
+    level: "intermediate",
+    subcategory: "project-management",
+    exam_tags: [
+      "itpass",
+      "sg"
+    ],
+    examTags: [
+      "itpass",
+      "sg"
+    ],
+    skillTags: [
+      "knowledge-sharing",
+      "collaboration"
+    ],
+    searchBoost: 1.1,
+    schemaVersion: "v2",
+    updatedAt: "2026-06-13",
+    keepEnglish: true,
+    ja: {
+      term: "ナレッジマネジメント",
+      kana: "ナレッジマネジメント",
+      note: "企業や組織の構成員が持つ暗黙知を形式知化し、共有・活用することで組織力を高める経営手法。"
+    },
+    zh: {
+      term: "知识管理",
+      explanation: "企业或组织对内外部的有形和无形知识资源（包括隐性知识与显性知识）进行系统化收集、共享、保存和创新的管理活动。"
+    },
+    en: {
+      term: "Knowledge Management",
+      explanation: "The process of creating, sharing, using and managing the knowledge and information of an organization."
+    },
+    my: {
+      term: "အသိပညာ စီမံခန့်ခွဲမှုစနစ်",
+      explanation: "အဖွဲ့အစည်းတစ်ခုအတွင်းရှိ အတွေ့အကြုံများနှင့် အသိပညာများကို စနစ်တကျ စုဆောင်းမျှဝေပြီး အသုံးချသည့် စနစ်။",
+      needsReview: true
+    },
+    vi: {
+      term: "Quản lý tri thức",
+      explanation: "Quá trình thu thập, chia sẻ, sử dụng và quản trị tri thức cũng như thông tin trong một tổ chức.",
+      needsReview: true
+    },
+    fr: {
+      term: "Gestion des connaissances",
+      explanation: "Méthode managériale visant à identifier, formaliser et partager les connaissances au sein d'une organisation.",
+      needsReview: true
+    },
+    aliases: [
+      "KM"
+    ],
+    related: [],
+    example: {
+      text: "We set up a central wiki platform to improve knowledge management within the DevOps team."
+    },
+    source: "project-glossary-v2"
+  },
+  {
+    id: "lean_startup",
+    category: "project",
+    level: "intermediate",
+    subcategory: "project-management",
+    exam_tags: [
+      "itpass",
+      "sg"
+    ],
+    examTags: [
+      "itpass",
+      "sg"
+    ],
+    skillTags: [
+      "startup-methodology",
+      "agile"
+    ],
+    searchBoost: 1.1,
+    schemaVersion: "v2",
+    updatedAt: "2026-06-13",
+    keepEnglish: true,
+    ja: {
+      term: "リーンスタートアップ",
+      kana: "リーンスタートアップ",
+      note: "コストをかけずに最小限の製品 (MVP) を作り、顧客の反応を見ながら改善や軌道修正を素早く繰り返す起業手法。"
+    },
+    zh: {
+      term: "精益创业",
+      explanation: "一种倡导开发极简可行产品（MVP）、通过快速的市场和用户反馈进行低成本迭代验证与方向调整的创新创业方法论。"
+    },
+    en: {
+      term: "Lean Startup",
+      explanation: "A methodology for developing businesses and products that aims to shorten product development cycles by adopting MVP."
+    },
+    my: {
+      term: "လျင်မြန်သော စီးပွားရေးစတင်မှုနည်းလမ်း",
+      explanation: "အနည်းဆုံးလိုအပ်ချက်များပါဝင်သော MVP အား ထုတ်လုပ်ပြီး စျေးကွက်တုံ့ပြန်ချက်ဖြင့် လျင်မြန်စွာ ပြုပြင်မွမ်းမံသည့် စနစ်။",
+      needsReview: true
+    },
+    vi: {
+      term: "Khởi nghiệp tinh gọn",
+      explanation: "Phương pháp phát triển sản phẩm thông qua việc thử nghiệm MVP và cải tiến liên tục dựa trên phản hồi của khách hàng.",
+      needsReview: true
+    },
+    fr: {
+      term: "Lean Startup",
+      explanation: "Une approche de lancement d'activité axée sur la validation rapide des besoins clients avec un produit minimum viable.",
+      needsReview: true
+    },
+    aliases: [],
+    related: [],
+    example: {
+      text: "Our engineering team used the lean startup model to validate the new dashboard feature."
+    },
+    source: "project-glossary-v2"
+  },
+  {
+    id: "matrix_organization",
+    category: "project",
+    level: "intermediate",
+    subcategory: "project-management",
+    exam_tags: [
+      "itpass",
+      "sg"
+    ],
+    examTags: [
+      "itpass",
+      "sg"
+    ],
+    skillTags: [
+      "organizational-design",
+      "governance"
+    ],
+    searchBoost: 1.1,
+    schemaVersion: "v2",
+    updatedAt: "2026-06-13",
+    keepEnglish: true,
+    ja: {
+      term: "マトリクス組織",
+      kana: "マトリクスソシキ",
+      note: "従来の職能別組織とプロジェクト別組織を縦横に組み合わせ、複数の指揮系統を持つ組織形態。"
+    },
+    zh: {
+      term: "矩阵型组织",
+      explanation: "将传统的职能部门（纵向）与临时项目团队（横向）相结合的组织结构，成员通常需同时向职能经理和项目经理双重汇报。"
+    },
+    en: {
+      term: "Matrix Organization",
+      explanation: "An organizational structure in which employees report to both a functional manager and a project manager."
+    },
+    my: {
+      term: "မက်ထရစ် ဖွဲ့စည်းပုံစနစ်",
+      explanation: "အလုပ်သမားများအနေဖြင့် လုပ်ငန်းဆိုင်ရာမန်နေဂျာနှင့် ပရောဂျက်မန်နေဂျာနှစ်ဦးလုံးထံ တင်ပြရသည့် ဖွဲ့စည်းပုံ။",
+      needsReview: true
+    },
+    vi: {
+      term: "Cơ cấu tổ chức ma trận",
+      explanation: "Mẫu cơ cấu tổ chức quản lý song song, trong đó nhân viên báo cáo cho cả quản lý chức năng lẫn quản lý dự án.",
+      needsReview: true
+    },
+    fr: {
+      term: "Organisation matricielle",
+      explanation: "Structure organisationnelle où les employés dépendent à la fois d'un chef de projet et d'un responsable fonctionnel.",
+      needsReview: true
+    },
+    aliases: [],
+    related: [],
+    example: {
+      text: "In our matrix organization, developers consult their functional head for career development but report to project leads daily."
+    },
+    source: "project-glossary-v2"
+  },
+  {
+    id: "corporate_identity",
+    category: "project",
+    level: "basic",
+    subcategory: "legal-and-ethics",
+    exam_tags: [
+      "itpass",
+      "sg"
+    ],
+    examTags: [
+      "itpass",
+      "sg"
+    ],
+    skillTags: [
+      "branding",
+      "corporate-strategy"
+    ],
+    searchBoost: 1.1,
+    schemaVersion: "v2",
+    updatedAt: "2026-06-13",
+    keepEnglish: true,
+    ja: {
+      term: "コーポレートアイデンティティ (CI)",
+      kana: "コーポレートアイデンティティ",
+      note: "企業の理念、使命、ビジュアルイメージなどを統一的に発信し、ブランドイメージを確立する戦略。"
+    },
+    zh: {
+      term: "企业识别",
+      explanation: "企业通过统一的经营理念、行为准则及视觉设计（VI），向社会公众传达独特个性和企业形象的品牌战略，简称 CI。"
+    },
+    en: {
+      term: "Corporate Identity",
+      explanation: "The manner in which a corporation, firm or business enterprise presents itself to the public."
+    },
+    my: {
+      term: "ကုမ္ပဏီပုံရိပ် ဖော်ဆောင်မှုစနစ်",
+      explanation: "ကုမ္ပဏီတစ်ခု၏ အတွေးအခေါ်၊ လုပ်ငန်းပုံစံနှင့် လိုဂိုဒီဇိုင်းများကို အများပြည်သူသိရှိရန် ပုံဖော်ပေးသည့်စနစ် (CI)။",
+      needsReview: true
+    },
+    vi: {
+      term: "Bản sắc doanh nghiệp",
+      explanation: "Cách thức một doanh nghiệp thể hiện bản thân trước công chúng thông qua thương hiệu, văn hóa và bộ nhận diện trực quan.",
+      needsReview: true
+    },
+    fr: {
+      term: "Identité visuelle de l'entreprise",
+      explanation: "Ensemble des éléments graphiques et philosophiques par lesquels une entreprise exprime sa personnalité unique.",
+      needsReview: true
+    },
+    aliases: [
+      "CI"
+    ],
+    related: [],
+    example: {
+      text: "The marketing team created a new design system to refresh our corporate identity."
+    },
+    source: "project-glossary-v2"
+  },
+  {
+    id: "product_lifecycle_management",
+    category: "project",
+    level: "intermediate",
+    subcategory: "project-management",
+    exam_tags: [
+      "itpass",
+      "sg"
+    ],
+    examTags: [
+      "itpass",
+      "sg"
+    ],
+    skillTags: [
+      "product-development",
+      "lifecycle"
+    ],
+    searchBoost: 1.1,
+    schemaVersion: "v2",
+    updatedAt: "2026-06-13",
+    keepEnglish: true,
+    ja: {
+      term: "製品ライフサイクル管理 (PLM)",
+      kana: "セイヒンライフサイクルカンリ",
+      note: "製品の企画、設計、製造、販売、保守から廃棄に至る全ライフサイクルを一元管理し、効率化を図る手法。"
+    },
+    zh: {
+      term: "产品生命周期管理",
+      explanation: "对产品从需求策划、开发设计、制造交付、运营维护到回收废弃的整个生命周期信息和业务流程进行集成管理，简称 PLM。"
+    },
+    en: {
+      term: "Product Lifecycle Management",
+      explanation: "The process of managing the entire lifecycle of a product from inception, through design and manufacture, to service and disposal."
+    },
+    my: {
+      term: "ထုတ်ကုန်သက်တမ်း စီမံခန့်ခွဲမှု",
+      explanation: "ထုတ်ကုန်တစ်ခု၏ ဒီဇိုင်း၊ ထုတ်လုပ်မှု၊ ဖြန့်ဖြူးမှုမှသည် ဖျက်သိမ်းမှုအထိ သက်တမ်းတစ်ခုလုံးအား စနစ်တကျစီမံခြင်း။",
+      needsReview: true
+    },
+    vi: {
+      term: "Quản lý vòng đời sản phẩm",
+      explanation: "Quy trình tích hợp quản lý toàn bộ vòng đời sản phẩm từ khâu ý tưởng, thiết kế đến sản xuất và tiêu hủy.",
+      needsReview: true
+    },
+    fr: {
+      term: "Gestion du cycle de vie du produit",
+      explanation: "Démarche d'ingénierie consistant à piloter l'ensemble des étapes de la vie d'un produit (PLM).",
+      needsReview: true
+    },
+    aliases: [
+      "PLM"
+    ],
+    related: [],
+    example: {
+      text: "Automotive companies rely heavily on product lifecycle management software to sync global engineering designs."
+    },
+    source: "project-glossary-v2"
+  },
+  {
+    id: "service_level_management",
+    category: "project",
+    level: "intermediate",
+    subcategory: "legal-and-ethics",
+    exam_tags: [
+      "itpass",
+      "sg"
+    ],
+    examTags: [
+      "itpass",
+      "sg"
+    ],
+    skillTags: [
+      "service-management",
+      "operations"
+    ],
+    searchBoost: 1.1,
+    schemaVersion: "v2",
+    updatedAt: "2026-06-13",
+    keepEnglish: true,
+    ja: {
+      term: "サービスレベル管理 (SLM)",
+      kana: "サービスレベルカンリ",
+      note: "SLAで合意したサービス品質を維持・向上させるために、測定、評価、改善を継続的に行う管理プロセス。"
+    },
+    zh: {
+      term: "服务级别管理",
+      explanation: "IT 服务管理中用以协商、监控和报告服务质量达标情况，以确保所提供的 IT 服务级别符合客户要求的持续性管理流程，简称 SLM。"
+    },
+    en: {
+      term: "Service Level Management",
+      explanation: "The process of negotiating, defining, monitoring, and evaluating the quality of IT services provided."
+    },
+    my: {
+      term: "ဝန်ဆောင်မှုအဆင့် စီမံခန့်ခွဲမှုစနစ်",
+      explanation: "SLA တွင် သဘောတူထားသော အရည်အသွေးများကို ထိန်းသိမ်းရန်နှင့် စဉ်ဆက်မပြတ် မြှင့်တင်ရန် တိုင်းတာကြီးကြပ်သည့် လုပ်ငန်းစဉ် (SLM)။",
+      needsReview: true
+    },
+    vi: {
+      term: "Quản lý mức dịch vụ",
+      explanation: "Quy trình đàm phán, giám sát và đánh giá chất lượng dịch vụ nhằm đảm bảo đáp ứng các cam kết trong SLA.",
+      needsReview: true
+    },
+    fr: {
+      term: "Gestion des niveaux de service",
+      explanation: "Processus (SLM) visant à négocier, surveiller et améliorer continuellement la qualité des services livrés.",
+      needsReview: true
+    },
+    aliases: [
+      "SLM"
+    ],
+    related: [],
+    example: {
+      text: "Monthly uptime reviews are a critical part of our team's service level management routine."
+    },
+    source: "project-glossary-v2"
+  },
+  {
+    id: "organizational_breakdown_structure",
+    category: "project",
+    level: "intermediate",
+    subcategory: "project-management",
+    exam_tags: [
+      "itpass",
+      "sg"
+    ],
+    examTags: [
+      "itpass",
+      "sg"
+    ],
+    skillTags: [
+      "organizational-design",
+      "project-governance"
+    ],
+    searchBoost: 1.1,
+    schemaVersion: "v2",
+    updatedAt: "2026-06-13",
+    keepEnglish: true,
+    ja: {
+      term: "組織ブレークダウン構造 (OBS)",
+      kana: "ソシキブレークダウンコウゾウ",
+      note: "プロジェクトに関わる組織構成を階層的に記述し、WBSの各ワークパッケージへの責任関係を示すための図表。"
+    },
+    zh: {
+      term: "组织分解结构",
+      explanation: "一种按阶层形式展示项目执行团队组织架构的图表，用于将项目工作包与具体的执行部门或个人相绑定，简称 OBS。"
+    },
+    en: {
+      term: "Organizational Breakdown Structure",
+      explanation: "A hierarchical representation of the project organization that outlines the relationships between project activities and organizational units."
+    },
+    my: {
+      term: "အဖွဲ့အစည်း ဖွဲ့စည်းပုံခွဲခြမ်းစိတ်ဖြာမှု",
+      explanation: "ပရောဂျက်လုပ်ဆောင်ချက်များနှင့် တာဝန်ရှိသည့် ဌာနများအကြား ဆက်သွယ်မှုကို ဖော်ပြသည့် အဆင့်ဆင့်ဖွဲ့စည်းပုံပြဇယား (OBS)။",
+      needsReview: true
+    },
+    vi: {
+      term: "Cấu trúc phân rã tổ chức",
+      explanation: "Sơ đồ biểu diễn thứ bậc phân cấp của tổ chức dự án, giúp liên kết các công việc với đơn vị chịu trách nhiệm.",
+      needsReview: true
+    },
+    fr: {
+      term: "Structure organisationnelle du projet",
+      explanation: "Une représentation hiérarchique de l'organisation du projet (OBS), reliant les lots de travail aux équipes.",
+      needsReview: true
+    },
+    aliases: [
+      "OBS"
+    ],
+    related: [],
+    example: {
+      text: "We mapped the work breakdown structure to the organizational breakdown structure to assign coding responsibilities."
+    },
+    source: "project-glossary-v2"
+  },
+  {
+    id: "database_federation",
+    category: "database",
+    level: "advanced",
+    subcategory: "database-architecture",
+    exam_tags: [
+      "sql"
+    ],
+    examTags: [
+      "sql"
+    ],
+    skillTags: [
+      "scalability",
+      "distributed-database"
+    ],
+    searchBoost: 1.2,
+    schemaVersion: "v2",
+    updatedAt: "2026-06-13",
+    keepEnglish: true,
+    ja: {
+      term: "データベース連邦化",
+      kana: "データベースレンポウカ",
+      note: "物理的に分散した複数の独立したデータベースを、ユーザーに対して仮想的に単一のデータベースとして見せる技術。"
+    },
+    zh: {
+      term: "数据库联邦",
+      explanation: "将物理上独立分布且异构的多个数据库系统，通过中间软件层整合为对上层应用呈现统一查询接口的逻辑单一数据库系统。"
+    },
+    en: {
+      term: "Database Federation",
+      explanation: "A database system which meta-associates multiple autonomous database systems into a single federated database."
+    },
+    my: {
+      term: "ဒေတာဘေ့စ် စုပေါင်းဆက်နွယ်မှုစနစ်",
+      explanation: "သီးခြားကွဲပြားနေသော ဒေတာဘေ့စ်စနစ်များကို သုံးစွဲသူအတွက် တစ်ခုတည်းအဖြစ် ပေါင်းစည်းပြသသည့် နည်းပညာ။",
+      needsReview: true
+    },
+    vi: {
+      term: "Liên minh cơ sở dữ liệu",
+      explanation: "Hệ thống tích hợp logic nhiều cơ sở dữ liệu độc lập vật lý thành một thực thể duy nhất đối với người dùng.",
+      needsReview: true
+    },
+    fr: {
+      term: "Fédération de bases de données",
+      explanation: "Système de gestion unifiant virtuellement plusieurs bases de données autonomes et distribuées.",
+      needsReview: true
+    },
+    aliases: [
+      "Federated Database Systems"
+    ],
+    related: [],
+    example: {
+      text: "Our reporting engine queries a database federation that aggregates data from sales and logistics systems."
+    },
+    source: "project-glossary-v2"
+  },
+  {
+    id: "write_ahead_logging",
+    category: "database",
+    level: "advanced",
+    subcategory: "database-architecture",
+    exam_tags: [
+      "sql"
+    ],
+    examTags: [
+      "sql"
+    ],
+    skillTags: [
+      "durability",
+      "transaction-safety"
+    ],
+    searchBoost: 1.2,
+    schemaVersion: "v2",
+    updatedAt: "2026-06-13",
+    keepEnglish: true,
+    ja: {
+      term: "ログ先行書き込み (WAL)",
+      kana: "ログセンコウカキコミ",
+      note: "データベースの変更を物理ファイルに適用する前に、まず変更内容をシーケンシャルなログに書き出すことで原子性と永続性を保証する手法。"
+    },
+    zh: {
+      term: "预写式日志",
+      explanation: "数据库保证事务原子性与持久性（ACID中的A和D）的核心技术。在修改实际数据页之前，必须先将变更信息顺序写入日志盘，简称 WAL。"
+    },
+    en: {
+      term: "Write-Ahead Logging",
+      explanation: "A family of techniques for providing atomicity and durability in database systems by writing actions to a log before modifying the database."
+    },
+    my: {
+      term: "ပြင်ဆင်မှုမှတ်တမ်း ကြိုတင်ရေးသားခြင်းစနစ် (WAL)",
+      explanation: "ဒေတာများကို အမှန်တကယ်မပြင်ဆင်မီ ၎င်းအစီအစဉ်များကို ဂျာနယ်မှတ်တမ်းတွင် အရင်ရေးသွင်းသည့် ACID အာမခံနည်းပညာ။",
+      needsReview: true
+    },
+    vi: {
+      term: "Ghi nhật ký trước khi viết",
+      explanation: "Cơ chế ghi các thay đổi dữ liệu vào tệp nhật ký tuần tự trước khi áp dụng chúng vào cơ sở dữ liệu vật lý để khôi phục khi gặp sự cố.",
+      needsReview: true
+    },
+    fr: {
+      term: "Journalisation transactionnelle",
+      explanation: "Technique (WAL) consistant à enregistrer les modifications dans un journal avant de les écrire dans la base de données.",
+      needsReview: true
+    },
+    aliases: [
+      "WAL"
+    ],
+    related: [],
+    example: {
+      text: "PostgreSQL uses write-ahead logging to guarantee crash recovery without losing committed transactions."
+    },
+    source: "project-glossary-v2"
+  },
+  {
+    id: "database_sharding_key",
+    category: "database",
+    level: "advanced",
+    subcategory: "database-architecture",
+    exam_tags: [
+      "sql"
+    ],
+    examTags: [
+      "sql"
+    ],
+    skillTags: [
+      "database-design",
+      "scalability"
+    ],
+    searchBoost: 1.1,
+    schemaVersion: "v2",
+    updatedAt: "2026-06-13",
+    keepEnglish: true,
+    ja: {
+      term: "シャードキー",
+      kana: "シャードキー",
+      note: "データベースを複数シャードに分割配置する際、データ行がどの物理サーバーに格納されるかを決定するために使用される特定の列。"
+    },
+    zh: {
+      term: "分片键",
+      explanation: "数据库在实施水平分片架构时，系统根据其对应字段的值（通过范围或哈希算法）路由和存取数据行的特定表字段。"
+    },
+    en: {
+      term: "Sharding Key",
+      explanation: "A column or field in a database table that determines how data is distributed across multiple physical shards."
+    },
+    my: {
+      term: "Sharding သော့ချက်",
+      explanation: "ဒေတာများကို မည်သည့်ဆာဗာဆီသို့ ဖြန့်ခွဲသိမ်းဆည်းမည်ကို ဆုံးဖြတ်ပေးသည့် ဇယားရှိ ညွှန်းကိန်းကော်လံ (Sharding Key)။",
+      needsReview: true
+    },
+    vi: {
+      term: "Khóa phân mảnh",
+      explanation: "Trường dữ liệu dùng làm căn cứ định tuyến và phân chia dữ liệu vào các máy chủ vật lý khác nhau trong hệ thống sharding.",
+      needsReview: true
+    },
+    fr: {
+      term: "Clé de partitionnement",
+      explanation: "Une colonne de table utilisée pour déterminer dans quel fragment (shard) chaque ligne de données doit être stockée.",
+      needsReview: true
+    },
+    aliases: [
+      "Shard Key"
+    ],
+    related: [],
+    example: {
+      text: "Choosing user_id as the database sharding key ensures all orders from a single user reside in the same partition."
+    },
+    source: "project-glossary-v2"
+  },
+  {
+    id: "database_connection_pooling",
+    category: "database",
+    level: "intermediate",
+    subcategory: "database-architecture",
+    exam_tags: [
+      "sql"
+    ],
+    examTags: [
+      "sql"
+    ],
+    skillTags: [
+      "performance-tuning",
+      "scalability"
+    ],
+    searchBoost: 1.1,
+    schemaVersion: "v2",
+    updatedAt: "2026-06-13",
+    keepEnglish: true,
+    ja: {
+      term: "データベース接続プーリング",
+      kana: "データベースセツゾクプーリング",
+      note: "データベース接続を毎回切断・再確立せず、あらかじめ作成した接続インスタンスを保持し使い回す仕組み。"
+    },
+    zh: {
+      term: "数据库连接池",
+      explanation: "一种创建并管理数据库物理连接缓存的技术。应用在启动时初始化一组连接，并在需要时借出、使用后归还，以规避高昂的TCP握手和连接创建开销。"
+    },
+    en: {
+      term: "Database Connection Pooling",
+      explanation: "A method of keeping database connections open so they can be reused by multiple requests, avoiding connection overhead."
+    },
+    my: {
+      term: "ဒေတာဘေ့စ် ချိတ်ဆက်မှုစုစည်းကန်",
+      explanation: "ချိတ်ဆက်မှုအသစ်များကို အကြိမ်ကြိမ်မပြုလုပ်ဘဲ ကြိုတင်ဖွင့်ထားသော ချိတ်ဆက်မှုများကို ပြန်လည်မျှဝေအသုံးပြုသည့်စနစ်။",
+      needsReview: true
+    },
+    vi: {
+      term: "Cung cấp nhóm kết nối cơ sở dữ liệu",
+      explanation: "Cơ chế quản lý tập hợp các kết nối cơ sở dữ liệu đã mở sẵn để tái sử dụng, giúp giảm tải tài nguyên hệ thống.",
+      needsReview: true
+    },
+    fr: {
+      term: "Pool de connexions",
+      explanation: "Méthode de conservation de connexions actives à la base de données pour éliminer le coût de création à chaque requête.",
+      needsReview: true
+    },
+    aliases: [
+      "Connection Pool"
+    ],
+    related: [],
+    example: {
+      text: "We configured a database connection pooling size of 50 to prevent connection timeouts under load."
+    },
+    source: "project-glossary-v2"
+  },
+  {
+    id: "slow_query_log",
+    category: "database",
+    level: "intermediate",
+    subcategory: "sql-tuning",
+    exam_tags: [
+      "sql"
+    ],
+    examTags: [
+      "sql"
+    ],
+    skillTags: [
+      "debugging",
+      "performance-tuning"
+    ],
+    searchBoost: 1.1,
+    schemaVersion: "v2",
+    updatedAt: "2026-06-13",
+    keepEnglish: true,
+    ja: {
+      term: "スロークエリログ",
+      kana: "スロークエリログ",
+      note: "設定された閾値以上の実行時間を要したデータベースクエリを記録したログファイル。パフォーマンスのボトルネック特定に用いる。"
+    },
+    zh: {
+      term: "慢查询日志",
+      explanation: "关系型数据库管理系统用来记录执行时长超过指定阈值阈（例如2秒）的所有SQL语句的系统日志，用于调优诊断。"
+    },
+    en: {
+      term: "Slow Query Log",
+      explanation: "A log file used in databases to record queries that take longer than a predefined amount of time to execute."
+    },
+    my: {
+      term: "နှေးကွေးသော Query မှတ်တမ်း",
+      explanation: "သတ်မှတ်စက္ကန့်ထက် ပိုမိုကြာမြင့်စွာ အလုပ်လုပ်နေသော query များကို ရှာဖွေနိုင်ရန် မှတ်တမ်းတင်ထားသော ဖိုင်။",
+      needsReview: true
+    },
+    vi: {
+      term: "Nhật ký truy vấn chậm",
+      explanation: "Tệp nhật ký ghi lại các câu lệnh SQL chạy lâu hơn thời gian quy định nhằm mục đích phân tích tối ưu hóa.",
+      needsReview: true
+    },
+    fr: {
+      term: "Journal des requêtes lentes",
+      explanation: "Fichier de logs contenant les requêtes SQL dont le temps d'exécution dépasse un seuil déterminé.",
+      needsReview: true
+    },
+    aliases: [],
+    related: [],
+    example: {
+      text: "Analyzing the slow query log revealed a missing composite index on the orders table."
+    },
+    source: "project-glossary-v2"
+  },
+  {
+    id: "database_clustering",
+    category: "database",
+    level: "advanced",
+    subcategory: "database-architecture",
+    exam_tags: [
+      "sql"
+    ],
+    examTags: [
+      "sql"
+    ],
+    skillTags: [
+      "high-availability",
+      "load-balancing"
+    ],
+    searchBoost: 1.2,
+    schemaVersion: "v2",
+    updatedAt: "2026-06-13",
+    keepEnglish: true,
+    ja: {
+      term: "データベースクラスタリング",
+      kana: "データベースクラスタリング",
+      note: "複数のデータベースサーバーを結合して一つのシステムとして動作させ、可用性と処理能力を向上させる技術。"
+    },
+    zh: {
+      term: "数据库集群",
+      explanation: "利用多台数据库服务器组成高可用、负载均衡或高伸缩性的集群系统，协同对外提供统一读写服务的数据库部署方式。"
+    },
+    en: {
+      term: "Database Clustering",
+      explanation: "The process of combining multiple database instances or servers to work together as a single system."
+    },
+    my: {
+      term: "ဒေတာဘေ့စ် စုပေါင်းဆာဗာစနစ်",
+      explanation: "ဒေတာဘေ့စ်ဆာဗာများစွာကို စုစည်းပြီး စွမ်းဆောင်ရည်နှင့် အသုံးပြုနိုင်စွမ်း မြင့်မားအောင် လုပ်ဆောင်သည့် စနစ်။",
+      needsReview: true
+    },
+    vi: {
+      term: "Phân cụm cơ sở dữ liệu",
+      explanation: "Cơ cấu liên kết nhiều thực thể cơ sở dữ liệu chạy song song nhằm đảm bảo tính sẵn sàng cao và phân tải.",
+      needsReview: true
+    },
+    fr: {
+      term: "Clustering de base de données",
+      explanation: "Configuration associant plusieurs serveurs de bases de données pour assurer la haute disponibilité et la tolérance aux pannes.",
+      needsReview: true
+    },
+    aliases: [
+      "Database Cluster"
+    ],
+    related: [],
+    example: {
+      text: "We set up active-passive database clustering to minimize downtime during hardware failures."
+    },
+    source: "project-glossary-v2"
+  },
+  {
+    id: "base_consistency_model",
+    category: "database",
+    level: "advanced",
+    subcategory: "database-architecture",
+    exam_tags: [
+      "sql"
+    ],
+    examTags: [
+      "sql"
+    ],
+    skillTags: [
+      "distributed-systems",
+      "nosql-concepts"
+    ],
+    searchBoost: 1.1,
+    schemaVersion: "v2",
+    updatedAt: "2026-06-13",
+    keepEnglish: true,
+    ja: {
+      term: "BASE一貫性モデル",
+      kana: "ベースイッカンセイモデル",
+      note: "ACIDと対比される分散システムの設計理念。基本利用可能 (Basically Available)、ソフト状態 (Soft state)、結果的一貫性 (Eventual consistency) の略。"
+    },
+    zh: {
+      term: "BASE 一致性模型",
+      explanation: "与ACID强一致性相对，常用于分布式NoSQL系统。指基本可用（Basically Available）、软状态（Soft state）和最终一致性（Eventual consistency）。"
+    },
+    en: {
+      term: "BASE Consistency Model",
+      explanation: "A model contrasted with ACID, emphasizing Basically Available, Soft state, and Eventual consistency in distributed databases."
+    },
+    my: {
+      term: "BASE ညီညွတ်မှုပုံစံ",
+      explanation: "ACID နှင့် မတူညီဘဲ ဖြန့်ခွဲစနစ်များအတွက် ရလဒ်ပိုင်းဆိုင်ရာ အချိန်ကိုက် ညီညွတ်မှုကို အဓိကထားသည့် မော်ဒယ်။",
+      needsReview: true
+    },
+    vi: {
+      term: "Mô hình nhất quán BASE",
+      explanation: "Mô hình thiết kế hệ thống phân tán đề cao tính sẵn sàng cao và chấp nhận nhất quán cuối cùng, tương phản với ACID.",
+      needsReview: true
+    },
+    fr: {
+      term: "Modèle de cohérence BASE",
+      explanation: "Modèle (BASE) pragmatique pour systèmes distribués, axé sur la disponibilité et la cohérence à terme (eventual consistency).",
+      needsReview: true
+    },
+    aliases: [
+      "BASE Model",
+      "Eventual Consistency"
+    ],
+    related: [],
+    example: {
+      text: "NoSQL databases often opt for the BASE consistency model to achieve high scale."
+    },
+    source: "project-glossary-v2"
+  },
+  {
+    id: "database_indexing_btree",
+    category: "database",
+    level: "intermediate",
+    subcategory: "sql-tuning",
+    exam_tags: [
+      "sql"
+    ],
+    examTags: [
+      "sql"
+    ],
+    skillTags: [
+      "indexing",
+      "performance-tuning"
+    ],
+    searchBoost: 1.2,
+    schemaVersion: "v2",
+    updatedAt: "2026-06-13",
+    keepEnglish: true,
+    ja: {
+      term: "B-Treeインデックス",
+      kana: "ビーツリーインデックス",
+      note: "平衡木（B-Tree）アルゴリズムに基づき、等価クエリや範囲検索を効率化するデータベースの標準インデックス構造。"
+    },
+    zh: {
+      term: "B树索引",
+      explanation: "利用平衡多路查找树（B-Tree或B+Tree）数据结构构建的数据库物理索引，可使数据查找、范围扫描和排序的时间复杂度降至对数级别。"
+    },
+    en: {
+      term: "B-Tree Indexing",
+      explanation: "A database index structure that uses a self-balancing tree to speed up equality and range queries."
+    },
+    my: {
+      term: "B-Tree ညွှန်းကိန်းစနစ်",
+      explanation: "ဒေတာများကို အမြန်ဆုံးရှာဖွေနိုင်ရန် Balanced Tree ပုံစံဖြင့် တည်ဆောက်ထားသော database index စနစ်။",
+      needsReview: true
+    },
+    vi: {
+      term: "Chỉ mục cây B-Tree",
+      explanation: "Cấu trúc chỉ mục mặc định của cơ sở dữ liệu sử dụng thuật toán cây tự cân bằng giúp tìm kiếm giá trị chính xác và phạm vi nhanh chóng.",
+      needsReview: true
+    },
+    fr: {
+      term: "Indexation par arbre B-Tree",
+      explanation: "Une structure d'indexation auto-équilibrée couramment utilisée pour accélérer les opérations de recherche.",
+      needsReview: true
+    },
+    aliases: [
+      "B-Tree Index"
+    ],
+    related: [],
+    example: {
+      text: "Adding a B-Tree indexing on the creation date significantly speeded up our chronological query."
+    },
+    source: "project-glossary-v2"
+  },
+  {
+    id: "foreign_key_constraint",
+    category: "database",
+    level: "basic",
+    subcategory: "database-architecture",
+    exam_tags: [
+      "sql"
+    ],
+    examTags: [
+      "sql"
+    ],
+    skillTags: [
+      "database-design",
+      "integrity"
+    ],
+    searchBoost: 1.2,
+    schemaVersion: "v2",
+    updatedAt: "2026-06-13",
+    keepEnglish: true,
+    ja: {
+      term: "外部キー制約",
+      kana: "ガイブキーセイラク",
+      note: "一つのテーブルの列が、別のテーブルの主キーに対応していることを保証し、テーブル間の参照整合性を維持する制約。"
+    },
+    zh: {
+      term: "外键约束",
+      explanation: "关系数据库中用以强制维持表与表之间引用完整性的完整性约束规则，保证引用的键在主表中必然存在。"
+    },
+    en: {
+      term: "Foreign Key Constraint",
+      explanation: "A database constraint that establishes a link between data in two tables, enforcing referential integrity."
+    },
+    my: {
+      term: "ပြင်ပသော့ချက် ကန့်သတ်ချက်",
+      explanation: "ဇယားနှစ်ခုအကြား အချက်အလက်များ လွဲချော်မှုမရှိစေရန် ချိတ်ဆက်မှု အညွှန်း整合ကို ထိန်းသိမ်းပေးသည့် စနစ်။",
+      needsReview: true
+    },
+    vi: {
+      term: "Ràng buộc khóa ngoại",
+      explanation: "Quy tắc thiết kế đảm bảo tính toàn vẹn tham chiếu giữa hai bảng, ngăn chặn dữ liệu rác.",
+      needsReview: true
+    },
+    fr: {
+      term: "Contrainte de clé étrangère",
+      explanation: "Règle de structure (FK) garantissant la cohérence des liaisons de données entre deux tables de la base.",
+      needsReview: true
+    },
+    aliases: [
+      "FK Constraint"
+    ],
+    related: [],
+    example: {
+      text: "A foreign key constraint prevents us from inserting an order for a customer ID that does not exist."
+    },
+    source: "project-glossary-v2"
+  },
+  {
+    id: "database_transaction_isolation",
+    category: "database",
+    level: "advanced",
+    subcategory: "database-architecture",
+    exam_tags: [
+      "sql"
+    ],
+    examTags: [
+      "sql"
+    ],
+    skillTags: [
+      "concurrency",
+      "transaction-safety"
+    ],
+    searchBoost: 1.1,
+    schemaVersion: "v2",
+    updatedAt: "2026-06-13",
+    keepEnglish: true,
+    ja: {
+      term: "トランザクション分離レベル",
+      kana: "トランザクションブンリレベル",
+      note: "データベースにおいて、並行して実行されるトランザクション同士が与え合う干渉度合いを制御する設定レベル。"
+    },
+    zh: {
+      term: "事务隔离级别",
+      explanation: "数据库用来控制并发事务在修改相同数据时的相互隔离和可见性水准。定义了读未提交、读已提交、可重复读和串行化四种级别。"
+    },
+    en: {
+      term: "Database Transaction Isolation",
+      explanation: "Defines the degree to which a transaction must be isolated from data modifications made by other transactions."
+    },
+    my: {
+      term: "ဒေတာဘေ့စ် transaction သီးခြားခွဲထားမှုအဆင့်",
+      explanation: "တစ်ချိန်တည်းဝင်ရောက်လာသော query များအကြား အပြန်အလှန် နှောင့်ယှက်မှု မရှိစေရန် စည်းကမ်းသတ်မှတ်သည့် အဆင့်များ။",
+      needsReview: true
+    },
+    vi: {
+      term: "Mức cô lập giao dịch",
+      explanation: "Mức độ cách ly dữ liệu khi các giao dịch chạy đồng thời để tránh lỗi xung đột (Dirty Read, Phantom Read).",
+      needsReview: true
+    },
+    fr: {
+      term: "Isolation des transactions",
+      explanation: "Niveau d'étanchéité définissant comment les modifications de données parallèles sont rendues visibles.",
+      needsReview: true
+    },
+    aliases: [
+      "Isolation Levels"
+    ],
+    related: [],
+    example: {
+      text: "We changed the database transaction isolation level to Repeatable Read to prevent dirty reads."
+    },
+    source: "project-glossary-v2"
+  },
+  {
+    id: "write_skew_anomaly",
+    category: "database",
+    level: "advanced",
+    subcategory: "database-architecture",
+    exam_tags: [
+      "sql"
+    ],
+    examTags: [
+      "sql"
+    ],
+    skillTags: [
+      "concurrency-control",
+      "advanced-sql"
+    ],
+    searchBoost: 1.1,
+    schemaVersion: "v2",
+    updatedAt: "2026-06-13",
+    keepEnglish: true,
+    ja: {
+      term: "ライトスキュー",
+      kana: "ライトスキュー",
+      note: "スナップショット分離レベルにおいて、2つの並行トランザクションが重なり合う別々のデータを書き換えることで生じる整合性異常。"
+    },
+    zh: {
+      term: "写偏斜异常",
+      explanation: "在快照隔离级别（Snapshot Isolation）下发生的一种并发异常：两个并行事务各自读取符合同一约束的数据，修改了不同的记录，但提交后违反了业务逻辑约束。"
+    },
+    en: {
+      term: "Write Skew Anomaly",
+      explanation: "A concurrency anomaly that occurs under Snapshot Isolation when two parallel transactions modify different datasets based on reading the same state."
+    },
+    my: {
+      term: "Write Skew လွဲချော်မှုပြဿနာ",
+      explanation: "Snapshot isolation အဆင့်တွင် query နှစ်ခုက ဒေတာမတူညီသည်ကို ပြင်သော်လည်း တစ်ပြိုင်နက်တည်းတွင် လော့ဂျစ်လွဲချော်သွားသည့် အခြေအနေ။",
+      needsReview: true
+    },
+    vi: {
+      term: "Lỗi dị thường ghi lệch",
+      explanation: "Hiện tượng bất nhất dữ liệu xảy ra ở mức cách ly Snapshot khi hai giao dịch đồng thời đọc cùng một trạng thái nhưng ghi đè lên hai đối tượng độc lập.",
+      needsReview: true
+    },
+    fr: {
+      term: "Anomalie d'écriture biaisée",
+      explanation: "Anomalie de concurrence (write skew) survenant sous isolation Snapshot lorsque deux transactions écrivent sur des entités distinctes.",
+      needsReview: true
+    },
+    aliases: [
+      "Write Skew"
+    ],
+    related: [],
+    example: {
+      text: "Write skew anomaly allowed two doctors to go off-call simultaneously because the validation checked active schedules concurrently."
+    },
+    source: "project-glossary-v2"
+  },
+  {
+    id: "lost_update_anomaly",
+    category: "database",
+    level: "advanced",
+    subcategory: "database-architecture",
+    exam_tags: [
+      "sql"
+    ],
+    examTags: [
+      "sql"
+    ],
+    skillTags: [
+      "concurrency-control",
+      "database-integrity"
+    ],
+    searchBoost: 1.1,
+    schemaVersion: "v2",
+    updatedAt: "2026-06-13",
+    keepEnglish: true,
+    ja: {
+      term: "ロストアップデート (更新消失)",
+      kana: "ロストアップデート",
+      note: "2つのトランザクションが同じ行を同時に更新する際、一方のコミット内容がもう一方のコミットで上書きされ失われる現象。"
+    },
+    zh: {
+      term: "丢失更新异常",
+      explanation: "两个并行事务读取并尝试修改同一行记录，后提交的事务无意中覆盖了先提交事务所做出的修改，导致数据变更丢失。"
+    },
+    en: {
+      term: "Lost Update Anomaly",
+      explanation: "A concurrency problem where two transactions update the same item, and the second update overwrites the first without knowing."
+    },
+    my: {
+      term: "ပြင်ဆင်ချက် ပျောက်ဆုံးသွားမှုပြဿနာ",
+      explanation: "နှစ်ဦးတစ်ပြိုင်တည်း ပြင်ဆင်ရန် ကြိုးစားရာတွင် ဒုတိယမြောက်လူ၏ ပြင်ဆင်ချက်က ပထမလူ၏ ပြင်ဆင်မှုကို အစားထိုးဖျက်ဆီးလိုက်သည့် အမှား။",
+      needsReview: true
+    },
+    vi: {
+      term: "Lỗi dị thường mất cập nhật",
+      explanation: "Vấn đề tranh chấp trong đó hai giao dịch thay đổi cùng một bản ghi và cập nhật của giao dịch thứ hai vô hiệu hóa cập nhật trước đó.",
+      needsReview: true
+    },
+    fr: {
+      term: "Anomalie de mise à jour perdue",
+      explanation: "Anomalie (lost update) où les modifications validées par une transaction sont écrasées par une autre sans avertissement.",
+      needsReview: true
+    },
+    aliases: [
+      "Lost Update"
+    ],
+    related: [],
+    example: {
+      text: "We applied pessimistic locking to avoid the lost update anomaly on the ticket reservation count."
+    },
+    source: "project-glossary-v2"
+  },
+  {
+    id: "java_compiler_tool",
+    category: "java",
+    level: "basic",
+    subcategory: "java-jvm",
+    exam_tags: [
+      "java"
+    ],
+    examTags: [
+      "java"
+    ],
+    skillTags: [
+      "compilation",
+      "java-build"
+    ],
+    searchBoost: 1.2,
+    schemaVersion: "v2",
+    updatedAt: "2026-06-13",
+    keepEnglish: true,
+    ja: {
+      term: "Javaコンパイラ (javac)",
+      kana: "ジャバコンパイラ",
+      note: "Javaのソースコード（.java）をJVMが実行可能なバイトコード（.class）に翻訳するツール。"
+    },
+    zh: {
+      term: "Java 编译器",
+      explanation: "将人类编写的 Java 源程序文件（.java）翻译转换为 Java 虚拟机能够解析执行的字节码文件（.class）的系统级编译程序，命令名为 javac。"
+    },
+    en: {
+      term: "Java Compiler",
+      explanation: "The tool (javac) that translates Java source code (.java) into platform-independent JVM bytecode (.class)."
+    },
+    my: {
+      term: "Java ဘာသာပြန်ကိရိယာ",
+      explanation: "လူဖတ်နိုင်သော Java source code (.java) ဖိုင်များကို JVM က မောင်းနှင်နိုင်သည့် bytecode (.class) အဖြစ် ပြောင်းလဲပေးသည့် command (javac)။",
+      needsReview: true
+    },
+    vi: {
+      term: "Trình biên dịch Java",
+      explanation: "Công cụ (javac) giúp biên dịch mã nguồn Java (.java) thành các tệp mã bytecode (.class) độc lập phần cứng.",
+      needsReview: true
+    },
+    fr: {
+      term: "Compilateur Java",
+      explanation: "L'outil standard (javac) transformant le code source Java (.java) en bytecode (.class) interprétable.",
+      needsReview: true
+    },
+    aliases: [
+      "javac"
+    ],
+    related: [],
+    example: {
+      text: "Run 'javac Main.java' in the command line to invoke the Java compiler tool."
+    },
+    source: "project-glossary-v2"
+  },  {
+    id: "java_native_interface_jni",
+    category: "java",
+    level: "advanced",
+    subcategory: "java-jvm",
+    exam_tags: [
+      "java"
+    ],
+    examTags: [
+      "java"
+    ],
+    skillTags: [
+      "native-code",
+      "interoperability"
+    ],
+    searchBoost: 1.1,
+    schemaVersion: "v2",
+    updatedAt: "2026-06-13",
+    keepEnglish: true,
+    ja: {
+      term: "Java Native Interface (JNI)",
+      kana: "ジャバネイティブインターフェース",
+      note: "JVM上で動作するJavaプログラムが、C/C++などの他のプログラミング言語で書かれたネイティブライブラリと相互通信するための機能。"
+    },
+    zh: {
+      term: "Java 本地接口",
+      explanation: "允许运行于 JVM 中的 Java 代码与用其他语言（如 C, C++）编写的动态链接库及系统底层硬软件服务进行双向互调用的框架，简称 JNI。"
+    },
+    en: {
+      term: "Java Native Interface",
+      explanation: "A programming framework that enables Java code running in a JVM to call and be called by native applications and libraries."
+    },
+    my: {
+      term: "Java Native Interface (JNI)",
+      explanation: "JVM ပေါ်ရှိ Java ကုဒ်များနှင့် C/C++ ကဲ့သို့ အခြားသော စနစ်သုံးဘာသာစကားများအကြား တိုက်ရိုက်ချိတ်ဆက်မောင်းနှင်ရန် ပံ့ပိုးသည့် framework။",
+      needsReview: true
+    },
+    vi: {
+      term: "Giao diện gốc Java",
+      explanation: "Khung lập trình (JNI) cho phép mã nguồn Java tương tác và gọi trực tiếp các thư viện mã máy được viết bằng C/C++.",
+      needsReview: true
+    },
+    fr: {
+      term: "Java Native Interface",
+      explanation: "Un cadriciel (JNI) permettant au code Java d'exécuter des bibliothèques compilées nativement en C ou C++.",
+      needsReview: true
+    },
+    aliases: [
+      "JNI"
+    ],
+    related: [],
+    example: {
+      text: "We used the Java Native Interface to access high-performance graphics hardware directly."
+    },
+    source: "project-glossary-v2"
+  },
+  {
+    id: "java_garbage_collection_process",
+    category: "java",
+    level: "intermediate",
+    subcategory: "java-jvm",
+    exam_tags: [
+      "java"
+    ],
+    examTags: [
+      "java"
+    ],
+    skillTags: [
+      "memory-management",
+      "jvm-performance"
+    ],
+    searchBoost: 1.2,
+    schemaVersion: "v2",
+    updatedAt: "2026-06-13",
+    keepEnglish: true,
+    ja: {
+      term: "Javaガベージコレクション",
+      kana: "ジャバガベージコレクション",
+      note: "JVMが使用されなくなった不要なオブジェクトをヒープメモリから自動的に検出し、解放するメモリ管理プロセス。"
+    },
+    zh: {
+      term: "Java 垃圾回收机制",
+      explanation: "Java 虚拟机的核心自动内存管理机制。运行于后台的线程会自动检测并释放堆中不再被引用的对象空间，避免手动内存泄漏。"
+    },
+    en: {
+      term: "Java Garbage Collection",
+      explanation: "The automatic memory management process in Java that reclaims unused heap memory by deleting unreachable objects."
+    },
+    my: {
+      term: "Java အမှိုက်သိမ်းစနစ်",
+      explanation: "JVM က သုံးစွဲခြင်းမရှိတော့သည့် heap memory ပေါ်ရှိ object များကို အလိုအလျောက် ရှင်းလင်းပေးသည့် စနစ်။",
+      needsReview: true
+    },
+    vi: {
+      term: "Quy trình thu gom rác Java",
+      explanation: "Cơ chế tự động dọn dẹp bộ nhớ heap của JVM bằng cách hủy các đối tượng không còn được sử dụng để tối ưu RAM.",
+      needsReview: true
+    },
+    fr: {
+      term: "Gestion de la mémoire par ramasse-miettes",
+      explanation: "Processus automatique (Garbage Collection) libérant la mémoire occupée par des objets inutilisés dans le tas JVM.",
+      needsReview: true
+    },
+    aliases: [
+      "Java GC",
+      "Garbage Collection"
+    ],
+    related: [],
+    example: {
+      text: "Tuning the Java garbage collection process parameters helped us reduce application pause time."
+    },
+    source: "project-glossary-v2"
+  },
+  {
+    id: "java_class_loader_mechanism",
+    category: "java",
+    level: "advanced",
+    subcategory: "java-jvm",
+    exam_tags: [
+      "java"
+    ],
+    examTags: [
+      "java"
+    ],
+    skillTags: [
+      "jvm-internals",
+      "classloading"
+    ],
+    searchBoost: 1.1,
+    schemaVersion: "v2",
+    updatedAt: "2026-06-13",
+    keepEnglish: true,
+    ja: {
+      term: "クラスローダ機構",
+      kana: "クラスローダキコウ",
+      note: "Javaプログラムの実行時に、必要なクラスファイル（.class）を動的に検索・読み込み、JVMのメモリ空間へロードする仕組み。"
+    },
+    zh: {
+      term: "Java 类加载机制",
+      explanation: "Java 运行时环境在需要使用某个类时，通过双亲委派机制动态地将字节码文件的二进制数据读入内存、解析并初始化类对象的系统过程。"
+    },
+    en: {
+      term: "Java ClassLoader Mechanism",
+      explanation: "The part of the Java Runtime Environment that dynamically loads Java classes into the Java Virtual Machine."
+    },
+    my: {
+      term: "Java class loader လုပ်ဆောင်ချက်စနစ်",
+      explanation: ".class ဖိုင်များကို ၎င်းတို့လိုအပ်သည့်အခါ JVM ၏ Memory ပေါ်သို့ အဆင့်ဆင့် ရှာဖွေတင်ဆောင်ပေးသည့် စနစ်။",
+      needsReview: true
+    },
+    vi: {
+      term: "Cơ chế ClassLoader Java",
+      explanation: "Hệ thống phụ trách tải động các tệp lớp Java (.class) vào bộ nhớ JVM khi ứng dụng khởi chạy.",
+      needsReview: true
+    },
+    fr: {
+      term: "Mécanisme de chargement des classes",
+      explanation: "Composant de la JRE chargeant dynamiquement les fichiers de classes (.class) au sein de la JVM.",
+      needsReview: true
+    },
+    aliases: [
+      "ClassLoader"
+    ],
+    related: [],
+    example: {
+      text: "We implemented a custom class loader mechanism to decrypt Java class bytes before executing them."
+    },
+    source: "project-glossary-v2"
+  },
+  {
+    id: "java_reflection_mechanism",
+    category: "java",
+    level: "advanced",
+    subcategory: "java-jvm",
+    exam_tags: [
+      "java"
+    ],
+    examTags: [
+      "java"
+    ],
+    skillTags: [
+      "metaprogramming",
+      "advanced-java"
+    ],
+    searchBoost: 1.1,
+    schemaVersion: "v2",
+    updatedAt: "2026-06-13",
+    keepEnglish: true,
+    ja: {
+      term: "リフレクション機能",
+      kana: "リフレクションキノウ",
+      note: "実行中のJavaプログラム自身が、クラスの構造やオブジェクトの属性、メソッドを動的に取得・操作するメタプログラミング手法。"
+    },
+    zh: {
+      term: "Java 反射机制",
+      explanation: "Java 程序在运行状态中，能够动态地获知任意一个类的所有属性和方法，并且能够操作任意一个对象的成员，支持动态开发。"
+    },
+    en: {
+      term: "Java Reflection",
+      explanation: "A feature in Java that allows an executing program to examine or modify the runtime behavior of applications."
+    },
+    my: {
+      term: "Java reflection လုပ်ဆောင်ချက်စနစ်",
+      explanation: "ပရိုဂရမ်မောင်းနှင်နေစဉ်အတွင်း class များ၏ ဖွဲ့စည်းပုံနှင့် method များကို dynamic နည်းလမ်းဖြင့် ဆန်းစစ်ထိန်းချုပ်နိုင်သည့် စနစ်။",
+      needsReview: true
+    },
+    vi: {
+      term: "Cơ chế phản chiếu Java",
+      explanation: "Khả năng cho phép chương trình Java kiểm tra và sửa đổi cấu trúc cũng như hành vi của lớp tại thời điểm chạy (runtime).",
+      needsReview: true
+    },
+    fr: {
+      term: "Mécanisme de réflexion Java",
+      explanation: "Fonctionnalité permettant d'examiner et de manipuler de manière dynamique les classes et objets à l'exécution.",
+      needsReview: true
+    },
+    aliases: [
+      "Reflection API"
+    ],
+    related: [],
+    example: {
+      text: "Spring framework uses the Java reflection mechanism to inject dependencies into class properties."
+    },
+    source: "project-glossary-v2"
+  },
+  {
+    id: "java_annotation_metadata",
+    category: "java",
+    level: "intermediate",
+    subcategory: "java-jvm",
+    exam_tags: [
+      "java"
+    ],
+    examTags: [
+      "java"
+    ],
+    skillTags: [
+      "metadata",
+      "programming-concepts"
+    ],
+    searchBoost: 1.1,
+    schemaVersion: "v2",
+    updatedAt: "2026-06-13",
+    keepEnglish: true,
+    ja: {
+      term: "Javaアノテーション",
+      kana: "ジャバアノテーション",
+      note: "ソースコードに記述し、コンパイラやフレームワークに対してクラスやメソッドの補助情報を提供するメタデータ。"
+    },
+    zh: {
+      term: "Java 注解",
+      explanation: "一种插入在 Java 源代码中的元数据标签，以 @ 符号开头。可在编译、类加载或运行时被编译器及第三方框架读取并自动执行特定逻辑。"
+    },
+    en: {
+      term: "Java Annotation",
+      explanation: "A form of metadata that can be added to Java source code, providing instructions to the compiler or framework."
+    },
+    my: {
+      term: "Java မှတ်ချက်စနစ်",
+      explanation: "ဆော့ဖ်ဝဲလ်ကုဒ်များတွင် ရေးသားပြီး compiler သို့မဟုတ် framework များသို့ အချက်အလက်元 တင်ပြပေးသည့် @ သင်္ကေတသုံး စနစ်။",
+      needsReview: true
+    },
+    vi: {
+      term: "Siêu dữ liệu chú thích Java",
+      explanation: "Thẻ siêu dữ liệu ghi vào mã nguồn giúp cung cấp hướng dẫn hoặc thông tin cấu hình cho trình biên dịch và framework.",
+      needsReview: true
+    },
+    fr: {
+      term: "Annotations Java",
+      explanation: "Métadonnées insérées dans le code source pour guider le compilateur ou les cadriciels à l'exécution.",
+      needsReview: true
+    },
+    aliases: [
+      "Java Annotations"
+    ],
+    related: [],
+    example: {
+      text: "The @Override java annotation metadata tells the compiler that the method is overriding a parent method."
+    },
+    source: "project-glossary-v2"
+  },
+  {
+    id: "java_executor_framework",
+    category: "java",
+    level: "advanced",
+    subcategory: "java-jvm",
+    exam_tags: [
+      "java"
+    ],
+    examTags: [
+      "java"
+    ],
+    skillTags: [
+      "concurrency",
+      "multithreading"
+    ],
+    searchBoost: 1.1,
+    schemaVersion: "v2",
+    updatedAt: "2026-06-13",
+    keepEnglish: true,
+    ja: {
+      term: "Executorフレームワーク",
+      kana: "エグゼキュータフレームワーク",
+      note: "スレッドの作成やタスクの割り当てなどを自動管理し、安全かつ効率的な並行処理を実現するJavaの標準機能。"
+    },
+    zh: {
+      term: "Java 线程池框架",
+      explanation: "Java 并发包（java.util.concurrent）中提供的一套异步执行和线程池管理框架，用以统一调度多线程，避免手动管理线程生命周期的风险。"
+    },
+    en: {
+      term: "Java Executor Framework",
+      explanation: "A framework that simplifies the execution of asynchronous tasks by managing and reusing threads automatically."
+    },
+    my: {
+      term: "Java Executor framework",
+      explanation: "Thread သစ်များကို ထပ်ခါတလဲလဲ မဖန်တီးဘဲ concurrency task များကို စနစ်တကျ စုစည်းစီမံပေးသည့် concurrent framework။",
+      needsReview: true
+    },
+    vi: {
+      term: "Khung công cụ Executor Java",
+      explanation: "Khung API quản lý hàng đợi tác vụ và tối ưu hóa phân phối luồng chạy nền trong java.util.concurrent.",
+      needsReview: true
+    },
+    fr: {
+      term: "Cadriciel Executor Java",
+      explanation: "Un ensemble d'API (Executor) facilitant l'exécution asynchrone des tâches et la gestion automatisée des threads.",
+      needsReview: true
+    },
+    aliases: [
+      "ExecutorService",
+      "ThreadPoolExecutor"
+    ],
+    related: [],
+    example: {
+      text: "We utilized the java executor framework with a fixed thread pool of ten to handle incoming socket requests."
+    },
+    source: "project-glossary-v2"
+  },
+  {
+    id: "java_servlet_api",
+    category: "java",
+    level: "intermediate",
+    subcategory: "java-jvm",
+    exam_tags: [
+      "java"
+    ],
+    examTags: [
+      "java"
+    ],
+    skillTags: [
+      "web-development",
+      "java-web"
+    ],
+    searchBoost: 1.1,
+    schemaVersion: "v2",
+    updatedAt: "2026-06-13",
+    keepEnglish: true,
+    ja: {
+      term: "JavaサーブレットAPI",
+      kana: "ジャバサーブレットエーピーアイ",
+      note: "Webサーバー上で動的にWebページやデータを生成するための、Java用標準サーバサイド技術仕様。"
+    },
+    zh: {
+      term: "Java Servlet 技术",
+      explanation: "运行在 Web 服务器或应用服务器上的 Java 核心技术规范，用于拦截、处理客户端发送的 HTTP 请求并动态生成响应。"
+    },
+    en: {
+      term: "Java Servlet API",
+      explanation: "A Java program that extends the capabilities of a server, hosting web applications and processing HTTP requests."
+    },
+    my: {
+      term: "Java Servlet နည်းပညာ",
+      explanation: "Web Server ပေါ်တွင် dynamic HTML များ သို့မဟုတ် HTTP response များ ထုတ်လုပ်ပေးရန် အသုံးပြုသည့် Java standard API။",
+      needsReview: true
+    },
+    vi: {
+      term: "Công cụ API Servlet Java",
+      explanation: "Công nghệ phía máy chủ của Java giúp định tuyến và xử lý các yêu cầu HTTP, tạo ra các phản hồi web động.",
+      needsReview: true
+    },
+    fr: {
+      term: "Servlet Java",
+      explanation: "Une API Java côté serveur permettant de répondre dynamiquement aux requêtes HTTP des clients web.",
+      needsReview: true
+    },
+    aliases: [
+      "Servlet"
+    ],
+    related: [],
+    example: {
+      text: "Historically, the java servlet api served as the bedrock for modern Java enterprise web frameworks."
+    },
+    source: "project-glossary-v2"
+  },
+  {
+    id: "java_spring_framework",
+    category: "java",
+    level: "intermediate",
+    subcategory: "java-jvm",
+    exam_tags: [
+      "java"
+    ],
+    examTags: [
+      "java"
+    ],
+    skillTags: [
+      "web-framework",
+      "dependency-injection"
+    ],
+    searchBoost: 1.2,
+    schemaVersion: "v2",
+    updatedAt: "2026-06-13",
+    keepEnglish: true,
+    ja: {
+      term: "Springフレームワーク",
+      kana: "スプリングフレームワーク",
+      note: "依存性の注入 (DI) やアスペクト指向 (AOP) などをコア機能として持つ、世界中で最も普及しているJava用企業向けフレームワーク。"
+    },
+    zh: {
+      term: "Spring 框架",
+      explanation: "Java 企业级开发中应用最广的开源应用框架。核心特色为控制反转（IoC / DI 依赖注入）与面向切面编程（AOP），简化了企业软件开发。"
+    },
+    en: {
+      term: "Spring Framework",
+      explanation: "An open-source application framework for the Java platform, featuring dependency injection and aspect-oriented programming."
+    },
+    my: {
+      term: "Spring framework",
+      explanation: "Dependency Injection (DI) နှင့် AOP တို့ကို အခြေခံပြီး Java enterprise app များ ရေးသားရာတွင် ကမ္ဘာ့အသုံးအများဆုံး framework။",
+      needsReview: true
+    },
+    vi: {
+      term: "Spring Framework",
+      explanation: "Khung phát triển phần mềm nguồn mở hàng đầu dành cho Java Enterprise, nổi tiếng với DI và AOP.",
+      needsReview: true
+    },
+    fr: {
+      term: "Cadriciel Spring",
+      explanation: "Cadriciel d'application open source (Spring) incontournable pour le développement d'applications Java d'entreprise.",
+      needsReview: true
+    },
+    aliases: [
+      "Spring Boot"
+    ],
+    related: [],
+    example: {
+      text: "We configured our database transaction management using the java spring framework's declarative annotations."
+    },
+    source: "project-glossary-v2"
+  },
+  {
+    id: "java_maven_build",
+    category: "java",
+    level: "basic",
+    subcategory: "java-jvm",
+    exam_tags: [
+      "java"
+    ],
+    examTags: [
+      "java"
+    ],
+    skillTags: [
+      "dependency-management",
+      "build-tools"
+    ],
+    searchBoost: 1.1,
+    schemaVersion: "v2",
+    updatedAt: "2026-06-13",
+    keepEnglish: true,
+    ja: {
+      term: "Apache Maven",
+      kana: "アパッチメイヴン",
+      note: "XML形式のpom.xmlファイルを用いて、Javaプロジェクトの依存ライブラリ管理やビルドプロセスを自動化するツール。"
+    },
+    zh: {
+      term: "Maven 构建工具",
+      explanation: "一种基于项目对象模型（POM）概念的 Java 项目管理和构建自动化工具，通过声明式的 pom.xml 自动从中央仓库下载依赖库。"
+    },
+    en: {
+      term: "Apache Maven",
+      explanation: "A build automation tool used primarily for Java projects, managing library dependencies via pom.xml."
+    },
+    my: {
+      term: "Apache Maven",
+      explanation: "pom.xml ဖိုင်ကို အခြေခံပြီး Java library dependency များကို အလိုအလျောက် ရယူဆောက်လုပ်ပေးသည့် build tool။",
+      needsReview: true
+    },
+    vi: {
+      term: "Công cụ quản lý dự án Maven",
+      explanation: "Công cụ tự động hóa việc biên dịch, đóng gói và quản lý các thư viện phụ thuộc của dự án Java bằng tệp pom.xml.",
+      needsReview: true
+    },
+    fr: {
+      term: "Apache Maven",
+      explanation: "Un outil de gestion et d'automatisation de production (Maven) pour les projets logiciels Java.",
+      needsReview: true
+    },
+    aliases: [
+      "Maven",
+      "Apache Maven tool"
+    ],
+    related: [],
+    example: {
+      text: "Adding the database driver coordinates in the java maven build file imports the JAR automatically."
+    },
+    source: "project-glossary-v2"
+  },
+  {
+    id: "python_package_installer_pip",
+    category: "python",
+    level: "basic",
+    subcategory: "python-syntax",
+    exam_tags: [
+      "python"
+    ],
+    examTags: [
+      "python"
+    ],
+    skillTags: [
+      "package-management",
+      "python-tools"
+    ],
+    searchBoost: 1.2,
+    schemaVersion: "v2",
+    updatedAt: "2026-06-13",
+    keepEnglish: true,
+    ja: {
+      term: "pipパッケージインストーラ",
+      kana: "ピップパッケージインストーラ",
+      note: "Python Package Index (PyPI) などからサードパーティ製ライブラリをダウンロードしてインストールするための標準ツール。"
+    },
+    zh: {
+      term: "pip 包管理器",
+      explanation: "Python 的官方标准软件包安装及管理工具，允许开发者从 PyPI 仓库拉取、安装和升级第三方模块包。"
+    },
+    en: {
+      term: "pip",
+      explanation: "The package installer for Python, allowing you to install and manage additional packages from the PyPI repository."
+    },
+    my: {
+      term: "pip package ထည့်သွင်းသူ",
+      explanation: "PyPI တွင် တင်ပြထားသော Python library များကို အလိုအလျောက် download ဆွဲတပ်ဆင်ပေးသည့် standard utility (pip)။",
+      needsReview: true
+    },
+    vi: {
+      term: "Trình cài đặt gói pip Python",
+      explanation: "Công cụ tiêu chuẩn để tìm kiếm, tải về và cài đặt các thư viện bên thứ ba từ máy chủ PyPI.",
+      needsReview: true
+    },
+    fr: {
+      term: "Gestionnaire de paquets pip",
+      explanation: "L'outil officiel de gestion de paquets (pip) pour installer des bibliothèques tierces depuis PyPI.",
+      needsReview: true
+    },
+    aliases: [
+      "pip"
+    ],
+    related: [],
+    example: {
+      text: "We used the python package installer pip to add the PostgreSQL driver to our deployment environment."
+    },
+    source: "project-glossary-v2"
+  },
+  {
+    id: "python_decorator_pattern",
+    category: "python",
+    level: "intermediate",
+    subcategory: "python-syntax",
+    exam_tags: [
+      "python"
+    ],
+    examTags: [
+      "python"
+    ],
+    skillTags: [
+      "metaprogramming",
+      "clean-code"
+    ],
+    searchBoost: 1.1,
+    schemaVersion: "v2",
+    updatedAt: "2026-06-13",
+    keepEnglish: true,
+    ja: {
+      term: "デコレータ",
+      kana: "デコレータ",
+      note: "関数やメソッドの定義の前に @ 記号を用いて記述し、既存のコードを変更せずに追加機能を被せる構文。"
+    },
+    zh: {
+      term: "Python 装饰器",
+      explanation: "Python 中通过在定义函数或类的前面添加 @ 语法糖，在不修改原对象代码的前提下为其注入审计、缓存、鉴权等扩展功能的切面编程机制。"
+    },
+    en: {
+      term: "Python Decorator",
+      explanation: "A design pattern in Python that allows a user to add new functionality to an existing object without modifying its structure."
+    },
+    my: {
+      term: "Python decorator ပုံစံ",
+      explanation: "@ သင်္ကေတသုံးပြီး ရှိပြီးသား function ၏ လော့ဂျစ်ကို မပြင်ဆင်ဘဲ အပိုအလုပ်လုပ်စေရန် လွှမ်းခြုံပေးသည့် ကုဒ်ပုံစံ။",
+      needsReview: true
+    },
+    vi: {
+      term: "Mẫu thiết kế decorator Python",
+      explanation: "Cú pháp sử dụng ký tự @ đặt trước hàm giúp bổ sung chức năng cho hàm hiện tại mà không sửa đổi mã nguồn của nó.",
+      needsReview: true
+    },
+    fr: {
+      term: "Décorateur Python",
+      explanation: "Une syntaxe simplifiée (@) permettant d'envelopper une fonction ou une classe pour enrichir son comportement.",
+      needsReview: true
+    },
+    aliases: [
+      "Python Decorator",
+      "Function Decorator"
+    ],
+    related: [],
+    example: {
+      text: "We created a custom python decorator pattern called @log_query to record SQL execution times."
+    },
+    source: "project-glossary-v2"
+  },
+  {
+    id: "python_generator_yield",
+    category: "python",
+    level: "intermediate",
+    subcategory: "python-syntax",
+    exam_tags: [
+      "python"
+    ],
+    examTags: [
+      "python"
+    ],
+    skillTags: [
+      "memory-efficiency",
+      "generators"
+    ],
+    searchBoost: 1.1,
+    schemaVersion: "v2",
+    updatedAt: "2026-06-13",
+    keepEnglish: true,
+    ja: {
+      term: "ジェネレータ (yield)",
+      kana: "ジェネレータ",
+      note: "一度にすべてのデータをメモリ上に確保するのではなく、必要に応じて1つずつ値を生成（yield）する特殊なイテレータ。"
+    },
+    zh: {
+      term: "Python 生成器",
+      explanation: "使用 yield 关键字的特殊函数，每次调用只生成并返回一个值并挂起当前上下文，极大地降低了大样本集合迭代时的内存开销。"
+    },
+    en: {
+      term: "Python Generator",
+      explanation: "A function that returns an iterator that produces a sequence of values when iterated over, using yield."
+    },
+    my: {
+      term: "Python generator လုပ်ဆောင်ချက်",
+      explanation: "ဒေတာအားလုံးကို Memory ပေါ်တွင် တစ်ခါတည်းမသိမ်းဆည်းဘဲ yield သုံးကာ တစ်ခုစီ ထုတ်လုပ်ပေးသည့် ထိရောက်သော iterator။",
+      needsReview: true
+    },
+    vi: {
+      term: "Trình tạo generator Python",
+      explanation: "Hàm đặc biệt trả về một đối tượng lặp sử dụng từ khóa yield giúp tiết kiệm RAM khi duyệt qua tập dữ liệu lớn.",
+      needsReview: true
+    },
+    fr: {
+      term: "Générateur Python",
+      explanation: "Fonction spéciale renvoyant un itérateur via l'instruction yield, idéale pour traiter de gros volumes de données.",
+      needsReview: true
+    },
+    aliases: [
+      "yield in Python",
+      "Generator Function"
+    ],
+    related: [],
+    example: {
+      text: "A python generator yield is perfect for streaming millions of rows from a database table."
+    },
+    source: "project-glossary-v2"
+  },
+  {
+    id: "python_interpreter_engine",
+    category: "python",
+    level: "basic",
+    subcategory: "python-syntax",
+    exam_tags: [
+      "python"
+    ],
+    examTags: [
+      "python"
+    ],
+    skillTags: [
+      "runtime",
+      "interpreter"
+    ],
+    searchBoost: 1.2,
+    schemaVersion: "v2",
+    updatedAt: "2026-06-13",
+    keepEnglish: true,
+    ja: {
+      term: "Pythonインタプリタ",
+      kana: "パイソンインタプリタ",
+      note: "Pythonコードを受け取り、コンパイルと実行をリアルタイムで行うランタイムエンジン（主にCPython）。"
+    },
+    zh: {
+      term: "Python 解释器",
+      explanation: "逐行将 Python 源代码翻译成低级字节码并立即执行的核心运行时引擎，最经典的官方参考实现是 CPython。"
+    },
+    en: {
+      term: "Python Interpreter",
+      explanation: "The software engine that reads and executes Python code directly, typically referring to CPython."
+    },
+    my: {
+      term: "Python ဘာသာပြန်အင်ဂျင်",
+      explanation: "Python source code များကို အချိန်နှင့်တပြေးညီ ဖတ်ရှုမောင်းနှင်ပေးသည့် runtime logic အင်ဂျင် (CPython)။",
+      needsReview: true
+    },
+    vi: {
+      term: "Trình thông dịch Python",
+      explanation: "Bộ máy thực thi chịu trách nhiệm đọc và thông dịch từng dòng lệnh Python thành mã byte để thực hiện trực tiếp.",
+      needsReview: true
+    },
+    fr: {
+      term: "Interpréteur Python",
+      explanation: "Le moteur logiciel (comme CPython) traduisant et exécutant le code Python ligne par ligne.",
+      needsReview: true
+    },
+    aliases: [
+      "CPython",
+      "Python Engine"
+    ],
+    related: [],
+    example: {
+      text: "When you run a script, the python interpreter engine parses syntax and runs the bytecode loop."
+    },
+    source: "project-glossary-v2"
+  },
+  {
+    id: "python_asyncio_framework",
+    category: "python",
+    level: "advanced",
+    subcategory: "python-syntax",
+    exam_tags: [
+      "python"
+    ],
+    examTags: [
+      "python"
+    ],
+    skillTags: [
+      "asynchronous",
+      "concurrency"
+    ],
+    searchBoost: 1.1,
+    schemaVersion: "v2",
+    updatedAt: "2026-06-13",
+    keepEnglish: true,
+    ja: {
+      term: "asyncioライブラリ",
+      kana: "アシンクアイオーライブラリ",
+      note: "async/await構文を用いて、シングルスレッドでのイベントループによる高並行I/O処理を実現するPython標準ライブラリ。"
+    },
+    zh: {
+      term: "asyncio 异步框架",
+      explanation: "Python 官方提供的异步I/O框架。利用 async/await 语法与单线程协程事件循环，能以极高的效率处理大量的并发网络请求。"
+    },
+    en: {
+      term: "Python asyncio",
+      explanation: "A library in Python to write concurrent code using the async/await syntax and event loops."
+    },
+    my: {
+      term: "asyncio frameowrk",
+      explanation: "async/await syntax များကိုသုံးပြီး single-thread event loop ဖြင့် high并发 I/O များကို ထိရောက်စွာစီမံသည့် built-in module။",
+      needsReview: true
+    },
+    vi: {
+      term: "Thư viện asyncio Python",
+      explanation: "Thư viện cốt lõi giúp viết mã đồng thời sử dụng cú pháp async/await để điều hướng vòng lặp sự kiện phi tuyến tính.",
+      needsReview: true
+    },
+    fr: {
+      term: "Cadriciel asyncio Python",
+      explanation: "Une bibliothèque standard (asyncio) pour écrire du code asynchrone performant via les mots-clés async et await.",
+      needsReview: true
+    },
+    aliases: [
+      "asyncio"
+    ],
+    related: [],
+    example: {
+      text: "We used the python asyncio framework to run twenty independent API calls in parallel."
+    },
+    source: "project-glossary-v2"
+  },
+  {
+    id: "python_dunder_methods",
+    category: "python",
+    level: "intermediate",
+    subcategory: "python-syntax",
+    exam_tags: [
+      "python"
+    ],
+    examTags: [
+      "python"
+    ],
+    skillTags: [
+      "oop",
+      "magic-methods"
+    ],
+    searchBoost: 1.1,
+    schemaVersion: "v2",
+    updatedAt: "2026-06-13",
+    keepEnglish: true,
+    ja: {
+      term: "特殊メソッド (ダブルアンダースコア)",
+      kana: "トクシュメソッド",
+      note: "__init__や__str__のように、名前の前後にダブルアンダースコアを持つ、Pythonが特定の処理で自動的に呼び出す組み込みメソッド。"
+    },
+    zh: {
+      term: "魔术方法",
+      explanation: "Python 类中前后以双下划线命名的特殊内置方法（如 __init__, __str__），允许自定义重载操作符或拦截系统调用，简称魔术方法或双下方法。"
+    },
+    en: {
+      term: "Dunder Methods",
+      explanation: "Special methods in Python with double underscores at the beginning and end of their names, such as __init__."
+    },
+    my: {
+      term: "Dunder method များ",
+      explanation: "__init__ သို့မဟုတ် __repr__ ကဲ့သို့ double underscore ဖြင့်စသော Python ၏ သီးခြားလုပ်ဆောင်ချက် built-in magic method များ။",
+      needsReview: true
+    },
+    vi: {
+      term: "Phương thức dunder Python",
+      explanation: "Các phương thức đặc biệt bắt đầu và kết thúc bằng hai dấu gạch dưới (ví dụ: __init__), giúp tùy biến hành vi của lớp.",
+      needsReview: true
+    },
+    fr: {
+      term: "Méthodes magiques dunder",
+      explanation: "Méthodes spéciales (comme __init__ ou __str__) entourées de doubles tirets bas pour surcharger les comportements d'objets.",
+      needsReview: true
+    },
+    aliases: [
+      "Magic Methods",
+      "Double Underscore Methods"
+    ],
+    related: [],
+    example: {
+      text: "Implementing the __len__ python dunder method allows the class instance to support the built-in len() function."
+    },
+    source: "project-glossary-v2"
+  },
+  {
+    id: "python_pandas_library",
+    category: "python",
+    level: "intermediate",
+    subcategory: "python-syntax",
+    exam_tags: [
+      "python"
+    ],
+    examTags: [
+      "python"
+    ],
+    skillTags: [
+      "data-analysis",
+      "data-science"
+    ],
+    searchBoost: 1.1,
+    schemaVersion: "v2",
+    updatedAt: "2026-06-13",
+    keepEnglish: true,
+    ja: {
+      term: "Pandasライブラリ",
+      kana: "パンダスライブラリ",
+      note: "データフレーム (DataFrame) と呼ばれる強力な2次元データ構造を提供し、データの集計や加工を容易にするライブラリ。"
+    },
+    zh: {
+      term: "Pandas 库",
+      explanation: "Python 数据分析的核心第三方库。提供称为 DataFrame 的多维数据分析和处理表结构，非常适合做数据清洗和统计分析。"
+    },
+    en: {
+      term: "pandas",
+      explanation: "A fast, powerful, flexible and easy to use open source data analysis and manipulation tool built on top of Python."
+    },
+    my: {
+      term: "Pandas library",
+      explanation: "DataFrame ဟုခေါ်သော ဇယားပုံစံ ဒေတာများကို လျင်မြန်စွာ ဆန်းစစ်ကိုင်တွယ်နိုင်ရန် ပံ့ပိုးသည့် Python library။",
+      needsReview: true
+    },
+    vi: {
+      term: "Thư viện pandas Python",
+      explanation: "Thư viện khoa học dữ liệu hàng đầu của Python cung cấp cấu trúc DataFrame phục vụ phân tích và làm sạch thông tin.",
+      needsReview: true
+    },
+    fr: {
+      term: "Bibliothèque pandas",
+      explanation: "Bibliothèque Python (pandas) de référence pour la manipulation et l'analyse de données structurées.",
+      needsReview: true
+    },
+    aliases: [
+      "pandas"
+    ],
+    related: [],
+    example: {
+      text: "We loaded the SQL query results directly into a python pandas library DataFrame to compute correlation coefficients."
+    },
+    source: "project-glossary-v2"
+  },
+  {
+    id: "python_numpy_library",
+    category: "python",
+    level: "intermediate",
+    subcategory: "python-syntax",
+    exam_tags: [
+      "python"
+    ],
+    examTags: [
+      "python"
+    ],
+    skillTags: [
+      "scientific-computing",
+      "math"
+    ],
+    searchBoost: 1.1,
+    schemaVersion: "v2",
+    updatedAt: "2026-06-13",
+    keepEnglish: true,
+    ja: {
+      term: "NumPyライブラリ",
+      kana: "ナムパイライブラリ",
+      note: "大規模な多次元配列や行列の効率的な演算を可能にする、科学技術計算用の基盤ライブラリ。"
+    },
+    zh: {
+      term: "NumPy 库",
+      explanation: "Python 科学计算的基础核心库。提供高性能的多维数组（ndarray）对象以及大量的数学函数库，被 Pandas 等工具广泛依赖。"
+    },
+    en: {
+      term: "NumPy",
+      explanation: "A library for the Python programming language, adding support for large, multi-dimensional arrays and matrices."
+    },
+    my: {
+      term: "NumPy library",
+      explanation: "မက်ထရစ်များနှင့် အတိုင်းအဆအမြောက်အမြားရှိသော ကိန်းဂဏန်းသင်္ချာများကို အထူးမြန်ဆန်စွာ တွက်ချက်ပေးသည့် library။",
+      needsReview: true
+    },
+    vi: {
+      term: "Thư viện NumPy Python",
+      explanation: "Thư viện toán học nền tảng hỗ trợ tính toán vector, ma trận và mảng nhiều chiều với tốc độ cao.",
+      needsReview: true
+    },
+    fr: {
+      term: "Bibliothèque NumPy",
+      explanation: "Bibliothèque Python (NumPy) spécialisée dans le calcul scientifique et le traitement de grands tableaux multidimensionnels.",
+      needsReview: true
+    },
+    aliases: [
+      "numpy"
+    ],
+    related: [],
+    example: {
+      text: "The machine learning algorithm converts image pixels into a python numpy library array first."
+    },
+    source: "project-glossary-v2"
+  },
+  {
+    id: "python_poetry_tool",
+    category: "python",
+    level: "intermediate",
+    subcategory: "python-syntax",
+    exam_tags: [
+      "python"
+    ],
+    examTags: [
+      "python"
+    ],
+    skillTags: [
+      "dependency-management",
+      "build-tools"
+    ],
+    searchBoost: 1.1,
+    schemaVersion: "v2",
+    updatedAt: "2026-06-13",
+    keepEnglish: true,
+    ja: {
+      term: "Poetryデプロイツール",
+      kana: "ポエトリーデプロイツール",
+      note: "pyproject.tomlファイルを用いて、Pythonプロジェクトの依存ライブラリ管理や仮想環境、ビルドを統合管理するモダンなツール。"
+    },
+    zh: {
+      term: "Poetry 依赖管理工具",
+      explanation: "现代化的 Python 项目打包和依赖管理工具，基于 pyproject.toml 规范，能生成严格锁定的 poetry.lock 以保证开发与生产依赖的一致性。"
+    },
+    en: {
+      term: "Poetry",
+      explanation: "A tool for dependency management and packaging in Python, managing pyproject.toml and poetry.lock files."
+    },
+    my: {
+      term: "Poetry package စီမံခန့်ခွဲမှုကိရိယာ",
+      explanation: "pyproject.toml ကို အခြေခံပြီး Python dependency များနှင့် virtual environment ကို ပေါင်းစပ်ထိန်းချုပ်ပေးသည့် tool။",
+      needsReview: true
+    },
+    vi: {
+      term: "Công cụ quản lý thư viện Poetry",
+      explanation: "Công cụ hiện đại giúp quản lý thư viện phụ thuộc và đóng gói dự án Python thông qua tệp pyproject.toml.",
+      needsReview: true
+    },
+    fr: {
+      term: "Poetry Python",
+      explanation: "Un outil moderne de gestion des dépendances et d'empaquetage de projets Python (Poetry).",
+      needsReview: true
+    },
+    aliases: [
+      "Poetry"
+    ],
+    related: [],
+    example: {
+      text: "We migrated our dependency specification to python poetry tool to avoid library version mismatches."
+    },
+    source: "project-glossary-v2"
+  },
+  {
+    id: "python_docstring_format",
+    category: "python",
+    level: "basic",
+    subcategory: "python-syntax",
+    exam_tags: [
+      "python"
+    ],
+    examTags: [
+      "python"
+    ],
+    skillTags: [
+      "documentation",
+      "best-practices"
+    ],
+    searchBoost: 1.1,
+    schemaVersion: "v2",
+    updatedAt: "2026-06-13",
+    keepEnglish: true,
+    ja: {
+      term: "ドキュメンテーション文字列 (docstring)",
+      kana: "ドキュメンテーションモジレツ",
+      note: "関数やモジュールの先頭に記述する三連引用符（\"\"\"）を用いた説明文。help()関数で動的取得できる。"
+    },
+    zh: {
+      term: "Python 文档字符串",
+      explanation: "在函数、类或模块内部第一行使用三对双引号定义的内容注释，可通过 help() 或 .__doc__ 属性在运行时被反射读取的官方文档规范，简称 docstring。"
+    },
+    en: {
+      term: "Python Docstring",
+      explanation: "A string literal specified as the first statement in a module, function, class, or method definition."
+    },
+    my: {
+      term: "Python Docstring စာသား",
+      explanation: "Function သို့မဟုတ် class များ၏ ပထမဆုံးလိုင်းတွင် ၎င်း၏ ရည်ရွယ်ချက်ကို ရေးသားသည့် built-in documentation စာသား (\"\"\")။",
+      needsReview: true
+    },
+    vi: {
+      term: "Định dạng docstring Python",
+      explanation: "Chuỗi văn bản mô tả cấu trúc và cách dùng hàm hoặc lớp, khai báo ngay đầu hàm bằng cụm ba dấu nháy kép.",
+      needsReview: true
+    },
+    fr: {
+      term: "Chaîne de documentation docstring",
+      explanation: "Le commentaire textuel (docstring) inséré au début d'un bloc en Python pour documenter son rôle.",
+      needsReview: true
+    },
+    aliases: [
+      "Docstring"
+    ],
+    related: [],
+    example: {
+      text: "We updated the python docstring format on all database access functions to include param types."
+    },
+    source: "project-glossary-v2"
+  },
+  {
+    id: "ospf_routing_protocol",
+    category: "network",
+    level: "advanced",
+    subcategory: "network-protocols",
+    exam_tags: [
+      "itpass",
+      "sg"
+    ],
+    examTags: [
+      "itpass",
+      "sg"
+    ],
+    skillTags: [
+      "routing",
+      "enterprise-network"
+    ],
+    searchBoost: 1.1,
+    schemaVersion: "v2",
+    updatedAt: "2026-06-13",
+    keepEnglish: true,
+    ja: {
+      term: "OSPFルーティングプロトコル",
+      kana: "オーエスピーエフルーティングプロトコル",
+      note: "自律システム (AS) 内部のルーティングに用いられる、リンク状態（Link State）型アルゴリズムの代表的プロトコル。"
+    },
+    zh: {
+      term: "OSPF 路由协议",
+      explanation: "一种用于自治系统（AS）内部的、基于链路状态（Link State）算法的内部网关协议，它通过广播邻居状态计算最短路径树，简称 OSPF。"
+    },
+    en: {
+      term: "Open Shortest Path First",
+      explanation: "A link-state routing protocol for Internet Protocol networks, calculating paths using Dijkstra's algorithm."
+    },
+    my: {
+      term: "OSPF လမ်းကြောင်းရှာဖွေမှု ပရိုတိုကော",
+      explanation: "AS တစ်ခုအတွင်း အမြန်ဆုံးလမ်းကြောင်းကို Dijkstra algorithm ဖြင့် တွက်ချက်ဖော်ပြသည့် link-state routing protocol။",
+      needsReview: true
+    },
+    vi: {
+      term: "Giao thức định tuyến OSPF",
+      explanation: "Giao thức định tuyến nội vùng dựa trên thuật toán trạng thái liên kết giúp xác định tuyến đường ngắn nhất.",
+      needsReview: true
+    },
+    fr: {
+      term: "Protocole de routage OSPF",
+      explanation: "Un protocole de routage dynamique interne (OSPF) basé sur l'état des liaisons réseau.",
+      needsReview: true
+    },
+    aliases: [
+      "OSPF"
+    ],
+    related: [],
+    example: {
+      text: "Our core enterprise switches are configured with the ospf routing protocol to route traffic dynamically."
+    },
+    source: "project-glossary-v2"
+  },
+  {
+    id: "reverse_address_resolution_protocol",
+    category: "network",
+    level: "intermediate",
+    subcategory: "network-protocols",
+    exam_tags: [
+      "itpass",
+      "sg"
+    ],
+    examTags: [
+      "itpass",
+      "sg"
+    ],
+    skillTags: [
+      "network-protocols",
+      "address-mapping"
+    ],
+    searchBoost: 1.1,
+    schemaVersion: "v2",
+    updatedAt: "2026-06-13",
+    keepEnglish: true,
+    ja: {
+      term: "逆アドレス解決プロトコル (RARP)",
+      kana: "ギャクアドレスカイケツプロトコル",
+      note: "ARPの逆で、物理アドレス（MACアドレス）からIPアドレスを動的に取得するための古いネットワークプロトコル。"
+    },
+    zh: {
+      term: "反向地址解析协议",
+      explanation: "与 ARP 协议相反。允许无盘工作站等设备在启动时，通过广播自身物理 MAC 地址来向服务器请求分配对应的 IP 地址，简称 RARP。"
+    },
+    en: {
+      term: "Reverse Address Resolution Protocol",
+      explanation: "A computer networking protocol used by a client computer to request its Internet Protocol (IPv4) address from a gateway router's ARP table."
+    },
+    my: {
+      term: "RARP လိပ်စာပြောင်းပြန်ရှာဖွေမှု ပရိုတိုကော",
+      explanation: "MAC Address (物理လိပ်စာ) မှ IP Address ကို ရယူရန် အသုံးပြုသည့် protocol (RARP)။",
+      needsReview: true
+    },
+    vi: {
+      term: "Giao thức phân giải địa chỉ ngược",
+      explanation: "Giao thức (RARP) giúp thiết bị không có ổ đĩa dò tìm địa chỉ IP dựa trên địa chỉ vật lý MAC.",
+      needsReview: true
+    },
+    fr: {
+      term: "Protocole de résolution d'adresse inversé",
+      explanation: "Protocole réseau (RARP) permettant à un hôte d'obtenir son adresse IP à partir de son adresse physique MAC.",
+      needsReview: true
+    },
+    aliases: [
+      "RARP"
+    ],
+    related: [],
+    example: {
+      text: "Modern setups use DHCP instead of the reverse address resolution protocol because DHCP is more robust."
+    },
+    source: "project-glossary-v2"
+  },
+  {
+    id: "dynamic_routing_protocol",
+    category: "network",
+    level: "intermediate",
+    subcategory: "network-protocols",
+    exam_tags: [
+      "itpass",
+      "sg"
+    ],
+    examTags: [
+      "itpass",
+      "sg"
+    ],
+    skillTags: [
+      "routing",
+      "network-infrastructure"
+    ],
+    searchBoost: 1.1,
+    schemaVersion: "v2",
+    updatedAt: "2026-06-13",
+    keepEnglish: true,
+    ja: {
+      term: "動的ルーティングプロトコル",
+      kana: "ドウテキルーティングプロトコル",
+      note: "ルータ同士がネットワークの状態を相互に交換し合い、最適な経路を動的に更新・決定するプロトコルの総称。"
+    },
+    zh: {
+      term: "动态路由协议",
+      explanation: "运行在路由器上的软件算法协议，允许路由器相互交换网络拓扑变化信息，并自动重新计算和更新最佳路由表的系统分类。"
+    },
+    en: {
+      term: "Dynamic Routing Protocol",
+      explanation: "A protocol that allows routers to adjust to network changes dynamically by sharing topology updates."
+    },
+    my: {
+      term: "ဒိုင်းနမစ် လမ်းကြောင်းရှာဖွေရေးစနစ်",
+      explanation: "ကွန်ရက်ပြောင်းလဲမှုများကို အလိုအလျောက် သိရှိပြီး လမ်းကြောင်းဇယားကို ပြင်ဆင်မွမ်းမံသည့် protocol များ။",
+      needsReview: true
+    },
+    vi: {
+      term: "Giao thức định tuyến động",
+      explanation: "Tập hợp các giao thức cho phép các bộ định tuyến chia sẻ thông tin cấu hình mạng để tự động cập nhật bảng tuyến.",
+      needsReview: true
+    },
+    fr: {
+      term: "Protocole de routage dynamique",
+      explanation: "Protocole permettant aux routeurs de s'échanger des informations pour ajuster automatiquement leurs tables de routage.",
+      needsReview: true
+    },
+    aliases: [
+      "Dynamic Routing"
+    ],
+    related: [],
+    example: {
+      text: "We configured a dynamic routing protocol to ensure our packets find an alternate route if the primary WAN line fails."
+    },
+    source: "project-glossary-v2"
+  },
+  {
+    id: "network_time_protocol",
+    category: "network",
+    level: "basic",
+    subcategory: "network-protocols",
+    exam_tags: [
+      "itpass",
+      "sg"
+    ],
+    examTags: [
+      "itpass",
+      "sg"
+    ],
+    skillTags: [
+      "time-synchronization",
+      "network-management"
+    ],
+    searchBoost: 1.1,
+    schemaVersion: "v2",
+    updatedAt: "2026-06-13",
+    keepEnglish: true,
+    ja: {
+      term: "ネットワーク時間プロトコル (NTP)",
+      kana: "ネットワークジカンプロトコル",
+      note: "ネットワークに接続された機器のシステム時計を、正確な時刻ソースと同期させるためのプロトコル。"
+    },
+    zh: {
+      term: "网络时间协议",
+      explanation: "用来同步计算机网络中各个设备系统时钟的一种网络协议，基于 UDP 123 端口，通过分层的时间同步源保障时钟精准，简称 NTP。"
+    },
+    en: {
+      term: "Network Time Protocol",
+      explanation: "A networking protocol for clock synchronization between computer systems over packet-switched, variable-latency data networks."
+    },
+    my: {
+      term: "ကွန်ရက်အချိန် အချိန်ကိုက်ညှိပရိုတိုကော",
+      explanation: "ကွန်ပျူတာများ၏ စနစ်နာရီအချိန်ကို အထူးတိကျသော စံချိန်စံညွှန်းအတိုင်း အချိန်ကိုက်ညှိပေးသည့် protocol (NTP)။",
+      needsReview: true
+    },
+    vi: {
+      term: "Giao thức đồng bộ thời gian mạng",
+      explanation: "Giao thức (NTP) giúp đồng bộ hóa đồng hồ hệ thống của thiết bị mạng với một máy chủ thời gian chuẩn.",
+      needsReview: true
+    },
+    fr: {
+      term: "Network Time Protocol",
+      explanation: "Protocole (NTP) permettant de synchroniser les horloges système des ordinateurs à travers le réseau.",
+      needsReview: true
+    },
+    aliases: [
+      "NTP"
+    ],
+    related: [],
+    example: {
+      text: "Database clustering requires the network time protocol to prevent write timestamp overlaps."
+    },
+    source: "project-glossary-v2"
+  },
+  {
+    id: "simple_network_management_protocol",
+    category: "network",
+    level: "intermediate",
+    subcategory: "network-protocols",
+    exam_tags: [
+      "itpass",
+      "sg"
+    ],
+    examTags: [
+      "itpass",
+      "sg"
+    ],
+    skillTags: [
+      "network-monitoring",
+      "management"
+    ],
+    searchBoost: 1.1,
+    schemaVersion: "v2",
+    updatedAt: "2026-06-13",
+    keepEnglish: true,
+    ja: {
+      term: "簡易ネットワーク管理プロトコル (SNMP)",
+      kana: "カンイネットワークカンリプロトコル",
+      note: "ルータ、スイッチ、サーバなどのネットワーク機器を、中央から遠隔監視・管理するための標準プロトコル。"
+    },
+    zh: {
+      term: "简单网络管理协议",
+      explanation: "应用层管理协议。允许网络管理员监视、控制并收集远程路由器、交换机及服务器等硬件设备的性能状态和警报日志，简称 SNMP。"
+    },
+    en: {
+      term: "Simple Network Management Protocol",
+      explanation: "An Internet Standard protocol for collecting and organizing information about managed devices on IP networks."
+    },
+    my: {
+      term: "ကွန်ရက်စီမံခန့်ခွဲမှု ရိုးရှင်းသောပရိုတိုကော",
+      explanation: "ဆာဗာနှင့် switch များ၏ စွမ်းဆောင်ရည်နှင့် အခြေအနေများကို ဗဟိုမှ လှမ်းမေးစီမံနိုင်သည့် protocol (SNMP)။",
+      needsReview: true
+    },
+    vi: {
+      term: "Giao thức quản trị mạng đơn giản",
+      explanation: "Giao thức chuẩn internet (SNMP) dùng để thu thập thông tin và quản lý giám sát các thiết bị phần cứng mạng.",
+      needsReview: true
+    },
+    fr: {
+      term: "Simple Network Management Protocol",
+      explanation: "Protocole (SNMP) de supervision permettant de surveiller et gérer l'état d'équipements réseau.",
+      needsReview: true
+    },
+    aliases: [
+      "SNMP"
+    ],
+    related: [],
+    example: {
+      text: "We configured simple network management protocol traps to notify us immediately when a switch port goes down."
+    },
+    source: "project-glossary-v2"
+  },
+  {
+    id: "virtual_private_network_vpn",
+    category: "network",
+    level: "basic",
+    subcategory: "network-protocols",
+    exam_tags: [
+      "itpass",
+      "sg"
+    ],
+    examTags: [
+      "itpass",
+      "sg"
+    ],
+    skillTags: [
+      "encryption",
+      "remote-access"
+    ],
+    searchBoost: 1.2,
+    schemaVersion: "v2",
+    updatedAt: "2026-06-13",
+    keepEnglish: true,
+    ja: {
+      term: "仮想プライベートネットワーク (VPN)",
+      kana: "カソウプライベートネットワーク",
+      note: "公衆回線上に暗号化とトンネリング技術を用いて仮想的な専用回線を構築し、安全な通信を提供する技術。"
+    },
+    zh: {
+      term: "虚拟专用网络",
+      explanation: "利用隧道技术和加密算法，在公共因特网（如互联网）上建立安全的虚拟专用通信通道的连接技术，简称 VPN。"
+    },
+    en: {
+      term: "Virtual Private Network",
+      explanation: "A service that creates a safe, encrypted connection over a less secure network, such as the public internet."
+    },
+    my: {
+      term: "VPN ကွန်ရက်လုံခြုံရေးချိတ်ဆက်မှု",
+      explanation: "အများသုံးအင်တာနက်ပေါ်တွင် လုံခြုံစိတ်ချရသော သီးသန့်ကွန်ရက်လမ်းကြောင်းတစ်ခုအား ကုဒ်ဝှက်ဖန်တီးပေးသည့် နည်းပညာ (VPN)။",
+      needsReview: true
+    },
+    vi: {
+      term: "Mạng riêng ảo",
+      explanation: "Giải pháp tạo ra kết nối được mã hóa an toàn qua môi trường internet công cộng nhằm truy cập nội bộ bảo mật.",
+      needsReview: true
+    },
+    fr: {
+      term: "Réseau privé virtuel",
+      explanation: "Technique (VPN) permettant de sécuriser et masquer les flux de données circulant sur un réseau public.",
+      needsReview: true
+    },
+    aliases: [
+      "VPN"
+    ],
+    related: [],
+    example: {
+      text: "Remote developers must connect to the corporate virtual private network vpn to access the staging database."
+    },
+    source: "project-glossary-v2"
+  },  {
+    id: "subnet_mask_config",
+    category: "network",
+    level: "basic",
+    subcategory: "network-protocols",
+    exam_tags: [
+      "itpass",
+      "sg"
+    ],
+    examTags: [
+      "itpass",
+      "sg"
+    ],
+    skillTags: [
+      "ip-addressing",
+      "networking"
+    ],
+    searchBoost: 1.1,
+    schemaVersion: "v2",
+    updatedAt: "2026-06-13",
+    keepEnglish: true,
+    ja: {
+      term: "サブネットマスク",
+      kana: "サブネットマスク",
+      note: "IPアドレスをネットワーク部分とホスト部分に分割するために用いる32ビットのビットマスク値。"
+    },
+    zh: {
+      term: "子网掩码",
+      explanation: "与 IP 地址结合使用的一种 32 位二进制数值，用来区分 IP 地址中的网络标识和主机标识，实现局域网的子网划分。"
+    },
+    en: {
+      term: "Subnet Mask",
+      explanation: "A 32-bit number that masks an IP address, dividing the IP address into network and host addresses."
+    },
+    my: {
+      term: "Subnet Mask သတ်မှတ်ချက်",
+      explanation: "IP Address ၏ Network ပိုင်းနှင့် Host ပိုင်းကို ခွဲခြားနိုင်ရန် ဖုံးအုပ်သတ်မှတ်ပေးသော ၃၂ ဘစ်ရှိ ကိန်းဂဏန်း (Subnet Mask)။",
+      needsReview: true
+    },
+    vi: {
+      term: "Mặt nạ mạng con",
+      explanation: "Dải số 32-bit dùng để phân tách địa chỉ IP thành phần mạng (network) và phần máy chủ (host).",
+      needsReview: true
+    },
+    fr: {
+      term: "Masque de sous-réseau",
+      explanation: "Valeur de 32 bits utilisée pour séparer la partie réseau et la partie hôte d'une adresse IP.",
+      needsReview: true
+    },
+    aliases: [
+      "Netmask",
+      "CIDR Mask"
+    ],
+    related: [],
+    example: {
+      text: "A class C IP address typical uses 255.255.255.0 as its subnet mask config."
+    },
+    source: "project-glossary-v2"
+  },
+  {
+    id: "transmission_control_protocol_handshake",
+    category: "network",
+    level: "intermediate",
+    subcategory: "network-protocols",
+    exam_tags: [
+      "itpass",
+      "sg"
+    ],
+    examTags: [
+      "itpass",
+      "sg"
+    ],
+    skillTags: [
+      "tcp-ip",
+      "connection-setup"
+    ],
+    searchBoost: 1.2,
+    schemaVersion: "v2",
+    updatedAt: "2026-06-13",
+    keepEnglish: true,
+    ja: {
+      term: "TCP 3ウェイ・ハンドシェイク",
+      kana: "ティーシーピーサンウェイハンドシェイク",
+      note: "TCPコネクションを確立する際、SYN、SYN-ACK、ACKの3つのステップでクライアントとサーバ間で確認し合う仕組み。"
+    },
+    zh: {
+      term: "TCP 三次握手",
+      explanation: "TCP 协议在建立可靠数据传输连接时所使用的方法。通过 SYN, SYN-ACK, ACK 三条消息的收发，双方确认彼此的收发包能力和初始序号。"
+    },
+    en: {
+      term: "TCP Three-Way Handshake",
+      explanation: "The process used in a TCP/IP network to make a connection between a client and server (SYN, SYN-ACK, ACK)."
+    },
+    my: {
+      term: "TCP အပြန်အလှန် နှုတ်ဆက်ခြင်းစနစ်",
+      explanation: "TCP connection တစ်ခုကို မတည်ဆောက်မီ စက်နှစ်ခုအကြား အပြန်အလှန် ပို့လွှတ်အတည်ပြုသည့် အဆင့် ၃ ဆင့်ရှိ လုပ်ငန်းစဉ် (SYN, SYN-ACK, ACK)။",
+      needsReview: true
+    },
+    vi: {
+      term: "Cơ chế bắt tay ba bước TCP",
+      explanation: "Quy trình thiết lập kết nối tin cậy trong giao thức TCP thông qua các gói tin tuần tự SYN, SYN-ACK và ACK.",
+      needsReview: true
+    },
+    fr: {
+      term: "Poignée de main en trois étapes",
+      explanation: "Processus (three-way handshake) permettant d'établir une session fiable sous protocole TCP.",
+      needsReview: true
+    },
+    aliases: [
+      "Three-Way Handshake",
+      "TCP Connection Setup"
+    ],
+    related: [],
+    example: {
+      text: "We optimized TCP socket creation because the transmission control protocol handshake takes time over sat connections."
+    },
+    source: "project-glossary-v2"
+  },
+  {
+    id: "domain_name_resolution_process",
+    category: "network",
+    level: "basic",
+    subcategory: "network-protocols",
+    exam_tags: [
+      "itpass",
+      "sg"
+    ],
+    examTags: [
+      "itpass",
+      "sg"
+    ],
+    skillTags: [
+      "dns",
+      "internet-mechanics"
+    ],
+    searchBoost: 1.1,
+    schemaVersion: "v2",
+    updatedAt: "2026-06-13",
+    keepEnglish: true,
+    ja: {
+      term: "名前解決プロセス (DNS)",
+      kana: "ナマエカイケツプロセス",
+      note: "人間が理解しやすいドメイン名（例: example.com）を、コンピュータが認識するIPアドレスに自動変換する一連の手続き。"
+    },
+    zh: {
+      term: "域名解析过程",
+      explanation: "指系统将人类易记的域名字符串（如 google.com）翻译映射为网络路由器所必须的底层数字 IP 地址的查询与分配过程。"
+    },
+    en: {
+      term: "Domain Name Resolution",
+      explanation: "The translation of user-friendly domain names into numerical IP addresses to route requests on the network."
+    },
+    my: {
+      term: "Domain အမည် လိပ်စာရှာဖွေခြင်းလုပ်ငန်းစဉ်",
+      explanation: "စာလုံးများဖြင့်ဖွဲ့စည်းထားသော web domain အမည်ကို ကွန်ပျူတာနားလည်သည့် IP Address အဖြစ် DNS မှ ပြောင်းလဲပေးသည့် လုပ်ငန်းစဉ်။",
+      needsReview: true
+    },
+    vi: {
+      term: "Quy trình phân giải tên miền",
+      explanation: "Quá trình dịch địa chỉ tên miền dạng văn bản sang địa chỉ số IP để thiết bị kết nối đúng máy chủ.",
+      needsReview: true
+    },
+    fr: {
+      term: "Résolution de noms de domaine",
+      explanation: "Le processus traduisant une adresse lisible par l'homme en une adresse IP numérique.",
+      needsReview: true
+    },
+    aliases: [
+      "DNS Resolution",
+      "Name Resolution"
+    ],
+    related: [],
+    example: {
+      text: "Domain name resolution process queries local caches first before querying root DNS servers."
+    },
+    source: "project-glossary-v2"
+  },
+  {
+    id: "packet_filtering_firewall",
+    category: "network",
+    level: "intermediate",
+    subcategory: "network-protocols",
+    exam_tags: [
+      "itpass",
+      "sg"
+    ],
+    examTags: [
+      "itpass",
+      "sg"
+    ],
+    skillTags: [
+      "firewall",
+      "network-security"
+    ],
+    searchBoost: 1.1,
+    schemaVersion: "v2",
+    updatedAt: "2026-06-13",
+    keepEnglish: true,
+    ja: {
+      term: "パケットフィルタリング型ファイアウォール",
+      kana: "パケットフィルタリングガタファイアウォール",
+      note: "通信パケットのヘッダ情報（送信元・宛先のIPアドレスやポート番号）を検査し、事前に設定したルールに従って通過を許可または拒否する防御壁。"
+    },
+    zh: {
+      term: "包过滤防火墙",
+      explanation: "工作在网络层和传输层的一种防火墙。根据安全访问规则，对通过它的数据包头部（源/目的IP、端口、协议类型等）进行逐个检查后放行或阻断。"
+    },
+    en: {
+      term: "Packet Filtering Firewall",
+      explanation: "A security method that controls network access by analyzing the incoming and outgoing packets based on IP and port."
+    },
+    my: {
+      term: "Packet စစ်ထုတ်သည့် Firewall စနစ်",
+      explanation: "ဒေတာထုပ်များ၏ port နှင့် IP များကို စစ်ဆေးပြီး အဝင်အထွက်ကို ခွင့်ပြု/ပိတ်ပင်ပေးသည့် Firewall စနစ်။",
+      needsReview: true
+    },
+    vi: {
+      term: "Tường lửa lọc gói tin",
+      explanation: "Hệ thống bảo mật mạng hoạt động bằng cách phân tích tiêu đề IP và cổng của từng gói tin theo bộ quy tắc bảo mật.",
+      needsReview: true
+    },
+    fr: {
+      term: "Pare-feu à filtrage de paquets",
+      explanation: "Une technique de sécurité réseau (firewall) bloquant ou autorisant les paquets selon leurs en-têtes.",
+      needsReview: true
+    },
+    aliases: [
+      "Stateless Firewall"
+    ],
+    related: [],
+    example: {
+      text: "Our router acts as a packet filtering firewall that drops all incoming Telnet connection requests."
+    },
+    source: "project-glossary-v2"
+  },
+  {
+    id: "cross_site_scripting_xss",
+    category: "security",
+    level: "intermediate",
+    subcategory: "security-threats",
+    exam_tags: [
+      "itpass",
+      "sg"
+    ],
+    examTags: [
+      "itpass",
+      "sg"
+    ],
+    skillTags: [
+      "web-security",
+      "vulnerabilities"
+    ],
+    searchBoost: 1.2,
+    schemaVersion: "v2",
+    updatedAt: "2026-06-13",
+    keepEnglish: true,
+    ja: {
+      term: "クロスサイトスクリプティング (XSS)",
+      kana: "クロスサイトスクリプティング",
+      note: "脆弱性のあるWebページに悪意のあるスクリプトを注入し、閲覧したユーザーのブラウザ上で実行させる攻撃。"
+    },
+    zh: {
+      term: "跨站脚本攻击",
+      explanation: "一种经典的 Web 安全漏洞。由于未对用户输入做安全过滤，攻击者可将恶意脚本（通常是 JavaScript）嵌入网页，从而在受害者的浏览器中执行，窃取 Cookie 等，简称 XSS。"
+    },
+    en: {
+      term: "Cross-Site Scripting",
+      explanation: "A security vulnerability in web applications that allows attackers to inject malicious client-side scripts into web pages."
+    },
+    my: {
+      term: "Cross-Site Scripting (XSS) အလွဲသုံးစားမှု",
+      explanation: "ဝဘ်ဆိုက်၏ အားနည်းချက်ကို အသုံးချကာ ဝင်ရောက်ကြည့်ရှုသူ၏ ဘရောက်ဇာတွင် မသမာသော script ကုဒ်များကို မောင်းနှင်ခိုင်းသည့် တိုက်ခိုက်မှု။",
+      needsReview: true
+    },
+    vi: {
+      term: "Tấn công chéo trang XSS",
+      explanation: "Lỗ hổng bảo mật web phổ biến cho phép hacker chèn mã độc Javascript vào trang web của người dùng vô tội.",
+      needsReview: true
+    },
+    fr: {
+      term: "Script de site à site",
+      explanation: "Une faille de sécurité (XSS) permettant d'injecter des scripts malveillants dans des pages web légitimes.",
+      needsReview: true
+    },
+    aliases: [
+      "XSS"
+    ],
+    related: [],
+    example: {
+      text: "Sanitizing user-submitted comment inputs is vital to prevent cross site scripting xss attacks."
+    },
+    source: "project-glossary-v2"
+  },
+  {
+    id: "malware_ransomware_threat",
+    category: "security",
+    level: "basic",
+    subcategory: "security-threats",
+    exam_tags: [
+      "itpass",
+      "sg"
+    ],
+    examTags: [
+      "itpass",
+      "sg"
+    ],
+    skillTags: [
+      "cybersecurity",
+      "malware"
+    ],
+    searchBoost: 1.2,
+    schemaVersion: "v2",
+    updatedAt: "2026-06-13",
+    keepEnglish: true,
+    ja: {
+      term: "ランサムウェア",
+      kana: "ランサムウェア",
+      note: "感染したコンピュータのファイルを暗号化してアクセス不能にし、復旧の対価として金銭（身代金）を要求するマルウェア。"
+    },
+    zh: {
+      term: "勒索软件",
+      explanation: "一种恶意软件。它在侵入受害计算机后，会对系统或关键文件进行强加密，以此胁迫受害者支付赎金以获取解密密钥。"
+    },
+    en: {
+      term: "Ransomware",
+      explanation: "A type of malicious software designed to block access to a computer system or files until a sum of money is paid."
+    },
+    my: {
+      term: "Ransomware (ပြန်ပေးဆွဲဆော့ဖ်ဝဲလ်)",
+      explanation: "ကွန်ပျူတာဖိုင်များကို လျှို့ဝှက်ကုဒ်ဝှက်ပိတ်ပင်ပြီး ဖွင့်ပေးရန် ငွေကြေးတောင်းခံသည့် ခြိမ်းခြောက်ဆော့ဖ်ဝဲလ်။",
+      needsReview: true
+    },
+    vi: {
+      term: "Mối đe dọa mã độc tống tiền",
+      explanation: "Mã độc tống tiền mã hóa toàn bộ dữ liệu máy tính nạn nhân để buộc họ trả tiền chuộc để giải mã.",
+      needsReview: true
+    },
+    fr: {
+      term: "Rançongiciel",
+      explanation: "Un logiciel malveillant (ransomware) chiffrant les données d'un ordinateur et réclamant une rançon.",
+      needsReview: true
+    },
+    aliases: [
+      "Ransomware"
+    ],
+    related: [],
+    example: {
+      text: "Offline backups are the best defense against a devastating malware ransomware threat."
+    },
+    source: "project-glossary-v2"
+  },
+  {
+    id: "phishing_attack_method",
+    category: "security",
+    level: "basic",
+    subcategory: "security-threats",
+    exam_tags: [
+      "itpass",
+      "sg"
+    ],
+    examTags: [
+      "itpass",
+      "sg"
+    ],
+    skillTags: [
+      "social-engineering",
+      "cybersecurity"
+    ],
+    searchBoost: 1.2,
+    schemaVersion: "v2",
+    updatedAt: "2026-06-13",
+    keepEnglish: true,
+    ja: {
+      term: "フィッシング詐欺",
+      kana: "フィッシングサギ",
+      note: "実在する銀行や企業を装った偽メールを送り、偽のWebサイトに誘導してパスワードやクレジットカード情報を盗み出す詐欺行為。"
+    },
+    zh: {
+      term: "钓鱼攻击",
+      explanation: "一种社会工程学攻击手段。攻击者通过伪装成银行或官方的可信邮件及网站，诱骗受害者输入账号密码、信用卡号等敏感信息。"
+    },
+    en: {
+      term: "Phishing",
+      explanation: "A social engineering attack where the attacker masquerades as a trusted entity to steal user credentials or data."
+    },
+    my: {
+      term: "Phishing အယောင်ဆောင်တိုက်ခိုက်မှု",
+      explanation: "ယုံကြည်ရသော အဖွဲ့အစည်းအယောင်ဆောင်၍ မသမာသော website များဆီသို့ မျှားခေါ်ကာ password များကို ခိုးယူသည့်နည်းလမ်း။",
+      needsReview: true
+    },
+    vi: {
+      term: "Phương pháp tấn công giả mạo",
+      explanation: "Hình thức lừa đảo qua mạng trong đó kẻ tấn công giả dạng cơ quan uy tín nhằm trộm cắp tài khoản đăng nhập.",
+      needsReview: true
+    },
+    fr: {
+      term: "Hameçonnage",
+      explanation: "Une technique d'ingénierie sociale (phishing) volant des identifiants via de faux emails ou sites.",
+      needsReview: true
+    },
+    aliases: [
+      "Phishing"
+    ],
+    related: [],
+    example: {
+      text: "We trained employees to inspect email sender domains carefully to thwart phishing attack method attempts."
+    },
+    source: "project-glossary-v2"
+  },
+  {
+    id: "multifactor_authentication_mfa",
+    category: "security",
+    level: "basic",
+    subcategory: "security-threats",
+    exam_tags: [
+      "itpass",
+      "sg"
+    ],
+    examTags: [
+      "itpass",
+      "sg"
+    ],
+    skillTags: [
+      "identity-access-management",
+      "security-controls"
+    ],
+    searchBoost: 1.2,
+    schemaVersion: "v2",
+    updatedAt: "2026-06-13",
+    keepEnglish: true,
+    ja: {
+      term: "多要素認証 (MFA)",
+      kana: "タヨウソニンショウ",
+      note: "知識（パスワード）、所持（スマートフォン）、生体情報（指紋）などの異なるカテゴリの要素を複数組み合わせて本人確認を行う認証方式。"
+    },
+    zh: {
+      term: "多因素认证",
+      explanation: "一种安全鉴权方法。要求用户在登录时提供两种或以上不同维度的证据：如密码（知道什么）、手机动态码（拥有什么）或指纹（我是谁），简称 MFA。"
+    },
+    en: {
+      term: "Multi-Factor Authentication",
+      explanation: "An authentication method that requires the user to provide two or more verification factors to gain access."
+    },
+    my: {
+      term: "အချက်အလက်မျိုးစုံသုံး အတည်ပြုစနစ်",
+      explanation: "စနစ်တစ်ခုသို့ ဝင်ရောက်ရန် Password အပြင် ဖုန်းကုဒ် သို့မဟုတ် လက်ဗွေစသည့် အဆင့်နှစ်ဆင့်ထက်မက တောင်းခံသည့် အတည်ပြုစနစ် (MFA)။",
+      needsReview: true
+    },
+    vi: {
+      term: "Xác thực đa yếu tố",
+      explanation: "Cơ chế bảo mật yêu cầu người dùng cung cấp từ hai yếu tố xác minh độc lập trở lên để đăng nhập thành công.",
+      needsReview: true
+    },
+    fr: {
+      term: "Authentification multifacteur",
+      explanation: "Processus de sécurité (MFA) validant l'identité d'un utilisateur par le biais de plusieurs preuves distinctes.",
+      needsReview: true
+    },
+    aliases: [
+      "MFA",
+      "Two-Factor Authentication",
+      "2FA"
+    ],
+    related: [],
+    example: {
+      text: "Enforcing multifactor authentication mfa reduced account hijacking cases to almost zero."
+    },
+    source: "project-glossary-v2"
+  },
+  {
+    id: "identity_provider_idp",
+    category: "security",
+    level: "intermediate",
+    subcategory: "security-threats",
+    exam_tags: [
+      "itpass",
+      "sg"
+    ],
+    examTags: [
+      "itpass",
+      "sg"
+    ],
+    skillTags: [
+      "authentication",
+      "identity-access-management"
+    ],
+    searchBoost: 1.1,
+    schemaVersion: "v2",
+    updatedAt: "2026-06-13",
+    keepEnglish: true,
+    ja: {
+      term: "アイデンティティプロバイダ (IdP)",
+      kana: "アイデンティティプロバイダ",
+      note: "クラウドサービス等において、ユーザーのデジタルアイデンティティを管理・認証し、シングルサインオン (SSO) を実現するサービス。"
+    },
+    zh: {
+      term: "身份提供商",
+      explanation: "统一管理、存储和验证用户数字身份的系统，它允许用户通过单点登录（SSO）安全访问多个外部应用，简称 IdP。"
+    },
+    en: {
+      term: "Identity Provider",
+      explanation: "A system that creates, maintains, and manages identity information for principals while providing authentication services."
+    },
+    my: {
+      term: "အထောက်အထားစီမံဝန်ဆောင်မှုအဖွဲ့ (IdP)",
+      explanation: "ဒစ်ဂျစ်တယ်စနစ်တွင် သုံးစွဲသူ၏ အထောက်အထားကို သိုလှောင်ပြီး Single Sign-On ဖြင့် အတည်ပြုပေးသည့် ဗဟိုစနစ်။",
+      needsReview: true
+    },
+    vi: {
+      term: "Nhà cung cấp danh tính",
+      explanation: "Hệ thống (IdP) quản lý và xác thực danh tính số của người dùng, làm cơ sở cho Single Sign-On (SSO).",
+      needsReview: true
+    },
+    fr: {
+      term: "Fournisseur d'identité",
+      explanation: "Un système (IdP) qui crée, maintient et gère les informations d'identité des utilisateurs pour d'autres services.",
+      needsReview: true
+    },
+    aliases: [
+      "IdP"
+    ],
+    related: [],
+    example: {
+      text: "We configured our SaaS application to trust Microsoft Azure AD as our primary identity provider idp."
+    },
+    source: "project-glossary-v2"
+  },
+  {
+    id: "symmetric_key_cryptography",
+    category: "security",
+    level: "basic",
+    subcategory: "security-threats",
+    exam_tags: [
+      "itpass",
+      "sg"
+    ],
+    examTags: [
+      "itpass",
+      "sg"
+    ],
+    skillTags: [
+      "encryption",
+      "cryptography"
+    ],
+    searchBoost: 1.1,
+    schemaVersion: "v2",
+    updatedAt: "2026-06-13",
+    keepEnglish: true,
+    ja: {
+      term: "共通鍵暗号方式",
+      kana: "キョウツウカギアンゴウホウシキ",
+      note: "データの暗号化と復号に、同じ一つの秘密の鍵を使用する暗号方式。処理速度が速い。"
+    },
+    zh: {
+      term: "对称加密",
+      explanation: "加密和解密时使用同一个秘密密钥的密码学方法。其处理速度极快，适合加密大文件，常见算法有 AES。"
+    },
+    en: {
+      term: "Symmetric-Key Cryptography",
+      explanation: "An encryption system in which the sender and receiver of a message share a single, common key to encrypt and decrypt."
+    },
+    my: {
+      term: "အချိုးညီသော သော့ချက်ကုဒ်ဝှက်စနစ်",
+      explanation: "အချက်အလက်ကို ကုဒ်ဝှက်ရန်နှင့် ပြန်ဖြည်ရန် တူညီသော သော့ချက်တစ်ခုတည်းကိုသာ မျှဝေသုံးစွဲသည့် စနစ်။",
+      needsReview: true
+    },
+    vi: {
+      term: "Mật mã học khóa đối xứng",
+      explanation: "Phương thức mã hóa (đối xứng) sử dụng cùng một khóa bí mật duy nhất cho cả quá trình khóa dữ liệu và mở dữ liệu.",
+      needsReview: true
+    },
+    fr: {
+      term: "Chiffrement symétrique",
+      explanation: "Méthode de cryptographie où la même clé secrète est partagée pour chiffrer et déchiffrer les messages.",
+      needsReview: true
+    },
+    aliases: [
+      "Symmetric Encryption",
+      "Shared Key Encryption"
+    ],
+    related: [],
+    example: {
+      text: "We use symmetric key cryptography for local database storage encryption to maintain fast read speeds."
+    },
+    source: "project-glossary-v2"
+  },
+  {
+    id: "asymmetric_key_cryptography",
+    category: "security",
+    level: "intermediate",
+    subcategory: "security-threats",
+    exam_tags: [
+      "itpass",
+      "sg"
+    ],
+    examTags: [
+      "itpass",
+      "sg"
+    ],
+    skillTags: [
+      "cryptography",
+      "security-infrastructure"
+    ],
+    searchBoost: 1.1,
+    schemaVersion: "v2",
+    updatedAt: "2026-06-13",
+    keepEnglish: true,
+    ja: {
+      term: "公開鍵暗号方式",
+      kana: "コウカイカギアンゴウホウシキ",
+      note: "暗号化には誰でも使える「公開鍵」、復号には本人のみが持つ「秘密鍵」という一対の異なる鍵を用いる暗号方式。"
+    },
+    zh: {
+      term: "非对称加密",
+      explanation: "使用一对密钥的加密方法：可公开发布的“公钥”用于加密，而必须妥善保管的“私钥”用于解密。用于解决密钥分发问题，经典算法有 RSA。"
+    },
+    en: {
+      term: "Asymmetric Cryptography",
+      explanation: "A cryptography system using pairs of keys: public keys which may be disseminated widely, and private keys which are known only to the owner."
+    },
+    my: {
+      term: "အချိုးမညီသော သော့ချက်ကုဒ်ဝှက်စနစ်",
+      explanation: "လူတိုင်းသိနိုင်သော Public Key နှင့် ပိုင်ရှင်သာသိသော Private Key ဟူသော သော့တစ်စုံကို အသုံးပြုသည့် စနစ် (RSA)။",
+      needsReview: true
+    },
+    vi: {
+      term: "Mật mã học khóa bất đối xứng",
+      explanation: "Hệ thống mật mã sử dụng cặp khóa khác nhau gồm khóa công khai để mã hóa và khóa bí mật để giải mã.",
+      needsReview: true
+    },
+    fr: {
+      term: "Chiffrement asymétrique",
+      explanation: "Système de cryptographie (asymétrique) reposant sur un couple de clés publique et privée distinctes.",
+      needsReview: true
+    },
+    aliases: [
+      "Public-Key Cryptography",
+      "Asymmetric Encryption"
+    ],
+    related: [],
+    example: {
+      text: "Asymmetric key cryptography is used in SSH to authenticate developers without sending passwords."
+    },
+    source: "project-glossary-v2"
+  },
+  {
+    id: "advanced_encryption_standard_aes",
+    category: "security",
+    level: "intermediate",
+    subcategory: "security-threats",
+    exam_tags: [
+      "itpass",
+      "sg"
+    ],
+    examTags: [
+      "itpass",
+      "sg"
+    ],
+    skillTags: [
+      "encryption",
+      "data-protection"
+    ],
+    searchBoost: 1.1,
+    schemaVersion: "v2",
+    updatedAt: "2026-06-13",
+    keepEnglish: true,
+    ja: {
+      term: "AES (高度暗号化規格)",
+      kana: "エーイーエス",
+      note: "米国政府が採用した標準の対称鍵暗号規格。堅牢性と高速なデータ処理を両立し、世界中で利用されている。"
+    },
+    zh: {
+      term: "高级加密标准",
+      explanation: "美国联邦政府采用的区块对称加密算法标准，其块大小为 128 位，支持 128、192 和 256 位密钥长度，简称 AES。极其安全且性能优越。"
+    },
+    en: {
+      term: "Advanced Encryption Standard",
+      explanation: "A specification for the encryption of electronic data established by the U.S. National Institute of Standards and Technology (NIST)."
+    },
+    my: {
+      term: "AES အဆင့်မြင့်ကုဒ်ဝှက်စံနှုန်း",
+      explanation: "ကမ္ဘာတစ်ဝှမ်းတွင် လုံခြုံရေးအဆင့်အမြင့်ဆုံးအဖြစ် လက်ခံအသုံးပြုနေသော block အချိုးညီကုဒ်ဝှက်နည်းပညာစံ (AES)။",
+      needsReview: true
+    },
+    vi: {
+      term: "Tiêu chuẩn mã hóa tiên tiến AES",
+      explanation: "Thuật toán mã hóa đối xứng khối được chuẩn hóa bởi NIST Hoa Kỳ, ứng dụng mã hóa thông tin phổ biến hàng đầu.",
+      needsReview: true
+    },
+    fr: {
+      term: "Standard de chiffrement avancé",
+      explanation: "Un algorithme de chiffrement symétrique par blocs (AES) très sécurisé adopté au niveau international.",
+      needsReview: true
+    },
+    aliases: [
+      "AES",
+      "Rijndael"
+    ],
+    related: [],
+    example: {
+      text: "We configure AES-256 for symmetric encrypting of backups containing sensitive customer table dumps."
+    },
+    source: "project-glossary-v2"
+  },
+  {
+    id: "secure_hash_algorithm_sha",
+    category: "security",
+    level: "basic",
+    subcategory: "security-threats",
+    exam_tags: [
+      "itpass",
+      "sg"
+    ],
+    examTags: [
+      "itpass",
+      "sg"
+    ],
+    skillTags: [
+      "hashing",
+      "integrity"
+    ],
+    searchBoost: 1.1,
+    schemaVersion: "v2",
+    updatedAt: "2026-06-13",
+    keepEnglish: true,
+    ja: {
+      term: "安全なハッシュアルゴリズム (SHA)",
+      kana: "セキュアハッシュアルゴリズム",
+      note: "データ改ざん検知やパスワード検証に用いられる、一方向性の固定長ハッシュ値を生成するアルゴリズム規格。"
+    },
+    zh: {
+      term: "安全哈希算法",
+      explanation: "一系列单向密码学哈希函数标准，能将任意长度的输入数据映射为固定长度的摘要散列值，常用于数据校验与密码存储，简称 SHA。"
+    },
+    en: {
+      term: "Secure Hash Algorithm",
+      explanation: "A family of cryptographic hash functions published by the National Institute of Standards and Technology (NIST)."
+    },
+    my: {
+      term: "SHA လုံခြုံသောဟက်ရှ်စံနှုန်း",
+      explanation: "ဒေတာများ ပြောင်းလဲပြင်ဆင်ခံရမှုရှိမရှိ တိုက်ဆိုင်စစ်ဆေးနိုင်ရန် တစ်လမ်းသွား hash တန်ဖိုးထုတ်ပေးသည့် စနစ် (SHA)။",
+      needsReview: true
+    },
+    vi: {
+      term: "Thuật toán băm an toàn SHA",
+      explanation: "Họ các hàm băm mật mã học một chiều tạo ra chuỗi giá trị có độ dài cố định phục vụ kiểm tra toàn vẹn dữ liệu.",
+      needsReview: true
+    },
+    fr: {
+      term: "Algorithme de hachage sécurisé",
+      explanation: "Une famille de fonctions de hachage cryptographique (SHA) utilisées pour vérifier l'intégrité des fichiers.",
+      needsReview: true
+    },
+    aliases: [
+      "SHA",
+      "SHA-256"
+    ],
+    related: [],
+    example: {
+      text: "We store password hashes generated via SHA-256 with salts in our user database."
+    },
+    source: "project-glossary-v2"
+  },
+  {
+    id: "transport_layer_security_tls",
+    category: "security",
+    level: "basic",
+    subcategory: "security-threats",
+    exam_tags: [
+      "itpass",
+      "sg"
+    ],
+    examTags: [
+      "itpass",
+      "sg"
+    ],
+    skillTags: [
+      "web-security",
+      "network-security"
+    ],
+    searchBoost: 1.2,
+    schemaVersion: "v2",
+    updatedAt: "2026-06-13",
+    keepEnglish: true,
+    ja: {
+      term: "トランスポート層セキュリティ (TLS)",
+      kana: "トランスポートレイヤーセキュリティ",
+      note: "インターネット通信を暗号化し、盗聴や改ざん、なりすましを防ぐための標準プロトコル（SSLの後継）。"
+    },
+    zh: {
+      term: "传输层安全协议",
+      explanation: "用于在两个通信应用程序之间提供保密性和数据完整性的密码学安全协议，常配合 HTTP 使用以构成 HTTPS，简称 TLS（SSL的升级后继者）。"
+    },
+    en: {
+      term: "Transport Layer Security",
+      explanation: "A cryptographic protocol designed to provide communications security over a computer network, succeeding SSL."
+    },
+    my: {
+      term: "TLS ကွန်ရက်ပို့ဆောင်မှုအဆင့် ကုဒ်ဝှက်စနစ်",
+      explanation: "အင်တာနက်ဆက်သွယ်ရေးတွင် ကြားဖြတ်ခိုးယူမှုမရှိစေရန် လွှဲပြောင်းပေးပို့သော ဒေတာများကို လုံခြုံအောင်ကုဒ်ဝှက်သည့် protocol (TLS)။",
+      needsReview: true
+    },
+    vi: {
+      term: "Bảo mật lớp truyền tải TLS",
+      explanation: "Giao thức mã hóa bảo mật (TLS) kế thừa từ SSL, đảm bảo truyền tải dữ liệu an toàn trên mạng.",
+      needsReview: true
+    },
+    fr: {
+      term: "Sécurité de la couche de transport",
+      explanation: "Protocole de sécurisation des échanges sur Internet (TLS), successeur officiel du protocole SSL.",
+      needsReview: true
+    },
+    aliases: [
+      "TLS",
+      "SSL/TLS"
+    ],
+    related: [],
+    example: {
+      text: "The web browser displays a padlock icon when the server connection uses transport layer security tls."
+    },
+    source: "project-glossary-v2"
+  },
+  {
+    id: "distributed_denial_of_service_ddos",
+    category: "security",
+    level: "basic",
+    subcategory: "security-threats",
+    exam_tags: [
+      "itpass",
+      "sg"
+    ],
+    examTags: [
+      "itpass",
+      "sg"
+    ],
+    skillTags: [
+      "cyber-attacks",
+      "network-defense"
+    ],
+    searchBoost: 1.2,
+    schemaVersion: "v2",
+    updatedAt: "2026-06-13",
+    keepEnglish: true,
+    ja: {
+      term: "分散型サービス拒否攻撃 (DDoS)",
+      kana: "ブンサンガタサービスキョヒコウゲキ",
+      note: "複数のウイルス感染PCなどから標的のサーバへ一斉に大量のアクセスを行い、サービスを停止に追い込むサイバー攻撃。"
+    },
+    zh: {
+      term: "分布式拒绝服务攻击",
+      explanation: "黑客通过控制网络上分布的大量傀儡主机（僵尸网络），同时向目标服务器发起海量伪造请求，致其带宽和资源枯竭瘫痪，简称 DDoS。"
+    },
+    en: {
+      term: "Distributed Denial of Service",
+      explanation: "A cyberattack in which multiple compromised computer systems attack a target, causing a denial of service."
+    },
+    my: {
+      term: "DDoS စုပေါင်းတိုက်ခိုက်မှုစနစ်",
+      explanation: "ဗိုင်းရပ်စ်ကူးစက်ထားသော ကွန်ပျူတာများစွာကို အသုံးချပြီး ဆာဗာတစ်ခုအား ဝန်ပိပျက်စီးစေရန် တိုက်ခိုက်ခြင်း (DDoS)။",
+      needsReview: true
+    },
+    vi: {
+      term: "Tấn công từ chối dịch vụ phân tán",
+      explanation: "Phương thức tấn công mạng (DDoS) phối hợp nhiều thiết bị ma để làm nghẽn băng thông của hệ thống mục tiêu.",
+      needsReview: true
+    },
+    fr: {
+      term: "Attaque par déni de service distribué",
+      explanation: "Une attaque informatique (DDoS) saturant un service en l'inondant de requêtes depuis de multiples sources.",
+      needsReview: true
+    },
+    aliases: [
+      "DDoS",
+      "DDoS Attack"
+    ],
+    related: [],
+    example: {
+      text: "We enabled a cloud scrubbing service to absorb the distributed denial of service ddos attack on our SQL APIs."
+    },
+    source: "project-glossary-v2"
+  },
+  {
+    id: "intrusion_prevention_system_ips",
+    category: "security",
+    level: "intermediate",
+    subcategory: "security-threats",
+    exam_tags: [
+      "itpass",
+      "sg"
+    ],
+    examTags: [
+      "itpass",
+      "sg"
+    ],
+    skillTags: [
+      "network-security",
+      "intrusion-detection"
+    ],
+    searchBoost: 1.1,
+    schemaVersion: "v2",
+    updatedAt: "2026-06-13",
+    keepEnglish: true,
+    ja: {
+      term: "侵入防止システム (IPS)",
+      kana: "シンニュウボウシシステム",
+      note: "ネットワークの通信を監視し、不正なパターンを検出すると単に通報するだけでなく、リアルタイムで通信を遮断する能動的防御システム。"
+    },
+    zh: {
+      term: "入侵防御系统",
+      explanation: "一种网络安全物理或逻辑设备。不仅能实时监视网络流量中的恶意行为（类似于IDS），且能在检测到危害时立即主动拦截数据流，简称 IPS。"
+    },
+    en: {
+      term: "Intrusion Prevention System",
+      explanation: "A network security appliance that monitors network activities for malicious activity and blocks it."
+    },
+    my: {
+      term: "ကျူးကျော်ဝင်ရောက်မှု ကာကွယ်ရေးစနစ် (IPS)",
+      explanation: "ကွန်ရက်အတွင်းသို့ မသမာသောဝင်ရောက်မှုများကို စောင့်ကြည့်ရုံသာမက ၎င်းတို့ကို တိုက်ရိုက်ပိတ်ဆို့ပစ်သည့်စနစ်။",
+      needsReview: true
+    },
+    vi: {
+      term: "Hệ thống ngăn ngừa xâm nhập IPS",
+      explanation: "Thiết bị bảo mật chủ động (IPS) giám sát lưu lượng mạng để phát hiện và tự động chặn đứng hành vi tấn công trái phép.",
+      needsReview: true
+    },
+    fr: {
+      term: "Système de prévention des intrusions",
+      explanation: "Dispositif de sécurité (IPS) analysant le trafic réseau pour bloquer activement les activités suspectes.",
+      needsReview: true
+    },
+    aliases: [
+      "IPS"
+    ],
+    related: [],
+    example: {
+      text: "An intrusion prevention system ips can automatically update firewall rules when it detects port scanning."
+    },
+    source: "project-glossary-v2"
+  },
+  {
+    id: "read_only_memory_rom",
+    category: "system",
+    level: "basic",
+    subcategory: "system-hardware",
+    exam_tags: [
+      "itpass",
+      "sg"
+    ],
+    examTags: [
+      "itpass",
+      "sg"
+    ],
+    skillTags: [
+      "hardware",
+      "computer-architecture"
+    ],
+    searchBoost: 1.1,
+    schemaVersion: "v2",
+    updatedAt: "2026-06-13",
+    keepEnglish: true,
+    ja: {
+      term: "只読メモリ (ROM)",
+      kana: "リードオンリーメモリ",
+      note: "データの読み出し専用の半導体メモリ。電源を切っても記憶内容が消えない不揮発性の特性を持つ。"
+    },
+    zh: {
+      term: "只读存储器",
+      explanation: "一种半导体内存。数据在写入后只能被读取，且在断电后数据不会丢失，属于非易失性存储，简称 ROM。"
+    },
+    en: {
+      term: "Read-Only Memory",
+      explanation: "A type of non-volatile memory used in computers and other electronic devices, whose data cannot be easily modified."
+    },
+    my: {
+      term: "ROM မှတ်ဉာဏ်စနစ်",
+      explanation: "ပါဝါပိတ်သော်လည်း ဒေတာများ ပျက်ပြယ်ခြင်းမရှိဘဲ ဖတ်ရန်သာ သုံးစွဲနိုင်သော memory စနစ် (ROM)။",
+      needsReview: true
+    },
+    vi: {
+      term: "Bộ nhớ chỉ đọc ROM",
+      explanation: "Loại bộ nhớ không bay hơi giữ lại dữ liệu ngay cả khi ngắt điện, dữ liệu chỉ đọc không thể dễ dàng ghi đè.",
+      needsReview: true
+    },
+    fr: {
+      term: "Mémoire morte",
+      explanation: "Type de mémoire non volatile (ROM) contenant des données figées lisibles par le système informatique.",
+      needsReview: true
+    },
+    aliases: [
+      "ROM"
+    ],
+    related: [],
+    example: {
+      text: "The system bootloader is typically stored in a read only memory rom chip on the motherboard."
+    },
+    source: "project-glossary-v2"
+  },
+  {
+    id: "arithmetic_logic_unit_alu",
+    category: "system",
+    level: "basic",
+    subcategory: "system-hardware",
+    exam_tags: [
+      "itpass",
+      "sg"
+    ],
+    examTags: [
+      "itpass",
+      "sg"
+    ],
+    skillTags: [
+      "cpu-internals",
+      "computer-architecture"
+    ],
+    searchBoost: 1.1,
+    schemaVersion: "v2",
+    updatedAt: "2026-06-13",
+    keepEnglish: true,
+    ja: {
+      term: "算術論理演算装置 (ALU)",
+      kana: "サンジュツロンリエンザンソウチ",
+      note: "CPUの核となる構成要素で、四則演算（算術演算）やAND/ORなどの論理演算を専門に行う電子回路。"
+    },
+    zh: {
+      term: "算术逻辑单元",
+      explanation: "计算机中央处理器（CPU）的核心子部件之一，负责执行诸如加减乘除等算术运算以及与或非等逻辑运算，简称 ALU。"
+    },
+    en: {
+      term: "Arithmetic Logic Unit",
+      explanation: "A combinational digital circuit that performs arithmetic and bitwise operations on integer binary numbers."
+    },
+    my: {
+      term: "ALU သင်္ချာနှင့်လော့ဂျစ် တွက်ချက်ရေးအစိတ်အပိုင်း",
+      explanation: "CPU ၏ အတွင်းပိုင်းတွင် သင်္ချာဆိုင်ရာနှင့် လော့ဂျစ်ပိုင်းဆိုင်ရာ တွက်ချက်မှုများကို အဓိကလုပ်ဆောင်ပေးသည့် အစိတ်အပိုင်း (ALU)။",
+      needsReview: true
+    },
+    vi: {
+      term: "Khối tính toán số học và logic ALU",
+      explanation: "Bộ phận bên trong bộ vi xử lý (ALU) chịu trách nhiệm thực hiện toàn bộ các phép tính toán học và logic.",
+      needsReview: true
+    },
+    fr: {
+      term: "Unité arithmétique et logique",
+      explanation: "Organe du processeur (ALU) en charge des calculs mathématiques élémentaires et des opérations logiques.",
+      needsReview: true
+    },
+    aliases: [
+      "ALU"
+    ],
+    related: [],
+    example: {
+      text: "When computing index offsets, the CPU coordinates the arithmetic logic unit alu to perform binary additions."
+    },
+    source: "project-glossary-v2"
+  },
+  {
+    id: "direct_memory_access_dma",
+    category: "system",
+    level: "advanced",
+    subcategory: "system-hardware",
+    exam_tags: [
+      "itpass",
+      "sg"
+    ],
+    examTags: [
+      "itpass",
+      "sg"
+    ],
+    skillTags: [
+      "hardware-io",
+      "system-optimization"
+    ],
+    searchBoost: 1.1,
+    schemaVersion: "v2",
+    updatedAt: "2026-06-13",
+    keepEnglish: true,
+    ja: {
+      term: "直接メモリアクセス (DMA)",
+      kana: "チョクセツメモリアクセス",
+      note: "CPUを介さずに、周辺機器と主記憶装置（メモリ）の間で直接高速なデータ転送を行うための制御方式。"
+    },
+    zh: {
+      term: "直接内存存取",
+      explanation: "一种硬件机制。允许外设（如网卡、磁盘控制器）绕过 CPU，直接将数据读取写入主存中，从而降低 CPU 的 I/O 中断管理负担，简称 DMA。"
+    },
+    en: {
+      term: "Direct Memory Access",
+      explanation: "A feature of computer systems that allows certain hardware subsystems to access main system memory independently of the central processing unit."
+    },
+    my: {
+      term: "DMA တိုက်ရိုက်မှတ်ဉာဏ်ရယူမှုစနစ်",
+      explanation: "CPU ကို ကြားမခံဘဲ memory နှင့် အခြားစက်ပစ္စည်းများအကြား ဒေတာများကို တိုက်ရိုက်အရှိန်မြှင့် လွှဲပြောင်းပေးသည့် နည်းပညာ။",
+      needsReview: true
+    },
+    vi: {
+      term: "Truy cập bộ nhớ trực tiếp DMA",
+      explanation: "Phương thức truyền dữ liệu trực tiếp giữa thiết bị ngoại vi và RAM mà không cần sự can thiệp của CPU, giúp giảm tải hệ thống.",
+      needsReview: true
+    },
+    fr: {
+      term: "Accès direct à la mémoire",
+      explanation: "Mécanisme (DMA) permettant à des périphériques d'écrire directement en RAM sans solliciter le processeur.",
+      needsReview: true
+    },
+    aliases: [
+      "DMA"
+    ],
+    related: [],
+    example: {
+      text: "Using direct memory access dma allows network cards to buffer high-speed database packet streams directly in RAM."
+    },
+    source: "project-glossary-v2"
+  },
+  {
+    id: "virtual_memory_system",
+    category: "system",
+    level: "intermediate",
+    subcategory: "system-hardware",
+    exam_tags: [
+      "itpass",
+      "sg"
+    ],
+    examTags: [
+      "itpass",
+      "sg"
+    ],
+    skillTags: [
+      "operating-system",
+      "memory-management"
+    ],
+    searchBoost: 1.1,
+    schemaVersion: "v2",
+    updatedAt: "2026-06-13",
+    keepEnglish: true,
+    ja: {
+      term: "仮想メモリシステム",
+      kana: "カソウメモリシステム",
+      note: "ハードディスクの一部をメモリのように見せかけ、物理メモリ（RAM）の容量を超えたプログラムを実行可能にするOSのメモリ管理機能。"
+    },
+    zh: {
+      term: "虚拟内存系统",
+      explanation: "操作系统采用的一种存储管理技术。它将辅存（如硬盘）的一部分虚拟为物理内存使用，使计算机能运行大小远超实际物理 RAM 容量的程序。"
+    },
+    en: {
+      term: "Virtual Memory",
+      explanation: "A memory management capability of an operating system that uses hardware and software to allow a computer to compensate for physical memory shortages."
+    },
+    my: {
+      term: "ဗားချวล မှတ်ဉာဏ်စနစ်",
+      explanation: "ရုပ်ဝတ္တု RAM မလုံလောက်မှုအတွက် disk နေရာအချို့ကို ယာယီ memory အဖြစ် အသုံးချသည့် OS ၏ စီမံခန့်ခွဲမှုစနစ်။",
+      needsReview: true
+    },
+    vi: {
+      term: "Hệ thống bộ nhớ ảo",
+      explanation: "Kỹ thuật của hệ điều hành cho phép bù đắp thiếu hụt RAM vật lý bằng cách sử dụng một phần ổ đĩa cứng làm bộ nhớ phụ.",
+      needsReview: true
+    },
+    fr: {
+      term: "Mémoire virtuelle",
+      explanation: "Technique de gestion de mémoire associant la RAM et l'espace disque pour simuler une mémoire globale plus grande.",
+      needsReview: true
+    },
+    aliases: [
+      "Virtual Memory",
+      "Paging System"
+    ],
+    related: [],
+    example: {
+      text: "When physical RAM is exhausted, the virtual memory system swaps database pages to the SSD."
+    },
+    source: "project-glossary-v2"
+  },
+  {
+    id: "interrupt_handling_process",
+    category: "system",
+    level: "intermediate",
+    subcategory: "system-hardware",
+    exam_tags: [
+      "itpass",
+      "sg"
+    ],
+    examTags: [
+      "itpass",
+      "sg"
+    ],
+    skillTags: [
+      "operating-system",
+      "low-level"
+    ],
+    searchBoost: 1.1,
+    schemaVersion: "v2",
+    updatedAt: "2026-06-13",
+    keepEnglish: true,
+    ja: {
+      term: "割り込み処理",
+      kana: "ワリコミショリ",
+      note: "外部ハードウェアの信号などを検知した際、実行中のプログラムを一時中断し、最優先で指定のプログラム（ハンドラ）を実行する仕組み。"
+    },
+    zh: {
+      term: "中断处理过程",
+      explanation: "计算机在收到硬件外设或软件的异常中断信号后，暂停当前执行的主程序，转去执行对应的中断服务程序（ISR），执行完毕后再返回原程序的系统机制。"
+    },
+    en: {
+      term: "Interrupt Handling",
+      explanation: "The process of responding to an asynchronous signal from hardware or software, invoking an interrupt handler."
+    },
+    my: {
+      term: "ကြားဖြတ်တုံ့ပြန်မှုလုပ်ငန်းစဉ်",
+      explanation: "စက်ပစ္စည်းများမှ အရေးပေါ်ကြားဖြတ်အချက်ပေးမှုများ ရောက်လာပါက လက်ရှိလုပ်ငန်းကို ယာယီရပ်ဆိုင်းပြီး ဦးစားပေးတုံ့ပြန်ဆောင်ရွက်သည့်စနစ်။",
+      needsReview: true
+    },
+    vi: {
+      term: "Quy trình xử lý ngắt",
+      explanation: "Cơ chế đáp ứng lập tức tín hiệu ngắt từ phần cứng hoặc phần mềm bằng cách gọi hàm xử lý ngắt ưu tiên.",
+      needsReview: true
+    },
+    fr: {
+      term: "Gestion des interruptions",
+      explanation: "Mécanisme système interrompant le processeur pour traiter immédiatement un événement matériel ou logiciel.",
+      needsReview: true
+    },
+    aliases: [
+      "Interrupt",
+      "ISR"
+    ],
+    related: [],
+    example: {
+      text: "Network card packet arrivals trigger an interrupt handling process in the operating system kernel."
+    },
+    source: "project-glossary-v2"
+  },
+  {
+    id: "kernel_space_user_space",
+    category: "system",
+    level: "advanced",
+    subcategory: "system-hardware",
+    exam_tags: [
+      "itpass",
+      "sg"
+    ],
+    examTags: [
+      "itpass",
+      "sg"
+    ],
+    skillTags: [
+      "operating-system",
+      "system-security"
+    ],
+    searchBoost: 1.1,
+    schemaVersion: "v2",
+    updatedAt: "2026-06-13",
+    keepEnglish: true,
+    ja: {
+      term: "カーネル空間とユーザー空間",
+      kana: "カーネルクウカンとユーザークウカン",
+      note: "OSがシステムの安全性と安定性を保つために設けた、特権モードで動作するメモリ領域（カーネル）と制限付きで動作する領域（ユーザー）の分離。"
+    },
+    zh: {
+      term: "内核空间与用户空间",
+      explanation: "现代操作系统在虚拟内存中划分出的两个安全访问级别区域：高特权级的内核空间用于执行底层核心指令，限制特权的用户空间用于运行普通应用。"
+    },
+    en: {
+      term: "Kernel Space and User Space",
+      explanation: "The separation of virtual memory into kernel space for running privileged OS core and user space for running applications."
+    },
+    my: {
+      term: "Kernel space နှင့် User space",
+      explanation: "စနစ်လုံခြုံရေးအတွက် OS ၏ အဓိကလုပ်ဆောင်ချက်များ မောင်းနှင်သည့် kernel space နှင့် software များအလုပ်လုပ်သည့် user space အား ခွဲခြားသတ်မှတ်မှု။",
+      needsReview: true
+    },
+    vi: {
+      term: "Không gian hạt nhân và Không gian người dùng",
+      explanation: "Vùng phân chia bộ nhớ ảo của hệ điều hành, phân lập các chỉ thị đặc quyền cốt lõi (kernel) khỏi phần mềm thông thường (user).",
+      needsReview: true
+    },
+    fr: {
+      term: "Espace noyau et espace utilisateur",
+      explanation: "Séparation mémoire entre la zone réservée aux fonctions système (noyau) et celle allouée aux applications (utilisateur).",
+      needsReview: true
+    },
+    aliases: [
+      "User Mode / Kernel Mode"
+    ],
+    related: [],
+    example: {
+      text: "A context switch occurs when the database transitions from user space to kernel space to write disk blocks."
+    },
+    source: "project-glossary-v2"
+  },
+  {
+    id: "hard_disk_drive_hdd",
+    category: "system",
+    level: "basic",
+    subcategory: "system-hardware",
+    exam_tags: [
+      "itpass",
+      "sg"
+    ],
+    examTags: [
+      "itpass",
+      "sg"
+    ],
+    skillTags: [
+      "storage",
+      "hardware"
+    ],
+    searchBoost: 1.1,
+    schemaVersion: "v2",
+    updatedAt: "2026-06-13",
+    keepEnglish: true,
+    ja: {
+      term: "ハードディスクドライブ (HDD)",
+      kana: "ハードディスクドライブ",
+      note: "磁気ディスクを高速回転させ、磁気ヘッドを用いてデータを読み書きする大容量不揮発性ストレージ。"
+    },
+    zh: {
+      term: "机械硬盘",
+      explanation: "利用高速旋转的磁性盘片以及磁头定位，进行数据磁化读写存储的传统大容量非易失性辅助存储介质，简称 HDD。"
+    },
+    en: {
+      term: "Hard Disk Drive",
+      explanation: "An electro-mechanical data storage device that uses magnetic storage to store and retrieve digital data."
+    },
+    my: {
+      term: "စက်ပြင်သံလိုက် ဟာ့ဒ်ဒစ် (HDD)",
+      explanation: "သံလိုက်ချပ်ဝိုင်းကို အသုံးပြု၍ ဒေတာများကို ရေရှည်သိုလှောင်ပေးသည့် လျှပ်စစ်စက်မှု သိုလှောင်စက် (HDD)။",
+      needsReview: true
+    },
+    vi: {
+      term: "Ổ đĩa cứng cơ học HDD",
+      explanation: "Thiết bị lưu trữ dữ liệu cơ điện sử dụng các đĩa từ quay tròn để đọc ghi thông tin, dung lượng lớn nhưng tốc độ thấp.",
+      needsReview: true
+    },
+    fr: {
+      term: "Disque dur mécanique",
+      explanation: "Dispositif de stockage magnétique de masse (HDD) constitué de plateaux rotatifs et de têtes de lecture.",
+      needsReview: true
+    },
+    aliases: [
+      "HDD",
+      "Hard Drive"
+    ],
+    related: [],
+    example: {
+      text: "Compared to modern SSDs, a hard disk drive hdd exhibits slower random read performance."
+    },
+    source: "project-glossary-v2"
+  },
+  {
+    id: "bios_firmware_system",
+    category: "system",
+    level: "basic",
+    subcategory: "system-hardware",
+    exam_tags: [
+      "itpass",
+      "sg"
+    ],
+    examTags: [
+      "itpass",
+      "sg"
+    ],
+    skillTags: [
+      "firmware",
+      "boot-process"
+    ],
+    searchBoost: 1.1,
+    schemaVersion: "v2",
+    updatedAt: "2026-06-13",
+    keepEnglish: true,
+    ja: {
+      term: "BIOS (基本入出力システム)",
+      kana: "バイオス",
+      note: "パソコンの電源投入時に最初に実行される、マザーボード上のROMに書き込まれたハードウェア制御用ファームウェア。"
+    },
+    zh: {
+      term: "BIOS 固件",
+      explanation: "安装在计算机主板只读存储芯片上的基本输入输出系统。在系统通电时最先启动，负责检测并初始化硬件设备并引导加载操作系统，简称 BIOS。"
+    },
+    en: {
+      term: "BIOS",
+      explanation: "Basic Input/Output System, a type of firmware used to perform hardware initialization during the booting process."
+    },
+    my: {
+      term: "BIOS firmware စနစ်",
+      explanation: "ကွန်ပျူတာစတင်ဖွင့်ချိန်တွင် hardware များကို စစ်ဆေးစတင်မောင်းနှင်ပေးသည့် မားသားဘုတ် ROM ပေါ်ရှိ firmware စနစ် (BIOS)။",
+      needsReview: true
+    },
+    vi: {
+      term: "Hệ thống phần sụn BIOS",
+      explanation: "Hệ thống đầu vào đầu ra cơ bản (BIOS) là phần sụn được nhúng sẵn trên bo mạch chủ giúp khởi tạo phần cứng khi khởi động.",
+      needsReview: true
+    },
+    fr: {
+      term: "Système de micrologiciel BIOS",
+      explanation: "Un micrologiciel (BIOS) effectuant les tests matériels initiaux lors de la mise sous tension de la machine.",
+      needsReview: true
+    },
+    aliases: [
+      "BIOS",
+      "Basic Input/Output System"
+    ],
+    related: [],
+    example: {
+      text: "The bios firmware system performs a power-on self-test before reading the master boot record."
+    },
+    source: "project-glossary-v2"
+  },
+  {
+    id: "grpc_framework",
+    category: "web",
+    level: "advanced",
+    subcategory: "web-api",
+    exam_tags: [
+      "itpass",
+      "sg"
+    ],
+    examTags: [
+      "itpass",
+      "sg"
+    ],
+    skillTags: [
+      "api-protocol",
+      "microservices"
+    ],
+    searchBoost: 1.1,
+    schemaVersion: "v2",
+    updatedAt: "2026-06-13",
+    keepEnglish: true,
+    ja: {
+      term: "gRPCフレームワーク",
+      kana: "ジーアールピーシーフレームワーク",
+      note: "Googleが開発したオープンソースのRPC（リモートプロシージャコール）フレームワーク。HTTP/2とProtocol Buffersを採用し、超高速・低遅延なAPI通信を実現。"
+    },
+    zh: {
+      term: "gRPC 框架",
+      explanation: "Google 开源的高性能、跨语言远程过程调用（RPC）框架。它基于 HTTP/2 传输协议和 Protocol Buffers 接口描述语言，广泛应用于微服务通信。"
+    },
+    en: {
+      term: "gRPC",
+      explanation: "A high-performance, open-source universal RPC framework developed by Google, using HTTP/2 and Protocol Buffers."
+    },
+    my: {
+      term: "gRPC framework",
+      explanation: "Google က တီထွင်ပြီး HTTP/2 နှင့် Protocol Buffers သုံးကာ ဆာဗာအချင်းချင်း အလွန်မြန်ဆန်စွာ ဆက်သွယ်ပေးသည့် RPC framework (gRPC)။",
+      needsReview: true
+    },
+    vi: {
+      term: "Khung công nghệ gRPC",
+      explanation: "Khung truyền thông RPC hiệu suất cao do Google phát triển, hoạt động trên giao thức HTTP/2 và sử dụng Protocol Buffers.",
+      needsReview: true
+    },
+    fr: {
+      term: "Cadriciel gRPC",
+      explanation: "Un cadre d'appel de procédure à distance (gRPC) hautement performant développé par Google sur HTTP/2.",
+      needsReview: true
+    },
+    aliases: [
+      "gRPC"
+    ],
+    related: [],
+    example: {
+      text: "Our internal microservices communicate using the grpc_framework to minimize JSON parsing overhead."
+    },
+    source: "project-glossary-v2"
+  },  {
+    id: "representational_state_transfer_rest",
+    category: "web",
+    level: "intermediate",
+    subcategory: "web-api",
+    exam_tags: [
+      "itpass",
+      "sg"
+    ],
+    examTags: [
+      "itpass",
+      "sg"
+    ],
+    skillTags: [
+      "api-design",
+      "rest-api"
+    ],
+    searchBoost: 1.2,
+    schemaVersion: "v2",
+    updatedAt: "2026-06-13",
+    keepEnglish: true,
+    ja: {
+      term: "REST (表現状態転送)",
+      kana: "レスト",
+      note: "Webのアーキテクチャ設計原則の一つ。ステートレス、統一インターフェース（GET, POST等）、アドレス可能性などを満たす設計手法。"
+    },
+    zh: {
+      term: "REST 架构",
+      explanation: "一种用于构建分布式网络服务的软件架构风格。基于 HTTP 原生方法（GET, POST, PUT, DELETE等）和无状态通信，在 Web API 设计中被广泛采纳。"
+    },
+    en: {
+      term: "REST",
+      explanation: "Representational State Transfer, an architectural style for providing standards between computer systems on the web."
+    },
+    my: {
+      term: "RESTful ဖွဲ့စည်းပုံနည်းလမ်း",
+      explanation: "HTTP method များကို အသုံးပြုပြီး stateless စနစ်ဖြင့် ဝဘ်ဝန်ဆောင်မှုများ တည်ဆောက်သည့် စံနှုန်းဒီဇိုင်းစတိုင် (REST)။",
+      needsReview: true
+    },
+    vi: {
+      term: "Kiến trúc chuyển giao trạng thái REST",
+      explanation: "Phong cách thiết kế kiến trúc phần mềm (REST) tối ưu hóa khả năng truyền tải dữ liệu phi trạng thái thông qua giao thức HTTP.",
+      needsReview: true
+    },
+    fr: {
+      term: "Transfert d'état représentatif",
+      explanation: "Un style d'architecture logicielle (REST) standardisé pour la création d'API Web basées sur HTTP.",
+      needsReview: true
+    },
+    aliases: [
+      "REST",
+      "RESTful API"
+    ],
+    related: [],
+    example: {
+      text: "We designed a representational state transfer rest API to expose our SQL tables to mobile clients."
+    },
+    source: "project-glossary-v2"
+  },
+  {
+    id: "hypertext_transfer_protocol_secure_https",
+    category: "web",
+    level: "basic",
+    subcategory: "web-api",
+    exam_tags: [
+      "itpass",
+      "sg"
+    ],
+    examTags: [
+      "itpass",
+      "sg"
+    ],
+    skillTags: [
+      "web-security",
+      "encryption"
+    ],
+    searchBoost: 1.2,
+    schemaVersion: "v2",
+    updatedAt: "2026-06-13",
+    keepEnglish: true,
+    ja: {
+      term: "HTTPS (安全なHTTP)",
+      kana: "エッチティーティーピーエス",
+      note: "HTTPによる通信をSSL/TLSプロトコルで暗号化し、盗聴や改ざんを防ぐセキュアなプロトコル。"
+    },
+    zh: {
+      term: "HTTPS 协议",
+      explanation: "超文本传输安全协议。在 HTTP 通信基础上引入 SSL/TLS 加密层，从而实现客户端与服务器之间传输数据的主动加密和身份验证，默认端口为 443。"
+    },
+    en: {
+      term: "HTTPS",
+      explanation: "An extension of the Hypertext Transfer Protocol, using SSL/TLS to encrypt communication for secure web transactions."
+    },
+    my: {
+      term: "HTTPS လုံခြုံသောဝဘ်ပို့ဆောင်ရေး ပရိုတိုကော",
+      explanation: "HTTP communication ကို TLS ဖြင့် ကုဒ်ဝှက်ပြီး သတင်းအချက်အလက်ခိုးယူမှုမှ ကာကွယ်သည့် လုံခြုံရေး protocol (HTTPS)။",
+      needsReview: true
+    },
+    vi: {
+      term: "Giao thức truyền tải siêu văn bản bảo mật HTTPS",
+      explanation: "Giao thức mở rộng của HTTP được bảo mật bằng cách mã hóa dòng dữ liệu qua TLS/SSL.",
+      needsReview: true
+    },
+    fr: {
+      term: "Protocole de transfert hypertexte sécurisé",
+      explanation: "Version sécurisée du protocole HTTP (HTTPS) chiffrant les communications grâce à SSL/TLS.",
+      needsReview: true
+    },
+    aliases: [
+      "HTTPS"
+    ],
+    related: [],
+    example: {
+      text: "All login portals must enforce hypertext transfer protocol secure https to prevent password eavesdropping."
+    },
+    source: "project-glossary-v2"
+  },
+  {
+    id: "session_cookie_management",
+    category: "web",
+    level: "intermediate",
+    subcategory: "web-api",
+    exam_tags: [
+      "itpass",
+      "sg"
+    ],
+    examTags: [
+      "itpass",
+      "sg"
+    ],
+    skillTags: [
+      "web-security",
+      "state-management"
+    ],
+    searchBoost: 1.1,
+    schemaVersion: "v2",
+    updatedAt: "2026-06-13",
+    keepEnglish: true,
+    ja: {
+      term: "セッションとクッキーの管理",
+      kana: "セッションとクッキーのカンリ",
+      note: "状態を持たないHTTPにおいて、サーバー側にセッション情報を、ブラウザ側にクッキー（セッションID）を保存してユーザーの状態を追跡する仕組み。"
+    },
+    zh: {
+      term: "Session 和 Cookie 管理",
+      explanation: "Web 开发中用来克服 HTTP 无状态特性的会话保持技术。将状态明细存于服务器（Session），并将唯一的标识密钥存给客户端浏览器（Cookie）以跟踪登录状态。"
+    },
+    en: {
+      term: "Session and Cookie Management",
+      explanation: "The methods used in web applications to maintain user state across stateless HTTP requests."
+    },
+    my: {
+      term: "Session နှင့် Cookie စီမံခန့်ခွဲမှု",
+      explanation: "Stateless HTTP စနစ်တွင် သုံးစွဲသူ၏ log-in အခြေအနေကို မှတ်မိနေစေရန် server နှင့် browser အကြား ဒေတာသိမ်းဆည်းစီမံမှု။",
+      needsReview: true
+    },
+    vi: {
+      term: "Quản trị Session và Cookie",
+      explanation: "Kỹ thuật duy trì trạng thái đăng nhập của người dùng qua các yêu cầu HTTP vốn phi trạng thái, bằng cách sử dụng Session ở máy chủ và Cookie ở máy khách.",
+      needsReview: true
+    },
+    fr: {
+      term: "Gestion des sessions et des cookies",
+      explanation: "Mécanismes permettant de maintenir l'état d'un utilisateur à travers les requêtes HTTP sans état.",
+      needsReview: true
+    },
+    aliases: [
+      "HTTP State Management"
+    ],
+    related: [],
+    example: {
+      text: "Proper session cookie management requires setting HttpOnly and Secure flags to block XSS access."
+    },
+    source: "project-glossary-v2"
+  },
+  {
+    id: "cross_origin_resource_sharing_cors",
+    category: "web",
+    level: "intermediate",
+    subcategory: "web-api",
+    exam_tags: [
+      "itpass",
+      "sg"
+    ],
+    examTags: [
+      "itpass",
+      "sg"
+    ],
+    skillTags: [
+      "web-security",
+      "api-design"
+    ],
+    searchBoost: 1.1,
+    schemaVersion: "v2",
+    updatedAt: "2026-06-13",
+    keepEnglish: true,
+    ja: {
+      term: "CORS (オリジン間リソース共有)",
+      kana: "シーオーアールエス",
+      note: "ブラウザの同一起源ポリシー (SOP) を超え、あるWebドメインから異なるドメインのAPIやリソースへのセキュアなアクセスを許可するW3C標準仕様。"
+    },
+    zh: {
+      term: "跨域资源共享",
+      explanation: "一种由浏览器控制的安全访问机制。允许服务器通过响应特定的 HTTP 头信息，授权允许来自其他域名（源）的网页脚本跨域请求读取本地资源，简称 CORS。"
+    },
+    en: {
+      term: "Cross-Origin Resource Sharing",
+      explanation: "A mechanism that allows restricted resources on a web page to be requested from another domain outside the domain from which the first resource was served."
+    },
+    my: {
+      term: "CORS ခြားနားသော domain အကြား အရင်းအမြစ်မျှဝေမှုစနစ်",
+      explanation: "Browser ၏ SOP ကန့်သတ်ချက်ကို ကျော်လွန်ပြီး အခြား domain တစ်ခုရှိ API များအား လုံခြုံစွာ ခေါ်ယူခွင့်ပြုသည့် ယန္တရား (CORS)။",
+      needsReview: true
+    },
+    vi: {
+      term: "Chia sẻ tài nguyên ngoại nguồn CORS",
+      explanation: "Cơ chế bảo mật của trình duyệt cho phép truy cập tài nguyên bị giới hạn của trang web từ một tên miền khác.",
+      needsReview: true
+    },
+    fr: {
+      term: "Partage des ressources entre origines multiples",
+      explanation: "Un mécanisme (CORS) permettant à des pages web d'effectuer des requêtes vers un domaine tiers.",
+      needsReview: true
+    },
+    aliases: [
+      "CORS"
+    ],
+    related: [],
+    example: {
+      text: "We updated the cross origin resource sharing cors settings on the API server to allow our web public domain access."
+    },
+    source: "project-glossary-v2"
+  },
+  {
+    id: "server_side_rendering_ssr",
+    category: "web",
+    level: "intermediate",
+    subcategory: "web-api",
+    exam_tags: [
+      "itpass",
+      "sg"
+    ],
+    examTags: [
+      "itpass",
+      "sg"
+    ],
+    skillTags: [
+      "frontend-architecture",
+      "seo"
+    ],
+    searchBoost: 1.1,
+    schemaVersion: "v2",
+    updatedAt: "2026-06-13",
+    keepEnglish: true,
+    ja: {
+      term: "サーバーサイドレンダリング (SSR)",
+      kana: "サーバーサイドレンダリング",
+      note: "Webページのリクエスト時に、サーバー側でHTML全体を組み立ててクライアントに返送するレンダリング手法。SEOや初速向上に有利。"
+    },
+    zh: {
+      term: "服务端渲染",
+      explanation: "在服务器端将网页的数据模型填充进网页模板、合成最终的完整 HTML 字符串，然后一次性吐给浏览器进行直出的网页展现技术，简称 SSR。"
+    },
+    en: {
+      term: "Server-Side Rendering",
+      explanation: "The process of rendering web pages on the server and sending the fully constructed HTML to the client."
+    },
+    my: {
+      term: "ဆာဗာဘက်ခြမ်း HTML တည်ဆောက်မှုစနစ် (SSR)",
+      explanation: "ဝဘ်စာမျက်နှာကို browser ထံသို့ မပို့မီ server ပေါ်တွင် HTML အဖြစ် အပြီးသတ်ဖန်တီးပေးပို့သည့် စနစ်။",
+      needsReview: true
+    },
+    vi: {
+      term: "Kết xuất phía máy chủ SSR",
+      explanation: "Quy trình kết xuất giao diện HTML hoàn chỉnh trực tiếp tại máy chủ trước khi gửi về trình duyệt của người dùng.",
+      needsReview: true
+    },
+    fr: {
+      term: "Rendu côté serveur",
+      explanation: "Technique (SSR) consistant à générer le code HTML final d'une page sur le serveur avant de l'envoyer au client.",
+      needsReview: true
+    },
+    aliases: [
+      "SSR"
+    ],
+    related: [],
+    example: {
+      text: "We implemented server side rendering ssr in Next.js to improve loading times and search engine indexing."
+    },
+    source: "project-glossary-v2"
+  },
+  {
+    id: "web_application_firewall_waf",
+    category: "web",
+    level: "intermediate",
+    subcategory: "web-api",
+    exam_tags: [
+      "itpass",
+      "sg"
+    ],
+    examTags: [
+      "itpass",
+      "sg"
+    ],
+    skillTags: [
+      "web-security",
+      "security-controls"
+    ],
+    searchBoost: 1.1,
+    schemaVersion: "v2",
+    updatedAt: "2026-06-13",
+    keepEnglish: true,
+    ja: {
+      term: "Webアプリケーションファイアウォール (WAF)",
+      kana: "ウェブアプリケーションファイアウォール",
+      note: "WebアプリケーションのHTTP通信を専門に監視・検査し、SQLインジェクションやXSSなどの悪意のある攻撃を防御するセキュリティフィルター。"
+    },
+    zh: {
+      term: "Web 应用防火墙",
+      explanation: "一种专门针对应用层 HTTP/HTTPS 流量进行深度内容过滤的安全防御壁，用以过滤并拦截 SQL 注入、跨站脚本（XSS）等应用级网络攻击，简称 WAF。"
+    },
+    en: {
+      term: "Web Application Firewall",
+      explanation: "A specific type of firewall that monitors, filters, and blocks HTTP traffic to and from a web application."
+    },
+    my: {
+      term: "ဝဘ်အက်ပလီကေးရှင်းသုံး Firewall (WAF)",
+      explanation: "HTTP traffic များကို အသေးစိတ်စစ်ဆေးပြီး SQL injection သို့မဟုတ် XSS တိုက်ခိုက်မှုများကို ဟန့်တားပေးသည့် လုံခြုံရေးစနစ် (WAF)။",
+      needsReview: true
+    },
+    vi: {
+      term: "Tường lửa ứng dụng web WAF",
+      explanation: "Hệ thống tường lửa chuyên dụng (WAF) lọc và chặn các lưu lượng HTTP độc hại nhắm vào ứng dụng web.",
+      needsReview: true
+    },
+    fr: {
+      term: "Pare-feu pour applications Web",
+      explanation: "Un filtre de sécurité (WAF) analysant les requêtes HTTP pour bloquer les attaques de niveau applicatif.",
+      needsReview: true
+    },
+    aliases: [
+      "WAF"
+    ],
+    related: [],
+    example: {
+      text: "We configured a web application firewall waf to automatically block suspicious SQL query parameters."
+    },
+    source: "project-glossary-v2"
+  },
+  {
+    id: "json_web_token_jwt",
+    category: "web",
+    level: "intermediate",
+    subcategory: "web-api",
+    exam_tags: [
+      "itpass",
+      "sg"
+    ],
+    examTags: [
+      "itpass",
+      "sg"
+    ],
+    skillTags: [
+      "token-auth",
+      "identity"
+    ],
+    searchBoost: 1.1,
+    schemaVersion: "v2",
+    updatedAt: "2026-06-13",
+    keepEnglish: true,
+    ja: {
+      term: "JSON Web Token (JWT)",
+      kana: "ジェイソンウェブトークン",
+      note: "認証情報をJSON形式で安全に送受信するための自己完結型のトークン規格。暗号署名（HMACやRSA）が施され、ステートレスな認証に使用される。"
+    },
+    zh: {
+      term: "JSON Web 令牌",
+      explanation: "一种开放标准（RFC 7519），用于在网络应用之间安全地传输 JSON 对象作为自包含身份令牌，经过签名（HMAC或RSA）难以篡改，适用于微服务，简称 JWT。"
+    },
+    en: {
+      term: "JSON Web Token",
+      explanation: "An open standard (RFC 7519) that defines a compact and self-contained way for securely transmitting information between parties as a JSON object."
+    },
+    my: {
+      term: "JSON Web Token (JWT)",
+      explanation: "သုံးစွဲသူ၏ အထောက်အထားကို JSON ပုံစံဖြင့် လုံခြုံစွာ ထုပ်ပိုးလက်မှတ်ထိုးပေးပို့သည့် authentication token စံနှုန်း (JWT)။",
+      needsReview: true
+    },
+    vi: {
+      term: "Mã thông báo JSON Web Token",
+      explanation: "Tiêu chuẩn mã thông báo tự chứa (JWT) được ký số giúp truyền tải thông tin định danh an toàn giữa máy khách và máy chủ.",
+      needsReview: true
+    },
+    fr: {
+      term: "Jeton Web JSON",
+      explanation: "Un standard ouvert (JWT) définissant un moyen compact et autonome d'échanger des données signées au format JSON.",
+      needsReview: true
+    },
+    aliases: [
+      "JWT"
+    ],
+    related: [],
+    example: {
+      text: "After a successful login, the server returns a signed json web token jwt to the client."
+    },
+    source: "project-glossary-v2"
+  },
+  {
+    id: "git_cherry_pick_operation",
+    category: "git",
+    level: "intermediate",
+    subcategory: "git-tools",
+    exam_tags: [
+      "itpass",
+      "sg"
+    ],
+    examTags: [
+      "itpass",
+      "sg"
+    ],
+    skillTags: [
+      "version-control",
+      "git"
+    ],
+    searchBoost: 1.1,
+    schemaVersion: "v2",
+    updatedAt: "2026-06-13",
+    keepEnglish: true,
+    ja: {
+      term: "チェリーピック (cherry-pick)",
+      kana: "チェリーピック",
+      note: "別のブランチにある特定のコミットだけを指定して、現在のブランチに取り込むGitの操作。"
+    },
+    zh: {
+      term: "Git 挑选合并操作",
+      explanation: "Git 版本控制中一种特殊的提取合并命令。允许开发人员选择其他分支上的某一个或几个特定提交（Commit），并将其应用到当前活动分支上，命令名为 git cherry-pick。"
+    },
+    en: {
+      term: "Git Cherry-Pick",
+      explanation: "A git operation that applies the changes introduced by some existing commits onto the current branch."
+    },
+    my: {
+      term: "Git cherry-pick လုပ်ဆောင်ချက်",
+      explanation: "အခြား branch တစ်ခုပေါ်ရှိ သီးခြား commit တစ်ခုကိုသာ ရွေးချယ်ပြီး လက်ရှိ branch ပေါ်သို့ လှမ်းယူပေါင်းစပ်သည့် Git operation။",
+      needsReview: true
+    },
+    vi: {
+      term: "Thao tác chọn lọc git cherry-pick",
+      explanation: "Thao tác trong Git cho phép chọn một commit cụ thể từ nhánh khác và áp dụng nó trực tiếp vào nhánh hiện tại.",
+      needsReview: true
+    },
+    fr: {
+      term: "Sélection de commit git cherry-pick",
+      explanation: "Commande Git permettant d'appliquer les modifications d'un commit spécifique sur la branche courante.",
+      needsReview: true
+    },
+    aliases: [
+      "cherry-pick"
+    ],
+    related: [],
+    example: {
+      text: "We used git cherry_pick_operation to apply the critical SQL patch commit directly to the release branch."
+    },
+    source: "project-glossary-v2"
+  },
+  {
+    id: "mock_object_testing",
+    category: "git",
+    level: "intermediate",
+    subcategory: "git-tools",
+    exam_tags: [
+      "itpass",
+      "sg"
+    ],
+    examTags: [
+      "itpass",
+      "sg"
+    ],
+    skillTags: [
+      "testing-methodology",
+      "unit-testing"
+    ],
+    searchBoost: 1.1,
+    schemaVersion: "v2",
+    updatedAt: "2026-06-13",
+    keepEnglish: true,
+    ja: {
+      term: "モックオブジェクトテスト",
+      kana: "モックオブジェクトテスト",
+      note: "ユニットテストにおいて、データベースや外部APIなどの本物の依存対象の代わりに、模擬オブジェクトを用いてテストを実行する手法。"
+    },
+    zh: {
+      term: "Mock 对象测试",
+      explanation: "单元测试中常用的一种隔离测试技术。通过创建模拟的“哑对象”来替代真实的数据库、外部网络API等复杂外部依赖，并预设其返回值以专注于测试当前类逻辑。"
+    },
+    en: {
+      term: "Mock Object",
+      explanation: "Simulated objects that mimic the behavior of real, complex objects in controlled software testing environments."
+    },
+    my: {
+      term: "Mock object စမ်းသပ်မှုစနစ်",
+      explanation: "Unit testing တွင် real database သို့မဟုတ် external API နေရာတွင် အစားထိုး တုပစမ်းသပ်သည့် စနစ်။",
+      needsReview: true
+    },
+    vi: {
+      term: "Kiểm thử bằng đối tượng giả lập Mock",
+      explanation: "Phương pháp tạo ra các đối tượng giả (Mock) thay thế cho các phụ thuộc thực tế (như database) để kiểm thử độc lập.",
+      needsReview: true
+    },
+    fr: {
+      term: "Objet factice de test mock",
+      explanation: "Objets simulés (mocks) imitant le comportement d'objets réels pour isoler les tests unitaires.",
+      needsReview: true
+    },
+    aliases: [
+      "Mocking",
+      "Mock Test"
+    ],
+    related: [],
+    example: {
+      text: "We used mock object testing to simulate database query return values without launching a live SQL instance."
+    },
+    source: "project-glossary-v2"
+  },
+  {
+    id: "integration_testing_level",
+    category: "git",
+    level: "basic",
+    subcategory: "git-tools",
+    exam_tags: [
+      "itpass",
+      "sg"
+    ],
+    examTags: [
+      "itpass",
+      "sg"
+    ],
+    skillTags: [
+      "qa",
+      "testing-phases"
+    ],
+    searchBoost: 1.1,
+    schemaVersion: "v2",
+    updatedAt: "2026-06-13",
+    keepEnglish: true,
+    ja: {
+      term: "結合テスト",
+      kana: "ケツゴウテスト",
+      note: "個別に単体テストされたソフトウェアモジュールを組み合わせ、モジュール間のインターフェースや連携が正しく機能するかを検証するテスト段階。"
+    },
+    zh: {
+      term: "集成测试",
+      explanation: "软件测试的一个阶段。将已经通过单元测试的多个独立软件模块联合装配，重点检测各个模块组装后的接口通信、数据传递是否正确，也称结合测试。"
+    },
+    en: {
+      term: "Integration Testing",
+      explanation: "A phase in software testing in which individual software modules are combined and tested as a group."
+    },
+    my: {
+      term: "ပေါင်းစပ်စမ်းသပ်မှုအဆင့်",
+      explanation: "သီးခြားစမ်းသပ်ပြီးသော module များကို စုစည်းပြီး ၎င်းတို့အကြား ချိတ်ဆက်မှုကို စမ်းသပ်သည့် အဆင့် (Integration Test)။",
+      needsReview: true
+    },
+    vi: {
+      term: "Mức kiểm thử tích hợp",
+      explanation: "Giai đoạn kiểm thử phần mềm trong đó các mô-đun riêng lẻ được kết hợp lại để kiểm tra giao diện tương tác giữa chúng.",
+      needsReview: true
+    },
+    fr: {
+      term: "Tests d'intégration",
+      explanation: "Phase de test logiciel (intégration) vérifiant la bonne communication entre des modules préalablement validés.",
+      needsReview: true
+    },
+    aliases: [
+      "Integration Test"
+    ],
+    related: [],
+    example: {
+      text: "During integration testing level, we verified that the Java service saves the user payload to the SQL DB successfully."
+    },
+    source: "project-glossary-v2"
+  },
+  {
+    id: "regression_testing_type",
+    category: "git",
+    level: "intermediate",
+    subcategory: "git-tools",
+    exam_tags: [
+      "itpass",
+      "sg"
+    ],
+    examTags: [
+      "itpass",
+      "sg"
+    ],
+    skillTags: [
+      "qa",
+      "software-maintenance"
+    ],
+    searchBoost: 1.1,
+    schemaVersion: "v2",
+    updatedAt: "2026-06-13",
+    keepEnglish: true,
+    ja: {
+      term: "退行テスト (レグレッションテスト)",
+      kana: "タイコウテスト",
+      note: "プログラム修正や新機能追加を行った後に、既存の正常な部分に予期せぬ不具合（バグ）やデグレードが発生していないかを確認するテスト。"
+    },
+    zh: {
+      term: "回归测试",
+      explanation: "在软件被修改（如修复漏洞或添加新功能）后重新进行的测试，用以确保该修改没有破坏原有的、本已正常的其他功能逻辑或产生新的负作用。"
+    },
+    en: {
+      term: "Regression Testing",
+      explanation: "Re-running functional and non-functional tests to ensure that previously developed and tested software still performs after a change."
+    },
+    my: {
+      term: "regression စမ်းသပ်မှုစနစ်",
+      explanation: "စနစ်ကို ပြင်ဆင်ပြီးနောက် ရှိပြီးသားကောင်းမွန်သော အစိတ်အပိုင်းများတွင် အမှားသစ်များ ထပ်မံမပေါ်ပေါက်စေရန် ပြန်လည်စမ်းသပ်မှု။",
+      needsReview: true
+    },
+    vi: {
+      term: "Loại kiểm thử hồi quy",
+      explanation: "Quy trình chạy lại các ca kiểm thử nhằm bảo đảm các sửa đổi mã nguồn gần đây không làm hỏng các tính năng cũ đang chạy tốt.",
+      needsReview: true
+    },
+    fr: {
+      term: "Tests de non-régression",
+      explanation: "Exécution de tests (régression) vérifiant que les modifications récentes n'ont pas introduit d'effets de bord indésirables.",
+      needsReview: true
+    },
+    aliases: [
+      "Regression Test",
+      "Non-Regression Testing"
+    ],
+    related: [],
+    example: {
+      text: "We ran a suite of automated API test scripts as a regression testing type after migrating database drivers."
+    },
+    source: "project-glossary-v2"
+  },
+  {
+    id: "continuous_integration_ci",
+    category: "git",
+    level: "intermediate",
+    subcategory: "git-tools",
+    exam_tags: [
+      "itpass",
+      "sg"
+    ],
+    examTags: [
+      "itpass",
+      "sg"
+    ],
+    skillTags: [
+      "devops",
+      "automation"
+    ],
+    searchBoost: 1.2,
+    schemaVersion: "v2",
+    updatedAt: "2026-06-13",
+    keepEnglish: true,
+    ja: {
+      term: "継続的インテグレーション (CI)",
+      kana: "ケイゾクテキインテグレーション",
+      note: "開発者がコード変更を共有リポジトリに頻繁にマージし、それを自動ビルド・自動テストするプロセス。"
+    },
+    zh: {
+      term: "持续集成",
+      explanation: "一种软件开发实践，简称 CI。团队成员频繁将代码合并入主分支，每次合并都会触发自动化的构建和测试套件，以及时发现和纠正冲突漏洞。"
+    },
+    en: {
+      term: "Continuous Integration",
+      explanation: "A software development practice where developers regularly merge their code changes into a central repository, followed by automated builds."
+    },
+    my: {
+      term: "စဉ်ဆက်မပြတ် ပေါင်းစပ်တည်ဆောက်မှုစနစ် (CI)",
+      explanation: "တီထွင်သူများ၏ ကုဒ်ပြင်ဆင်ချက်များကို မျှဝေ repository သို့ မကြာခဏ ပေါင်းစပ်ပြီး အလိုအလျောက် တည်ဆောက်စမ်းသပ်သည့် စနစ်။",
+      needsReview: true
+    },
+    vi: {
+      term: "Tích hợp liên tục CI",
+      explanation: "Thực hành phát triển phần mềm (CI) trong đó các thành viên thường xuyên đẩy mã nguồn mới lên nhánh chính và kiểm thử tự động.",
+      needsReview: true
+    },
+    fr: {
+      term: "Intégration continue",
+      explanation: "Pratique de développement (CI) consistant à automatiser la validation et la fusion de chaque modification de code.",
+      needsReview: true
+    },
+    aliases: [
+      "CI"
+    ],
+    related: [],
+    example: {
+      text: "Our continuous integration ci server rejects pull requests if any unit test fails."
+    },
+    source: "project-glossary-v2"
+  },
+  {
+    id: "integrated_development_environment_ide",
+    category: "git",
+    level: "basic",
+    subcategory: "git-tools",
+    exam_tags: [
+      "itpass",
+      "sg"
+    ],
+    examTags: [
+      "itpass",
+      "sg"
+    ],
+    skillTags: [
+      "developer-tools",
+      "productivity"
+    ],
+    searchBoost: 1.1,
+    schemaVersion: "v2",
+    updatedAt: "2026-06-13",
+    keepEnglish: true,
+    ja: {
+      term: "統合開発環境 (IDE)",
+      kana: "トウゴウカイハツカンキョウ",
+      note: "コードエディタ、コンパイラ、デバッガなどの開発に必要なツールを一つの画面に統合したソフトウェア。"
+    },
+    zh: {
+      term: "集成开发环境",
+      explanation: "将代码编写、编译构建、运行调试以及版本控制等开发辅助功能无缝集成在单一图形用户界面的软件工具，如 VS Code、IntelliJ IDEA，简称 IDE。"
+    },
+    en: {
+      term: "Integrated Development Environment",
+      explanation: "A software application that provides comprehensive facilities to computer programmers for software development, combining code editor, build tools and debugger."
+    },
+    my: {
+      term: "ပေါင်းစပ်တီထွင်မှု ပတ်ဝန်းကျင်ဆော့ဖ်ဝဲလ် (IDE)",
+      explanation: "ကုဒ်ရေးသားခြင်း၊ compiler နှင့် debugger စသည်တို့ကို ဆော့ဖ်ဝဲလ်တစ်ခုတည်းတွင် ပေါင်းစပ်ပေးထားသည့် tool (IDE)။",
+      needsReview: true
+    },
+    vi: {
+      term: "Môi trường phát triển tích hợp IDE",
+      explanation: "Ứng dụng phần mềm cung cấp đầy đủ tiện ích biên dịch, gỡ lỗi và chỉnh sửa mã nguồn cho lập trình viên.",
+      needsReview: true
+    },
+    fr: {
+      term: "Environnement de développement intégré",
+      explanation: "Une application logicielle (IDE) rassemblant les outils essentiels (éditeur, compilateur, débogueur) du programmeur.",
+      needsReview: true
+    },
+    aliases: [
+      "IDE"
+    ],
+    related: [],
+    example: {
+      text: "Modern integrated development environment ide tools provide smart auto-completions using neural network models."
+    },
+    source: "project-glossary-v2"
+  },
+  {
+    id: "infrastructure_as_code_iac",
+    category: "cloud",
+    level: "intermediate",
+    subcategory: "cloud-architecture",
+    exam_tags: [
+      "itpass",
+      "sg"
+    ],
+    examTags: [
+      "itpass",
+      "sg"
+    ],
+    skillTags: [
+      "devops",
+      "automation"
+    ],
+    searchBoost: 1.2,
+    schemaVersion: "v2",
+    updatedAt: "2026-06-13",
+    keepEnglish: true,
+    ja: {
+      term: "コードによるインフラ構成 (IaC)",
+      kana: "コードによるインフラコウセイ",
+      note: "サーバー、ネットワークなどのITインフラ構成を、手動操作ではなく定義ファイル（コード）を用いて自動的に構築・管理する手法。"
+    },
+    zh: {
+      term: "基础设施即代码",
+      explanation: "一种通过编写声明式的配置文件（如 Terraform, CloudFormation）来自动化创建、配置和管理服务器、网络等硬件基础设施的方法，简称 IaC。"
+    },
+    en: {
+      term: "Infrastructure as Code",
+      explanation: "The managing and provisioning of infrastructure through code instead of through manual processes."
+    },
+    my: {
+      term: "ကုဒ်သုံး အခြေခံအဆောက်အအုံ စီမံခန့်ခွဲမှုစနစ် (IaC)",
+      explanation: "ဆာဗာနှင့် network များကို manual မဟုတ်ဘဲ config code ဖိုင်များဖြင့် အလိုအလျောက် တည်ဆောက်ထိန်းချုပ်သည့် စနစ်။",
+      needsReview: true
+    },
+    vi: {
+      term: "Hạ tầng dạng mã IaC",
+      explanation: "Thực hành quản trị và cung cấp tài nguyên hạ tầng (máy chủ, mạng) thông qua mã lệnh cấu hình thay vì quy trình thủ công.",
+      needsReview: true
+    },
+    fr: {
+      term: "Infrastructure en tant que code",
+      explanation: "Pratique (IaC) de gestion et de provisionnement des ressources informatiques à l'aide de fichiers de configuration.",
+      needsReview: true
+    },
+    aliases: [
+      "IaC"
+    ],
+    related: [],
+    example: {
+      text: "Writing our database schema deployments as infrastructure as code iac makes environment setup repeatable."
+    },
+    source: "project-glossary-v2"
+  },
+  {
+    id: "serverless_computing_architecture",
+    category: "cloud",
+    level: "intermediate",
+    subcategory: "cloud-architecture",
+    exam_tags: [
+      "itpass",
+      "sg"
+    ],
+    examTags: [
+      "itpass",
+      "sg"
+    ],
+    skillTags: [
+      "cloud-architecture",
+      "serverless"
+    ],
+    searchBoost: 1.2,
+    schemaVersion: "v2",
+    updatedAt: "2026-06-13",
+    keepEnglish: true,
+    ja: {
+      term: "サーバーレスコンピューティング",
+      kana: "サーバーレスコンピューティング",
+      note: "開発者がサーバーの管理やプロビジョニングを行わず、イベント駆動型で実行されたコードの分だけ課金されるクラウド実行モデル。"
+    },
+    zh: {
+      term: "无服务器计算",
+      explanation: "一种云执行计算模型。云服务商全权管理物理服务器并自动弹性伸缩容器资源，开发者只需上传无状态函数代码（如 AWS Lambda），按实际调用量计费。"
+    },
+    en: {
+      term: "Serverless Computing",
+      explanation: "A cloud-computing execution model where the cloud provider runs the server, dynamically managing the allocation of machine resources."
+    },
+    my: {
+      term: "ဆာဗာမဲ့ တွက်ချက်မှုစနစ်",
+      explanation: "ဆာဗာများကို ကိုယ်တိုင်စီမံရန်မလိုဘဲ ရေးသားထားသော ကုဒ်အလုပ်လုပ်ချိန်အတွက်သာ ပိုက်ဆံပေးရသည့် cloud စနစ်။",
+      needsReview: true
+    },
+    vi: {
+      term: "Kiến trúc điện toán không máy chủ",
+      explanation: "Mô hình triển khai đám mây trong đó nhà cung cấp tự động phân bổ tài nguyên máy chủ và tính phí theo thời gian thực thi mã.",
+      needsReview: true
+    },
+    fr: {
+      term: "Informatique sans serveur",
+      explanation: "Modèle cloud (serverless) où la gestion des serveurs physiques est totalement masquée et gérée par le fournisseur.",
+      needsReview: true
+    },
+    aliases: [
+      "Serverless",
+      "Function-as-a-Service",
+      "FaaS"
+    ],
+    related: [],
+    example: {
+      text: "We migrated our database cleanup script to serverless computing architecture to avoid keeping a VM running 24/7."
+    },
+    source: "project-glossary-v2"
+  },
+  {
+    id: "hypervisor_virtualization",
+    category: "cloud",
+    level: "intermediate",
+    subcategory: "cloud-architecture",
+    exam_tags: [
+      "itpass",
+      "sg"
+    ],
+    examTags: [
+      "itpass",
+      "sg"
+    ],
+    skillTags: [
+      "virtualization",
+      "cloud-infrastructure"
+    ],
+    searchBoost: 1.1,
+    schemaVersion: "v2",
+    updatedAt: "2026-06-13",
+    keepEnglish: true,
+    ja: {
+      term: "ハイパーバイザ仮想化",
+      kana: "ハイパーバイザカソウカ",
+      note: "物理サーバの上に直接またはホストOS経由で制御ソフトウェア（ハイパーバイザ）を介在させ、複数のゲストOS（仮想マシン）を動作させる技術。"
+    },
+    zh: {
+      term: "虚拟机监控器虚拟化",
+      explanation: "利用底层的虚拟机监控器（Hypervisor）软件，在物理机硬件之上抽象出多个完全独立运作且带有各自完整操作系统的虚拟机（VM）的传统虚拟化技术。"
+    },
+    en: {
+      term: "Hypervisor Virtualization",
+      explanation: "A virtualization technique where a software layer (hypervisor) runs directly on the hardware or host OS to manage guest virtual machines."
+    },
+    my: {
+      term: "Hypervisor virtualစနစ်",
+      explanation: "ရုပ်ဝတ္တုဆာဗာတစ်ခုတည်းပေါ်တွင် သီးခြား OS များစွာပါသော VM များကို မောင်းနှင်စီမံပေးသည့် hypervisor ဆော့ဖ်ဝဲလ်နည်းပညာ။",
+      needsReview: true
+    },
+    vi: {
+      term: "Phân tách ảo hóa Hypervisor",
+      explanation: "Công nghệ ảo hóa sử dụng lớp phần mềm giám sát (hypervisor) để quản lý độc lập các máy ảo chạy trên cùng phần cứng vật lý.",
+      needsReview: true
+    },
+    fr: {
+      term: "Virtualisation par hyperviseur",
+      explanation: "Technique d'architecture émulant plusieurs systèmes d'exploitation sur une même machine via un composant (hyperviseur).",
+      needsReview: true
+    },
+    aliases: [
+      "Hypervisor",
+      "Virtual Machine Monitor",
+      "VMM"
+    ],
+    related: [],
+    example: {
+      text: "VMware ESXi is a bare-metal hypervisor virtualization tool widely used in data centers."
+    },
+    source: "project-glossary-v2"
+  },
+  {
+    id: "cloud_computing_saas",
+    category: "cloud",
+    level: "basic",
+    subcategory: "cloud-architecture",
+    exam_tags: [
+      "itpass",
+      "sg"
+    ],
+    examTags: [
+      "itpass",
+      "sg"
+    ],
+    skillTags: [
+      "cloud-delivery-models",
+      "business-cloud"
+    ],
+    searchBoost: 1.2,
+    schemaVersion: "v2",
+    updatedAt: "2026-06-13",
+    keepEnglish: true,
+    ja: {
+      term: "SaaS (ソフトウェア・アズ・ア・サービス)",
+      kana: "サース",
+      note: "インターネット経由でソフトウェア製品をサービスとして提供し、ユーザーがブラウザなどで利用するクラウド提供モデル。"
+    },
+    zh: {
+      term: "软件即服务",
+      explanation: "云服务商向最终用户交付的成品软件级托管服务，用户无需操心基础设施与程序维护，如 Microsoft 365，简称 SaaS。"
+    },
+    en: {
+      term: "Software as a Service",
+      explanation: "A software licensing and delivery model in which software is licensed on a subscription basis and centrally hosted."
+    },
+    my: {
+      term: "SaaS ဝန်ဆောင်မှုစနစ်",
+      explanation: "အသုံးပြုသူမှ browser ပေါ်တွင် တိုက်ရိုက်ဝင်ရောက်သုံးနိုင်အောင် developer က အပြီးသတ်တင်ပြပေးသော ဆော့ဖ်ဝဲလ်ဝန်ဆောင်မှု (SaaS)။",
+      needsReview: true
+    },
+    vi: {
+      term: "Phần mềm dạng dịch vụ SaaS",
+      explanation: "Mô hình phân phối phần mềm đám mây (SaaS) trong đó ứng dụng được lưu trữ tập trung và người dùng truy cập qua trình duyệt.",
+      needsReview: true
+    },
+    fr: {
+      term: "Logiciel en tant que service",
+      explanation: "Modèle de distribution d'applications (SaaS) hébergées dans le cloud et accessibles via un abonnement.",
+      needsReview: true
+    },
+    aliases: [
+      "SaaS"
+    ],
+    related: [],
+    example: {
+      text: "Our issue tracking web tool operates on a cloud computing saas subscription model."
+    },
+    source: "project-glossary-v2"
+  },
+  {
+    id: "cloud_computing_paas",
+    category: "cloud",
+    level: "basic",
+    subcategory: "cloud-architecture",
+    exam_tags: [
+      "itpass",
+      "sg"
+    ],
+    examTags: [
+      "itpass",
+      "sg"
+    ],
+    skillTags: [
+      "cloud-delivery-models",
+      "developer-platforms"
+    ],
+    searchBoost: 1.2,
+    schemaVersion: "v2",
+    updatedAt: "2026-06-13",
+    keepEnglish: true,
+    ja: {
+      term: "PaaS (プラットフォーム・アズ・ア・サービス)",
+      kana: "パース",
+      note: "アプリケーションを開発・実行するために必要なデータベースやOSなどのプラットフォームを、インターネット経由で提供するモデル。"
+    },
+    zh: {
+      term: "平台即服务",
+      explanation: "云服务商向开发者提供包含操作系统、中间件及数据库环境的预配置软件平台，免去了服务器管理的琐碎，简称 Paas。"
+    },
+    en: {
+      term: "Platform as a Service",
+      explanation: "A category of cloud computing services that provides a platform allowing customers to develop, run, and manage applications without hardware."
+    },
+    my: {
+      term: "PaaS ဝန်ဆောင်မှုစနစ်",
+      explanation: "ကုဒ်ရေးဆွဲရန်လိုအပ်သည့် database နှင့် operating system ပတ်ဝန်းကျင်ပလက်ဖောင်းကို ဝန်ဆောင်မှုပေးသည့်စနစ် (PaaS)။",
+      needsReview: true
+    },
+    vi: {
+      term: "Nền tảng dạng dịch vụ PaaS",
+      explanation: "Dịch vụ đám mây (PaaS) cung cấp sẵn hệ điều hành, môi trường chạy mã và cơ sở dữ liệu để phát triển ứng dụng.",
+      needsReview: true
+    },
+    fr: {
+      term: "Plateforme en tant que service",
+      explanation: "Modèle cloud (PaaS) offrant un environnement complet pour développer et héberger des applications sans gérer de serveurs.",
+      needsReview: true
+    },
+    aliases: [
+      "PaaS"
+    ],
+    related: [],
+    example: {
+      text: "Deploying our Java app to a cloud computing paas allowed us to focus on SQL code rather than OS updates."
+    },
+    source: "project-glossary-v2"
+  },
+  {
+    id: "cloud_computing_iaas",
+    category: "cloud",
+    level: "basic",
+    subcategory: "cloud-architecture",
+    exam_tags: [
+      "itpass",
+      "sg"
+    ],
+    examTags: [
+      "itpass",
+      "sg"
+    ],
+    skillTags: [
+      "cloud-delivery-models",
+      "virtual-hardware"
+    ],
+    searchBoost: 1.2,
+    schemaVersion: "v2",
+    updatedAt: "2026-06-13",
+    keepEnglish: true,
+    ja: {
+      term: "IaaS (インフラストラクチャー・アズ・ア・サービス)",
+      kana: "イアース",
+      note: "仮想サーバー、ネットワーク、ストレージなどのインフラ資源を、インターネット経由で提供するクラウドモデル。"
+    },
+    zh: {
+      term: "基础设施即服务",
+      explanation: "云服务商提供虚拟的计算、存储和网络等裸硬资源，用户需要自行安装操作系统和应用，具有最高自由度，简称 IaaS。"
+    },
+    en: {
+      term: "Infrastructure as a Service",
+      explanation: "A form of cloud computing that delivers virtualized computing resources over the internet, including virtual machines."
+    },
+    my: {
+      term: "IaaS ဝန်ဆောင်မှုစနစ်",
+      explanation: "ဗားချွတ်ဆာဗာ၊ storage နှင့် ကွန်ရက်အဆောက်အအုံ စသည့် အရင်းအမြစ်သက်သက်ကို ငှားရမ်းပေးသည့် cloud စနစ် (IaaS)။",
+      needsReview: true
+    },
+    vi: {
+      term: "Hạ tầng dạng dịch vụ IaaS",
+      explanation: "Mô hình đám mây (IaaS) cung cấp quyền truy cập vào các tài nguyên phần cứng ảo hóa như máy ảo và ổ cứng.",
+      needsReview: true
+    },
+    fr: {
+      term: "Infrastructure en tant que service",
+      explanation: "Modèle cloud (IaaS) fournissant des ressources matérielles brutes virtualisées (serveurs, réseaux, stockage) à la demande.",
+      needsReview: true
+    },
+    aliases: [
+      "IaaS"
+    ],
+    related: [],
+    example: {
+      text: "We rented five virtual machines from a cloud computing iaas provider to build a custom DB cluster."
+    },
+    source: "project-glossary-v2"
+  },
+  {
+    id: "binary_search_tree_bst",
+    category: "algorithm",
+    level: "intermediate",
+    subcategory: "basic-algorithms",
+    exam_tags: [
+      "itpass",
+      "sg"
+    ],
+    examTags: [
+      "itpass",
+      "sg"
+    ],
+    skillTags: [
+      "data-structures",
+      "search-efficiency"
+    ],
+    searchBoost: 1.1,
+    schemaVersion: "v2",
+    updatedAt: "2026-06-13",
+    keepEnglish: true,
+    ja: {
+      term: "二分探索木",
+      kana: "ニブンタンサクキ",
+      note: "各ノードにおいて、「左の子の値 < 親の値 < 右の子の値」という条件を満たすように配置された、効率的な探索用二分木構造。"
+    },
+    zh: {
+      term: "二叉搜索树",
+      explanation: "一种特殊的二叉树数据结构，满足“任意节点的左子树所有节点值均小于该节点，右子树所有节点值均大于该节点”的性质，使得查找效率提升至 O(log n)，简称 BST。"
+    },
+    en: {
+      term: "Binary Search Tree",
+      explanation: "A node-based binary tree data structure where the left subtree has values less than the parent, and the right has greater."
+    },
+    my: {
+      term: "ဒွိဂုဏ်ရှာဖွေရေး သစ်ပင်တည်ဆောက်ပုံ",
+      explanation: "ဘယ်ဘက်ကလေးငယ် < မိဘ < ညာဘက်ကလေးငယ် အစီအစဉ်အတိုင်း ဒေတာများကို သတ်သတ်မှတ်မှတ် ဖြန့်ခွဲသိမ်းဆည်းသော ဒွိသစ်ပင်တည်ဆောက်ပုံ (BST)။",
+      needsReview: true
+    },
+    vi: {
+      term: "Cấu trúc cây tìm kiếm nhị phân BST",
+      explanation: "Cấu trúc dữ liệu cây nhị phân (BST) trong đó nhánh con trái chứa giá trị nhỏ hơn nút gốc, nhánh con phải chứa giá trị lớn hơn nút gốc.",
+      needsReview: true
+    },
+    fr: {
+      term: "Arbre binaire de recherche",
+      explanation: "Structure de données arborescente (BST) organisant les nœuds pour permettre des recherches dichotomiques rapides.",
+      needsReview: true
+    },
+    aliases: [
+      "BST"
+    ],
+    related: [],
+    example: {
+      text: "A binary search tree_bst allows search, insertion, and deletion operations to run in logarithmic time on average."
+    },
+    source: "project-glossary-v2"
+  },
+  {
+    id: "insertion_sort_algorithm",
+    category: "algorithm",
+    level: "basic",
+    subcategory: "basic-algorithms",
+    exam_tags: [
+      "itpass",
+      "sg"
+    ],
+    examTags: [
+      "itpass",
+      "sg"
+    ],
+    skillTags: [
+      "sorting",
+      "computational-complexity"
+    ],
+    searchBoost: 1.1,
+    schemaVersion: "v2",
+    updatedAt: "2026-06-13",
+    keepEnglish: true,
+    ja: {
+      term: "挿入ソート",
+      kana: "ソウニュウソート",
+      note: "整列済みのリストに対して、未整列のデータを順に適切な位置に「挿入」していく単純な並べ替えアルゴリズム。"
+    },
+    zh: {
+      term: "插入排序算法",
+      explanation: "一种简单直观的排序算法。通过构建有序序列，对于未排序数据，在已排序序列中从后向前扫描，找到相应位置并插入，平均时间复杂度为 O(n²)。"
+    },
+    en: {
+      term: "Insertion Sort",
+      explanation: "A simple sorting algorithm that builds the final sorted array one item at a time by inserting elements into correct spots."
+    },
+    my: {
+      term: "ထည့်သွင်းစနစ်ဖြင့် အစီအစဉ်တကျစီနည်း",
+      explanation: "အစီအစဉ်တကျဖြစ်ပြီးသော အုပ်စုအတွင်းသို့ ဒေတာအသစ်များကို သင့်တော်ရာနေရာသို့ ထိုးထည့်ကာ စီသွားသည့် ရိုးရှင်းသောအစီအစဉ်စီနည်းလမ်း။",
+      needsReview: true
+    },
+    vi: {
+      term: "Thuật toán sắp xếp chèn",
+      explanation: "Thuật toán sắp xếp đơn giản hoạt động bằng cách lấy từng phần tử chưa sắp xếp và chèn vào vị trí thích hợp trong dãy đã sắp xếp.",
+      needsReview: true
+    },
+    fr: {
+      term: "Tri par insertion",
+      explanation: "Algorithme simple de tri (insertion) insérant successivement chaque élément non trié à sa place dans la sous-liste ordonnée.",
+      needsReview: true
+    },
+    aliases: [
+      "Insertion Sort"
+    ],
+    related: [],
+    example: {
+      text: "The insertion sort algorithm is highly efficient for sorting nearly sorted datasets."
+    },
+    source: "project-glossary-v2"
+  },
+  {
+    id: "breadth_first_search_bfs",
+    category: "algorithm",
+    level: "intermediate",
+    subcategory: "basic-algorithms",
+    exam_tags: [
+      "itpass",
+      "sg"
+    ],
+    examTags: [
+      "itpass",
+      "sg"
+    ],
+    skillTags: [
+      "graph-traversal",
+      "search-algorithms"
+    ],
+    searchBoost: 1.1,
+    schemaVersion: "v2",
+    updatedAt: "2026-06-13",
+    keepEnglish: true,
+    ja: {
+      term: "幅優先探索 (BFS)",
+      kana: "ハバユウセンタンサク",
+      note: "グラフや木の探索において、出発点から近いノード（同じ深さのノード全体）を優先して横方向に探索するアルゴリズム。キューを用いる。"
+    },
+    zh: {
+      term: "广度优先搜索",
+      explanation: "一种图遍历或搜索算法。从根节点开始，沿着图的宽度优先遍历相邻的同层节点，然后再深入下一层，常基于队列（Queue）实现，简称 BFS。"
+    },
+    en: {
+      term: "Breadth-First Search",
+      explanation: "An algorithm for traversing or searching tree or graph data structures, exploring all neighbor nodes at the present depth before moving deeper."
+    },
+    my: {
+      term: "အကျယ်ဦးစားပေး ရှာဖွေရေးစနစ်",
+      explanation: "Graph သို့မဟုတ် tree ပေါ်တွင် လက်ရှိအနီးဆုံးတန်းတူရှိသော node အားလုံးကို အရင်ရှာပြီးမှ အောက်ဆင့်သို့ ဆက်လက်ရှာဖွေသည့် စနစ် (BFS)။",
+      needsReview: true
+    },
+    vi: {
+      term: "Thuật toán tìm kiếm theo chiều rộng BFS",
+      explanation: "Thuật toán duyệt đồ thị (BFS) ưu tiên khám phá toàn bộ các đỉnh lân cận ở mức sâu hiện tại trước khi xuống mức sâu hơn.",
+      needsReview: true
+    },
+    fr: {
+      term: "Recherche en largeur",
+      explanation: "Algorithme d'exploration de graphe (BFS) explorant tous les nœuds d'un niveau donné avant de passer au suivant.",
+      needsReview: true
+    },
+    aliases: [
+      "BFS"
+    ],
+    related: [],
+    example: {
+      text: "We implemented a breadth first search bfs using a queue to find the shortest path in an unweighted routing graph."
+    },
+    source: "project-glossary-v2"
+  },
+  {
+    id: "dijkstra_shortest_path",
+    category: "algorithm",
+    level: "advanced",
+    subcategory: "basic-algorithms",
+    exam_tags: [
+      "itpass",
+      "sg"
+    ],
+    examTags: [
+      "itpass",
+      "sg"
+    ],
+    skillTags: [
+      "graph-algorithms",
+      "network-routing"
+    ],
+    searchBoost: 1.2,
+    schemaVersion: "v2",
+    updatedAt: "2026-06-13",
+    keepEnglish: true,
+    ja: {
+      term: "ダイクストラ法 (最短経路アルゴリズム)",
+      kana: "ダイクストラホウ",
+      note: "グラフ上の特定のノードから他のすべてのノードへの最短経路を求める、負の重みを持たない場合の代表的なアルゴリズム。"
+    },
+    zh: {
+      term: "迪杰斯特拉最短路径算法",
+      explanation: "由计算机科学家 Dijkstra 提出的图论算法。用于计算有向加权图中一个顶点至其他所有顶点的单源最短路径，被广泛应用于网络路由计算。"
+    },
+    en: {
+      term: "Dijkstra's Algorithm",
+      explanation: "An algorithm for finding the shortest paths between nodes in a graph, commonly used in network routing protocols."
+    },
+    my: {
+      term: "Dijkstra ၏ အတိုဆုံးလမ်းကြောင်းရှာစနစ်",
+      explanation: "Graph တစ်ခုရှိ တစ်နေရာမှ အခြားနေရာများဆီသို့ အတိုဆုံးခရီးအကွာအဝေးကို တွက်ချက်ပေးသည့် နာမည်ကျော် algorithm။",
+      needsReview: true
+    },
+    vi: {
+      term: "Thuật toán đường đi ngắn nhất Dijkstra",
+      explanation: "Thuật toán tìm kiếm đường đi ngắn nhất từ một điểm gốc đến toàn bộ các đỉnh còn lại trong đồ thị có trọng số dương.",
+      needsReview: true
+    },
+    fr: {
+      term: "Algorithme de Dijkstra",
+      explanation: "Un algorithme de théorie des graphes calculant le plus court chemin entre un sommet de départ et les autres.",
+      needsReview: true
+    },
+    aliases: [
+      "Dijkstra's Algorithm",
+      "Single Source Shortest Path"
+    ],
+    related: [],
+    example: {
+      text: "The routing daemon runs dijkstra shortest path algorithm to recalculate the optimal packet forward path."
+    },
+    source: "project-glossary-v2"
+  },
+  {
+    id: "machine_learning_supervised",
+    category: "automation",
+    level: "intermediate",
+    subcategory: "data-science",
+    exam_tags: [
+      "itpass",
+      "sg"
+    ],
+    examTags: [
+      "itpass",
+      "sg"
+    ],
+    skillTags: [
+      "machine-learning",
+      "ai"
+    ],
+    searchBoost: 1.2,
+    schemaVersion: "v2",
+    updatedAt: "2026-06-13",
+    keepEnglish: true,
+    ja: {
+      term: "教師あり学習",
+      kana: "キョウシアリガクシュウ",
+      note: "入力データとそれに対応する正しい「ラベル（正解）」のペアを学習データとして与え、コンピュータに予測モデルを構築させる手法。"
+    },
+    zh: {
+      term: "监督学习",
+      explanation: "机器学习的主要分支。在训练过程中，算法接收带有已知正确输出结果标签的样本数据，通过拟合计算建立输入至输出的预测函数模型。"
+    },
+    en: {
+      term: "Supervised Learning",
+      explanation: "A subcategory of machine learning where algorithms are trained on labeled data to predict outcomes or classify inputs."
+    },
+    my: {
+      term: "ကြီးကြပ်မှုပါသော သင်ယူခြင်းစနစ်",
+      explanation: "အဖြေတန်းဖိုး (label) များ ကြိုတင်ပါဝင်သည့် ဒေတာများကို ပေးသွင်းသင်ကြားပြီး ခန့်မှန်းမော်ဒယ်များ ထုတ်လုပ်ယူသည့် AI နည်းလမ်း။",
+      needsReview: true
+    },
+    vi: {
+      term: "Học có giám sát",
+      explanation: "Phân ngành của học máy (machine learning) huấn luyện mô hình dựa trên các cặp dữ liệu vào và nhãn kết quả có sẵn.",
+      needsReview: true
+    },
+    fr: {
+      term: "Apprentissage supervisé",
+      explanation: "Branche de l'apprentissage automatique consistant à entraîner un modèle à partir de données déjà étiquetées (labelisées).",
+      needsReview: true
+    },
+    aliases: [
+      "Supervised Machine Learning"
+    ],
+    related: [],
+    example: {
+      text: "We used machine learning supervised models to classify SQL query logs into malicious or safe categories."
+    },
+    source: "project-glossary-v2"
+  },
+  {
+    id: "natural_language_processing_nlp",
+    category: "automation",
+    level: "intermediate",
+    subcategory: "data-science",
+    exam_tags: [
+      "itpass",
+      "sg"
+    ],
+    examTags: [
+      "itpass",
+      "sg"
+    ],
+    skillTags: [
+      "computational-linguistics",
+      "ai"
+    ],
+    searchBoost: 1.2,
+    schemaVersion: "v2",
+    updatedAt: "2026-06-13",
+    keepEnglish: true,
+    ja: {
+      term: "自然言語処理 (NLP)",
+      kana: "シゼンゲンゴショリ",
+      note: "人間が日常的に話したり書いたりする言葉（自然言語）を、コンピュータに解析・理解・処理させる技術。"
+    },
+    zh: {
+      term: "自然语言处理",
+      explanation: "人工智能的一个重要子领域，研究如何让计算机系统解析、理解、生成和操作人类日常所使用的自然语言文本，简称 NLP。"
+    },
+    en: {
+      term: "Natural Language Processing",
+      explanation: "A subfield of computer science and artificial intelligence concerned with the interactions between computers and human languages."
+    },
+    my: {
+      term: "သဘာဝဘာသာစကား လုပ်ဆောင်ချက်နည်းပညာ (NLP)",
+      explanation: "လူသားတို့ ပြောဆိုရေးသားသော စာပေစကားများကို ကွန်ပျူတာမှ နားလည်ဆန်းစစ်ပြီး အလိုအလျောက် တုံ့ပြန်ပေးသည့် နည်းပညာ (NLP)။",
+      needsReview: true
+    },
+    vi: {
+      term: "Xử lý ngôn ngữ tự nhiên NLP",
+      explanation: "Lĩnh vực nghiên cứu giao thoa của AI và ngôn ngữ học giúp máy tính hiểu và tạo ra ngôn ngữ nói viết của con người.",
+      needsReview: true
+    },
+    fr: {
+      term: "Traitement du langage naturel",
+      explanation: "Discipline (NLP/TAL) visant à faire comprendre, analyser et générer le langage humain par une machine.",
+      needsReview: true
+    },
+    aliases: [
+      "NLP"
+    ],
+    related: [],
+    example: {
+      text: "Generative search agents rely heavily on natural language processing nlp to translate user prompts into SQL queries."
+    },
+    source: "project-glossary-v2"
+  },
 ];
 
   // Build lookup by ID

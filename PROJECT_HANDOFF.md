@@ -3475,7 +3475,65 @@ ode --check service-worker.js | PASS |
 
 #### Next
 
-- **Round 15.22**: Begin 1100 -> 1200 term expansion, or 1100-term search experience optimization.
+- **Round 15.22** (completed): Begin 1100 -> 1200 term expansion, or 1100-term search experience optimization.
+
+---
+
+### Round 15.22 - Glossary 1100 -> 1200 Expansion
+
+**Status: PASS**
+
+#### Scope
+
+- Expanded glossary from 1100 terms to 1200 terms (added 100 terms in 4 batches of 25).
+- Automatically filtered out invalid non-existent IDs in related fields and synchronized exam_tags / examTags arrays.
+- Normalized all line endings of `it_terms.js` to LF (\n) to prevent dual-end SHA256 mismatches caused by Windows autocrlf.
+- Did not perform any Web cache update, Portable repackaging, or GitHub Release tag generation.
+
+#### Batch execution log
+
+- **Batch 1**: 1100 -> 1125, validator PASS
+- **Batch 2**: 1125 -> 1150, validator PASS
+- **Batch 3**: 1150 -> 1175, validator PASS
+- **Batch 4**: 1175 -> 1200, validator PASS
+
+#### Final validation
+
+| Check | Result |
+| :--- | :--- |
+| node tools/verify_glossary.js | PASS |
+| Term count | 1200 |
+| Errors | 0 |
+| Warnings | 0 |
+| Windows/Web SHA256 match | PASS |
+| Windows/Web `data/glossary/it_terms.js` SHA256 | `34331eabda5bffd2c79834585b98eb4139b91f3166ca0b4f391195bf19fe3fca` |
+| Web node --check data/glossary/it_terms.js | PASS |
+
+#### Git
+
+| Repo | Branch | Commit hash | Push |
+| :--- | :--- | :--- | :--- |
+| Windows glossary | main | Recorded by `feat: expand glossary to 1200 terms` | PASS |
+| Web glossary | master | Recorded by `feat: sync glossary 1200 terms` | PASS |
+| Windows handoff | main | Recorded by `docs: record glossary 1200 expansion` | PASS |
+
+#### Explicitly not done
+
+- Did not update Web cache version.
+- Did not modify version.js / service-worker.js.
+- Did not modify asset-manifest.json / i18n_content/manifest.json metadata.
+- Did not repackage Portable client.
+- Did not create tag or GitHub Release.
+- Did not add a ko field.
+- Did not add Korean UI.
+- Did not modify course data.
+- Did not modify content language packs.
+- Did not modify backend (server.py / study_ai.py).
+- Did not modify Java/Python sandbox.
+
+#### Next
+
+- **Round 15.23** (recommended): 1200-term quality review and localization polish + Web cache update + Portable repack + GitHub Release
 
 
 
