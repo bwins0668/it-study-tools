@@ -5129,7 +5129,7 @@ Response: `{"status": "deleted"}`
 
 - **Windows Code Commit**: `7c0bf9d` (feat: add auth UI prototype and local user state)
 - **Web Commit**: `aaadc14` (feat: sync auth UI prototype)
-- **Windows Handoff Commit**: `0552855` (docs: correct handoff hash to be2a40d)
+- **Windows Handoff Commit**: `4512a3e` (docs: fix handoff hash to 0552855)
 
 #### Explicitly not done
 
@@ -5148,3 +5148,102 @@ Response: `{"status": "deleted"}`
 #### Next
 
 - **Round 17.3** (recommended): Supabase Auth SDK integration prep and security configuration draft — or manual Supabase project creation guide.
+
+---
+
+### Round 17.3 - Supabase Auth Preparation Layer
+
+**Status: PASS**
+
+#### Scope and modified files
+
+Windows:
+
+- `assets/js/supabase-config.example.js`
+- `assets/js/supabase-client.js`
+- `assets/js/auth-ui.js`
+- `docs/supabase_setup.md`
+- `docs/sync_architecture.md`
+- `.gitignore`
+- `PROJECT_HANDOFF.md`
+
+Web:
+
+- `assets/js/supabase-config.example.js`
+- `assets/js/supabase-client.js`
+- `assets/js/auth-ui.js`
+- `docs/supabase_setup.md`
+- `docs/sync_architecture.md`
+- `.gitignore`
+
+#### Supabase preparation layer
+
+- Added an empty, disabled `window.STUDY_TOOLS_SUPABASE_CONFIG` template.
+- Added `window.StudySupabase` with `getConfig`, `isConfigured`, `isEnabled`, `getStatus`, `initClient`, `getClient`, `getCurrentSession`, `getCurrentUser`, `signInWithEmail`, `signOut`, and `onAuthStateChange`.
+- Added fail-closed statuses for `not_configured`, `disabled`, and `sdk_not_loaded`.
+- Added a read-only Supabase status row to the existing account panel.
+- Kept local anonymous mode, mock sign-in/sign-out, snapshot export, lessons, and glossary independent from Supabase.
+- Fixed the Web auth button strict-mode declaration and replaced inline auth actions with explicit event listeners.
+
+#### Security protections
+
+- Real configuration belongs only in ignored `assets/js/supabase-config.local.js`.
+- `.env`, `.env.local`, `*.secret`, and the local Supabase config are ignored.
+- No real Supabase URL, anon key, `service_role` key, JWT, token, password, or database credential was added.
+- Unconfigured/disabled/SDK-missing paths return local values and do not create a client.
+- `getCurrentSession()` and `getCurrentUser()` return `null` when unavailable.
+- Unconfigured `signInWithEmail()` returns a local error object and does not retain the supplied password.
+- No Supabase, auth, or sync network request was implemented or observed.
+
+#### Documentation
+
+- Added a beginner setup guide covering project creation, Project URL and anon key lookup, local config copying, `init_supabase.sql`, RLS, and the `service_role` frontend prohibition.
+- Updated the sync architecture with Round 17.3 no-network defaults, local-first behavior, configuration strategy, adapter boundary, and security red lines.
+
+#### Verification results
+
+| Check | Result |
+|:---|:---|
+| Windows `node tools/verify_glossary.js` | PASS |
+| Windows `node --check assets/js/supabase-config.example.js` | PASS |
+| Windows `node --check assets/js/supabase-client.js` | PASS |
+| Windows `node --check assets/js/auth-ui.js` | PASS |
+| Windows `node --check assets/js/sync-engine.js` | PASS |
+| Web `node --check assets/js/supabase-config.example.js` | PASS |
+| Web `node --check assets/js/supabase-client.js` | PASS |
+| Web `node --check assets/js/auth-ui.js` | PASS |
+| Web `node --check assets/js/sync-engine.js` | PASS |
+| Adapter status/API smoke | PASS: 3 status branches, user/session null, local errors |
+| Adapter request counter | PASS: 0 requests |
+| Secret placeholder scan | PASS: empty URL and anon key, no real key material |
+
+#### Browser smoke results
+
+- Windows and Web pages opened normally with no JavaScript console errors.
+- Auth account panel rendered and showed Supabase status `未配置`.
+- Local auth state smoke passed for mock sign-in and return to anonymous mode.
+- Snapshot export action remains bound to the unchanged local export implementation.
+- SQL lesson content rendered normally.
+- Glossary opened normally and reported 1500 terms.
+- No Supabase SDK, Supabase endpoint, auth request, or sync request was loaded.
+
+#### Git commits
+
+- **Windows Code Commit**: `(this commit; recorded by the follow-up handoff commit)`
+- **Web Commit**: `41a8526` (feat: sync Supabase auth preparation layer)
+- **Windows Handoff Commit**: `(follow-up handoff commit)`
+
+#### Explicitly not done
+
+- Did not create or connect a real Supabase project.
+- Did not load the Supabase SDK.
+- Did not register, log in, or log out a real user.
+- Did not execute `tools/init_supabase.sql` or enable RLS in a real database.
+- Did not implement cloud push/pull or any cloud sync.
+- Did not modify course data, glossary data, backend, sandbox, service worker, manifest, or version.
+- Did not package, tag, or publish a Release.
+- Did not add or delete glossary terms; total remains 1500.
+
+#### Next
+
+- **Round 17.4** (recommended): controlled Supabase SDK loading and a real Auth pilot only after project creation, RLS policy completion, and a dedicated security review.

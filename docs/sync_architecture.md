@@ -9,6 +9,26 @@ This document describes the architecture, data model, and roadmap for adding use
 Establish the **local-only sync foundation**: device ID, sync queue, local progress snapshot, and Supabase SQL DDL draft.  
 No real login, no cloud sync, no UI changes.
 
+## Round 17.3: Supabase Auth Preparation Layer
+
+Round 17.3 only prepares a safe browser boundary for a future Supabase Auth integration.
+
+- **No-network by default:** empty or disabled configuration returns local status/error values before a client can be created.
+- **Local-first:** the existing auth UI, mock sign-in, localStorage state, snapshot export, lessons, and glossary continue to work without Supabase.
+- **Configuration strategy:** commit only `supabase-config.example.js`; keep real values in ignored `supabase-config.local.js`.
+- **SDK boundary:** `window.StudySupabase` is the only app-facing adapter. Feature code must not call the Supabase SDK directly.
+- **Security red lines:** never commit `service_role`, database passwords, JWT secrets, user passwords, sessions, or tokens. Never put `service_role` in browser code.
+- **No cloud sync yet:** the sync queue remains local and no auth/sync network request is implemented.
+
+Preparation files:
+
+| File | Role |
+|:---|:---|
+| `assets/js/supabase-config.example.js` | Empty, disabled configuration template |
+| `assets/js/supabase-config.local.js` | Developer-only real configuration; ignored by Git |
+| `assets/js/supabase-client.js` | Fail-closed client adapter exposed as `window.StudySupabase` |
+| `docs/supabase_setup.md` | Beginner setup and RLS safety guide |
+
 ## Authentication Strategy
 
 We **do not self-host passwords**. Auth is delegated to **Supabase Auth** (built-in):
@@ -109,8 +129,8 @@ Full DDL: `tools/init_supabase.sql`
 | Round | Scope |
 |:---|:---|
 | **17.2** | Auth UI prototype: login/signup page, anonymous indicator, user menu |
-| **17.3** | Supabase SDK integration, real cloud connection, basic push/pull |
-| **17.4** | Learning progress sync between devices |
+| **17.3** | Supabase Auth preparation layer, disabled config template, no-network adapter |
+| **17.4** | Controlled SDK loading and real Auth pilot after RLS/security review |
 | **17.5** | Settings, translations, bookmarks sync |
 | **17.6** | Windows sync engine (Python), dual-write to local SQLite |
 | **17.7** | Conflict resolution, offline queue edge cases, sync status indicator |

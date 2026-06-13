@@ -10,3 +10,9 @@ __pycache__/
 *.zip
 data/study_ai.db
 tree.txt
+
+# Local Supabase configuration and secrets
+assets/js/supabase-config.local.js
+.env
+.env.local
+*.secret

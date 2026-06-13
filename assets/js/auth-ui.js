@@ -34,6 +34,26 @@
     updated_at:   new Date().toISOString(),
   };
 
+  var supabaseAdapterLoading = null;
+
+  function ensureSupabaseAdapter() {
+    if (window.StudySupabase) return Promise.resolve(window.StudySupabase);
+    if (supabaseAdapterLoading) return supabaseAdapterLoading;
+
+    supabaseAdapterLoading = new Promise(function (resolve) {
+      var script = document.createElement("script");
+      script.src = "assets/js/supabase-client.js";
+      script.async = true;
+      script.onload = function () {
+        if (panelVisible) populateAuthPanel(el("auth-panel"), "status-refresh");
+        resolve(window.StudySupabase || null);
+      };
+      script.onerror = function () { resolve(null); };
+      document.head.appendChild(script);
+    });
+    return supabaseAdapterLoading;
+  }
+
   /* ── Helpers ─────────────────────────────────────── */
   function safeGet(key, fallback) {
     try {
@@ -158,6 +178,22 @@
     return state.display_name || state.email || t("auth.account", "账号");
   }
 
+  function getSupabaseStatusLabel() {
+    if (!window.StudySupabase || typeof window.StudySupabase.getStatus !== "function") {
+      return "SDK 未加载";
+    }
+    var status = window.StudySupabase.getStatus();
+    var labels = {
+      not_configured: "未配置",
+      sdk_not_loaded: "SDK 未加载",
+      disabled: "已禁用",
+      initialization_error: "初始化失败",
+      ready_to_initialize: "可初始化",
+      ready: "已就绪",
+    };
+    return labels[status.code] || status.message || "未知";
+  }
+
   /* ── Panel ────────────────────────────────────────── */
   var panelVisible = false;
 
@@ -226,7 +262,7 @@
     content.innerHTML =
       '<div class="auth-panel-header">' +
         '<h3 id="auth-panel-title">' + esc(t("auth.account", "账号")) + '</h3>' +
-        '<button class="auth-panel-close-btn" onclick="window.StudyAuthUI && window.StudyAuthUI.closeAuthPanel()" title="' + esc(t("auth.close", "关闭")) + '"><i class="fa-solid fa-xmark"></i></button>' +
+        '<button class="auth-panel-close-btn" data-auth-action="close" title="' + esc(t("auth.close", "关闭")) + '"><i class="fa-solid fa-xmark"></i></button>' +
       '</div>' +
       '<div class="auth-panel-body">' +
         // Status section
@@ -236,6 +272,10 @@
             '<span class="auth-value auth-badge-' + (isAnonymous ? "local" : "synced") + '">' +
               (isAnonymous ? esc(t("auth.localMode", "本地模式")) : esc(t("auth.syncStatus.synced", "已登录"))) +
             '</span>' +
+          '</div>' +
+          '<div class="auth-status-row">' +
+            '<span class="auth-label">Supabase:</span>' +
+            '<span class="auth-value" data-i18n-skip="true">' + esc(getSupabaseStatusLabel()) + '</span>' +
           '</div>' +
         '</div>' +
 
@@ -264,18 +304,36 @@
         // Action buttons
         '<div class="auth-actions">' +
           (isMock ?
-            '<button class="auth-btn auth-btn-secondary" onclick="window.StudyAuthUI && window.StudyAuthUI.setAnonymousMode()">' +
+            '<button class="auth-btn auth-btn-secondary" data-auth-action="sign-out">' +
               '<i class="fa-solid fa-sign-out-alt"></i> ' + esc(t("auth.mockSignOut", "退出模拟登录")) +
             '</button>' :
-            '<button class="auth-btn auth-btn-primary" onclick="window.StudyAuthUI && window.StudyAuthUI.setMockSignedInUser({display_name: \'' + esc(t("auth.account", "模拟用户")) + '\'})">' +
+            '<button class="auth-btn auth-btn-primary" data-auth-action="sign-in">' +
               '<i class="fa-solid fa-user"></i> ' + esc(t("auth.mockSignIn", "模拟登录状态")) +
             '</button>'
           ) +
-          '<button class="auth-btn auth-btn-secondary" onclick="window.StudyAuthUI && window.StudyAuthUI.exportSnapshotAction()">' +
+          '<button class="auth-btn auth-btn-secondary" data-auth-action="export">' +
             '<i class="fa-solid fa-download"></i> ' + esc(t("auth.exportSnapshot", "导出本地快照")) +
           '</button>' +
         '</div>' +
       '</div>';
+
+    bindAuthPanelActions(content);
+  }
+
+  function bindAuthPanelActions(content) {
+    var closeButton = qs('[data-auth-action="close"]', content);
+    var signInButton = qs('[data-auth-action="sign-in"]', content);
+    var signOutButton = qs('[data-auth-action="sign-out"]', content);
+    var exportButton = qs('[data-auth-action="export"]', content);
+
+    if (closeButton) closeButton.addEventListener("click", closeAuthPanel);
+    if (signInButton) {
+      signInButton.addEventListener("click", function () {
+        setMockSignedInUser({ display_name: t("auth.account", "模拟用户") });
+      });
+    }
+    if (signOutButton) signOutButton.addEventListener("click", setAnonymousMode);
+    if (exportButton) exportButton.addEventListener("click", exportSnapshotAction);
   }
 
   function renderUserMenu() {
@@ -343,6 +401,7 @@
       console.warn("[AuthUI] StudySync not found, auth UI will be limited");
     }
     renderUserMenu();
+    ensureSupabaseAdapter();
   }
 
   /* ── Utility esc ─────────────────────────────────── */
