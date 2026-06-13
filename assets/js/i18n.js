@@ -1190,6 +1190,7 @@
     if (clean === "zh" || clean === "zh-cn" || clean.startsWith("zh-")) return "zh-CN";
     if (clean === "vi" || clean === "vi-vn" || clean.startsWith("vi-")) return "vi-VN";
     if (clean === "my" || clean === "my-mm" || clean.startsWith("my-")) return "my-MM";
+    if (clean === "ko" || clean === "ko-kr" || clean.startsWith("ko-")) return "ko-KR";
     if (clean === "fr" || clean === "fr-fr" || clean.startsWith("fr-")) return "fr-FR";
     return "en-US";
   }
