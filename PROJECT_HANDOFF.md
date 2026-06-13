@@ -6735,3 +6735,105 @@ ode_modules/, ackups/, supabase-config.local.js, .env, etc. |
 #### Next
 
 - **Round 19.6**: Bookmarks pre-release stability audit, or **Round 20.0**: User-customized translation UI audit.
+- **Round 19.5.1**: Bookmarks sync stability audit ? PASS.
+
+### Round 19.5.1 - Bookmarks ìØ??ïzëO?íËê´?? (2026-06-13)
+
+**Status**: PASS
+
+**Type**: Read-only audit (no code changes needed)
+
+#### Dual-End Consistency
+
+| File | Windows SHA | Web SHA | Match |
+|---|---|---|---|
+| sync-engine.js | 51C65A10... | 51C65A10... | ? |
+| uth-ui.js | 7C6E87E7... | 7C6E87E7... | ? |
+| i18n-ui-dict.js | DC021B6B... | DC021B6B... | ? |
+| sync_architecture.md | C52B7237... | C52B7237... | ? |
+
+#### Code Audit Results
+
+| Check | Result |
+|---|---|
+| 7 new functions exist (getTypingBookmarkSyncState, setTypingBookmarkSyncState, detectTypingBookmarkDeletions, pushBookmarkTombstones, pullBookmarkTombstones, pplyTypingBookmarkDeletes, mergeBookmarksWithTombstones) | ? All present |
+| Functions exported in SyncEngine | ? All exported |
+| Summary fields in getSyncSummary | ? ookmarks_deleted_pushed, ookmarks_deleted_pulled, ookmarks_restored, ookmarks_conflicts_resolved |
+| Summary fields in unManualSync summaryData | ? All 4 fields computed from esults.bookmarks_sync |
+| detectTypingBookmarkDeletions called before step loop | ? At line 1019 |
+| ookmarks_sync replaces old ookmarks_pull step | ? In stepKeys array |
+| auth-ui.js reads + displays new fields | ? ookmarksDeletedPushed, ookmarksRestored, ookmarksConflictsResolved with icons |
+| i18n keys for all 7 languages | ? 5 keys Å~ 7 languages = 35 entries |
+| manualSyncRunning still protects duplicate clicks | ? Unchanged |
+| Single-step failure does not block settings/progress/quiz | ? Error handled, lastError recorded, loop continues |
+
+#### Data Security Audit
+
+| Check | Result |
+|---|---|
+| Syncs study-tools-i18n-cache-v4 | ? Not found in code |
+| Syncs 	ranslation_cache | ? Not found in sync paths |
+| Syncs AI API keys (sessionStorage) | ? Excluded per documentation |
+| Syncs provider/model/Ollama URL | ? Excluded |
+| Syncs AI chat content | ? Not present in sync scope |
+| Bookmarks sync scope | ? Only 	yping_article with eference_id and deleted_at |
+
+#### localStorage Audit
+
+| Key | Structure | Status |
+|---|---|---|
+| study-tools-japanese-typing-v1 | { ... favorites: [...] } ? unchanged | ? Preserved |
+| study-tools-typing-bookmarks-sync-v1 | { knownFavorites: [], deletedFavorites: {}, lastSyncedAt: null, version: 1 } | ? New, correct |
+
+#### Supabase Bookmark Audit
+
+| Check | Result |
+|---|---|
+| No physical DELETE on bookmarks table | ? Only upsert with deleted_at |
+| deleted_at can be written | ? Rows upserted with deleted_at: timestamp |
+| Active rows deleted_at = null | ? pushBookmarks sets deleted_at: null |
+| Tombstone rows deleted_at != null | ? pushBookmarkTombstones sets deleted_at |
+| RLS isolated by user_id | ? All queries filtered by user_id |
+| Real user email/key/token not output | ? Confirmed |
+
+#### Case A-G Code Review
+
+| Case | Mechanism | Result |
+|---|---|---|
+| A: A favorites X Å® Sync Å® B Å® B sees X | pushBookmarks sends active; mergeBookmarksWithTombstones pulls active via pullActiveResult | ? Correct |
+| B: A has X, remote empty Å® X not lost | mergeBookmarks does not clear local if remote empty | ? Correct |
+| C: A un-favorites X Å® Sync Å® B removes X | detectTypingBookmarkDeletions records tombstone; pushBookmarkTombstones pushes; pplyTypingBookmarkDeletes removes locally on B | ? Correct |
+| D: A deletes X; B re-adds X Å® X restored | pplyTypingBookmarkDeletes detects local re-add and removes tombstone | ? Correct |
+| E: A has X; B deletes X Å® A removes X | Remote tombstone pulled; pplyTypingBookmarkDeletes removes from A's local | ? Correct |
+| F: Repeated Sync Now clicks | manualSyncRunning guard returns error immediately | ? Correct |
+| G: Bookmarks step fails | Error handled, loop continues, lastError set, warnings populated | ? Correct |
+
+#### Verification
+
+| Check | Result |
+|---|---|
+| Glossary 1500 (dual-end SHA match) | ? PASS |
+| JS syntax Windows (4 files) | ? ALL PASS |
+| JS syntax Web (4 files) | ? ALL PASS |
+
+#### Security Declarations
+
+| Statement | Value |
+|---|---|
+| Physical delete of remote bookmarks | ? No (soft delete with deleted_at) |
+| Sync user translations | ? No |
+| Upload AI cache/API key | ? No |
+| Auto-sync | ? No (manual only) |
+| Real Supabase credentials committed | ? No |
+| Course/glossary/backend/sandbox modified | ? No |
+
+#### Commits
+
+- **Windows main (previous)**: 848772 fix: support typing bookmark soft delete sync
+- **Web master (previous)**: d1bd78 fix: sync typing bookmark soft delete support
+- **Web**: No changes this round (read-only audit)
+- **Windows handoff commit**: (this commit) docs: record bookmarks sync stability audit
+
+#### Next
+
+- **Round 19.6**: Bookmarks sync stable release, or **Round 20.0**: User-customized translation UI audit.
