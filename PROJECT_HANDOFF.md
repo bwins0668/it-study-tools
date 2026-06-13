@@ -4116,7 +4116,7 @@ ode --check service-worker.js | PASS |
 
 #### Git & Handoff Commits
 
-- **Windows Handoff Commit**: `f038020` (docs: correct handoff commit hash)
+- **Windows Handoff Commit**: `adbcc36` (docs: record language system stable release)
 - **Windows Code Commit**: `070798c` (fix: stabilize language switching and fallback behavior) — unchanged this round
 - **Web Commit**: `edbb592` (chore: release language system stable web cache update)
 
