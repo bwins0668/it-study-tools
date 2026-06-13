@@ -3060,3 +3060,70 @@ Fixed legacy IDs:
 #### Next
 
 - **Round 15.15**: Glossary 800 -> 900 expansion.
+
+---
+
+### Round 15.15-Lite - Glossary 800 to 825 Expansion
+
+**Status: PASS**
+
+#### Scope
+
+- Expanded glossary from **800** to **825** terms.
+- Added exactly **25** terms.
+- Kept this as a lightweight expansion round.
+- No release, cache, tag, or Portable packaging work was performed.
+
+#### Added terms
+
+| Area | Count | IDs |
+| :--- | :--- | :--- |
+| IT Passport / SG / legal / project | 4 | `data_governance_policy`, `acceptance_criteria`, `contract_clause`, `data_subject_request` |
+| SQL / Database | 3 | `database_failover`, `schema_versioning`, `connection_pooling` |
+| Java | 3 | `java_module_system`, `java_var_keyword`, `java_switch_expression` |
+| Python | 3 | `python_f_string`, `python_walrus_operator`, `python_match_statement` |
+| Network | 3 | `ipv6_address`, `ipv6_prefix`, `spanning_tree_protocol` |
+| Security | 3 | `credential_hashing`, `security_incident`, `vulnerability_disclosure` |
+| System / OS / Hardware | 2 | `bootloader`, `system_timer` |
+| Web / API / HTTP | 2 | `http_cache_control`, `json_web_token` |
+| Git / Dev Tools / Testing | 1 | `test_double` |
+| Cloud / DevOps | 1 | `kubernetes_namespace` |
+
+#### Final validation
+
+| Check | Result |
+| :--- | :--- |
+| `node tools/verify_glossary.js` | PASS |
+| Term count | 825 |
+| Errors | 0 |
+| Warnings | 0 |
+| Windows/Web SHA256 match | PASS |
+| Windows/Web `data/glossary/it_terms.js` SHA256 | `4faff8b68c2c033f045b15c42ee64721cf5092c622e0058d3352f1852797ba8f` |
+| Web `node --check data/glossary/it_terms.js` | PASS |
+
+#### Git
+
+| Repo | Branch | Commit hash | Push |
+| :--- | :--- | :--- | :--- |
+| Windows glossary | main | `b291d05` | PASS |
+| Web glossary | master | `b47c5eb` | PASS |
+| Windows handoff | main | Recorded by `docs: record glossary 825 lite expansion` | PASS |
+
+#### Explicitly not done
+
+- Did not expand to 900 terms.
+- Did not update Web cache version.
+- Did not modify `assets/js/version.js`.
+- Did not modify `service-worker.js`.
+- Did not package Portable.
+- Did not create a tag or GitHub Release.
+- Did not add a `ko` field.
+- Did not add Korean UI.
+- Did not modify course data.
+- Did not modify content language packs.
+- Did not modify backend (`server.py` / `study_ai.py`).
+- Did not modify Java/Python sandbox.
+
+#### Next
+
+- **Round 15.16**: Glossary 825 -> 900 expansion, or continue full expansion after switching model.
