@@ -214,6 +214,20 @@ function validateTerms(terms, label) {
         error(idx + ' id="' + term.id + '": ' + lk + '.explanation is missing or empty');
         hasError = true;
       }
+      if (lk === "ko") {
+        var forbidden = ["PLACEHOLDER", "TODO", "TBD", "待翻译", "임시", "placeholder"];
+        for (var fi = 0; fi < forbidden.length; fi++) {
+          var fb = forbidden[fi];
+          if (val.term && val.term.indexOf(fb) !== -1) {
+            error(idx + ' id="' + term.id + '": ko.term contains forbidden placeholder "' + fb + '"');
+            hasError = true;
+          }
+          if (val.explanation && val.explanation.indexOf(fb) !== -1) {
+            error(idx + ' id="' + term.id + '": ko.explanation contains forbidden placeholder "' + fb + '"');
+            hasError = true;
+          }
+        }
+      }
     }
 
     // ja specific subfields

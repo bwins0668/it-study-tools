@@ -3827,4 +3827,73 @@ ode --check service-worker.js | PASS |
 
 #### Next
 
-- **Round 16.3** (recommended): Korean Glossary search experience, aliases optimization, smoke test coverage
+- **Round 16.3** (completed): Replace Korean Glossary placeholders with translations, upgrade validator.
+
+---
+
+### Round 16.3 - Replace Korean Glossary Placeholders and Enforce Validation
+
+**Status: PASS**
+
+#### Scope
+
+- Replaced `ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }` for all 1500 terms with real, natural, and accurate Korean translations.
+- Ensured zero placeholders or banned terms (such as `PLACEHOLDER`, `TODO`, `TBD`, `待翻译`, `임시`, `placeholder`) exist in the Korean glossary fields.
+- Upgraded the validator `tools/verify_glossary.js` to reject any Korean glossary fields containing these forbidden placeholders/words.
+- Did not add, delete, or reorder any terms (total count remains exactly 1500).
+- Did not add Korean content language packs, did not update Web cache version, did not modify manifests, did not repackage Portable, and did not create any tag/release.
+
+#### Batch Execution Log
+
+- **Batch 1**: 1 -> 250 translated, merged, validator PASS (local)
+- **Batch 2**: 251 -> 500 translated, merged, validator PASS (local)
+- **Batch 3**: 501 -> 750 translated, merged, validator PASS (local)
+- **Batch 4**: 751 -> 1000 translated, merged, validator PASS (local)
+- **Batch 5**: 1001 -> 1250 translated, merged, validator PASS (local)
+- **Batch 6**: 1251 -> 1500 translated, merged, validator PASS (local)
+
+#### Final Validation
+
+| Check | Result |
+| :--- | :--- |
+| `node tools/verify_glossary.js` (Windows) | **PASS** |
+| Term count | 1500 |
+| Errors / Warnings | 0 / 0 |
+| ko PLACEHOLDER remaining count | 0 |
+| Windows/Web `it_terms.js` SHA256 match | **PASS** |
+| Windows/Web `it_terms.js` SHA256 | `88d000d93b58220e0a9827b299c796d341d8690af363e7f5cfdcc1f9d8a5a9cf` |
+| `node --check` all files | PASS |
+
+#### Smoke Test
+
+- Language selector successfully switched UI to Korean.
+- Glossary opened and loaded all 1500 terms in Korean.
+- Random check of 30 terms confirmed high-quality natural Korean translations.
+- Searching Korean keyword (e.g. "데이터베이스") correctly returned relevant terms.
+- Searching English technical terms (e.g. "SQL") successfully returned matching terms.
+- No console/JS errors observed.
+
+#### Git
+
+| Repo | Commit hash | Message |
+| :--- | :--- | :--- |
+| Windows glossary | `(current commit)` | `feat: replace Korean glossary placeholders with translations` |
+| Web glossary | `eeba65e` | `feat: sync Korean glossary translations` |
+| Windows handoff | `(current commit)` | `feat: replace Korean glossary placeholders with translations` |
+
+#### Explicitly not done
+
+- Did not add or delete any terms.
+- Did not add Korean aliases.
+- Did not add Korean content language packs.
+- Did not modify `data/i18n_content`.
+- Did not update Web cache version.
+- Did not modify `service-worker.js` / manifests.
+- Did not repackage Portable client.
+- Did not create tag or GitHub Release.
+- Did not modify course data, backend, or sandbox.
+
+#### Next
+
+- **Round 16.4** (recommended): Korean Glossary search experience, aliases optimization, smoke test coverage
+

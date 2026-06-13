@@ -42,7 +42,7 @@
       related: ["sql", "table"],
       example: { sql: "CREATE DATABASE school;" },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "데이터베이스", explanation: "데이터 구조에 따라 데이터를 조직, 저장 및 관리하는 저장소입니다." }
     },
     {
       id: "sql",
@@ -66,7 +66,7 @@
       related: ["database", "table"],
       example: { sql: "SELECT * FROM students;" },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "SQL", explanation: "관계형 데이터베이스를 관리하고 조작하기 위해 사용하는 표준 구조화 질의어입니다." }
     },
     {
       id: "table",
@@ -90,7 +90,7 @@
       related: ["database", "row", "column"],
       example: { sql: "CREATE TABLE students (id INT, name TEXT);" },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "테이블", explanation: "데이터베이스에서 행과 열로 구성된 2차원 데이터 구조입니다." }
     },
     {
       id: "row",
@@ -114,7 +114,7 @@
       related: ["table", "column"],
       example: { sql: "INSERT INTO students VALUES (1, 'Taro');\n-- 1行（レコード）を追加" },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "행 (레코드)", explanation: "테이블에서 하나의 완성된 데이터 레코드를 나타냅니다." }
     },
     {
       id: "column",
@@ -138,7 +138,7 @@
       related: ["table", "row"],
       example: { sql: "ALTER TABLE students ADD COLUMN email TEXT;" },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "열 (컬럼)", explanation: "테이블의 필드로, 데이터의 속성을 정의합니다." }
     },
     {
       id: "primary_key",
@@ -162,7 +162,7 @@
       related: ["foreign_key", "table"],
       example: { sql: "CREATE TABLE users (id INTEGER PRIMARY KEY, name TEXT);" },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "기본키", explanation: "테이블에서 각 행의 데이터를 고유하게 식별할 수 있는 필드입니다." }
     },
     {
       id: "foreign_key",
@@ -186,7 +186,7 @@
       related: ["primary_key", "table"],
       example: { sql: "CREATE TABLE orders (id INT, user_id INT REFERENCES users(id));" },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "외래키", explanation: "두 테이블 간의 연결을 설정하기 위해 다른 테이블의 기본키를 참조하는 필드입니다." }
     },
     {
       id: "index",
@@ -210,7 +210,7 @@
       related: ["database", "table"],
       example: { sql: "CREATE INDEX idx_name ON students (name);" },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "인덱스", explanation: "데이터베이스에서 데이터 검색 속도를 향상시키기 위해 사용하는 데이터 구조입니다." }
     },
     {
       id: "transaction",
@@ -234,7 +234,7 @@
       related: ["database", "normalization"],
       example: { sql: "BEGIN TRANSACTION;\nUPDATE accounts SET balance = balance - 100;\nCOMMIT;" },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "트랜잭션", explanation: "하나의 논리적 작업 단위로 취급되는 일련의 데이터베이스 조작들로, 모두 성공하거나 모두 취소되어야 합니다." }
     },
     {
       id: "normalization",
@@ -258,7 +258,7 @@
       related: ["database", "table"],
       example: {},
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "정규화", explanation: "데이터의 중복을 줄이고 무결성을 향상시키기 위해 테이블을 분해하여 설계하는 과정입니다." }
     },
 
     // ======================================================================
@@ -286,7 +286,7 @@
       related: ["integrity", "availability", "encryption"],
       example: {},
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "기밀성", explanation: "인가되지 않은 사용자가 정보에 접근하지 못하도록 보호하는 성질입니다." }
     },
     {
       id: "integrity",
@@ -310,7 +310,7 @@
       related: ["confidentiality", "availability"],
       example: {},
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "무결성", explanation: "데이터가 변조되지 않고 정확성과 일관성을 유지하도록 보장하는 성질입니다." }
     },
     {
       id: "availability",
@@ -334,7 +334,7 @@
       related: ["confidentiality", "integrity"],
       example: {},
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "가용성", explanation: "권한이 있는 사용자가 필요할 때 언제든지 시스템이나 데이터에 접근하고 사용할 수 있는 성질입니다." }
     },
     {
       id: "authentication",
@@ -358,7 +358,7 @@
       related: ["authorization"],
       example: { text: "ログイン時にパスワードで認証する。" },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "인증", explanation: "사용자나 시스템의 신원을 확인하는 과정입니다." }
     },
     {
       id: "authorization",
@@ -382,7 +382,7 @@
       related: ["authentication"],
       example: { text: "管理者のみがデータ削除可能という認可設定。" },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "인가", explanation: "인증된 사용자에게 특정 자원에 접근하거나 작업을 수행할 수 있는 권한을 부여하는 과정입니다." }
     },
     {
       id: "vulnerability",
@@ -406,7 +406,7 @@
       related: ["risk_assessment", "malware"],
       example: {},
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "취약점", explanation: "공격자에 의해 악용될 수 있는 시스템 내의 보안상 약점입니다." }
     },
     {
       id: "malware",
@@ -430,7 +430,7 @@
       related: ["vulnerability", "encryption"],
       example: {},
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "악성코드", explanation: "컴퓨터 시스템에 해를 끼치거나 오작동을 유발하도록 설계된 바이러스, 웜, 트로이 목마 등의 악성 소프트웨어입니다." }
     },
     {
       id: "encryption",
@@ -454,7 +454,7 @@
       related: ["confidentiality", "authentication"],
       example: {},
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "암호화", explanation: "데이터를 무단으로 읽을 수 없는 안전한 형식으로 변환하여 콘텐츠를 보호하는 과정입니다." }
     },
     {
       id: "firewall",
@@ -478,7 +478,7 @@
       related: ["ip_address"],
       example: {},
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "방화벽", explanation: "네트워크 트래픽을 모니터링하고 제어하여 비인가 접근을 차단하는 보안 시스템입니다." }
     },
     {
       id: "risk_assessment",
@@ -502,7 +502,7 @@
       related: ["vulnerability"],
       example: {},
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "위험 평가", explanation: "보안 위험을 식별, 분석 및 평가하는 프로세스입니다." }
     },
 
     // ======================================================================
@@ -530,7 +530,7 @@
       related: ["dns", "firewall"],
       example: {},
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "IP 주소", explanation: "네트워크상에서 각 장치를 식별하기 위해 부여되는 고유한 숫자 주소입니다." }
     },
     {
       id: "dns",
@@ -554,7 +554,7 @@
       related: ["ip_address", "cloud_computing"],
       example: {},
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "DNS", explanation: "도메인 이름을 IP 주소로 변환해 주는 도메인 네임 시스템입니다." }
     },
     {
       id: "client_server",
@@ -578,7 +578,7 @@
       related: ["cloud_computing", "ip_address"],
       example: {},
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "클라이언트-서버", explanation: "클라이언트가 서비스를 요청하고 서버가 이에 응답하여 서비스를 제공하는 네트워크 아키텍처입니다." }
     },
     {
       id: "cloud_computing",
@@ -602,7 +602,7 @@
       related: ["client_server", "backup"],
       example: {},
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "클라우드 컴퓨팅", explanation: "인터넷을 통해 컴퓨터 리소스(서버, 스토리지, 데이터베이스 등)를 필요에 따라 온디맨드로 제공하는 컴퓨팅 모델입니다." }
     },
     {
       id: "backup",
@@ -626,7 +626,7 @@
       related: ["availability", "cloud_computing"],
       example: {},
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "백업", explanation: "데이터 분실에 대비하여 복구할 수 있도록 데이터의 복사본을 생성해 두는 것입니다." }
     },
 
     // ======================================================================
@@ -654,7 +654,7 @@
       related: ["function", "class"],
       example: { java: "int count = 10;", python: "count = 10" },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "변수", explanation: "프로그램에서 데이터를 일시적으로 저장하기 위해 이름을 부여한 공간입니다." }
     },
     {
       id: "function",
@@ -678,7 +678,7 @@
       related: ["variable", "class", "exception"],
       example: { java: "public int add(int a, int b) { return a + b; }", python: "def add(a, b):\n    return a + b" },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "함수", explanation: "특정 작업을 수행하기 위해 재사용 가능하도록 캡슐화한 코드 블록입니다." }
     },
     {
       id: "class",
@@ -702,7 +702,7 @@
       related: ["object", "function", "variable"],
       example: { java: "class Student {\n  String name;\n  int age;\n}", python: "class Student:\n    def __init__(self, name):\n        self.name = name" },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "클래스", explanation: "객체 지향 프로그래밍에서 객체를 생성하기 위한 변수와 메서드를 정의하는 템플릿(설계도)입니다." }
     },
     {
       id: "object",
@@ -726,7 +726,7 @@
       related: ["class", "variable", "function"],
       example: { java: "Student s = new Student();", python: "s = Student()" },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "객체", explanation: "클래스에서 생성된 실체로, 고유한 상태(변수)와 행동(메서드)을 가집니다." }
     },
     // ======================================================================
     // 新增：SQL / Database (id: 31-45)
@@ -749,7 +749,7 @@
       aliases: ["クエリ"],
       related: ["sql", "select_statement"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "쿼리", explanation: "데이터베이스에서 데이터를 검색하거나 조작하기 위해 전송하는 요청 문장입니다." }
     },
     {
       id: "select_statement",
@@ -769,7 +769,7 @@
       aliases: ["SELECT", "セレクト"],
       related: ["sql", "where_clause", "query"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "SELECT 문", explanation: "데이터베이스 테이블에서 데이터를 검색하고 조회하는 데 사용하는 SQL 문입니다." }
     },
     {
       id: "where_clause",
@@ -789,7 +789,7 @@
       aliases: ["WHERE"],
       related: ["select_statement", "query"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "WHERE 절", explanation: "SQL 쿼리문에서 특정 검색 조건을 지정하여 결과를 필터링하는 절입니다." }
     },
     {
       id: "join",
@@ -809,7 +809,7 @@
       aliases: ["結合", "テーブル結合"],
       related: ["inner_join", "left_join", "table", "foreign_key"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "조인", explanation: "둘 이상의 테이블을 관련 있는 열을 기준으로 결합하여 데이터를 가져오는 SQL 조작입니다." }
     },
     {
       id: "inner_join",
@@ -829,7 +829,7 @@
       aliases: ["INNER JOIN", "内部結合"],
       related: ["join", "left_join", "foreign_key"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "내부 조인", explanation: "결합하는 두 테이블 모두에서 일치하는 값이 있는 행만 반환하는 조인 방식입니다." }
     },
     {
       id: "left_join",
@@ -849,7 +849,7 @@
       aliases: ["LEFT JOIN", "左外部結合"],
       related: ["join", "inner_join", "foreign_key"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "왼쪽 외부 조인", explanation: "왼쪽 테이블의 모든 행을 반환하고, 오른쪽 테이블에서 일치하는 행이 없으면 NULL을 채워 반환하는 조인 방식입니다." }
     },
     {
       id: "group_by",
@@ -869,7 +869,7 @@
       aliases: ["GROUP BY"],
       related: ["select_statement", "aggregate_function", "order_by"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "GROUP BY 절", explanation: "지정한 열을 기준으로 쿼리 결과를 그룹화하며, 주로 집계 함수와 함께 사용됩니다." }
     },
     {
       id: "order_by",
@@ -889,7 +889,7 @@
       aliases: ["ORDER BY"],
       related: ["select_statement", "group_by"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "ORDER BY 절", explanation: "쿼리 결과를 지정된 열을 기준으로 오름차순(ASC) 또는 내림차순(DESC)으로 정렬하는 절입니다." }
     },
     {
       id: "aggregate_function",
@@ -909,7 +909,7 @@
       aliases: ["COUNT", "SUM", "AVG", "集計関数"],
       related: ["group_by", "select_statement"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "집계 함수", explanation: "복수의 값에 대해 계산을 수행하고 단일 값을 반환하는 함수로, COUNT, SUM, AVG 등이 있습니다." }
     },
     {
       id: "null_value",
@@ -929,7 +929,7 @@
       aliases: ["NULL", "ヌル値"],
       related: ["database", "data_type"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "NULL", explanation: "데이터베이스에서 데이터 값이 누락되었거나 알 수 없음을 나타내는 특수한 마커입니다." }
     },
     {
       id: "constraint",
@@ -949,7 +949,7 @@
       aliases: ["制約"],
       related: ["primary_key", "foreign_key", "unique_constraint"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "제약 조건", explanation: "데이터의 무결성을 유지하기 위해 테이블 열에 적용되는 규칙(기본키, 외래키, UNIQUE 등)입니다." }
     },
     {
       id: "unique_constraint",
@@ -969,7 +969,7 @@
       aliases: ["UNIQUE", "一意制約"],
       related: ["constraint", "primary_key"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "고유 제약 조건", explanation: "테이블의 특정 열 또는 열 집합에 중복된 값이 들어가지 않도록 보장하는 제약 조건입니다." }
     },
     {
       id: "commit",
@@ -989,7 +989,7 @@
       aliases: ["コミット"],
       related: ["transaction", "rollback"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "커밋", explanation: "트랜잭션의 모든 변경 사항을 데이터베이스에 영구적으로 반영하고 저장하는 작업입니다." }
     },
     {
       id: "rollback",
@@ -1009,7 +1009,7 @@
       aliases: ["ロールバック"],
       related: ["transaction", "commit"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "롤백", explanation: "트랜잭션의 변경 사항을 취소하고 트랜잭션이 시작되기 전의 상태로 되돌리는 작업입니다." }
     },
     {
       id: "data_type",
@@ -1029,7 +1029,7 @@
       aliases: ["データ型", "型"],
       related: ["database", "table", "column"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "데이터 타입", explanation: "정수, 텍스트, 날짜 등 열에 저장할 수 있는 데이터의 종류를 정의한 것입니다." }
     },
     // ======================================================================
     // 新增：Programming / General (id: 46-60)
@@ -1052,7 +1052,7 @@
       aliases: ["アルゴリズム"],
       related: ["variable", "function", "control_flow"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "알고리즘", explanation: "문제를 해결하기 위한 일련의 순서화된 절차와 규칙입니다." }
     },
     {
       id: "constant",
@@ -1072,7 +1072,7 @@
       aliases: ["定数"],
       related: ["variable", "function"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "상수", explanation: "프로그램 실행 중에 값이 변하지 않고 유지되는 식별자입니다." }
     },
     {
       id: "parameter",
@@ -1092,7 +1092,7 @@
       aliases: ["引数", "パラメータ"],
       related: ["function", "return_value"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "매개변수", explanation: "함수 내부의 연산이나 처리를 위해 함수를 호출할 때 전달하는 값입니다." }
     },
     {
       id: "return_value",
@@ -1112,7 +1112,7 @@
       aliases: ["戻り値"],
       related: ["function", "parameter"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "반환값", explanation: "함수가 실행을 마치고 호출자에게 돌려주는 결과입니다." }
     },
     {
       id: "control_flow",
@@ -1132,7 +1132,7 @@
       aliases: ["制御構造", "制御フロー"],
       related: ["condition", "loop", "function"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "제어 흐름", explanation: "조건문과 반복문 등을 통해 프로그램의 명령어가 실행되는 순서를 제어하는 구조입니다." }
     },
     {
       id: "condition",
@@ -1152,7 +1152,7 @@
       aliases: ["条件分岐", "if文"],
       related: ["control_flow", "loop", "data_type"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "조건문", explanation: "조건의 참 또는 거짓에 따라 프로그램의 실행 경로를 결정하는 제어 구조입니다." }
     },
     {
       id: "loop",
@@ -1172,7 +1172,7 @@
       aliases: ["ループ", "for文", "while文"],
       related: ["control_flow", "condition", "array"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "반복문", explanation: "특정 조건이 충족될 때까지 코드 블록을 반복해서 실행하는 제어 구조입니다." }
     },
     {
       id: "array",
@@ -1192,7 +1192,7 @@
       aliases: ["配列"],
       related: ["list", "variable", "loop"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "배열", explanation: "동일한 타입의 요소들을 순서대로 저장하는 데이터 구조로, 인덱스를 사용하여 각 요소에 접근합니다." }
     },
     {
       id: "list",
@@ -1212,7 +1212,7 @@
       aliases: ["リスト"],
       related: ["array", "python_list", "loop"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "리스트", explanation: "순서가 있고 가변적인 요소들의 집합으로, Python 등에서 널리 쓰이는 기본 데이터 구조입니다." }
     },
     {
       id: "dictionary",
@@ -1232,7 +1232,7 @@
       aliases: ["辞書", "dict", "連想配列"],
       related: ["python_dict", "list", "object"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "딕셔너리", explanation: "키와 값의 쌍을 저장하는 데이터 구조로, 키를 통해 값을 빠르게 검색할 수 있습니다." }
     },
     {
       id: "encapsulation",
@@ -1252,7 +1252,7 @@
       aliases: ["カプセル化"],
       related: ["class", "object", "inheritance", "polymorphism"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "캡슐화", explanation: "데이터와 그 데이터를 처리하는 메서드를 하나로 묶고 외부에서 직접적인 접근을 제한하는 객체 지향 프로그래밍(OOP) 특징입니다." }
     },
     {
       id: "polymorphism",
@@ -1272,7 +1272,7 @@
       aliases: ["多態性", "ポリモーフィズム"],
       related: ["class", "inheritance", "encapsulation", "interface"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "다형성", explanation: "서로 다른 객체가 동일한 메시지나 인터페이스에 대해 각자의 방식으로 반응하여 다르게 동작하는 객체 지향 프로그래밍(OOP) 특징입니다." }
     },
     {
       id: "debugging",
@@ -1292,7 +1292,7 @@
       aliases: ["デバッグ"],
       related: ["testing", "exception"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "디버깅", explanation: "프로그램에 존재하는 오류(버그)를 찾아내고 분석하여 수정하는 과정입니다." }
     },
     // ======================================================================
     // 新增：Java (id: 61-68)
@@ -1315,7 +1315,7 @@
       aliases: ["static"],
       related: ["java_class", "instance", "java_constructor"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "static 키워드", explanation: "특정 인스턴스가 아닌 클래스 자체에 속하는 멤버 변수나 메서드를 선언할 때 사용하는 키워드입니다." }
     },
     {
       id: "instance",
@@ -1335,7 +1335,7 @@
       aliases: ["インスタンス"],
       related: ["class", "object", "java_constructor"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "인스턴스", explanation: "클래스로부터 생성된 실제 객체로, 클래스에 정의된 속성과 메서드를 실제로 구현한 형태입니다." }
     },
     {
       id: "java_constructor",
@@ -1355,7 +1355,7 @@
       aliases: ["コンストラクタ"],
       related: ["class", "instance", "object"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "생성자", explanation: "객체가 생성될 때 자동으로 호출되어 객체의 초기 상태를 설정하는 특수한 메서드입니다." }
     },
     {
       id: "interface",
@@ -1375,7 +1375,7 @@
       aliases: ["インターフェース"],
       related: ["class", "inheritance", "polymorphism"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "인터페이스", explanation: "추상 메서드만을 포함하는 참조 타입으로, 구현 클래스가 인터페이스에 정의된 모든 메서드를 구현하도록 강제합니다." }
     },
     {
       id: "access_modifier",
@@ -1395,7 +1395,7 @@
       aliases: ["アクセス修飾子", "public", "private"],
       related: ["class", "encapsulation", "java_class"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "접근 제어자", explanation: "클래스, 메서드, 변수의 접근 가능 범위와 가시성을 제어하는 키워드(public, private 등)입니다." }
     },
     {
       id: "package",
@@ -1415,7 +1415,7 @@
       aliases: ["パッケージ"],
       related: ["java_class", "import_statement", "package"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "패키지", explanation: "관련된 클래스와 인터페이스를 체계적으로 분류하고 관리하기 위한 네임스페이스 메커니즘입니다." }
     },
     {
       id: "inheritance",
@@ -1435,7 +1435,7 @@
       aliases: ["継承"],
       related: ["class", "encapsulation", "polymorphism", "interface"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "상속", explanation: "기존 클래스의 속성과 메서드를 다른 클래스가 물려받아 재사용 및 확장할 수 있게 하는 객체 지향 프로그래밍(OOP) 특징입니다." }
     },
     {
       id: "java_class",
@@ -1455,7 +1455,7 @@
       aliases: ["クラス", "Java class"],
       related: ["object", "inheritance", "java_constructor", "instance"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Java 클래스", explanation: "Java 프로그램의 기본 빌딩 블록으로, 필드(속성)와 메서드(행위)를 포함합니다." }
     },
     // ======================================================================
     // 新增：Python (id: 69-76)
@@ -1478,7 +1478,7 @@
       aliases: ["list", "リスト型"],
       related: ["list", "python_dict", "loop"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Python 리스트", explanation: "Python에 내장된 가변 순차 데이터 타입으로, 다양한 타입의 요소들을 저장할 수 있습니다." }
     },
     {
       id: "python_dict",
@@ -1498,7 +1498,7 @@
       aliases: ["dict", "辞書型"],
       related: ["dictionary", "python_list"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Python 딕셔너리", explanation: "Python에서 키와 값의 쌍을 저장하는 가변 매핑 타입으로, 중괄호 {}를 사용해 정의합니다." }
     },
     {
       id: "indentation",
@@ -1518,7 +1518,7 @@
       aliases: ["インデント"],
       related: ["control_flow", "function"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "들여쓰기", explanation: "Python에서 코드 블록을 나타내기 위해 라인 시작 부분에 삽입하는 공백 문자로, 문법의 필수 요소입니다." }
     },
     {
       id: "import_statement",
@@ -1538,7 +1538,7 @@
       aliases: ["import", "インポート"],
       related: ["package", "import_statement", "python_module"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "import 문", explanation: "외부 라이브러리나 모듈을 불러와 프로그램의 기능을 확장하기 위해 사용하는 선언문입니다." }
     },
     {
       id: "lambda_function",
@@ -1558,7 +1558,7 @@
       aliases: ["lambda", "ラムダ式"],
       related: ["function", "python_list"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "람다 함수", explanation: "함수를 인자로 간결하게 전달하기 위해 이름 없이 한 줄짜리 표현식으로 작성하는 익명 함수입니다." }
     },
     {
       id: "python_module",
@@ -1578,7 +1578,7 @@
       aliases: ["モジュール"],
       related: ["import_statement", "function", "package"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Python 모듈", explanation: "재사용 가능한 코드를 조직하기 위해 파이썬 정의와 문장들을 담고 있는 파일(.py)입니다." }
     },
     {
       id: "list_comprehension",
@@ -1598,7 +1598,7 @@
       aliases: ["リスト内包表記"],
       related: ["python_list", "loop", "condition"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "리스트 컴프리헨션", explanation: "Python에서 단일 표현식을 사용하여 새로운 리스트를 빠르고 간결하게 생성하는 문법입니다." }
     },
     {
       id: "virtual_environment",
@@ -1618,7 +1618,7 @@
       aliases: ["venv", "仮想環境"],
       related: ["python_module", "package"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "가상 환경", explanation: "Python 프로젝트별로 독립된 패키지 설치 환경을 구축하여 프로젝트 간의 패키지 버전 충돌을 방지하는 시스템입니다." }
     },
     // ======================================================================
     // 新增：Network (id: 77-85)
@@ -1641,7 +1641,7 @@
       aliases: ["サブネット"],
       related: ["ip_address", "router"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "서브넷", explanation: "하나의 대규모 IP 네트워크를 논리적으로 분할한 소규모 네트워크 단위로, 주소 효율성과 보안을 높입니다." }
     },
     {
       id: "http",
@@ -1661,7 +1661,7 @@
       aliases: ["HTTP", "Hypertext Transfer Protocol"],
       related: ["https", "url", "client_server", "api"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "HTTP", explanation: "웹 브라우저와 웹 서버 간에 하이퍼텍스트 데이터를 전송하기 위해 사용하는 인터넷 프로토콜입니다." }
     },
     {
       id: "https",
@@ -1681,7 +1681,7 @@
       aliases: ["HTTPS"],
       related: ["http", "encryption", "url"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "HTTPS", explanation: "SSL/TLS 프로토콜을 통해 HTTP 통신을 암호화하여 데이터 전송의 안전성과 무결성을 확보한 프로토콜입니다." }
     },
     {
       id: "tcp",
@@ -1701,7 +1701,7 @@
       aliases: ["TCP", "Transmission Control Protocol"],
       related: ["ip_address", "udp", "http"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "TCP", explanation: "전송 계층의 프로토콜로, 두 기기 간에 신뢰성 있고 연결 지향적인 데이터 전송을 보장합니다." }
     },
     {
       id: "udp",
@@ -1721,7 +1721,7 @@
       aliases: ["UDP", "User Datagram Protocol"],
       related: ["ip_address", "tcp"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "UDP", explanation: "전송 계층의 프로토콜로, 연결을 설정하지 않고 데이터를 빠르게 전송하지만 신뢰성은 보장하지 않습니다." }
     },
     {
       id: "router",
@@ -1741,7 +1741,7 @@
       aliases: ["ルーター"],
       related: ["ip_address", "subnet", "router", "firewall"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "라우터", explanation: "서로 다른 네트워크 간에 IP 주소를 기반으로 데이터 패킷을 전달하고 최적의 경로를 설정해 주는 장치입니다." }
     },
     {
       id: "url",
@@ -1761,7 +1761,7 @@
       aliases: ["URL"],
       related: ["http", "https", "dns"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "URL", explanation: "인터넷상에 존재하는 웹 자원(텍스트, 이미지, 비디오 등)의 위치를 나타내는 주소 형식입니다." }
     },
     {
       id: "api",
@@ -1781,7 +1781,7 @@
       aliases: ["API", "Application Programming Interface"],
       related: ["http", "rest_api", "client_server", "url"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "API", explanation: "애플리케이션 프로그래밍 인터페이스로, 다른 소프트웨어 구성 요소들이 서로 상호작용하고 통신할 수 있게 하는 규칙 집합입니다." }
     },
     {
       id: "rest_api",
@@ -1801,7 +1801,7 @@
       aliases: ["REST", "RESTful API"],
       related: ["api", "http", "client_server"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "REST API", explanation: "HTTP 메서드(GET, POST, PUT, DELETE)를 사용하여 자원을 식별하고 조작하는 REST 아키텍처 스타일 기반의 API입니다." }
     },
     // ======================================================================
     // 新增：Security (id: 86-93)
@@ -1824,7 +1824,7 @@
       aliases: ["ハッシュ化", "ハッシュ関数"],
       related: ["encryption", "authentication"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "해싱", explanation: "임의 길이의 데이터를 고정된 길이의 해시 값으로 변환하는 단방향 알고리즘으로, 비밀번호 저장과 무결성 검증에 사용됩니다." }
     },
     {
       id: "phishing",
@@ -1844,7 +1844,7 @@
       aliases: ["フィッシング", "フィッシング詐欺"],
       related: ["malware", "vulnerability"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "피싱", explanation: "신뢰할 수 있는 기관이나 사람을 사칭하여 사용자의 개인정보나 로그인 정보 등을 가로채는 금융 사기 기법입니다." }
     },
     {
       id: "access_control",
@@ -1864,7 +1864,7 @@
       aliases: ["アクセス制御"],
       related: ["authentication", "authorization", "firewall"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "접근 제어", explanation: "사용자 신원과 권한에 따라 시스템 리소스에 대한 접근 권한을 제한하는 보안 메커니즘입니다." }
     },
     {
       id: "multi_factor_authentication",
@@ -1884,7 +1884,7 @@
       aliases: ["MFA", "多要素認証"],
       related: ["authentication", "authorization"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "다요소 인증", explanation: "보안을 강화하기 위해 지식, 소유, 생체 정보 중 두 가지 이상의 독립적인 요소를 조합하여 신원을 확인하는 인증 방식입니다." }
     },
     {
       id: "sql_injection",
@@ -1904,7 +1904,7 @@
       aliases: ["SQLインジェクション"],
       related: ["sql", "vulnerability", "authentication"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "SQL 인젝션", explanation: "공격자가 입력 필드에 악의적인 SQL 코드를 주입하여 데이터베이스를 무단으로 조작하거나 정보를 탈취하는 웹 취약점 공격 기법입니다." }
     },
     {
       id: "public_key",
@@ -1924,7 +1924,7 @@
       aliases: ["公開鍵", "公開鍵暗号"],
       related: ["private_key", "encryption", "authentication"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "공개키", explanation: "비대칭 암호화 방식에서 널리 배포되어 데이터를 암호화하거나 서명을 검증하는 데 사용하는 쌍을 이루는 키입니다." }
     },
     {
       id: "private_key",
@@ -1944,7 +1944,7 @@
       aliases: ["秘密鍵"],
       related: ["public_key", "encryption", "authentication"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "개인키", explanation: "비대칭 암호화 방식에서 본인만 안전하게 보관하며, 암호화된 데이터를 복호화하거나 디지털 서명을 생성하는 데 사용하는 키입니다." }
     },
     {
       id: "risk_management",
@@ -1964,7 +1964,7 @@
       aliases: ["リスク対応"],
       related: ["vulnerability", "firewall"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "위험 관리", explanation: "식별된 보안 위험에 대응하기 위해 회피, 완화, 전가, 수용 등의 대책을 수립하고 제어하는 프로세스입니다." }
     },
     // ======================================================================
     // 新增：System / OS / Development (id: 94-99)
@@ -1987,7 +1987,7 @@
       aliases: ["OS", "オペレーティングシステム"],
       related: ["process", "memory", "file_system"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "운영체제", explanation: "컴퓨터 하드웨어와 소프트웨어 자원을 관리하고 사용자가 컴퓨터를 편리하게 사용하도록 지원하는 핵심 시스템 소프트웨어입니다." }
     },
     {
       id: "process",
@@ -2007,7 +2007,7 @@
       aliases: ["プロセス"],
       related: ["thread", "operating_system", "memory"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "프로세스", explanation: "실행 중인 프로그램 인스턴스로, 운영체제로부터 메모리와 CPU 자원을 할당받는 작업의 기본 단위입니다." }
     },
     {
       id: "thread",
@@ -2027,7 +2027,7 @@
       aliases: ["スレッド"],
       related: ["process", "operating_system"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "스레드", explanation: "프로세스 내에서 실행되는 실행 흐름의 최소 단위로, 하나의 프로세스 내에서 여러 스레드가 동시에 실행될 수 있습니다." }
     },
     {
       id: "memory",
@@ -2047,7 +2047,7 @@
       aliases: ["メモリ", "RAM", "主記憶"],
       related: ["process", "operating_system", "thread"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "메모리", explanation: "CPU가 실행할 프로그램과 데이터를 일시적으로 저장하는 하드웨어 구성 요소(RAM 등)입니다." }
     },
     {
       id: "file_system",
@@ -2067,7 +2067,7 @@
       aliases: ["ファイルシステム"],
       related: ["operating_system", "memory"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "파일 시스템", explanation: "운영체제가 저장 매체(HDD, SSD 등)에서 파일을 쉽게 찾고 관리할 수 있도록 구성하는 구조와 규칙입니다." }
     },
     {
       id: "version_control",
@@ -2087,7 +2087,7 @@
       aliases: ["バージョン管理", "VCS"],
       related: ["testing", "version_control", "debugging"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "버전 관리", explanation: "파일이나 소스코드의 변경 이력을 추적하고 관리하는 시스템으로, Git이 사실상 표준으로 사용됩니다." }
     },
     {
       id: "testing",
@@ -2107,7 +2107,7 @@
       aliases: ["テスト", "ソフトウェアテスト"],
       related: ["debugging", "version_control", "testing"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "테스트", explanation: "소프트웨어가 요구 사항대로 올바르게 작동하는지 확인하고 결함을 발견하여 품질을 검증하는 프로세스입니다." }
     },
     // ======================================================================
     // restore: exception (was the 30th original term, got dropped during expansion)
@@ -2134,7 +2134,7 @@
       related: ["function", "class"],
       example: { java: "try {\n  int x = 1 / 0;\n} catch (ArithmeticException e) {\n  System.out.println(e);\n}", python: "try:\n    x = 1 / 0\nexcept ZeroDivisionError as e:\n    print(e)" },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "예외", explanation: "프로그램 실행 중에 예기치 않게 발생하는 오류로, try-catch 등을 통해 예외 처리가 가능합니다." }
     },
     // ======================================================================
     // 新增：补齐到 100 条 (id: 99-100)
@@ -2157,7 +2157,7 @@
       aliases: ["単体テスト", "UT"],
       related: ["testing", "debugging"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "단위 테스트", explanation: "소프트웨어의 가장 작은 단위(함수, 메서드, 모듈 등)를 독립적으로 검증하는 테스트 기법입니다." }
     },
     {
       id: "virtualization",
@@ -2177,7 +2177,7 @@
       aliases: ["仮想化"],
       related: ["operating_system", "cloud_computing"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "가상화", explanation: "물리적인 컴퓨팅 자원(서버, 스토리지 등)을 소프트웨어적으로 추상화하여 독립된 가상 자원으로 나누거나 통합하여 관리하는 기술입니다." }
     },
 
     // ======================================================================
@@ -2201,7 +2201,7 @@
       aliases: ["情報システム", "IS"],
       related: ["database", "operating_system", "client_server"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "정보 시스템", explanation: "업무 효율화와 의사 결정을 지원하기 위해 데이터를 수집, 처리, 저장, 배포하는 정보 관련 시스템입니다." }
     },
     {
       id: "business_process",
@@ -2221,7 +2221,7 @@
       aliases: ["ビジネスプロセス", "BP"],
       related: ["information_system", "cost_benefit_analysis"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "비즈니스 프로세스", explanation: "조직의 특정 목표를 달성하기 위해 유기적으로 연결된 일련의 업무 활동 절차입니다." }
     },
     {
       id: "system_lifecycle",
@@ -2241,7 +2241,7 @@
       aliases: ["システムライフサイクル", "SDLC"],
       related: ["information_system", "feasibility_study"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "시스템 수명 주기", explanation: "시스템의 기획, 설계, 개발, 도입, 운영 및 폐기까지의 전체적인 단계를 의미합니다." }
     },
     {
       id: "feasibility_study",
@@ -2261,7 +2261,7 @@
       aliases: ["フィージビリティ調査", "feasibility"],
       related: ["system_lifecycle", "cost_benefit_analysis"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "타당성 분석", explanation: "시스템이나 프로젝트를 본격적으로 도입하기 전에 기술적, 경제적, 운영적 타당성을 사전 평가하는 조사입니다." }
     },
     {
       id: "cost_benefit_analysis",
@@ -2281,7 +2281,7 @@
       aliases: ["費用便益分析", "CBA"],
       related: ["feasibility_study", "risk_assessment"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "비용 편익 분석", explanation: "시스템 투자에 대비하여 발생하는 비용과 회수되는 편익을 금전적 가치로 환산하여 비교 평가하는 기법입니다." }
     },
     {
       id: "service_level_agreement",
@@ -2301,7 +2301,7 @@
       aliases: ["SLA", "サービスレベル合意書"],
       related: ["availability", "outsourcing"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "서비스 수준 합의서", explanation: "서비스 제공업체와 고객 간에 맺는 서비스 수준에 대한 약정서로, 가용성이나 응답 속도 등의 정량적 목표를 정의합니다." }
     },
     {
       id: "incident_management",
@@ -2321,7 +2321,7 @@
       aliases: ["インシデント管理"],
       related: ["availability", "problem_management"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "인시던트 관리", explanation: "시스템 장애나 보안 사고가 발생했을 때 비즈니스 영향을 최소화하기 위해 서비스를 신속하게 복구하는 관리 프로세스입니다." }
     },
     {
       id: "problem_management",
@@ -2341,7 +2341,7 @@
       aliases: ["問題管理"],
       related: ["incident_management", "change_management"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "문제 관리", explanation: "장애(인시던트)의 근본적인 원인을 규명하고 영구적인 해결책과 예방책을 마련하여 재발을 방지하는 프로세스입니다." }
     },
     {
       id: "change_management",
@@ -2361,7 +2361,7 @@
       aliases: ["変更管理"],
       related: ["problem_management", "testing"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "변경 관리", explanation: "시스템 변경으로 인한 장애를 방지하기 위해 변경 계획, 승인, 적용, 검증의 일련의 단계를 체계적으로 관리하는 프로세스입니다." }
     },
     {
       id: "maintainability",
@@ -2381,7 +2381,7 @@
       aliases: ["保守性"],
       related: ["reliability", "availability"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "유지보수성", explanation: "시스템에 결함이 발생했을 때 이를 수정하거나 요구사항에 맞춰 기능을 개선하기 쉬운 정도를 나타내는 품질 특성입니다." }
     },
     {
       id: "reliability",
@@ -2401,7 +2401,7 @@
       aliases: ["信頼性"],
       related: ["availability", "maintainability"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "신뢰성", explanation: "시스템이 지정된 조건에서 고장 없이 정상적으로 지속 작동할 수 있는 성능(MTBF로 측정)입니다." }
     },
     {
       id: "scalability",
@@ -2421,7 +2421,7 @@
       aliases: ["拡張性", "スケーラビリティ"],
       related: ["cloud_computing", "availability"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "확장성", explanation: "사용자 수나 트래픽 증가와 같은 서버 부하 증가에 맞추어 시스템 처리 성능을 유연하게 늘릴 수 있는 역량입니다." }
     },
     {
       id: "outsourcing",
@@ -2441,7 +2441,7 @@
       aliases: ["アウトソーシング", "委託"],
       related: ["service_level_agreement", "cloud_computing"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "아웃소싱", explanation: "업무 효율화와 핵심 역량 집중을 위해 기업 내부 업무 중 일부를 외부 전문 기업에 위탁하여 수행하는 방식입니다." }
     },
     {
       id: "compliance",
@@ -2461,7 +2461,7 @@
       aliases: ["コンプライアンス"],
       related: ["compliance", "privacy"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "컴플라이언스", explanation: "관련 법률, 규제 지침, 사내 규칙 등을 엄격히 준수하는 준법 감시 체계입니다." }
     },
     {
       id: "privacy",
@@ -2481,7 +2481,7 @@
       aliases: ["プライバシー", "個人情報保護"],
       related: ["compliance", "confidentiality", "encryption"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "개인정보 보호", explanation: "개인 사생활의 자유와 권리를 보장하고 개인정보 오남용을 막기 위한 보호 체계입니다." }
     },
     {
       id: "database_schema",
@@ -2501,7 +2501,7 @@
       aliases: ["スキーマ"],
       related: ["database", "table", "constraint"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "데이터베이스 스키마", explanation: "데이터베이스의 전체적인 논리적 구조, 테이블 간의 관계, 제약 조건을 정의한 개념적 설계도입니다." }
     },
     {
       id: "composite_key",
@@ -2521,7 +2521,7 @@
       aliases: ["複合キー", "結合キー"],
       related: ["primary_key", "foreign_key", "constraint"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "복합키", explanation: "하나의 테이블에서 고유 식별자 역할을 수행하기 위해 두 개 이상의 열을 결합하여 만든 기본키입니다." }
     },
     {
       id: "referential_integrity",
@@ -2541,7 +2541,7 @@
       aliases: ["参照整合性", "RI"],
       related: ["foreign_key", "constraint", "cascade_delete"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "참조 무결성", explanation: "외래키 값이 부모 테이블의 기본키에 반드시 존재하거나 또는 NULL이어야 함을 보장하는 데이터베이스 제약 조건입니다." }
     },
     {
       id: "cascade_delete",
@@ -2561,7 +2561,7 @@
       aliases: ["カスケード削除", "CASCADE"],
       related: ["foreign_key", "referential_integrity", "constraint"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "종속 삭제", explanation: "부모 테이블의 특정 행을 삭제할 때 외래키로 이를 참조하고 있는 자식 테이블의 관련 행들도 함께 자동 삭제하는 동작입니다." }
     },
     {
       id: "stored_procedure",
@@ -2581,7 +2581,7 @@
       aliases: ["ストアドプロシージャ", "stored proc"],
       related: ["sql", "stored_procedure"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "저장 프로시저", explanation: "데이터베이스 내에 미리 컴파일되어 저장되어 있으며, 필요할 때 호출하여 실행할 수 있는 일련의 SQL 문 집합입니다." }
     },
     {
       id: "subquery",
@@ -2601,7 +2601,7 @@
       aliases: ["副問合せ", "サブクエリ"],
       related: ["select_statement", "where_clause", "join"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "서브쿼리", explanation: "하나의 SQL 쿼리문 안에 중첩되어 포함된 또 다른 SELECT 문을 의미합니다." }
     },
     {
       id: "union_operator",
@@ -2621,7 +2621,7 @@
       aliases: ["UNION", "UNION演算子"],
       related: ["select_statement", "join"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "UNION 연산자", explanation: "두 개 이상의 SELECT 쿼리 결과를 하나로 합치며, 기본적으로 중복된 행은 제거하여 반환하는 집합 연산자입니다." }
     },
     {
       id: "having_clause",
@@ -2641,7 +2641,7 @@
       aliases: ["HAVING"],
       related: ["group_by", "where_clause", "aggregate_function"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "HAVING 절", explanation: "GROUP BY 절에 의해 그룹화된 결과에 대해 필터링 조건을 적용할 때 사용하는 절입니다." }
     },
     {
       id: "deadlock",
@@ -2661,7 +2661,7 @@
       aliases: ["デッドロック"],
       related: ["transaction"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "교착 상태 (데드락)", explanation: "복수의 트랜잭션이 서로가 점유하고 있는 자원의 잠금이 풀리기를 기다리며 무한 대기에 빠지는 현상입니다." }
     },
     {
       id: "acid_properties",
@@ -2681,7 +2681,7 @@
       aliases: ["ACID"],
       related: ["transaction", "commit"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "ACID 특성", explanation: "데이터베이스 트랜잭션의 신뢰성을 보장하기 위한 4대 특성(원자성, 일관성, 고립성, 지속성)입니다." }
     },
 
     // ======================================================================
@@ -2705,7 +2705,7 @@
       aliases: ["JVM", "Java仮想マシン"],
       related: ["jdk", "bytecode", "memory"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "JVM", explanation: "자바 바이트코드를 실행하여 자바 프로그램이 플랫폼에 상관없이 운영체제 위에서 작동할 수 있도록 해주는 가상 머신입니다." }
     },
     {
       id: "jdk",
@@ -2725,7 +2725,7 @@
       aliases: ["JDK", "Java Development Kit"],
       related: ["jvm", "jre", "java_class"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "JDK", explanation: "자바 애플리케이션을 개발하고 컴파일하는 데 필요한 컴파일러(javac)와 디버거 등의 도구를 제공하는 개발 패키지입니다." }
     },
     {
       id: "jre",
@@ -2745,7 +2745,7 @@
       aliases: ["JRE", "Java Runtime Environment"],
       related: ["jvm", "jdk"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "JRE", explanation: "자바 프로그램을 컴파일할 필요 없이 실행만 할 때 필요한 환경으로, JVM과 자바 클래스 라이브러리를 포함합니다." }
     },
     {
       id: "bytecode",
@@ -2765,7 +2765,7 @@
       aliases: ["バイトコード", "byte code"],
       related: ["jvm", "java_class"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "바이트코드", explanation: "자바 소스 코드를 컴파일하여 생성된 플랫폼 독립적인 중간 형식의 코드로, JVM 상에서 해석되고 실행됩니다." }
     },
     {
       id: "primitive_type",
@@ -2785,7 +2785,7 @@
       aliases: ["プリミティブ型", "基本型"],
       related: ["reference_type", "data_type", "variable"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "원시 타입", explanation: "자바에서 객체가 아닌 메모리에 실제 값을 저장하는 기본 데이터 타입(int, char, boolean 등 8가지)입니다." }
     },
     {
       id: "reference_type",
@@ -2805,7 +2805,7 @@
       aliases: ["参照型"],
       related: ["primitive_type", "class", "object"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "참조 타입", explanation: "메모리상에 있는 객체의 주소를 참조(저장)하는 타입으로 클래스, 인터페이스, 배열 등이 이에 해당합니다." }
     },
     {
       id: "override",
@@ -2825,7 +2825,7 @@
       aliases: ["オーバーライド", "overriding"],
       related: ["inheritance", "polymorphism", "java_class"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "오버라이딩", explanation: "상속 관계에서 자식 클래스가 부모 클래스에 정의된 메서드를 동일한 시그니처로 다시 정의하여 덮어쓰는 기법입니다." }
     },
     {
       id: "overload",
@@ -2845,7 +2845,7 @@
       aliases: ["オーバーロード", "overloading"],
       related: ["override", "java_class"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "오버로딩", explanation: "같은 클래스 내에서 동일한 이름을 가졌으나 매개변수의 개수나 타입을 다르게 하여 여러 개 정의하는 기법입니다." }
     },
     {
       id: "abstract_class",
@@ -2865,7 +2865,7 @@
       aliases: ["抽象クラス"],
       related: ["class", "interface", "inheritance"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "추상 클래스", explanation: "abstract 키워드로 선언되어 직접 인스턴스화할 수 없으며, 자식 클래스에서 구현하도록 상속용으로 사용하는 클래스입니다." }
     },
     {
       id: "final_keyword",
@@ -2885,7 +2885,7 @@
       aliases: ["final"],
       related: ["class", "variable", "java_class"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "final 키워드", explanation: "자바에서 변수의 재할당 금지(상수화), 클래스의 상속 금지, 메서드의 오버라이딩 금지를 정의할 때 사용하는 키워드입니다." }
     },
     {
       id: "try_catch",
@@ -2905,7 +2905,7 @@
       aliases: ["try-catch", "例外処理"],
       related: ["exception", "function"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "try-catch 문", explanation: "예외가 발생할 가능성이 있는 코드를 try 블록에 두고, 발생한 예외를 catch 블록에서 처리하는 기본적인 예외 처리 구문입니다." }
     },
     {
       id: "enum_type",
@@ -2925,7 +2925,7 @@
       aliases: ["enum", "列挙型"],
       related: ["class", "data_type"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "열거형", explanation: "서로 연관된 고정된 상수들의 집합을 정의할 때 사용하는 특수한 데이터 타입입니다." }
     },
     {
       id: "garbage_collection",
@@ -2945,7 +2945,7 @@
       aliases: ["GC", "ガベコレ"],
       related: ["memory", "jvm", "object"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "가비지 컬렉션", explanation: "JVM이 힙 메모리에서 동적으로 할당되었으나 더 이상 참조되지 않는 메모리를 자동으로 감지하고 회수하는 프로세스입니다." }
     },
     {
       id: "collection_framework",
@@ -2965,7 +2965,7 @@
       aliases: ["コレクションフレームワーク"],
       related: ["list", "array", "java_class"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "컬렉션 프레임워크", explanation: "자바에서 데이터를 효율적으로 처리할 수 있도록 지원하는 표준화된 자료구조 라이브러리(List, Set, Map 등)의 집합입니다." }
     },
     // Python
     {
@@ -2986,7 +2986,7 @@
       aliases: ["タプル", "tuple"],
       related: ["python_list", "list"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Python 튜플", explanation: "Python에 내장된 불변 순차 데이터 타입으로, 소괄호 ()로 표현하며 생성 후 수정이 불가능합니다." }
     },
     {
       id: "python_set",
@@ -3006,7 +3006,7 @@
       aliases: ["set", "集合型"],
       related: ["python_list", "python_dict", "data_type"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Python 세트", explanation: "Python에 내장된 중복되지 않은 유일한 요소들의 집합을 나타내는 순서가 없는 데이터 타입입니다." }
     },
     {
       id: "slice",
@@ -3026,7 +3026,7 @@
       aliases: ["スライス"],
       related: ["python_list", "array", "python_string"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "슬라이싱", explanation: "시퀀스 자료형(리스트, 문자열 등)의 일부분을 [시작:끝:단계] 형식으로 지정하여 잘라내어 가져오는 조작입니다." }
     },
     {
       id: "python_string",
@@ -3046,7 +3046,7 @@
       aliases: ["str", "文字列型"],
       related: ["python_list", "slice", "variable"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Python 문자열", explanation: "Python에서 텍스트 데이터를 처리하는 str 자료형으로, 작은따옴표나 큰따옴표로 둘러싸 표현합니다." }
     },
     {
       id: "boolean_type",
@@ -3066,7 +3066,7 @@
       aliases: ["bool", "真偽値"],
       related: ["data_type", "condition", "variable"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "불리언 타입", explanation: "참(True)과 거짓(False)이라는 단 두 개의 논리적 상태 값만을 가지는 데이터 타입입니다." }
     },
     {
       id: "class_definition",
@@ -3086,7 +3086,7 @@
       aliases: ["クラス定義"],
       related: ["class", "object", "class_definition", "self_parameter"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "클래스 정의", explanation: "Python 등에서 class 키워드를 사용하여 새로운 객체를 생성하기 위한 변수와 메서드의 명세를 정의하는 것입니다." }
     },
     {
       id: "self_parameter",
@@ -3106,7 +3106,7 @@
       aliases: ["self"],
       related: ["class_definition", "class", "instance"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "self 매개변수", explanation: "Python의 클래스 내 인스턴스 메서드에서 첫 번째 인자로 전달되는 매개변수로, 인스턴스 자기 자신을 가리킵니다." }
     },
     {
       id: "decorator",
@@ -3126,7 +3126,7 @@
       aliases: ["デコレータ"],
       related: ["function", "python_module", "lambda_function"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "데코레이터", explanation: "기존 코드를 수정하지 않고 함수나 메서드의 기능을 쉽게 확장하거나 변경할 수 있도록 지원하는 Python의 특수 문법(@)입니다." }
     },
     {
       id: "generator",
@@ -3146,7 +3146,7 @@
       aliases: ["ジェネレータ"],
       related: ["function", "loop"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "제네레이터", explanation: "yield 키워드를 사용하여 이터레이터를 생성하며, 값을 한 번에 메모리에 올리지 않고 호출될 때마다 하나씩 생성하여 반환하는 함수입니다." }
     },
     {
       id: "candidate_key",
@@ -3166,7 +3166,7 @@
       aliases: ["candidate key"],
       related: ["primary_key", "foreign_key", "composite_key"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "후보키", explanation: "데이터베이스 테이블에서 행을 유일하게 식별할 수 있는 최소한의 속성들의 집합으로, 기본키의 후보가 됩니다." }
     },
     {
       id: "view",
@@ -3186,7 +3186,7 @@
       aliases: ["仮想表", "virtual table"],
       related: ["table", "query", "select_statement"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "뷰", explanation: "사용자에게 실재하는 테이블처럼 보이지만 물리적인 데이터를 저장하지 않고, 쿼리 결과를 바탕으로 보여주는 가상의 테이블입니다." }
     },
     {
       id: "trigger",
@@ -3206,7 +3206,7 @@
       aliases: ["database trigger"],
       related: ["table", "stored_procedure"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "트리거", explanation: "테이블에 INSERT, UPDATE, DELETE 등의 변경 작업이 발생할 때 사전에 정의된 로직이 자동으로 호출되어 실행되는 감시성 데이터베이스 객체입니다." }
     },
     {
       id: "create_table",
@@ -3226,7 +3226,7 @@
       aliases: ["CREATE TABLE"],
       related: ["table", "alter_table", "drop_table", "constraint"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "CREATE TABLE 문", explanation: "데이터베이스 내에 새로운 테이블 구조를 생성하기 위해 사용하는 SQL 데이터 정의어(DDL)입니다." }
     },
     {
       id: "alter_table",
@@ -3246,7 +3246,7 @@
       aliases: ["ALTER TABLE"],
       related: ["table", "create_table", "drop_table"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "ALTER TABLE 문", explanation: "기존 테이블의 스키마 구조(열의 추가, 삭제, 속성 변경 및 제약 조건 추가 등)를 변경할 때 사용하는 SQL 문입니다." }
     },
     {
       id: "drop_table",
@@ -3266,7 +3266,7 @@
       aliases: ["DROP TABLE"],
       related: ["table", "create_table", "alter_table"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "DROP TABLE 문", explanation: "데이터베이스에서 특정 테이블을 스키마 구조와 데이터를 포함하여 완전히 삭제할 때 사용하는 SQL 문입니다." }
     },
     {
       id: "insert_statement",
@@ -3286,7 +3286,7 @@
       aliases: ["INSERT"],
       related: ["table", "row", "update_statement", "delete_statement"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "INSERT 문", explanation: "테이블에 새로운 행 레코드를 삽입하여 데이터를 추가하는 SQL 데이터 조작어(DML)입니다." }
     },
     {
       id: "update_statement",
@@ -3306,7 +3306,7 @@
       aliases: ["UPDATE"],
       related: ["table", "where_clause", "insert_statement", "delete_statement"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "UPDATE 문", explanation: "테이블 내의 기존 행 데이터를 새로운 값으로 수정할 때 사용하는 SQL 데이터 조작어(DML)입니다." }
     },
     {
       id: "delete_statement",
@@ -3326,7 +3326,7 @@
       aliases: ["DELETE"],
       related: ["table", "where_clause", "insert_statement", "update_statement"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "DELETE 문", explanation: "테이블 내에서 특정 행 데이터를 필터링 조건에 맞추어 삭제할 때 사용하는 SQL 데이터 조작어(DML)입니다." }
     },
     {
       id: "this_keyword",
@@ -3346,7 +3346,7 @@
       aliases: ["this"],
       related: ["object", "class", "super_keyword"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "this 키워드", explanation: "자바 등에서 현재 코드가 실행되고 있는 객체 자기 자신의 인스턴스를 가리키는 특수 참조 변수입니다." }
     },
     {
       id: "super_keyword",
@@ -3366,7 +3366,7 @@
       aliases: ["super"],
       related: ["inheritance", "class", "this_keyword"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "super 키워드", explanation: "자바 등에서 자식 클래스가 직속 상위 클래스(부모 클래스)의 생성자나 메서드, 변수를 호출할 때 사용하는 참조 변수입니다." }
     },
     {
       id: "string_class",
@@ -3386,7 +3386,7 @@
       aliases: ["String"],
       related: ["data_type", "primitive_type", "reference_type"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "String 클래스", explanation: "자바에서 기본 제공하는 불변 문자열을 나타내는 클래스입니다." }
     },
     {
       id: "array_list",
@@ -3406,7 +3406,7 @@
       aliases: ["ArrayList"],
       related: ["collection_framework", "array", "list"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "ArrayList 클래스", explanation: "자바의 컬렉션 프레임워크 중 하나로, 크기가 자동으로 늘어나거나 줄어드는 동적 배열 형식의 리스트 구현체입니다." }
     },
     {
       id: "hash_map",
@@ -3426,7 +3426,7 @@
       aliases: ["HashMap"],
       related: ["collection_framework", "dictionary", "hashing"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "HashMap 클래스", explanation: "자바에서 키와 값의 쌍을 해시 테이블 구조를 이용하여 매핑하고 저장하는 컬렉션 구현체입니다." }
     },
     {
       id: "generic_type",
@@ -3446,7 +3446,7 @@
       aliases: ["ジェネリクス", "generics"],
       related: ["collection_framework", "data_type"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "제네릭", explanation: "클래스나 메서드에서 사용할 구체적인 데이터 타입을 선언할 때 지정하지 않고, 컴파일 단계에서 객체 생성 시 유동적으로 매개변수화하여 지정하는 기능입니다." }
     },
     {
       id: "none_value",
@@ -3466,7 +3466,7 @@
       aliases: ["None", "null"],
       related: ["data_type", "null_value"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "None 값", explanation: "Python에서 아무런 값도 들어있지 않거나 유효하지 않은 빈 상태임을 나타내기 위한 특수한 싱글톤 상수입니다." }
     },
     {
       id: "for_loop",
@@ -3486,7 +3486,7 @@
       aliases: ["for", "繰り返し"],
       related: ["loop", "while_loop", "control_flow"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "for 루프", explanation: "사전에 정의된 특정 범위, 횟수, 혹은 시퀀스 컬렉션 객체를 순회하며 코드 블록을 실행하는 대표적인 반복 제어문입니다." }
     },
     {
       id: "while_loop",
@@ -3506,7 +3506,7 @@
       aliases: ["while"],
       related: ["loop", "for_loop", "control_flow"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "while 루프", explanation: "지정된 조건식의 판별 결과가 참(True)인 동안 블록 내부의 코드를 무한히 반복하여 실행하는 제어문입니다." }
     },
     {
       id: "yield_keyword",
@@ -3526,7 +3526,7 @@
       aliases: ["yield"],
       related: ["generator", "function"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "yield 키워드", explanation: "Python의 제네레이터 함수 내에서 연산 결과를 호출자에게 반환하고, 함수의 현재 상태를 일시 저장하며 대기 상태로 들어갈 때 사용하는 키워드입니다." }
     },
     {
       id: "with_statement",
@@ -3546,7 +3546,7 @@
       aliases: ["with"],
       related: ["python_module", "exception"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "with 문", explanation: "Python에서 컨텍스트 관리자를 통해 리소스 할당과 해제 등의 정리 작업을 안전하고 간결하게 처리하는 구문입니다." }
     },
     {
       id: "osi_model",
@@ -3566,7 +3566,7 @@
       aliases: ["OSI参照モデル", "OSI reference model"],
       related: ["tcp", "udp", "router", "ip_address"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "OSI 7계층 모델", explanation: "국제표준화기구(ISO)에서 정의한 개방형 시스템 간 상호접속 모델로, 네트워크 통신 체계를 7가지의 독립적인 논리 계층으로 분류한 모델입니다." }
     },
     {
       id: "application_layer",
@@ -3586,7 +3586,7 @@
       aliases: ["第七層", "Layer 7"],
       related: ["osi_model", "http", "https", "dns"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "애플리케이션 계층", explanation: "OSI 7계층 중 가장 높은 7번째 계층으로, 사용자 인터페이스와 직결되어 웹 브라우저나 이메일 프로그램 등의 소프트웨어에 네트워크 서비스를 직접 제공합니다." }
     },
     {
       id: "transport_layer",
@@ -3606,7 +3606,7 @@
       aliases: ["第四層", "Layer 4"],
       related: ["osi_model", "tcp", "udp"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "전송 계층", explanation: "OSI 7계층 중 4번째 계층으로, 송신 단말과 수신 단말 간의 포트 주소를 확인하고 데이터 흐름 제어, 오류 검출, 신뢰성 있는 연결 상태 관리를 보장하는 계층입니다." }
     },
     {
       id: "network_layer",
@@ -3626,7 +3626,7 @@
       aliases: ["第三層", "Layer 3"],
       related: ["osi_model", "router", "ip_address"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "네트워크 계층", explanation: "OSI 7계층 중 3번째 계층으로, 지리적으로 떨어진 시스템 간에 패킷을 전달하고 IP 주소를 설계하며 목적지까지의 가장 빠른 최적 경로를 설정하는 라우팅을 담당하는 계층입니다." }
     },
     {
       id: "mac_address",
@@ -3646,7 +3646,7 @@
       aliases: ["物理アドレス", "physical address"],
       related: ["ip_address", "subnet"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "MAC 주소", explanation: "네트워크 카드가 물리적으로 가진 고유 식별 번호로, 제조 시 칩셋에 각인되는 48비트 하드웨어 주소입니다." }
     },
     {
       id: "arp",
@@ -3666,7 +3666,7 @@
       aliases: ["Address Resolution Protocol"],
       related: ["ip_address", "mac_address", "network_layer"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "ARP", explanation: "네트워크상의 송신 장치가 수신 장치의 논리적 IP 주소를 기반으로 물리적인 MAC 하드웨어 주소를 알아낼 수 있도록 돕는 주소 변환 프로토콜입니다." }
     },
     {
       id: "dhcp",
@@ -3686,7 +3686,7 @@
       aliases: ["Dynamic Host Configuration Protocol"],
       related: ["ip_address", "client_server", "application_layer"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "DHCP", explanation: "새롭게 네트워크망에 접속하는 유동 단말 장치들에게 동적으로 사용 가능한 IP 주소 및 서브넷 마스크, 게이트웨이 등의 접속 정보를 자동으로 할당하는 프로토콜입니다." }
     },
     {
       id: "nat",
@@ -3706,7 +3706,7 @@
       aliases: ["Network Address Translation"],
       related: ["ip_address", "router", "network_layer"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "NAT", explanation: "내부 전용망에서 쓰이는 사설 IP 주소들을 외부 인터넷망 통신을 위한 고유한 공인 IP 주소로 변환하여 중계해 주는 기술입니다." }
     },
     {
       id: "vpn",
@@ -3726,7 +3726,7 @@
       aliases: ["Virtual Private Network"],
       related: ["encryption", "network_layer"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "VPN", explanation: "일반 공용 인터넷망 위에 마치 가상으로 뚫어 놓은 암호화된 전용선 통로를 개설하여, 보안성이 높은 원격 통신망 환경을 구축하는 기술입니다." }
     },
     {
       id: "load_balancer",
@@ -3746,7 +3746,7 @@
       aliases: ["ロードバランサ", "load balancer"],
       related: ["reliability", "scalability"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "로드 밸런서", explanation: "특정 단일 웹 서버에 인터넷 패킷 요청 트래픽이 일시에 과도하게 폭주하지 않도록, 네트워크 트래픽 부하를 다수의 서버에 골고루 분산해 주는 장비입니다." }
     },
     {
       id: "domain_name",
@@ -3766,7 +3766,7 @@
       aliases: ["ドメイン", "domain name"],
       related: ["dns", "ip_address", "url"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "도메인 네임", explanation: "외우기 어렵고 숫자로 이루어진 네트워크상 서버의 고유 IP 주소를 직관적으로 알아보기 쉽게 영문 글자로 표현한 주소입니다." }
     },
     {
       id: "tls",
@@ -3786,7 +3786,7 @@
       aliases: ["Transport Layer Security"],
       related: ["https", "encryption", "transport_layer"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "TLS", explanation: "인터넷 네트워크상에서 해킹 스니핑이나 위변조를 차단하기 위해 단말 간 데이터를 암호화하여 통신 안전성을 보장하는 통신 암호화 프로토콜입니다." }
     },
     {
       id: "status_code",
@@ -3806,7 +3806,7 @@
       aliases: ["ステータスコード", "status code"],
       related: ["http", "https", "url"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "HTTP 상태 코드", explanation: "웹 클라이언트 사용자가 웹 서버로 보낸 HTTP 요청이 정상 처리되었는지, 아니면 에러가 발생했는지를 나타내는 3자리 숫자 응답입니다." }
     },
     {
       id: "get_method",
@@ -3826,7 +3826,7 @@
       aliases: ["GET", "GETリクエスト"],
       related: ["http", "post_method", "api"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "GET 메서드", explanation: "HTTP 프로토콜의 통신 규약 중 가장 많이 쓰이며, 서버 측에 존재하는 특정 파일이나 정보를 조회하고 로딩해 달라고 요청할 때 사용하는 방식입니다." }
     },
     {
       id: "post_method",
@@ -3846,7 +3846,7 @@
       aliases: ["POST", "POSTリクエスト"],
       related: ["http", "get_method", "api"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "POST 메서드", explanation: "HTTP 프로토콜의 통신 규약 중 하나로, 신규 가입 정보나 게시글 본문 데이터 등 비교적 대용량이거나 보안이 중요한 콘텐츠를 바디 영역에 실어 서버로 전송할 때 사용하는 방식입니다." }
     },
     {
       id: "cookie",
@@ -3866,7 +3866,7 @@
       aliases: ["クッキー", "HTTP cookie"],
       related: ["session", "http"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "쿠키", explanation: "접속한 특정 웹 서버가 웹 클라이언트 브라우저 측 디렉터리에 기록하고 일시적으로 저장해 두는 미세한 크기의 사용자 식별용 텍스트 파일 데이터입니다." }
     },
     {
       id: "session",
@@ -3886,7 +3886,7 @@
       aliases: ["セッション管理", "session"],
       related: ["cookie", "http"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "세션", explanation: "사용자가 특정 사이트 웹 브라우저를 열어 웹 서버와 연결된 뒤 브라우저를 종료하여 끊기 전까지의 흐름을 서버 단에 안전하게 기록하는 일련의 논리적 연결 상태입니다." }
     },
     {
       id: "cors",
@@ -3906,7 +3906,7 @@
       aliases: ["オリジン間リソース共有", "Cross-Origin Resource Sharing"],
       related: ["http", "api"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "CORS", explanation: "교차 출처 리소스 공유 정책으로, 보안상의 이유로 브라우저 상에서 제한하는 서로 다른 도메인 간 자원 요청 및 통신을 보안상 안전하게 상호 허용하는 메커니즘입니다." }
     },
     {
       id: "symmetric_encryption",
@@ -3926,7 +3926,7 @@
       aliases: ["共通鍵暗号", "symmetric cryptography"],
       related: ["encryption", "asymmetric_encryption", "public_key"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "대칭키 암호화 방식", explanation: "암호화에 사용하는 키와 비밀번호 복호화에 사용하는 키가 동일한 암호화 기법으로, 연산 처리가 신속하다는 장점이 있습니다." }
     },
     {
       id: "asymmetric_encryption",
@@ -3946,7 +3946,7 @@
       aliases: ["公開鍵暗号", "asymmetric cryptography"],
       related: ["encryption", "symmetric_encryption", "public_key", "private_key"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "비대칭키 암호화 방식", explanation: "암호화할 때는 누구나 알 수 있는 공개키를 쓰고, 복호화할 때는 오직 소유주만 가진 비밀키를 사용해 해독하는 암호 알고리즘입니다." }
     },
     {
       id: "brute_force_attack",
@@ -3966,7 +3966,7 @@
       aliases: ["総当たり攻撃", "brute force attack"],
       related: ["phishing", "encryption"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "무작위 대입 공격", explanation: "타겟 시스템의 비밀번호나 암호 해독 키를 알아내기 위해 가능한 모든 문자의 조합을 무한정 대입해 보는 해킹 기법입니다." }
     },
     {
       id: "social_engineering",
@@ -3986,7 +3986,7 @@
       aliases: ["ソーシャル・エンジニアリング", "social engineering"],
       related: ["phishing", "vulnerability"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "사회공학 기법", explanation: "사람의 심리적 약점이나 부주의함을 교묘히 악용하여 비인가자가 시스템 비밀번호나 중요 보안 정보를 획득하는 속임수 해킹 수법입니다." }
     },
     {
       id: "ransomware",
@@ -4006,7 +4006,7 @@
       aliases: ["身代金要求型ウイルス", "ransomware"],
       related: ["malware", "backup", "encryption"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "랜섬웨어", explanation: "피해자 PC 내의 중요 데이터 파일들을 무단으로 암호화하여 접근을 통제하고, 암호를 풀어주는 대가로 금전(몸값)을 협박하여 요구하는 악성 코드입니다." }
     },
     {
       id: "zero_day",
@@ -4026,7 +4026,7 @@
       aliases: ["ゼロデイ", "zero-day attack"],
       related: ["vulnerability"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "제로데이 공격", explanation: "특정 소프트웨어에 치명적인 최신 보안 취약점이 새로 발견되었을 때, 개발사가 이를 고치는 보안 패치를 출시하여 배포하기도 전에 기습하는 해킹 공격입니다." }
     },
     {
       id: "least_privilege",
@@ -4046,7 +4046,7 @@
       aliases: ["最小特権", "principle of least privilege"],
       related: ["access_control", "authorization"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "최소 권한의 원칙", explanation: "보안 사고 피해 범위를 좁히기 위해, 시스템 관리자나 계정 사용자에게 정상적인 필수 업무 수행 목적 외에는 불필요한 시스템 접근 권한을 일체 주지 않는 기본 보안 원칙입니다." }
     },
     {
       id: "kernel",
@@ -4066,7 +4066,7 @@
       aliases: ["OSカーネル", "kernel"],
       related: ["operating_system", "process", "thread"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "커널", explanation: "컴퓨터 운영체제의 심장부로서 메모리 자원 할당, CPU 실행 스케줄 제어, 다양한 주변 장치들과의 직접적인 소통을 처리하는 최하단 핵심 코드 엔진입니다." }
     },
     {
       id: "device_driver",
@@ -4086,7 +4086,7 @@
       aliases: ["ドライバ", "device driver"],
       related: ["operating_system", "kernel"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "디바이스 드라이버", explanation: "운영체제가 하드웨어 장치들과 원활히 신호를 소통하고 인식할 수 있게끔 돕는 제어 프로그램입니다." }
     },
     {
       id: "interrupt",
@@ -4106,7 +4106,7 @@
       aliases: ["割り込み", "interrupt"],
       related: ["operating_system", "process"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "인터럽트", explanation: "CPU가 평소 작업을 진행하고 있을 때, 외부 하드웨어나 특수 연산 에러 신호로 인해 잠시 실행을 멈추고 우선순위가 높은 다른 명령 코드를 처리하게 유도하는 하드웨어 제어 기법입니다." }
     },
     {
       id: "cache_memory",
@@ -4126,7 +4126,7 @@
       aliases: ["キャッシュ", "cache memory"],
       related: ["memory"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "캐시 메모리", explanation: "매우 빠른 CPU 연산 처리 속도와 비교적 그보다 속도가 느린 주기억 장치 간의 병목 속도 격차를 완화하기 위해, CPU 내부에 설치해 자주 쓰이는 일부 데이터를 보관하는 고속 완충용 초고속 메모리입니다." }
     },
     {
       id: "virtual_memory",
@@ -4146,7 +4146,7 @@
       aliases: ["仮想メモリ", "virtual memory"],
       related: ["memory"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "가상 메모리", explanation: "컴퓨터의 주 물리적 RAM 용량이 부족할 때, 하드디스크나 SSD 같은 보조 기억 장치의 남는 공간 일부를 마치 RAM의 가상 확장판처럼 가상 주소 영역으로 구성하여 프로그램 구동을 돕는 메모리 기술입니다." }
     },
     {
       id: "ssd",
@@ -4166,7 +4166,7 @@
       aliases: ["SSD", "solid state drive"],
       related: ["memory", "hdd"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "SSD", explanation: "물리적인 디스크 회전 없이 실리콘 반도체 플래시 메모리 칩셋에 전자식으로 데이터를 기록하므로 물리적 손상에 강하고 읽기 쓰기 속도가 월등히 향상된 차세대 보조 기억 매체입니다." }
     },
     {
       id: "hdd",
@@ -4186,7 +4186,7 @@
       aliases: ["HDD", "hard disk drive"],
       related: ["memory", "ssd"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "HDD", explanation: "둥근 마그네틱 플래터 디스크 판을 고속 모터로 물리 회전시키고 헤드를 움직여 데이터를 쓰고 읽는 대용량 보조 기억 장치입니다." }
     },
     {
       id: "data_structure",
@@ -4206,7 +4206,7 @@
       aliases: ["データ構造", "data structure"],
       related: ["algorithm", "array", "list"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "자료구조", explanation: "컴퓨터 내부에서 데이터를 효율적으로 관리하고 조작할 수 있게 논리적으로 배열하고 정렬하는 데이터 조직화 모델입니다." }
     },
     {
       id: "stack",
@@ -4226,7 +4226,7 @@
       aliases: ["スタック", "stack"],
       related: ["data_structure", "array", "queue"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "스택", explanation: "데이터가 삽입되는 공간 and 인출되는 통로가 단방향으로만 트여 있어, 맨 나중에 들어온 정보가 맨 처음에 나가게 설계된 후입선출(LIFO) 선형 자료구조입니다." }
     },
     {
       id: "queue",
@@ -4246,7 +4246,7 @@
       aliases: ["キュー", "queue"],
       related: ["data_structure", "stack"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "큐", explanation: "입구와 출구가 양방향으로 뚫려 있어, 가장 먼저 삽입된 정보가 가장 먼저 전방으로 빠져나가는 선입선출(FIFO) 방식의 선형 자료구조입니다." }
     },
     {
       id: "linked_list",
@@ -4266,7 +4266,7 @@
       aliases: ["ポインタ連結リスト", "linked list"],
       related: ["data_structure", "array"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "연결 리스트", explanation: "요소들이 물리적으로 떨어져 있어도, 각각의 데이터 필드에 다음 요소가 위치한 주소 정보를 가진 참조 포인터를 매개로 염주처럼 연결해 놓은 리스트형 자료구조입니다." }
     },
     {
       id: "tree_structure",
@@ -4286,7 +4286,7 @@
       aliases: ["ツリー構造", "tree structure"],
       related: ["data_structure", "binary_tree"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "트리 구조", explanation: "최상단 루트 노드로부터 부모 노드와 여러 자식 노드들이 아래 방향으로 가지를 뻗어 나가며 연결되는 나무 모형의 계층형 비선형 자료구조입니다." }
     },
     {
       id: "binary_tree",
@@ -4306,7 +4306,7 @@
       aliases: ["バイナリツリー", "binary tree"],
       related: ["tree_structure", "data_structure"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "이진 트리", explanation: "트리 구조에 달린 모든 부모 노드들이 오직 최대 두 개 이하의 자식 노드만을 거느리도록 조건 설계가 제약된 보편적인 형태의 트리 모델입니다." }
     },
     {
       id: "graph_structure",
@@ -4326,7 +4326,7 @@
       aliases: ["ネットワークグラフ", "graph structure"],
       related: ["data_structure", "tree_structure"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "그래프 구조", explanation: "가치 정보를 내포한 정점들과 이들 정점 간의 관계 유대를 나타내는 선로인 간선들로 유기적으로 엮인 그물망 형태의 자료구조입니다." }
     },
     {
       id: "hash_table",
@@ -4346,7 +4346,7 @@
       aliases: ["散列表", "hash table"],
       related: ["data_structure", "hashing"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "해시 테이블", explanation: "해시 함수에 유일키를 연산시켜 즉각적인 주소 인덱스 번지를 환산함으로써, 데이터 복잡도에 무관하게 아주 빠른 속도로 정보를 색인하고 찾아내는 키-값 매핑 자료구조입니다." }
     },
     {
       id: "sorting_algorithm",
@@ -4366,7 +4366,7 @@
       aliases: ["ソートアルゴリズム", "sorting algorithm"],
       related: ["algorithm", "bubble_sort", "quick_sort"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "정렬 알고리즘", explanation: "무작위 순서의 데이터들을 일정한 규칙에 따라 나란히 정렬하는 알고리즘입니다." }
     },
     {
       id: "searching_algorithm",
@@ -4386,7 +4386,7 @@
       aliases: ["サーチアルゴリズム", "searching algorithm"],
       related: ["algorithm", "linear_search", "binary_search"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "탐색 알고리즘", explanation: "데이터가 집적된 거대한 컬렉션 속에서, 사용자가 원하고 찾고자 하는 조건의 정보나 고유 키 값을 갖춘 요소를 찾아내는 알고리즘입니다." }
     },
     {
       id: "linear_search",
@@ -4406,7 +4406,7 @@
       aliases: ["順次探索", "linear search"],
       related: ["searching_algorithm", "array"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "선형 탐색", explanation: "데이터 리스트의 가장 첫 번째 자리 요소부터 시작하여 끝에 도달할 때까지 하나씩 순서대로 대조하며 비교하는 가장 직관적인 검색 기법입니다." }
     },
     {
       id: "binary_search",
@@ -4426,7 +4426,7 @@
       aliases: ["二分法", "binary search"],
       related: ["searching_algorithm", "array", "sorting_algorithm"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "이진 탐색", explanation: "크기순으로 정렬되어 있는 배열에서, 매번 중앙 지점의 데이터 값과 목표값을 비교하여 탐색 범위를 지속적으로 절반씩 축소해 나가며 찾는 고성능 탐색 기법입니다." }
     },
     {
       id: "bubble_sort",
@@ -4446,7 +4446,7 @@
       aliases: ["隣接交換法", "bubble sort"],
       related: ["sorting_algorithm", "array"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "버블 정렬", explanation: "배열 안에서 서로 이웃해 있는 두 개의 바로 옆 요소끼리 순차적으로 크기를 대조하여, 정렬 순서 조건이 역방향일 경우 서로 자리를 맞바꾸는 조작을 반복하는 기초적인 정렬 기법입니다." }
     },
     {
       id: "selection_sort",
@@ -4466,7 +4466,7 @@
       aliases: ["基本選択法", "selection sort"],
       related: ["sorting_algorithm", "array"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "선택 정렬", explanation: "주어진 배열의 전체 잔여 영역 내에서 가장 작은 최솟값을 찾아내어, 아직 정렬되지 않은 부분의 최선두 칸 요소와 맞교환하는 과정을 반복하는 정렬 기법입니다." }
     },
     {
       id: "insertion_sort",
@@ -4486,7 +4486,7 @@
       aliases: ["基本挿入法", "insertion sort"],
       related: ["sorting_algorithm", "array"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "삽입 정렬", explanation: "배열 내부의 아직 미정렬 상태인 데이터 요소들을 하나씩 뽑아내어, 이미 정렬을 완료한 부분 배열의 올바른 정렬 위치를 찾아 틈새로 끼워 넣는 정렬 기법입니다." }
     },
     {
       id: "merge_sort",
@@ -4506,7 +4506,7 @@
       aliases: ["併合ソート", "merge sort"],
       related: ["sorting_algorithm", "algorithm"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "병합 정렬", explanation: "분할 정복 기법을 활용하여, 하나의 큰 배열을 아주 작은 단위 조각까지 쪼갰다가 각 조각을 합치면서 오름차순이나 내림차순 정렬을 해나가는 고속 정렬 기법입니다." }
     },
     {
       id: "quick_sort",
@@ -4526,7 +4526,7 @@
       aliases: ["高速区分ソート", "quick sort"],
       related: ["sorting_algorithm", "algorithm"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "퀵 정렬", explanation: "배열 내부에서 임의의 기준점(피벗)을 잡은 뒤, 피벗보다 작은 부류는 왼편으로 보내고 피벗보다 큰 부류는 오른편으로 모이게 가르는 과정을 재귀적으로 반복하는 고속 정렬 기법입니다." }
     },
     {
       id: "time_complexity",
@@ -4546,7 +4546,7 @@
       aliases: ["実行時間量", "time complexity"],
       related: ["algorithm", "sorting_algorithm"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "시간 복잡도", explanation: "알고리즘이 해결해야 하는 과업의 입력값 크기가 커짐에 따라, 수행 완료까지 걸리는 소요 작동 시간의 수학적 증가 추세를 표기하는 지표입니다." }
     },
     {
       id: "java_package_import",
@@ -4566,7 +4566,7 @@
       aliases: ["import宣言", "package import"],
       related: ["package", "import_statement"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Java 패키지 임포트", explanation: "Java 개발 소스 코드 파일 상단에 import 키워드를 기입함으로써, 긴 전체 패키지 참조 경로명을 생략한 채 다른 패키지에 선언된 외부 클래스들을 자유롭게 호출해 쓰는 문법입니다." }
     },
     {
       id: "java_modifier",
@@ -4586,7 +4586,7 @@
       aliases: ["修飾子", "modifier"],
       related: ["access_modifier", "class"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Java 제어자", explanation: "Java 소스에서 클래스, 함수, 변수명 선언 시 부가하여 가시 범위 접근 제한이나 인스턴스 소속(static), 불변(final) 같은 부가 속성 정의를 지정하는 키워드입니다." }
     },
     {
       id: "public_keyword",
@@ -4606,7 +4606,7 @@
       aliases: ["public", "public keyword"],
       related: ["access_modifier", "private_keyword"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "public 키워드", explanation: "자바 프로그램 내 어디서든 외부 패키지 소속의 타 클래스나 타 메서드라도 아무 제약 조건 없이 완전 자유롭게 접근할 수 있도록 완전 공개를 선언하는 접근 제어자입니다." }
     },
     {
       id: "private_keyword",
@@ -4626,7 +4626,7 @@
       aliases: ["private", "private keyword"],
       related: ["access_modifier", "public_keyword"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "private 키워드", explanation: "캡슐화 구현을 위해 자바 프로그램 내부에서 변수나 메서드의 접근을 엄격히 차단하며, 오직 자기 자신이 소속되어 선언된 동일 클래스 내부에서만 불러내 접근할 수 있게 봉인하는 접근 제어자입니다." }
     },
     {
       id: "protected_keyword",
@@ -4646,7 +4646,7 @@
       aliases: ["protected", "protected keyword"],
       related: ["access_modifier", "public_keyword", "private_keyword"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "protected 키워드", explanation: "동일 패키지 내부에 선언된 타 클래스들이거나, 만약 다른 패키지 소속이라도 대상 클래스를 상속받은 하위 자식 서브클래스에 한해서만 접근을 허용하는 접근 제어자입니다." }
     },
     {
       id: "static_method",
@@ -4666,7 +4666,7 @@
       aliases: ["静的メソッド", "static method"],
       related: ["static_keyword", "function"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "정적 메서드", explanation: "static 키워드를 선두에 덧붙여 개별 인스턴스 할당 조작 없이도, 클래스 원본명에 닷(.) 연산자를 붙여서 메모리에 바로 적재된 함수를 직접 꺼내 호출할 수 있는 메서드입니다." }
     },
     {
       id: "instance_method",
@@ -4686,7 +4686,7 @@
       aliases: ["非静的メソッド", "instance method"],
       related: ["instance", "function", "static_method"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "인스턴스 메서드", explanation: "클래스 설계도만으로는 직접 호출할 수 없고, 반드시 객체 인스턴스를 메모리에 실체화한 후에 그 인스턴스 변수를 매개체로 호출해 쓸 수 있는 객체 종속적인 메서드입니다." }
     },
     {
       id: "method_signature",
@@ -4706,7 +4706,7 @@
       aliases: ["シグネチャ", "method signature"],
       related: ["function", "parameter", "data_type"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "메서드 시그니처", explanation: "컴파일러가 다른 함수들과 명확히 개별 함수를 유일하게 구별해 인지할 수 있게 묶은 지표로, 메서드 이름과 인수 매개변수들의 개수, 타입, 나열 순서가 결합된 정의입니다." }
     },
     {
       id: "object_reference",
@@ -4726,7 +4726,7 @@
       aliases: ["参照", "object reference"],
       related: ["reference_type", "object"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "객체 참조", explanation: "메모리 영역 힙 공간에 새로 할당된 인스턴스 객체의 실체 값을 직접 들고 있는 것이 아니라, 그 객체가 위치한 메모리 시작 주소 정보를 보관하는 참조 변수입니다." }
     },
     {
       id: "null_pointer_exception",
@@ -4746,7 +4746,7 @@
       aliases: ["NullPointerException", "ヌルポ", "null pointer exception"],
       related: ["exception", "object_reference"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "NullPointerException", explanation: "메모리 실체가 아직 생성되지 않았거나 비어 있는 상태인 null 참조 변수에서 속성에 접근하거나 하위 메서드를 호출할 때 시스템이 충돌하며 던지는 치명적인 런타임 예외 에러입니다." }
     },
     {
       id: "java_try_finally",
@@ -4766,7 +4766,7 @@
       aliases: ["finallyブロック", "try-finally"],
       related: ["try_catch", "exception"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Java try-finally 문", explanation: "소스 코드 실행 중에 예기치 못한 비정상적인 예외가 발생하든 상관없이, 파일 스트림이나 데이터베이스 커넥션 등의 리소스 반납 작업이 반드시 이행되도록 설계하는 자바 예외 처리 구조입니다." }
     },
     {
       id: "java_lambda",
@@ -4786,7 +4786,7 @@
       aliases: ["ラムダ式", "lambda expression"],
       related: ["lambda_function"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Java 람다식", explanation: "Java 8 버전부터 적용된 함수형 프로그래밍 문법으로, 코드가 단 하나인 익명 인터페이스의 추상 구현 메서드를 별도 클래스 없이 소괄호와 화살표 기호만을 엮어 매우 심플한 구문으로 압축하여 표현하는 기법입니다." }
     },
     {
       id: "python_function",
@@ -4806,7 +4806,7 @@
       aliases: ["Pythonの関数", "python function"],
       related: ["function"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Python 함수", explanation: "파이썬 문법 환경 아래에서 def 키워드를 이용해 독립적인 선언을 함으로써, 반복 호출을 지원하고 입력인자 및 호출결과 리턴값을 제공하는 독립된 코드 구조체입니다." }
     },
     {
       id: "python_class",
@@ -4826,7 +4826,7 @@
       aliases: ["Pythonのクラス", "python class"],
       related: ["class", "class_definition"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Python 클래스", explanation: "class 키워드를 기점으로 구조를 정의하며, 다양한 전용 멤버 필드와 함수들을 내재해 향후 가상의 인스턴스 객체를 연속 생성해 내는 설계 도면입니다." }
     },
     {
       id: "python_object",
@@ -4846,7 +4846,7 @@
       aliases: ["Pythonのオブジェクト", "python object"],
       related: ["object", "python_class"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Python 객체", explanation: "파이썬 구동 환경에 생성되어 로딩된 모든 구성 요소의 기반으로, 문자열, 수치, 내장 딕셔너리, 리스트 구조는 물론이고 정의된 모든 인스턴스나 모듈 함수조차 전부 파이썬에서는 고유 주소를 가진 객체로 격상되어 처리됩니다." }
     },
     {
       id: "python_method",
@@ -4866,7 +4866,7 @@
       aliases: ["クラス内メソッド", "python method"],
       related: ["function", "python_class", "self_parameter"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Python 메서드", explanation: "파이썬으로 설계한 클래스 구조도 내부에 정의된 함수이며, 함수 정의부의 첫 번째 매개변수명 자리에 인스턴스 자신을 가리키는 self 키워드를 반드시 기재해야 합니다." }
     },
     {
       id: "python_property",
@@ -4886,7 +4886,7 @@
       aliases: ["属性デコレータ", "property"],
       related: ["decorator", "python_class"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Python 프로퍼티", explanation: "클래스 내부의 복잡한 연산 기능을 가진 Getter/Setter 함수 메서드들을, 마치 클래스 밖에서는 간편한 일반 인스턴스 변수 멤버 속성을 꺼내 쓰는 형태로 유연하게 사용할 수 있도록 지원하는 기능입니다." }
     },
     {
       id: "python_iterator",
@@ -4906,7 +4906,7 @@
       aliases: ["反復子", "iterator"],
       related: ["python_iterable", "generator"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Python 이터레이터", explanation: "차례차례 꺼낼 수 있는 다량의 데이터 풀을 내부에 간직하고 있으면서, next() 함수 호출을 받을 때마다 순번에 맞게 1칸씩 다음 요소를 밀어 내어 반환하는 반복 객체입니다." }
     },
     {
       id: "python_iterable",
@@ -4926,7 +4926,7 @@
       aliases: ["イテラブル", "iterable"],
       related: ["python_list", "python_iterator"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Python 이터러블", explanation: "리스트, 튜플, 문자열 등과 같이 for 루프 반복 제어문에 직접 인가하여 처음부터 끝까지 전체 순회를 돌릴 수 있으며, 내부적으로 iter() 함수 처리를 거쳐 이터레이터 객체를 반환하는 대상 컬렉션 객체입니다." }
     },
     {
       id: "python_exception_handling",
@@ -4946,7 +4946,7 @@
       aliases: ["例外ハンドリング", "python exception handling"],
       related: ["exception", "python_try_except"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Python 예외 처리", explanation: "파이썬 코드가 오작동으로 인해 중간에 다운되지 않도록 오류 예방용 코드를 설계하여 가동하며, 발생할 법한 런타임 버그들을 탐지해 정상적인 백업 실행 루트로 돌려놓는 보안 설계입니다." }
     },
     {
       id: "python_try_except",
@@ -4966,7 +4966,7 @@
       aliases: ["try-except", "python try-except"],
       related: ["try_catch", "python_exception_handling"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Python try-except 문", explanation: "파이썬에서 제공하는 표준 예외 차단 블록으로, 에러 위험이 도사린 실행 명령군을 try 블록에 올리고 만약 버그가 감지되면 except 블록이 이를 이어받아 복구용 로직을 대응 구동하는 제어 구조입니다." }
     },
     {
       id: "python_file_io",
@@ -4986,7 +4986,7 @@
       aliases: ["ファイル入出力", "python file io"],
       related: ["with_statement", "file_system"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Python 파일 입출력", explanation: "파이썬에 기본 내장된 open() 함수나 with 문법 프레임워크를 조작하여, 컴퓨터 로컬 저장소 상의 물리 텍스트 파일이나 바이너리 데이터를 열고 적거나 읽어서 저장하는 입출력 조작입니다." }
     },
     {
       id: "python_venv",
@@ -5006,7 +5006,7 @@
       aliases: ["venv", "python venv"],
       related: ["virtual_environment"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "venv 모듈", explanation: "파이썬의 표준 패키지 배포판에 항상 내장 설치되어 제공되는 경량 가상 환경 작성용 도구로, 타 프로젝트와 격리된 자신만의 깨끗한 독립 환경을 구축할 수 있게 만듭니다." }
     },
     {
       id: "python_pip_install",
@@ -5026,7 +5026,7 @@
       aliases: ["pip", "pip install"],
       related: ["python_venv"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "pip 패키지 관리자", explanation: "공식 패키지 저장소(PyPI) 서버로부터 원하는 서드파티 모듈 라이브러리 패키지를 다운로드하고 설치하여 버전 관리를 도맡아 주는 패키지 인스톨러 프로그램입니다." }
     },
     {
       id: "sql_alias",
@@ -5046,7 +5046,7 @@
       aliases: ["ASキーワード", "sql alias"],
       related: ["sql", "select_statement"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "SQL 별칭", explanation: "SQL 질의 내에서 AS 키워드를 삽입해 테이블명이나 조회 열 이름 등의 대상 필드를 훨씬 알아보기 쉽거나 영문 타이핑을 절감하는 짧은 대체 이름(별명)으로 선언하는 조작입니다." }
     },
     {
       id: "sql_expression",
@@ -5066,7 +5066,7 @@
       aliases: ["式", "sql expression"],
       related: ["sql", "column"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "SQL 표현식", explanation: "SQL 데이터베이스 서버 내에서 단일 열 이름, 고정 상수값, 각종 사칙 및 산술 연산자, 복합 함수 등을 연결하여 최종적으로 하나의 특정 결과값으로 수렴 계산해 내는 식입니다." }
     },
     {
       id: "sql_operator",
@@ -5086,7 +5086,7 @@
       aliases: ["演算子", "sql operator"],
       related: ["sql", "comparison_operator", "logical_operator"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "SQL 연산자", explanation: "SQL에서 테이블 필드를 대조해 보거나 다중 조건을 참/거짓 판단으로 묶기 위해, WHERE 조건절 등에서 주로 활용하는 특수 예약 문자 또는 비교 기호입니다." }
     },
     {
       id: "comparison_operator",
@@ -5106,7 +5106,7 @@
       aliases: ["比較演算", "comparison operator"],
       related: ["sql_operator"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "비교 연산자", explanation: "데이터베이스 테이블 칼럼의 수치나 문자 값이 서로 같은지(=), 크거나 작은지(<, >), 혹은 일치하지 않는지(<>) 등을 조건식 판별하여 참 또는 거짓의 논리 결과로 돌려주는 연산자입니다." }
     },
     {
       id: "logical_operator",
@@ -5126,7 +5126,7 @@
       aliases: ["論理演算", "logical operator"],
       related: ["sql_operator"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "논리 연산자", explanation: "WHERE 절 내부에서 다량의 필터링 조건문 조각들을 한데 엮기 위해 쓰는 연산자로, 둘 다 참이어야 하는 AND, 하나만 참이어도 통과하는 OR, 결과를 반전시키는 NOT 연산자 등이 있습니다." }
     },
     {
       id: "between_operator",
@@ -5146,7 +5146,7 @@
       aliases: ["BETWEEN", "between operator"],
       related: ["sql_operator", "comparison_operator"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "BETWEEN 연산자", explanation: "SQL 쿼리문 중 WHERE 절에 덧붙여 데이터 범위 필터링을 할 때, 특정 칼럼의 수치가 지정한 하한과 상한 값 범위(경계값 포함) 내에 있는 정보들만 추출하는 비교 연산자입니다." }
     },
     {
       id: "in_operator",
@@ -5166,7 +5166,7 @@
       aliases: ["IN", "in operator"],
       related: ["sql_operator", "comparison_operator"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "IN 연산자", explanation: "SQL 조건식에서 대상 필드 값이 소괄호 내부에 콤마로 기재된 값의 비교 리스트 중 단 하나라도 같으면 조건 충족으로 판단해 추출하는 집합 비교 연산자입니다." }
     },
     {
       id: "like_operator",
@@ -5186,7 +5186,7 @@
       aliases: ["LIKE", "like operator"],
       related: ["sql_operator", "comparison_operator"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "LIKE 연산자", explanation: "SQL 질의 절에서 텍스트의 부분 일치 및 유형 감지를 수행하며, 와일드카드 문자 % (여러 문자 대체) 또는 _ (한 글자 대체)와 조합하여 특정 글자가 들어간 어휘를 추출하는 부분 일치 검색용 연산자입니다." }
     },
     {
       id: "is_null",
@@ -5206,7 +5206,7 @@
       aliases: ["IS NULL", "is null"],
       related: ["null_value", "sql_operator"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "IS NULL 연산자", explanation: "SQL에서 컬럼의 값이 비어 있는 상태(NULL)인지 확인하기 위해 사용하는 전용 비교 연산자입니다." }
     },
     {
       id: "scalar_function",
@@ -5226,7 +5226,7 @@
       aliases: ["スカラ関数", "scalar function"],
       related: ["function", "aggregate_function"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "단일 행 함수 (스칼라 함수)", explanation: "하나 이상의 입력값을 받아 처리한 후 단일 값을 반환하는 SQL 함수(예: UPPER, ROUND 등)입니다." }
     },
     {
       id: "query_optimizer",
@@ -5246,7 +5246,7 @@
       aliases: ["オプティマイザ", "query optimizer"],
       related: ["query", "execution_plan"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "쿼리 옵티마이저", explanation: "데이터베이스 관리 시스템(DBMS)에서 SQL 쿼리를 가장 효율적으로 처리할 수 있도록 여러 실행 계획 중 최적의 계획을 생성하고 선택하는 핵심 컴포넌트입니다." }
     },
     {
       id: "execution_plan",
@@ -5266,7 +5266,7 @@
       aliases: ["アクセスパス", "execution plan"],
       related: ["query", "query_optimizer"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "실행 계획", explanation: "데이터베이스가 특정 SQL 쿼리를 실행하기 위해 선택한 인덱스 스캔, 조인 순서 등 물리적인 처리 절차를 기술한 상세 경로입니다." }
     },
     {
       id: "service_management",
@@ -5286,7 +5286,7 @@
       aliases: ["ITSM", "service management"],
       related: ["itil", "service_level_agreement"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "IT 서비스 관리 (ITSM)", explanation: "비즈니스와 고객의 요구에 맞추어 안정적이고 고품질의 IT 서비스를 설계, 제공, 관리하기 위한 관리 프레임워크입니다." }
     },
     {
       id: "itil",
@@ -5306,7 +5306,7 @@
       aliases: ["ITIL", "Information Technology Infrastructure Library"],
       related: ["service_management", "incident_management"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "ITIL", explanation: "IT 서비스 관리(ITSM) 분야에서 비즈니스의 요구사항에 부합하도록 IT 서비스를 정렬하기 위해 전 세계적으로 널리 사용되는 모범 사례(Best Practices) 라이브러리입니다." }
     },
     {
       id: "help_desk",
@@ -5326,7 +5326,7 @@
       aliases: ["サービスデスク", "help desk"],
       related: ["incident_management", "service_management"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "헬프 데스크 (서비스 데스크)", explanation: "시스템 사용자의 장애 대처 및 운영 정보 문의를 집중 처리하며, 사용자와 IT 서비스 관리 사이의 단일 접점(SPOC) 역할을 수행하는 지원 센터입니다." }
     },
     {
       id: "capacity_planning",
@@ -5346,7 +5346,7 @@
       aliases: ["容量計画", "capacity planning"],
       related: ["system_lifecycle", "service_level_agreement"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "용량 계획 (용량 산정)", explanation: "시스템의 미래 비즈니스 부하를 예측하여 필요한 컴퓨터 하드웨어, 스토리지, 네트워크 대역폭 등의 인프라 자원을 평가하고 적절하게 계획 및 구성하는 프로세스입니다." }
     },
     {
       id: "configuration_management",
@@ -5366,7 +5366,7 @@
       aliases: ["構成アイテム管理", "configuration management"],
       related: ["change_management", "system_lifecycle"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "구성 관리", explanation: "IT 서비스를 구성하는 하드웨어, 소프트웨어, 문서 등 모든 구성 항목(CI)의 정보를 식별, 기록하고 관계를 유지 및 보고하는 관리 프로세스입니다." }
     },
     {
       id: "business_continuity_plan",
@@ -5386,7 +5386,7 @@
       aliases: ["BCP", "business continuity plan"],
       related: ["disaster_recovery", "rto", "rpo"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "비즈니스 연속성 계획 (BCP)", explanation: "자연재해나 화재, 시스템 장애 등 중대한 예기치 못한 비상사태가 발생하더라도 핵심 업무가 중단되지 않거나 목표 시간 내에 정상 복구될 수 있도록 사전에 마련한 예방 및 대응 계획입니다." }
     },
     {
       id: "disaster_recovery",
@@ -5406,7 +5406,7 @@
       aliases: ["DR", "disaster recovery"],
       related: ["business_continuity_plan", "backup"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "재해 복구 (DR)", explanation: "재난으로 인해 기본 데이터 센터나 물리 인프라가 중단되거나 파손되었을 때, 다른 지역의 백업 시스템 및 정책을 활용하여 기술 인프라와 핵심 시스템을 재구축하고 복구하는 대책입니다." }
     },
     {
       id: "rto",
@@ -5426,7 +5426,7 @@
       aliases: ["目標復旧時間", "RTO"],
       related: ["business_continuity_plan", "rpo"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "목표 복구 시간 (RTO)", explanation: "재해나 장애가 발생하여 비즈니스가 중단된 후, 시스템이나 업무 프로세스를 목표한 상태로 정상 복구해야 하는 최대 허용 시간입니다." }
     },
     {
       id: "rpo",
@@ -5446,7 +5446,7 @@
       aliases: ["目標復旧時点", "RPO"],
       related: ["business_continuity_plan", "rto"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "목표 복구 시점 (RPO)", explanation: "시스템 장애 시 허용할 수 있는 최대 데이터 손실량으로, 백업 저장소로부터 데이터를 복구할 때 손실을 감수할 수 있는 가장 마지막 시점의 목표치입니다." }
     },
     {
       id: "quality_management",
@@ -5466,7 +5466,7 @@
       aliases: ["品質制御", "quality management"],
       related: ["pdca_cycle", "kpi"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "품질 관리", explanation: "제품이나 서비스가 설정된 품질 기준과 요구사항을 지속해서 충족하도록 지속적으로 모니터링, 평가, 개선하는 전반적인 관리 활동입니다." }
     },
     {
       id: "pdca_cycle",
@@ -5486,7 +5486,7 @@
       aliases: ["デミングサイクル", "pdca"],
       related: ["quality_management", "kpi"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "PDCA 사이클", explanation: "업무 프로세스의 지속적인 제어와 품질 향상을 위해 계획(Plan), 실행(Do), 평가(Check), 개선(Act)의 4단계를 반복 순환하는 경영 관리 및 프로세스 개선 프레임워크입니다." }
     },
     {
       id: "kpi",
@@ -5506,7 +5506,7 @@
       aliases: ["主要業績指標", "KPI"],
       related: ["quality_management", "pdca_cycle"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "핵심 성과 지표 (KPI)", explanation: "조직이나 프로젝트의 특정 목표가 얼마나 성공적으로 달성되었는지를 평가하기 위해 정량적으로 측정하는 관리 지표입니다." }
     },
     {
       id: "roi",
@@ -5526,7 +5526,7 @@
       aliases: ["投資回収率", "ROI"],
       related: ["cost_benefit_analysis", "tco"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "투자 수익률 (ROI)", explanation: "투자 대비 얻은 순수익을 비교하여 특정 투자 프로젝트나 비즈니스 활동의 경제적 효율성 및 수익성을 평가하는 백분율 지표입니다." }
     },
     {
       id: "tco",
@@ -5546,7 +5546,7 @@
       aliases: ["総コスト", "TCO"],
       related: ["cost_benefit_analysis", "roi"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "총 소유 비용 (TCO)", explanation: "특정 자산이나 IT 시스템의 구매 비용(초기 비용)뿐만 아니라 설치, 운영, 관리 및 폐기까지 수명 주기 전체에 걸쳐 발생하는 직접 및 간접 비용의 총합입니다." }
     },
     {
       id: "vulnerability_scan",
@@ -5566,7 +5566,7 @@
       aliases: ["セキュリティ診断", "vulnerability scan"],
       related: ["vulnerability", "security_patch"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "취약점 스캔 (취약점 진단)", explanation: "컴퓨터 네트워크, 시스템, 또는 애플리케이션의 알려진 보안 취약점과 잠재적인 보안 약점을 전문 도구를 사용하여 자동으로 점검하고 진단하는 프로세스입니다." }
     },
     {
       id: "security_patch",
@@ -5586,7 +5586,7 @@
       aliases: ["修正パッチ", "security patch"],
       related: ["vulnerability", "vulnerability_scan"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "보안 패치", explanation: "운영체제나 소프트웨어의 알려진 보안 결함 및 취약점을 보완하여 외부의 침입이나 악성 공격으로부터 보호하기 위해 벤더가 제공하는 수정 프로그램입니다." }
     },
     {
       id: "exploit",
@@ -5606,7 +5606,7 @@
       aliases: ["攻撃コード", "exploit"],
       related: ["vulnerability", "zero_day"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "익스플로잇", explanation: "시스템이나 소프트웨어의 버그 또는 보안 취약점을 악용하여 공격자가 원하지 않는 시스템 동작을 유발하거나 무단 침입을 할 수 있도록 개발된 코드, 데이터 또는 스크립트입니다." }
     },
     {
       id: "privilege_escalation",
@@ -5626,7 +5626,7 @@
       aliases: ["権限奪取", "privilege escalation"],
       related: ["vulnerability", "access_control"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "권한 상승", explanation: "공격자나 일반 사용자가 시스템의 버그나 설계상 결함을 악용하여 자신의 권한을 최고 관리자나 보호된 리소스에 접근할 수 있는 높은 수준으로 끌어올리는 행위입니다." }
     },
     {
       id: "access_token",
@@ -5646,7 +5646,7 @@
       aliases: ["トークン", "access token"],
       related: ["authentication", "authorization", "refresh_token"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "액세스 토큰", explanation: "사용자가 인증에 성공한 후 발급받는 보안 정보가 포함된 일회성 혹은 유효 기간이 있는 독특한 인증 키 문자열로, 클라이언트가 보호된 API 리소스에 접근할 때 인증 및 인가 수단으로 제공하는 일종의 통행증입니다." }
     },
     {
       id: "refresh_token",
@@ -5666,7 +5666,7 @@
       aliases: ["更新トークン", "refresh token"],
       related: ["access_token", "authentication"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "리프레시 토큰", explanation: "상대적으로 만료 기간이 짧은 액세스 토큰이 만료되었을 때, 사용자가 로그인 정보를 다시 입력하지 않고도 새로운 액세스 토큰을 안전하게 재발급받을 수 있도록 해주는 장기 유효 토큰입니다." }
     },
     {
       id: "oauth",
@@ -5686,7 +5686,7 @@
       aliases: ["OAuth2.0", "oauth"],
       related: ["authorization", "access_token"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "OAuth", explanation: "사용자의 아이디와 비밀번호를 서드파티 애플리케이션에 노출하지 않고도, 다른 서비스에 저장된 자원에 대한 제한적 액세스 권한을 허가할 수 있도록 지원하는 개방형 표준 인증 및 인가 프레임워크입니다." }
     },
     {
       id: "dmz",
@@ -5706,7 +5706,7 @@
       aliases: ["非武装地帯", "DMZ"],
       related: ["firewall", "ip_address"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "DMZ (비무장지대)", explanation: "기업의 내부 네트워크와 신뢰할 수 없는 외부 인터넷 사이에 위치한 물리적 또는 논리적 완충 구역(서브넷)으로, 외부로 공개된 서버(Web, Mail 등)를 배치하여 내부 인프라를 보호하는 영역입니다." }
     },
     {
       id: "ids",
@@ -5726,7 +5726,7 @@
       aliases: ["IDS", "Intrusion Detection System"],
       related: ["firewall", "ips"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "IDS (침입 탐지 시스템)", explanation: "네트워크 트래픽이나 시스템 사용 패턴을 모니터링하여 침입 행동이나 비정상적인 보안 규정 위반을 실시간으로 감지하고 관리자에게 경고를 전달하는 시스템입니다." }
     },
     {
       id: "ips",
@@ -5746,7 +5746,7 @@
       aliases: ["IPS", "Intrusion Prevention System"],
       related: ["firewall", "ids"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "IPS (침입 차단 시스템)", explanation: "악성 활동이나 위협 행위를 실시간으로 모니터링 및 감지할 뿐만 아니라, 감지된 네트워크 패킷을 즉시 차단하여 위협이 시스템에 유입되는 것을 능동적으로 방지하는 능동형 보안 장치입니다." }
     },
     {
       id: "ipv4",
@@ -5766,7 +5766,7 @@
       aliases: ["IPv4", "IP version 4"],
       related: ["ip_address", "ipv6", "subnet_mask"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "IPv4", explanation: "32비트(4바이트) 길이의 주소 체계를 가지는 인터넷 프로토콜의 네 번째 버전으로, 약 43억 개의 고유한 네트워크 디바이스 주소를 나타낼 수 있는 널리 보급된 통신 규약입니다." }
     },
     {
       id: "ipv6",
@@ -5786,7 +5786,7 @@
       aliases: ["IPv6", "IP version 6"],
       related: ["ip_address", "ipv4"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "IPv6", explanation: "IPv4의 주소 고갈 문제를 해결하기 위해 도입된 차세대 인터넷 프로토콜로, 128비트(16바이트) 주소 체계를 사용하여 거의 무한에 가까운 네트워크 IP 주소 공간을 제공합니다." }
     },
     {
       id: "subnet_mask",
@@ -5806,7 +5806,7 @@
       aliases: ["ネットマスク", "subnet mask"],
       related: ["ip_address", "subnet"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "서브넷 마스크", explanation: "32비트의 이진수 마스크로, IP 주소를 네트워크 주소(네트워크 ID)와 호스트 주소(호스트 ID)의 두 부분으로 구분하여 동일한 서브넷에 있는지 판별하는 기준입니다." }
     },
     {
       id: "default_gateway",
@@ -5826,7 +5826,7 @@
       aliases: ["ゲートウェイ", "default gateway"],
       related: ["router", "ip_address"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "기본 게이트웨이 (디폴트 게이트웨이)", explanation: "로컬 서브넷에 포함되지 않은 다른 외부 네트워크로 패킷을 전송할 때, 데이터가 먼저 통과해야 하는 네트워크의 대표적 라우터나 공유기 인터페이스의 IP 주소입니다." }
     },
     {
       id: "routing",
@@ -5846,7 +5846,7 @@
       aliases: ["経路制御", "routing"],
       related: ["router", "ip_address"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "라우팅 (경로 제어)", explanation: "네트워크상의 패킷이 출발지에서 목적지까지 이동할 수 있는 최적의 경로를 분석하고 선택하여 데이터를 포워딩하는 프로세스입니다." }
     },
     {
       id: "icmp",
@@ -5866,7 +5866,7 @@
       aliases: ["ICMP", "Internet Control Message Protocol"],
       related: ["ip_address", "ping"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "ICMP", explanation: "인터넷 제어 메시지 프로토콜로, 네트워크 기기들이 에러를 보고하거나 데이터 전송 중 발생하는 예외 상황을 알리고 진단 정보(예: 목적지 도달 불가)를 공유하는 데 사용되는 인터넷 프로토콜 그룹의 제어 메시지 전송 규약입니다." }
     },
     {
       id: "ping",
@@ -5886,7 +5886,7 @@
       aliases: ["ピン", "ピング", "ping command"],
       related: ["icmp", "ip_address"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "ping (핑)", explanation: "ICMP의 에코 요청 및 응답 메커니즘을 기반으로, 특정 대상 호스트의 도달 가능 여부와 통신 왕복 지연 시간(레이턴시)을 점검하는 네트워크 관리 진단 유틸리티입니다." }
     },
     {
       id: "bandwidth",
@@ -5906,7 +5906,7 @@
       aliases: ["通信帯域", "bandwidth"],
       related: ["ip_address"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "대역폭", explanation: "통신 채널이나 네트워크 인터페이스가 단위 시간당 전달할 수 있는 최대 데이터 전송 능력을 나타내며, 대개 초당 비트 수(bps)로 표시합니다." }
     },
     {
       id: "web_application",
@@ -5926,7 +5926,7 @@
       aliases: ["Webアプリ", "web application"],
       related: ["api", "http"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "웹 애플리케이션", explanation: "사용자가 웹 브라우저를 통해 상호작용하고, 서버 측에서 데이터베이스 연동과 비즈니스 로직 처리를 거쳐 결과를 동적인 웹 페이지 형태로 제공하는 소프트웨어 프로그램입니다." }
     },
     {
       id: "rest_endpoint",
@@ -5946,7 +5946,7 @@
       aliases: ["APIエンドポイント", "rest endpoint"],
       related: ["rest_api", "url"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "REST 엔드포인트", explanation: "REST API에서 특정 웹 리소스를 고유하게 식별하고 웹 서비스 요청을 처리하도록 노출해 둔 URI 경로(접속 주소)입니다." }
     },
     {
       id: "http_header",
@@ -5966,7 +5966,7 @@
       aliases: ["HTTPリクエストヘッダー", "http header"],
       related: ["http", "https"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "HTTP 헤더", explanation: "HTTP 요청이나 응답 메시지의 시작 부분에 위치하여 요청 클라이언트 정보, 콘텐츠 유형, 본문 데이터 크기, 쿠키 등 통신과 관련된 부가 메타데이터를 담아 전달하는 제어 영역입니다." }
     },
     {
       id: "query_parameter",
@@ -5986,7 +5986,7 @@
       aliases: ["URLパラメータ", "query parameter"],
       related: ["url", "api"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "쿼리 파라미터 (쿼리 스트링)", explanation: "URL 주소의 맨 뒤에 물음표(?)로 시작하는 '키=값' 형태로 덧붙여 전송하는 매개변수로, 서버에 페이지 정렬, 필터, 검색 조건 등을 전달할 때 주로 사용합니다." }
     },
     {
       id: "response_code",
@@ -6006,7 +6006,7 @@
       aliases: ["ステータスコード", "http status code"],
       related: ["status_code", "http"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "HTTP 상태 코드", explanation: "웹 서버가 클라이언트의 HTTP 요청을 수신 및 처리한 결과를 나타내기 위해 제공하는 3자리의 상태 표기 숫자(예: 200 OK, 404 Not Found 등)입니다." }
     },
     {
       id: "web_storage",
@@ -6026,7 +6026,7 @@
       aliases: ["HTML5ストレージ", "web storage"],
       related: ["cookie", "session"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "웹 스토리지", explanation: "HTML5에서 도입되어 웹 사이트가 쿠키(Cookie)보다 큰 대용량의 데이터를 브라우저 로컬 저장소에 로컬 세션별(SessionStorage) 또는 영구적으로(LocalStorage) 키-값 형태로 안전하게 보관할 수 있게 하는 기능입니다." }
     },
     {
       id: "git_status",
@@ -6046,7 +6046,7 @@
       aliases: ["git status", "status命令"],
       related: ["version_control"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "git status 명령어", explanation: "현재 작업 디렉터리(Working Directory)와 스테이징 영역(Staging Area)의 상태를 검사하여 변경되거나, 스테이징에 등록되었거나, 추적되지 않고 있는 파일들의 최신 상태를 보여주는 Git 명령어입니다." }
     },
     {
       id: "git_stash",
@@ -6066,7 +6066,7 @@
       aliases: ["git stash", "stash命令"],
       related: ["version_control"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "git stash 명령어", explanation: "작업을 완전히 완료하여 커밋(Commit)하기 애매한 미완성 소스코드 변경 사항을 Git의 별도 대기소에 잠시 저장(숨김)해 두고, 현재 작업 폴더를 깨끗한 원래 상태로 되돌려 다른 긴급 작업을 할 수 있게 해주는 Git 명령어입니다." }
     },
     {
       id: "static_analysis",
@@ -6086,7 +6086,7 @@
       aliases: ["静的コード解析", "static analysis"],
       related: ["debugging", "testing"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "정적 분석", explanation: "프로그램을 빌드하거나 실행하지 않고 소스코드 자체를 정적으로 분석하여 구문 오류, 코딩 컨벤션 위반, 보안 취약점, 혹은 잠재적 결함을 사전에 탐지하는 코드 검사 기법입니다." }
     },
     {
       id: "integration_testing",
@@ -6106,7 +6106,7 @@
       aliases: ["連結テスト", "integration testing"],
       related: ["testing", "unit_test"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "통합 테스트", explanation: "단위 테스트(Unit Test)를 통과한 개별 프로그램 모듈이나 코드를 하나의 결합형 그룹으로 묶고, 상호간의 인터페이스 데이터 호출 및 연동 기능이 정상적으로 이루어지는지 검증하는 소프트웨어 테스트 단계입니다." }
     },
     {
       id: "iaas",
@@ -6126,7 +6126,7 @@
       aliases: ["IaaS", "Infrastructure as a Service"],
       related: ["cloud_computing", "paas", "saas"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "IaaS (인프라 서비스 / 인프라형 서비스)", explanation: "클라우드 제공업체가 인터넷을 통해 가상 서버, 메모리, 스토리지, 네트워크 대역폭 등 기본 물리 장치 수준의 컴퓨팅 하드웨어 자원을 임대 형식으로 즉시 공급하는 서비스 모델입니다." }
     },
     {
       id: "paas",
@@ -6146,7 +6146,7 @@
       aliases: ["PaaS", "Platform as a Service"],
       related: ["cloud_computing", "iaas", "saas"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "PaaS (플랫폼 서비스 / 플랫폼형 서비스)", explanation: "인프라 외에 애플리케이션의 개발, 빌드, 테스트 및 배포를 위한 운영체제(OS), 런타임 플랫폼, 데이터베이스, 미들웨어 인프라 세트를 클라우드를 통해 제공함으로써 개발자가 무슨 비즈니스 소스코드 구현에만 집중하게 돕는 서비스 모델입니다." }
     },
     {
       id: "saas",
@@ -6166,7 +6166,7 @@
       aliases: ["SaaS", "Software as a Service"],
       related: ["cloud_computing", "iaas", "paas"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "SaaS (소프트웨어 서비스 / 소프트웨어형 서비스)", explanation: "로컬 장치에 별도 프로그램을 구축 및 설치하지 않고, 공급업체가 웹 상에 호스팅하여 서비스 형태로 개방한 응용 애플리케이션을 인터넷 브라우저 등을 통해 구독형태로 직접 사용하는 서비스 모델입니다." }
     },
     {
       id: "container",
@@ -6186,7 +6186,7 @@
       aliases: ["コンテナ仮想化", "container"],
       related: ["virtualization", "operating_system"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "컨테이너 (컨테이너화)", explanation: "호스트 운영체제 위에 가상화 하이퍼바이저 없이 전용 프로세스 격리 기술을 사용하여, 실행 환경이 서로 간섭하지 않고 독립적으로 동작할 수 있도록 코드를 종속 라이브러리와 묶어 실행하는 경량 가상화 기술입니다." }
     },
     {
       id: "business_model",
@@ -6206,7 +6206,7 @@
       aliases: ["business model","事業モデル"],
       related: ["information_system"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "비즈니스 모델", explanation: "기업이 차별화된 가치를 창출하고 이를 어떻게 고객에게 전달하며, 이를 통해 수익을 창출하는지에 대한 전반적인 사업 운영 메커니즘과 비즈니스 논리 구조입니다." }
     },
     {
       id: "value_chain",
@@ -6226,7 +6226,7 @@
       aliases: ["value chain","価値連鎖"],
       related: ["business_process"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "가치 사슬 (밸류 체인)", explanation: "원자재 조달, 제품 생산, 물류, 마케팅, 서비스 등 기업 내부의 일련의 영업 및 비즈니스 활동을 유기적 가치 부가 체인으로 분석하여 핵심 경쟁 우위를 파악하는 마이클 포터의 경영학 분석 모형입니다." }
     },
     {
       id: "swot_analysis",
@@ -6246,7 +6246,7 @@
       aliases: ["SWOT","swot analysis"],
       related: ["risk_assessment"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "SWOT 분석", explanation: "기업 내부의 강점(Strengths)과 약점(Weaknesses), 그리고 기업 외부가 처해 있는 기회(Opportunities)와 위협(Threats)의 네 가지 요소를 결합하여 경영 및 마케팅 전략을 도출해 내는 프레임워크입니다." }
     },
     {
       id: "balanced_scorecard",
@@ -6266,7 +6266,7 @@
       aliases: ["BSC","balanced scorecard"],
       related: ["kpi"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "균형 성과표 (BSC)", explanation: "기업이나 조직의 성과를 전통적인 단기 재무 지표뿐만 아니라 고객 관점, 내부 프로세스 관점, 학습 및 성장 관점의 총 4가지 주요 다차원적 시각에서 전략적으로 종합 평가 및 관리하는 평가 체계입니다." }
     },
     {
       id: "business_requirement",
@@ -6286,7 +6286,7 @@
       aliases: ["業務要求","business requirements"],
       related: ["system_lifecycle"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "비즈니스 요구사항 (업무 요구사항)", explanation: "새로운 프로젝트나 IT 시스템 구축을 시작할 때, 비즈니스 및 운영 관점의 목적을 달성하기 위해 기업이나 고객이 기대하고 요구하는 핵심 업무 규칙과 실행 목표입니다." }
     },
     {
       id: "system_requirement",
@@ -6306,7 +6306,7 @@
       aliases: ["システム要求","system requirements"],
       related: ["system_lifecycle"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "시스템 요구사항", explanation: "사용자의 업무 및 비즈니스 요구사항을 달성하기 위해 시스템이 실제로 갖추어야 하는 논리적 기능 범위, 시스템 구성 요건 및 기술 설계의 구체적 명세입니다." }
     },
     {
       id: "functional_requirement",
@@ -6326,7 +6326,7 @@
       aliases: ["機能要件定義","functional requirement"],
       related: ["system_requirement"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "기능 요구사항", explanation: "시스템이 제공해야 할 직접적인 동작(입력 처리, 계산 결과물 출력, 데이터 보관, 특정 기능 흐름 제어 등)을 기술하는 구체적 요구사양입니다." }
     },
     {
       id: "nonfunctional_requirement",
@@ -6346,7 +6346,7 @@
       aliases: ["非機能要件定義","non-functional requirement"],
       related: ["system_requirement","confidentiality"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "비기능 요구사항", explanation: "시스템이 제공하는 동작 이외에 신뢰성, 응답 속도 및 성능, 보안 규정 준수, 상호 호환성, 가용성 등 시스템 전반의 품질 기준과 제약 조건을 설명하는 요구사양입니다." }
     },
     {
       id: "user_acceptance",
@@ -6366,7 +6366,7 @@
       aliases: ["受入検査","UAT","user acceptance testing"],
       related: ["testing"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "사용자 수락 테스트 (UAT)", explanation: "소프트웨어 개발 프로젝트의 가장 마지막 단계로, 실제 해당 업무를 담당하는 사용자가 실제 비즈니스 흐름을 모방한 상태에서 계약상의 요구사항을 정상 충족하는지 종합 확인하는 검증 단계입니다." }
     },
     {
       id: "service_catalog",
@@ -6386,7 +6386,7 @@
       aliases: ["service catalog","サービスの一覧表"],
       related: ["service_management","itil"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "서비스 카탈로그", explanation: "IT 서비스 공급자가 현재 최종 사용자나 고객에게 제공 가능한 전체 IT 서비스 및 세부 명세를 구조적으로 나열해 놓은 정보 목록이나 상세 정의 문서입니다." }
     },
     {
       id: "escalation",
@@ -6406,7 +6406,7 @@
       aliases: ["escalation","上位部門への引き継ぎ"],
       related: ["incident_management","help_desk"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "에스컬레이션 (보고 및 이관 절차)", explanation: "IT 기술 지원 또는 티켓 관리 시스템에서 1선 지원 부서가 해당 기술 문제나 권한 부족의 이유로 이슈를 독립적으로 해결할 수 없을 때, 이를 더 풍부한 경험을 가진 상급 기술자나 담당 부서장에게 공식적으로 넘겨 처리하는 과정입니다." }
     },
     {
       id: "root_cause_analysis",
@@ -6426,7 +6426,7 @@
       aliases: ["RCA","root cause analysis"],
       related: ["problem_management"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "근본 원인 분석 (RCA)", explanation: "시스템이나 운영 프로세스에서 장애나 예상치 못한 이상 이벤트가 발생했을 때, 단순한 표면적 미봉책 수정을 넘어 해당 문제를 유발한 진짜 원인을 구조적으로 파악하여 동일 장애의 재발을 방지하는 품질 분석 방법론입니다." }
     },
     {
       id: "workaround",
@@ -6446,7 +6446,7 @@
       aliases: ["回避策","workaround"],
       related: ["incident_management","problem_management"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "워크아라운드 (우회 대책)", explanation: "시스템에 심각한 버그나 장애가 유입되었으나 아직 영구적인 근본 해결이 어려울 때, 비즈니스의 조속한 업무 복구를 위해 일시적으로 사용하는 비상 대처 방식 또는 우회 로직입니다." }
     },
     {
       id: "change_request",
@@ -6466,7 +6466,7 @@
       aliases: ["RFC","request for change"],
       related: ["change_management"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "변경 요청서 (RFC)", explanation: "이미 상용 단계에 안착해 구동 중인 서비스 시스템이나 IT 인프라 구조를 변경하고자 할 때(기능 변경, 장비 개조 등), 이에 대한 영향도를 공식적으로 심사받기 위해 변경 관리 주체에 제출하는 문서화된 신청 절차입니다." }
     },
     {
       id: "procurement_contract",
@@ -6486,7 +6486,7 @@
       aliases: ["procurement contract","調達の契約"],
       related: ["outsourcing"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "조달 계약 (구매 계약)", explanation: "기업이나 기관이 시스템 구축, 자재 납품, 개발 아웃소싱 등을 획득하기 위해 파트너 공급업체와 맺는 구속력 있는 법적 구매 합의 및 계약서입니다." }
     },
     {
       id: "compliance_check",
@@ -6506,7 +6506,7 @@
       aliases: ["合规性审查","compliance checking"],
       related: ["compliance"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "컴플라이언스 체크 (규제 준수 검토)", explanation: "기업의 업무 처리나 IT 시스템 구현 방식이 외부 법령, 규제 표준(PCI-DSS, GDPR 등) 및 기업 내부 통제 규범에 저촉되지 않는지 정기적으로 검토하고 감사하는 위험 최소화 확인 과정입니다." }
     },
     {
       id: "database_instance",
@@ -6526,7 +6526,7 @@
       aliases: ["DBインスタンス","database instance"],
       related: ["database"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "데이터베이스 인스턴스", explanation: "데이터베이스 관리 시스템(DBMS)이 구동될 때 생성되는 메모리 구조와 백그라운드 프로세스의 물리적 결합으로, 클라이언트의 SQL 요청을 분석하고 물리 저장 장치와의 중간 매개체 역할을 수행합니다." }
     },
     {
       id: "database_engine",
@@ -6546,7 +6546,7 @@
       aliases: ["ストレージエンジン","database engine"],
       related: ["database"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "데이터베이스 엔진 (스토리지 엔진)", explanation: "데이터베이스 관리 시스템의 기저를 이루는 핵심 컴포넌트(스토리지 모듈)로, 실질적으로 디스크나 파일에 데이터를 쓰고(Create), 조회하고(Read), 갱신(Update) 및 제거(Delete)하는 물리 처리 엔진입니다." }
     },
     {
       id: "database_connection",
@@ -6566,7 +6566,7 @@
       aliases: ["DB接続","database connection"],
       related: ["database"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "데이터베이스 연결 (커넥션)", explanation: "애플리케이션 프로그램과 데이터베이스 서버 사이에 SQL 명령을 전송하고 실행 결과 데이터를 상호 수신할 수 있도록 성립된 가상의 네트워크 통신 세션(채널)입니다." }
     },
     {
       id: "connection_pool",
@@ -6586,7 +6586,7 @@
       aliases: ["接続プール","connection pooling"],
       related: ["database_connection"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "커넥션 풀", explanation: "데이터베이스 접근에 따르는 연결 리소스 오버헤드를 막기 위해, 매번 인스턴스를 새로 연결하지 않고 일정량의 가용 커넥션을 사전에 메모리에 상주시켜 재활용할 수 있게 가공한 데이터 구조입니다." }
     },
     {
       id: "sql_transaction",
@@ -6606,7 +6606,7 @@
       aliases: ["トランザクション処理","sql transaction"],
       related: ["transaction","acid_properties"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "SQL 트랜잭션", explanation: "데이터베이스 내에서 단일한 논리적 작업 범위로 결속되어 실행되는 일련의 SQL 조작 묶음으로, 전체 처리가 모두 완전히 반영되거나(Commit) 완전히 무효화(Rollback)되어야 하는 불가분성을 유지하는 트랜잭션 처리 원칙을 따릅니다." }
     },
     {
       id: "transaction_log",
@@ -6626,7 +6626,7 @@
       aliases: ["更新ログ","transaction log"],
       related: ["transaction","backup"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "트랜잭션 로그", explanation: "데이터베이스가 비정상 중단될 경우를 복구하기 위해, 변경 사항을 실제로 디스크 데이터 블록에 덮어쓰기 전에 수행한 모든 SQL 기록을 시계열로 순차 보관해 놓은 로그입니다." }
     },
     {
       id: "savepoint",
@@ -6646,7 +6646,7 @@
       aliases: ["SAVEPOINT","savepoint statement"],
       related: ["transaction","rollback"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "세이브포인트 (저장점)", explanation: "SQL 트랜잭션 중도에 지정해 놓는 책갈피 역할의 가상 포인트로, 향후 데이터 롤백이 요청되었을 때 전체 트랜잭션을 포기하지 않고 특정 세이브포인트 시점까지만 부분적으로 취소할 수 있는 메커니즘을 지원합니다." }
     },
     {
       id: "first_normal_form",
@@ -6666,7 +6666,7 @@
       aliases: ["1NF","first normal form"],
       related: ["normalization"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "제1정규형 (1NF)", explanation: "데이터베이스 정규화 이론의 기본 요건으로, 릴레이션(테이블)의 모든 컬럼 속성이 더 이상 쪼개질 수 없는 단일의 원자값(Atomic Value)만으로만 구성되도록 중복 구조를 배제한 상태입니다." }
     },
     {
       id: "second_normal_form",
@@ -6686,7 +6686,7 @@
       aliases: ["2NF","second normal form"],
       related: ["normalization","first_normal_form"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "제2정규형 (2NF)", explanation: "제1정규형을 만족하면서, 기본키(PK)가 복합키로 구성된 경우 복합 기본키의 일부분에 종속되는 속성인 '부분 함수적 종속' 상태를 제거하여 모든 기본 키가 아닌 속성들이 기본키 전체에 완전 함수적 종속 관계가 되도록 분리한 상태입니다." }
     },
     {
       id: "third_normal_form",
@@ -6706,7 +6706,7 @@
       aliases: ["3NF","third normal form"],
       related: ["normalization","second_normal_form"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "제3정규형 (3NF)", explanation: "제2정규형을 만족하면서, 기본키 이외의 일반 속성 간에 발생하는 관계인 '이행적 함수적 종속' 관계를 전면 제거한 상태입니다." }
     },
     {
       id: "denormalization",
@@ -6726,7 +6726,7 @@
       aliases: ["反正規化","denormalization"],
       related: ["normalization"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "반정규화 (역정규화)", explanation: "과도하게 세분화된 정규화로 인해 잦은 테이블 조인(JOIN)과 조회 속도 성능 저하가 발생할 때, 이를 개선하고자 일부러 규칙을 어기고 정규화된 모델을 의도적으로 병합하거나 중복 데이터를 추가 배치하는 성능 최적화 기법입니다." }
     },
     {
       id: "entity",
@@ -6746,7 +6746,7 @@
       aliases: ["実体","entity"],
       related: ["database_schema"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "엔터티 (실체)", explanation: "데이터 모델링 또는 데이터베이스 개념 설계 시, 속성들을 바탕으로 다른 사물과 명확히 구별하여 실체화하거나 영구 식별할 수 있는 현실 세계의 사물이나 논리적 개념(예: 고객, 제품, 부서)입니다." }
     },
     {
       id: "attribute",
@@ -6766,7 +6766,7 @@
       aliases: ["アトリビュート","属性"],
       related: ["entity","column"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "속성 (어트리뷰트)", explanation: "엔터티나 관계가 지니고 있는 고유한 특성이나 속성 데이터를 뜻하며, 데이터베이스 물리 설계 및 실제 스키마 테이블에서는 컬럼(열)으로 변환되어 구현됩니다." }
     },
     {
       id: "relationship",
@@ -6786,7 +6786,7 @@
       aliases: ["関連","relationship"],
       related: ["entity","foreign_key"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "关系 (릴레이션십)", explanation: "두 개 이상의 엔터티 간에 성립되는 논리적인 연관성(예: 1 대 다, 다 대 다)을 지칭하며, 관계형 데이터베이스 모델에서는 테이블 간에 적용된 외래키(FK) 제약조건에 의해 물리적으로 실체화됩니다." }
     },
     {
       id: "java_main_method",
@@ -6806,7 +6806,7 @@
       aliases: ["mainメソッド","main method"],
       related: ["java_class"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Java main 메서드", explanation: "Java 프로그램 실행의 시작 지점이 되는 진입점(Entry Point) 특수 함수로, 형식이 엄격히 `public static void main(String[] args)`로 선언되며 JVM에 의해 기동 시 가장 먼저 직접적으로 호출됩니다." }
     },
     {
       id: "java_compiler",
@@ -6826,7 +6826,7 @@
       aliases: ["javac","javacコマンド"],
       related: ["jvm","bytecode"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Java 컴파일러", explanation: "개발자가 작성한 사람이 읽기 쉬운 소스코드 파일(`.java`)을 Java 가상 머신(JVM)이 이해하고 해석할 수 있는 중립적 바이트코드 파일(`.class`)로 점검하고 구문 변환해 주는 JDK 내장 도구(`javac`)입니다." }
     },
     {
       id: "classpath",
@@ -6846,7 +6846,7 @@
       aliases: ["classpath","クラスパス設定"],
       related: ["java_class"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "클래스패스", explanation: "Java 프로그램 컴파일 또는 실행 시, 컴파일러나 자바 가상 머신(JVM)에 빌드 대상 클래스 파일이나 라이브러리(`.jar`)들을 어떤 컴퓨터 경로로부터 먼저 검색해 올릴지 정의하는 디렉터리 경로 환경 설정입니다." }
     },
     {
       id: "jar_file",
@@ -6866,7 +6866,7 @@
       aliases: ["jar","JAR","Java Archive"],
       related: ["package"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "JAR 파일", explanation: "자바 아카이브(Java Archive)의 약어로, 여러 개의 바이트코드 클래스(`.class`) 파일, 관련 이미지, 메타데이터 설정 리소스를 ZIP 형식과 유사하게 하나로 통합 압축하여 전달하는 아카이브 파일 포맷입니다." }
     },
     {
       id: "java_interface_implementation",
@@ -6886,7 +6886,7 @@
       aliases: ["implements","インターフェースの実装"],
       related: ["interface","class"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "인터페이스 구현", explanation: "클래스 정의 시 `implements` 예약어를 선언하고, 대상 인터페이스가 요구하는 모든 추상 메서드 명세서에 실제로 구동될 구체적인 자바 코드 본문을 완성(오버라이딩)하는 프로그래밍 구조입니다." }
     },
     {
       id: "anonymous_class",
@@ -6906,7 +6906,7 @@
       aliases: ["匿名インナークラス","anonymous inner class"],
       related: ["class","interface"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "익명 클래스 (익명 내부 클래스)", explanation: "클래스의 구체적인 이름을 별도 선언하지 않고, 기존 부모 클래스나 인터페이스를 `new` 연산자로 인스턴스화하는 코드 블록 내에서 메서드들을 선언하여 1회용으로 사용하는 특수 클래스입니다." }
     },
     {
       id: "inner_class",
@@ -6926,7 +6926,7 @@
       aliases: ["インナークラス","inner class"],
       related: ["class"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "내부 클래스 (이너 클래스)", explanation: "다른 클래스의 멤버 변수처럼 감싸는 외부 클래스의 본문 구조 안에 삽입되어 설계된 클래스로, 별도 래퍼 없이 외부 클래스의 비공개 멤버나 변수에 안전하게 액세스할 수 있는 장점이 있습니다." }
     },
     {
       id: "static_block",
@@ -6946,7 +6946,7 @@
       aliases: ["staticブロック","static initialization block"],
       related: ["static_keyword"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "정적 블록 (static 초기화 블록)", explanation: "자바 클래스 파일이 JVM 메모리에 처음 로드될 때 단 한 번만 자동으로 실행되는 `static` 중괄호 코드 영역으로, 주로 복잡한 정적 멤버 변수의 계산 및 초기 환경 세팅을 할 때 쓰입니다." }
     },
     {
       id: "immutable_object",
@@ -6966,7 +6966,7 @@
       aliases: ["イミュータブルオブジェクト","immutable object"],
       related: ["object","final_keyword"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "불변 객체", explanation: "인스턴스가 힙 메모리에 초기 할당 및 생성된 이후에 그 상태(필드값)를 임의로 변경할 수 없도록 고정 설계한 객체(예: Java의 String 클래스)로, 멀티스레드 환경에서 스레드 안전성이 뛰어납니다." }
     },
     {
       id: "equals_method",
@@ -6986,7 +6986,7 @@
       aliases: ["equals","equals()"],
       related: ["object_reference"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "equals 메서드", explanation: "자바 최상위 `Object` 클래스에 내장된 함수로, 비교 대상인 두 개별 인스턴스가 지닌 데이터의 실질적 내용물(동치성)이 논리적으로 상호 부합하는지 가려내기 위해 오버라이딩하여 주로 사용합니다." }
     },
     {
       id: "hashcode_method",
@@ -7006,7 +7006,7 @@
       aliases: ["hashCode","hashCode()"],
       related: ["equals_method"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "hashCode 메서드", explanation: "해당 객체의 주소값 또는 고유 값을 기반으로 일정한 계산을 거쳐 반환하는 32비트 정수(해시 코드) 메서드로, `equals` 메서드를 오버라이드할 때 일치 관계 유지를 위해 반드시 규약에 따라 동시 재정의해야 합니다." }
     },
     {
       id: "java_exception",
@@ -7026,7 +7026,7 @@
       aliases: ["Javaの例外","java exception"],
       related: ["exception","try_catch"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Java 예외", explanation: "자바 프로그램이 정상 구동되던 중 발생하여 정상적인 제어 명령 흐름을 가로막는 비정상적인 사고 상황(예: 파일을 찾을 수 없거나 0으로 나누기 연산 등)으로, `Exception` 클래스의 하위 타입으로 생성됩니다." }
     },
     {
       id: "python_module_import",
@@ -7046,7 +7046,7 @@
       aliases: ["import","Pythonインポート"],
       related: ["import_statement","python_module"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Python 모듈 임포트", explanation: "파이썬에서 작성한 별도 모듈 파일(`.py`)이나 외부 라이브러리 소스코드 내의 함수, 변수, 클래스 등을 현재 개발 중인 코드 파일 영역에 인식시켜 재활용할 수 있도록 `import` 키워드를 사용해 들여오는 절차입니다." }
     },
     {
       id: "python_namespace",
@@ -7066,7 +7066,7 @@
       aliases: ["名前空間","python namespace"],
       related: ["variable"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Python 네임스페이스 (이름 공간)", explanation: "파이썬 구동 환경 내에서 변수명이나 함수명 등 특정 식별자들이 서로 중복되어 충돌하는 것을 방지하기 위해, 이름과 대상 객체 간의 고유한 매핑 정보를 계층적이고 체계적인 파이썬 딕셔너리로 관리하는 구역입니다." }
     },
     {
       id: "python_list_method",
@@ -7086,7 +7086,7 @@
       aliases: ["listメソッド","list methods"],
       related: ["python_list"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Python 리스트 메서드", explanation: "파이썬의 동적 배열 자료형인 리스트(list) 객체 뒤에 추가적으로 지원되는 내장 연산 함수(예: 요소 삽입 `append()`, 특정 아이템 삭제 `remove()`, 정렬 `sort()`)의 모음입니다." }
     },
     {
       id: "python_dict_method",
@@ -7106,7 +7106,7 @@
       aliases: ["dictメソッド","dict methods"],
       related: ["python_dict"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Python 딕셔너리 메서드", explanation: "파이썬의 키-값 쌍 연상 배열 구조인 딕셔너리(dict) 클래스 객체에서 사용할 수 있도록 빌트인되어 있는 제어 메서드(예: 안전 추출 `get()`, 키 집합 추출 `keys()`, 값 세트 추출 `values()`) 그룹입니다." }
     },
     {
       id: "python_set_operation",
@@ -7126,7 +7126,7 @@
       aliases: ["集合演算","set operations"],
       related: ["python_set"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Python 세트 연산 (집합 연산)", explanation: "중복과 인덱스 순서가 없는 집합을 지원하는 파이썬의 세트(set) 자료형에서 합집합(`union`), 교집합(`intersection`), 차집합(`difference`) 등의 수학적 연산을 직관적이고 빠르게 수행하는 행위입니다." }
     },
     {
       id: "python_string_method",
@@ -7146,7 +7146,7 @@
       aliases: ["strメソッド","string methods"],
       related: ["python_string"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Python 문자열 메서드", explanation: "파이썬 문자열(str) 개체에 구현되어 데이터 텍스트 조작을 도와주는 내장 함수(예: 양방향 공백 제거 `strip()`, 지정 문자 기준 분할 `split()`, 특정 문자열 대체 `replace()`)입니다." }
     },
     {
       id: "python_exception",
@@ -7166,7 +7166,7 @@
       aliases: ["Pythonの例外","python exception"],
       related: ["exception","python_try_except"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Python 예외", explanation: "파이썬 런타임 구동 중에 변수 계산 불가, 비정상 로직, 자원 불비 등으로 발생하는 비정상 흐름 에러 이벤트로, `BaseException`을 부모로 상속받는 특정 인스턴스 형태의 예외 클래스로 취급됩니다." }
     },
     {
       id: "value_error",
@@ -7186,7 +7186,7 @@
       aliases: ["ValueError","バリューエラー"],
       related: ["python_exception"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "ValueError", explanation: "파이썬 함수나 연산이 전달받은 인수(Argument)의 데이터 타입 자체는 올바르지만, 인수가 나타내고 있는 실제 데이터 값의 내용이 비합리적일 때(예: `int(\"abc\")`처럼 숫자가 아닌 문자를 정수로 변환하려 할 때) 발생하는 내장 예외입니다." }
     },
     {
       id: "type_error",
@@ -7206,7 +7206,7 @@
       aliases: ["TypeError","タイプエラー"],
       related: ["python_exception","data_type"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "TypeError", explanation: "지원되지 않거나 연산이 호환되지 않는 부적절한 데이터 타입(자료형)의 변수가 전달 또는 결합되었을 때(예: 정수와 문자열을 다이렉트로 더하는 `1 + \"a\"` 수행 등) 발생하는 파이썬의 표준 예외입니다." }
     },
     {
       id: "key_error",
@@ -7226,7 +7226,7 @@
       aliases: ["KeyError","キーエラー"],
       related: ["python_exception","python_dict"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "KeyError", explanation: "파이썬 딕셔너리(dict) 데이터에서 존재하지 않는 임의의 키(Key) 값을 참조하여 객체를 조회하려 할 때, 해당 키를 맵 내부에서 발견할 수 없어 발생하는 내장 에러 예외입니다." }
     },
     {
       id: "index_error",
@@ -7246,7 +7246,7 @@
       aliases: ["IndexError","インデックスエラー"],
       related: ["python_exception","python_list"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "IndexError", explanation: "파이썬의 리스트(list)나 튜플(tuple) 같은 시퀀스 자료형에서, 인덱스 인수가 나타내는 오프셋 경계를 넘어선 엉뚱한 위치 번호(정수)를 대입하여 접근하려 할 때 나타나는 예외입니다." }
     },
     {
       id: "python_logging",
@@ -7266,7 +7266,7 @@
       aliases: ["logging","ロギングモジュール"],
       related: ["debugging"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Python 로깅 모듈 (logging)", explanation: "프로그램 동작 정보를 보관하기 위해 파이썬 표준 라이브러리가 공식 지원하는 `logging` 내장 엔진으로, 중요도에 따라 5대 레벨(DEBUG, INFO, WARNING, ERROR, CRITICAL)별 파일 기록 및 스트림 로깅 출력을 지원합니다." }
     },
     {
       id: "aaa_security",
@@ -7286,7 +7286,7 @@
       aliases: ["AAA","triple-A security"],
       related: ["authentication","authorization"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "AAA 프레임워크", explanation: "컴퓨터 보안 인증 체계의 핵심 프레임워크로, 사용자 신원 식별을 확인하는 인증(Authentication), 대상 사용자의 권한을 부여하는 인가(Authorization), 시스템 사용량이나 행동 기록을 트래킹 및 보관하는 계정 관리(Accounting)의 세 가지 핵심 요소를 의미합니다." }
     },
     {
       id: "password_hashing",
@@ -7306,7 +7306,7 @@
       aliases: ["パスワードハッシュ","password hashing"],
       related: ["hashing"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "비밀번호 해싱 (비밀번호 암호화)", explanation: "시스템 사용자의 원래 패스워드를 텍스트 상태(평문)로 데이터베이스에 노출하여 보관하지 않고, 일방향(단방향) 수학적 해시 함수를 통과시킨 불가역적인 난수 바이트 해시값 형태로 치환하여 저장하는 보안 기법입니다." }
     },
     {
       id: "salt_cryptography",
@@ -7326,7 +7326,7 @@
       aliases: ["ソルト値","salt in cryptography"],
       related: ["password_hashing"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "솔트 (Salt)", explanation: "비밀번호 해싱 연산 시 공격자가 사전에 미리 계산해 둔 해시 일람표인 레인보우 테이블(Rainbow Table)로 해독하지 못하도록, 본래 암호 앞뒤에 임의로 임의의 랜덤한 보조 바이트 값(소금)을 뿌려 섞는 암호학적 장치입니다." }
     },
     {
       id: "key_management",
@@ -7346,7 +7346,7 @@
       aliases: ["鍵の管理","key management"],
       related: ["encryption"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "키 관리 (비밀키 관리)", explanation: "암호화에 필수적으로 관여하는 디지털 대칭키나 비대칭 공인 인증키들의 탄생(생성), 교환(배포), 보안 보관, 유효 갱신 및 파기(폐기)까지의 전 수명 주기를 외부 악의적 탈취로부터 안전하게 제어 통제하는 정보 보호 규정입니다." }
     },
     {
       id: "secret_key",
@@ -7366,7 +7366,7 @@
       aliases: ["秘密鍵 (共通鍵)","secret key","symmetric key"],
       related: ["symmetric_encryption"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "비밀키 (대칭키)", explanation: "대칭 암호화 기술에서 암호문으로 원본 파일을 잠글(암호화) 때와, 이를 풀어 복원(복호화)할 때 완벽히 매칭되어 동일하게 요구되는 공유 비밀키 정보입니다." }
     },
     {
       id: "public_key_certificate",
@@ -7386,7 +7386,7 @@
       aliases: ["デジタル証明書","public key certificate","CA証明書"],
       related: ["asymmetric_encryption","public_key"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "공개키 인증서 (디지털 인증서)", explanation: "제3의 공신력 있는 인증 기관(CA)이 해당 주체의 신원 검증을 완료한 후 CA 서명을 얹어 발급하는 전자 보증서로, 네트워크상에서 제공된 특정 공개키가 변조되지 않은 진본임을 증명합니다." }
     },
     {
       id: "certificate_chain",
@@ -7406,7 +7406,7 @@
       aliases: ["信頼の鎖","certificate chain"],
       related: ["public_key_certificate"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "인증서 체인 (신뢰 체인)", explanation: "디지털 서명 신원 보증의 적법성을 역추적하여 검증할 수 있도록, 말단의 사이트용 디지털 인증서부터 단계별 상위 중간 인증 기관(Intermediate CA)을 거쳐 최종적인 루트 신뢰 인증 기관(Root CA) 인증서까지의 수직적 연결고리(Trust Chain)를 설명하는 구조 목록입니다." }
     },
     {
       id: "tls_handshake",
@@ -7426,7 +7426,7 @@
       aliases: ["TLS握手","tls handshake"],
       related: ["tls","https"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "TLS 핸드셰이크", explanation: "보안 HTTPS 웹 통신을 개시하기에 앞서, 접속 클라이언트 브라우저와 웹 서버가 사용할 프로토콜 버전을 상호 타협하고 상호간 인증서를 조율하며 통신용 대칭 암호키를 전송 및 수립하는 일련의 준비 협상 단계입니다." }
     },
     {
       id: "trojan_horse",
@@ -7446,7 +7446,7 @@
       aliases: ["トロイの木馬マルウェア","trojan horse"],
       related: ["malware"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "트로이 목마", explanation: "얼핏 무해하거나 정당한 일반 유틸리티 파일인 것처럼 위장하여 사용자로 하여금 자연스럽게 다운로드 및 가동하도록 유도한 후, 실질적으론 백그라운드 해킹 백도어를 확보하거나 시스템을 파괴하는 악성 소프트웨어입니다." }
     },
     {
       id: "computer_worm",
@@ -7466,7 +7466,7 @@
       aliases: ["ワーム","computer worm"],
       related: ["malware"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "웜 (컴퓨터 웜)", explanation: "숙주가 되는 감염 대상 문서 파일 등이 없이도 스스로 구동되어 다른 단말 장비들의 취약점(네트워크망 등)을 파고들어 자기 복제와 자율 전파를 무한 반복하며 네트워크 트래픽을 유발시키는 단독형 악성코드입니다." }
     },
     {
       id: "botnet",
@@ -7486,7 +7486,7 @@
       aliases: ["ボットネットワーク","botnet"],
       related: ["malware","brute_force_attack"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "봇넷", explanation: "해커 악성코드에 감염되어 명령제어(C&C) 서버로부터 원격 지휘를 받는 다수의 좀비 단말 장치(PC, IoT 장비 등)들로 구성되어 불법 대형 공격 네트워크망을 생성한 집합군입니다." }
     },
     {
       id: "ddos_attack",
@@ -7506,7 +7506,7 @@
       aliases: ["DDoS","ddos attack","分散DoS"],
       related: ["malware","botnet"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "DDoS 공격 (분산 서비스 거부 공격)", explanation: "해킹 그룹이 소유한 광범위한 봇넷 내 다수의 좀비 단말을 동원하여 타깃 호스트 웹 서버를 향해 일시에 대용량 무효 접속 리퀘스트를 퍼부어, 과부하로 정상 방문자의 접속을 마비시키는 분산 거부 해킹 수법입니다." }
     },
     {
       id: "lan",
@@ -7526,7 +7526,7 @@
       aliases: ["LAN","local area network"],
       related: ["ip_address"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "LAN (근거리 통신망)", explanation: "사무실, 가정, 학교, 데이터 센터 빌딩 등 공간적 한계가 뚜렷한 한정된 구역 내부의 디바이스들을 이더넷 허브나 무선 주파수로 유기 결합한 로컬 고속 통신 네트워크망입니다." }
     },
     {
       id: "wan",
@@ -7546,7 +7546,7 @@
       aliases: ["WAN","wide area network"],
       related: ["lan"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "WAN (광역 통신망)", explanation: "지리적으로 멀리 떨어진 도시, 국가, 또는 대륙 간의 근거리망(LAN)들을 기간 통신사 전용선 등으로 연결해 구축한 거대 스케일의 광역 데이터 통신 네트워크망입니다." }
     },
     {
       id: "wlan",
@@ -7566,7 +7566,7 @@
       aliases: ["WLAN","Wi-Fi","wireless LAN"],
       related: ["lan"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "무선 LAN (WLAN)", explanation: "동축 유선 전선이나 광섬유 케이블의 연결 없이 고주파 라디오 전파를 활용하여 모바일 디바이스와 통신 AP 단말 간에 패킷을 송수신하도록 설계된 근거리 무선 네트워크 기술(예: 와이파이)입니다." }
     },
     {
       id: "vlan",
@@ -7586,7 +7586,7 @@
       aliases: ["VLAN","virtual LAN"],
       related: ["lan","subnet"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "VLAN (가상 로컬 영역 네트워크)", explanation: "허브나 스위치 등의 물리 포트 연결 구성과 상관없이, 스위치 2계층 설정 변경이나 포트 지정을 통해 논리적으로 분리하고 트래픽을 상호 격리하는 가상 서브넷 구축 기술입니다." }
     },
     {
       id: "ethernet",
@@ -7606,7 +7606,7 @@
       aliases: ["イーサ規格","ethernet"],
       related: ["mac_address"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "이더넷", explanation: "현재 전 세계 LAN 유선 네트워크 구축의 절대적인 표준을 차지하는 IEEE 802.3 규격 통신 패밀리로, 케이블 종류, 신호 인코딩 방식, 패킷 흐름 제어 규칙 등을 규정합니다." }
     },
     {
       id: "network_switch",
@@ -7626,7 +7626,7 @@
       aliases: ["L2スイッチ","スイッチングハブ","network switch"],
       related: ["mac_address","router"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "네트워크 스위치 (스위칭 허브)", explanation: "로컬 영역 네트워크(LAN)의 데이터 링크 계층에서 운용되는 통신 장비로, 들어오는 프레임의 목적지 물리 MAC 주소를 읽어 무차별 공유 대신 정확한 대상 포트 포인터로만 1:1 전송해 주는 스위칭 허브입니다." }
     },
     {
       id: "port_number",
@@ -7646,7 +7646,7 @@
       aliases: ["ポート番号","port number"],
       related: ["ip_address"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "포트 번호", explanation: "전송 계층 프로토콜(TCP/UDP)에서 구동되는 16비트 정수형(0~65535) 논리 식별 번호로, 외부에서 들어온 네트워크 패킷 데이터를 로컬 호스트 운영체제 내의 어떤 데스크톱 프로세스/애플리케이션으로 분배해 주어야 하는지 최종 판별해 줍니다." }
     },
     {
       id: "well_known_port",
@@ -7666,7 +7666,7 @@
       aliases: ["ウェルノウンポート","well-known ports"],
       related: ["port_number"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "잘 알려진 포트 (웰노운 포트)", explanation: "인터넷 번호 할당 기구(IANA)에 의해 표준 공용 프로토콜 연결 전용으로 선점 예약된 0번에서 1023번 범위의 대표 포트(예: HTTP=80, HTTPS=443, SSH=22, FTP=21) 집합입니다." }
     },
     {
       id: "three_way_handshake",
@@ -7686,7 +7686,7 @@
       aliases: ["3ウェイ・ハンドシェイク","three-way handshake"],
       related: ["tcp"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "3방향 핸드셰이크 (3-way Handshake)", explanation: "신뢰성 있는 TCP/IP 통신 세션을 초기 연결하기 위해 클라이언트와 대상 서버 사이에 싱크(SYN), 싱크-에크(SYN-ACK), 에크(ACK)의 세 가지 응답 패킷을 순차적으로 주고받아 회선 접속 상태를 양방향 합의하는 프로세스입니다." }
     },
     {
       id: "udp_datagram",
@@ -7706,7 +7706,7 @@
       aliases: ["データグラム","udp datagram"],
       related: ["udp"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "UDP 데이터그램", explanation: "비연결 지향성인 사용자 데이터그램 프로토콜(UDP) 환경에서 신뢰적 세션 연결 수립 없이 실시간으로 고속 전송하기 위해 캡슐화한 단순 단위로, 헤더 부하가 8바이트로 매우 작아 효율성이 높습니다." }
     },
     {
       id: "cpu",
@@ -7726,7 +7726,7 @@
       aliases: ["プロセッサ","中央処理装置","CPU"],
       related: ["memory"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "CPU (중앙 처리 장치)", explanation: "컴퓨터 시스템 전체의 뇌 역할을 맡은 핵심적인 하드웨어 장치로, RAM으로부터 시스템 명령어를 순차적으로 가져와 해석하고 사칙 연산, 메모리 쓰기 및 각 외부 부품 통제를 통합 관장합니다." }
     },
     {
       id: "gpu",
@@ -7746,7 +7746,7 @@
       aliases: ["グラフィックボード","グラフィックスプロセッサ","GPU"],
       related: ["cpu"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "GPU (그래픽 처리 장치)", explanation: "대규모 연산이 동시에 필요한 고차원 그래픽 렌더링이나 AI 딥러닝 훈련 계산을 효율적으로 처리하기 위해, 수천 개의 연산 코어를 병렬 집적한 비디오 카드 부가 연산 전용 특수 집적회로입니다." }
     },
     {
       id: "ram",
@@ -7766,7 +7766,7 @@
       aliases: ["メインメモリ","主記憶装置","RAM"],
       related: ["memory","rom"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "RAM (주기억 장치 / 휘발성 메모리)", explanation: "컴퓨터의 주기억 장치(랜덤 액세스 메모리)로 CPU가 프로그램 코드를 상시 조회하여 초고속으로 메모리에 쓰거나 읽어 들이는 주소 할당 구역이며, 전원이 차단되면 내부 보존 데이터가 증발하는 휘발성 자원입니다." }
     },
     {
       id: "rom",
@@ -7786,7 +7786,7 @@
       aliases: ["リードオンリーメモリ","ROM"],
       related: ["memory","ram"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "ROM (기록 전용 메모리 / 비휘발성 메모리)", explanation: "공장 제조 출하 단계에서 내용물이 보존 및 잠금 처리되어 데이터를 단방향 조회만 유도하는 비휘발성 메모리로, 장치의 작동이 꺼져도 정보가 보존되므로 하드웨어 기동(부팅)용 펌웨어(예: BIOS) 보관용으로 쓰입니다." }
     },
     {
       id: "operating_system_kernel",
@@ -7806,7 +7806,7 @@
       aliases: ["カーネル","kernel"],
       related: ["operating_system","kernel"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "운영체제 커널 (OS 커널)", explanation: "컴퓨터 운영체제(OS)의 가장 밑바탕을 지탱하는 연산 통제 핵심으로, 물리 하드웨어(CPU, RAM, 파일 드라이버) 자원의 할당 관리를 안전하게 주도하며 응용 소프트웨어가 접근 가능한 통로를 내어줍니다." }
     },
     {
       id: "system_call",
@@ -7826,7 +7826,7 @@
       aliases: ["システム呼び出し","system call"],
       related: ["operating_system_kernel"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "시스템 콜 (시스템 호출)", explanation: "사용자가 실행한 일반 응용프로그램이 직접 접근할 수 없는 보호된 하드웨어 기능(예: 디스크 파일 읽기/쓰기, 네트워크 포트 바인딩)을 운영체제 커널에 안전하게 서비스 위임 대행하도록 요청하는 대칭 인터페이스 관문입니다." }
     },
     {
       id: "daemon_process",
@@ -7846,7 +7846,7 @@
       aliases: ["常駐プロセス","daemon","デーモン"],
       related: ["process"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "데몬 프로세스", explanation: "리눅스/유닉스 계열 서버 시스템에서 쉘 대화 터미널 창을 꺼도 무관하게 시스템 백그라운드 상주 상태로 잠잠히 주기 동작하며 특정 통신 서비스 대기나 모니터링을 담당하는 서비스용 백그라운드 프로세스입니다." }
     },
     {
       id: "log_rotation",
@@ -7866,7 +7866,7 @@
       aliases: ["ログローテ","log rotation"],
       related: ["backup"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "로그 로테이션 (로그 순환)", explanation: "시스템 구동 중 지속적으로 기록 및 누적되는 텍스트 로그 파일이 너무 거대해져 디스크가 한계에 달하는 현상을 막기 위해, 시간이나 크기 제한을 두어 이전 로그를 압축 보관하고 오래된 백업을 삭제하는 자동 관리 기법입니다." }
     },
     {
       id: "http_cookie",
@@ -7886,7 +7886,7 @@
       aliases: ["クッキー","Cookie","HTTP cookie"],
       related: ["cookie","session"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "HTTP 쿠키", explanation: "방문한 웹 서버가 클라이언트의 인터넷 브라우저에 쿠키 형태로 기록해 두도록 응답 헤더로 전달하는 소용량 비영구 메타데이터로, 브라우저는 재방문할 때 해당 웹서버에 이 쿠키 정보를 동봉해 전송함으로써 상태 유지를 확인합니다." }
     },
     {
       id: "same_origin_policy",
@@ -7906,7 +7906,7 @@
       aliases: ["同一生成元ポリシー","same-origin policy"],
       related: ["cors"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "동일 출처 정책 (SOP)", explanation: "웹 브라우저가 제공하는 중요한 웹 보안 체계로, 임의의 한 출처(스키마, 호스트 도메인명, 연결 포트번호의 결합)에서 로드된 실행 자바스크립트 스크립트가 다른 출처의 프레임 문서나 리소스 데이터에 접근하지 못하게 원천 제한하는 보안 제어입니다." }
     },
     {
       id: "csrf_token",
@@ -7926,7 +7926,7 @@
       aliases: ["CSRF対策トークン","anti-CSRF token"],
       related: ["session"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "CSRF 토큰", explanation: "사용자가 악성 웹 사이트에 조작 유도당해 로그인되어 있는 정상 시스템에 비정상 승인 요청을 강제 전송하는 크로스 사이트 요청 위조(CSRF) 공격을 방지하기 위해, 웹 폼 전송 시 마다 서버와 세션이 검증 확인하는 임의의 일회용 비밀 토큰 값입니다." }
     },
     {
       id: "bearer_token",
@@ -7946,7 +7946,7 @@
       aliases: ["Bearerトークン","bearer token"],
       related: ["access_token"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "베어러 토큰 (Bearer Token)", explanation: "웹 서비스 API 보안 인증 시 활용되는 고유 권한 토큰 포맷으로, HTTP 통신 헤더의 `Authorization: Bearer <토큰>` 방식을 채택하여 해당 토큰 문자열을 보유한 주체에게 즉각적인 자원 승인을 약속하는 인증 정보입니다." }
     },
     {
       id: "webhook",
@@ -7966,7 +7966,7 @@
       aliases: ["ウェブフック","webhook"],
       related: ["api"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "웹훅 (Webhook)", explanation: "특정 소스 시스템 내부에서 어떠한 주요 이벤트가 발생하는 즉시, 사전에 수신처가 등록해 놓은 목적지 웹 URL을 향해 실시간 HTTP POST 콜백 형태로 JSON 패킷 알림을 발송하는 메커니즘입니다." }
     },
     {
       id: "http_cache",
@@ -7986,7 +7986,7 @@
       aliases: ["ブラウザキャッシュ","http cache"],
       related: ["http"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "HTTP 캐시", explanation: "최초 방문 시 내려받은 무거운 이미지, 스타일시트(CSS), 자바스크립트 파일 등 정적 웹 리소스를 인터넷 브라우저 로컬 데이터 디스크나 프록시 장비에 사전에 사본 저장해 두어, 재요청 시 서버까지 원거리 통신을 하지 않고 사본을 즉시 로딩해 속도를 향상시키는 캐싱 메커니즘입니다." }
     },
     {
       id: "git_init",
@@ -8006,7 +8006,7 @@
       aliases: ["git init","リポジトリ初期化"],
       related: ["version_control"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "git init 명령어", explanation: "로컬 컴퓨터의 특정 빈 폴더에 로컬 저장소 이력을 관리할 수 있는 숨겨진 `.git` 환경 제어 디렉터리를 초기 설계해 넣는 작업으로, Git 버전 제어 트래킹을 새로 활성화할 때 가동하는 첫 명령어입니다." }
     },
     {
       id: "git_commit_hash",
@@ -8026,7 +8026,7 @@
       aliases: ["SHA-1ハッシュ","commit hash"],
       related: ["version_control"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Git 커밋 해시", explanation: "깃(Git) 버전 관리 시스템에서 각각의 커밋 내용물 정보, 생성자, 변경 타임스탬프 정보 등을 토대로 SHA-1 암호학적 해시 알고리즘 연산을 가해 출력한 40자리의 고유 식별 해시 키코드 값입니다." }
     },
     {
       id: "smoke_test",
@@ -8046,7 +8046,7 @@
       aliases: ["スモークテスト","smoke testing"],
       related: ["testing"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "스모크 테스트 (冒煙 테스트)", explanation: "새로운 프로그램 빌드가 성립된 이후, 본격적이고 깊이 있는 종합 성능 검사나 단위 테스트에 들어가기에 앞서 시스템이 최소한 부팅이 되고 핵심 기동 기능들이 뻗지 않고(연기 나지 않고) 수행되는지 속성 검증하는 1차 기본 테스트입니다." }
     },
     {
       id: "end_to_end_test",
@@ -8066,7 +8066,7 @@
       aliases: ["E2Eテスト","end-to-end testing"],
       related: ["testing","unit_test"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "엔드투엔드 테스트 (E2E 테스트)", explanation: "실사용자의 브라우저 행동 패턴이나 API 통신을 처음부터 끝까지 실감 나게 흉내 내어 사용자 환경(UI)을 시작으로 비즈니스 API 모듈을 거쳐 실제 물리 DB 스토리지 저장 처리까지의 전체 거래 동선을 일관되게 검증하는 시스템 테스트 기법입니다." }
     },
     {
       id: "public_cloud",
@@ -8086,7 +8086,7 @@
       aliases: ["共有クラウド","public cloud"],
       related: ["cloud_computing"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "퍼블릭 클라우드", explanation: "클라우드 전문 대기업(AWS, Microsoft Azure, Google Cloud 등)이 소유 및 가동하는 물리 데이터 센터 자원을 퍼블릭 인터넷 망을 매개로 다수의 일반 기업이나 개인 서브스크립션 유저에게 가상 컴퓨팅 리소스 형태로 유료 분배 임대하는 구동 방식입니다." }
     },
     {
       id: "private_cloud",
@@ -8106,7 +8106,7 @@
       aliases: ["専用クラウド","private cloud"],
       related: ["cloud_computing","public_cloud"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "프라이빗 클라우드 (사설 클라우드)", explanation: "오직 특정 기업이나 계열사 기관 단 하나만을 위해 독점적으로 격리 설계된 폐쇄형 가상 컴퓨팅 환경으로, 온프레미스 전용 사내 데이터 센터 혹은 독립된 전용망 클라우드 호스팅 영역에 배치하여 강력한 정보 보안과 사내 자율 통제를 도모합니다." }
     },
     {
       id: "hybrid_cloud",
@@ -8126,7 +8126,7 @@
       aliases: ["ハイブリッド","hybrid cloud"],
       related: ["cloud_computing","public_cloud","private_cloud"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "하이브리드 클라우드", explanation: "퍼블릭 클라우드 서비스와 전용 프라이빗 클라우드 또는 기업 내부의 전통적 로컬 서버 인프라(온프레미스)를 고속 VPN 링크로 연결하여, 기업의 워크로드 수준 및 정보 기밀도에 따라 앱이나 데이터 사본을 최적의 공간으로 유동 이동 및 병용 관리하는 클라우드 전략 아키텍처입니다." }
     },
     {
       id: "rolling_update",
@@ -8146,7 +8146,7 @@
       aliases: ["段階的デプロイ","rolling update"],
       related: ["container"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "롤링 업데이트 (점진적 업데이트)", explanation: "대형 클라우드나 컨테이너 오케스트레이션(Kubernetes 등) 환경에서 운영 무중단 서비스를 지향하여, 기동 중인 구버전의 POD 컨테이너나 호스트 서버 노드 인스턴스들을 일시에 정지하지 않고 한 대 혹은 일정 세트씩 교대로 새로운 버전의 애플리케이션으로 점진 대체하는 배포 방식입니다." }
     },
     {
       id: "stable_sort",
@@ -8166,7 +8166,7 @@
       aliases: ["安定ソート","stable sorting"],
       related: ["sorting_algorithm"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "안정 정렬 (Stable Sort)", explanation: "정렬 알고리즘 중 하나로, 정렬하고자 하는 데이터 셋 내에서 동일한 비교 키(Key)를 가진 레코드들이 존재할 경우, 정렬이 완료된 뒤에도 이들의 정렬 전 초기 상대적인 순서가 보존되는 정렬 성질(예: 병합 정렬, 버블 정렬)입니다." }
     },
     {
       id: "in_place_sort",
@@ -8186,7 +8186,7 @@
       aliases: ["内部ソート","in-place sorting"],
       related: ["sorting_algorithm"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "제자리 정렬 (In-place Sort)", explanation: "정렬 연산 수행 시 대량의 추가적인 보조 메모리 공간을 할당하지 않고, 주어진 입력 배열 데이터 영역 내부에서 직접 요소들의 자리를 서로 스와프(교환)하여 정렬을 해결하는 초절약 메모리형 정렬 특성(예: 퀵 정렬, 삽입 정렬)입니다." }
     },
     {
       id: "project_manager",
@@ -8206,7 +8206,7 @@
       aliases: ["PM"],
       related: ["system_lifecycle"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "프로젝트 매니저 (PM)", explanation: "특정 태스크 프로젝트의 전반적인 발의부터 개시, 세부 설계 및 실행, 진척 감시, 성공 종료까지 기획과 관리의 전적인 책임 지휘를 조율하는 핵심 실무 총괄자입니다." }
     },
     {
       id: "project_scope",
@@ -8226,7 +8226,7 @@
       aliases: ["スコープ"],
       related: ["project_manager","system_lifecycle"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "프로젝트 범위 (스코프)", explanation: "프로젝트를 정해진 예산과 일정대로 확실하게 수행 및 조기 인도하기 위해, 결과물로 창출해 내야 하는 최종 제품/서비스 사양 및 이의 완성에 수반되는 작업 한계의 정확한 영역 범위입니다." }
     },
     {
       id: "scope_creep",
@@ -8246,7 +8246,7 @@
       aliases: ["範囲の肥大化"],
       related: ["project_scope","change_management"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "범위 크립 (범위 잠식 / 스코프 크립)", explanation: "공식적인 위험 분석서 작성이나 상응하는 예산 조정, 기간 연장 합의 절차 없이 프로젝트 범위가 무계획하고 지속적으로 증가하고 옆으로 불어나는 위험한 현상입니다." }
     },
     {
       id: "work_breakdown_structure",
@@ -8266,7 +8266,7 @@
       aliases: ["WBS","作業分解構成図"],
       related: ["project_scope","project_manager"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "작업 분할 구조도 (WBS)", explanation: "프로젝트의 전체 작업 범위를 관리하기 용이하도록 더 작고 실무적인 업무 단위(Work Package)로 계층 분석하여 분류 기술한 세부 계층화 도표로, 비용 산정과 진척 일정을 조절하는 프로젝트 관리의 뼈대입니다." }
     },
     {
       id: "database_migration",
@@ -8286,7 +8286,7 @@
       aliases: ["DB移行"],
       related: ["database_schema","database_connection"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "데이터베이스 마이그레이션", explanation: "서버 교체나 가상화 및 클라우드 이전 작업 시, 기존 소스 데이터베이스 관리 시스템에서 작동 중인 스키마와 저장 데이터 자원을 대상 목적지 타깃 데이터베이스 서버로 정밀 변환하여 이송하는 처리입니다." }
     },
     {
       id: "schema_migration",
@@ -8306,7 +8306,7 @@
       aliases: ["スキーマ管理","schema versioning"],
       related: ["database_schema","database_migration"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "스키마 마이그레이션", explanation: "연동된 소프트웨어 응용 애플리케이션의 릴리스 버전 업그레이드 변화에 부응하여, 기존 운영 데이터베이스 내부의 테이블 컬럼 추가, 관계 제약 조건 등의 데이터 구조 정의서(스키마)를 정합성 파손 없이 순차 갱신 및 버전 제어하는 처리입니다." }
     },
     {
       id: "data_migration",
@@ -8326,7 +8326,7 @@
       aliases: ["データマイグレーション"],
       related: ["database_migration"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "데이터 마이그레이션", explanation: "시스템 고도화나 데이터 통합 계획의 일환으로, 컴퓨터 저장 장치의 물리 유형 변경, 파일 구조 개편, 혹은 운영 서버의 변경에 따라 실제 보관 데이터를 다른 장치나 영역으로 완전히 옮겨 적재하는 작업입니다." }
     },
     {
       id: "java_polymorphism",
@@ -8346,7 +8346,7 @@
       aliases: ["ポリモーフィズム","多相性"],
       related: ["polymorphism","java_inheritance","override"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Java 다형성 (Polymorphism)", explanation: "자바 객체지향 프로그래밍의 중요 패러다임으로, 동일한 부모 타입의 인터페이스나 수퍼 클래스 참조 변수를 사용해 특정 추상 메서드를 호출하더라도, 런타임에 동적으로 바인딩된 실제 하위 구현 객체(인스턴스)에 따라 각자의 고유한 실행 결과를 도출하는 특성입니다." }
     },
     {
       id: "java_encapsulation",
@@ -8366,7 +8366,7 @@
       aliases: ["カプセル化"],
       related: ["encapsulation"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Java 캡슐화 (Encapsulation)", explanation: "자바 클래스 내 데이터(멤버 변수)의 임의 조작 오작동을 막기 위해 상태 변수를 private 접근 제어로 감추고, 오직 외부에 노출 승인된 검증 인터페이스 메서드(Getter/Setter)를 통해서만 클래스 내부 데이터를 읽고 쓰도록 유도하는 데이터 보호 설계 방식입니다." }
     },
     {
       id: "java_inheritance",
@@ -8386,7 +8386,7 @@
       aliases: ["継承"],
       related: ["inheritance","java_polymorphism","super_keyword"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Java 상속 (Inheritance)", explanation: "객체지향 자바의 코드 재사용 기반으로, `extends` 선언을 통하여 기존 상위 부모 클래스(Superclass)가 보유한 유효 필드 변수와 실행 메서드 멤버들을 하위 자식 클래스(Subclass)가 온전히 물려받아 기능을 보완하거나 수정(Overriding)해 사용하는 기능입니다." }
     },
     {
       id: "python_inheritance",
@@ -8406,7 +8406,7 @@
       aliases: ["Python継承"],
       related: ["inheritance","python_super"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Python 상속", explanation: "파이썬 클래스 정의 시 소괄호 안에 부모 클래스들을 매개체로 직접 명시함으로써 기존 멤버와 특징적 기능들을 재활용하는 메커니즘으로, 특히 자바와 달리 복수의 부모를 결합시키는 다중 상속(Multiple Inheritance) 구조를 온전히 지원합니다." }
     },
     {
       id: "python_super",
@@ -8426,7 +8426,7 @@
       aliases: ["super()"],
       related: ["python_inheritance"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Python super() 함수", explanation: "파이썬 하위 클래스(자식 클래스) 정의 본문 안에서, 오버라이딩하여 가려진 직속 부모 클래스의 메서드나 생성자 호출(`__init__`)을 대행 위임하기 위해 직접적으로 대상 상위 버전을 리턴하는 내장 프록시 기능 함수입니다." }
     },
     {
       id: "python_magic_method",
@@ -8446,7 +8446,7 @@
       aliases: ["特殊メソッド","dunder methods"],
       related: ["python_class"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Python 매직 메서드 (특별 메서드)", explanation: "앞뒤가 더블 언더스코어 두 개(`__`)로 감싸인 파이썬 전용 내장 가상 메서드들(예: 객체 초기화 `__init__`, 출력 포맷 `__str__`, 동등 비교 `__eq__`)로, 연산자 오버로딩과 파이썬 기본 인터페이스와 개체 클래스의 상호 동작을 동적으로 정의합니다." }
     },
     {
       id: "network_topology",
@@ -8466,7 +8466,7 @@
       aliases: ["接続形態","topology"],
       related: ["star_topology","bus_topology"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "네트워크 토폴로지 (망 구성 형태)", explanation: "네트워크를 구성하는 호스트 컴퓨터 노드, 스위치 기기 및 신호 케이블 전선 등의 각 링크들을 물리적으로 배열하거나 논리적인 연관 관계로 묶어낸 하드웨어 연결의 기하학적 형태 구조입니다." }
     },
     {
       id: "star_topology",
@@ -8486,7 +8486,7 @@
       aliases: ["スター型接続"],
       related: ["network_topology","network_switch"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "성형 토폴로지 (스타형 망 구성)", explanation: "임의의 한 중앙 단말 스위칭 제어 허브를 기준으로 하여 모든 주변 노드 장치들을 1:1 방사형 케이블 라인으로 결합시키는 통신 구조로, 지선 케이블의 훼손이 전체망에 간섭하지 않고 관리가 편하지만 허브 장애 시 전면 통신 장애를 겪습니다." }
     },
     {
       id: "bus_topology",
@@ -8506,7 +8506,7 @@
       aliases: ["バス型接続"],
       related: ["network_topology"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "버스형 토폴로지 (버스형 망 구성)", explanation: "단 한 가닥의 중심 전송 선로(Bus) 케이블에 모든 장치 노드들을 병렬식으로 연결하여 신호를 수송 및 공유하는 형태의 네트워크 구성법으로, 백본 기간 통신 케이블 파손 시 네트워크 전반이 일시에 마비되는 성질이 있습니다." }
     },
     {
       id: "zero_trust",
@@ -8526,7 +8526,7 @@
       aliases: ["ゼロトラストネットワーク","Zero Trust Architecture"],
       related: ["defense_in_depth","multi_factor_authentication"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "제로 트러스트 (Zero Trust)", explanation: "\"안전한 내부 네트워크 경계 구역은 존재하지 않는다\"라는 전제에서 출발한 기업 보안 통제 사상으로, 사내 내망 접속과 외부 아웃바운드 시도 여부를 불문하고 모든 데이터 접근 주체에 대하여 항시 인증, 권한 점검 및 트래픽 암호화를 상시 반복 요구합니다." }
     },
     {
       id: "defense_in_depth",
@@ -8546,7 +8546,7 @@
       aliases: ["深層防御","multilayer defense"],
       related: ["zero_trust","firewall"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "심층 방어 (다층 방어 / Defense in Depth)", explanation: "단일 보안 장비의 우회 공격에 대비하여 네트워크 방화벽, 침입 방지 시스템(IPS), 백신 가동, 통신 패킷 암호화, 데이터 탈민 등 서로 다른 원리의 보안 보호막을 시스템 전 영역에 걸쳐 여러 레이어로 겹겹이 덧대는 입체적 방어 개념입니다." }
     },
     {
       id: "endpoint_security",
@@ -8566,7 +8566,7 @@
       aliases: ["端末セキュリティ"],
       related: ["malware","vulnerability_scan"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "엔드포인트 보안 (단말 보안)", explanation: "네트워크 환경에 가상 접속 중인 실질적인 사용자 컴퓨터 장치 단계에서 악성 바이러스 백신 진단이나 행위 차단 기술을 전개하여, 네트워크 진입로의 위협 요소들을 사전 차단하는 보안 영역입니다." }
     },
     {
       id: "computer_architecture",
@@ -8586,7 +8586,7 @@
       aliases: ["コンピュータ構成","computer organization"],
       related: ["cpu","ram"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "컴퓨터 아키텍처 (컴퓨터 구조)", explanation: "컴퓨터의 성능 제어를 구성하기 위한 레지스터 구성 방식, 하드웨어 내부 장치들 간의 기능적 설계 사상 및 기계 명령어 세트의 논리 결합 설계 체계입니다." }
     },
     {
       id: "cpu_core",
@@ -8606,7 +8606,7 @@
       aliases: ["プロセッサコア","core"],
       related: ["cpu"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "CPU 코어", explanation: "단일 CPU 칩 패키지 내부에 자리 잡고 실제로 연산 명령어 집합을 단독 수행하여 기계 연산을 담당해 처리하는 물리적 핵심 하드웨어 장치 단위를 의미합니다." }
     },
     {
       id: "http_method",
@@ -8626,7 +8626,7 @@
       aliases: ["リクエストメソッド","HTTP request method"],
       related: ["http","http_get"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "HTTP 메서드 (HTTP 요청 메서드)", explanation: "웹 브라우저 클라이언트가 대상 웹 서버에 통신을 발송할 때, 타깃 인터넷 리소스를 어떻게 다룰 것인지를 명기하는 행동 양식 커맨드 규약입니다." }
     },
     {
       id: "http_get",
@@ -8646,7 +8646,7 @@
       aliases: ["GETリクエスト","get_method"],
       related: ["http_method"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "HTTP GET 메서드", explanation: "웹 서버로부터 데이터나 문서를 조회하여 안전하게 획득하려 할 때 전송하는 가장 보편적이고 기초적인 HTTP 요청 방식입니다." }
     },
     {
       id: "source_code",
@@ -8666,7 +8666,7 @@
       aliases: ["ソース","source file"],
       related: ["version_control","git_init"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "소스코드 (원시 코드)", explanation: "소프트웨어 개발 엔지니어가 특정 컴퓨터 언어 규약에 의거하여 기계 명령을 수행하도록 사람이 읽을 수 있는 문서 텍스트 형태로 작성해 놓은 소프트웨어의 기본 설계본입니다." }
     },
     {
       id: "cloud_provider",
@@ -8686,7 +8686,7 @@
       aliases: ["クラウド事業者","cloud service provider"],
       related: ["cloud_computing","iaas","paas","saas"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "클라우드 제공업체 (클라우드 서비스 제공사)", explanation: "자사 소유의 대형 정보 처리 인프라 및 플랫폼 환경을 인터넷 통신망을 통해 원격 가상 자원 임대형 서비스 모델로 제공 및 요금을 부과하는 전문 기업입니다." }
     },
     {
       id: "risk_register",
@@ -8706,7 +8706,7 @@
       aliases: ["リスクログ","Risk Log"],
       related: ["change_management"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "위험 등록부 (Risk Register)", explanation: "프로젝트 실행 과정에서 출현할 수 있는 모든 예상 잠재적 장애 및 위해 요소들을 열거하고, 각 발생 확률과 충격 영향도 평가 분석을 거쳐 사전 예방 회피 및 완화 대책을 묶어 기록해 둔 프로젝트 관리 표준 대장입니다." }
     },
     {
       id: "issue_log",
@@ -8726,7 +8726,7 @@
       aliases: ["イシューログ","Issue Register"],
       related: ["risk_register","change_management"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "이슈 로그 (이슈 관리 대장 / 과제 관리표)", explanation: "프로젝트 기획 실행 단계에서 이미 현실화되어 버린 부작용이나 문제점들을 순차 취합해 올린 뒤, 조치 담당자 배정 및 해결 마감일자, 그리고 현재 진행 상황 및 해소 상태를 모니터링하기 위해 편제한 현안 관리 장부입니다." }
     },
     {
       id: "stakeholder_analysis",
@@ -8746,7 +8746,7 @@
       aliases: ["利害関係者分析"],
       related: ["project_manager"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "이해관계자 분석 (스테이크홀더 분석)", explanation: "프로젝트 추진 시 의사결정의 주축이 되거나 간접 영향을 주고받는 여러 이해당사자들의 프로젝트에 관한 영향 파워, 요구사항 관심 수준 등을 질적/양적으로 수집하여 최적의 소통 교신 대책을 수립하는 전략 기법입니다." }
     },
     {
       id: "nondisclosure_agreement",
@@ -8766,7 +8766,7 @@
       aliases: ["NDA","守秘義務契約"],
       related: ["compliance_check"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "비밀 유지 계약 (NDA)", explanation: "비즈니스 거래 타당성 검토나 기술 협력 등의 업무 대화 과정에서 상대방에게 유입되는 회사의 핵심 노하우, 핵심 영업 기밀 소스 및 무형 재산 정보들을 제3자나 불특정 대중에게 발설하지 않도록 강제 규정한 법적 효력의 계약서입니다." }
     },
     {
       id: "data_dictionary",
@@ -8786,7 +8786,7 @@
       aliases: ["データディクショナリ"],
       related: ["database_schema"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "데이터 사전 (Data Dictionary)", explanation: "데이터베이스 관리 시스템에서 활용되는 스키마 테이블 구조, 컬럼 형식 데이터 타입 명세, 참조 키 관계 등 시스템 제어에 관여하는 모든 메타데이터 정의 정보들을 한곳에 체계화해 보관하는 데이터베이스용 어휘록입니다." }
     },
     {
       id: "metadata",
@@ -8806,7 +8806,7 @@
       aliases: ["付帯情報"],
       related: ["data_dictionary","database_schema"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "메타데이터", explanation: "특정 알맹이 데이터를 보완 및 가이드하기 위한 목적으로 설계된 '데이터를 위한 데이터'로, 대상 파일의 생성 일자, 소유 저작권자, 텍스트 인코딩 포맷 및 데이터 구조 설명 등이 포함됩니다." }
     },
     {
       id: "data_integrity",
@@ -8826,7 +8826,7 @@
       aliases: ["データインテグリティ"],
       related: ["referential_integrity"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "데이터 무결성", explanation: "데이터베이스 내에 저장된 모든 테이블 정보가 변경 및 통신 과정에서 오류 없이 완벽하게 정합성을 유지하여 모순이나 누락 없이 정확한 최신 상태를 유지하고 있는 성질입니다." }
     },
     {
       id: "java_constructor_overload",
@@ -8846,7 +8846,7 @@
       aliases: ["コンストラクタの多重定義"],
       related: ["java_constructor","overload"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Java 생성자 오버로딩", explanation: "하나의 자바 클래스 내에 매개변수의 개수, 타입 형태, 선언 배치 순서가 서로 다르게 코딩된 생성자들을 다중으로 편제하여, 객체를 생성할 때 전달하는 인수 조합의 종류에 맞게 맞춤형 초기 인스턴스화를 허용하는 코딩 방식입니다." }
     },
     {
       id: "java_access_level",
@@ -8866,7 +8866,7 @@
       aliases: ["アクセス修飾子レベル"],
       related: ["access_modifier","java_encapsulation"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Java 접근 제한 수준 (접근 제어자 수준)", explanation: "클래스, 필드 속성 변수, 선언 메서드들에 가해지는 자바 지시자의 제약 상태를 지칭하며, 외부 패키지나 클래스로부터의 데이터 접근 노출 유효성을 제어합니다." }
     },
     {
       id: "java_static_variable",
@@ -8886,7 +8886,7 @@
       aliases: ["クラス変数","static変数"],
       related: ["static_keyword"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Java 정적 변수 (클래스 변수)", explanation: "`static` 예약어가 수반된 자바 필드 속성으로, 개별 생성 객체에 속하지 않고 클래스 로더 기동 시 해당 클래스 원본 영역 메모리에 단 1회 상주 생성되어 모든 하위 개체들이 동일 값을 전역 공유하는 변수입니다." }
     },
     {
       id: "python_eq_method",
@@ -8906,7 +8906,7 @@
       aliases: ["__eq__"],
       related: ["python_magic_method"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Python __eq__ 메서드", explanation: "파이썬 클래스의 인스턴스를 등가 동치 비교 연산자로 상호 대조해 판별하려 할 때, 내부 개발자가 클래스 맞춤형으로 1:1 같은 조건에 관한 계산 로직을 정의하는 매직 메서드입니다." }
     },
     {
       id: "python_str_method",
@@ -8926,7 +8926,7 @@
       aliases: ["__str__"],
       related: ["python_magic_method"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Python __str__ 메서드", explanation: "개체를 사용자가 쉽게 읽어 식별할 수 있는 정형화된 비공식 설명 텍스트 문자열 형식으로 대칭 출력하게 해주는 특수 메서드로, 파이썬 기본 `print()` 출력이나 `str()` 변환 시 자동 연계되어 작용합니다." }
     },
     {
       id: "python_repr_method",
@@ -8946,7 +8946,7 @@
       aliases: ["__repr__"],
       related: ["python_magic_method","python_str_method"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Python __repr__ 메서드", explanation: "시스템 디버깅 시나 개발자가 변수를 점검할 때, 대상 인스턴스를 생성할 때 대입한 코드 원본에 가까운 가장 정확하고 유일무이한 공식적인 문자열 설명을 표현해 내는 매직 메서드입니다." }
     },
     {
       id: "mesh_topology",
@@ -8966,7 +8966,7 @@
       aliases: ["フルメッシュ","網の目状接続"],
       related: ["network_topology"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "망형 토폴로지 (메시형 망 구성)", explanation: "로컬 단말 컴퓨터나 중계 허브 스위치들이 상호간에 1:1 다중 교차 회선을 그물망 형태로 완전히 혹은 부분적으로 직접 다리 놓는 구성 방식으로, 특정 회선이나 노드가 끊어져도 대체 우회 경로가 확보되므로 신뢰성이 최상위인 대신 전선 배선 비용이 막대합니다." }
     },
     {
       id: "network_segment",
@@ -8986,7 +8986,7 @@
       aliases: ["セグメント","segment"],
       related: ["subnet"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "네트워크 세그먼트 (네트워크 분할 구역)", explanation: "스위칭 허브나 물리 라우터를 기점으로 하여 물리적, 논리적으로 트래픽의 전송 범위를 한정 지어 격리한 독립적 로컬 네트워크 방송 구역입니다." }
     },
     {
       id: "default_route",
@@ -9006,7 +9006,7 @@
       aliases: ["デフォルトゲートウェイルート"],
       related: ["routing","default_gateway"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "디폴트 라우트 (기본 경로)", explanation: "유입된 인터넷 패킷을 포워딩하려 할 때 라우터 장비 내부의 정밀 라우팅 테이블에서 대칭되는 상세 행선지 정보 경로를 조율할 수 없을 경우, 무조건적으로 패킷을 최종 토스해 넘기는 와일드카드 경로 설정입니다." }
     },
     {
       id: "vulnerability_assessment",
@@ -9026,7 +9026,7 @@
       aliases: ["脆弱性診断","vulnerability scan-assessment"],
       related: ["vulnerability_scan","endpoint_security"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "취약점 평가 (보안 취약점 진단)", explanation: "기업의 네트워크 인프라나 운영 프로그램의 전 보안 홀들을 계통 식별 및 진단한 뒤, 해당 약점으로 초래될 공격 파괴도나 시스템 노출도 수준을 분석하여 조치 보완의 우선순위를 평점 매기는 체계적인 과정입니다." }
     },
     {
       id: "phishing_email",
@@ -9046,7 +9046,7 @@
       aliases: ["詐欺メール"],
       related: ["phishing"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "피싱 이메일", explanation: "은행, 공공기관 혹은 신뢰 받는 기업체 명의를 교묘하게 사칭해 피해 사용자에게 대량 발송한 사기 메일로, 본문에 위장 피싱 사이트 하이퍼링크를 넣어 패스워드나 개인 식별 카드 금융 정보를 무단 탈취하는 사회공학적 기법입니다." }
     },
     {
       id: "spear_phishing",
@@ -9066,7 +9066,7 @@
       aliases: ["標的型メール攻撃","spear phishing attack"],
       related: ["phishing_email"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "스피어 피싱 (표적형 피싱)", explanation: "불특정 일반 대상을 모조리 공격하는 일반 피싱과 달리, 기업 내부의 권한을 쥔 특정 실무 관리자나 주요 고위 임원 인물을 단독 조준하여 내부 프로젝트 메일이나 거래처 명세서 등으로 철저하게 맞춤형 설계해 잠입을 시도하는 고도 타깃 해킹 공격입니다." }
     },
     {
       id: "cpu_thread",
@@ -9086,7 +9086,7 @@
       aliases: ["論理プロセッサ","logical core"],
       related: ["cpu_core","process"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "CPU 스레드 (논리 코어)", explanation: "운영체제가 인식하는 스케줄링 최소 단위이자 논리 코어로, 하드웨어 하이퍼스레딩 기술을 활용하여 물리 CPU 코어 하나가 여러 스레드의 연산 흐름을 동시에 연동해 실행하게 돕는 논리 가공 장치입니다." }
     },
     {
       id: "memory_leak",
@@ -9106,7 +9106,7 @@
       aliases: ["メモリ流出"],
       related: ["memory"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "메모리 누수 (메모리 리크)", explanation: "응용 프로그램이 가동 도중 필요한 RAM 공간을 할당받았으나 사용 소멸이 끝난 이후에도 힙 메모리에서 이를 적절하게 해제하지 않아, 불필요한 메모리 점유가 지속해서 누적되어 급기야 호스트 시스템의 물리 램이 고갈되는 소프트웨어 오류입니다." }
     },
     {
       id: "http_post",
@@ -9126,7 +9126,7 @@
       aliases: ["POSTリクエスト","post_method"],
       related: ["http_method","http_get"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "HTTP POST 메서드", explanation: "클라이언트가 입력한 데이터 폼 정보나 생성 요청 패킷을 웹 서버에 송출하여 지정된 위치 아래에 완전히 새로운 리소스를 생성 및 등록할 때 사용하는 HTTP 요청 방식입니다." }
     },
     {
       id: "http_put",
@@ -9146,7 +9146,7 @@
       aliases: ["PUTリクエスト","put_method"],
       related: ["http_method","http_post"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "HTTP PUT 메서드", explanation: "지정된 목적지 URL 위치의 원래 리소스를, 클라이언트가 신규 전달한 본문 데이터를 토대로 1:1 통째로 완전히 대체하도록 처리하는 멱등성이 보장된 HTTP 요청 방식입니다." }
     },
     {
       id: "source_control",
@@ -9166,7 +9166,7 @@
       aliases: ["バージョン管理システム","source code management","SCM"],
       related: ["version_control"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "소스 코드 관리 (버전 관리)", explanation: "소스 파일들의 시점별 추가 변경 추적을 지속 기록하여, 개발 코드가 꼬였을 때 특정 시점으로 복구하거나 공동 개발자들이 같은 코드를 동시에 편집하고 합칠 수 있도록 제어하는 개발 형상 관리 도구입니다." }
     },
     {
       id: "compute_instance",
@@ -9186,7 +9186,7 @@
       aliases: ["クラウドインスタンス","VM instance"],
       related: ["cloud_computing"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "컴퓨트 인스턴스 (가상 서버 인스턴스)", explanation: "가상화 하이퍼바이저 기반으로 작동하는 단독 구동 가상 머신 실행체로, 클라우드 상에서 독립된 CPU 성능, 할당 메모리, 전용 OS 이미지 파티션을 받아 유저에게 배정되는 가상 컴퓨터 본체 단위입니다." }
     },
     {
       id: "personal_information_protection",
@@ -9206,7 +9206,7 @@
       aliases: ["個人情報保護法"],
       related: ["privacy"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "개인정보 보호", explanation: "개인 식별성과 사생활 침해 피해를 미연에 제어하기 위해, 이름, 휴대전화, 카드번호 등의 고유 정보를 수집 및 보관 가공하는 주체에 안전 조치를 요구하고 무단 유출을 단속하는 법률 규범 및 기술적 프레임워크입니다." }
     },
     {
       id: "privacy_mark",
@@ -9226,7 +9226,7 @@
       aliases: ["Pマーク"],
       related: ["personal_information_protection"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "프라이버시 마크 (PrivacyMark)", explanation: "개인 정보보호 수집 및 처리가 높은 수준으로 안전하고 적합하게 수립되어 운용되고 있는 우수한 기업 및 기관에 대해 평가 기관이 인증서 부착을 허가해 주는 적합성 평가 인증 로고입니다." }
     },
     {
       id: "corporate_governance",
@@ -9246,7 +9246,7 @@
       aliases: ["企業統治"],
       related: ["compliance_check"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "기업 지배구조 (코퍼레이트 거버넌스)", explanation: "대기업 주주나 전문 경영인의 도덕적 해이와 경영 비리를 근절하고 투명한 회계 및 영업 활동을 담보하도록 유도하는 사외 감시 위원회 배정, 감사 제도 설계 등 전반적인 경영 통제 구조 지배 체계입니다." }
     },
     {
       id: "backup_strategy",
@@ -9266,7 +9266,7 @@
       aliases: ["バックアップポリシー"],
       related: ["backup"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "백업 전략", explanation: "하드웨어 고장이나 데이터 유실 등의 긴급 장애 시나리오에 즉각 대처할 수 있도록 백업 저장소의 지리 위치, 백업 기동 주기, 방식 종류 등을 명문화하여 정해 둔 데이터 소실 방지 마스터플랜입니다." }
     },
     {
       id: "full_backup",
@@ -9286,7 +9286,7 @@
       aliases: ["完全バックアップ"],
       related: ["backup_strategy","backup"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "전체 백업 (전체 복사 백업)", explanation: "저장 장치 내부의 선택한 파일이나 데이터베이스 테이블 레코드 전부를 단 하나의 시점에서 빈틈없이 통째로 완전 복사하는 백업 방식으로, 장애 복원 시 1차 사본만 올리면 되어 복구가 가장 빠르지만 백업 수행 시 막대한 리소스와 시간이 소요됩니다." }
     },
     {
       id: "incremental_backup",
@@ -9306,7 +9306,7 @@
       aliases: ["インクリメンタルバックアップ"],
       related: ["backup_strategy","full_backup"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "증분 백업", explanation: "가장 최신의 백업 유형을 진행한 바로 그 시점부터 계산하여 그 후에 새로 추가 및 수정 변화된 변경 파일 데이터들만 부분적으로 찾아 저장하는 저용량 백업 기법입니다." }
     },
     {
       id: "java_instance_variable",
@@ -9326,7 +9326,7 @@
       aliases: ["メンバー変数","フィールド","instance field"],
       related: ["java_class","java_static_variable"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Java 인스턴스 변수 (멤버 변수)", explanation: "자바 클래스 중괄호 본문 내에 선언되었지만 static 수식어를 부착하지 않은 속성 변수들로, 새로 생성된 개별 인스턴스마다 각각 독자적인 메모리 힙 자리를 부여받아 1:1 고유 상태 값을 수용하는 필드 변수입니다." }
     },
     {
       id: "java_final_class",
@@ -9346,7 +9346,7 @@
       aliases: ["継承禁止クラス"],
       related: ["final_keyword","java_class"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Java final 클래스 (최종 클래스)", explanation: "자바 선언구에 `final` 지시자가 선언되어 다른 일반 클래스들이 상속받거나 확장하는 일을 절대 불가하게 영구 차단한 구조입니다." }
     },
     {
       id: "java_abstract_method",
@@ -9366,7 +9366,7 @@
       aliases: ["abstractメソッド"],
       related: ["abstract_class","override"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Java 추상 메서드", explanation: "부모 추상 클래스에 선언될 때 실행부 블록 중괄호와 몸체 로직 없이 시그니처 선언부 형태만 띄고 있는 `abstract` 함수로, 이를 계승받아 실체화하려는 자식 서브클래스에서 구체적으로 오버라이딩하여 동작 코드를 마저 완성해 구현할 것을 강제 유도합니다." }
     },
     {
       id: "python_property_decorator",
@@ -9386,7 +9386,7 @@
       aliases: ["property()","プロパティ属性"],
       related: ["decorator","python_class"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Python @property 데코레이터", explanation: "파이썬 클래스 정의 시 특정 메서드 이름 위에 부착하여, 외부에서 이를 괄호 없이 일반 변수 멤버처럼 자연스럽게 액세스할 수 있게 만드는 장치로, 캡슐화 유지 및 변수용 Getter/Setter를 매끄럽게 정의하는 파이썬 내장 데코레이터입니다." }
     },
     {
       id: "python_staticmethod",
@@ -9406,7 +9406,7 @@
       aliases: ["staticmethod()"],
       related: ["decorator","static_keyword"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Python @staticmethod 데코레이터", explanation: "파이썬 클래스 본문 안에서 선언 지시되는 정적 메서드 데코레이터로, 첫 인수로 개체 상태인 `self`나 클래스 자체인 `cls`를 요구받지 않고, 단순히 클래스 네임스페이스 영역 하단에 그룹 지어 사용하는 논리상 고립 함수를 설정할 때 쓰입니다." }
     },
     {
       id: "python_classmethod",
@@ -9426,7 +9426,7 @@
       aliases: ["classmethod()"],
       related: ["decorator","python_staticmethod"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Python @classmethod 데코레이터", explanation: "파이썬 클래스에 부착되는 특수 데코레이터로, 해당 메서드를 실행할 때 첫 인수로 생성 인스턴스 대신 해당 클래스의 형식 정보 자체를 암묵적으로 넘겨받게 설계하며, 대개 팩토리 메서드를 기획할 때 활용됩니다." }
     },
     {
       id: "static_route",
@@ -9446,7 +9446,7 @@
       aliases: ["静的ルーティング","固定経路設定"],
       related: ["routing","default_route"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "정적 라우팅 (스태틱 라우트)", explanation: "네트워크 정보 관리자가 대상 네트워크 구조 환경에 연동하여 패킷 포워딩 행선지 경로를 수동 조작으로 라우터 내부 정보에 고정 설정해 둔 불변 경로 정보입니다." }
     },
     {
       id: "dynamic_routing",
@@ -9466,7 +9466,7 @@
       aliases: ["動的ルーティング"],
       related: ["routing","static_route"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "동적 라우팅 (다이내믹 라우팅)", explanation: "각 거점 라우터 기기들이 특수 약속된 동적 라우팅 프로토콜을 구동시켜 주변 기기들과 주기적으로 통신망의 실시간 통행 가동률 정보를 공유하고, 회선 장애 발생 시 자동으로 우회 대체 최적 경로를 재계산하여 경로 테이블을 업데이트하는 지능형 통제 경로 제어 방식입니다." }
     },
     {
       id: "credential_stuffing",
@@ -9486,7 +9486,7 @@
       aliases: ["撞库","credential stuffing attack"],
       related: ["brute_force_attack"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "크레덴셜 스터핑 (Credential Stuffing / 계정 도용 공격)", explanation: "다른 외부 온라인 서비스 사이트의 침입을 통해 유출된 불특정 다수의 계정 비밀번호 목록을 활용하여, 동일 패스워드를 재활용하는 유저 습성을 겨냥해 특정 시스템에 자동 대입식 로그인을 반복 시행하는 공격 해킹 기법입니다." }
     },
     {
       id: "session_hijacking",
@@ -9506,7 +9506,7 @@
       aliases: ["セッション乗っ取り"],
       related: ["session","cookie"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "세션 하이재킹 (세션 납치)", explanation: "이미 해당 시스템 인증을 통과하여 세션이 살아있는 정당 유저의 고유 세션 값을 통신 도청이나 XSS 취약점 탈취로 무단 확보한 뒤, 클라이언트와 서버 중간의 대화 채널 소유권을 가로채 로그인 사용자를 사칭해 기동하는 해킹 행위입니다." }
     },
     {
       id: "cross_site_scripting",
@@ -9526,7 +9526,7 @@
       aliases: ["XSS"],
       related: ["cookie","session_hijacking"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "크로스 사이트 스크립팅 (XSS)", explanation: "보안 검증 필터링이 미비한 웹 게시판이나 입력 폼에 악의적인 자바스크립트 스크립트 코드를 몰래 삽입하여 저장한 뒤, 타인이 해당 웹 페이지 화면을 접속하거나 열람하는 즉시 대상 방문자 컴퓨터 브라우저에서 스크립트가 강제 실행되어 개인 쿠키를 갈취당하거나 비정상 액션을 겪게 만드는 웹 해킹 공격 기법입니다." }
     },
     {
       id: "stack_memory",
@@ -9546,7 +9546,7 @@
       aliases: ["スタックメモリ","call stack"],
       related: ["memory","stack"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "스택 메모리 (Stack 영역)", explanation: "프로그램 런타임 환경에서 각 함수 내부에 선언된 지역 변수, 전달 매개변수 인수 정보, 함수 수행 복귀 주소 정보 등을 일시 적재 보관하는 구조로, LIFO(후입선출) 원리에 입각하여 시스템에 의해 생성 및 자동 해제가 매우 정밀하고 빠르게 이뤄지는 메모리 구역입니다." }
     },
     {
       id: "heap_memory",
@@ -9566,7 +9566,7 @@
       aliases: ["ヒープメモリ"],
       related: ["memory","stack_memory"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "힙 메모리 (Heap 영역)", explanation: "程序 구동 도중 동적인 방식으로 크기가 유동 결정되어 사용자가 임의 할당하는 공유 영역의 장기 메모리 공간으로, 수동 코드 해제나 가비지 컬렉터의 가비지 회수에 의존해 최종 회수됩니다." }
     },
     {
       id: "http_delete",
@@ -9586,7 +9586,7 @@
       aliases: ["DELETEリクエスト","delete_method"],
       related: ["http_method","http_post"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "HTTP DELETE 메서드", explanation: "지정 목적지 경로상에 생성되어 있는 명확한 표적 리소스를 서버 장치 상에서 영구 소멸시키도록 지시하는 HTTP 요청 방식이며, 여러 번 연속 호출해도 대상 정보가 이미 없거나 결과가 동일하게 무효한 멱등적 성격을 가집니다." }
     },
     {
       id: "http_patch",
@@ -9606,7 +9606,7 @@
       aliases: ["PATCHリクエスト","patch_method"],
       related: ["http_method","http_put"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "HTTP PATCH 메서드", explanation: "대상 웹 리소스 전부를 갈아치우는 PUT 방식과 반대로, 특정 컬럼이나 세부 정보 한두 개 같은 가변 항목 일부만을 변경하여 가공 전송하는 비교적 경량의 데이터 부분 갱신용 HTTP 요청 방식입니다." }
     },
     {
       id: "working_tree",
@@ -9626,7 +9626,7 @@
       aliases: ["作業ディレクトリ","working directory"],
       related: ["version_control"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "워킹 트리 (작업 디렉터리 / 작업 영역)", explanation: "사용자가 로컬 기기 디렉터리 내에서 텍스트 에디터 등으로 눈으로 보고 파일의 소스코드를 실질적으로 타이핑해 변경 및 수정해 나가는 로컬 작업용 공간입니다." }
     },
     {
       id: "staging_area",
@@ -9646,7 +9646,7 @@
       aliases: ["インデックス","Git index","stage"],
       related: ["working_tree","git_commit_hash"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "스테이징 영역 (Staging Area / 인덱스)", explanation: "로컬 작업 환경에서 수정한 여러 소스 파일 중, 다음 저장소 커밋에 포함시킬 특정 변경 사항 파일들만을 선별하여 일시적으로 올려 두는 중간 스냅샷 완충용 Git 인덱스 영역입니다." }
     },
     {
       id: "virtual_network",
@@ -9666,7 +9666,7 @@
       aliases: ["VPC","Virtual Private Cloud"],
       related: ["cloud_computing","vlan"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "가상 네트워크 (Virtual Network)", explanation: "실재하는 케이블 배선 등 물리적 라우터 장비망 위에 얹어 소프트웨어 정의 방식으로 독립 작동하도록 논리 구획하고 암호화 처리한 가상 사설 통신 네트워크 영역입니다." }
     },
     {
       id: "algorithm_design",
@@ -9686,7 +9686,7 @@
       aliases: ["アルゴリズム考案"],
       related: ["algorithm"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "알고리즘 설계", explanation: "임의의 한 수학적, 논리적 해결 과제가 주어졌을 때 주어진 하드웨어 시간 복잡도 및 공간 복잡도 자원 한계 제약 안에서 조속히 처리할 수 있는 연산 명령어 단계와 구조의 흐름을 효율적으로 구성하는 과정입니다." }
     },
     {
       id: "it_governance",
@@ -9706,7 +9706,7 @@
       aliases: ["IT統治"],
       related: ["corporate_governance"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "IT 거버넌스", explanation: "기업의 경영 기획과 비즈니스 성패 방향에 맞추어 사내 전반의 IT 설비 투자, 규범 준수, 자원 개발 계획을 조율하여 기업 가치를 극대화하기 위해 구축하는 통합적인 IT 감독 제어 및 조직 지배 체제입니다." }
     },
     {
       id: "system_audit",
@@ -9726,7 +9726,7 @@
       aliases: ["情報システム監査"],
       related: ["it_governance","compliance_check"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "시스템 감사", explanation: "해당 인프라의 구축 및 보수 운영 주체로부터 완전 독립된 제3의 감사 기관 혹은 전문가가 대상 IT 정보 시스템의 기밀 무결성 보호 수준, 운용의 경제 효율성 및 법적 준수 여부를 제어 검증하고 조언 및 보고하는 행위입니다." }
     },
     {
       id: "audit_trail_review",
@@ -9746,7 +9746,7 @@
       aliases: ["監査証跡レビュー","audit log verification"],
       related: ["system_audit"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "감사 추적 검토 (감사 트레일 검토)", explanation: "시스템 내부 데이터에 가해진 실질적인 생성, 변경, 수정 등의 행위 조작이 사내 정당 권한을 통해 안전하게 행해졌는지 판별하기 위해, 데이터베이스의 시간 기록 로그 및 접속 세션 흔적을 순차 대조하고 검증하는 감사 작업입니다." }
     },
     {
       id: "differential_backup",
@@ -9766,7 +9766,7 @@
       aliases: ["ディファレンシャルバックアップ"],
       related: ["full_backup","incremental_backup"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "차분 백업 (차이 백업)", explanation: "가장 마지막으로 완성된 전체 백업 시점을 기준으로 잡고, 그 이후부터 현재까지 생성 변경된 변동 데이터 전부를 보관하는 백업 방식입니다." }
     },
     {
       id: "optimistic_lock",
@@ -9786,7 +9786,7 @@
       aliases: ["楽観的排他制御"],
       related: ["transaction"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "낙관적 락 (낙관적 동시성 제어)", explanation: "데이터 업데이트 충돌이나 경쟁 상태가 빈발하지 않을 것으로 낙관 기하여, 조회를 진행할 때는 물리적인 잠금을 걸어두지 않고 대기하며 데이터의 수정 커밋을 요청하는 마지막 순간에 다른 스레드의 간섭 변동이 끼어들었는지 가려내어 제어하는 무잠금형 배타 제어 기법입니다." }
     },
     {
       id: "pessimistic_lock",
@@ -9806,7 +9806,7 @@
       aliases: ["悲観的排他制御"],
       related: ["optimistic_lock","deadlock"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "비관적 락 (비관적 동시성 제어)", explanation: "데이터 거래 충돌 확률이 매번 빈번할 것으로 극도로 조심하고 비관하여, 조회 연산 시 즉각 대상 물리 레코드 행 단위를 타인 접근 금지로 잠금 처리하고, 본 트랜잭션이 안전 완료될 때까지 타 세션의 쓰기나 읽기를 전면 통제하는 강력 격리 제어 기법입니다." }
     },
     {
       id: "java_interface_method",
@@ -9826,7 +9826,7 @@
       aliases: ["インターフェースの宣言メソッド"],
       related: ["interface","java_abstract_method"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Java 인터페이스 메서드", explanation: "자바 인터페이스 선언 구조 내부에 포함되어 호출될 매개값 및 동작명 이름만 지정해 둔 메서드로, 명시하지 않더라도 암묵적으로 `public abstract`로 귀결되며 이 인터페이스 규약을 수락 구현하는 클래스에 구체적 오버라이딩 완성을 요구합니다." }
     },
     {
       id: "java_collection_list",
@@ -9846,7 +9846,7 @@
       aliases: ["Listコレクション","java.util.List"],
       related: ["collection_framework","array_list"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Java List 인터페이스", explanation: "자바 프레임워크의 핵심 규약 중 하나로, 배열 요소의 입력 주입 순서를 유지하고, 동일한 데이터 값의 중복 적재를 온전히 허용하며 다룰 수 있게 구성된 순차 리스트 인터페이스입니다." }
     },
     {
       id: "java_collection_map",
@@ -9866,7 +9866,7 @@
       aliases: ["Mapコレクション","java.util.Map"],
       related: ["collection_framework","hash_map"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Java Map 인터페이스", explanation: "데이터를 탐색할 수 있는 '키(Key)'와 실제 적재 데이터인 '값(Value)'을 1:1 연계 매핑하여 관리하도록 가공한 인터페이스로, 키에 한해서는 절대적 중복 생성을 불허하며, 동일 키로 재작성 시 기존 값이 덮어써집니다." }
     },
     {
       id: "python_exception_class",
@@ -9886,7 +9886,7 @@
       aliases: ["例外型"],
       related: ["python_exception","type_error"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Python 예외 클래스", explanation: "파이썬 상에서 에러 흐름을 처리하기 위해 객체화하는 특수 클래스로, 모든 내장 에러 규정 및 수동 정의형 클래스는 상위 레벨의 부모 `Exception` 클래스를 상속하는 형태로 설계됩니다." }
     },
     {
       id: "python_custom_exception",
@@ -9906,7 +9906,7 @@
       aliases: ["独自例外クラス"],
       related: ["python_exception_class"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Python 사용자 정의 예외 (커스텀 예외)", explanation: "내장 제공 에러 분류만으로 표현하기 힘든 고유한 애플리케이션 업무 로직 관련 예외를 탐지하기 위해, 개발자가 `Exception` 클래스를 직접 자식 상속하여 별도 생성한 예외 객체입니다." }
     },
     {
       id: "python_environment_variable",
@@ -9926,7 +9926,7 @@
       aliases: ["os.environ"],
       related: ["python_module"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Python 환경 변수", explanation: "운영체제 기저 환경의 쉘 환경 변수 정보를 의미하며, 파이썬 소스 코드 내부에서는 기본 탑재 모듈 라이브러리의 `os.environ` 딕셔너리를 활용해 외부 변수 값을 안전하게 읽어 들이거나 교정할 수 있습니다." }
     },
     {
       id: "private_ip_address",
@@ -9946,7 +9946,7 @@
       aliases: ["ローカルIPアドレス","プライベートIP"],
       related: ["ip_address","public_ip_address"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "사설 IP 주소 (사설 IP / 로컬 IP)", explanation: "공인 인터넷망과 직접 통신하지 않는 가정, 회사, 혹은 연구실 등의 단독 LAN 네트워크 범위 내에서 라우터 장비나 내부 공유기에 의해 임의 할당되어 쓰이는 외부 비개방형 IP 주소 체계입니다." }
     },
     {
       id: "public_ip_address",
@@ -9966,7 +9966,7 @@
       aliases: ["グローバルIP","パブリックIP"],
       related: ["ip_address","private_ip_address"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "공인 IP 주소 (공인 IP / 글로벌 IP)", explanation: "전 세계 인터넷 통신망 상에서 단 하나만 존재하도록 보증된 규정 고유 식별 IP 주소로, IANA/KISA 등의 공인 주소 할당 기구로부터 구매 및 정식 배정받아 세계 공용 인터넷 접속 및 장비 간 상호 연결에 활용됩니다." }
     },
     {
       id: "sql_injection_attack",
@@ -9986,7 +9986,7 @@
       aliases: ["SQL注入攻击","SQLインジェクション"],
       related: ["sql_injection"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "SQL 인젝션 공격 (SQL 삽입 공격)", explanation: "입력 상자나 URL 파라미터 텍스트 영역에 정밀 가공한 SQL 쿼리 조건 구문을 특수문자와 함께 강제 유입하여, 웹 애플리케이션을 구동하는 백엔드 데이터베이스가 공격자의 조작된 SQL 문장을 그대로 해석해 실행하도록 유도함으로써 중요 DB 정보를 갈취하거나 훼손하는 보안 침입 수법입니다." }
     },
     {
       id: "key_rotation",
@@ -10006,7 +10006,7 @@
       aliases: ["キーローテーション"],
       related: ["secret_key","key_management"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "키 로테이션 (암호 키 순환)", explanation: "암호화에 개입하는 비밀 키가 해킹 등으로 장기 유출되었을 경우의 보안 위험도를 완화하고 차단하기 위해, 특정 주기마다 새로운 정식 암호 키를 생성하여 기존 저장 장치의 잠금 키를 대체 갱신하는 조치입니다." }
     },
     {
       id: "data_masking",
@@ -10026,7 +10026,7 @@
       aliases: ["データ隠蔽","masking"],
       related: ["confidentiality","privacy"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "데이터 마스킹 (데이터 탈민)", explanation: "개인의 사생활 중요 데이터가 제3자 화면에 그대로 표출되어 노출되지 않도록, 정보의 특정 자릿수 부분을 특수 기호나 허구 값으로 변환 처리하여 기밀성을 확보하는 데이터 보호 기술입니다." }
     },
     {
       id: "disk_partition",
@@ -10046,7 +10046,7 @@
       aliases: ["パーティション分割","drive partition"],
       related: ["file_system"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "디스크 파티션", explanation: "단 한 개의 단독 물리 하드디스크나 SSD 장비 메모리 공간을, 운영체제 상에서 완전 격리된 별개의 독립 볼륨 드라이브처럼 취급되도록 영역 공간을 수평적으로 쪼개 분할하는 가상 구획 처리입니다." }
     },
     {
       id: "symbolic_link",
@@ -10066,7 +10066,7 @@
       aliases: ["ソフトリンク","symlink"],
       related: ["file_system"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "심볼릭 링크 (소프트 링크)", explanation: "파일 시스템 내에 존재하는 특수 파일로, 실제 타깃 파일이나 디렉터리의 물리 위치 주소를 지목하는 가상 징검다리 역할을 하며, 윈도우 운영체제의 '바로가기 아이콘'과 매우 흡사하게 동작합니다." }
     },
     {
       id: "request_url",
@@ -10086,7 +10086,7 @@
       aliases: ["リクエストURI","request endpoint"],
       related: ["url","query_parameter"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "요청 URL (리퀘스트 URL)", explanation: "인터넷 사용자의 모바일이나 데스크톱 브라우저 클라이언트가 대상 호스트 웹 서버의 구체적 리소스에 전용 연결하여 서비스를 전송받기 위해 조준 지정해 요청하는 절대 혹은 상대 네트워크 주소입니다." }
     },
     {
       id: "cors_policy",
@@ -10106,7 +10106,7 @@
       aliases: ["CORSルール","CORS設定"],
       related: ["cors","same_origin_policy"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "CORS 정책 (교차 출처 리소스 공유 정책)", explanation: "크로스 도메인 웹 공유 보안 규정으로, 브라우저가 기본 제공하는 차단 체계인 '동일 출처 정책' 제약을 넘어, 다른 출처의 클라이언트 스크립트가 자사 웹 서버 내 특정 API를 신뢰 수용하여 데이터를 공유 및 연동할 수 있도록 허가 범위를 서버측이 통제해 명문화해 둔 정책입니다." }
     },
     {
       id: "merge_conflict",
@@ -10126,7 +10126,7 @@
       aliases: ["衝突","conflict"],
       related: ["version_control"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "병합 충돌 (머지 충돌 / Merge Conflict)", explanation: "분산 버전 관리에서 분리 개척해 가던 두 가지의 브랜치를 하나로 합치려 시도할 때, 두 브랜치에서 정확히 똑같은 소스 파일 라인의 코드를 서로 상반되게 변경함으로써 소스 제어 시스템 스스로 선후 결정을 내리지 못해 가동이 멈춘 코드 충돌 현상입니다." }
     },
     {
       id: "security_group",
@@ -10146,7 +10146,7 @@
       aliases: ["クラウドファイアウォール","Security Group rule"],
       related: ["cloud_computing","firewall"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "보안 그룹", explanation: "클라우드 컴퓨팅 플랫폼에서 호스트 인스턴스 바로 앞 단에 배치하여 개별 감시 통제하는 가상의 방화벽 장치로, 인바운드 및 아웃바운드 패킷 필터링 보안 수단으로 상태 보존형 연산 제어를 지원합니다." }
     },
     {
       id: "dockerfile",
@@ -10166,7 +10166,7 @@
       aliases: ["Dockerイメージ構成ファイル"],
       related: ["container"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Dockerfile", explanation: "도커 소프트웨어 컨테이너 이미지를 컴파일 및 생성하기 위해, 기저 운영체제 베이스 정보, 패키지 추가 인스톨 명령어, 디스크 포트 개방 설정 등 일련의 조립 절차 지시문을 스크립트 형태로 기술한 텍스트 정의 문서입니다." }
     },
     {
       id: "binary_search_tree",
@@ -10186,7 +10186,7 @@
       aliases: ["二分検索ツリー","BST"],
       related: ["tree_structure","binary_search"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "이진 탐색 트리 (BST)", explanation: "이진 트리 자료구조 중 하나로, 특정 노드를 기준 삼아 왼쪽 서브 트리에 위치한 자식 노드값들은 무조건 부모보다 작게 설정하고, 오른쪽 서브 트리의 자식 노드값들은 항상 부모 노드보다 크도록 정렬 배치하여, 데이터 검색을 로그 시간 속도로 완수하는 이진 트리입니다." }
     },
     {
       id: "project_charter",
@@ -10206,7 +10206,7 @@
       aliases: ["憲章"],
       related: ["project_manager"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "프로젝트 헌장", explanation: "프로젝트의 공식적인 시작을 승인하고 프로젝트 관리자에게 조직의 자원을 사용할 수 있는 권한을 부여하는 핵심 공식 문서입니다." }
     },
     {
       id: "project_baseline",
@@ -10226,7 +10226,7 @@
       aliases: ["ベースライン"],
       related: ["project_scope"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "프로젝트 기준선(베이스라인)", explanation: "실제 진행 상태와 비교 및 측정하기 위해 승인된 프로젝트 계획(범위, 일정, 비용 등)의 기준값입니다." }
     },
     {
       id: "project_constraint",
@@ -10246,7 +10246,7 @@
       aliases: ["制約事項"],
       related: ["project_baseline"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "프로젝트 제약 조건", explanation: "범위, 시간(일정), 예산(비용), 품질 등 프로젝트 수행 시 반드시 준수해야 하는 제한적 요소입니다." }
     },
     {
       id: "database_partitioning",
@@ -10266,7 +10266,7 @@
       aliases: ["テーブル分割","partitioning"],
       related: ["database_schema"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "데이터베이스 파티셔닝", explanation: "쿼리 성능 향상과 관리 효율성을 위해 대형 테이블이나 인덱스를 더 작고 관리하기 쉬운 독립된 물리적 부분으로 나누는 아키텍처 설계 기법입니다." }
     },
     {
       id: "horizontal_partitioning",
@@ -10286,7 +10286,7 @@
       aliases: ["シャージング","horizontal division"],
       related: ["database_partitioning"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "수평 파티셔닝", explanation: "데이터베이스 테이블을 행(레코드) 단위로 분할하여 서로 다른 파티션에 나누어 저장하는 물리적 분할 기법입니다." }
     },
     {
       id: "vertical_partitioning",
@@ -10306,7 +10306,7 @@
       aliases: ["列分割","vertical division"],
       related: ["database_partitioning"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "수직 파티셔닝", explanation: "자주 사용되지 않는 열이나 대용량 데이터 열을 별도의 하위 테이블로 독립시켜 쿼리 성능을 최적화하기 위해 열(속성) 단위로 테이블을 분할하는 기법입니다." }
     },
     {
       id: "java_reflection",
@@ -10326,7 +10326,7 @@
       aliases: ["反射"],
       related: ["java_class"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Java 리플렉션", explanation: "실행 중인 프로그램(런타임)에서 클래스, 필드, 메서드의 정보를 동적으로 가져오고 조작할 수 있도록 지원하는 Java의 메커니즘입니다." }
     },
     {
       id: "java_serialization",
@@ -10346,7 +10346,7 @@
       aliases: ["シリアライズ","直列化"],
       related: ["java_class"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Java 직렬화", explanation: "파일 저장이나 네트워크 전송이 가능하도록 Java 객체의 상태 정보를 바이트 스트림으로 변환하는 과정입니다." }
     },
     {
       id: "java_deserialization",
@@ -10366,7 +10366,7 @@
       aliases: ["デシリアライズ","逆直列化"],
       related: ["java_serialization"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Java 역직렬화", explanation: "저장 매체나 네트워크로부터 읽어온 바이트 스트림을 다시 원래의 Java 객체로 재구성하여 복원하는 역과정입니다." }
     },
     {
       id: "pip_freeze",
@@ -10386,7 +10386,7 @@
       aliases: ["pip freeze"],
       related: ["python_venv"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "pip freeze 명령", explanation: "현재 가상 환경에 설치된 모든 패키지와 그 정확한 버전을 requirements.txt 형식에 맞게 출력하는 Python의 pip 명령입니다." }
     },
     {
       id: "requirements_txt",
@@ -10406,7 +10406,7 @@
       aliases: ["依存パッケージリスト"],
       related: ["python_venv","pip_freeze"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "requirements.txt", explanation: "Python 프로젝트에서 필요한 외부 라이브러리 목록과 버전을 기록하여 pip 명령어로 일괄 설치할 수 있게 돕는 종속성 선언 파일입니다." }
     },
     {
       id: "network_protocol",
@@ -10426,7 +10426,7 @@
       aliases: ["通信プロトコル","protocol"],
       related: ["network_topology"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "네트워크 프로토콜", explanation: "컴퓨터 네트워크에서 데이터 교환 및 원활한 통신을 진행하기 위해 규정한 데이터 포맷, 전송 시기 등에 관한 표준 규칙이자 약속입니다." }
     },
     {
       id: "tcp_ip_model",
@@ -10446,7 +10446,7 @@
       aliases: ["TCP/IP 4層モデル","internet protocol suite"],
       related: ["osi_model","network_protocol"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "TCP/IP 모델", explanation: "인터넷 통신의 표준 아키텍처 모델로, 네트워크 통신을 응용 계층, 전송 계층, 인터넷 계층, 네트워크 인터페이스 계층의 4개 층으로 단순화하여 정의한 개념적 모델입니다." }
     },
     {
       id: "physical_layer",
@@ -10466,7 +10466,7 @@
       aliases: ["第1層","OSI L1"],
       related: ["osi_model"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "물리 계층", explanation: "OSI 참조 모델의 제1계층(최하위 계층)으로, 하드웨어 전송 매체의 물리적 인터페이스, 핀 배치, 전기적 신호 변환 등 물리적 연결 사양을 정의합니다." }
     },
     {
       id: "secure_by_design",
@@ -10486,7 +10486,7 @@
       aliases: ["設計段階セキュリティ"],
       related: ["system_lifecycle"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "보안 내재화 설계", explanation: "시스템이나 소프트웨어를 기획하고 설계하는 초기 단계부터 보안 메커니즘과 취약점 방지 대책을 미리 반영하는 개발 패러다임입니다." }
     },
     {
       id: "privacy_by_design",
@@ -10506,7 +10506,7 @@
       aliases: ["プライバシー優先設計"],
       related: ["secure_by_design","privacy"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "프라이버시 내재화 설계", explanation: "시스템 구축 초기부터 사용자의 개인정보 보호(익명화, 비식별화, 최소 권한 등) 조치를 아키텍처 설계 전반에 적용하는 철학이자 방법론입니다." }
     },
     {
       id: "security_review",
@@ -10526,7 +10526,7 @@
       aliases: ["セキュリティ監査レビュー"],
       related: ["secure_by_design","compliance_check"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "보안 검토", explanation: "개발 라이프사이클의 주요 이정표마다 시스템 설계 문서, 네트워크 토폴로지 또는 구성 규칙 등을 보안 관점에서 검사하고 규정 준수 여부를 평가하는 과정입니다." }
     },
     {
       id: "preemptive_multitasking",
@@ -10546,7 +10546,7 @@
       aliases: ["強制割り込みマルチタスク"],
       related: ["operating_system_kernel","thread"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "선점형 멀티태스킹", explanation: "운영체제 커널이 CPU 사용 권한을 직접 제어하여 실행 중인 프로세스를 강제로 중단시키고 다른 우선순위 작업에 CPU를 배분함으로써 시스템 안정성을 높이는 방식입니다." }
     },
     {
       id: "cooperative_multitasking",
@@ -10566,7 +10566,7 @@
       aliases: ["協調的マルチタスク","非プリエンプティブマルチタスク"],
       related: ["preemptive_multitasking"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "협력형 멀티태스킹", explanation: "실행 중인 애플리케이션이 자발적으로 CPU 제어권을 해제하고 다른 프로세스에 양보하도록 유도하는 방식으로, 특정 프로그램이 응답하지 않으면 전체 OS가 멈출 수 있습니다." }
     },
     {
       id: "html_element",
@@ -10586,7 +10586,7 @@
       aliases: ["HTMLタグノード","DOM要素"],
       related: ["web_application"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "HTML 요소", explanation: "시작 태그, 내용(콘텐츠) 및 종료 태그로 구성되어 웹 페이지의 기본 골격을 형성하는 요소 객체입니다." }
     },
     {
       id: "html_tag",
@@ -10606,7 +10606,7 @@
       aliases: ["タグ","markup tag"],
       related: ["html_element"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "HTML 태그", explanation: "브라우저에게 텍스트의 렌더링 스타일, 속성 구조, 시작과 끝 등을 나타내기 위해 꺾쇠괄호(<> 등)로 묶어 표기하는 마크업 명령입니다." }
     },
     {
       id: "remote_repository",
@@ -10626,7 +10626,7 @@
       aliases: ["リモート","remote repo"],
       related: ["version_control"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "원격 저장소", explanation: "GitHub나 GitLab 등 네트워크상의 서버에 배포되어 코드 공유, 버전 기록 관리 및 협업 개발을 가능하게 하는 Git 리포지토리입니다." }
     },
     {
       id: "upstream_repository",
@@ -10646,7 +10646,7 @@
       aliases: ["フォーク元リポジトリ","upstream"],
       related: ["remote_repository"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "업스트림 저장소", explanation: "Fork(클론) 대상이 된 오리지널 마스터 리포지토리를 의미하며, 분산 개발 시 팀의 최신 공통 소스코드를 가져오는 소스가 됩니다." }
     },
     {
       id: "cloud_resource",
@@ -10666,7 +10666,7 @@
       aliases: ["クラウド資産"],
       related: ["cloud_computing"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "클라우드 리소스", explanation: "클라우드 서비스 제공업체가 가상화 기술을 통해 제공하는 가상 머신, 네트워크 채널, 저장소 공간 등 다양한 IT 인프라 구성 요소를 통칭합니다." }
     },
     {
       id: "constant_time",
@@ -10686,7 +10686,7 @@
       aliases: ["定数時間","O(1)"],
       related: ["time_complexity"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "상수 시간 복잡도", explanation: "입력 데이터의 규모(n)에 관계없이 항상 일정한 단계나 시간으로 처리되는 알고리즘 시간 복잡도로, 빅오 표기법으로 O(1)로 표시됩니다." }
     },
     {
       id: "project_closure",
@@ -10706,7 +10706,7 @@
       aliases: ["プロジェクトクローズ"],
       related: ["system_lifecycle"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "프로젝트 종료", explanation: "프로젝트의 최종 결과물을 고객에게 인계하고, 계약을 완료하며, 모든 프로젝트 자원을 해체 및 릴리스하는 마지막 단계의 관리 활동입니다." }
     },
     {
       id: "lessons_learned",
@@ -10726,7 +10726,7 @@
       aliases: ["レッスンズラーンド"],
       related: ["project_closure","project_manager"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "교훈", explanation: "프로젝트 실행 중 겪은 성공과 실패의 원인을 지식 자산으로 문서화하여, 향후 다른 프로젝트의 개선 지침으로 활용하는 축적된 학습 지식입니다." }
     },
     {
       id: "service_request",
@@ -10746,7 +10746,7 @@
       aliases: ["リクエスト"],
       related: ["service_level_agreement","incident_management"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "서비스 요청", explanation: "ITIL 환경에서 사용자가 비밀번호 재설정, 소프트웨어 설치 등과 같이 서비스 데스크에 제기하는 표준적이고 위험도가 낮은 일상적인 비즈니스 요청입니다." }
     },
     {
       id: "sharding",
@@ -10766,7 +10766,7 @@
       aliases: ["シャード分割","database sharding"],
       related: ["horizontal_partitioning"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "샤딩", explanation: "하나의 대용량 데이터베이스 테이블을 물리적으로 독립된 여러 데이터베이스 서버에 수평 분할하여 데이터 저장 및 처리 부하를 분산하는 수평 확장 설계입니다." }
     },
     {
       id: "read_replica",
@@ -10786,7 +10786,7 @@
       aliases: ["読み取り専用レプリカ"],
       related: ["database_instance","backup"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "읽기 전용 복제본", explanation: "기본 데이터베이스와 실시간 동기화되는 읽기 전용 복제 데이터베이스로, 주로 고성능 동시 조회 트래픽을 분산 처리하여 주 데이터베이스의 부하를 줄입니다." }
     },
     {
       id: "primary_database",
@@ -10806,7 +10806,7 @@
       aliases: ["マスタDB","主DB"],
       related: ["read_replica","database_instance"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "기본 데이터베이스", explanation: "주-종(Master-Slave) 또는 액티브-스탠바이 아키텍처에서 주 데이터 쓰기, 수정, 삭제 등의 작업을 처리하고 복제본에 데이터를 동기화하는 중앙 데이터베이스 노드입니다." }
     },
     {
       id: "java_io",
@@ -10826,7 +10826,7 @@
       aliases: ["java.io","阻塞型IO"],
       related: ["java_class"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Java I/O", explanation: "Java에서 가장 기초가 되는 동기식 입출력 처리 패키지로, 스트림(Stream) 기반의 블로킹 방식을 사용해 데이터를 입출력합니다." }
     },
     {
       id: "java_nio",
@@ -10846,7 +10846,7 @@
       aliases: ["java.nio","非ブロッキングIO"],
       related: ["java_io"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Java NIO", explanation: "Java에서 고성능 비블로킹(Non-blocking) 처리를 위해 도입한 채널(Channel), 버퍼(Buffer) 및 셀렉터(Selector) 기반의 블록 단위 입출력 라이브러리입니다." }
     },
     {
       id: "pypi",
@@ -10866,7 +10866,7 @@
       aliases: ["Python Package Index"],
       related: ["python_venv"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "PyPI", explanation: "공식적인 Python 서드파티 패키지 저장소로, pip 도구가 패키지를 다운로드하고 설치할 때 기본적으로 활용하는 중앙 패키지 저장소 서비스입니다." }
     },
     {
       id: "python_typing",
@@ -10886,7 +10886,7 @@
       aliases: ["Type Hints","型ヒント"],
       related: ["type_error"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Python 타입 힌팅", explanation: "Python 3.5 버전부터 도입된 정적 타입 주석 기능으로, 변수와 매개변수의 예상 타입을 명시하여 정적 분석 도구로 버그를 사전에 탐지하도록 돕습니다." }
     },
     {
       id: "data_link_layer",
@@ -10906,7 +10906,7 @@
       aliases: ["第2層","OSI L2"],
       related: ["physical_layer"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "데이터 링크 계층", explanation: "OSI 참조 모델의 제2계층으로, 물리적으로 연결된 두 노드 간의 안정적인 데이터 전송(프레임 구성) 및 에러 검출, MAC 주소를 이용한 주소 지정을 담당합니다." }
     },
     {
       id: "network_firewall",
@@ -10926,7 +10926,7 @@
       aliases: ["FW","境界防御"],
       related: ["firewall"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "네트워크 방화벽", explanation: "서로 다른 네트워크 경계 사이에서 설정된 보안 규칙에 따라 들어오고 나가는 네트워크 트래픽을 검사하고 필터링 및 차단하는 보안 장비입니다." }
     },
     {
       id: "incident_report",
@@ -10946,7 +10946,7 @@
       aliases: ["障害報告書"],
       related: ["incident_management"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "장애 보고서", explanation: "보안 침해나 시스템 장애가 발생했을 때 장애 시간, 영향 범위, 원인 분석 및 향후 조치 대책 등을 자세히 기록한 공식 문서입니다." }
     },
     {
       id: "totp",
@@ -10966,7 +10966,7 @@
       aliases: ["TOTP","ワンタイムパスワード"],
       related: ["multi_factor_authentication"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "TOTP", explanation: "다중 인증(MFA)에서 널리 쓰이는 알고리즘으로, 공유된 보안 키와 현재 시간 값을 결합하여 일정 시간 동안만 유효한 동적 일회용 패스워드를 생성합니다." }
     },
     {
       id: "mfa_app",
@@ -10986,7 +10986,7 @@
       aliases: ["認証アプリ","Authenticator app"],
       related: ["totp","multi_factor_authentication"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "MFA 애플리케이션", explanation: "사용자의 스마트기기에서 실시간으로 일회용 비밀번호(TOTP)를 보여주거나 푸시 알림을 통해 추가 인증을 수행하는 2단계 인증용 보안 모바일 앱입니다." }
     },
     {
       id: "page_table",
@@ -11006,7 +11006,7 @@
       aliases: ["ページ対応表"],
       related: ["virtual_memory"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "페이지 테이블", explanation: "운영체제 가상 메모리 관리 커널이 유지하는 매핑 데이터 구조로, 프로세스의 가상 주소(페이지)와 물리 메모리의 실제 주소(프레임) 간의 변환 관계를 기록합니다." }
     },
     {
       id: "paging",
@@ -11026,7 +11026,7 @@
       aliases: ["ページング","paging method"],
       related: ["page_table","virtual_memory"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "페이징", explanation: "가상 메모리를 고정된 크기의 페이지로 나누고, 물리 메모리를 같은 크기의 프레임으로 분할하여 불연속적인 메모리 공간에서도 효율적으로 관리하는 메모리 기법입니다." }
     },
     {
       id: "semantic_html",
@@ -11046,7 +11046,7 @@
       aliases: ["意味構造マークアップ","semantic markup"],
       related: ["html_element"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "시맨틱 HTML", explanation: "단순히 div 태그를 남발하지 않고 의미를 가진 태그(<header>, <article>, <footer> 등)를 올바르게 사용하여 문서 구조와 정보를 명확히 함으로써 검색 엔진 최적화(SEO) 및 접근성을 높이는 마크업 방식입니다." }
     },
     {
       id: "css_box_model",
@@ -11066,7 +11066,7 @@
       aliases: ["ボックスモデル","box model"],
       related: ["web_application"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "CSS 박스 모델", explanation: "CSS 레이아웃의 기본 뼈대로, 모든 웹 요소를 마진, 테두리, 패딩, 콘텐츠의 네 가지 영역으로 감싸진 사각형 형태로 다루는 개념입니다." }
     },
     {
       id: "protected_branch",
@@ -11086,7 +11086,7 @@
       aliases: ["ブランチ保護","branch protection"],
       related: ["version_control"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "보호된 브랜치", explanation: "GitHub 등의 소스 제어 플랫폼에서 설정되는 안전한 브랜치로, 임의의 직접적인 푸시나 강제 푸시를 차단하고 코드 리뷰나 빌드 테스트(CI) 통과를 의무화합니다." }
     },
     {
       id: "build_log",
@@ -11106,7 +11106,7 @@
       aliases: ["ビルド結果出力"],
       related: ["version_control"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "빌드 로그", explanation: "컴파일 또는 패키징 도구가 빌드 프로세스를 실행하는 동안 출력하는 상세 텍스트 기록으로, 빌드 실패 원인을 파악하는 데 가장 중요한 역할을 합니다." }
     },
     {
       id: "resource_group",
@@ -11126,7 +11126,7 @@
       aliases: ["リソースフォルダ"],
       related: ["cloud_resource"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "리소스 그룹", explanation: "클라우드 서비스 제공 플랫폼에서 관련 리소스(가상 머신, 데이터베이스, 네트워크 등)를 단일 수명 주기와 권한 단위로 관리할 수 있도록 논리적으로 묶어둔 컨테이너입니다." }
     },
     {
       id: "ingress_controller",
@@ -11146,7 +11146,7 @@
       aliases: ["Kubernetes Ingress","イングレス"],
       related: ["load_balancer","container"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Ingress 컨트롤러", explanation: "Kubernetes 클러스터 외부의 HTTP/HTTPS 트래픽을 감지하고, 인그레스 규칙에 정의된 대로 클러스터 내부의 서비스(Pod)로 라우팅하는 리버스 프록시 및 로드 밸런서 소프트웨어입니다." }
     },
     {
       id: "linear_time",
@@ -11166,7 +11166,7 @@
       aliases: ["線形時間","O(n)"],
       related: ["time_complexity","constant_time"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "선형 시간 복잡도", explanation: "알고리즘 시간 복잡도 중 하나로, 데이터의 크기 n에 비례하여 실행 단계나 연산 횟수가 직접적으로 증가함을 의미하며 O(n)으로 표기합니다." }
     },
     {
       id: "machine_learning",
@@ -11186,7 +11186,7 @@
       aliases: ["ML","マシンラーニング"],
       related: ["algorithm"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "머신러닝", explanation: "인공지능의 한 분야로, 명시적인 프로그래밍 없이도 대량의 데이터에서 패턴과 통계적 모델을 추출하여 예측 및 분석 의사결정을 수행할 수 있도록 컴퓨터를 학습시키는 기술입니다." }
     },
     {
       id: "supplier_management",
@@ -11206,7 +11206,7 @@
       aliases: ["供給者管理","ベンダー管理"],
       related: ["outsourcing"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "공급업체 관리", explanation: "ITIL 및 프로젝트 관리에서 외부 공급업체나 클라우드 벤더의 선정, 계약 협상, 정기적인 서비스 성과 및 품질을 평가하여 관계를 유지하는 관리 프로세스입니다." }
     },
     {
       id: "license_management",
@@ -11226,7 +11226,7 @@
       aliases: ["SAM","ソフトウェア資産管理"],
       related: ["compliance_check"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "라이선스 관리", explanation: "조직 내에서 사용하는 소프트웨어의 라이선스 구매 수량, 활성화 장치 정보 및 만료일을 추적 및 감사하여 규정 준수 여부를 보증하는 관리 활동입니다." }
     },
     {
       id: "software_license",
@@ -11246,7 +11246,7 @@
       aliases: ["使用許諾契約","EULA"],
       related: ["license_management"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "소프트웨어 라이선스", explanation: "소프트웨어의 소유자나 권리자가 사용자에게 특정 범위, 기한, 용도 내에서만 소프트웨어를 사용하도록 허용하는 조항을 담은 법적 사용 계약입니다." }
     },
     {
       id: "failover",
@@ -11266,7 +11266,7 @@
       aliases: ["自動切り替え","系切り替え"],
       related: ["availability","database_instance"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "장애 조치", explanation: "운영 중인 서버나 기본 데이터베이스에 장애가 생겼을 때, 준비된 백업 시스템(스탠바이)이 자동으로 비즈니스 제어권을 인계받아 지속성을 보장하는 다중화 기술입니다." }
     },
     {
       id: "database_availability",
@@ -11286,7 +11286,7 @@
       aliases: ["DB可用性"],
       related: ["failover","availability"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "데이터베이스 가용성", explanation: "데이터베이스 시스템이 사용자의 쿼리 및 트랜잭션 요청을 정상적으로 처리하여 작동하고 있는 시간의 비율을 의미합니다." }
     },
     {
       id: "covering_index",
@@ -11306,7 +11306,7 @@
       aliases: ["カバードインデックス","index covering"],
       related: ["index","composite_key"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "커버링 인덱스", explanation: "조회하려는 컬럼이 인덱스 키에 완전히 포함되어 있어, 데이터 테이블을 직접 읽지 않고 인덱스 자체에서 결과를 리턴하는 고성능 쿼리 최적화 방법입니다." }
     },
     {
       id: "java_date_time_api",
@@ -11326,7 +11326,7 @@
       aliases: ["java.time","Java 8 Date API"],
       related: ["java_class"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Java Date-Time API", explanation: "Java 8부터 도입된 현대적인 날짜 및 시간 라이브러리로, 기존의 클래스들과 달리 불변 타입이고 스레드 세이프하게 설계되었습니다." }
     },
     {
       id: "java_regular_expression",
@@ -11346,7 +11346,7 @@
       aliases: ["java.util.regex","Java正規表現"],
       related: ["java_class"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Java 정규 표현식", explanation: "Java의 java.util.regex 패키지에 있는 Pattern 및 Matcher 클래스를 활용하여 문자열에서 복잡한 패턴을 효율적으로 검색, 수정 및 추출하는 기술입니다." }
     },
     {
       id: "python_async",
@@ -11366,7 +11366,7 @@
       aliases: ["asyncio","Python非同期"],
       related: ["thread"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Python 비동기 프로그래밍", explanation: "Python에서 단일 스레드와 이벤트 루프를 사용하여 다중 입출력(I/O) 작업을 대기 시간 동안 전환함으로써 병행성을 향상시키는 고효율 개발 패러다임입니다." }
     },
     {
       id: "python_await",
@@ -11386,7 +11386,7 @@
       aliases: ["await"],
       related: ["python_async"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Python await 키워드", explanation: "async 함수 내부에서 사용되며, 비동기 연산의 작업 완료를 기다리는 동안 실행 스레드의 제어권을 일시적으로 이벤트 루프에 양보하는 비동기 지연 제어 키워드입니다." }
     },
     {
       id: "python_coroutine",
@@ -11406,7 +11406,7 @@
       aliases: ["コルーチン","coroutine"],
       related: ["python_await"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Python 코루틴", explanation: "async def 키워드로 정의된 특별한 함수 객체로, 실행 중간에 일시 정지되었다가 필요할 때 다시 시작할 수 있는 경량의 실행 단위입니다." }
     },
     {
       id: "session_layer",
@@ -11426,7 +11426,7 @@
       aliases: ["第5層","OSI L5"],
       related: ["osi_model"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "세션 계층", explanation: "OSI 참조 모델의 제5계층으로, 분산된 통신 장치들 사이에서 가상적인 통신 채널(세션)을 수립, 유지, 동기화 및 해제하는 책임을 가집니다." }
     },
     {
       id: "presentation_layer",
@@ -11446,7 +11446,7 @@
       aliases: ["第6層","OSI L6"],
       related: ["osi_model","session_layer"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "표현 계층", explanation: "OSI 참조 모델의 제6계층으로, 응용 계층이 이해할 수 있도록 데이터를 표준 형식으로 암호화, 압축, 문자 세트 변환하는 역할을 수행합니다." }
     },
     {
       id: "otp",
@@ -11466,7 +11466,7 @@
       aliases: ["OTP","使い捨てパスワード"],
       related: ["totp","multi_factor_authentication"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "일회용 비밀번호(OTP)", explanation: "단 한 번의 로그인 세션이나 트랜잭션 도중에만 사용될 수 있으며 수명이 짧아 중간자 공격이나 계정 도용에 안전한 동적 보안 코드입니다." }
     },
     {
       id: "hardware_token",
@@ -11486,7 +11486,7 @@
       aliases: ["セキュリティトークン","OTPトークン"],
       related: ["multi_factor_authentication"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "하드웨어 토큰", explanation: "일회용 보안 패스워드를 띄워주거나 인증용 암호키를 탑재하고 있는 열쇠고리 또는 USB 형태의 독립된 전용 물리 보안 장치입니다." }
     },
     {
       id: "recovery_code",
@@ -11506,7 +11506,7 @@
       aliases: ["リカバリーコード","バックアップコード"],
       related: ["multi_factor_authentication","totp"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "복구 코드", explanation: "MFA 모바일 기기나 OTP 토큰이 없거나 파손되었을 때, 2단계 인증 프로세스를 우회하여 계정에 로그인하고 재설정할 수 있게 해주는 사전 발급용 일회성 코드입니다." }
     },
     {
       id: "user_mode",
@@ -11526,7 +11526,7 @@
       aliases: ["非特権モード","非特権状態"],
       related: ["operating_system_kernel"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "사용자 모드", explanation: "CPU가 지원하는 권한 레벨 중 하나로, 하드웨어나 보호된 메모리에 직접 접근할 수 없고 오직 정의된 시스템 서비스를 통해서만 작업을 수행할 수 있는 비특권 실행 모드입니다." }
     },
     {
       id: "kernel_mode",
@@ -11546,7 +11546,7 @@
       aliases: ["特権モード","スーパーバイザモード"],
       related: ["user_mode"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "커널 모드", explanation: "CPU 장치의 최고 권한 실행 제어 상태로, 운영체제 커널의 핵심 프로그램이 동작하여 하드웨어 제어 레지스터와 실제 물리 메모리 주소에 무제한으로 접근합니다." }
     },
     {
       id: "css_flexbox",
@@ -11566,7 +11566,7 @@
       aliases: ["フレックスボックスレイアウト","flexible box"],
       related: ["css_box_model"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "CSS Flexbox", explanation: "웹 화면 상에서 1차원 구조(행 또는 열 단위)로 내부 자식 요소들을 고르게 분배하고, 정렬 및 신축성 있게 제어하는 레이아웃 배치 모델입니다." }
     },
     {
       id: "dom_event",
@@ -11586,7 +11586,7 @@
       aliases: ["イベントオブジェクト","JSイベント"],
       related: ["web_application"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "DOM 이벤트", explanation: "브라우저 및 웹 요소 노드에서 마우스 클릭, 텍스트 타이핑, 스크롤링, 화면 로딩 완료 등 사용자와 시스템 상태 변화에 대응해 발생하는 상호작용 트리거 신호입니다." }
     },
     {
       id: "pull_request_template",
@@ -11606,7 +11606,7 @@
       aliases: ["PRテンプレート","PR template"],
       related: ["protected_branch"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "풀 리퀘스트 템플릿", explanation: "GitHub 등 협업 도구에서 개발자가 Pull Request를 작성할 때 개발 목적과 자가 검증 항목 등을 체계적으로 기록할 수 있도록 기본으로 불러와지는 서식 파일입니다." }
     },
     {
       id: "code_owner",
@@ -11626,7 +11626,7 @@
       aliases: ["CODEOWNERS","コードの責任者"],
       related: ["protected_branch"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "코드 오너", explanation: "프로젝트 코드의 특정 하위 경로를 명시하고, 해당 부분의 변경 건이 접수되었을 때 반드시 자동 리뷰어로 매핑되어야 하는 관리 주체 규칙입니다." }
     },
     {
       id: "access_policy",
@@ -11646,7 +11646,7 @@
       aliases: ["アクセス規則ポリシー"],
       related: ["authorization"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "액세스 정책", explanation: "시스템이나 클라우드 인프라 자원에서 개별 사용자나 서비스 계정이 리소스에 대해 취할 수 있는 허용 행위와 권한 규칙들을 체계화한 규정입니다." }
     },
     {
       id: "managed_identity",
@@ -11666,7 +11666,7 @@
       aliases: ["マネージドID認証","managed identity credentials"],
       related: ["access_policy","cloud_resource"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "관리 ID", explanation: "클라우드 서비스가 제공하는 보안 자격 증명 관리 방식으로, 코드 내에 데이터베이스 비밀번호 등의 인증 비밀 정보를 하드코딩하지 않고 클라우드 플랫폼에서 자원을 직접 자동 연계해 주는 인증 체계입니다." }
     },
     {
       id: "logarithmic_time",
@@ -11686,7 +11686,7 @@
       aliases: ["対数時間","O(log n)"],
       related: ["time_complexity","linear_time"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "로그 시간 복잡도", explanation: "입력 데이터 크기 n이 기하급수적으로 늘어나더라도 쿼리나 탐색에 필요한 단계는 아주 완만하게 늘어나는 고성능 알고리즘 상태이며 O(log n)으로 분류합니다." }
     },
     {
       id: "project_assumption",
@@ -11706,7 +11706,7 @@
       aliases: ["仮定条件","assumption"],
       related: ["project_constraint","project_charter"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "프로젝트 가정 사항", explanation: "프로젝트 초기 계획을 수립할 때, 객관적 증명 없이 사실로 상정한 전제 조건으로, 만약 이것이 틀린 것으로 파악되면 프로젝트 일정이나 리스크에 즉각 영향을 줍니다." }
     },
     {
       id: "progress_report",
@@ -11726,7 +11726,7 @@
       aliases: ["ステータスレポート","progress status"],
       related: ["project_charter","project_closure"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "진행 상황 보고서", explanation: "프로젝트 진행 과정에서 당기 성과물, 예상 일정 대비 차이, 위험 요소 관리 방안 등을 정리해 정기적으로 주요 관계자와 클라이언트에게 제시하는 문서입니다." }
     },
     {
       id: "sensitive_information",
@@ -11746,7 +11746,7 @@
       aliases: ["センシティブ情報","sensitive data"],
       related: ["privacy","confidentiality"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "민감 정보", explanation: "유출 및 외부 노출 시 조직에 중대한 법적, 경제적 위기를 초래하거나 개인의 권리 침해를 야기하여 고도의 접근 제어가 필요한 데이터 정보입니다." }
     },
     {
       id: "operating_system_process",
@@ -11766,7 +11766,7 @@
       aliases: ["プロセス","OS process"],
       related: ["process","thread"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "운영체제 프로세스", explanation: "컴퓨터 운영체제가 메모리를 할당하고 시스템 리소스를 부여해 실행 상태에 있도록 제어하는 활성 상태의 프로그램 인스턴스입니다." }
     },
     {
       id: "command_argument",
@@ -11786,7 +11786,7 @@
       aliases: ["引数","cmd arguments"],
       related: ["operating_system_process","user_mode"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "명령줄 인수", explanation: "터미널이나 명령줄에서 프로그램을 호출할 때 전달하는 매개변수로, 실행 모드나 입력 경로를 바꿀 때 인수로 대입합니다." }
     },
     {
       id: "cloud_monitoring",
@@ -11806,7 +11806,7 @@
       aliases: ["クラウドモニタリング"],
       related: ["cloud_computing","cloud_resource"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "클라우드 모니터링", explanation: "클라우드 플랫폼 내 가상 머신, 트래픽 유입 속도, 디스크 용량, 데이터 처리 효율 등의 가용성 데이터들을 지속적으로 측정해 장애를 조기에 인지하는 시스템 모니터링입니다." }
     },
     {
       id: "database_scalability",
@@ -11826,7 +11826,7 @@
       aliases: ["DB拡張性"],
       related: ["database","read_replica"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "데이터베이스 확장성", explanation: "데이터 볼륨이나 트래픽이 폭증할 때 시스템 사양을 올리거나 서버 대수를 물리적으로 넓혀서 처리 성능을 대응하는 유연성을 뜻합니다." }
     },
     {
       id: "database_performance",
@@ -11846,7 +11846,7 @@
       aliases: ["DB性能","database performance tuning"],
       related: ["database","query"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "데이터베이스 성능", explanation: "데이터베이스가 주어진 쿼리 요청을 얼마나 신속하게 연산하고 단위 시간 내에 얼마나 많은 트랜잭션을 완결 짓는지를 평정하는 시스템 효율성입니다." }
     },
     {
       id: "prepared_query",
@@ -11866,7 +11866,7 @@
       aliases: ["プリペアドステートメント","prepared statement"],
       related: ["sql_injection","query"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "매개변수화 쿼리(Prepared Statement)", explanation: "SQL 해석 골격을 미리 컴파일해 두고 매번 들어오는 인수들만 파라미터로 결합해 반복 연산 성능을 확보하고 SQL 인젝션 공격을 방어하는 보안 질의 방식입니다." }
     },
     {
       id: "java_file_class",
@@ -11886,7 +11886,7 @@
       aliases: ["java.io.File","Fileクラス"],
       related: ["java_class","java_io"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Java File 클래스", explanation: "Java의 java.io 패키지에서 파일 또는 디렉터리 경로명을 객체화하여, 파일 생성, 이름 변경, 삭제 등의 파일 시스템 조작을 담당하는 클래스입니다." }
     },
     {
       id: "java_heap",
@@ -11906,7 +11906,7 @@
       aliases: ["JVMヒープ","heap memory"],
       related: ["java_stack","heap_memory"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Java 힙 메모리", explanation: "Java 가상 머신(JVM)이 구동 중에 동적으로 선언되는 모든 인스턴스 객체나 배열 구조를 올려놓고 가비지 컬렉터(GC)에 의해 사후 해제되는 주된 공유 메모리 영역입니다." }
     },
     {
       id: "java_stack",
@@ -11926,7 +11926,7 @@
       aliases: ["JVMスタック","thread stack"],
       related: ["java_heap","stack_memory"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Java 스택 메모리", explanation: "Java의 개별 스레드들이 본인의 로직 루틴을 실행할 때 할당되는 전용 공간으로, 메서드 내의 로컬 변수나 힙 내부 참조 주소를 올려놓고 메서드가 리턴되면 소멸되는 영역입니다." }
     },
     {
       id: "python_virtual_environment",
@@ -11946,7 +11946,7 @@
       aliases: ["venv","python venv"],
       related: ["python_module","pypi"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Python 가상 환경", explanation: "동일한 OS 인스턴스 안에서 여러 프로젝트들이 서로 다른 외부 모듈 버전을 쓸 수 있도록, 라이브러리와 실행기를 논리적으로 독립시키는 Python만의 가상화 구조입니다." }
     },
     {
       id: "python_package_index",
@@ -11966,7 +11966,7 @@
       aliases: ["PyPI","python package repository"],
       related: ["pypi","python_virtual_environment"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Python 패키지 인덱스", explanation: "전 세계 개발자들이 공개한 오픈소스 Python 라이브러리 패키지를 모아 관리하는 최상위 중앙 배포 인프라(PyPI)입니다." }
     },
     {
       id: "python_import_path",
@@ -11986,7 +11986,7 @@
       aliases: ["sys.path","search path"],
       related: ["python_module","python_virtual_environment"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Python 임포트 경로", explanation: "Python 소스 파일에서 import 선언문을 이용해 모듈을 불러올 때, 런타임 인터프리터가 해당 모듈 파일의 실재 위치를 찾기 위해 거쳐가는 디렉터리 경로 목록(sys.path)입니다." }
     },
     {
       id: "css_grid",
@@ -12006,7 +12006,7 @@
       aliases: ["グリッドレイアウト","CSS Grid"],
       related: ["css_flexbox","css_box_model"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "CSS 그리드", explanation: "수평 행과 수직 열이라는 이차원 격자망을 직접 구조화하여 복합적인 웹 페이지의 세부 레이아웃들을 편리하게 제어하는 레이아웃 시스템입니다." }
     },
     {
       id: "javascript_promise",
@@ -12026,7 +12026,7 @@
       aliases: ["Promise","JS Promise"],
       related: ["web_application","dom_event"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "JavaScript 프로미스", explanation: "JavaScript의 비동기 처리에서 성공이나 실패 같은 최종 연산 상태를 나타내어, 비동기 콜백 중첩을 방지하는 객체입니다." }
     },
     {
       id: "quadratic_time",
@@ -12046,7 +12046,7 @@
       aliases: ["O(n^2)","二次時間"],
       related: ["time_complexity","linear_time"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "이차 시간 복잡도", explanation: "입력값의 수 n이 커질 때 동작 복잡도가 그의 제곱값인 n^2 비율로 가중되는 비효율적 복잡도이며, 이중 루프(예: 버블 정렬) 같은 구조에서 흔히 발견됩니다." }
     },
     {
       id: "supervised_learning",
@@ -12066,7 +12066,7 @@
       aliases: ["教示あり学習"],
       related: ["machine_learning"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "지도 학습", explanation: "머신러닝의 한 종류로서, 입력 데이터와 이에 대응하는 라벨링된 모범 답안을 모델에 주어 입력값과 타겟 속성 간의 함수 관계를 학습시키는 기법입니다." }
     },
     {
       id: "ip_packet",
@@ -12086,7 +12086,7 @@
       aliases: ["パケット","IP datagram"],
       related: ["ip_address","tcp_segment"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "IP 패킷", explanation: "인터넷 네트워크망 상에서 전송되는 가장 기본이 되는 데이터 규격으로, 발신자와 수신자의 IP 주소가 수록된 패킷 헤더와 실제 내용물인 페이로드로 구분됩니다." }
     },
     {
       id: "tcp_segment",
@@ -12106,7 +12106,7 @@
       aliases: ["セグメント","TCP segment"],
       related: ["ip_packet","port_number"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "TCP 세그먼트", explanation: "전송 계층(L4)에서 활용되는 TCP 헤더 정보를 담아 하위 물리 계층으로 이송되는 데이터 덩어리로, 포트 번호, 전송 순번, 세션 흐름을 보장하는 구조입니다." }
     },
     {
       id: "dns_resolver",
@@ -12126,7 +12126,7 @@
       aliases: ["フルサービスリゾルバ","recursive resolver"],
       related: ["dns","ip_address"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "DNS 리졸버", explanation: "컴퓨터나 브라우저의 도메인 검색 지시에 호응하여 루트 서버부터 도메인 담당 서버까지 재귀적으로 질의해 유효한 IP 주소를 회신해 주는 DNS 에이전트 서비스입니다." }
     },
     {
       id: "dependency_vulnerability",
@@ -12146,7 +12146,7 @@
       aliases: ["依存ライブラリの脆弱性","library vulnerability"],
       related: ["vulnerability","sbom"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "의존성 취약점", explanation: "소프트웨어 제작 시 직접 만든 로직이 아닌, 외부에서 참조한 프레임워크나 서드파티 라이브러리 모듈 자체에 잠재된 보안 결함을 뜻합니다." }
     },
     {
       id: "sbom",
@@ -12166,7 +12166,7 @@
       aliases: ["SBOM","ソフトウェア部品構成表"],
       related: ["dependency_vulnerability","vulnerability"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "소프트웨어 자재 명세서(SBOM)", explanation: "해당 소프트웨어에 편입되어 배포된 모듈, 오픈소스 라이선스, 프레임워크들의 상세 목록과 명세를 도식화하여 공급망 관점의 위해 요소를 식별하는 부품 명세서입니다." }
     },
     {
       id: "code_security_review",
@@ -12186,7 +12186,7 @@
       aliases: ["セキュアコード監査","secure code review"],
       related: ["security_review","vulnerability"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "보안 코드 검토", explanation: "소프트웨어의 소스코드를 릴리스하기 전에 전수 조사하여 메모리 누출, 크로스 사이트 스크립팅, 하드코딩된 비밀번호 등 위험한 결함을 포착하고 고쳐나가는 코드 리뷰 활동입니다." }
     },
     {
       id: "availability_zone",
@@ -12206,7 +12206,7 @@
       aliases: ["AZ"],
       related: ["cloud_computing","availability"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "가용 영역", explanation: "클라우드 제공업체가 운영하는 특정 지리적 리전 내에서 전력, 공조, 네트워크 시스템이 개별적으로 독립된 물리 데이터 센터들을 그룹화한 논리 격리 구역입니다." }
     },
     {
       id: "auto_scaling",
@@ -12226,7 +12226,7 @@
       aliases: ["autoscaling"],
       related: ["cloud_monitoring","database_scalability"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "오토 스케일링", explanation: "서버들의 리소스 점유율이나 트래픽 부하 추이를 상시 모니터링하여 가상 리소스를 실시간으로 확장하거나 축소하여 비용과 가용성을 보장하는 기능입니다." }
     },
     {
       id: "docker_image",
@@ -12246,7 +12246,7 @@
       aliases: ["container image"],
       related: ["container","dockerfile"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Docker 이미지", explanation: "애플리케이션 코드를 포함하여 가동에 필요한 종속 라이브러리, 환경 설정값 등을 묶어서 보관하는 변경 불가능한 컨테이너 실행용 스냅샷 템플릿입니다." }
     },
     {
       id: "container_orchestration",
@@ -12266,7 +12266,7 @@
       aliases: ["orchestration"],
       related: ["container","auto_scaling"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "컨테이너 오케스트레이션", explanation: "분산 컨테이너들의 배포, 스케줄링, 가상 네트워크 라우팅, 확장성 조절 및 헬스 체크 복구 등을 프로그램으로 자동 통제하는 관리 시스템입니다." }
     },
     {
       id: "ci_pipeline",
@@ -12286,7 +12286,7 @@
       aliases: ["continuous integration pipeline"],
       related: ["unit_test","pull_request_template"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "CI 파이프라인", explanation: "개발자들이 공동 브랜치로 커밋한 코드를 상시 감지하여 자동 빌드, 단위 검사 및 분석을 거치고 통합 프로세스의 무결성을 실시간 증명하는 가동 흐름입니다." }
     },
     {
       id: "cd_pipeline",
@@ -12306,7 +12306,7 @@
       aliases: ["continuous delivery pipeline","continuous deployment pipeline"],
       related: ["ci_pipeline","release_management"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "CD 파이프라인", explanation: "CI가 통과된 소프트웨어를 개발서버, 검증용 스테이징, 실제 운영 환경으로 손대지 않고 자동으로 인프라를 프로비저닝하고 배포를 실행하는 자동 프로세스입니다." }
     },
     {
       id: "release_management",
@@ -12326,7 +12326,7 @@
       aliases: ["release process"],
       related: ["cd_pipeline","progress_report"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "릴리스 관리", explanation: "제품이나 내부 시스템의 기능 향상과 패치 적용을 위해 빌드 상태를 검토 및 배포 승인을 거쳐 사용자에게 실제 공급할 때까지의 모든 과정을 계획 및 기획하는 통제 절차입니다." }
     },
     {
       id: "blue_green_deployment",
@@ -12346,7 +12346,7 @@
       aliases: ["blue green deployment"],
       related: ["release_management","rollback"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "블루-그린 배포", explanation: "사용자가 사용 중인 환경(Blue)과 새 패치가 로드된 환경(Green)을 분리하여 완비한 뒤, 라우터 스위칭을 통해 일시에 접속 트래픽을 넘김으로써 릴리스 중단 시간을 최소화하는 배포 방식입니다." }
     },
     {
       id: "canary_release",
@@ -12366,7 +12366,7 @@
       aliases: ["canary deployment"],
       related: ["release_management","cloud_monitoring"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "카나리 릴리스", explanation: "신규 버전의 릴리스를 전체 트래픽에 적용하기 앞서 일부 실사용자 그룹에 먼저 시범 배포하고, 오류 양상을 면밀히 살핀 뒤 점진적으로 확대 적용하는 릴리스 기법입니다." }
     },
     {
       id: "feature_flag",
@@ -12386,7 +12386,7 @@
       aliases: ["feature toggle"],
       related: ["canary_release","web_application"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "기능 플래그", explanation: "서버 코드를 다시 빌드하고 릴리스 배포하는 단계를 건너뛰고, 시스템 설정 변수의 ON/OFF 상태를 바꾸는 것만으로 특정 모듈의 가시성을 조절하는 통제 조건입니다." }
     },
     {
       id: "observability",
@@ -12406,7 +12406,7 @@
       aliases: ["observable systems"],
       related: ["cloud_monitoring","log_aggregation"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "관찰 가능성(Observability)", explanation: "단순히 시스템 생사 여부를 탐지하는 모니터링을 넘어 시스템 내부의 복잡한 로그, 메트릭, 분산 추적 등의 지표들을 통합 분석하여 이상 징후의 근본적 이유를 역추적하는 성질입니다." }
     },
     {
       id: "log_aggregation",
@@ -12426,7 +12426,7 @@
       aliases: ["centralized logging"],
       related: ["observability","cloud_monitoring"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "로그 집계", explanation: "네트워크나 서비스의 다양한 장치들에서 발생하는 데이터 기록을 실시간 수집해 단일 중앙 스토리지로 통폐합하고 검색 및 분석이 가능하게 돕는 원격 로그 수집 체계입니다." }
     },
     {
       id: "distributed_tracing",
@@ -12446,7 +12446,7 @@
       aliases: ["request tracing"],
       related: ["observability","api"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "분산 추적", explanation: "마이크로서비스 환경에서 하나의 클라이언트 요구사항이 백엔드 내부의 수많은 원격 프로세스를 거치는 과정을 추적 ID 기반으로 묶어 병목 지점을 진단하는 추적 방식입니다." }
     },
     {
       id: "api_gateway",
@@ -12466,7 +12466,7 @@
       aliases: ["gateway"],
       related: ["api","rest_api"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "API 게이트웨이", explanation: "클라이언트와 내부 서비스들의 중심 허브 역할을 맡아 유입 트래픽에 대해 통합 인증, 모니터링, 데이터 라우팅, 트래픽 제어를 총괄하는 단일 진입점 장치입니다." }
     },
     {
       id: "rate_limiting",
@@ -12486,7 +12486,7 @@
       aliases: ["request throttling"],
       related: ["api_gateway","availability"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "속도 제한(Rate Limiting)", explanation: "특정 사용자가 정해진 기간 동안 서버로 보낼 수 있는 최대 API 요청 횟수를 규정해 과도한 유입에 따른 전체 인프라 과부하와 악의적 공격을 억제하는 방어 기술입니다." }
     },
     {
       id: "oauth2",
@@ -12506,7 +12506,7 @@
       aliases: ["OAuth2"],
       related: ["authorization","api"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "OAuth 2.0", explanation: "애플리케이션이 외부 인증 기관의 회원 정보에 대한 접근 제한 권한을 사용자 대신 발급받은 액세스 토큰을 통해 안전하게 위임받는 표준 인증 프레임워크입니다." }
     },
     {
       id: "openid_connect",
@@ -12526,7 +12526,7 @@
       aliases: ["OIDC"],
       related: ["oauth2","authentication"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "OpenID Connect", explanation: "OAuth 2.0을 토대로 신원 확인 정보 공유 규약을 정립한 인증 레이어로, 원클릭 로그인 연동을 통해 ID 토큰을 취득하고 회원 식별 인프라를 일원화하는 프로토콜입니다." }
     },
     {
       id: "single_sign_on",
@@ -12546,7 +12546,7 @@
       aliases: ["SSO"],
       related: ["openid_connect","authentication"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "싱글 사인온(SSO)", explanation: "단 한번의 중앙 자격 검증만 통과하면 연계되어 있는 복수의 웹 서비스나 사이트들을 매번 로그인하는 번거로움 없이 곧바로 이용할 수 있게 해주는 통합 인증 체계입니다." }
     },
     {
       id: "serverless_computing",
@@ -12566,7 +12566,7 @@
       aliases: ["serverless"],
       related: ["cloud_computing","function_as_a_service"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "서버리스 컴퓨팅", explanation: "실제 서버 인프라의 가동과 관리를 개발자가 직접 다루지 않고 오직 코드 내용만 함수로 등록해 두면 클라우드 제공업체가 자원을 동적으로 할당하고 요금을 부과하는 구동 모델입니다." }
     },
     {
       id: "function_as_a_service",
@@ -12586,7 +12586,7 @@
       aliases: ["FaaS"],
       related: ["serverless_computing","webhook"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "FaaS(Service형 함수)", explanation: "서버리스 컴퓨팅의 구체화된 서비스 모델로, 특정 이벤트가 발생했을 때 소규모 코드 세그먼트(함수)가 즉각 활성화되어 작업을 완수하고 저절로 해제되는 과금 아키텍처입니다." }
     },
     {
       id: "cloud_region",
@@ -12606,7 +12606,7 @@
       aliases: ["region"],
       related: ["cloud_computing","availability_zone"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "클라우드 리전", explanation: "클라우드 공급업체가 지리적으로 완전히 독립된 국가나 지역별로 자사 데이터 센터들을 집중 배치해 가상의 서비스를 공급하는 거점 구역을 말합니다." }
     },
     {
       id: "cloud_storage",
@@ -12626,7 +12626,7 @@
       aliases: ["online storage"],
       related: ["cloud_computing","object_storage"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "클라우드 스토리지", explanation: "클라우드 컴퓨팅 환경에서 네트워크 연결을 매개로 가상의 대용량 저장 매체에 안전하게 데이터를 기록하고 호출할 수 있도록 제공되는 서비스입니다." }
     },
     {
       id: "object_storage",
@@ -12646,7 +12646,7 @@
       aliases: ["blob storage"],
       related: ["cloud_storage","database_scalability"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "객체 스토리지", explanation: "계층 구조가 없는 평면 데이터 구조 내에서 고유 식별자와 메타데이터를 파일과 묶어 단일 '객체'로 보관하여, 대규모 비정형 데이터를 저장하기에 적합한 스토리지 모델입니다." }
     },
     {
       id: "health_check",
@@ -12666,7 +12666,7 @@
       aliases: ["liveness check"],
       related: ["availability","load_balancer"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "상태 점검(Health Check)", explanation: "대상 서버나 서비스 인스턴스가 정상 작동 중이며 신규 접속 트래픽을 처리 가능한 상태인지 외부 엔드포인트 호출 등을 통해 상시 모니터링하는 검사 활동입니다." }
     },
     {
       id: "infrastructure_as_code",
@@ -12686,7 +12686,7 @@
       aliases: ["IaC"],
       related: ["configuration_management","cloud_computing"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "코드 기반 인프라(IaC)", explanation: "서버, 데이터베이스 등의 인프라 자원을 수작업으로 프로비저닝하지 않고, 텍스트 형태의 선언형 설정 코드 파일로 정의해 자동화하여 일관되게 생성 및 복제하는 방식입니다." }
     },
     {
       id: "data_lake",
@@ -12706,7 +12706,7 @@
       aliases: ["data lake"],
       related: ["cloud_storage","object_storage"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "데이터 레이크", explanation: "포맷이 정해지지 않은 미가공 원시 로그부터 구조화된 관계형 데이터까지 대규모의 다양한 데이터를 목적에 제한 없이 원천 수집해 놓는 미정제 정보 저장소입니다." }
     },
     {
       id: "data_warehouse",
@@ -12726,7 +12726,7 @@
       aliases: ["DWH"],
       related: ["database","data_lake"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "데이터 웨어하우스", explanation: "기업의 분석적 의사결정을 보조하기 위해 트랜잭션 시스템 등에서 데이터를 정기 수집하고, 특정한 비즈니스 분석 용도에 맞게 정제해 보관하는 관계형 데이터베이스입니다." }
     },
     {
       id: "etl",
@@ -12746,7 +12746,7 @@
       aliases: ["Extract Transform Load"],
       related: ["data_pipeline","data_warehouse"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "ETL", explanation: "다양한 원천 데이터베이스에서 분석에 필요한 데이터만 선별해 추출하고, 비즈니스 목적에 맞게 가공/정제하여 최종 목적지인 데이터웨어하우스에 적재하는 통합 과정입니다." }
     },
     {
       id: "data_pipeline",
@@ -12766,7 +12766,7 @@
       aliases: ["pipeline"],
       related: ["etl","data_quality"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "데이터 파이프라인", explanation: "데이터의 수집부터 시작해 가공, 분석, 적재 시스템 전송에 이르기까지 데이터가 자동 및 연속적으로 흘러가도록 제어하는 파이프 아키텍처입니다." }
     },
     {
       id: "data_catalog",
@@ -12786,7 +12786,7 @@
       aliases: ["metadata catalog"],
       related: ["data_lineage","data_quality"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "데이터 카탈로그", explanation: "조직 내 수많은 테이블 and 데이터 애셋의 위치, 설명, 정합성 메타데이터 정보를 색인으로 분류하여 데이터 검색 및 거버넌스를 돕는 메타 사전입니다." }
     },
     {
       id: "data_quality",
@@ -12806,7 +12806,7 @@
       aliases: ["quality of data"],
       related: ["data_catalog","integrity"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "데이터 품질", explanation: "의사결정의 신뢰성을 확보하기 위해 수집 및 분석되는 데이터가 얼마나 정확하며, 누락 없이 완전하고 일관되게 관리되고 있는지를 평가하는 수준입니다." }
     },
     {
       id: "data_lineage",
@@ -12826,7 +12826,7 @@
       aliases: ["lineage"],
       related: ["data_catalog","data_pipeline"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "데이터 리니지", explanation: "데이터의 수집, 변환, 병합 등 전체 라이프사이클을 추적하여 특정 데이터가 어느 원천 소스에서 출발하여 어떤 연산 과정을 거쳐 최종 결과물에 이르렀는지를 가시화한 계보 정보입니다." }
     },
     {
       id: "database_sharding",
@@ -12846,7 +12846,7 @@
       aliases: ["sharding"],
       related: ["database_scalability","database_performance"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "데이터베이스 샤딩", explanation: "단일 데이터베이스 테이블의 대용량 레코드를 파티셔닝 규칙(샤드 키)에 따라 잘게 쪼개 여러 개의 독립된 물리 데이터베이스 노드들에 분산 저장하는 아키텍처 기법입니다." }
     },
     {
       id: "query_plan",
@@ -12866,7 +12866,7 @@
       aliases: ["execution plan"],
       related: ["sql","index"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "쿼리 실행 계획", explanation: "데이터베이스 엔진의 옵티마이저가 주어진 SQL 질의를 수행하기 위해 데이터 액세스 경로와 조인 연산 순서 등을 수립한 세부 실행 프로토콜입니다." }
     },
     {
       id: "materialized_view",
@@ -12886,7 +12886,7 @@
       aliases: ["materialised view"],
       related: ["query_plan","index"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "구체화된 뷰(Materialized View)", explanation: "복잡한 SQL 쿼리의 연산 결과를 매번 실시간으로 연산하지 않고, 디스크에 실제 물리 테이블처럼 물리적으로 상주시켜 쿼리 응답 시간을 획기적으로 줄이는 물리적 뷰 객체입니다." }
     },
     {
       id: "write_ahead_log",
@@ -12906,7 +12906,7 @@
       aliases: ["WAL"],
       related: ["transaction_log","recovery_code"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Write-Ahead Log", explanation: "데이터베이스에서 실제 데이터 페이지를 변경하기에 앞서 트랜잭션 기록 로그를 비휘발성 저장 매체에 안전하게 선제 기록하여 정전 시 데이터 보존과 크래시 복구를 지원하는 기법입니다." }
     },
     {
       id: "isolation_level",
@@ -12926,7 +12926,7 @@
       aliases: ["transaction isolation"],
       related: ["deadlock","sql"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "격리 수준(Isolation Level)", explanation: "동시에 여러 개의 데이터베이스 트랜잭션이 가동될 때, 미확정(미커밋) 상태의 변경 값 등 중간 연산 과정을 다른 트랜잭션에게 공유할지 여부를 정의한 제어 수준입니다." }
     },
     {
       id: "acid",
@@ -12946,7 +12946,7 @@
       aliases: ["ACID"],
       related: ["isolation_level","integrity"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "ACID 특성", explanation: "데이터베이스 트랜잭션의 신뢰성을 보장하는 필수적 속성인 원자성, 일관성, 격리성, 지속성을 통칭하는 개념입니다." }
     },
     {
       id: "eventual_consistency",
@@ -12966,7 +12966,7 @@
       aliases: ["eventual consistency"],
       related: ["database_scalability","distributed_tracing"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "최종 일관성", explanation: "분산 스토리지 시스템에서 동시 변경 건이 발생했을 때 일시적으로 복제본 간 데이터 차이가 생기더라도, 추가적인 업데이트가 멈춘다면 결국에는 모든 노드가 동일한 정합성을 갖게 됨을 선언하는 정밀 완화 일관성 모델입니다." }
     },
     {
       id: "idempotency",
@@ -12986,7 +12986,7 @@
       aliases: ["idempotent operation"],
       related: ["api","http"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "멱등성", explanation: "동일한 요청이나 연산을 여러 번 반복해서 수행하더라도, 부작용 없이 단 한 번 실행했을 때의 결과와 시스템 상태가 동일하게 유지되는 성질입니다." }
     },
     {
       id: "contract_test",
@@ -13006,7 +13006,7 @@
       aliases: ["contract testing"],
       related: ["api","integration_test"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "계약 테스트", explanation: "마이크로서비스나 외부 연계 모듈 간의 인터페이스 통신 규약(JSON 구조, 파라미터 등)을 약정서로 체결하고, 변경이 발생했을 때 상호 규약을 위반하지 않는지 보증하는 통합 테스트입니다." }
     },
     {
       id: "integration_test",
@@ -13026,7 +13026,7 @@
       aliases: ["integration testing"],
       related: ["unit_test","contract_test"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "통합 테스트", explanation: "독립적으로 검증된 개별 컴포넌트나 서브시스템들을 유기적으로 결합하여, 모듈 간 상호작용 인터페이스가 누락이나 왜곡 없이 올바르게 맞물려 구동되는지 검정하는 안전 점검 테스트입니다." }
     },
     {
       id: "test_fixture",
@@ -13046,7 +13046,7 @@
       aliases: ["fixture"],
       related: ["unit_test","integration_test"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "테스트 픽스처", explanation: "테스트를 매번 동일한 초기 환경 상태에서 안정적이고 일관되게 수행할 수 있도록 준비해 두는 모의 가상 데이터베이스 값이나 객체 셋입니다." }
     },
     {
       id: "mock_object",
@@ -13066,7 +13066,7 @@
       aliases: ["mock"],
       related: ["unit_test","test_fixture"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "모의 객체(Mock Object)", explanation: "테스트 대상 코드가 외부 데이터베이스나 유료 원격 API 등에 종속되어 있을 때, 이를 가짜 객체로 대체하여 내부 로직만을 빠르고 독립적으로 검사할 수 있도록 설계된 테스트용 가상 객체입니다." }
     },
     {
       id: "test_coverage",
@@ -13086,7 +13086,7 @@
       aliases: ["coverage"],
       related: ["unit_test","testing"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "테스트 커버리지", explanation: "작성한 단위 테스트 스크립트군이 실제 타겟 코드의 전체 로직 라인 및 분기점을 몇 퍼센트나 거쳐서 수행되었는지를 나타내는 수치적 품질 척도입니다." }
     },
     {
       id: "lint",
@@ -13106,7 +13106,7 @@
       aliases: ["linter"],
       related: ["static_analysis","code_formatting"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "린트(Lint)", explanation: "소프트웨어 코드를 실행하지 않고 정적 파일 상태로 전수 스캔하여 코딩 표준 위반, 구문 오류, 미선언 변수 등 잠재적 오류를 색출하는 정적 분석 행위 및 도구입니다." }
     },
     {
       id: "code_formatting",
@@ -13126,7 +13126,7 @@
       aliases: ["formatter"],
       related: ["lint","static_analysis"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "코드 포맷팅", explanation: "줄바꿈, 괄호 들여쓰기, 공백 등의 코드 스타일을 사내 규칙에 일치시켜 여러 인원이 짜깁기한 소스코드의 가독성을 단일 스타일로 단정하게 정리해 주는 미화 처리입니다." }
     },
     {
       id: "technical_debt",
@@ -13146,7 +13146,7 @@
       aliases: ["tech debt"],
       related: ["project_assumption","code_security_review"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "기술 부채", explanation: "당장의 릴리스 일정을 맞추거나 신속한 개발 편의를 위해 차용한 설계 타협으로 인해, 향후 소프트웨어 수정 및 유지보수 시에 배가된 노력과 비용을 유발하게 되는 잠재적 위험 요소를 비유한 표현입니다." }
     },
     {
       id: "refactoring",
@@ -13166,7 +13166,7 @@
       aliases: ["code cleanup"],
       related: ["technical_debt","unit_test"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "리팩토링", explanation: "외부적으로 드러나는 비즈니스 기능의 동작은 변경하지 않고, 복잡하고 지저분한 내부 코드 구조와 아키텍처 가독성을 개선해 시스템의 품질을 상향하는 작업입니다." }
     },
     {
       id: "regression_test",
@@ -13186,7 +13186,7 @@
       aliases: ["regression testing"],
       related: ["unit_test","integration_test"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "회귀 테스트", explanation: "소프트웨어에 버그 패치나 신규 기능 업데이트를 적용한 이후, 기존에 잘 동작하던 기본 부품이나 다른 모듈이 부작용으로 인해 고장 나지 않았는지를 기존 검사 세트로 재시험하는 검증 과정입니다." }
     },
     {
       id: "privileged_access_management",
@@ -13206,7 +13206,7 @@
       aliases: ["PAM"],
       related: ["least_privilege","authorization"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "특권 접근 관리(PAM)", explanation: "조직 내 시스템 관리자 계정 등 초고도 인프라 통제 권한을 가진 핵심 관리 계정들의 암호 관리, 권한 발급, 가동 세션 기록 및 사후 감사 작업을 전문으로 영위하는 보안 아키텍처입니다." }
     },
     {
       id: "identity_provider",
@@ -13226,7 +13226,7 @@
       aliases: ["IdP"],
       related: ["single_sign_on","authentication"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "신원 제공업체(IdP)", explanation: "조직 임직원이나 고객의 계정 권한 및 자격 증명 정보를 일원화하여 저장 관리하고, 연동 연계된 외부 애플리케이션들에게 사용자 식별 여부를 중계 인증해 주는 중앙 신원 증명 서비스입니다." }
     },
     {
       id: "saml",
@@ -13246,7 +13246,7 @@
       aliases: ["Security Assertion Markup Language"],
       related: ["identity_provider","single_sign_on"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "SAML", explanation: "사용자 인증 및 권한 인가 상태 데이터를 XML 구조 형식으로 정의하여, 안전하게 이종 웹 사이트 및 클라우드 서비스 간 통합 싱글사인온(SSO) 자격 정보를 전달하는 업계 표준 보안 프로토콜입니다." }
     },
     {
       id: "csrf",
@@ -13266,7 +13266,7 @@
       aliases: ["CSRF"],
       related: ["authentication","web_application"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "크로스 사이트 요청 위조(CSRF)", explanation: "보안 인증을 마친 일반 사용자의 브라우저 세션을 속여, 해커가 은밀히 설계한 악성 스크립트를 통해 의도치 않은 송금이나 데이터 변경 등의 변개 트랜잭션을 실행하도록 기만하는 공격 기법입니다." }
     },
     {
       id: "xss",
@@ -13286,7 +13286,7 @@
       aliases: ["XSS"],
       related: ["web_application","vulnerability"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "크로스 사이트 스크립팅(XSS)", explanation: "웹 페이지 게시판 등 입력 폼에 악의적인 프론트엔드 스크립트를 은닉 삽입하여, 해당 글이나 페이지를 조회한 다른 무고한 사용자의 브라우저 세션 정보와 쿠키 값을 탈취하는 공격 방식입니다." }
     },
     {
       id: "command_injection",
@@ -13306,7 +13306,7 @@
       aliases: ["OS command injection"],
       related: ["vulnerability","code_security_review"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "명령어 삽입(Command Injection)", explanation: "어플리케이션 입력창의 파일명이나 인수를 검증 없이 수용하는 틈을 타, 정상 작동 흐름 대신 운영체제(OS) 고유의 시스템 쉘 명령을 덧대어 전달함으로써 서버를 원격 무단 통제하는 공격 기법입니다." }
     },
     {
       id: "path_traversal",
@@ -13326,7 +13326,7 @@
       aliases: ["directory traversal"],
       related: ["vulnerability","code_security_review"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "경로 탐색(Path Traversal)", explanation: "입력 매개변수에 상위 폴더 지정 기호인 '../'를 조합해서 전달하여, 외부 공개가 차단된 하드디스크 깊은 곳의 운영체제 비밀번호 파일 등 민감한 디렉터리에 변칙적으로 접근하는 경로 탐색 공격입니다." }
     },
     {
       id: "security_token",
@@ -13346,7 +13346,7 @@
       aliases: ["token"],
       related: ["oauth2","authorization"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "보안 토큰", explanation: "사용자 신원이나 권한 승인 상태가 검증되었음을 표현하는 전자식 서명 파일 또는 2차 보안용 물리 전자 카드 형태의 자격 증명서입니다." }
     },
     {
       id: "certificate_authority",
@@ -13366,7 +13366,7 @@
       aliases: ["CA"],
       related: ["encryption","public_key_infrastructure"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "인증 기관(CA)", explanation: "소프트웨어 제작사나 도메인 실소유주의 신원 정보를 최종 대조하여 기밀 서명된 신뢰성 높은 SSL/TLS 디지털 인증서를 전문 발급하고 감사 목록을 운영하는 공인 대행 기관입니다." }
     },
     {
       id: "public_key_infrastructure",
@@ -13386,7 +13386,7 @@
       aliases: ["PKI"],
       related: ["certificate_authority","encryption"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "공개키 기반구조(PKI)", explanation: "비대칭 암호키(공개키 및 개인키)를 생성, 검증, 발급, 분배 및 폐기하여, 네트워크 데이터 전송의 기밀성과 무결성, 전자서명 인증을 온전하게 보장하는 하드웨어·소프트웨어 보안 프레임워크입니다." }
     },
     {
       id: "dns_spoofing",
@@ -13406,7 +13406,7 @@
       aliases: ["DNS cache poisoning"],
       related: ["dns","dns_resolver"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "DNS 스푸핑", explanation: "DNS 질의 패킷을 가로채거나 캐시 서버를 오염시켜 도메인에 매핑된 진짜 IP 주소 대신, 해커가 마련해 둔 위장용 가짜 피싱 사이트 IP로 접속자를 유도하는 통신 기만 공격입니다." }
     },
     {
       id: "arp_spoofing",
@@ -13426,7 +13426,7 @@
       aliases: ["ARP poisoning"],
       related: ["packet_sniffing","ip_packet"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "ARP 스푸핑", explanation: "동일 로컬 네트워크(LAN) 구역 내에서 타겟 컴퓨터들에게 허위 ARP 매핑 정보를 전송하여, 외부 인터넷 관문(게이트웨이)으로 전송되는 모든 패킷을 중간에서 가로채고 도청하는 보안 해킹 행위입니다." }
     },
     {
       id: "packet_sniffing",
@@ -13446,7 +13446,7 @@
       aliases: ["sniffing"],
       related: ["ip_packet","tcp_segment"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "패킷 스니핑", explanation: "네트워크 선로를 타고 흐르는 개별 데이터 패킷들을 무단으로 캡처하고 분석하여, 평문으로 전달되는 비밀번호나 세션 ID 같은 기밀 데이터를 훔쳐보는 유선 도청 기법입니다." }
     },
     {
       id: "intrusion_detection_system",
@@ -13466,7 +13466,7 @@
       aliases: ["IDS"],
       related: ["firewall","security_information_event_management"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "침입 탐지 시스템(IDS)", explanation: "네트워크망 트래픽과 로컬 호스트 로그 추이를 상시 모니터링하여, 유해한 패킷이나 비정상적인 권한 탈취 시도 등 기 등록된 위협 행위를 포착했을 때 보안 관리자에게 경보를 알리는 시스템입니다." }
     },
     {
       id: "intrusion_prevention_system",
@@ -13486,7 +13486,7 @@
       aliases: ["IPS"],
       related: ["intrusion_detection_system","firewall"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "침입 방지 시스템(IPS)", explanation: "단순 경고 전송에 멈추지 않고, 해킹 침입이나 분산 서비스 거부 등의 유해 행위 패킷이 탐지되는 즉시 해당 접속 세션을 실시간으로 직접 차단하고 방화벽 포트를 닫아 버리는 능동적 방어 솔루션입니다." }
     },
     {
       id: "security_information_event_management",
@@ -13506,7 +13506,7 @@
       aliases: ["SIEM"],
       related: ["log_aggregation","incident_response_plan"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "보안 정보 및 이벤트 관리(SIEM)", explanation: "사내 시스템 전반의 각종 서버, 방화벽, 인증 솔루션 등의 산만하게 흩어진 로그 데이터를 단일 뷰어로 취합해 위협 행동 간의 연관 관계를 통합 감시하는 보안 관제 플랫폼입니다." }
     },
     {
       id: "endpoint_detection_response",
@@ -13526,7 +13526,7 @@
       aliases: ["EDR"],
       related: ["endpoint_security","malware"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "엔드포인트 탐지 및 대응(EDR)", explanation: "사내 임직원들이 쓰는 개인 업무용 컴퓨터와 모바일 기기 내부의 파일, 네트워크 상태를 백그라운드 추적하여, 신종 랜섬웨어 등 위협 징후를 발견 시 실시간 격리 대응하는 통합 엔드포인트 보안 도구입니다." }
     },
     {
       id: "data_loss_prevention",
@@ -13546,7 +13546,7 @@
       aliases: ["DLP"],
       related: ["sensitive_information","confidentiality"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "데이터 손실 방지(DLP)", explanation: "내부 기밀 정보나 개인 식별 코드가 메일 전송, 외부 클라우드 업로드, 혹은 USB 매체 등으로 무단 이동할 때 핵심 단어 패턴을 검열 차단함으로써 정보의 사외 유출을 조기에 예방하는 통제 기술입니다." }
     },
     {
       id: "backup_rotation",
@@ -13566,7 +13566,7 @@
       aliases: ["backup generations"],
       related: ["backup","disaster_recovery_plan"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "백업 순환 방식", explanation: "저장용 디스크의 무제한 낭비를 예방하면서 효율적인 과거 복구 상태를 유지할 수 있도록, 일간, 주간, 월간 단위로 기간별 백업 매체를 순환 교체하며 옛 세대 백업을 정리해 나가는 보관 규율 계획입니다." }
     },
     {
       id: "disaster_recovery_plan",
@@ -13586,7 +13586,7 @@
       aliases: ["DRP"],
       related: ["backup_rotation","rto"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "재해 복구 계획(DRP)", explanation: "홍수, 지진, 전쟁 및 물리 리전 대란 등으로 인해 기본 인프라 센터가 전면 붕괴하여 복구 불능일 때, 예비 대체 백업 센터로 핵심 IT 기능과 비즈니스 데이터를 빠르게 인계 가동하는 총체적 비상대책 가이드라인입니다." }
     },
     {
       id: "incident_response_plan",
@@ -13606,7 +13606,7 @@
       aliases: ["IR plan"],
       related: ["security_information_event_management","risk_assessment"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "인시던트 대응 계획(IRP)", explanation: "중대 보안 사고나 해킹 유출 등의 사고가 감지되었을 때 전담 복구팀을 긴급 소집하고 추가적인 확산 방지 차단, 피해 평가, 미디어 홍보 통제 등의 체계적인 대응 단계를 다룬 조직 비상 행동 매뉴얼입니다." }
     },
     {
       id: "vulnerability_scanning",
@@ -13626,7 +13626,7 @@
       aliases: ["vulnerability scan"],
       related: ["vulnerability","dependency_vulnerability"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "취약점 스캐닝", explanation: "대상 서버나 애플리케이션의 유입 경로 및 응용 모듈 버전을 전용 점검 툴로 자동 패킷 테스트하여, 기 알려진 취약한 상태나 포트 미비점이 외부 위험으로 노출되어 있는지 정기 색출하는 진단 프로세스입니다." }
     },
     {
       id: "patch_management",
@@ -13646,7 +13646,7 @@
       aliases: ["patching"],
       related: ["vulnerability_scanning","security_patch"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "패치 관리", explanation: "소프트웨어 공급업체가 발급하는 신규 기능이나 보안 업데이트 조항을 사전에 취합해 검토하고, 사내 개발 기기에 먼저 적용해 안정성을 검토한 뒤 운영 인프라 전반에 일괄 배포하여 안전하게 관리하는 절차입니다." }
     },
     {
       id: "threat_modeling",
@@ -13666,7 +13666,7 @@
       aliases: ["threat model"],
       related: ["risk_assessment","attack_surface"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "위협 모델링(Threat Modeling)", explanation: "소프트웨어 아키텍처 디자인 단계에서 전체 시스템 데이터 흐름을 명확히 구분해 보며, 해킹으로 이어질 가능성이 높은 STRIDE(위장, 변조 등) 보안 리스크를 선제 식별하여 방어벽을 설계하는 선례 위험 분석 기법입니다." }
     },
     {
       id: "attack_surface",
@@ -13686,7 +13686,7 @@
       aliases: ["attack surface area"],
       related: ["threat_modeling","vulnerability_scanning"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "공격 표면(Attack Surface)", explanation: "보안이 취약한 경로로 유입을 도모하기 위해 해커나 비인가 공격자가 접근하여 시도해 볼 수 있는 모든 열린 네트워크 포트, 외부 API 엔드포인트, 사용자 계정 및 입력 칸 등 취약 가능한 모든 접점들의 전체 집합입니다." }
     },
     {
       id: "java_record",
@@ -13706,7 +13706,7 @@
       aliases: ["record class"],
       related: ["java_class","object"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Java 레코드(Record)", explanation: "Java 14부터 제공되는 데이터 전송용 간결한 문법의 클래스 구조로, 생성자, getter, equals, hashCode, toString 등의 보일러플레이트 메서드들을 컴파일러가 자동 작성해 주어 불변 데이터를 간편하게 다룰 수 있습니다." }
     },
     {
       id: "java_sealed_class",
@@ -13726,7 +13726,7 @@
       aliases: ["sealed class"],
       related: ["java_class","inheritance"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Java 봉인 클래스(Sealed Class)", explanation: "Java 15부터 도입되었으며 permits 키워드를 활용해 선언한 하위 클래스들 외에는 무단으로 해당 클래스를 상속하거나 인터페이스를 구현 확장할 수 없도록 강하게 한정하는 보안 상속 기능입니다." }
     },
     {
       id: "java_lambda_expression",
@@ -13746,7 +13746,7 @@
       aliases: ["lambda"],
       related: ["interface","java_class"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Java 람다식(Lambda Expression)", explanation: "이름 없는 익명 함수를 극히 단순한 선언 형태(->)로 표기하여 자바 메서드의 매개변수나 리턴값 형태로 전달할 수 있게 해줌으로써, 컬렉션의 처리 성능과 함수형 프로그래밍 가독성을 비약적으로 제어하는 문법입니다." }
     },
     {
       id: "java_stream_api",
@@ -13766,7 +13766,7 @@
       aliases: ["stream"],
       related: ["java_lambda_expression","java_class"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Java 스트림 API", explanation: "자바 컬렉션의 복잡한 이중 for 루프 처리를 건너뛰고, 필터링, 정렬, 변환 등의 데이터 분석 조작을 선언적이고 연쇄적인 메서드 파이프라인 구조로 깔끔히 처리해 내는 전용 처리 프레임워크입니다." }
     },
     {
       id: "java_optional",
@@ -13786,7 +13786,7 @@
       aliases: ["Optional"],
       related: ["java_class","null_pointer_exception"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Java 옵셔널(Optional)", explanation: "null 참조 오류 발생을 효과적으로 방지하기 위해, 존재할 수도 있고 부재할 수도 있는 특정 제네릭 값을 내부에 래핑하여 안전하게 유효성 검사 루틴을 탈 수 있게 마련된 표준 정규 컨테이너 래퍼입니다." }
     },
     {
       id: "java_generic_type",
@@ -13806,7 +13806,7 @@
       aliases: ["generics"],
       related: ["java_class","object"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Java 제네릭(Generic)", explanation: "클래스나 메서드가 컴파일될 때 구체적 데이터 형태를 확정 짓지 않고, 인스턴스를 인스턴스화하는 시점에 매개변수로 구체적 객체 클래스 유형을 전달하게 조치하여, 런타임 캐스팅 오류를 방지하는 기능입니다." }
     },
     {
       id: "java_annotation",
@@ -13826,7 +13826,7 @@
       aliases: ["annotation"],
       related: ["java_class","object"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Java 애너테이션(Annotation)", explanation: "자바 소스코드에 부착해 컴파일러나 프레임워크(스프링 등)가 이를 해석하여 특정한 설정이나 동작 구조를 런타임에 동적으로 조립하도록 돕는 주석 기호 형태의 유용한 메타데이터 기법입니다." }
     },
     {
       id: "java_exception_handling",
@@ -13846,7 +13846,7 @@
       aliases: ["try catch"],
       related: ["java_class","exception"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Java 예외 처리", explanation: "런타임 중에 예측하지 못한 연산 오류나 자원 결핍을 감지했을 때 프로그램이 강제 정지되는 사태를 차단하기 위해, try, catch, finally 블록으로 정상 제어 회복 구조를 구축하는 개발 방식입니다." }
     },
     {
       id: "python_context_manager",
@@ -13866,7 +13866,7 @@
       aliases: ["with statement"],
       related: ["python_file_io","python_exception_handling"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Python 컨텍스트 매니저", explanation: "with 문과 연동하여 진입 시 자원의 취득을 담당하고 탈출 시점에는 자동으로 자원의 회수나 소멸 처리를 실행해 주는, 리소스 안전 관리용 이터레이팅 프로토콜 규약입니다." }
     },
     {
       id: "python_generator",
@@ -13886,7 +13886,7 @@
       aliases: ["generator"],
       related: ["python_iterator","python_function"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Python 제네레이터", explanation: "함수 가동 연산 결과를 대용량 배열로 통째로 돌려주지 않고 yield 키워드를 차용하여, 호출 시마다 한 개씩 지연 생성해 줌으로써 대폭의 메모리 절약을 가능케 하는 경량 이터레이터 함수입니다." }
     },
     {
       id: "python_decorator",
@@ -13906,7 +13906,7 @@
       aliases: ["decorator"],
       related: ["python_function","python_module"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Python 데코레이터", explanation: "기존 타겟 함수의 본체 코드를 손상시키지 않고 함수 선언 구절 바로 위에 @ 기호로 장식해 줌으로써, 전후 권한 인가나 실행 속도 감시 등 중복되는 보조 로직을 효율적으로 이식하는 디자인 기법입니다." }
     },
     {
       id: "python_type_hint",
@@ -13926,7 +13926,7 @@
       aliases: ["type annotation"],
       related: ["python_function","static_analysis"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Python 타입 힌트", explanation: "변수 선언문이나 인수의 형태 뒤에 콜론과 텍스트를 기재해 예상 데이터 형식을 기술하는 기능으로, IDE 정적 분석기의 오류 스캔을 정밀화하고 오타 예방을 지원하는 주석 표현 방식입니다." }
     },
     {
       id: "python_dataclass",
@@ -13946,7 +13946,7 @@
       aliases: ["dataclasses"],
       related: ["python_class","object"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Python 데이터클래스", explanation: "@dataclass 장식자를 선언해 순수 레코드 보관 성격의 변수형 데이터 구조를 선언함으로써, 번거로운 인스턴스 생성자(__init__) 구현과 객체 표현용 텍스트 리턴 기능 등의 중복 코드 입력을 자동 단축하는 간소화 기능입니다." }
     },
     {
       id: "python_list_comprehension",
@@ -13966,7 +13966,7 @@
       aliases: ["list comprehension"],
       related: ["python_list","python_iterator"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Python 리스트 컴프리헨션", explanation: "배열 데이터를 동적 루프로 추출할 때, 괄호 [] 기호 내부에 한 줄짜리 함축적인 for 루프와 if 조건식을 포개어 적어 간결하게 결과 리스트를 빠르게 빌드해 내는 파이썬 전용 축약 기법입니다." }
     },
     {
       id: "python_asyncio",
@@ -13986,7 +13986,7 @@
       aliases: ["asyncio"],
       related: ["python_coroutine","python_generator"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Python asyncio", explanation: "비동기 입출력 프로그래밍 구조를 정비하는 표준 핵심 패키지로, 단일 프로세스 아래에서 여러 코루틴들을 정교하게 스케줄링하고 이벤트 루프 대기를 조율하는 비동기 전용 모듈입니다." }
     },
     {
       id: "priority_queue",
@@ -14006,7 +14006,7 @@
       aliases: ["heap queue"],
       related: ["data_structure","algorithm"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "우선순위 큐", explanation: "자료 입력 선후 순서에 영향받지 않고, 객체들이 등록될 때 부여받은 중요도나 크기 수치에 기반해 우선순위가 가장 높은 요소부터 선순위로 꺼내어 처리하는 추상 자료 형태입니다." }
     },
     {
       id: "graph_traversal",
@@ -14026,7 +14026,7 @@
       aliases: ["graph search"],
       related: ["algorithm","data_structure"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "그래프 탐색", explanation: "노드(정점)와 노드 간의 복잡한 그물망 연결 관계인 비선형 그래프 상에서, 모든 위치 지점을 빼놓거나 중복됨 없이 차례대로 조회 방문하는 연산 절차입니다." }
     },
     {
       id: "breadth_first_search",
@@ -14046,7 +14046,7 @@
       aliases: ["BFS"],
       related: ["graph_traversal","queue"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "너비 우선 탐색(BFS)", explanation: "비선형 구조 그래프 검색 기법으로, 시작하는 특정 기준점 노드로부터 바로 인접한 가로 방향 이웃 노드들을 먼저 빠짐없이 모두 탐색한 후 한 단계 아래 레벨로 진입하는 수평 위주 탐색 기법입니다." }
     },
     {
       id: "depth_first_search",
@@ -14066,7 +14066,7 @@
       aliases: ["DFS"],
       related: ["graph_traversal","stack"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "깊이 우선 탐색(DFS)", explanation: "비선형 구조 그래프 검색 기법 중 하나로, 임의의 한 가닥 경로를 따라 막다른 길이 나타날 때까지 수직으로 깊숙이 파고들며 탐색한 뒤, 갈 곳이 막히면 바로 이전 갈래길로 회군해 다른 경로를 수색하는 수직형 탐색 기법입니다." }
     },
     {
       id: "dynamic_programming",
@@ -14086,7 +14086,7 @@
       aliases: ["DP"],
       related: ["algorithm","memoization"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "동적 계획법", explanation: "풀고자 하는 커다란 핵심 난제를 잘게 나누어 해결한 후, 각각 얻어낸 동일 소문제들의 중간 계산 결과들을 메모리에 백업 보존해 둠으로써 중복되는 낭비 계산을 없애는 최적화 수학 알고리즘입니다." }
     },
     {
       id: "memoization",
@@ -14106,7 +14106,7 @@
       aliases: ["memoisation"],
       related: ["dynamic_programming","cache_eviction"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "메모이제이션", explanation: "동적 계획법의 속도를 높이는 캐싱 기법으로, 동일 인수가 들어오는 특정 연산 메서드가 실행되었을 때 그 산출값을 미리 배열이나 해시 테이블에 담아 둔 후, 재요청 시 즉시 그 캐시 데이터를 반환하는 기법입니다." }
     },
     {
       id: "cache_eviction",
@@ -14126,7 +14126,7 @@
       aliases: ["eviction policy"],
       related: ["memoization","lru_cache"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "캐시 제거 정책", explanation: "제한된 공간을 점유하는 캐시 메모리 용량이 완전히 찼을 때, 새롭게 들어오는 가치 있는 데이터 적재를 위해 기존 저장 내용물 중 어떤 불필요 대상을 밀어내 지울지 정하는 방출 우선순위 알고리즘입니다." }
     },
     {
       id: "lru_cache",
@@ -14146,7 +14146,7 @@
       aliases: ["LRU"],
       related: ["cache_eviction","memoization"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "LRU 캐시", explanation: "캐시 방출 전략의 일종으로, 교체 필요 상황이 왔을 때 사용 빈도가 가장 오래 경과된(최근까지 쿼리 호출이 없었던) 묵은 캐시 데이터를 골라내 선순위로 제거해 주는 기법입니다." }
     },
     {
       id: "process_scheduler",
@@ -14166,7 +14166,7 @@
       aliases: ["scheduler"],
       related: ["operating_system_process","thread"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "프로세스 스케줄러", explanation: "운영체제가 하드웨어 CPU 코어를 각 프로세스나 스레드들에게 공평하고 고효율로 사용 권한을 쪼개 넘겨줄 수 있도록 우선순위 큐 대기 상태를 상시 정리하는 운영체제 관리 부품입니다." }
     },
     {
       id: "context_switch",
@@ -14186,7 +14186,7 @@
       aliases: ["task switch"],
       related: ["process_scheduler","thread"],
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "문맥 교환", explanation: "CPU 하드웨어가 실행하고 있던 프로세스의 레지스터 상태 정보를 메모리의 제어 블록에 백업 저장하고, 새로 실행 임무를 맡은 다른 프로세스의 보존 상태값들을 다시 레지스터 칩으로 복원 주입하는 로직 교체 과정입니다." }
     },
     {
       id: "stakeholder_register",
@@ -14210,7 +14210,7 @@
       related: ["project_assumption","progress_report"],
       example: { text: "Record each stakeholder role before project kickoff." },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "이해관계자 대장", explanation: "프로젝트 착수와 수행 시에 의사결정 권한을 갖거나 산출물로 영향력을 교환받는 모든 관련 인물, 부서, 스폰서, 외부 파트너의 인적 정보와 관리 기준을 등재한 종합 명부 문서입니다." }
     },
     {
       id: "project_initiation_document",
@@ -14234,7 +14234,7 @@
       related: ["project_assumption","progress_report"],
       example: { text: "Use a project initiation document to align scope and sponsors." },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "프로젝트 개시 문서(PID)", explanation: "프로젝트 시작에 필요한 핵심 사업적 배경, 예산 규모, 초기 스케줄, 인력 조직 배치 및 최종 관리 통제 기법을 단일 문서화하여 프로젝트 추진에 합리적 동의를 구하는 선례 개정 문서입니다." }
     },
     {
       id: "risk_owner",
@@ -14258,7 +14258,7 @@
       related: ["risk_assessment","project_assumption"],
       example: { text: "Assign a risk owner for each high-priority project risk." },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "리스크 담당자", explanation: "위험 관리 대장에 기재된 특정 사건 발생에 대해, 리스크 수치의 변화를 모니터링하고 실제 악재가 생겨 수습이 필요할 때 지정된 비상 계획 시나리오를 주도적으로 실행할 의무를 위임받은 담당 주체입니다." }
     },
     {
       id: "risk_register_entry",
@@ -14282,7 +14282,7 @@
       related: ["risk_owner","risk_assessment"],
       example: { text: "Update the risk register entry after mitigation work." },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "위험 등록부 항목", explanation: "프로젝트 위기 관리 명부에 기입되는 개별 위험 행태 정보로, 위험의 구체적 설명, 도달할 가능성 백분율, 미칠 충격 피해 크기, 이에 대한 대비 조치안 등을 정리한 개별 레코드입니다." }
     },
     {
       id: "change_control_board",
@@ -14306,7 +14306,7 @@
       related: ["release_management","project_assumption"],
       example: { text: "Submit major scope changes to the change control board." },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "변경 통제 위원회(CCB)", explanation: "프로젝트 수행 중에 고객의 요구 조건 변경 등의 사업 범위 수정 건이 접수되었을 때, 이가 사업 예산이나 스케줄에 줄 타격 가치를 검증하고 정식 수용 여부를 가결 짓는 정식 결정 기구입니다." }
     },
     {
       id: "procurement_management",
@@ -14330,7 +14330,7 @@
       related: ["project_assumption","risk_assessment"],
       example: { text: "Procurement management includes vendor selection and contract review." },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "조달 관리", explanation: "내부 역량만으로 준비할 수 없는 특수한 전산 자재나 외주 기술 지원, 컨설팅 자원을 외부 공급처로부터 안전하게 획득하기 위한 업체의 물색, 계약 협의 및 검수 납품 과정을 통제하는 관리 영역입니다." }
     },
     {
       id: "sla_monitoring",
@@ -14354,7 +14354,7 @@
       related: ["availability","cloud_monitoring"],
       example: { text: "SLA monitoring tracks uptime and response time targets." },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "SLA 모니터링", explanation: "외주 IT 공급업체나 클라우드 벤더사와 체결한 서비스 수준 합의서상의 가용률이나 장애 복구 시간 등의 의무 조항을 지표화하여, 정기적으로 계약 이행 수준을 측정 평가하는 모니터링입니다." }
     },
     {
       id: "compliance_audit",
@@ -14378,7 +14378,7 @@
       related: ["access_policy","risk_assessment"],
       example: { text: "A compliance audit may review access logs and retention records." },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "규정 준수 감사", explanation: "기업의 제반 전산 업무 구조나 데이터 제어 프로세스가 국가 개인정보 법령이나 외부 공인 기준, 내부 윤리 규정에 설정된 필수 준수 의무 항목들을 온전히 유지하는지 감정하는 감사 절차입니다." }
     },
     {
       id: "data_retention_policy",
@@ -14402,7 +14402,7 @@
       related: ["sensitive_information","compliance_audit"],
       example: { text: "Set a data retention policy for logs and personal data." },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "데이터 보존 정책", explanation: "기업 내에서 축적되는 중요 거래 장부, 이용자 개인 데이터, 시스템 가동 로그 등의 라이프사이클을 지정하여, 법적 기준과 비즈니스 활용성에 근거한 보관 만료일 및 영구 소멸 프로세스를 명문화한 방침입니다." }
     },
     {
       id: "privacy_impact_assessment",
@@ -14426,7 +14426,7 @@
       related: ["personal_information_protection","risk_assessment"],
       example: { text: "Run a privacy impact assessment before launching a new data service." },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "개인정보 영향평가", explanation: "개인 식별 데이터가 수반되는 새로운 대규모 정보 처리 아키텍처를 도입할 때, 사용자의 신원 정보가 위협에 노출되거나 누출될 만한 취약 요소를 사전에 예측 진단하여 대안책을 평가받는 법적 제도입니다." }
     },
     {
       id: "intellectual_property_rights",
@@ -14450,7 +14450,7 @@
       related: ["software_license_compliance","access_policy"],
       example: { text: "Respect intellectual property rights when reusing source code." },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "지식 재산권", explanation: "비즈니스 솔루션, 특허 기술, 소프트웨어 소스코드, 독점 로고 상표 등 무형의 인간 지적 창작 성과물에 대해 창작 법인이 단독으로 권리를 점유할 수 있도록 법적으로 수호하는 지식 재산 보호 권리입니다." }
     },
     {
       id: "software_license_compliance",
@@ -14474,7 +14474,7 @@
       related: ["sbom","intellectual_property_rights"],
       example: { text: "Check software license compliance before release." },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "소프트웨어 라이선스 준수", explanation: "외부 개발 패키지나 상용 프로그램, 오픈소스 라이브러리를 프로젝트에 적용할 때 저작자가 제시한 합의 약관들을 정확하게 준수함으로써 저작권 소송이나 소스코드 의무 공개 같은 법률 리스크를 해소하는 조치입니다." }
     },
     {
       id: "logical_schema",
@@ -14498,7 +14498,7 @@
       related: ["database","table"],
       example: { text: "Design the logical schema before choosing physical indexes." },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "논리 스키마", explanation: "특정 특정 데이터베이스(DBMS) 제품군의 내부 물리 저장 사양에 연연하지 않고, 현실 업무의 도메인 분석에 맞춘 순수한 엔티티 구조와 속성, 그리고 기본키와 관계 관계만을 설계한 도표 구조입니다." }
     },
     {
       id: "normalized_design",
@@ -14522,7 +14522,7 @@
       related: ["normalization","logical_schema"],
       example: { text: "A normalized design separates customers and orders into related tables." },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "정규화 설계", explanation: "데이터베이스에서 중복 적재에 따른 입력 이상이나 갱신 이상 등의 장애를 제거하기 위해, 관계형 이론의 정규형 기준에 따라 대형 테이블을 유기적인 복수의 소형 테이블로 쪼개 설계하는 체계적 정합 설계입니다." }
     },
     {
       id: "database_index_selectivity",
@@ -14546,7 +14546,7 @@
       related: ["index","database_performance"],
       example: { text: "High index selectivity can make a query faster." },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "데이터베이스 인덱스 선택도", explanation: "인덱스가 적용된 데이터 컬럼 내에 서로 다른 고유 값들이 얼마나 밀도 있게 분산되어 분포하는지 나타내는 비중으로, 선택도가 높은(중복이 거의 없는) 열일수록 검색 효율을 극대화합니다." }
     },
     {
       id: "optimizer_statistics",
@@ -14570,7 +14570,7 @@
       related: ["query_plan","database_index_selectivity"],
       example: { text: "Update optimizer statistics after loading a large table." },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "옵티마이저 통계 정보", explanation: "데이터베이스 엔진이 적합한 쿼리 연산 실행을 기획할 수 있도록 각 테이블의 물리 크기, 총 로우 숫자, 인덱스 분포 상태 등의 가동 환경 데이터를 요약 축적해 둔 통계 자료입니다." }
     },
     {
       id: "transaction_isolation",
@@ -14594,7 +14594,7 @@
       related: ["isolation_level","acid"],
       example: { text: "Transaction isolation helps prevent inconsistent reads." },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "트랜잭션 격리(Transaction Isolation)", explanation: "다수의 트랜잭션이 데이터베이스 안에서 병행 작동할 때, 상호 작업 중인 미확정 데이터 변경 과정을 다른 트랜잭션에게 침범이나 간섭당하지 않도록 안전하게 논리 차단해 주는 정합성 속성입니다." }
     },
     {
       id: "dirty_read",
@@ -14618,7 +14618,7 @@
       related: ["transaction_isolation","isolation_level"],
       example: { text: "A dirty read may disappear if the other transaction rolls back." },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "더티 리드(Dirty Read)", explanation: "동시성 트랜잭션 환경에서 타 트랜잭션이 어떤 데이터를 변경했으나 아직 최종 커밋을 누르지 않은 상태의 미확정 데이터 값을 임의로 엿보아 조회해 읽는 에러 상태입니다." }
     },
     {
       id: "phantom_read",
@@ -14642,7 +14642,7 @@
       related: ["transaction_isolation","isolation_level"],
       example: { text: "A phantom read can occur when a new matching row appears." },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "팬텀 리드(Phantom Read)", explanation: "한 트랜잭션 내부에서 범위를 걸어 데이터를 연달아 두 번 쿼리하는 사이에, 다른 트랜잭션이 새로운 로우 데이터를 그 구간에 주입하거나 지워서 두 조회 결괏값의 레코드 개수가 유령처럼 뒤바뀌는 이상 현상입니다." }
     },
     {
       id: "database_routine",
@@ -14666,7 +14666,7 @@
       related: ["sql","database_trigger"],
       example: { text: "A database routine can encapsulate repeated business logic." },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "데이터베이스 루틴", explanation: "데이터베이스 내부 엔진 공간에 컴파일하여 안착시켜 둔 독립된 연산 단위로, 복수의 비즈니스 명령줄을 단일 모듈화하여 클라이언트 호출이나 트리거 이벤트에 따라 호출 실행하는 저장 프로시저와 함수들을 포괄합니다." }
     },
     {
       id: "database_trigger",
@@ -14690,7 +14690,7 @@
       related: ["database_routine","table"],
       example: { text: "A trigger can write an audit row after an update." },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "데이터베이스 트리거", explanation: "특정 테이블에 데이터 수정, 삭제, 삽입 작업이 실행되는 순간, 사전에 선언된 규칙에 부합할 시 데이터베이스 엔진에 의해 무조건 동조 실행되어 일관된 후속 조치를 보조하는 자동 루틴입니다." }
     },
     {
       id: "cursor",
@@ -14714,7 +14714,7 @@
       related: ["sql","database_routine"],
       example: { text: "Use a cursor only when set-based SQL is not practical." },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "커서", explanation: "질의 결괏값으로 얻어낸 거대한 데이터 튜플(행) 집합을 메모리에서 한 행씩 한 단계씩 순차로 이동하며 로컬 변수에 주입하고 제어 조작할 수 있게 돕는 데이터 접근 제어 포인터입니다." }
     },
     {
       id: "database_backup",
@@ -14738,7 +14738,7 @@
       related: ["backup","disaster_recovery_plan"],
       example: { text: "Schedule a database backup before maintenance." },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "데이터베이스 백업", explanation: "시스템 장애, 디스크 노후 및 데이터 파괴 사태에 직면했을 때 정상 시점으로 원복하기 위해, 가동 중인 데이터베이스 내부 테이블 구조와 실제 데이터, 트랜잭션 기록 로그 전체를 백업 저장매체에 복제 및 아카이빙해 두는 안전성 확보 작업입니다." }
     },
     {
       id: "point_in_time_recovery",
@@ -14762,7 +14762,7 @@
       related: ["database_backup","write_ahead_log"],
       example: { text: "Use point-in-time recovery to restore data before accidental deletion." },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "시점 복구", explanation: "데이터베이스의 마지막 전체 백업 본체에 그 이후 생성된 세부 변경 트랜잭션 기록 로그를 시간 순서대로 덧입혀 가며, 과거 장애 발생 정확히 수 초 전의 정상 작동 시각 상태로 정밀 롤백 복원하는 방식입니다." }
     },
     {
       id: "java_jvm",
@@ -14786,7 +14786,7 @@
       related: ["java_class","object"],
       example: { text: "The JVM runs compiled Java bytecode." },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Java 가상 머신(JVM)", explanation: "자바 컴파일러가 출력한 기계 중립적 바이트코드를 런타임 호스트의 운영체제 기계어 코드로 즉시 번역해 구동하며, 힙 메모리와 백그라운드 스레드를 통합 제어하는 포터블 구동 엔진입니다." }
     },
     {
       id: "java_bytecode",
@@ -14810,7 +14810,7 @@
       related: ["java_jvm","java_class"],
       example: { text: "Java source code is compiled into Java bytecode." },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Java 바이트코드", explanation: "Java 원본 코드를 컴파일러가 기계가 곧바로 실행할 수는 없으나 가상 실행기는 쉽게 구동할 수 있도록 변환해 둔 .class 형식의 중간 명령어 체계입니다." }
     },
     {
       id: "java_garbage_collection",
@@ -14834,7 +14834,7 @@
       related: ["java_jvm","memory"],
       example: { text: "Garbage collection reduces manual memory management in Java." },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Java 가비지 컬렉션(GC)", explanation: "자바 가상 머신(JVM)이 주기적으로 메모리의 힙 공간을 전수 탐색하여, 프로세스 내에서 더 이상 참조(사용)할 경로가 없는 소멸된 쓰레기 객체들을 제거하여 주 기억장치를 강제 정비해 주는 백그라운드 자원 청소입니다." }
     },
     {
       id: "java_thread",
@@ -14858,7 +14858,7 @@
       related: ["thread","java_jvm"],
       example: { text: "A Java thread can run background processing." },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Java 스레드", explanation: "하나의 자바 프로그램 가동 범주 내에서, 별개의 메서드나 작업을 동시에 독립된 실행 흐름으로 수행할 수 있도록 조치하는 최소 단위의 경량 처리 흐름입니다." }
     },
     {
       id: "java_synchronized",
@@ -14882,7 +14882,7 @@
       related: ["java_thread","thread"],
       example: { text: "Use synchronized to protect a shared counter." },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Java synchronized", explanation: "멀티스레드 환경에서 한 개의 공유 리소스를 두고 여러 작업 스레드가 동시에 값을 변경하려는 경합 상태를 막기 위해, 임계 영역에 오직 하나의 스레드 입장권만 소지 승인시키는 동기화 제어문입니다." }
     },
     {
       id: "java_interface_default_method",
@@ -14906,7 +14906,7 @@
       related: ["interface","java_class"],
       example: { text: "A default method can provide shared behavior in an interface." },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Java 인터페이스 디폴트 메서드", explanation: "Java 8부터 지원되며, 인터페이스 본체 내부에 구현 코드가 이미 채워진 완성형 default 메서드를 탑재할 수 있게 하여 기존 파생 클래스들의 수정 없이 인터페이스 구조를 고도화하는 기능입니다." }
     },
     {
       id: "java_enum",
@@ -14930,7 +14930,7 @@
       related: ["java_class","constant"],
       example: { text: "Use an enum for fixed states such as ACTIVE and DISABLED." },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Java 열거형(enum)", explanation: "요일, 상태 코드, 성별 등 가질 수 있는 한정된 고유 상수 컬렉션을 단일 자료형 클래스로 정형화 정의하여 오타 오류를 예방하고 타입 판정 정밀도를 돕는 상수 정의형 타입입니다." }
     },
     {
       id: "java_package",
@@ -14954,7 +14954,7 @@
       related: ["java_class","python_module"],
       example: { text: "A Java package groups related service classes." },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Java 패키지", explanation: "자바 소스 파일들과 관련 인터페이스들의 이름 공간을 디렉터리 경로처럼 수직 분류함으로써 클래스 명칭 중복을 미연에 방지하고 기능 단위를 쉽게 묶어 유통 및 관리하는 자바의 폴더 구조입니다." }
     },
     {
       id: "java_build_tool",
@@ -14978,7 +14978,7 @@
       related: ["ci_pipeline","java_jvm"],
       example: { text: "A Java build tool can create a runnable JAR file." },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Java 빌드 도구", explanation: "Java 코드의 가동에 필요한 외부 라이브러리 자동 해결, 소스 컴파일, 단위 검사 가동 및 최종 결과물의 jar 패키징까지 배포를 위한 연속 연산을 한 번에 제어해 주는 빌드 프로그램(Gradle, Maven 등)입니다." }
     },
     {
       id: "java_unit_test",
@@ -15002,7 +15002,7 @@
       related: ["unit_test","java_class"],
       example: { text: "A Java unit test verifies a method return value." },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Java 단위 테스트", explanation: "외부 스프링 환경 등의 복잡한 인프라 종속성을 배제하고, 작성된 자바 소스 내 단일 모듈의 로직이 지정값에 맞게 제어 리턴하는지 JUnit 등을 빌려 소규모로 독자 시험하는 단위 점검 방식입니다." }
     },
     {
       id: "python_package",
@@ -15026,7 +15026,7 @@
       related: ["python_module","python_package_index"],
       example: { text: "A Python package can contain multiple modules." },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Python 패키지", explanation: "__init__.py 구성 파일을 곁들인 폴더 구조 하위에 여러 파이썬 모듈들을 이식하여, 외부 파일에서 점(.) 구조의 경로식 import 호출로 사용 배포하기 쉽게 계층화한 묶음 단위입니다." }
     },
     {
       id: "python_wheel",
@@ -15050,7 +15050,7 @@
       related: ["python_package","python_package_index"],
       example: { text: "Install a Python wheel with pip." },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Python 휠(Wheel)", explanation: "파이썬 패키지를 매번 C 모듈 컴파일 과정을 거치지 않고 타겟 기기에서 초고속으로 압축 해제만 하여 임포트할 수 있도록, 사전에 컴파일 빌드해 둔 파이썬 표준 라이브러리 유통 규격(.whl)입니다." }
     },
     {
       id: "python_pip",
@@ -15074,7 +15074,7 @@
       related: ["python_package_index","python_package"],
       example: { text: "pip install requests downloads a package." },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "pip", explanation: "파이썬 공식 외부 오픈소스 저장소(PyPI)를 향해 원격 패키지 요청을 송출하고 다운로드하여 로컬 가상 환경 내부에 안전하게 모듈들의 버전을 설치 및 매핑해 주는 공식 패키지 인스톨러입니다." }
     },
     {
       id: "python_poetry",
@@ -15098,7 +15098,7 @@
       related: ["python_package","python_virtual_environment"],
       example: { text: "Poetry can create a lock file for dependencies." },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Poetry", explanation: "pyproject.toml 단일 설정 파일에 의존성 패키지와 가상 환경 명세를 압축 규정하여, 충돌 걱정 없는 라이브러리 관리, 락 파일 동기화 및 패키지 릴리스까지 스마트하게 관리하는 파이썬 전용 의존성 관리기입니다." }
     },
     {
       id: "python_global_interpreter_lock",
@@ -15122,7 +15122,7 @@
       related: ["python_coroutine","thread"],
       example: { text: "The GIL affects CPU-bound multithreaded Python code." },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "전역 인터프리터 락(GIL)", explanation: "CPython 가상 머신에서 스레드들의 가비지 컬렉터 계수 정합성을 방어하기 위해, 스레드가 병렬 가동되더라도 실시간 연산은 무조건 한 번에 단 하나의 단일 스레드만 파이썬 바이트코드를 CPU로 번역 및 수행하도록 제약하는 락 메커니즘입니다." }
     },
     {
       id: "python_virtualenv_activation",
@@ -15146,7 +15146,7 @@
       related: ["python_virtual_environment","python_pip"],
       example: { text: "Activate the virtual environment before installing packages." },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Python 가상 환경 활성화", explanation: "터미널 쉘에 현재 호출할 기본 python 파일 주소를 사설 가상 환경(venv) 내의 개별 바이너리 파일 경로로 강제 우회 적용하여, 해당 가상 세션 내부에 연동된 패키지들을 로드하게 개시하는 세션 설정 단계입니다." }
     },
     {
       id: "python_traceback",
@@ -15170,7 +15170,7 @@
       related: ["python_exception_handling","python_logging"],
       example: { text: "Read the traceback to find the failing line." },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Python 트레이스백", explanation: "파이썬 코드가 가동 중 중대한 예외 발생으로 크래시 셧다운될 때, 예외가 촉발된 가장 최하위 오작동 라인부터 이를 최초 호출한 상위 소스 영역까지 단계별 호출 stack(스택) 관계를 상세 나열해 주는 디버깅 가이드입니다." }
     },
     {
       id: "python_log_level",
@@ -15194,7 +15194,7 @@
       related: ["python_logging","log_aggregation"],
       example: { text: "Set the log level to INFO in production." },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Python 로그 레벨", explanation: "파이썬 표준 logging 패키지에서 출력할 정보의 위험 강도 및 성격을 제한하는 인수로, DEBUG, INFO, WARNING, ERROR, CRITICAL의 5대 표준 규격에 부합해 처리량을 필터링합니다." }
     },
     {
       id: "python_testing_pytest",
@@ -15218,7 +15218,7 @@
       related: ["unit_test","python_package"],
       example: { text: "Run pytest to execute Python test files." },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "pytest", explanation: "자바 스타일의 무거운 unittest 클래스 상속과 세부 설정 구절을 거치지 않고, 단지 파일 내부에 test_ 접두사를 단 함수와 assert 비교식만으로 단시간에 비동기 및 풍부한 단위 검증을 지원해 주는 인기 파이썬 테스트 라이브러리입니다." }
     },
     {
       id: "python_requirements_lock",
@@ -15242,7 +15242,7 @@
       related: ["requirements_txt","python_pip"],
       example: { text: "Use a lock file to reproduce package versions." },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Python 종속성 잠금 파일", explanation: "프로젝트가 의지하는 주 패키지뿐 아니라 하부 유관 라이브러리들의 정확한 고유 해시 식별값과 상세 설치 버전을 단일 락 파일에 기재하여 가동 장치 환경마다 일관된 빌드를 담보하는 잠금 기술입니다." }
     },
     {
       id: "cidr_notation",
@@ -15266,7 +15266,7 @@
       related: ["ip_address","subnet"],
       example: { text: "192.168.1.0/24 is CIDR notation." },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "CIDR 표기법", explanation: "IP 주소 슬래시(/) 뒤에 공통으로 사용할 네트워크 비트 길이(예: /24)를 덧붙이는 표현식으로, 서브넷 마스크 크기와 로컬 사설 호스트 컴퓨터들의 유효 대역을 간결하고 명료하게 표현하는 주소 기입식입니다." }
     },
     {
       id: "gateway_router",
@@ -15290,7 +15290,7 @@
       related: ["router","ip_address"],
       example: { text: "A gateway router sends traffic to the Internet." },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "게이트웨이 라우터", explanation: "사설 로컬 넷(LAN) 영역에서 상위 외부 인터넷 망이나 별개의 타사 가상 사설망(VPC)으로 데이터 전송을 실어 보낼 때 관문이자 네트워크 교차 지점에 서서 중계 연산하는 물리·가상 라우터 기기입니다." }
     },
     {
       id: "network_address_translation",
@@ -15314,7 +15314,7 @@
       related: ["ip_address","router"],
       example: { text: "NAT lets many devices share one public IP address." },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "네트워크 주소 변환(NAT)", explanation: "유한한 한두 개의 공인 IP 주소 뒤에 수십 수백 개의 사설 로컬 컴퓨터들을 배치해 통신할 수 있도록, 외부 패킷 왕래 시마다 사설 IP와 공인 IP 헤더 및 포트 번호를 상호 치환해 연결해 주는 주소 매핑 기술입니다." }
     },
     {
       id: "layer2_vlan",
@@ -15338,7 +15338,7 @@
       related: ["ip_address","lan"],
       example: { text: "A VLAN separates office and guest traffic." },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "2계층 가상 랜(Layer 2 VLAN)", explanation: "한 대의 물리적 스위치 허브 아래 묶인 네트워크 장치들을 가상의 VLAN ID를 태그 형태로 매겨 분리함으로써, 물리적 회선 포설과 무관하게 서로 다른 네트워크 도메인 브로드캐스트 구역으로 논리 격리하는 제2계층 기술입니다." }
     },
     {
       id: "vpn_tunnel",
@@ -15362,7 +15362,7 @@
       related: ["encryption","ip_packet"],
       example: { text: "A VPN tunnel protects remote access traffic." },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "VPN 터널", explanation: "일반 외부 공용 인터넷 회선망을 경유해 흘러가는 양 종단 통신 스트림을 강한 대칭키 연산으로 완전 포장(암호화 캡슐화)하여, 해킹이나 패킷 감시 걱정 없이 전용의 통신선로를 구축해 지나가는 효과를 내는 가상 보안 전송로입니다." }
     },
     {
       id: "mtu",
@@ -15386,7 +15386,7 @@
       related: ["ip_packet","tcp_segment"],
       example: { text: "A wrong MTU can cause packet fragmentation." },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "최대 전송 단위(MTU)", explanation: "하드웨어나 통신 링크가 도중에 패킷 조각화(Fragmentation) 분할 작업을 촉발하지 않고, 단일 프레임 규격 속에 온전히 수용하여 한 번에 가동시킬 수 있는 최대 바이트(Octet) 용량 제한으로, 보통 일반 이더넷에서는 1500바이트 기준을 따릅니다." }
     },
     {
       id: "network_latency",
@@ -15410,7 +15410,7 @@
       related: ["ip_packet","availability"],
       example: { text: "High network latency can slow web applications." },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "네트워크 지연 시간", explanation: "네트워크상에서 데이터를 전송하고 응답을 받기까지 발생하는 시간 지연입니다." }
     },
     {
       id: "jitter",
@@ -15434,7 +15434,7 @@
       related: ["network_latency","ip_packet"],
       example: { text: "High jitter can make voice calls unstable." },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "지터", explanation: "시간에 따른 패킷 전송 지연의 변화량으로, 특히 음성 및 영상 트래픽 품질에 큰 영향을 미칩니다." }
     },
     {
       id: "packet_loss",
@@ -15458,7 +15458,7 @@
       related: ["ip_packet","network_latency"],
       example: { text: "Packet loss can cause retransmission and poor quality." },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "패킷 손실", explanation: "데이터 패킷이 네트워크를 통해 전송되는 도중 목적지에 도달하지 못하고 유실되는 현상입니다." }
     },
     {
       id: "qos",
@@ -15482,7 +15482,7 @@
       related: ["jitter","packet_loss"],
       example: { text: "QoS can prioritize voice traffic over downloads." },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "QoS", explanation: "네트워크 트래픽에 우선순위를 부여하고 대역폭을 관리하여 특정 서비스 품질 요구사항을 충족하는 제어 기술입니다." }
     },
     {
       id: "security_baseline",
@@ -15506,7 +15506,7 @@
       related: ["access_policy","system_hardening"],
       example: { text: "Apply a security baseline to new servers." },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "보안 베이스라인", explanation: "시스템이나 서비스를 안전하게 운영하기 위해 요구되는 최소한의 필수 보안 설정 및 통제 기준입니다." }
     },
     {
       id: "system_hardening",
@@ -15530,7 +15530,7 @@
       related: ["security_baseline","attack_surface"],
       example: { text: "System hardening may disable unused network ports." },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "시스템 하드닝", explanation: "불필요한 서비스를 비활성화하고 취약한 구성을 개선하여 시스템의 공격 노출면을 줄이는 보안 강화 프로세스입니다." }
     },
     {
       id: "vulnerability_management",
@@ -15554,7 +15554,7 @@
       related: ["vulnerability_scanning","patch_management"],
       example: { text: "Vulnerability management prioritizes critical findings first." },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "취약점 관리", explanation: "보안 취약점을 식별하고, 위험도에 따라 우선순위를 정해 패치하며, 이를 지속적으로 검증하는 일련의 보안 프로세스입니다." }
     },
     {
       id: "penetration_test",
@@ -15578,7 +15578,7 @@
       related: ["vulnerability","threat_modeling"],
       example: { text: "A penetration test can validate real-world attack paths." },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "모의 해킹", explanation: "시스템이나 네트워크의 악용 가능한 결함을 찾아내기 위해 승인된 형태로 실제 사이버 공격을 시뮬레이션하는 보안 테스트입니다." }
     },
     {
       id: "security_awareness_training",
@@ -15602,7 +15602,7 @@
       related: ["phishing_simulation","access_policy"],
       example: { text: "Security awareness training explains suspicious email signs." },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "보안 인식 교육", explanation: "사용자가 일상적인 보안 위험을 인식하고 사이버 위협을 예방 및 회피할 수 있도록 돕는 교육 프로그램입니다." }
     },
     {
       id: "phishing_simulation",
@@ -15626,7 +15626,7 @@
       related: ["security_awareness_training","phishing"],
       example: { text: "Run a phishing simulation to improve reporting behavior." },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "피싱 모의 훈련", explanation: "모의 피싱 메일을 발송하여 사용자의 보안 대응 능력을 훈련하고 조직의 피싱 취약도를 측정하는 보안 교육 활동입니다." }
     },
     {
       id: "ransomware_recovery",
@@ -15650,7 +15650,7 @@
       related: ["ransomware","backup_rotation"],
       example: { text: "Ransomware recovery depends on tested backups." },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "랜섬웨어 복구", explanation: "랜섬웨어 공격으로 인해 암호화되거나 탈취된 시스템과 데이터를 안전하게 복원하고 정상화하는 과정입니다." }
     },
     {
       id: "cryptographic_key_rotation",
@@ -15674,7 +15674,7 @@
       related: ["key_management","secrets_rotation"],
       example: { text: "Rotate cryptographic keys after a security incident." },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "암호화 키 순환", explanation: "보안 유지를 위해 사용 중인 암호화 키를 주기적으로 또는 유출이 의심될 때 새로운 키로 교체하는 보안 조치입니다." }
     },
     {
       id: "secrets_rotation",
@@ -15698,7 +15698,7 @@
       related: ["security_token","token_expiration"],
       example: { text: "Secrets rotation reduces damage from leaked credentials." },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "비밀정보 순환", explanation: "비밀번호, API 키, 토큰 등 시스템 접속에 필요한 민감한 자격 증명 정보를 일정 주기마다 자동으로 교체하는 작업입니다." }
     },
     {
       id: "audit_log",
@@ -15722,7 +15722,7 @@
       related: ["access_policy","compliance_audit"],
       example: { text: "An audit log records administrator sign-in events." },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "감사 로그", explanation: "시스템이나 사용자가 수행한 중요 작업을 기록하여 투명성 확보, 원인 분석 및 규정 준수 검증에 활용하는 이력 데이터입니다." }
     },
     {
       id: "non_repudiation",
@@ -15746,7 +15746,7 @@
       related: ["encryption","audit_log"],
       example: { text: "Digital signatures support non-repudiation." },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "부인 방지", explanation: "송수신자가 특정 정보 전송 또는 거래 사실을 사후에 부인할 수 없도록 디지털 서명 등으로 법적·기술적 증거를 보장하는 보안 특성입니다." }
     },
     {
       id: "token_expiration",
@@ -15770,7 +15770,7 @@
       related: ["security_token","oauth2"],
       example: { text: "Short token expiration limits credential misuse." },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "토큰 만료", explanation: "인증이나 인가용 보안 토큰이 더 이상 유효하지 않게 되는 지정된 만료 시간 또는 유효 기간입니다." }
     },
     {
       id: "firmware",
@@ -15794,7 +15794,7 @@
       related: ["device_driver","kernel_mode"],
       example: { text: "Firmware updates can fix hardware security issues." },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "펌웨어", explanation: "하드웨어 장치에 내장되어 해당 기기의 물리적 동작과 기능을 직접 제어하는 저수준 제어 소프트웨어입니다." }
     },
     {
       id: "hardware_interrupt",
@@ -15818,7 +15818,7 @@
       related: ["process_scheduler","device_driver"],
       example: { text: "A keyboard press can generate a hardware interrupt." },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "하드웨어 인터럽트", explanation: "하드웨어 장치가 마우스 입력이나 입출력(I/O) 완료 등의 즉각적인 처리를 요구하기 위해 CPU에 보내는 긴급 전기 신호입니다." }
     },
     {
       id: "kernel_panic",
@@ -15842,7 +15842,7 @@
       related: ["kernel_mode","operating_system"],
       example: { text: "A kernel panic may require a system restart." },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "커널 패닉", explanation: "운영체제의 핵심부인 커널이 스스로 복구할 수 없는 심각한 오류를 감지하여 시스템의 정상 가동을 즉각 중단시키는 상태입니다." }
     },
     {
       id: "page_fault",
@@ -15866,7 +15866,7 @@
       related: ["virtual_memory","memory"],
       example: { text: "A page fault may load data from disk into memory." },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "페이지 폴트", explanation: "프로그램이 현재 가상 주소 공간에는 존재하지만 물리 메모리(RAM)에 로드되지 않은 메모리 페이지에 접근할 때 발생하는 예외 상태입니다." }
     },
     {
       id: "swap_space",
@@ -15890,7 +15890,7 @@
       related: ["memory","virtual_memory"],
       example: { text: "Swap space can prevent failure when memory is full." },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "스왑 공간", explanation: "물리 메모리(RAM) 용량이 부족해질 때 운영체제가 보조 저장장치(SSD/HDD)의 일부를 메모리 확장용으로 빌려 쓰는 디스크 영역입니다." }
     },
     {
       id: "file_descriptor",
@@ -15914,7 +15914,7 @@
       related: ["operating_system_process","python_file_io"],
       example: { text: "A process uses file descriptors for open files." },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "파일 디스크립터", explanation: "프로세스가 파일이나 파이프, 소켓 등 입출력 스트림에 접근할 때 운영체제로부터 부여받는 고유한 인덱스 번호입니다." }
     },
     {
       id: "raid",
@@ -15938,7 +15938,7 @@
       related: ["database_backup","availability"],
       example: { text: "RAID 1 mirrors data across two disks." },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "RAID", explanation: "복수의 물리 디스크를 논리적으로 결합하여 데이터 백업 안정성을 확보하거나 읽기/쓰기 성능을 향상시키는 디스크 구성 기술입니다." }
     },
     {
       id: "ups",
@@ -15962,7 +15962,7 @@
       related: ["availability","firmware"],
       example: { text: "A UPS gives servers time to shut down safely." },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "무정전 전원 공급 장치", explanation: "정전 등의 갑작스러운 전력 공급 중단 시 내장된 배터리를 가동하여 일시적으로 비상 전원을 인가해 주는 전력 안전 장치입니다." }
     },
     {
       id: "http_request_header",
@@ -15986,7 +15986,7 @@
       related: ["http","api"],
       example: { text: "An HTTP request header can include Authorization." },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "HTTP 요청 헤더", explanation: "클라이언트가 서버에 HTTP 요청을 보낼 때, 브라우저 환경, 데이터 사양, 캐시 정책 등 세션과 관련된 세부 메타데이터를 전송하는 구역입니다." }
     },
     {
       id: "cookie_attribute",
@@ -16010,7 +16010,7 @@
       related: ["http_cookie","security_token"],
       example: { text: "Set the HttpOnly cookie attribute for session cookies." },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "쿠키 속성", explanation: "유효 기간, 접근 범위, 보안 설정(HttpOnly, Secure, SameSite 등)을 제어하여 브라우저에 보관된 쿠키의 거동을 세부 관리하는 키-값 쌍입니다." }
     },
     {
       id: "origin_header",
@@ -16034,7 +16034,7 @@
       related: ["http_request_header","same_origin_policy"],
       example: { text: "Browsers send the Origin header during CORS requests." },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Origin 헤더", explanation: "교차 출처 요청(Cross-Origin Request) 시, 해당 HTTP 요청이 처음 시작된 프로토콜, 도메인, 포트 정보를 담아 전송하는 요청 헤더입니다." }
     },
     {
       id: "cors_preflight",
@@ -16058,7 +16058,7 @@
       related: ["origin_header","api"],
       example: { text: "A CORS preflight request checks allowed methods and headers." },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "CORS 프리플라이트 요청", explanation: "브라우저가 실제 교차 출처 요청을 보내기 전, OPTIONS 메서드를 사용하여 서버가 해당 요청 방식을 허가하는지 미리 탐색하는 예비 요청입니다." }
     },
     {
       id: "websocket",
@@ -16082,7 +16082,7 @@
       related: ["http","web_application"],
       example: { text: "A chat app can use WebSocket for real-time messages." },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "웹소켓", explanation: "단일 TCP 연결 위에서 브라우저와 웹 서버 간에 지연 없이 실시간 양방향 전송을 가능하게 해주는 지속형 통신 프로토콜입니다." }
     },
     {
       id: "graphql",
@@ -16106,7 +16106,7 @@
       related: ["api","web_application"],
       example: { text: "A GraphQL query can request a user name and posts together." },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "GraphQL", explanation: "페이스북에서 개발한 API 쿼리 언어 및 런타임으로, 클라이언트가 명시한 명세 요구에 부합하는 구조의 데이터만 정확히 응답받을 수 있게 조율합니다." }
     },
     {
       id: "api_versioning",
@@ -16130,7 +16130,7 @@
       related: ["api","release_management"],
       example: { text: "Use API versioning when changing response fields." },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "API 버전 관리", explanation: "인터페이스 명세를 업그레이드할 때 기존 클라이언트 코드를 망가뜨리지 않도록 버전 지표를 부여하여 체계적으로 호환성을 유지하는 기법입니다." }
     },
     {
       id: "pagination",
@@ -16154,7 +16154,7 @@
       related: ["api","database"],
       example: { text: "Pagination returns the first 50 records instead of all records." },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "페이지네이션", explanation: "대규모 검색 데이터 결과를 한 번에 로드하지 않고 유저의 쾌적한 열람을 돕기 위해 여러 페이지 단위로 잘라 분할 노출하는 설계 기법입니다." }
     },
     {
       id: "git_rebase",
@@ -16178,7 +16178,7 @@
       related: ["pull_request_template","ci_pipeline"],
       example: { text: "Use git rebase to update a feature branch." },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Git Rebase", explanation: "한 브랜치의 커밋들을 다른 브랜치의 최신 커밋 뒤로 정렬하여 깔끔하고 선형적인 커밋 이력을 사수하는 Git 명령어입니다." }
     },
     {
       id: "git_cherry_pick",
@@ -16202,7 +16202,7 @@
       related: ["git_rebase","release_management"],
       example: { text: "Cherry-pick a hotfix commit into a release branch." },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Git Cherry-Pick", explanation: "특정 브랜치에 올라와 있는 여러 커밋 기록 중 원하는 특정 커밋 하나만을 선별하여 현재 활성화된 작업 브랜치에 복제 적용하는 Git 기능입니다." }
     },
     {
       id: "git_tag",
@@ -16226,7 +16226,7 @@
       related: ["release_management","semantic_versioning"],
       example: { text: "Create a Git tag for a published release." },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Git 태그", explanation: "버전 배포 시점 등 특정 중요 커밋에 기억하기 쉬운 고유의 식별 문자를 고정 포인터로 표기해 두는 참조 표식입니다." }
     },
     {
       id: "semantic_versioning",
@@ -16250,7 +16250,7 @@
       related: ["release_management","git_tag"],
       example: { text: "Version 2.1.3 follows semantic versioning." },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "유의적 버전", explanation: "소프트웨어 배포판에 호환성 여부를 알려주기 위해 주(Major), 부(Minor), 수(Patch)의 세 자리 숫자로 버전을 지정하는 표준 규격입니다." }
     },
     {
       id: "snapshot_test",
@@ -16274,7 +16274,7 @@
       related: ["regression_test","test_fixture"],
       example: { text: "A snapshot test can detect unexpected UI output changes." },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "스냅샷 테스트", explanation: "애플리케이션의 현재 UI나 결과 상태를 사진 찍듯 파일로 저장하고, 향후 변경 발생 시 이전 기준 스냅샷 파일과 텍스트 수준으로 비교해 에러를 진단하는 기법입니다." }
     },
     {
       id: "mutation_test",
@@ -16298,7 +16298,7 @@
       related: ["test_coverage","unit_test"],
       example: { text: "Mutation testing checks whether tests fail for injected faults." },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "뮤테이션 테스트", explanation: "기존 단위 테스트의 검증 커버리지 신뢰도를 평가하기 위해, 코드의 아주 미세한 변종을 만들어 낸 후 기존 테스트가 이를 실패로 잡아내는지 확인하는 테스트 평가 기법입니다." }
     },
     {
       id: "cloud_cost_management",
@@ -16322,7 +16322,7 @@
       related: ["cloud_monitoring","cloud_budget_alert"],
       example: { text: "Cloud cost management identifies unused resources." },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "클라우드 비용 관리", explanation: "클라우드 인프라 자원의 사용 요금을 상시 모니터링하고 자원 효율을 극대화하여 낭비되는 인프라 지출을 줄이는 비용 최적화 활동입니다." }
     },
     {
       id: "cloud_budget_alert",
@@ -16346,7 +16346,7 @@
       related: ["cloud_cost_management","cloud_monitoring"],
       example: { text: "A cloud budget alert warns before monthly spend exceeds the limit." },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "클라우드 예산 알림", explanation: "클라우드 인프라 총 청구 요금이 설정된 예산 범위를 돌파하거나 도달하기 직전 단계에 담당자에게 즉시 경고 이메일 등을 발송해 주는 통지 시스템입니다." }
     },
     {
       id: "infrastructure_drift",
@@ -16370,7 +16370,7 @@
       related: ["infrastructure_as_code","configuration_management"],
       example: { text: "Infrastructure drift can appear after manual console changes." },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "인프라 드리프트", explanation: "IaC(코드 기반 인프라) 파일로 정의한 설정값 사양과 실제 가상 클라우드에 구동 중인 물리적 서버 리소스 상태 간에 격차가 발생해 상충되는 결함 현상입니다." }
     },
     {
       id: "service_mesh",
@@ -16394,7 +16394,7 @@
       related: ["container_orchestration","sidecar_proxy"],
       example: { text: "A service mesh can provide mutual TLS between services." },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "서비스 메시", explanation: "마이크로서비스 아키텍처(MSA) 하에서 구동되는 수많은 서비스들 간의 동적 네트워크 라우팅, 암호 통신, 에러 복구 및 모니터링을 전담하는 투명한 인프라 제어 계층입니다." }
     },
     {
       id: "sidecar_proxy",
@@ -16418,7 +16418,7 @@
       related: ["service_mesh","container"],
       example: { text: "A sidecar proxy can collect request metrics." },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "사이드카 프록시", explanation: "애플리케이션의 핵심 비즈니스 연산 코드 변경 없이 네트워킹과 로깅을 대행하기 위해 서비스 컨테이너 바로 곁에 동시 배포하여 조율하는 프록시 컨테이너입니다." }
     },
     {
       id: "container_registry",
@@ -16442,7 +16442,7 @@
       related: ["docker_image","container"],
       example: { text: "Push a container image to a container registry." },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "컨테이너 레지스트리", explanation: "패키징된 도커나 OCI 컨테이너 이미지들을 원격 클라우드에 영구 업로드해 두고 버전 보존과 공동 배포를 지원하는 전용 이미지 보관 서비스입니다." }
     },
     {
       id: "trie",
@@ -16466,7 +16466,7 @@
       related: ["data_structure","algorithm"],
       example: { text: "A trie can support autocomplete suggestions." },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "트라이", explanation: "문자열 집합을 트리 구조 형태로 체계적으로 정리하여 공통의 접두사를 타고 문자 단위 고속 매칭 조회를 실현하는 문자열 탐색 최적화 자료구조입니다." }
     },
     {
       id: "bloom_filter",
@@ -16490,7 +16490,7 @@
       related: ["hash_table","data_structure"],
       example: { text: "A Bloom filter may return false positives but not false negatives." },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "블룸 필터", explanation: "임의의 특정 데이터 원소가 타깃 집합 내에 포함되어 있는지 최소한의 메모리 비트 배열만으로 고속 판별해 내는 확률적 통계용 자료구조입니다." }
     },
     {
       id: "topological_sort",
@@ -16514,7 +16514,7 @@
       related: ["graph_traversal","algorithm"],
       example: { text: "Topological sort can order build tasks by dependency." },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "위상 정렬", explanation: "방향성이 있고 내부 순환 루프(Cycle)가 존재하지 않는 그래프 구조에서, 각 노드의 인접 의존 관계를 무너뜨리지 않는 선형적 순서 나열 정렬 방식입니다." }
     },
     {
       id: "union_find",
@@ -16538,7 +16538,7 @@
       related: ["data_structure","algorithm"],
       example: { text: "Union-Find can detect connected components." },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "유니온 파인드", explanation: "원소들이 상호 겹치지 않는 분리된 집합들(Disjoint Sets)로 쪼개져 있을 때, 두 원소의 합집합 병합(Union)과 대상 그룹 식별(Find) 연산을 신속히 돕는 트리형 자료구조입니다." }
     },
     {
       id: "prompt_engineering",
@@ -16562,7 +16562,7 @@
       related: ["machine_learning","project_assumption"],
       example: { text: "Prompt engineering can specify role, task, and constraints." },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "프롬프트 엔지니어링", explanation: "원하는 고품질의 정확한 답변을 인공지능 언어 모델로부터 획득하기 위해, 질문이나 명령 문장(프롬프트)의 문맥을 세련되게 다듬는 설계 과정입니다." }
     },
     {
       id: "robotic_process_automation",
@@ -16586,7 +16586,7 @@
       related: ["machine_learning","project_assumption"],
       example: { text: "RPA can copy invoice data between systems." },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "로봇 프로세스 자동화", explanation: "주기적으로 작동하는 정형화된 PC 입력이나 문서 정리 등의 단순 규칙형 비즈니스 워크플로우를 소프트웨어 봇으로 가동시키는 프로세스 자동화 기술입니다." }
     },
     {
       id: "data_governance_policy",
@@ -16610,7 +16610,7 @@
       related: ["data_quality","compliance"],
       example: { text: "A data governance policy defines who can approve changes to customer master data." },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "데이터 거버넌스 정책", explanation: "기업 내 축적되는 중요 자산인 데이터의 품질 수준, 안전한 접근권 규칙, 유효 생명 주기 및 소유 한계를 전사 관점에서 조율해 둔 사내 보안 운영 규범입니다." }
     },
     {
       id: "acceptance_criteria",
@@ -16634,7 +16634,7 @@
       related: ["project_baseline","project_closure"],
       example: { text: "Acceptance criteria can state the required response time and supported browsers." },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "인수 조건", explanation: "프로젝트 발주 기업이나 최종 소비자가 개발 완료된 대상 소프트웨어를 최종 승인하고 인수받기 위해 반드시 합격 통과해야 할 상세 요구 기준입니다." }
     },
     {
       id: "contract_clause",
@@ -16658,7 +16658,7 @@
       related: ["software_license_compliance","compliance"],
       example: { text: "A confidentiality clause limits how project information may be shared." },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "계약 조항", explanation: "계약 당사자 간의 권리 보장, 면책 조건, 해지 기준 및 위반에 따르는 보상금 한계를 상세히 규정해 명시해 둔 법적 계약 문서 상의 세부 항목입니다." }
     },
     {
       id: "data_subject_request",
@@ -16682,7 +16682,7 @@
       related: ["personal_information_protection","privacy"],
       example: { text: "A user asks the company to export all stored personal data." },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "정보주체 권리 요구", explanation: "개인이 정보주체의 자격으로 본인의 개인정보 보관 유무를 확인하거나 기업을 상대로 수정, 열람, 영구 삭제를 요청하는 개인정보 보호 권리 행사입니다." }
     },
     {
       id: "database_failover",
@@ -16706,7 +16706,7 @@
       related: ["database_availability","database_backup"],
       example: { text: "A standby database becomes primary after a node failure." },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "데이터베이스 장애 조치", explanation: "구동 중인 주 데이터베이스 서버가 다운되었을 때, 신속히 예비용 복제 대기 서버(Standby) 측을 활성화하여 비즈니스 서비스 연속성을 구원하는 자동/수동 복구 전환입니다." }
     },
     {
       id: "schema_versioning",
@@ -16730,7 +16730,7 @@
       related: ["database_schema","database_migration"],
       example: { text: "Version 12 adds an index and a new nullable column." },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "스키마 버전 관리", explanation: "데이터베이스 내부 테이블 레이아웃이나 관계 제약 조건의 변경 이력을 마이그레이션 파일 형식 등을 빌려 버전 단계별로 보존 및 동기화해 나가는 기록 관리 기법입니다." }
     },
     {
       id: "connection_pooling",
@@ -16754,7 +16754,7 @@
       related: ["prepared_query","query_plan"],
       example: { text: "A web application borrows and returns database connections from a pool." },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "커넥션 풀링", explanation: "서버가 구동될 때 미리 여러 개 데이터베이스 접속 라인(Connection)을 무리로 확보해 풀에 대기시킨 후, 필요할 때 빌려주고 사후 반환받는 자원 재활용 구조입니다." }
     },
     {
       id: "java_module_system",
@@ -16778,7 +16778,7 @@
       related: ["java_package","java_class"],
       example: { java: "module app.core { requires java.sql; }" },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Java 모듈 시스템", explanation: "자바 9부터 규정된 패키지 묶음 통제 아키텍처로, 외부 모듈에 대해 내재 소스의 접근 경계와 명시적 공개 범위를 설정하여 강력한 모듈 캡슐화를 이룹니다." }
     },
     {
       id: "java_var_keyword",
@@ -16802,7 +16802,7 @@
       related: ["variable","java_optional"],
       example: { java: "var count = 10;" },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Java var 키워드", explanation: "자바 10부터 도입된 지역 변수 유형 추론 구문으로, 대입되는 초깃값을 기초로 컴파일러가 형식을 직접 판별해 줍니다." }
     },
     {
       id: "java_switch_expression",
@@ -16826,7 +16826,7 @@
       related: ["control_flow","java_lambda_expression"],
       example: { java: "String label = switch (code) { case 1 -> \"one\"; default -> \"other\"; };" },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Java Switch 표현식", explanation: "모던 자바 스펙에 새로이 도입된 switch 제어로, 기존의 절차적 실행문(Statement)에서 벗어나 yield 및 화살표 구문을 적용해 연산 결과를 직접 반환할 수 있게 개선되었습니다." }
     },
     {
       id: "python_f_string",
@@ -16850,7 +16850,7 @@
       related: ["python_string","python_function"],
       example: { python: "name = \"Ada\"\nprint(f\"Hello {name}\")" },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Python f-string", explanation: "파이썬 3.6부터 지원되는 문자열 포매팅 문법으로, 접두사 f를 표시하고 큰따옴표 내 중괄호 `{}` 안에 변수나 계산 수식을 기입해 직관적인 출력을 보장합니다." }
     },
     {
       id: "python_walrus_operator",
@@ -16874,7 +16874,7 @@
       related: ["python_function","variable"],
       example: { python: "if (n := len(items)) > 0:\n    print(n)" },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Python 바다코끼리 연산자", explanation: "파이썬 3.8에 탑재된 대입 표현식 연산자 `:=` 로, 변수에 특정 값을 배정하는 연산 행위와 동시에 해당 표현식 평가의 평가값을 조건문 등에 곧장 리턴해 줍니다." }
     },
     {
       id: "python_match_statement",
@@ -16898,7 +16898,7 @@
       related: ["control_flow","python_dataclass"],
       example: { python: "match status:\n    case 200:\n        print(\"ok\")" },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Python match 문", explanation: "파이썬 3.10에 도입된 구조적 패턴 매칭 구문으로, match와 case 키워드 아래 다양한 모양의 자료 구조 형상을 매칭해 세련된 조건 분기문을 작성하도록 도와줍니다." }
     },
     {
       id: "ipv6_address",
@@ -16922,7 +16922,7 @@
       related: ["ip_address","network_protocol"],
       example: { text: "2001:db8::1 is an IPv6 documentation address." },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "IPv6 주소", explanation: "인터넷 프로토콜 주소 고갈에 선제 대응하기 위해 비준된 128비트 길이의 6세대 물리 주소 표준으로, 보통 8개 구역의 16진수 값으로 표기됩니다." }
     },
     {
       id: "ipv6_prefix",
@@ -16946,7 +16946,7 @@
       related: ["subnet","ip_address"],
       example: { text: "2001:db8::/32 is an IPv6 prefix." },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "IPv6 접두사", explanation: "IPv6 주소 대역의 선두 파트 자릿수들을 의미하며, 로컬 인터넷망 내에서 특정 장치 컴퓨터가 소속된 하위 서브넷 네트워크 영역을 지칭하는 경계선 역할을 합니다." }
     },
     {
       id: "spanning_tree_protocol",
@@ -16970,7 +16970,7 @@
       related: ["data_link_layer","layer2_vlan"],
       example: { text: "STP can block a redundant switch link to avoid a loop." },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "스패닝 트리 프로토콜", explanation: "컴퓨터 이더넷 스위치망 등에서 이중 회선 배치 오류 탓에 발생하는 패킷 루핑 오작동 현상을 막기 위해 특정 물리 포트를 강제 대기(차단) 상태로 제어하는 2계층 네트워크 프로토콜입니다." }
     },
     {
       id: "credential_hashing",
@@ -16994,7 +16994,7 @@
       related: ["hashing","authentication"],
       example: { text: "A login system stores salted password hashes instead of passwords." },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "자격 증명 해싱", explanation: "비밀번호 등의 사용자 중요 암호를 평문 텍스트 그대로 보관하지 않고, 일방향의 보안 크립토 해시 함수(예: bcrypt)로 짓이겨 해시 문자열로만 저장하는 로그인 검증 보관 기법입니다." }
     },
     {
       id: "security_incident",
@@ -17018,7 +17018,7 @@
       related: ["incident_response_plan","incident_report"],
       example: { text: "Unauthorized access to a production server is a security incident." },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "보안 사고", explanation: "시스템이나 사내 정보 자산의 기밀성, 무결성, 가용성에 직접적인 침해 위협을 가하거나 내부 핵심 문서가 유출되는 결과를 초래한 불미스러운 보안 위협 이벤트입니다." }
     },
     {
       id: "vulnerability_disclosure",
@@ -17042,7 +17042,7 @@
       related: ["vulnerability","vulnerability_management"],
       example: { text: "A researcher reports a flaw through the vendor disclosure process." },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "취약점 공개", explanation: "외부의 보안 분석가 등이 찾아낸 신규 시스템 허점을 패치 마련 시기 등에 연동해 대중 및 제조사에 조화로운 형식으로 공유 조율해 나가는 공개 과정입니다." }
     },
     {
       id: "bootloader",
@@ -17066,7 +17066,7 @@
       related: ["operating_system","firmware"],
       example: { text: "The bootloader loads the kernel into memory." },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "부트로더", explanation: "단말 기기의 하드웨어 전원이 인가되는 시초 순간에 먼저 기동하여, 외장 보조 드라이브 상에 적재되어 있던 핵심 운영체제(OS) 커널을 메인 RAM 영역으로 끌어와 시동하는 조그만 부팅 제어 소프트웨어입니다." }
     },
     {
       id: "system_timer",
@@ -17090,7 +17090,7 @@
       related: ["kernel","process_scheduler"],
       example: { text: "A system timer interrupt can trigger scheduler decisions." },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "시스템 타이머", explanation: "주기적인 하드웨어 인터럽트 발송을 가동하여 멀티태스킹 운영체제의 스레드 실행 시간을 배분하거나 로컬 장치 시각을 정확히 기록 및 동기화해 주는 시간 계측 요소입니다." }
     },
     {
       id: "http_cache_control",
@@ -17114,7 +17114,7 @@
       related: ["http","http_request_header"],
       example: { text: "Cache-Control: no-store prevents storing a response." },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "HTTP Cache-Control 헤더", explanation: "웹 서버가 클라이언트에 하달하는 HTTP 응답 메타데이터 중 하나로, 브라우저나 게이트웨이 프록시 서버 단의 로컬 데이터 캐싱 권장 주기와 비캐싱 규정을 선언해 주는 헤더입니다." }
     },
     {
       id: "json_web_token",
@@ -17138,7 +17138,7 @@
       related: ["security_token","oauth2"],
       example: { text: "A JWT can contain user identity and token expiration claims." },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "JSON Web Token", explanation: "인증 교환에 필요한 크레덴셜 정보를 JSON 규격 객체로 묶어 Base64Url 포맷으로 압축하고 디지털 암호화 서명을 보장하여 발행하는 웹 토큰 규약입니다." }
     },
     {
       id: "test_double",
@@ -17162,7 +17162,7 @@
       related: ["unit_test","mock_object"],
       example: { text: "A test double replaces a payment gateway during unit tests." },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "테스트 더블", explanation: "테스트 코드 실행 시 아직 미완성된 외부 컴포넌트나 연동 DB 장치 대신에 기용하는 Mock, Stub, Fake 등 모방 가짜 모의 연동 객체의 총칭입니다." }
     },
     {
       id: "kubernetes_namespace",
@@ -17186,7 +17186,7 @@
       related: ["container_orchestration","resource_group"],
       example: { text: "A namespace can separate dev and production Kubernetes resources." },
       source: "project-glossary-v1",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Kubernetes 네임스페이스", explanation: "하나의 거대한 단일 쿠버네티스 물리 클러스터 가용 범위 안에서, 복수의 개별 개발 팀이나 목적형 프로젝트 자원들을 논리적으로 구획 분리해 주는 격리 파티션 공간입니다." }
     },
 
     {
@@ -17211,7 +17211,7 @@
       related: [],
       example: {"text":"Submit a RFC (Request for Change) before deploying code."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "변경 관리 프로세스", explanation: "실 서비스 운영망 환경에 시스템 패치나 물리적 하드웨어 교체를 가할 때 초래되는 부작용 위험을 줄이기 위해 시행하는 체계적인 결재 검토, 일정 조율 및 롤백 조치 승인 프로세스입니다." }
     },
 
     {
@@ -17236,7 +17236,7 @@
       related: [],
       example: {"text":"BIA determines the Recovery Time Objective (RTO) for IT infrastructure."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "비즈니스 영향 분석", explanation: "예기치 못한 재해나 사고로 주요 전산 업무가 끊겼을 때 유발되는 누적 비즈니스적 타격과 손해액을 산정하여 비즈니스 연속성 계획(BCP) 우선순위를 잡아 나가는 평가 방법론입니다." }
     },
 
     {
@@ -17261,7 +17261,7 @@
       related: [],
       example: {"text":"Signing an NDA before sharing the system blueprint."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "비밀 유지 계약", explanation: "두 개 이상의 기업이 업무 제휴를 맺으며 공유한 핵심 기술 지식이나 내부 기밀 영업 문건을 제3의 기관에 무단 누설하지 않을 것을 엄격히 명문화하여 체결하는 민형사 서명 서약서(NDA)입니다." }
     },
 
     {
@@ -17286,7 +17286,7 @@
       related: ["database"],
       example: {"text":"Run `npm run db:seed` to insert default user roles into the database."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "데이터베이스 시딩", explanation: "인프라 마이그레이션이 끝난 새 개발 데이터베이스나 로컬 유닛 테스트용 격리 테이블망 위에 테스트용 회원 정보나 기성 설정 수치 등 필수 초기 데이터를 자동으로 인입해 두는 실행 단계입니다." }
     },
 
     {
@@ -17311,7 +17311,7 @@
       related: ["database"],
       example: {"text":"Setting up master-slave replication to offload read queries."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "데이터베이스 복제", explanation: "장애 대비 가용성과 트래픽 조회 부하를 분산할 의도로, 원래의 실시간 메인 쓰기(Master) 데이터베이스 정보 데이터를 동기/비동기 방식을 사용해 부가 복제(Replica) 데이터베이스들에 복사 동기화해 두는 기법입니다." }
     },
 
     {
@@ -17336,7 +17336,7 @@
       related: ["database"],
       example: {"text":"Optimistic locking is implemented using a version field in the table."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "낙관적 락", explanation: "동시 데이터 갱신 경합이 거의 나지 않을 것으로 기대하고 데이터 조회 시에는 잠금을 걸지 않다가, 갱신 커밋 시점에만 데이터의 버전 번호를 검사해 데이터 충돌 정합성을 처리해 주는 논리 동시성 기법입니다." }
     },
 
     {
@@ -17361,7 +17361,7 @@
       related: [],
       example: {"text":"Optional<String> name = Optional.ofNullable(getName());"},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Java Optional 클래스", explanation: "자바 8에 도입된 래퍼 클래스로서, 리턴할 대상 참조 인스턴스 값이 간혹 비어 있을(null) 수 있는 유동성 변수를 예쁘게 감싸 예외 에러(NPE) 수정을 효율화해 주는 컨테이너형 제어 도구입니다." }
     },
 
     {
@@ -17386,7 +17386,7 @@
       related: [],
       example: {"text":"Runnable and Comparator are examples of functional interfaces."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Java 함수형 인터페이스", explanation: "내부에 선언된 추상 메서드가 오직 1개로 제한된 인터페이스 규격으로, 모던 자바 컴파일러 환경에서 람다식 표기나 메서드 직접 참조 인수를 사용할 수 있게 길을 열어주는 매개체입니다." }
     },
 
     {
@@ -17411,7 +17411,7 @@
       related: [],
       example: {"text":"Runnable r = new Runnable() { public void run() {} };"},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Java 익명 클래스", explanation: "코드 구조 안에 명시적인 클래스 이름을 정의하지 않고 단 한 번만 활용하기 위해 인스턴스 소환 구문과 내부 메서드 재정의 로직을 일시에 기입해 구동시키는 단기 내부 클래스 구현 구조입니다." }
     },
 
     {
@@ -17436,7 +17436,7 @@
       related: [],
       example: {"python":"squares = {x: x**2 for x in range(5)}"},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Python 딕셔너리 컴프리헨션", explanation: "파이썬 고유의 딕셔너리 생성 구문으로, 중괄호 `{}` 및 for 루프 인라인 연산 형식을 적절히 결합해 기존 시퀀스 데이터로부터 새로운 키-값 쌍의 딕셔너리를 매우 짧게 가공해 내는 문법입니다." }
     },
 
     {
@@ -17461,7 +17461,7 @@
       related: [],
       example: {"python":"def count_up(n): \n    for i in range(n):\n        yield i"},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Python 제너레이터 함수", explanation: "일반 return 지시문이 아닌 yield 키워드를 가동해 결과 수치들을 원소마다 지연 시간 간격을 두고 순차 인출해 주는 이터레이터 유발 함수로, 대용량 배열을 메모리 낭비 없이 대기 처리합니다." }
     },
 
     {
@@ -17486,7 +17486,7 @@
       related: [],
       example: {"python":"@my_decorator\ndef hello():\n    print('hello')"},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Python 데코레이터 구문", explanation: "원래 작성된 타깃 함수 바디 설계를 망가뜨리지 않고, `@데코레이터명` 형태로 함수 헤더 바로 위에 기입해 주면 전후 권한 심사나 실행 시간 로그 분석 등의 보조 기능을 자연스럽게 덧붙여 주는 파이썬의 유연한 기법입니다." }
     },
 
     {
@@ -17511,7 +17511,7 @@
       related: [],
       example: {"text":"BGP is the protocol that makes the core internet routing system work."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "BGP", explanation: "인터넷 백본망 환경하에서 각 통신 기업이나 국가 기관의 독자 대형 네트워크 구역 단위인 자율 시스템(AS)들 간에 최적화된 라우팅 연결 경로 이정표 정보를 정형 공유하기 위한 핵심 경로 벡터 프로토콜입니다." }
     },
 
     {
@@ -17536,7 +17536,7 @@
       related: [],
       example: {"text":"Home routers typically run a DHCP server to assign IP addresses."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "DHCP", explanation: "사내 LAN 네트워크 영역 안에 합류하는 노트북이나 단말 장비에 미사용 사설 IP 번호, 서브넷 게이트웨이 및 DNS 정보 대역 사양을 원격에서 자동으로 대여 및 분배해 주는 통신 프로토콜 규격입니다." }
     },
 
     {
@@ -17561,7 +17561,7 @@
       related: [],
       example: {"text":"PAT allows your entire home network to share one public IP address from your ISP."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "포트 주소 변환", explanation: "한 개의 공인 외부 IP 주소에 수많은 임의 포트 식별 번호를 붙여 할당하는 NAT 확장 기술로, 사설 IP 대역의 수많은 지사 PC들이 단 하나의 공인 인터넷 망 외부 라인으로 동시에 연동하게 정합해 줍니다." }
     },
 
     {
@@ -17586,7 +17586,7 @@
       related: [],
       example: {"text":"Login using Google credentials on third-party sites."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "연합 아이덴티티", explanation: "상호 관리와 인프라 주소가 완벽히 단절된 상이한 여러 웹 서비스나 비즈니스 제휴 플랫폼 연합 환경에서, 한 번의 공통 신원 인증 확인을 거쳐 여러 통로를 단일 계정(SSO)처럼 공유 통과하게 조율하는 신원 구조입니다." }
     },
 
     {
@@ -17611,7 +17611,7 @@
       related: [],
       example: {"text":"Implementing ZTA requires verifying both device health and user ID on every API request."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "제로 트러스트 아키텍처", explanation: "방화벽 안쪽에 위치한 내부망 사용자라 할지라도 무조건 안전하다는 믿음 설정을 거두고, 모든 트래픽 주체는 유해할 수 있다는 전제 아래 매 순간 인증 단계를 반복 통제하는 최신 정보 인프라 보안 방법론입니다." }
     },
 
     {
@@ -17636,7 +17636,7 @@
       related: [],
       example: {"text":"WannaCry is one of the most famous examples of ransomware attacks."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "랜섬웨어 공격", explanation: "부정한 이메일 링크 등으로 기업 내부 단말기에 침투하여 주요 데이터 파일을 강제 복제 암호화하고, 해독해 주는 조건으로 디지털 전자 화폐 등을 갈취하는 금전적 사이버 인질 공격 수법입니다." }
     },
 
     {
@@ -17661,7 +17661,7 @@
       related: [],
       example: {"text":"Paging errors can cause disk thrashing under low virtual memory conditions."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "가상 메모리 관리", explanation: "운영체제가 장치 주기억 램(RAM)의 하드웨어 공간 한계를 뚫고 더 방대한 메모리 맵을 제공하기 위해, 보조 저장용 하드 드라이브의 일부 영역을 확장 가상 주소 공간으로 매핑 조율해 주는 메모리 극대화 기술입니다." }
     },
 
     {
@@ -17686,7 +17686,7 @@
       related: [],
       example: {"text":"Round-robin is a common time-sliced process scheduling algorithm."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "프로세스 스케줄링", explanation: "다중 작업 연산 수행 환경하에서 다중 프로세스 프로그램들이 중앙 CPU 계산 유닛의 연산 사용 시간을 공평하고 끊김 없이 공유하게끔, 실행 순서와 시분할 주기를 자동 제어해 주는 커널 분배 기능입니다." }
     },
 
     {
@@ -17711,7 +17711,7 @@
       related: ["api"],
       example: {"text":"A RESTful API uses GET to fetch data and POST to create it."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "REST", explanation: "네트워크 아키텍처 규격의 하나로, 연동할 핵심 데이터를 URI로 온전히 지칭하며 표준 HTTP 동작 규약인 GET, POST, PUT, DELETE 메서드 형식을 준수해 상태를 제어하는 무상태 통신 설계 가치관입니다." }
     },
 
     {
@@ -17736,7 +17736,7 @@
       related: [],
       example: {"text":"React and Vue are commonly used to build Single Page Applications."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "단일 페이지 애플리케이션", explanation: "유저의 동작에 반응해 매번 서버에 웹페이지 전체 구조를 재청구해 받아오지 않고, 최초 1회 전체 틀을 받은 상태에서 자바스크립트를 활용해 내부 변동 콘텐츠 부분만 비동기 로딩해 속도를 비약적으로 높인 웹 설계 기법입니다." }
     },
 
     {
@@ -17761,7 +17761,7 @@
       related: [],
       example: {"text":"Run `git reflog` to find a commit hash lost after a hard reset."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Git Reflog", explanation: "로컬 개발자 PC 내의 Git 저장소 환경에서 로컬 HEAD 포인터 및 주요 로컬 브랜치가 전개 수정되었던 세부 활동 로그를 가동 기록하여, 실수로 하드 리셋(hard reset)을 단행해 잃은 커밋까지 복원해 내는 안전장치입니다." }
     },
 
     {
@@ -17786,7 +17786,7 @@
       related: [],
       example: {"text":"Immutable infrastructure minimizes configuration drift in production environments."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "불변 인프라", explanation: "실 배포된 가상 머신(VM)이나 서버 설정을 변경 배포할 때 온라인 상태로 덮어쓰기 개량을 하지 않고, 수정 사항이 가미된 완전히 깨끗한 새 가상 하드웨어 이미지를 통째로 다시 굽고 구형 서버를 일괄 소멸시켜 통일성을 다지는 인프라 가치관입니다." }
     },
 
     {
@@ -17811,7 +17811,7 @@
       related: [],
       example: {"text":"An AVL tree performs search, insertion, and deletion operations in O(log n) time."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "AVL 트리 구조", explanation: "노드 원소가 들어올 때마다 스스로 밸런스를 복원 조율하는 이진 검색 트리 구조로, 좌우 서브 하부 트리들의 높이 차가 언제나 최대 1을 초과하지 않도록 억제해 줌으로써 최악의 비효열 탐색 낭비를 완전 진압합니다." }
     },
 
     {
@@ -17836,7 +17836,7 @@
       related: ["service_level_agreement"],
       example: {"text":"SLR specifies that the database uptime must be 99.9%."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "서비스 수준 요구사항", explanation: "공급 업체와 향후 공식 SLA 품질 확약 계약을 맺기 전, 고객사 단에서 자사 비즈니스 연속성에 기여해야 할 시스템 구동 가용도 한계나 장애 복구 대기 속도 등 상세 서비스 수준 요구사항을 명시한 사전 조사 지침서입니다." }
     },
 
     {
@@ -17861,7 +17861,7 @@
       related: [],
       example: {"text":"Use the stakeholder matrix to identify who needs to receive weekly reports."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "이해관계자 매트릭스", explanation: "프로젝트 성패에 관여하는 다양한 범위의 전사적 인물들을 프로젝트에 미치는 영향력(Power) 수준과 실질적 관심(Interest) 정도로 분류하여 각기 상이한 밀착 조력 관리 방안을 꾀하는 시각 표입니다." }
     },
 
     {
@@ -17886,7 +17886,7 @@
       related: [],
       example: {"text":"The QA plan dictates code reviews and automation testing frequencies."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "품질 보증 계획", explanation: "소프트웨어 개발 전 주기(SDLC) 환경 속에서, 최종 인도할 최종 산출 제품의 코드 완성도와 설계 품질 규격이 원래 약정한 목표에 성실히 안착하도록 가동할 일련의 사내 정형 검토 및 검수 지침 계획서입니다." }
     },
 
     {
@@ -17911,7 +17911,7 @@
       related: ["database","optimistic_locking"],
       example: {"sql":"SELECT * FROM orders WHERE id = 1 FOR UPDATE;"},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "비관적 락", explanation: "동시에 데이터를 고치는 세션 간의 충돌 빈도가 몹시 높을 것을 가정하여, 특정 레코드 세션을 조회하는 그 즉시 물리적인 배타적 락(Lock)을 선점 가동해 타인의 추가 읽기나 변경을 완전히 진압 및 대기시키는 차단 방식입니다." }
     },
 
     {
@@ -17936,7 +17936,7 @@
       related: ["database"],
       example: {"sql":"SET TRANSACTION ISOLATION LEVEL READ COMMITTED;"},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Read Committed", explanation: "데이터베이스 동시 격리 등급의 하나로, 어떤 트랜잭션 작업에서 최종 커밋(commit)을 확정해 기록한 영구 데이터 레코드에 한해서만 외부 타 세션의 동시 조회가 가능하게 열어주어 왜곡 오인을 방지합니다." }
     },
 
     {
@@ -17961,7 +17961,7 @@
       related: ["database","read_committed"],
       example: {"sql":"SET TRANSACTION ISOLATION LEVEL REPEATABLE READ;"},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Repeatable Read", explanation: "트랜잭션 격리 등급 중 하나로, 한 세션 트랜잭션이 수행되는 처음 시작 순간부터 끝나는 피날레 시점까지는 조회 대상 범위의 레코드 데이터 수치가 타 세션의 커밋 갱신에 침해받지 않고 한결같이 동일한 값으로 반환되게 돕는 동시성 제어입니다." }
     },
 
     {
@@ -17986,7 +17986,7 @@
       related: [],
       example: {"text":"public record Point(int x, int y) {}"},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Java 레코드 클래스", explanation: "자바 14에 도입된 불변 객체 캡슐화 전용의 간결한 신생 클래스로, 데이터 홀더 클래스 작성 시 수반되던 getter, 생성자, hashCode, toString 등의 반복적 보일러플레이트 코딩 작업을 컴파일러가 자동 완성해 줍니다." }
     },
 
     {
@@ -18011,7 +18011,7 @@
       related: [],
       example: {"text":"System.gc() requests the JVM to run the Garbage Collector, though execution is not guaranteed."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Java 가비지 컬렉터", explanation: "JVM(자바 가상 머신) 백그라운드 환경에서 동적으로 맴돌며, 힙 메모리 공간 위에 점유되어 사용되다가 실질 의존 관계 포인터가 상실되어 쓰이지 않는 쓰레기 인스턴스 영역을 스스로 청소 소멸해 주는 주 메모리 청소 엔진입니다." }
     },
 
     {
@@ -18036,7 +18036,7 @@
       related: [],
       example: {"text":"Class<?> clazz = Class.forName('com.example.User');"},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Java 리플렉션 API", explanation: "컴파일 시점에 정형 정의되지 않은 객체라 할지되어 런타임 상에 적재된 객체의 필드 이름이나 프라이빗 메서드 명세를 투영하여 실 객체를 동적으로 수정·가동할 수 있게 활성화해 주는 자바 인터페이스 라이브러리입니다." }
     },
 
     {
@@ -18061,7 +18061,7 @@
       related: [],
       example: {"text":"Run `pipenv install requests` to install a library within a managed environment."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Python Pipenv", explanation: "파이썬이 패키지를 관리할 때 겪는 개별 프로젝트 종속성 격리 및 잠금 파일(Pipfile.lock) 버전 선언 수고를 해결하기 위해, 라이브러리 다운 pip 기능과 가상 격리 공간 virtualenv 기술을 스마트하게 하나로 통폐합한 패키지 관리 툴입니다." }
     },
 
     {
@@ -18086,7 +18086,7 @@
       related: [],
       example: {"python":"with open('file.txt', 'r') as f:\n    content = f.read()"},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Python with 문", explanation: "파이썬 소스에서 외부의 입출력 리소스나 데이터베이스 소켓 연결을 획득해 작업할 시, 구문 블록을 탈출하는 그 찰나의 순간에 리소스 반환 닫기 처리 코드가 자동으로 시행되게 보장하는 안전한 컨텍스트 매니저 사용 구문입니다." }
     },
 
     {
@@ -18111,7 +18111,7 @@
       related: [],
       example: {"python":"def greet(name: str) -> str:\n    return 'Hello ' + name"},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Python 타입 힌팅", explanation: "동적 자료 검사 언어인 파이썬 소스코드에서 함수 인수 매개변수나 리턴형 자리에 `: int`, `-> str` 형태의 명시적 타입 주석 꼬리표를 덧붙여 주어, 소스 가독성과 외부 자동 린트 분석 도구의 품질 검침 능력을 높이는 보조 선언입니다." }
     },
 
     {
@@ -18136,7 +18136,7 @@
       related: [],
       example: {"text":"Assigning office computers and public WiFi clients to different VLANs for security."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "VLAN", explanation: "하나의 물리적 허브나 스위치 통신 장비에 묶여 있는 컴퓨터 장비들을, 네트워크 설정 조정을 통해 내부적으로 완전히 분리된 여러 가상 서브넷 브로드캐스트 구역으로 쪼개어 보안과 트래픽 효율성을 챙기는 네트워킹 기술입니다." }
     },
 
     {
@@ -18161,7 +18161,7 @@
       related: [],
       example: {"text":"SDN allows enterprise admins to configure virtual network fabrics dynamically."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "소프트웨어 정의 네트워킹", explanation: "네트워크 제어 평면(Control Plane)과 데이터 전송 물리 평면(Data Plane)을 분할 격리하여, 중앙화된 원격 소프트웨어 프로그램 엔진을 통해 전체 네트워크 토폴로지 연결 라우팅 설정을 유연하게 조율하는 신기술 구조입니다." }
     },
 
     {
@@ -18186,7 +18186,7 @@
       related: [],
       example: {"text":"FDDI is an optical standard that uses double ring topologies for fault tolerance."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "링형 토폴로지", explanation: "네트워크상의 장비들이 시작과 끝 단말이 맞물린 폐회로 루프 원형 형태로 유선 포트를 맞대어 기동하게 정렬한 물리 토폴로지로, 정해진 특정 순환 흐름을 타고 전달되는 프레임 토큰을 수신해 차례대로 데이터를 소통합니다." }
     },
 
     {
@@ -18211,7 +18211,7 @@
       related: ["sql"],
       example: {"text":"Always use placeholders in SQL statements rather than string concatenation."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "SQL 인젝션 방어", explanation: "해커가 임의의 사이트 입력창에 유해 쿼리를 난입시키는 기법을 방지하고자, 정형화된 사전 바인딩 파라미터 쿼리(Prepared Statement)를 엄격 사용하고 인풋 텍스트에 포함된 특수 예약어들을 전부 안전하게 이스케이프 정화하는 보안 개발입니다." }
     },
 
     {
@@ -18236,7 +18236,7 @@
       related: [],
       example: {"text":"HTML entity encoding is the primary XSS defense mechanism."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "크로스 사이트 스크립팅 방어", explanation: "게시판 본문 등에 강제 이식된 악성 자바스크립트가 다른 무고한 접속 유저의 브라우저에서 자동 기동되는 해를 막기 위해, 입력값 태그 인코딩 변환 조치 및 CSP 헤더 강제를 시행해 덤벼드는 XSS 세력을 소멸시키는 조치입니다." }
     },
 
     {
@@ -18261,7 +18261,7 @@
       related: [],
       example: {"text":"We conducted a phishing campaign simulation to train employees on security awareness."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "피싱 공격", explanation: "특정 사내 담당자나 공신력 있는 시중 기관을 정교하게 속여 위조한 가짜 인터넷 링크, 탈취 웹페이지 주소를 무작위 혹은 표적 송신하여 수신자의 암호 및 시스템 인가 크레덴셜 정보 유출을 기획하는 사회 공학적 기만 공격입니다." }
     },
 
     {
@@ -18286,7 +18286,7 @@
       related: [],
       example: {"text":"Mounting the USB drive to /media/usb on Linux."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "파일 시스템 마운트", explanation: "외장 보조 드라이브 볼륨이나 공유 네트워크 가상 스토리지를, 구동 중인 로컬 운영체제의 특정 하부 디렉터리 경로 포인트와 논리적 연계 결합하여, 유저가 마땅히 일반 폴더인 양 쓰기 읽기를 가능하게 길을 열어주는 제어입니다." }
     },
 
     {
@@ -18311,7 +18311,7 @@
       related: [],
       example: {"text":"Upgrading from an HDD to an SSD significantly increases system boot speeds."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "SSD", explanation: "회전 모터 자석 바늘이 상주하는 구형 HDD 저장 매체와 격을 달리하며, 고속 비휘발성 반도체 메모리 칩셋을 집약 배열하여 기계적 충격에 강하고 무작위 파일 읽기 쓰기 및 로딩 속도를 혁신적으로 개선한 주기억 장치 짝꿍 보조 저장 장치입니다." }
     },
 
     {
@@ -18336,7 +18336,7 @@
       related: [],
       example: {"text":"We use a CDN to cache product images and decrease loading times globally."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "콘텐츠 전송 네트워크", explanation: "사용자가 접근하는 웹사이트의 대용량 동영상, 자바스크립트 등 정적 리소스를 서버 한 곳에서 독점 전달하지 않고, 전 세계 지부의 边缘 프록시 캐시 서버들에 미리 분산해 두어 고객 단말과 가장 가까운 노드에서 민첩하게 송출하게 지원하는 네트워크입니다." }
     },
 
     {
@@ -18361,7 +18361,7 @@
       related: [],
       example: {"text":"Missing Access-Control-Allow-Origin header triggers a CORS error in the browser."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "교차 출처 자원 공유", explanation: "브라우저 보안인 SOP(동일 출처 정책)의 벽을 넘어, 현재 도메인 이외의 주소를 갖는 제3의 원격 API 서버 자원과도 안전하게 HTTPS 비동기 데이터를 양방향 교환할 수 있게 정식 승인해 주는 브라우저-서버 통신 조율 사양입니다." }
     },
 
     {
@@ -18386,7 +18386,7 @@
       related: [],
       example: {"text":"We configured GitHub Actions as our CI pipeline to run unit tests on every pull request."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "지속적 통합 파이프라인", explanation: "다수의 개발 인력이 전산 저장소에 자신의 코드 개정 사항을 머지 커밋할 때마다, 즉시 백그라운드 서버가 자동으로 소스 컴파일, 빌드, 전체 유닛 기능 테스트 실행을 완결해 소스의 안전과 결함 여부를 실시간 탐지하는 프로세스입니다." }
     },
 
     {
@@ -18411,7 +18411,7 @@
       related: [],
       example: {"text":"Building microservices using Spring Boot and Docker is a common way to deploy cloud native applications."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "클라우드 네이티브 애플리케이션", explanation: "클라우드 가상 IDC 인프라 생태계의 유연함과 강성을 최대 활용하도록 마이크로서비스(MSA) 독립 모듈화, 도커 컨테이너화 및 신속한 오토스케일 유연 자동 가동성을 목표로 처음부터 맞춤 기획되어 조립된 애플리케이션입니다." }
     },
 
     {
@@ -18436,7 +18436,7 @@
       related: [],
       example: {"text":"JavaScript objects and Python dictionaries are implemented internally using hash tables."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "해시 테이블 구조", explanation: "키와 밸류로 한 쌍을 이루는 고유 데이터 그룹을 저장할 때, 대상 키를 일련의 수학 해시 함수로 변환해 메모리 인덱스 주소로 활용함으로써 검색과 인서트 연산 복잡도를 O(1)에 가깝게 단축해 구성한 효율적인 자료구조입니다." }
     },
 
     {
@@ -18461,7 +18461,7 @@
       related: [],
       example: {"text":"We conduct SIT to check if the payment gateway talks to the order management system correctly."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "시스템 통합 테스트", explanation: "개발이 끝난 하위 구성 모듈들이나 개별 독립 서브 프로그램들을 상호 엮어 준 뒤, 각 모듈 간의 연결 경계면(Interface)이나 통합된 전체 데이터 흐름에 에러가 존재하지 않고 기능 요구 요건을 만족하는지 파악하는 테스트입니다." }
     },
 
     {
@@ -18486,7 +18486,7 @@
       related: [],
       example: {"text":"Delaying database migration on the critical path will delay the software launch date."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "임계 경로법", explanation: "프로젝트 진행 관리 일정 계획 시, 연계된 여러 과업 액티비티 중 결코 지연되어선 안 되는 가장 수행 시간이 오래 걸리는 논리적 최장 연결 통로인 '임계 경로'를 도출해 일정 인도 마감일을 통제하는 수학적 분석 기법입니다." }
     },
 
     {
@@ -18511,7 +18511,7 @@
       related: [],
       example: {"text":"We carried out a procurement audit to ensure fair competition among the cloud providers."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "조달 감사", explanation: "외부의 협력업체나 벤더 조달 프로세스상에서, 하청 계약서 조항의 이행 적정성, 단가 비용 선정의 공정성 및 납품 인도물의 완성도 심사가 법령 규범에 근거해 객관적으로 실행되었는지 사후 평가해 확인해 주는 체계적 감사 절차입니다." }
     },
 
     {
@@ -18536,7 +18536,7 @@
       related: ["database"],
       example: {"sql":"DECLARE employee_cursor CURSOR FOR SELECT name FROM employees;"},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "데이터베이스 커서", explanation: "SQL 조회 질의문 가동으로 얻어진 대량의 반환 레코드 집합 내부를 한 줄 단위로 가리키는 포인터 지시선으로, 프로그래밍 반복 코드 내부에서 해당 포인트가 지목하는 레코드 속성 수치들을 차례대로 뽑아 수정 가공하도록 보장합니다." }
     },
 
     {
@@ -18561,7 +18561,7 @@
       related: ["database"],
       example: {"text":"The marketing team has its own data mart containing customer email click rates."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "데이터 마트", explanation: "전체 사내의 종합 데이터웨어하우스 자산 중, 영업, 생산, 기획 등 특정 단일 업무 도메인 부서의 상세 실무 의사 결정을 민첩하게 구원하도록 데이터 속성들을 한정 수집하여 적재 조율해 둔 슬림한 전용 데이터 저장 영역입니다." }
     },
 
     {
@@ -18586,7 +18586,7 @@
       related: ["database"],
       example: {"sql":"CREATE VIEW active_users AS SELECT id, name FROM users WHERE status = 'active';"},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "데이터베이스 뷰", explanation: "하드디스크 볼륨에 실제 데이터를 지니지 않고 특정 쿼리 문장만을 논리적 가상 테이블 형태로 보관 정의해 둔 데이터베이스 구조로, 복잡한 테이블 간 JOIN 연산을 추상화하거나 유저의 조회 테이블 접근 권한 범위를 제한하는 보안 효과를 냅니다." }
     },
 
     {
@@ -18611,7 +18611,7 @@
       related: [],
       example: {"text":"ExecutorService executor = Executors.newFixedThreadPool(10);"},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Java 스레드 풀", explanation: "요청이 들어올 때마다 매번 운영체제의 값비싼 실제 스레드를 새로 만들지 않고, 정해진 규모의 활성 상태 작업용 스레드 그룹을 백그라운드에 상시 유지하면서 인입 작업을 차례대로 대행해 처리 효율을 높이는 스레드 관리 기법입니다." }
     },
 
     {
@@ -18636,7 +18636,7 @@
       related: [],
       example: {"text":"ClassLoader loader = MyClass.class.getClassLoader();"},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Java 클래스 로더", explanation: "자바 가상 머신의 내부 핵심 부서로, 애플리케이션 런타임 진행 시점에 비로소 소환 요구가 뜬 컴파일 자바 바이트파일(.class)을 하드 공간에서 포착해 메모리 런타임 데이터 영역으로 적재 적재해 주는 동적 장치입니다." }
     },
 
     {
@@ -18661,7 +18661,7 @@
       related: [],
       example: {"python":"class Book:\n    def __init__(self, title):\n        self.title = title"},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Python 매직 메서드", explanation: "파이썬 문법 규칙하에서 앞뒤에 두 개 언더바(예: `__init__`, `__str__`)를 두른 내장 함수 규약들로, 더하기 같은 기본 수학 부호 연산이나 객체의 이터레이션 반복 거동 양식을 사용자 지정 클래스에 커스텀 재정의하는 오버로딩 통로입니다." }
     },
 
     {
@@ -18686,7 +18686,7 @@
       related: [],
       example: {"python":"import asyncio\nasync def main():\n    await asyncio.sleep(1)"},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Python asyncio 모듈", explanation: "파이썬 표준 라이브러리로, 단일 스레드 기반에서 async/await 문법을 가동해 이벤트 루프 중심의 동시 다발적 비동기 입출력(I/O) 작업을 제어함으로써 불필요한 스레드 스위칭 리소스 소모 없이도 수많은 네트워크 입출력을 대기 처리해 줍니다." }
     },
 
     {
@@ -18711,7 +18711,7 @@
       related: [],
       example: {"text":"Web browsing (HTTP) and file transfers (FTP) require the reliability of TCP."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "TCP", explanation: "인터넷 전송 계층의 신뢰형 연결 지향 프로토콜로, 사전에 논리적인 연결로를 형성하는 3-way handshake 동작을 완료한 뒤 패킷들이 유실되면 재전송을 시행하고 순서를 정확하게 유지해 배송해 주는 안전한 통신 규약입니다." }
     },
 
     {
@@ -18736,7 +18736,7 @@
       related: ["transmission_control_protocol"],
       example: {"text":"DNS lookup queries and VoIP streaming applications run on top of UDP."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "UDP", explanation: "연결 설정과 패킷 복구 검사 메커니즘을 배제한 전송 계층의 비연결성 통신 프로토콜로, 수발신 신뢰성 대신 극한의 신속성을 확보하여 끊김 없는 대량 오디오/비디오 스트리밍이나 실시간 온라인 통신 영역에 적극 채택됩니다." }
     },
 
     {
@@ -18761,7 +18761,7 @@
       related: [],
       example: {"text":"We installed HIDS to alert us if any system configuration file is modified on the production server."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "호스트 침입 탐지 시스템", explanation: "개별 서버 단말의 내부 자원에 직접 이식되어 작동하며, 시스템 커널 호출 명세 감시, 중요 운영 로그 분석 및 중요 실행 바이너리 파일들의 무결성 변조 흔적 등을 세부 조사해 해킹 침해 발생 즉시 알람을 울리는 단말 탐지 보안 방식(HIDS)입니다." }
     },
 
     {
@@ -18786,7 +18786,7 @@
       related: [],
       example: {"text":"We updated the intrusion prevention policy to automatically block IPs scanning open ports."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "침입 방지 정책", explanation: "침입 방지 시스템(IPS) 내부 구성에 지정해 놓는 보안 통제 룰셋으로, 실시간 유입 트래픽 중에서 알려진 공격 서명 패턴이나 비정상 프로토콜 세션이 적발되었을 때 즉각 통신을 Drop 차단할 대응 세부 액션 규정을 다룹니다." }
     },
 
     {
@@ -18811,7 +18811,7 @@
       related: [],
       example: {"text":"Deploying SOAR playbooks allowed our SOC team to isolate compromised hosts within seconds."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "SOAR", explanation: "산재한 개별 보안 장비들의 이벤트 탐지 정보들을 통합 수집하여 조율하고, 위협 발견 즉시 사전 정의해 둔 업무 흐름(Playbook) 절차에 맞춰 방화벽 포트 차단 등 1차 긴급 대응 작업을 보안 관리자 개입 없이 자동화로 연계 조치하는 관제 시스템 규격입니다." }
     },
 
     {
@@ -18836,7 +18836,7 @@
       related: [],
       example: {"text":"The server upgraded to a 64-core CPU to handle massive user requests."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "CPU", explanation: "컴퓨터 아키텍처의 중심 제어 두뇌 반도체로, 운영 프로그램이 지시한 명령 코드들의 해석, 수리 가감 사칙 연산과 제반 제어 장비 버스 통신 조율을 담당하는 핵심 중앙처리장치입니다." }
     },
 
     {
@@ -18861,7 +18861,7 @@
       related: [],
       example: {"text":"Running Docker containers requires a substantial amount of RAM."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "RAM", explanation: "컴퓨터의 전원이 인가되어 구동되는 도중에만 실행 중인 운영체제와 사용자의 데이터를 고속으로 일시 저장하고 CPU에 공급해 주는 주 기억 메모리 장비로, 컴퓨터 시스템 종료 시 저장 정보가 일제히 사라지는 휘발성 자산입니다." }
     },
 
     {
@@ -18886,7 +18886,7 @@
       related: [],
       example: {"text":"Session state management is often handled using Redis to share sessions across clusters."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "세션 상태 관리", explanation: "단일 전송 후 접속을 끊는 무상태(Stateless) HTTP 프로토콜의 한계를 뚫고, 사용자 쿠키에 고유 세션 키 ID를 보낸 후 서버 세션 메모리나 별도 외부 Redis 메모리 등을 활용해 사용자의 과거 로그인 및 세션 정보를 끈덕지게 유지해 내는 기술입니다." }
     },
 
     {
@@ -18911,7 +18911,7 @@
       related: [],
       example: {"text":"Chat applications use the WebSocket protocol for instant message delivery without polling."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "웹소켓 프로토콜", explanation: "클라이언트 웹 브라우저와 대상 서버 소켓 간 단 한 차례 초기 HTTP handshake를 체결한 뒤, 맺어진 가상 전용 TCP 연결 포트를 반영구 유지하면서 대기 대기 지연 없이 실시간 양방향 패킷 데이터를 계속 전송 교류하게 돕는 응용 프로토콜 규격입니다." }
     },
 
     {
@@ -18936,7 +18936,7 @@
       related: [],
       example: {"text":"We use JUnit in Java to assert that calculations return correct values."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "단위 테스트 프레임워크", explanation: "개발 중인 애플리케이션의 세부 기능 유효성을 실시간 자동 점검하기 위해, 가장 작고 독립적인 코드 블록(함수, 메서드) 수준에서 예견된 검증 결과를 자동 수행해 아웃풋 정합성을 비교 판단하게 돕는 테스트 도구(예: JUnit, pytest)입니다." }
     },
 
     {
@@ -18961,7 +18961,7 @@
       related: [],
       example: {"text":"SonarQube is a leading platform for static code analysis."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "정적 코드 분석", explanation: "소스 코드를 컴파일 빌드하거나 직접 실제 런타임 환경에서 수행해보지 않은 채, 코드 텍스트 자체의 정적 문법 흐름과 컴포넌트 간 연결 관계만을 도구로 검사하여 잠재 보안 버그나 코딩 규칙 어김 현상을 잡아내는 소스 품질 검사 기술입니다." }
     },
 
     {
@@ -18986,7 +18986,7 @@
       related: [],
       example: {"text":"Docker uses containerd as its low-level container runtime."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "컨테이너 런타임", explanation: "호스트 머신 운영체제(OS) 환경상에서 가상 격리 가동 구역을 형성해 주는 소프트웨어 패키지로, 배포된 기성 컨테이너 이미지 파일을 가동해 실질 도커 컨테이너를 안전하게 소환하고 프로세스 작동 라이프사이클을 감독합니다." }
     },
 
     {
@@ -19011,7 +19011,7 @@
       related: [],
       example: {"text":"Firebase is a popular Backend as a Service platform that developers use for rapid prototyping."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "BaaS", explanation: "프론트엔드 모바일/웹 개발에 필요한 로그인 회원가입 인증 프로세스, 가상 서버 데이터베이스 저장소, 클라우드 푸시 알람 발송 모듈 등 정형화된 공통 백엔드 제반 인프라 성능을 완성형 클라우드 API 제품 형태로 신속하게 빌려 쓰는 개발 구조 모델입니다." }
     },
 
     {
@@ -19036,7 +19036,7 @@
       related: [],
       example: {"text":"Dijkstra's algorithm is commonly used in network routing protocols like OSPF."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "다익스트라 알고리즘", explanation: "그래프 이론상에서 시작점으로 지정된 단일 소스 노드를 기준으로 삼아, 가중치 값들이 전부 양수 범위인 선로들 속에서 최종 도달할 수 있는 타 모든 노드 지점들로 향하는 가장 누적 거리 비용이 적은 최단 경로 노선을 순차적으로 계산해 주는 방식입니다." }
     },
 
     {
@@ -19061,7 +19061,7 @@
       related: [],
       example: {"text":"We achieved BPA by automating our invoice approval pipeline."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "비즈니스 프로세스 자동화", explanation: "기업 내에서 전개되던 반복적인 수동 문서 기안, 인사 결재 승인, 이메일 확인 및 다수 부서 간 복합 워크플로우 단계를 통합된 IT 애플리케이션 시스템 상의 업무 흐름도로 구조화하여 실수 없이 민첩하게 처리하게 돕는 자동화 기법입니다." }
     },
 
     {
@@ -19086,7 +19086,7 @@
       related: [],
       example: {"text":"Our target KPI is to decrease client page load time by 20%."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "핵심 성과 지표", explanation: "조직이나 진행 프로젝트팀이 사전 설정해 둔 중장기 실질 비즈니스 목표를 성실히 사수하고 있는지 가늠하고자, 완결 실적 수치 데이터를 계량화하여 모니터링 관리 및 성패 평가 기준으로 가동하는 정량 지표입니다." }
     },
 
     {
@@ -19111,7 +19111,7 @@
       related: [],
       example: {"text":"Scope management avoids scope creep by referencing the WBS."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "프로젝트 범위 관리", explanation: "수행할 대형 전산 시스템 개발 계획에 요구되는 원래 약정한 작업 과업 범위를 정밀 정의하고, 사업 배포 진행 과정에서 승인되지 않은 잔여 요구 사항들이 무분별하게 난입해 원래의 완성 기한과 자금을 초과해 낭비하는 현상을 막는 관리 체계입니다." }
     },
 
     {
@@ -19136,7 +19136,7 @@
       related: [],
       example: {"text":"Upgrading the server hardware yielded a 150% ROI over two years."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "투자 수익률", explanation: "기업 경영에 투입된 전체 자산 예산 투자 비용 대비 최종 창출 및 확보해 낸 비즈니스적 알짜 순수익 실적 가치를 백분율 수치로 나타내어, 추진할 신규 IT 장비 도입 계획의 타당성이나 광고 비용 기여 실효성을 평가하는 재무 성과 비율 지표입니다." }
     },
 
     {
@@ -19161,7 +19161,7 @@
       related: ["database"],
       example: {"text":"Deadlock detection mechanism aborts one transaction to resolve the conflict."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "데이터베이스 데드락", explanation: "데이터베이스 다중 트랜잭션 충돌 현상의 하나로, 트랜잭션 A가 리소스 1에 락을 걸고 리소스 2에 락을 걸기 위해 대기할 때, 마침 트랜잭션 B는 리소스 2에 락을 잡은 채 리소스 1의 락 해제를 대기함으로써 두 세션 모두 처리를 잇지 못하고 멈춰 서는 교착 상태입니다." }
     },
 
     {
@@ -19186,7 +19186,7 @@
       related: ["database","read_committed"],
       example: {"sql":"Dirty read happens when isolation level is set to READ UNCOMMITTED."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "더티 리드", explanation: "동시성 트랜잭션이 상호 격리되지 않아 생기는 왜곡 문제로, 한 트랜잭션 세션이 테이블 행 데이터를 변경 중이나 아직 commit 처리를 확정하지 않은 미완성 중간 단계의 데이터를 타 트랜잭션이 미리 조회가 가능해져, 사후에 이전 세션이 rollback을 밟으면 신뢰가 상실되는 왜곡입니다." }
     },
 
     {
@@ -19211,7 +19211,7 @@
       related: ["database","repeatable_read"],
       example: {"sql":"SET TRANSACTION ISOLATION LEVEL READ COMMITTED prevents dirty reads but allows non-repeatable reads."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "반복 불가능한 조회", explanation: "트랜잭션 세션 수명 주기 내에서 특정 조건 데이터 레코드 조회를 여러 차례 시도할 때, 그 도중 시점에 타 세션이 대상 값을 변경하고 최종 commit을 마쳐버려 처음 1회 차에 얻었던 데이터 컬럼 수치 값과 2회 차에 새로 확인한 값이 서로 다르게 틀어지는 이상 조회 현상입니다." }
     },
 
     {
@@ -19236,7 +19236,7 @@
       related: [],
       example: {"text":"The JVM manages application memory and performs garbage collection."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Java 가상 머신", explanation: "자바 언어로 기획된 바이트코드 컴파일 프로그램(.class)이 로컬 물리 장치의 기종 종류에 상관없이 오직 자바 규약 명세에 맞춰 고스란히 해석 구동되도록 가교 역할을 하고, 메모리 자동 정제 및 런타임 보안 격리를 통제해 주는 가상 가동 엔진입니다." }
     },
 
     {
@@ -19261,7 +19261,7 @@
       related: ["java_virtual_machine"],
       example: {"text":"JIT compiler dynamically optimizes Java application hot spots during runtime."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "JIT 컴파일러", explanation: "자바 가상 머신의 내부 핵심 부속으로, 소스를 그때그때 한 줄씩 읽는 인터프리터 방식의 단점을 메우고자, 런타임 구동 중에 자주 실행되는 열성적 핫스폿 바이트코드 뭉치를 원시 CPU의 기계어 코드로 즉시 기계식 컴파일하여 실행 속도를 비약적으로 가속해 주는 부서입니다." }
     },
 
     {
@@ -19286,7 +19286,7 @@
       related: ["java_virtual_machine"],
       example: {"text":"Java bytecode achieves the write once, run anywhere write principle."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Java 바이트코드", explanation: "개발자가 입력한 자바 텍스트 소스를 자바 컴파일러 `javac` 도구가 가공하여 도출한 플랫폼 중립적 성향의 가상 기계어로, 보통 `.class` 확장자명을 가지며 개별 타깃 컴퓨터 환경에 설치된 자바 가상 머신(JVM)에 적재되어 실질적인 연산을 시행하게 됩니다." }
     },
 
     {
@@ -19311,7 +19311,7 @@
       related: [],
       example: {"text":"Due to the GIL, CPU-bound Python tasks run faster with multiprocessing rather than multithreading."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Python GIL", explanation: "오리지널 CPython 파이썬 인터프리터가 탑재한 상호 배제 잠금(Mutex) 규칙인 전역 인터프리터 락으로, 메모리 자원 충돌 없이 멀티스레드 자격 증명을 안전하게 지키기 위해 단 한 순간에는 단 하나의 스레드만 실질 파이썬 코드 연산을 물리적으로 처리하도록 제어하는 제약입니다." }
     },
 
     {
@@ -19336,7 +19336,7 @@
       related: [],
       example: {"text":"Python caches compiled bytecode in the __pycache__ directory."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Python 바이트코드 컴파일", explanation: "작성한 파이썬 스크립트 파일을 실행할 때마다 파싱하는 지연 시간을 아끼기 위해, 런타임 최초 진입 단계에서 가상 머신이 해독하기 수월한 조밀한 중립 가상 기계어로 소스를 즉시 번역하고 결과물 `.pyc` 캐시 파일로 로컬 디스크에 보관해 두는 동작입니다." }
     },
 
     {
@@ -19361,7 +19361,7 @@
       related: [],
       example: {"python":"my_list = [1, 2]\nmy_list.append(3)\nmy_list.pop()"},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Python 리스트 메서드", explanation: "파이썬이 기본 제공하는 동적 가변 시퀀스 타입인 리스트(list) 객체상에서 데이터 수정을 가동하기 위해 마련해 둔 빌트인 멤버 함수들로, 요소 적재를 돕는 `append()`, 추출 소멸을 행하는 `pop()`, 그리고 무작위 정렬을 맞추는 `sort()` 등입니다." }
     },
 
     {
@@ -19386,7 +19386,7 @@
       related: [],
       example: {"text":"DNS resolves www.example.com to 93.184.216.34."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "DNS", explanation: "일반 이용자가 암기하기 좋게 영문이나 한글 글자 조합으로 구축한 컴퓨터 주소명(도메인 이름) 정보를 바탕으로, 인터넷 데이터 송수신에 필수인 실제 상대방 장비의 32비트 혹은 128비트 IP 번호 주소로 번역하여 이름 해결을 수행하는 전 세계 분산 네트워크 데이터베이스입니다." }
     },
 
     {
@@ -19411,7 +19411,7 @@
       related: [],
       example: {"text":"HTTP requests consist of methods like GET, POST, and response status codes."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "HTTP", explanation: "인터넷 웹 환경상에서 정보 통신 단말 간에 하이퍼미디어 문서 및 각종 비동기 데이터 패킷을 유연하게 수발신하기 위해 제정된 네트워크 표준으로, 요청과 응답 모델 구조를 기본 뼈대로 삼아 동작하며 상태 기억 보존이 없는 무상태 성향을 지닌 응용 프로토콜입니다." }
     },
 
     {
@@ -19436,7 +19436,7 @@
       related: [],
       example: {"text":"Although we still say SSL certificate, we are actually using TLS for security."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "SSL", explanation: "인터넷 구간 데이터의 전송 암호화를 통해 가로채기와 조작을 원천 봉쇄할 의도로 제정되었던 대중적인 보안 암호 프로토콜 규격으로, 기성 https 전산망 구축의 초석이었으나 현재는 보안 취약 사유로 완전히 퇴출당하고 현행 규격인 TLS가 이 업무 명세를 계승해 쓰이고 있습니다." }
     },
 
     {
@@ -19461,7 +19461,7 @@
       related: [],
       example: {"text":"AES and DES are well-known examples of symmetric key encryption algorithms."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "대칭키 암호화", explanation: "평문의 일반 정보를 암호화 형식으로 조작해 숨기는 보안 과정과, 반대로 수신 측이 암호문을 본래 원본 문서 상태로 해독해 풀어내는 복호화 과정에서 완벽히 일치하는 단 하나의 보안 공유키를 사용하여 연산 처리가 신속한 암호 체계입니다." }
     },
 
     {
@@ -19486,7 +19486,7 @@
       related: ["symmetric_key_encryption"],
       example: {"text":"Asymmetric encryption solves the key distribution problem inherent in symmetric systems."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "비대칭키 암호화", explanation: "암호에 쓰이는 키 분배 유출 사고를 방지하고자, 외부 일반 대중이 조회해 암호화에 쓰게 조율된 '공개키(Public Key)'와 이에 유일 페어 매칭되어 대상 보안 수신 소유자만 품어 해독을 완료하는 '개인키(Private Key)'라는 다른 한 쌍의 특수 키를 가동하는 암호 구조입니다." }
     },
 
     {
@@ -19511,7 +19511,7 @@
       related: ["asymmetric_key_encryption"],
       example: {"text":"PKI architecture ensures secure SSL/TLS connections on the web."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "PKI 아키텍처", explanation: "인터넷상에서 교환되는 각 개별 공개키 정보가 사칭이나 조작 없는 진본임을 공증하도록, 제3의 국가 공인 신뢰 기관인 인증기관(CA), 가입 희망자 신원을 검증 접수하는 등록기관(RA) 및 전자서명 인증서 보관 폐지 규칙을 체계화한 디지털 보안 관리 기저 인프라입니다." }
     },
 
     {
@@ -19536,7 +19536,7 @@
       related: ["operating_system"],
       example: {"text":"Minix and QNX are real-world operating systems using microkernel architecture."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "마이크로커널 아키텍처", explanation: "운영체제 시스템 커널이 담당할 최우선 핵심 생명 로직(메모리 가상 매핑, CPU 스케줄러) 규모를 최소한으로 억제해 커널 모드에 가두고, 연계 장치 제어 드라이버나 파일 입출력 로직 같은 제반 부서들을 사용자 모드 영역(User Space)의 개별 독립 프로세스로 빼내어 안정성을 다지는 OS 설계 구조입니다." }
     },
 
     {
@@ -19561,7 +19561,7 @@
       related: ["operating_system","bootloader"],
       example: {"text":"The system boot process reads the master boot record (MBR) to find the kernel location."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "시스템 부팅 프로세스", explanation: "컴퓨터 하드웨어에 전력 공급이 개시되는 그 찰나의 첫 단계에서, 메인 마더보드 칩셋의 BIOS나 UEFI 펌웨어가 즉각 점검(POST)을 수행하고 부팅 드라이브에 상주하던 부트로더를 구동하여 최종 운영체제(OS)의 커널 인스턴스를 주 RAM 공간에 적재하고 초기 제어권을 완전 위임하기까지의 연쇄 동작입니다." }
     },
 
     {
@@ -19586,7 +19586,7 @@
       related: ["cross_origin_resource_sharing"],
       example: {"text":"SOP blocks an AJAX request from domain A to domain B unless CORS is configured."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "동일 출처 정책", explanation: "웹 프론트 브라우저가 준수하는 핵심 보안 철칙으로, 특정 출처(프로토콜, 도메인, 포트 정보의 합)에서 가져와 실행한 웹페이지 스크립트 소스가 다른 타 도메인 출처의 쿠키 영역이나 프라이빗 문서 내부 DOM 요소와 직접 연계하고 임의 변조하는 상호 작용을 금지하는 예방 정책입니다." }
     },
 
     {
@@ -19611,7 +19611,7 @@
       related: ["json_web_token"],
       example: {"text":"JWT format represents claims as a JSON object that is digitally signed."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "JSON Web Token 포맷", explanation: "보안 토큰 수단인 JWT의 데이터 정렬 형식으로, 디지털 서명에 가동한 알고리즘 명세를 지칭하는 헤더(Header), 실질적인 유저 개인 정보 수치 및 만료일을 내장한 페이로드(Payload), 조작을 검증하는 시그니처(Signature) 세 구획이 점(`.`) 기호로 직렬 연결된 Base64Url 포맷입니다." }
     },
 
     {
@@ -19636,7 +19636,7 @@
       related: [],
       example: {"text":"We use Git version control to collaborate on the project."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Git 버전 관리", explanation: "작성 중인 소프트웨어 소스코드 문서들의 상세 변동 상황을 효율 좋게 영구 저장하고 특정 작업 시점으로 되돌려 주는 고성능 분산 버전 통제 시스템으로, 개발 단체 개개인의 로컬 PC와 공동 원격 저장소에 똑같은 개정 히스토리 커밋 데이터 사본을 대칭 소장하게 해줍니다." }
     },
 
     {
@@ -19661,7 +19661,7 @@
       related: [],
       example: {"text":"Infrastructure provisioning can be automated using Terraform."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "인프라 프로비저닝", explanation: "새로운 온라인 비즈니스 시스템 가동에 소요되는 최적 규격의 가상 물리 머신(VM), 보안 포트 방화벽 설정, 네트워크 서브넷 분할 및 스토리지 공간 볼륨 할당 등의 모든 하드웨어 인프라 자원을 가상 클라우드에 자동 구성하고 배포하여 쓸 수 있게 구비해 주는 연쇄 가동 단계입니다." }
     },
 
     {
@@ -19686,7 +19686,7 @@
       related: ["algorithm"],
       example: {"text":"Bubble sort has an average and worst-case time complexity of O(n^2)."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "버블 정렬 알고리즘", explanation: "배열 정렬 기법 중 하나로, 맨 좌측 데이터 원소부터 시작하여 우측 바로 옆 원소와 순차 비교해 크면 위치를 맞교환하는 패스를 계속 순환 기동함으로써, 매 루프마다 배열 맨 뒷자리 구역에 최댓값 원소들이 하나씩 차례로 거품(Bubble)처럼 떠올라 정렬되도록 만드는 기초적인 알고리즘(O(n^2))입니다." }
     },
 
     {
@@ -19711,7 +19711,7 @@
       related: ["key_performance_indicator"],
       example: {"text":"Clear user requirements was identified as the primary CSF for our software development project."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "핵심 성공 요인", explanation: "기획한 기업 정보화 프로젝트 추진이나 신규 비즈니스 전략 가동 단계에서, 당초에 의도했던 최종 상위 목표 성취를 이루기 위해 필수적으로 성공 사수해야 하고 가장 높은 비중으로 내부 모니터링 관리를 쏟아부어야 할 지표 요인(CSF)입니다." }
     },
 
     {
@@ -19736,7 +19736,7 @@
       related: [],
       example: {"text":"Cloud migration reduced our IT hardware TCO by 30%."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "총 소유 비용", explanation: "기업이 신규 컴퓨터 장비나 사내 전산 솔루션을 새로 살 때 들어가는 단순 도입 초기 구매가뿐만 아니라, 시스템을 폐기 소멸하기까지 장기간 주기적으로 지급해야 할 상시 수리비, 전기 사용세, 운영인력 인건비, 연간 라이선스비 등을 포괄 계산하는 재무 총체 비용(TCO) 기법입니다." }
     },
 
     {
@@ -19761,7 +19761,7 @@
       related: [],
       example: {"text":"Our company implemented an SAP ERP system to unify accounting and inventory."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "전사적 자원 관리", explanation: "기업 내부에서 각기 따로 굴러가며 연동이 부실하던 마케팅, 인사 행정, 부품 조달, 재무 회계 자산 정보 흐름을 하나의 통일된 전사 공통형 데이터베이스 허브 시스템상으로 집중 관리하여, 자원의 유기적 조율과 신속한 경영 계획 판단을 돕는 통합 전사 패키지(ERP)입니다." }
     },
 
     {
@@ -19786,7 +19786,7 @@
       related: ["database","repeatable_read"],
       example: {"sql":"Phantom reads are only prevented in the SERIALIZABLE isolation level in standard SQL."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "팬텀 리드", explanation: "데이터베이스 동시 격리가 충족되지 않을 때 목격되는 에러 현상으로, 한 트랜잭션 내부에서 동일 조건식의 테이블 로우 조회를 2회 연달아 가동할 때, 그사이에 다른 트랜잭션이 조건에 딱 부합하는 새 데이터 행을 테이블에 등록 commit해버려 2회 차 결과에 이상 유령(Phantom) 로우들이 추가 관측되는 현상입니다." }
     },
 
     {
@@ -19811,7 +19811,7 @@
       related: ["database"],
       example: {"text":"Relational databases enforce ACID transactions to prevent data corruption."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "ACID 특성", explanation: "데이터베이스에서 실행되는 트랜잭션이 상시 신뢰성과 안전 무결성을 품고 보장되도록 요구하는 4대 기본 요인의 머리글자 약어로, 전체 가동하거나 다 취소되는 원자성(A), 규범을 일치시키는 일관성(C), 상호 간섭이 없는 격리성(I), 기록이 보존되는 지속성(D)을 의미합니다." }
     },
 
     {
@@ -19836,7 +19836,7 @@
       related: ["database","table"],
       example: {"sql":"CREATE INDEX idx_user_email ON users(email);"},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "데이터베이스 인덱스", explanation: "테이블 데이터 검색 시 처음부터 끝까지 전체 테이블을 훑는 풀 스캔 지연을 막고자, 특정 핵심 컬럼 필드들을 추려 정렬한 별도의 보조 포인터 색인 구조를 디스크에 형성함으로써 데이터 탐색 응답 시간을 비약적으로 가속해 주는 보조 자원입니다." }
     },
 
     {
@@ -19861,7 +19861,7 @@
       related: ["java_garbage_collector"],
       example: {"text":"Enable G1 GC in JVM using option: -XX:+UseG1GC"},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Java G1 가비지 컬렉터", explanation: "JVM(자바 가상 머신)의 주기억 힙 메모리 자동 청소기로, 전체 동적 메모리 평면 영역을 여러 소규모 격리 구역(Region)들로 작게 나누어, 쓰레기 인스턴스가 제일 많이 적체 오염된 구역부터 효율적으로 선택 수거하여 가동 정지 시간(STW) 지연율을 방어하는 대용량 메모리용 표준 수거 엔진입니다." }
     },
 
     {
@@ -19886,7 +19886,7 @@
       related: [],
       example: {"text":"public abstract class Animal { public abstract void makeSound(); }"},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Java 추상 클래스", explanation: "내부에 완결되지 않은 추상 상위 설계 메서드를 품을 수 있어 `new` 연산자로 직접 자신만의 독자 객체 생성을 할 수 없고, 오로지 이 클래스를 온전히 이어받아 명세를 구체화해 코딩을 마친 하위 실체화 자식 클래스의 상속 연결용 뼈대로 기능하는 템플릿성 클래스입니다." }
     },
 
     {
@@ -19911,7 +19911,7 @@
       related: [],
       example: {"text":"public interface MyInterface { default void log(String msg) { System.out.println(msg); } }"},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Java 인터페이스 디폴트 메서드", explanation: "자바 8부터 허용된 새로운 자바 프로그래밍 설계 사양으로, 본래 본문 소스 코드를 탑재할 수 없던 인터페이스 명세 뼈대 안에 `default` 키워드를 표기해 주면 구체적 몸체 동작 로직을 직접 코딩해 제공할 수 있어 기존 연계 상속 객체들의 파괴 수정을 효과적으로 방지합니다." }
     },
 
     {
@@ -19936,7 +19936,7 @@
       related: [],
       example: {"python":"my_dict = {'a': 1}\nmy_dict.get('b', 0)\nmy_dict.keys()"},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Python 딕셔너리 메서드", explanation: "파이썬 고유의 키-값 대응 연동 객체 타입인 딕셔너리(dict)에 빌트인 탑재되어 있는 헬퍼 함수들로, 맵 안에 박힌 전체 키 목록을 추출해 내는 `keys()`, 값들만 가져오는 `values()`, 에러를 회피해 특정 항목을 얻는 `get()` 등이 해당합니다." }
     },
 
     {
@@ -19961,7 +19961,7 @@
       related: [],
       example: {"python":"try:\n    res = 1 / 0\nexcept ZeroDivisionError:\n    res = 0"},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Python 예외 처리", explanation: "파이썬 프로그램 수행 중 물리 하드 에러나 부적절한 제로 나누기 같은 에러 예외를 마주했을 때 프로그램이 돌발 다운되는 참사를 막기 위해, 소스를 `try-except-finally` 제어 블록으로 묶어 에러 발생 시 지정한 안전 조치 코드로 부드럽게 흐르게 돕는 안전장치입니다." }
     },
 
     {
@@ -19986,7 +19986,7 @@
       related: ["python_pipenv"],
       example: {"text":"Run `virtualenv venv` to create a new folder containing a fresh Python setup."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Python virtualenv 도구", explanation: "단일 윈도우나 리눅스 PC 환경상에서 다수의 파이썬 신규 프로젝트 개발을 가동할 때 초래되는 패키지 버전 종속성 간 충돌을 원천 차단하기 위해, 프로젝트별 격리 폴더 내에 별개의 독립 파이썬 실행 바이너리와 라이브러리 저장고를 가설하는 격리 툴입니다." }
     },
 
     {
@@ -20011,7 +20011,7 @@
       related: ["secure_sockets_layer"],
       example: {"text":"HTTPS runs HTTP over a connection encrypted by TLS."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "TLS", explanation: "인터넷 구간에서 안전하게 패킷 데이터를 송수신할 수 있도록 기밀성과 도청 방지를 약속하기 위해 규정된 암호용 표준 인증 규약으로, 과거 결함이 잦던 SSL 프로토콜 명세를 패치해 계승하였으며 현행 HTTPS 인터넷 통신의 기본 보안 수호 규정입니다." }
     },
 
     {
@@ -20036,7 +20036,7 @@
       related: [],
       example: {"text":"Employees use a VPN to access internal office databases from home."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "VPN", explanation: "일반 불특정 다수가 함께 소통하는 개방형 공용 인터넷 데이터망 구간에, 가상 전용 암호화 보안 터널 연결을 기동함으로써, 마치 원거리 지사와 본사가 전용 물리 케이블선(전용선)을 깔아 직접 통신하는 듯한 격리 기밀성을 부여해 주는 네트워크 보안 기술입니다." }
     },
 
     {
@@ -20061,7 +20061,7 @@
       related: [],
       example: {"text":"WPA3 Wi-Fi security protects against offline dictionary attacks."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Wi-Fi 보안", explanation: "공중에 전파 파형 형태로 날아다니는 무선 LAN 기기 상호 간의 통신 패킷 유출이나 부정한 침투 가동을 예방 차단하기 위한 암호화 표준 규격으로, 기성 WPA2 기술 규격을 넘어 최신의 강력한 접속 비밀번호 사전 무력화 방어 필터링 메커니즘을 덧씌운 WPA3 표준이 활발히 쓰입니다." }
     },
 
     {
@@ -20086,7 +20086,7 @@
       related: ["asymmetric_key_encryption"],
       example: {"text":"DSS uses public key cryptography to prove the sender's identity."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "디지털 서명 표준", explanation: "미국 표준국 등에서 제정 공표한 안전한 디지털 전자 문서용 서명 프레임워크 규격으로, 정보 발신자의 고유 개인 비밀서명키를 가동해 암호 시그니처를 출력 덧붙이고, 수신자는 이에 대칭되는 공개키로 변조와 발신 사실을 검증하여 완벽한 신원 증명과 부인 방지 성능을 보장합니다." }
     },
 
     {
@@ -20111,7 +20111,7 @@
       related: ["pki_architecture"],
       example: {"text":"The registration authority validates passports before the CA signs their public key certificate."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "등록 기관", explanation: "공개키 기반 구조(PKI) 전산 체계 아래에서, 최종 공인 인증서 발급 신청을 낸 유저가 제출한 신원 증빙 서류나 서명 정보의 사실 여부를 실무단에서 직접 대조 검증하고, 상위 인증기관(CA) 측에 증명서 배포 승인을 통지해 주는 보조 심사 보안 기관(RA)입니다." }
     },
 
     {
@@ -20136,7 +20136,7 @@
       related: ["symmetric_key_encryption"],
       example: {"text":"AES supports key sizes of 128, 192, and 256 bits."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "AES", explanation: "과거 취약해져 쓰이지 않는 DES 암호를 계승하기 위해 미국 국립표준기술연구소(NIST)가 비준 채택한 전 세계 표준형 대칭 블록 암호 알고리즘 규격으로, 128비트, 192비트, 256비트 단위의 키를 채용해 데이터 연산이 매우 신속하면서도 뛰어난 보안 안전성을 갖추고 있습니다." }
     },
 
     {
@@ -20161,7 +20161,7 @@
       related: ["operating_system"],
       example: {"text":"Format the USB drive as FAT32 to ensure it works on both Windows and macOS."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "FAT 파일 시스템", explanation: "마이크로소프트의 MS-DOS 시절부터 기용되던 고전형 파일 할당 테이블 규격으로, 저장장치의 폴더 배치를 심플한 테이블 리스트로 연동해 다뤄 줍니다. 매우 가볍고 타사 장비 호환성이 높으나, 급작스런 정전 시 손상에 취약하며 단일 파일당 최대 4GB까지만 담는 용량 벽을 지닙니다." }
     },
 
     {
@@ -20186,7 +20186,7 @@
       related: ["operating_system","file_allocation_table"],
       example: {"text":"NTFS supports file permissions and larger file volumes than FAT32."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "NTFS 파일 시스템", explanation: "윈도우 NT 운영체제 도입 시점부터 기본 탑재된 마이크로소프트의 고급 주력 파일 저장 체계로, 개별 파일 단위로 정밀한 사용자별 보안 소유 권한(ACL)을 부여할 수 있고 시스템 전원 에러 다운 시 미완 처리를 자동 복원하는 저널링(Journaling) 성능을 가동해 강성을 띱니다." }
     },
 
     {
@@ -20211,7 +20211,7 @@
       related: ["session_state_management"],
       example: {"text":"Session cookies are used to store shopping cart items while browsing."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "세션 쿠키", explanation: "유저의 컴퓨터 하드 디스크에 파일 형태로 영구 저장을 행하지 않고 브라우저 가동에 소요되는 메모리 세션 상태 공간 내에만 유지 보관되는 비영구 웹 쿠키로, 사용자가 기동해 서핑 중이던 모든 웹 브라우저 창을 다 꺼서 닫으면 즉각 기억이 영구 소멸하는 특성이 있습니다." }
     },
 
     {
@@ -20236,7 +20236,7 @@
       related: ["representational_state_transfer","api"],
       example: {"text":"Our server provides RESTful web services returning JSON payloads."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "RESTful 웹 서비스", explanation: "REST 아키텍처 규칙 사상을 완전하게 준수하여 구축한 경량 웹 API 시스템으로, 연동 대상인 모든 데이터 자원(Resource)을 고유 URL 지표 명세로 표기하고 범용의 HTTP 메서드 명령(GET, POST, PUT, DELETE)만을 가동해 동기화 교환을 이루는 서비스 방식입니다." }
     },
 
     {
@@ -20261,7 +20261,7 @@
       related: ["git_version_control"],
       example: {"text":"We need to edit the file manually and mark resolved to fix the git merge conflict."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Git 병합 충돌", explanation: "Git 분산 버전 관리에서 한 브랜치를 타 브랜치와 결합 병합(Merge)시킬 때, 똑같은 파일의 같은 라인 위치에 서로 대치되는 갱신 코딩 내용이 중첩 감지되는 순간 발생하며, Git의 자동 병합 기능이 중단되어 개발자가 손수 파일 소스를 뜯어 상충 코드를 수정해야 합니다." }
     },
 
     {
@@ -20286,7 +20286,7 @@
       related: ["container_runtime"],
       example: {"text":"Docker is the industry standard for containerization technology."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "컨테이너화 기술", explanation: "무겁고 가상 하드웨어 소모 지연이 크던 구형 가상 컴퓨터(VM) 방식의 낭비를 메우기 위해, 물리 호스트 운영체제 커널의 가상 격리 기술(LXC Namespaces 등)만을 공유 가동함으로써 개별 프로그램 실행 라이브러리 가설 환경을 최소 비용 오버헤드로 구동시키는 경량의 가상화 기술입니다." }
     },
 
     {
@@ -20311,7 +20311,7 @@
       related: ["algorithm","bubble_sort_algorithm"],
       example: {"text":"Quick sort is generally much faster than bubble sort in practice."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "퀵 정렬 알고리즘", explanation: "평균 시간 복잡도가 O(n log n) 수준으로 대단히 민첩하여 애용되는 분할 정복형 정렬 기법으로, 임의 기준값인 피벗(Pivot)을 선정한 다음 피벗보다 큰 데이터 무리와 작은 데이터 무리로 양분 분리한 뒤, 각각 하부 분할 범위에 대칭 재귀 호출을 순환 가동해 정렬합니다." }
     },
 
     {
@@ -20336,7 +20336,7 @@
       related: [],
       example: {"text":"We use a CRM platform to track sales leads and customer support tickets."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "고객 관계 관리", explanation: "자사 기업 고객들의 상세 인적 프로필 정보, 과거 거래 이력 및 정기 상담 불만 사항 기록 등을 하나의 통합 데이터베이스 허브 시스템에 수집 정리하여, 타깃 판촉 마케팅 기획과 밀착형 고객 애프터케어 관리에 적극 기용하는 전산 솔루션(CRM)입니다." }
     },
 
     {
@@ -20361,7 +20361,7 @@
       related: [],
       example: {"text":"SCM integration reduced component warehousing costs by 15%."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "공급망 관리", explanation: "제품 제조에 긴요한 초기 부품 원자재 구매 계약 단계부터 시작해 공장 가공 조립 공정, 물류 유통창고 보관 입출고 및 대리점 최종 소비자 배송 공급망에 이르기까지 일련의 가치 사슬 전 과정을 실시간 통합 모니터링하여 유통 재고 지연 낭비를 진압하는 IT 경영 도구(SCM)입니다." }
     },
 
     {
@@ -20386,7 +20386,7 @@
       related: ["service_level_agreement"],
       example: {"text":"A database outage lasting over 2 hours resulted in an SLA breach."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "SLA 위반", explanation: "외주 IT 서비스를 제공하는 공급 기업이, 앞서 계약 단계에서 공식 합의(SLA)했던 최소 전산망 온라인 가동률 목표 수치나 최장 서버 장애 복구 지연 제한 시간 등의 주요 서비스 품질 요건 기준을 달성하지 못한 위약 상태를 가리킵니다." }
     },
 
     {
@@ -20411,7 +20411,7 @@
       related: ["database","database_indexes"],
       example: {"sql":"Default indexes in MySQL InnoDB tables are B-Tree indexes."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "B-Tree 인덱스", explanation: "대다수 상용 관계형 데이터베이스(RDBMS) 엔진에서 인덱스 색인을 구조화할 때 표준 채택하는 대표적인 자가 균형 검색 트리 모델 구조로, 모든 리프 노드 데이터 깊이를 동등하게 균형 정렬함으로써 최악의 테이블 스캔 낭비를 막고 고른 쿼리 속도(O(log n))를 지켜 줍니다." }
     },
 
     {
@@ -20436,7 +20436,7 @@
       related: ["database","table"],
       example: {"sql":"Using user_email as a natural key in the users table."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "내추럴 키", explanation: "데이터베이스 논리 모델링 설계 시, 데이터 테이블에 고유 식별 주 키(PK) 항목을 마련하기 위해 굳이 인위적인 일련 연번을 새로 배포하지 않고, 이미 실 업무 비즈니스 영역에서 실존하여 유일성을 띄던 고객 주민번호나 이메일 주소 속성을 그대로 주 키로 채택한 형태입니다." }
     },
 
     {
@@ -20461,7 +20461,7 @@
       related: ["database","table","natural_key"],
       example: {"sql":"An AUTO_INCREMENT integer id is a common example of a surrogate key."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "서로게이트 키", explanation: "실물 업무 도메인이나 테이블 원본 로우 데이터에는 하등 아무 상관 의미가 없으나, 중복 없는 데이터 테이블 고유 주 키(PK) 관리를 프로그래밍 편의상 깔끔하게 획득하고자 시스템 내부적으로 자동 배포(예: Auto-Increment 정수 및 UUID 식별자)해 부여한 인공 키 필드입니다." }
     },
 
     {
@@ -20486,7 +20486,7 @@
       related: ["java_thread_pool"],
       example: {"text":"We can check a thread's current state using the thread.getState() method."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Java 스레드 생명 주기", explanation: "JVM(자바 가상 머신) 런타임 환경 내부에서 하나의 스레드 실행 주체가 태어나서 죽기까지 겪는 논리적 변동 절차로, 스레드 선언(NEW), 실행 대기/수행(RUNNABLE), 동시성 락 대기(BLOCKED), 통지 대기(WAITING/TIMED_WAITING), 소멸(TERMINATED) 단계의 흐름 제어를 칭합니다." }
     },
 
     {
@@ -20511,7 +20511,7 @@
       related: ["hash_table_structure"],
       example: {"text":"ConcurrentHashMap<String, Integer> map = new ConcurrentHashMap<>();"},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Java ConcurrentHashMap", explanation: "동시에 돌아가는 멀티스레드 자바 애플리케이션 환경에서 유입되는 데이터 경합 문제를 안전하게 사수하는 고성능 자격 증명 맵 컨테이너로, 옛 Hashtable처럼 컬렉션 객체 통째에 무식한 단일 락을 잡지 않고 메모리 구역별로 락 세그먼트를 쪼개어 높은 동시 처리 속도를 냅니다." }
     },
 
     {
@@ -20536,7 +20536,7 @@
       related: ["java_class_loader"],
       example: {"text":"ClassNotFoundException occurs if the database JDBC driver JAR is missing from the classpath."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "ClassNotFoundException", explanation: "자바 가상 머신 구동 도중 문자열 텍스트 지표로 특정 클래스 로딩을 긴급 수행하려 할 때(예: `Class.forName()`), 명시한 명칭의 컴파일 바이너리 파일(.class)이 실질 클래스패스(Classpath) 경로 어디에서도 감지되지 않아 클래스 로드가 깨졌음을 알리는 체크 예외 오류입니다." }
     },
 
     {
@@ -20561,7 +20561,7 @@
       related: ["unit_testing_framework"],
       example: {"python":"def test_add():\n    assert add(1, 2) == 3"},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Python pytest 프레임워크", explanation: "전형적이고 형식 절차가 지저분했던 과거의 파이썬 내장 unittest의 수고를 덜어주기 위해 고안된 현대식 파이썬 자동 검증 라이브러리로, 별도의 상속 양식 작성 없이 파이썬 본래의 `assert` 논리식 기술만으로 매우 쉽게 단위 테스트를 작성 및 확장하게 돕습니다." }
     },
 
     {
@@ -20586,7 +20586,7 @@
       related: ["python_list_methods"],
       example: {"python":"numbers = [0, 1, 2, 3]\nsubset = numbers[1:3]  # [1, 2]"},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Python 리스트 슬라이싱", explanation: "파이썬이 자랑하는 가변 목록 타입 리스트(list) 상에서, 대괄호와 콜론 기호 조합식을 활용해 부분 추출 범위(예: `list[start:end:step]`)를 지정하여 원하는 데이터 구간의 하부 부분 리스트 객체만을 민첩하게 절단 획득해 내는 간편 문법입니다." }
     },
 
     {
@@ -20611,7 +20611,7 @@
       related: ["python_dict_comprehension"],
       example: {"python":"evens = [x for x in range(10) if x % 2 == 0]"},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Python 컴프리헨션 문법", explanation: "파이썬으로 리스트, 딕셔너리, 셋 등의 다량 보관 데이터 컬렉션을 루프 선언하며 신규 채워 나갈 때, 여러 행의 복잡한 중첩 for 구문을 단 한 줄의 인라인 수식으로 짧게 줄여 직관성 극대화와 메모리 연산 성능 향상을 한 번에 도모하는 가독형 구문 구조입니다." }
     },
 
     {
@@ -20636,7 +20636,7 @@
       related: [],
       example: {"text":"RIP protocol has a maximum hop count limit of 15 to prevent routing loops."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "RIP", explanation: "비교적 소규모의 사내 랜망이나 단순 네트워크 토폴로지상에서 연동되는 디스턴스 벡터 라우팅 프로토콜로, 타깃 컴퓨터 목적지까지 패킷을 안전 배달해 보낼 때 거쳐 가야 할 중도 통신 장비 라우터 대수(Hop Count) 정보 수치만을 최적 경로 판단의 단일 잣대로 활용합니다." }
     },
 
     {
@@ -20661,7 +20661,7 @@
       related: ["dijkstras_algorithm"],
       example: {"text":"OSPF is highly scalable compared to distance-vector protocols like RIP."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "OSPF", explanation: "중대규모 기업망이나 대용량 네트워크 환경하에서 각 라우터 장비 상호 간에 경로를 연동하는 대표적 링크 상태(Link-State) 프로토콜로, 통신 케이블 속도 대역폭 성능과 경로 지연율을 감안한 다익스트라(Dijkstra) 알고리즘을 가동하여 수렴 속도가 매우 빠르고 안정적입니다." }
     },
 
     {
@@ -20686,7 +20686,7 @@
       related: [],
       example: {"text":"Ping command uses ICMP Echo Request and Echo Reply messages."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "ICMP", explanation: "네트워크 통신 계층 3계층인 IP망 상에서 데이터 수발신 도중 에러가 나 유실되었을 때 관련 오류 피드백 메타데이터를 전송하거나, 상대 컴퓨터 단말이 현재 작동 중인지 확인(예: ping 진단)하기 위한 패킷 진단을 교환하는 보조 네트워크 제어 프로토콜입니다." }
     },
 
     {
@@ -20711,7 +20711,7 @@
       related: ["asymmetric_key_encryption"],
       example: {"text":"RSA keys are typically 2048 or 4096 bits long for modern secure applications."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "RSA 암호 알고리즘", explanation: "매우 거대하게 조립된 두 개의 소수값을 곱셈한 결과는 누구나 신속히 얻지만, 그 결과 정수값을 다시 원래의 소인수 두 개 구조로 쪼개어 풀어내는 '소인수분해' 연산은 수학적으로 천문학적 시간이 소요된다는 난제를 기반으로 보안을 성사시키는 대표 비대칭 암호 표준입니다." }
     },
 
     {
@@ -20736,7 +20736,7 @@
       related: [],
       example: {"text":"SHA-256 is used in Bitcoin to verify transactions and mine blocks."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "SHA-256", explanation: "입력하는 원본 파일의 텍스트 길이나 파일의 용량 크기와 전혀 상관없이, 수학적 암호 공정을 통과시켜 무조건 고정된 256비트(32바이트) 길이의 중복 위험이 극도로 희박한 고유 지문 해시 문자열 값으로 반환해 내는 크립토 단방향 해시 함수 규격입니다." }
     },
 
     {
@@ -20761,7 +20761,7 @@
       related: [],
       example: {"text":"C and C++ programs are historically susceptible to buffer overflow vulnerabilities."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "버퍼 오버플로우 취약점", explanation: "코딩 개발 단계에서 외부 입력 바이트 한계 검사를 누락해, 확보된 메모리 버퍼 용량 크기를 훨씬 능가하는 임의 데이터를 강제 밀어 넣었을 때, 경계를 넘쳐 흘러버린 데이터가 인접 프로그램 제어 스택 영역의 주소를 오염시켜 해커의 시스템 명령 강제 가동 권한을 내주는 취약성입니다." }
     },
 
     {
@@ -20786,7 +20786,7 @@
       related: ["operating_system"],
       example: {"text":"You must install the latest graphics device driver to run high-performance 3D applications."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "디바이스 드라이버", explanation: "새로이 컴퓨터 본체에 연결한 외장 그래픽 칩셋, 주변 프린터, 센서 물리 기기 장비들을 운영체제(OS)가 하드웨어 통제 언어로 바르게 소통하고 가동할 수 있도록 매개체 다리를 놔주는 주변 기기 제어용 변환 소프트웨어 모듈입니다." }
     },
 
     {
@@ -20811,7 +20811,7 @@
       related: ["operating_system"],
       example: {"text":"High-speed network cards and NVMe drives rely heavily on DMA channels."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "DMA", explanation: "네트워크 랜카드 부품이나 디바이스 기기가 메인보드 램(RAM) 영역과 대용량 데이터를 동기화 이송할 때, 매 바이트마다 CPU 하드웨어 칩셋에 인터럽트를 걸어 연산 연동을 방해하지 않고, 전용 DMA 제어 칩의 통제 하에 직접 메모리와 데이터를 소통시키는 버스 가속 기술입니다." }
     },
 
     {
@@ -20836,7 +20836,7 @@
       related: ["api"],
       example: {"text":"GraphQL enables client apps to query multiple resources in a single HTTP request."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "GraphQL", explanation: "페이스북이 고안한 클라이언트와 서버 간의 데이터 교환 인터페이스 언어로, 프론트엔드가 필요한 컬럼 정보 명세를 중괄호 쿼리 형태로 세련되게 담아 API 요청을 보내면 과잉 수집이나 부족 조회(Under-fetching) 단점 없이 정확히 원하는 모양의 데이터만 받습니다." }
     },
 
     {
@@ -20861,7 +20861,7 @@
       related: ["api"],
       example: {"text":"Unlike REST, SOAP protocols require rigid WSDL contracts."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "SOAP", explanation: "이기종 컴퓨터 시스템 간의 정형 정보 연동을 위해 기성 XML 태그 명세 포맷을 기반으로 기획된 메시지 전송 프로토콜로, 트랜잭션 완결 안전성과 내재 암호 조항(WS-Security) 규격이 몹시 엄밀하나 통신 패킷 부피가 대단히 비대하고 해독 파싱 비용이 무겁다는 특성이 있습니다." }
     },
 
     {
@@ -20886,7 +20886,7 @@
       related: ["git_version_control"],
       example: {"text":"Use `git rebase -i` to squash multiple local commits before pushing."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Git Rebase", explanation: "자식 브랜치의 코딩 변경 사항 커밋들을 정리할 때, 분기해 나왔던 이전 초기 부모 커밋(Base) 포인터 기점을 최신의 대상 브랜치 종결 커밋 뒤로 재배치함으로써, 히스토리에 잡음을 주는 지저분한 다중 병합(Merge) 흔적을 날려 선형 커밋 줄기로 정돈하는 명령어입니다." }
     },
 
     {
@@ -20911,7 +20911,7 @@
       related: ["container_runtime","containerization_technology"],
       example: {"text":"Kubernetes orchestration manages the lifecycle of pods across nodes."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Kubernetes 오케스트레이션", explanation: "수많은 물리 가상 서버들에 분산 배포된 대규모 마이크로서비스 도커 컨테이너들의 최초 빌드 전개, 트래픽 유입 부하 분산(Load Balancing), 컨테이너 오작동 시 자동 부활(Self-healing) 및 유동적인 서버 규모 오토스케일링을 관리 통제하는 컨테이너 자동 지휘 통제 플랫폼입니다." }
     },
 
     {
@@ -20936,7 +20936,7 @@
       related: ["algorithm"],
       example: {"text":"Linear search is used when the array is unsorted."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "선형 탐색 알고리즘", explanation: "나열되어 보관 중인 일련의 데이터 배열 리스트 안에서 원하는 표적 값을 색인하기 위해, 데이터 정렬 형태에 구애받지 않고 배열의 가장 최초 첫 번 노드부터 종단 끝 원소 노드 지점까지 정직하게 한 단계씩 동등 비교를 밟아 나가는 직렬식 탐색 방법(O(n))입니다." }
     },
 
     {
@@ -20961,7 +20961,7 @@
       related: [],
       example: {"text":"Earned value management showed that our project is currently behind schedule and over budget."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "획득가치 관리", explanation: "대규모 전산 시스템 개발 관리 시, 지금까지 실제 일정에 안착시켜 완결 지은 작업 진도 결과물들의 실효 가치를 통화 기준의 예산 가치(Earned Value)로 치환하고, 원래의 기획 예산(PV) 및 집행 실비(AC)와 비교하여 비용 낭비율과 기한 지체 위험을 수식 계산해 내는 프로젝트 통제 기법입니다." }
     },
 
     {
@@ -20986,7 +20986,7 @@
       related: [],
       example: {"text":"The team created a SWOT matrix to outline marketing tactics."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "SWOT 매트릭스", explanation: "기업 중장기 사업 구상이나 신규 프로젝트 착수 전 환경 정비 단계에서, 조직 내부의 강점(Strengths)과 취약점(Weaknesses) 요인을 규명하고, 기업 외부의 기회(Opportunities) 및 위협(Threats) 징후들을 2x2 매트릭스 형태로 엮어 전략안을 구상하는 전술 판독 도구입니다." }
     },
 
     {
@@ -21011,7 +21011,7 @@
       related: [],
       example: {"text":"We received sign-off from the clients after the successful system acceptance test."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "사용자 인수 테스트", explanation: "외주 정보화 개발 사업의 맨 마지막 기한 검수 단계에서, 해당 솔루션을 최종 납품받을 현업 고객사 직원이나 담당자가 직접 비즈니스 실무 현장의 가동 시나리오로 기기가 에러 없이 잘 작동하는지 꼼꼼하게 다뤄보고 합격 싸인을 내려 검수하는 단계(UAT)입니다." }
     },
 
     {
@@ -21036,7 +21036,7 @@
       related: ["database"],
       example: {"sql":"First normal form requires that all attributes contain atomic values."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "데이터베이스 정규화", explanation: "데이터베이스 스키마 설계 과정에서, 한 테이블에 복합 정보 속성들이 난립해 초래되는 데이터 갱신 왜곡(Anomaly)을 타파하고자, 일련의 정형화된 수학적 단계(1NF, 2NF, 3NF, BCNF 등) 기준에 입각하여 테이블 간 의존 관계를 규명하고 테이블을 상세 세분화하는 논리 기법입니다." }
     },
 
     {
@@ -21061,7 +21061,7 @@
       related: ["database","database_normalization"],
       example: {"sql":"We used denormalization by storing product_name directly in the sales table to avoid joins."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "데이터베이스 역정규화", explanation: "테이블을 정교하게 쪼갠 정규화 설계 탓에 조회 쿼리 시 무수한 테이블 JOIN 낭비로 통계 수집 성능이 크게 후퇴할 때, 오직 읽기 가속화와 처리 응답 단축을 기하기 위해 테이블 구조를 일부러 융합하거나 고의로 중복 컬럼 데이터를 기입해 타협하는 물리 튜닝 기술입니다." }
     },
 
     {
@@ -21086,7 +21086,7 @@
       related: ["database"],
       example: {"text":"A standard backup strategy involves a weekly full backup and daily incremental backups."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "데이터베이스 백업 전략", explanation: "데이터 센터 화재 등 물리적 파괴에 대응하기 위해 데이터를 백업 보존하는 조치로, 주기적인 전체 풀(Full) 복제와 그 사이 일정 시간 변동분만 백업하는 증분(Incremental) 혹은 차분(Differential) 백업 설정을 잘 버무려 복구 목표 시간(RTO)과 손실 범위를 사수하는 관리 전략입니다." }
     },
 
     {
@@ -21111,7 +21111,7 @@
       related: ["java_optional_class"],
       example: {"text":"Using Java 8 Optional can help developers avoid NullPointerException."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "NullPointerException", explanation: "자바 런타임 구동 과정에서 가장 허다하게 출몰하는 예외 에러로, 인스턴스 래핑 참조 변수가 어떤 메모리 실체 주소도 가리키지 않는 텅 빈 널(null) 상태인 상태에서, 강제로 해당 참조 변수 뒤에 닷(`.`)을 찍어 하위 멤버 필드를 부르거나 메서드 기동을 시도했을 때 발생합니다." }
     },
 
     {
@@ -21136,7 +21136,7 @@
       related: ["python_magic_methods"],
       example: {"python":"class Dog:\n    def __init__(self, name):\n        self.name = name"},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Python __init__ 메서드", explanation: "파이썬으로 구현한 특정 클래스 구조로 신규 실체 객체 인스턴스를 생성 소환하는 바로 그 첫 시점에, 자동으로 실행되는 특수 Dunder 매직 메서드로, 인스턴스 객체가 지닐 내부 변수 필드들의 최초 초깃값과 상태 속성을 정의 배정해 주는 역할을 담당합니다." }
     },
 
     {
@@ -21161,7 +21161,7 @@
       related: [],
       example: {"text":"ARP request is broadcasted to all machines in the local LAN."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "ARP", explanation: "동일한 로컬 네트워크 LAN 선 구간 안에서 물리적 프레임 패킷을 상대 단말에 올바르게 송신하기 위해, 상대방 컴퓨터의 논리적 3계층 IP 주소 정보를 수신해 이와 대칭되는 랜카드의 고유 물리 2계층 MAC 주소 정보로 유연하게 변환 번역해 오는 주소 해결 프로토콜 규격입니다." }
     },
 
     {
@@ -21186,7 +21186,7 @@
       related: [],
       example: {"text":"Adding unique anti-CSRF tokens to form submissions mitigates CSRF attacks."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "CSRF", explanation: "유저가 이미 신뢰하는 금융 등의 웹 사이트에 안전하게 로그인되어 있는 세션 권한 유효 상태를 틈타, 해커가 주입한 비공식 피싱 페이지나 악성 링크 접근을 통해 브라우저가 사용자 모르게 대상 서버로 부당 승인 요청이나 강제 이체 HTTP 요청 등을 자동 위조 발송하게 하는 세션 공격 기법입니다." }
     },
 
     {
@@ -21211,7 +21211,7 @@
       related: [],
       example: {"text":"A DoS attack flooded our web server, causing CPU utilization to reach 100%."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "DoS 공격", explanation: "대상 기업의 운영 웹 서버나 관문 라우터의 트래픽 한계 대역폭을 마비시킬 의도로, 공격 컴퓨터가 의미 없는 바이트 패킷이나 부당 접속 신호를 폭발적으로 퍼부어 대상 서버의 CPU와 주기억 장치 메모리 리소스를 가동 정지 상태로 완전 소모시키는 가용성 침해 공격입니다." }
     },
 
     {
@@ -21236,7 +21236,7 @@
       related: [],
       example: {"text":"Public unprotected Wi-Fi access points are common vectors for man-in-the-middle attacks."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "중간자 공격", explanation: "통신을 전개 중인 두 장비 간의 통신 선로나 전송 라우팅 노드 도중에 해커가 투명하게 끼어들어, 양측이 주고받는 크레덴셜이나 패킷 대화 텍스트 내용을 몰래 감청 복사해 가거나 암호문을 중간에서 가짜 키로 개조해 전달하여 직통 보안 통신을 맺고 있는 것처럼 상대를 속이는 기만 도청 수법입니다." }
     },
 
     {
@@ -21261,7 +21261,7 @@
       related: ["operating_system"],
       example: {"text":"Keystrokes trigger an interrupt handling routine to process inputs immediately."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "인터럽트 처리", explanation: "중앙처리장치(CPU) 하드웨어가 현재 처리 중이던 코딩 명령 실행을 잠시 보류하고, 외부 기기 등에서 돌발 유입된 긴급 하드웨어 상태 변화 요구(마우스 클릭 등)나 치명적 에러 통보를 최우선으로 수용하여 운영체제가 사전에 등록해 둔 비상 대응 코드(Interrupt Service Routine) 부서로 점프해 즉시 우선 처리 조치한 뒤 복귀하는 연산 제어 방식입니다." }
     },
 
     {
@@ -21286,7 +21286,7 @@
       related: ["operating_system"],
       example: {"text":"L1 cache is the fastest but smallest part of the cache memory hierarchy."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "캐시 메모리 계층", explanation: "엄청난 수리 계산 속도를 소유한 내부 CPU 칩셋과 이에 비해 물리적으로 작동 속도가 뒤지는 메인보드 주기억 RAM 칩셋 간의 입출력 속도 불일치 병목을 보완하고자, CPU 코어 내부 메모리 근처에 매우 빠르고 비싼 SRAM 반도체 소자를 L1, L2, L3 단계 계층 구조로 배치해 운영하는 구조입니다." }
     },
 
     {
@@ -21311,7 +21311,7 @@
       related: [],
       example: {"text":"We set up a cloud-based WAF to mitigate layer 7 DDoS attacks."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "웹 애플리케이션 방화벽", explanation: "일반 포트만 열고 닫는 저수준의 기성 네트워크 방화벽 설비와 달리, 7계층 응용 웹 데이터 프로토콜인 HTTP/HTTPS 페이로드 패킷 문맥을 안쪽까지 투명하게 검사하여 SQL 인젝션 공격 흔적이나 XSS 유해 문자 패턴이 검침되는 악성 세션 세력을 사전에 탐지 및 강제 폐쇄하는 WAF 장비입니다." }
     },
 
     {
@@ -21336,7 +21336,7 @@
       related: ["cross_site_scripting_defense"],
       example: {"text":"Adding a Content-Security-Policy header blocks execution of unauthorized inline scripts."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "콘텐츠 보안 정책 헤더", explanation: "XSS 스크립트 강제 삽입 공격의 해를 격퇴하기 위해 웹 서버 측에서 클라이언트 브라우저로 발송하는 HTTP 응답 헤더 사양으로, 브라우저가 해당 웹페이지를 그릴 때 외부에서 안전하게 연동해 다운로드해도 좋은 공식 화이트리스트 도메인 신뢰 주소 구역들만을 선언해 명시해 줍니다." }
     },
 
     {
@@ -21361,7 +21361,7 @@
       related: ["continuous_integration_pipeline"],
       example: {"text":"A continuous delivery pipeline ensures our software is always ready to release to clients."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "지속적 제공 파이프라인", explanation: "자동 빌드 및 테스트 통과 단계(CI)를 통과하여 유효성이 철저히 규명 완료된 최신 릴리스용 코드 패키지 산출물을, 실 운영망과 판박이인 가상 스테이징 배포 서버망 환경까지 관리자 수동 조작 개입 없이 즉각 자동 배포 완료하여, 배포 담당자의 단 한 번의 승인 클릭만으로 본 배포 롤아웃이 가능하도록 돕는 자동화망입니다." }
     },
 
     {
@@ -21386,7 +21386,7 @@
       related: ["unit_testing_framework"],
       example: {"text":"Following TDD helps developers design cleaner APIs."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "테스트 주도 개발", explanation: "실제 비즈니스 기능을 탑재할 소스코드 코딩에 돌입하기 전, 해당 명세 조건이 참인지를 판가름하고 우선은 무조건 실패할 자동화 테스트 케이스 코드를 미리 써 둔 다음, 이 테스트 통과 기준만을 간신히 달성할 최소한의 뼈대 소스코드를 구현하고 최후에 리팩토링으로 깔끔하게 매만지는 순환형 개발 기법입니다." }
     },
 
     {
@@ -21411,7 +21411,7 @@
       related: ["test_driven_development"],
       example: {"text":"Cucumber is a famous BDD framework using Gherkin syntax."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "행동 주도 개발", explanation: "TDD 개발이 너무 복잡한 소스코드 위주로 전개되어 현업 실무진과의 소통이 단절되는 단점을 메우고자, 프로젝트 기획자, 개발자, 품질 검증팀(QA)이 상호 공유하도록 자연어와 유사한 정형화된 시나리오 문장 규격(Given-When-Then) 형태로 비즈니스 요구 행동을 선언하여 테스트를 설계하는 기법입니다." }
     },
 
     {
@@ -21436,7 +21436,7 @@
       related: [],
       example: {"text":"A hybrid cloud deployment model combines public cloud resources with private on-premise servers."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "클라우드 배포 모델", explanation: "클라우드 서비스 데이터 센터 인프라 자원의 공급 및 소유 경계 배치 형식을 이르는 말로, 일반 다수가 공동 임차해 요금을 내고 사용하는 퍼블릭(Public), 한 기업이 사내 전용 폐쇄 용도로 독점 가동하는 프라이빗(Private), 그리고 필요에 따라 둘을 상호 융합 연계한 하이브리드(Hybrid) 등의 모델이 존재합니다." }
     },
 
     {
@@ -21461,7 +21461,7 @@
       related: ["continuous_integration_pipeline"],
       example: {"text":"Automating tests is crucial at the testing stage of the DevOps lifecycle."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "DevOps 라이프사이클", explanation: "소프트웨어의 개발 기획(Plan), 코딩(Code), 빌드(Build), 테스트(Test)의 개발(Dev) 전반부 활동과, 최종 제품의 패키지 릴리스(Release), 운영서버 배포(Deploy), 운영 관리(Operate), 실시간 감시(Monitor)의 운영(Ops) 단계를 끊김 없이 둥글게 상호 순환 전개하는 지속적 수명 주기 루프 프로세스입니다." }
     },
 
     {
@@ -21486,7 +21486,7 @@
       related: [],
       example: {"text":"We routed 5% of web traffic to the canary deployment to verify there were no memory leaks."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "카나리아 배포", explanation: "신규 개발된 시스템 버전 업그레이드 산출물을 본 서버망 전체에 일시에 릴리스하지 않고, 위험을 통제하기 위해 전체 유입 고객 트래픽의 오직 1~5% 남짓 수준의 소수 서버 영역에만 우선 제한 배포한 뒤, 주요 오류나 지표 모니터링을 관찰하여 안전함이 증명되면 비로소 대세를 단계별 확대 배포하는 안전 릴리스 기법입니다." }
     },
 
     {
@@ -21511,7 +21511,7 @@
       related: ["algorithm"],
       example: {"text":"A binary search tree is a sorted binary tree structure."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "이진 트리 구조", explanation: "노드들이 나뭇가지 형태로 연결된 비선형 트리 데이터 구획 양식 중 하나로, 임의 부모 노드 하나당 하부에 연결되어 뻗어 나가는 자식 형태 노드 개수가 무조건 좌측 자식 하나, 우측 자식 하나 등 최대 2개 이하의 개수로 제한되도록 통제해 구성한 기초 구조입니다." }
     },
 
     {
@@ -21536,7 +21536,7 @@
       related: [],
       example: {"text":"Supervised and unsupervised learning are the main paradigms in machine learning basics."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "머신러닝 기초", explanation: "인공지능의 하부 도메인으로, 프로그램 작성 시 개발자가 특정 업무 결과 판별용 if-else 조건 분기문을 수작업으로 일일이 코딩해 탑재하지 않고, 대량의 훈련용 데이터 목록을 알고리즘 연산에 주입하여 컴퓨터 스스로 최적의 패턴과 분류 가중치를 터득하게 이끄는 학습 사상입니다." }
     },
 
     {
@@ -21561,7 +21561,7 @@
       related: ["machine_learning_basics"],
       example: {"text":"Modern artificial intelligence concepts include natural language processing and computer vision."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "인공지능 개념", explanation: "인간이 지닌 고유의 이성적 추론 능력, 고차원적 언어 해독력, 사물 패턴 지각 능력 및 창의적인 상황 문제 해결 단계 등의 지적인 행동 규격을 모방하여, 가상의 컴퓨터 장치나 소프트웨어 연산 엔진 상부에서 흡사한 판단 형태로 구현·재현해 내고자 연구하는 넓은 컴퓨터 과학 분야입니다." }
     },
     {
       id: "agile_manifesto",
@@ -21585,7 +21585,7 @@
       related: [],
       example: {"text":"The Agile Manifesto prioritizes individuals and interactions over processes and tools."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "애자일 선언문", explanation: "애자일 소프트웨어 개발의 핵심 가치와 12가지 원칙을 정의한 공식 선언문입니다." }
     },
     {
       id: "information_technology_infrastructure_library",
@@ -21609,7 +21609,7 @@
       related: [],
       example: {"text":"ITIL version 4 shifts the focus toward value co-creation."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "ITIL", explanation: "IT 서비스 관리(ITSM)의 모범 사례를 정리하여 비즈니스의 요구사항에 IT 서비스를 정렬하는 데 중점을 둔 업계 표준 프레임워크입니다." }
     },
     {
       id: "service_desk",
@@ -21633,7 +21633,7 @@
       related: ["information_technology_infrastructure_library"],
       example: {"text":"Our service desk resolves 80% of network connectivity issues on the first call."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "서비스 데스크", explanation: "IT 서비스 제공자와 사용자 간의 단일 접점(SPOC)으로, 일상적인 활동, 인시던트 처리, 서비스 요청 등을 담당합니다." }
     },
     {
       id: "critical_path_analysis",
@@ -21657,7 +21657,7 @@
       related: [],
       example: {"text":"Critical path analysis revealed that testing delay will push back our product release by two weeks."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "임계 경로 분석", explanation: "프로젝트 진행 과정에서 지연 시 전체 납기에 직접적인 영향을 주는 가장 긴 경로를 찾아내고 분석하는 관리 기법입니다." }
     },
     {
       id: "project_risk_register",
@@ -21681,7 +21681,7 @@
       related: [],
       example: {"text":"We updated the project risk register when the key software component failed the performance test."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "프로젝트 리스크 대장", explanation: "프로젝트 수행 중 발생할 수 있는 리스크, 영향도, 대응 계획, 리스크 담당자를 기록하고 관리하는 마스터 문서입니다." }
     },
     {
       id: "gantt_chart_tool",
@@ -21705,7 +21705,7 @@
       related: ["critical_path_analysis"],
       example: {"text":"The project manager shared the Gantt chart tool link so that the stakeholders can view milestones."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "간트 차트 도구", explanation: "프로젝트의 작업, 작업 간 상호 의존성, 일정 및 진행 상황을 타임라인을 따라 시각적으로 보여주는 계획 관리 도구입니다." }
     },
     {
       id: "optimistic_concurrency_control",
@@ -21729,7 +21729,7 @@
       related: [],
       example: {"sql":"Optimistic locking in application code is often implemented using a version integer column."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "낙관적 동시성 제어", explanation: "데이터 충돌이 자주 발생하지 않는다고 가정하고, 데이터를 읽고 쓸 때 잠금을 걸지 않으며 커밋 시점에 버전 관리 등으로 충돌 여부를 확인하는 제어 방식입니다." }
     },
     {
       id: "pessimistic_concurrency_control",
@@ -21753,7 +21753,7 @@
       related: ["optimistic_concurrency_control"],
       example: {"sql":"SELECT ... FOR UPDATE is a classic implementation of pessimistic locking in SQL."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "비관적 동시성 제어", explanation: "데이터 충돌이 빈번하게 발생한다고 가정하여, 데이터에 액세스하기 전에 독점 잠금을 획득함으로써 다른 트랜잭션의 접근을 차단하는 제어 방식입니다." }
     },
     {
       id: "read_write_splitting",
@@ -21777,7 +21777,7 @@
       related: [],
       example: {"text":"Read-write splitting protects the primary database server from being overwhelmed by reporting queries."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "읽기/쓰기 분리", explanation: "데이터베이스의 쓰기 작업은 마스터(Primary) 인스턴스로 보내고, 읽기 쿼리는 여러 레플리카(Replica) 인스턴스로 분산시켜 처리 능력을 향상시키는 설계입니다." }
     },
     {
       id: "concurrency_anomaly_lost_update",
@@ -21801,7 +21801,7 @@
       related: ["pessimistic_concurrency_control","optimistic_concurrency_control"],
       example: {"sql":"Using the Repeatable Read isolation level prevents certain lost update anomalies."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "갱신 손실 이상", explanation: "두 개의 트랜잭션이 동일한 데이터를 읽고 수정하여 순차적으로 커밋할 때, 나중에 커밋된 트랜잭션이 먼저 완료된 트랜잭션의 수정 사항을 덮어써서 유실시키는 동시성 이상 현상입니다." }
     },
     {
       id: "concurrency_anomaly_dirty_write",
@@ -21825,7 +21825,7 @@
       related: ["concurrency_anomaly_lost_update"],
       example: {"sql":"Almost all database engines enforce dirty write prevention by holding write locks until transaction completion."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "더티 쓰기 이상", explanation: "아직 커밋되지 않은 트랜잭션이 쓴 값을 다른 활성 트랜잭션이 덮어써 버려 데이터 불일치가 발생하는 가장 심각한 동시성 이상 현상입니다." }
     },
     {
       id: "database_savepoint",
@@ -21849,7 +21849,7 @@
       related: [],
       example: {"sql":"SAVEPOINT my_marker; ... ROLLBACK TO SAVEPOINT my_marker;"},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "데이터베이스 세이브포인트", explanation: "트랜잭션 내부에서 특정 시점에 표시를 설정하여, 오류 발생 시 전체 트랜잭션을 롤백하지 않고 해당 표시 지점까지만 부분 롤백할 수 있게 하는 기능입니다." }
     },
     {
       id: "java_lambda_expressions",
@@ -21873,7 +21873,7 @@
       related: [],
       example: {"java":"List<String> list = Arrays.asList(\"A\", \"B\");\nlist.forEach(item -> System.out.println(item));"},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Java 람다식", explanation: "Java 8에서 도입되었으며, 함수형 인터페이스를 한 줄의 간결한 코드 블록으로 표현하는 함수형 프로그래밍 핵심 기능입니다." }
     },
     {
       id: "java_synchronized_keyword",
@@ -21897,7 +21897,7 @@
       related: [],
       example: {"java":"public synchronized void increment() {\n    count++;\n}"},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Java synchronized 키워드", explanation: "동시에 단 하나의 스레드만 특정 코드 블록이나 메서드에 접근할 수 있도록 동기화하여 멀티스레드 환경에서 스레드 안전성을 보장하는 키워드입니다." }
     },
     {
       id: "java_volatile_keyword",
@@ -21921,7 +21921,7 @@
       related: ["java_synchronized_keyword"],
       example: {"java":"private volatile boolean running = true;"},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Java volatile 키워드", explanation: "변수 값을 모든 스레드가 참조하는 메인 메모리에 직접 저장하도록 지시하여 메모리 가시성을 보장하고 명령어 재정렬을 방지하는 키워드입니다." }
     },
     {
       id: "java_concurrency_utilities",
@@ -21945,7 +21945,7 @@
       related: [],
       example: {"java":"ExecutorService executor = Executors.newFixedThreadPool(10);"},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Java 동시성 유틸리티", explanation: "java.util.concurrent 패키지(JUC)를 통해 제공되며 스레드 풀, 세마포어, 락 프레임워크 및 동시성 컬렉션 등 고성능 병렬 처리를 지원하는 도구 라이브러리입니다." }
     },
     {
       id: "java_garbage_collection_cms",
@@ -21969,7 +21969,7 @@
       related: [],
       example: {"text":"CMS garbage collector is deprecated in modern JDKs, replaced by G1 and ZGC."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "CMS 가비지 컬렉터", explanation: "JVM 가비지 컬렉터 중 하나로, 대부분의 수집 작업을 애플리케이션 스레드와 병렬로 수행하여 가비지 컬렉션으로 인한 일시 정지(Stop-The-World) 시간을 최소화하는 방식입니다." }
     },
     {
       id: "python_generators",
@@ -21993,7 +21993,7 @@
       related: [],
       example: {"python":"def count_up_to(x):\n    n = 1\n    while n <= x:\n        yield n\n        n += 1"},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Python 제네레이터", explanation: "yield 키워드를 사용하여 값을 한 번에 하나씩 필요할 때 동적으로 생성(지연 평가)하는 단순하고 강력한 이터레이터 생성 도구입니다." }
     },
     {
       id: "python_decorators",
@@ -22017,7 +22017,7 @@
       related: [],
       example: {"python":"def log_call(func):\n    def wrapper(*args, **kwargs):\n        print('Calling', func.__name__)\n        return func(*args, **kwargs)\n    return wrapper"},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Python 데코레이터", explanation: "기존 객체나 함수의 소스코드를 직접 수정하지 않고, 그 전후에 새로운 기능을 동적으로 추가하거나 확장할 수 있도록 지원하는 메타프로그래밍 문법입니다." }
     },
     {
       id: "python_set_comprehension",
@@ -22041,7 +22041,7 @@
       related: [],
       example: {"python":"squares_set = {x**2 for x in [1, 2, 2, 3]}"},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Python 집합 컴프리헨션", explanation: "중괄호 {}와 반복문을 사용하여 기존 반복 가능 객체(iterable)로부터 중복이 없는 새로운 집합(Set)을 쉽고 간결하게 생성하는 구문입니다." }
     },
     {
       id: "python_args_kwargs",
@@ -22065,7 +22065,7 @@
       related: [],
       example: {"python":"def show(*args, **kwargs):\n    print(args, kwargs)"},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "*args 및 **kwargs 매개변수", explanation: "Python 함수 정의 시 임의의 개수의 위치 인자(*args)와 키워드 인자(**kwargs)를 튜플과 딕셔너리 형태로 동적으로 전달받을 수 있게 하는 특수 구문입니다." }
     },
     {
       id: "python_iterators",
@@ -22089,7 +22089,7 @@
       related: ["python_generators"],
       example: {"python":"my_iter = iter([1, 2])\nprint(next(my_iter))"},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Python 이터레이터", explanation: "데이터 스트림을 나타내는 객체로, __next__() 메서드를 구현하여 next() 호출 시 요소를 순차적으로 반환하고 모든 요소 순회가 끝나면 StopIteration 예외를 발생시킵니다." }
     },
     {
       id: "network_address_port_translation",
@@ -22113,7 +22113,7 @@
       related: [],
       example: {"text":"Home routers use NAPT to share a single ISP internet connection among multiple devices."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "NAPT", explanation: "여러 개의 사설 IP 주소를 단일 포트 번호를 사용하여 단일 공인 IP 주소에 1:N으로 대응시켜 외부 네트워크와 통신할 수 있게 하는 네트워크 주소 변환 기술입니다." }
     },
     {
       id: "transmission_control_protocol_three_way_handshake",
@@ -22137,7 +22137,7 @@
       related: [],
       example: {"text":"A TCP three-way handshake establishes sequential tracking numbers for both ends."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "TCP 3-way 핸드셰이크", explanation: "TCP/IP 네트워크에서 클라이언트와 서버 간의 안정적인 연결을 수립하기 위해 SYN, SYN-ACK, ACK 패킷을 교환하는 3단계 통신 프로세스입니다." }
     },
     {
       id: "transmission_control_protocol_four_way_teardown",
@@ -22161,7 +22161,7 @@
       related: ["transmission_control_protocol_three_way_handshake"],
       example: {"text":"TCP four-way teardown requires a TIME-WAIT state to ensure all stray packets are discarded."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "TCP 4-way 핸드셰이크", explanation: "TCP 연결을 안전하게 해제하고 종료하기 위해 클라이언트와 서버 간에 네 개의 패킷(FIN, ACK, FIN, ACK)을 주고받는 프로세스입니다." }
     },
     {
       id: "domain_name_system_sec",
@@ -22185,7 +22185,7 @@
       related: [],
       example: {"text":"Deploying DNSSEC helps mitigate DNS cache poisoning attacks."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "DNSSEC", explanation: "도메인 네임 시스템(DNS)에서 제공되는 정보의 도메인 이름 확인 및 위변조 방지를 위해 디지털 서명을 추가한 보안 확장 사양입니다." }
     },
     {
       id: "network_packet_loss",
@@ -22209,7 +22209,7 @@
       related: [],
       example: {"text":"High network packet loss causes audio dropouts during VoIP calls."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "네트워크 패킷 손실", explanation: "네트워크를 통해 전송된 하나 이상의 데이터 패킷이 네트워크 혼잡, 오류 등으로 인해 목적지에 도달하지 못하고 유실되는 현상입니다." }
     },
     {
       id: "network_latency_delay",
@@ -22233,7 +22233,7 @@
       related: ["network_packet_loss"],
       example: {"text":"Online gaming requires low network latency delay for optimal responsiveness."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "네트워크 대기 시간", explanation: "송신자가 데이터 전송을 요청한 시점부터 수신자가 그 데이터를 받기 시작할 때까지 걸리는 통신 지연 시간입니다." }
     },
     {
       id: "subnet_mask_notation",
@@ -22257,7 +22257,7 @@
       related: [],
       example: {"text":"The subnet mask notation 255.255.255.0 corresponds to a /24 prefix."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "서브넷 마스크 표기법", explanation: "IP 주소를 네트워크 주소와 호스트 주소 부분으로 분할하기 위해 사용하는 32비트 숫자 표기법으로, 주로 CIDR(/24)이나 점으로 구분된 십진수로 표현합니다." }
     },
     {
       id: "ping_utility_tool",
@@ -22281,7 +22281,7 @@
       related: ["network_latency_delay"],
       example: {"text":"We used the ping utility tool to diagnose whether the router was online."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "ping 유틸리티 도구", explanation: "ICMP 프로토콜을 기반으로 호스트의 네트워크 도달 가능 여부를 진단하고 왕복 시간(RTT)을 측정하는 가장 기본적인 네트워크 관리 도구입니다." }
     },
     {
       id: "traceroute_diagnostic_tool",
@@ -22305,7 +22305,7 @@
       related: ["ping_utility_tool"],
       example: {"text":"Running the traceroute diagnostic tool showed where the packet was being dropped."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "traceroute 경로 추적 도구", explanation: "데이터 패킷이 대상 IP 주소까지 도달하는 전체 경로를 추적하고 각 홉(hop) 간의 전송 지연 시간을 측정하여 시각화하는 진단 도구입니다." }
     },
     {
       id: "address_resolution_protocol_cache",
@@ -22329,7 +22329,7 @@
       related: [],
       example: {"text":"We cleared the ARP cache on the server after replacing the network interface card."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "ARP 캐시", explanation: "메모리의 캐시 영역에 일시 저장되는 IP 주소와 MAC 주소 간의 대응 테이블로, 동일한 IP의 주소 변환 요청 시 네트워크 쿼리를 생략하여 통신을 가속화합니다." }
     },
     {
       id: "zero_trust_security_model",
@@ -22353,7 +22353,7 @@
       related: [],
       example: {"text":"Implementing a zero trust security model requires multi-factor authentication and strict access controls."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "제로 트러스트 보안 모델", explanation: "아무것도 신뢰하지 않고 항상 검증한다는 원칙 하에, 사용자와 기기의 물리적 위치에 관계없이 모든 접근 요청에 대해 엄격한 신원 검증을 요구하는 보안 아키텍처입니다." }
     },
     {
       id: "ransomware_malware",
@@ -22377,7 +22377,7 @@
       related: [],
       example: {"text":"Regular offline backups are the best defense against ransomware malware outbreaks."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "랜섬웨어", explanation: "사용자의 컴퓨터 시스템이나 파일들을 암호화하여 접근할 수 없게 잠근 후, 이를 해제해 주는 대가로 금전(몸값)을 요구하는 악성 소프트웨어입니다." }
     },
     {
       id: "phishing_scam",
@@ -22401,7 +22401,7 @@
       related: ["social_engineering_attack"],
       example: {"text":"The phishing scam email looked exactly like a official update notice from the bank."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "피싱 사기", explanation: "신뢰할 수 있는 기관(은행 등)을 사칭한 이메일이나 가짜 웹사이트를 이용해 사용자가 비밀번호, 신용카드 정보 등 민감한 개인정보를 입력하도록 유도하는 사회공학적 공격입니다." }
     },
     {
       id: "social_engineering_attack",
@@ -22425,7 +22425,7 @@
       related: ["phishing_scam"],
       example: {"text":"Social engineering attacks, like shoulder surfing, bypass highly secure firewalls by targeting humans."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "사회공학적 공격", explanation: "기술적 침입보다는 사람의 심리적 취약성, 실수, 호기심 등을 이용해 기밀 정보나 시스템 접근 암호를 기만적으로 얻어내는 비기술적 공격 수단입니다." }
     },
     {
       id: "cross_site_scripting_attack",
@@ -22449,7 +22449,7 @@
       related: [],
       example: {"text":"Cross-site scripting attacks can be prevented by converting output characters into HTML entities."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "크로스 사이트 스크립팅 공격", explanation: "웹 애플리케이션 보안 취약점의 하나로, 공격자가 취약한 웹사이트에 악성 스크립트를 삽입하여 이를 조회하는 다른 사용자의 브라우저에서 실행되도록 하는 공격(XSS)입니다." }
     },
     {
       id: "advanced_persistent_threat",
@@ -22473,7 +22473,7 @@
       related: ["zero_trust_security_model"],
       example: {"text":"Government organizations are primary targets for state-sponsored advanced persistent threats."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "지능형 지속 위협", explanation: "특정 조직을 대상으로 정교한 수단을 동원해 장기간 감지되지 않은 채 시스템에 침투해 정보를 유출하거나 파괴하는 고도화된 타겟형 사이버 공격(APT)입니다." }
     },
     {
       id: "virtual_memory_paging",
@@ -22497,7 +22497,7 @@
       related: [],
       example: {"text":"Virtual memory paging allows running large applications even on systems with limited physical RAM."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "가상 메모리 페이징", explanation: "컴퓨터의 운영체제가 보조 기억 장치를 주 기억 장치처럼 활용할 수 있도록 가상 주소 공간과 물리 메모리를 고정된 크기의 블록(페이지) 단위로 나누어 관리하는 메모리 관리 방식입니다." }
     },
     {
       id: "page_fault_exception",
@@ -22521,7 +22521,7 @@
       related: ["virtual_memory_paging"],
       example: {"text":"A high rate of page fault exceptions can lead to thrashing, drastically slowing down the OS."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "페이지 폴트 예외", explanation: "프로그램이 액세스하려는 가상 메모리 페이지가 물리 메모리(RAM)에 로드되어 있지 않을 때 메모리 관리 장치(MMU)에 의해 발생하여 OS가 하드디스크에서 이를 불러오도록 하는 하드웨어 인터럽트입니다." }
     },
     {
       id: "operating_system_scheduler",
@@ -22545,7 +22545,7 @@
       related: [],
       example: {"text":"The operating system scheduler ensures fair sharing of CPU time among running applications."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "운영체제 스케줄러", explanation: "CPU 리소스를 효율적으로 분배하기 위해 준비 큐에 있는 대기 프로세스나 스레드 중 다음에 실행할 작업을 특정 알고리즘에 따라 선택하고 제어하는 OS의 핵심 구성요소입니다." }
     },
     {
       id: "context_switching_overhead",
@@ -22569,7 +22569,7 @@
       related: ["operating_system_scheduler"],
       example: {"text":"Having too many active threads causes high context switching overhead, degrading overall performance."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "문맥 교환 오버헤드", explanation: "다중 작업 시스템에서 CPU가 현재 실행 중인 프로세스의 레지스터 상태를 저장하고 다른 프로세스의 상태를 복원하는 과정에서 소모되는 처리 시간 및 비정상적인 컴퓨팅 자원 낭비입니다." }
     },
     {
       id: "cors_mechanism",
@@ -22593,7 +22593,7 @@
       related: [],
       example: {"text":"Our API server rejects requests from local web apps unless we configure CORS headers properly."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "CORS 메커니즘", explanation: "HTTP 헤더를 전송하여 한 도메인의 프론트엔드 JavaScript 코드가 다른 도메인의 자원에 접근할 수 있도록 보안 규칙을 정의하고 통제하는 브라우저 보안 공유 사양입니다." }
     },
     {
       id: "websocket_protocol",
@@ -22617,7 +22617,7 @@
       related: [],
       example: {"text":"Chat applications utilize the WebSocket protocol to deliver messages with sub-millisecond delay."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "WebSocket 프로토콜", explanation: "단일 TCP 연결을 통해 클라이언트와 서버 간에 실시간, 양방향, 전이중 통신 채널을 수립할 수 있도록 지원하는 애플리케이션 레이어 통신 규격입니다." }
     },
     {
       id: "server_sent_events",
@@ -22641,7 +22641,7 @@
       related: ["websocket_protocol"],
       example: {"text":"For dashboard graphs updating once per minute, server-sent events are simpler to deploy than WebSockets."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Server-Sent Events", explanation: "서버가 표준 HTTP 연결을 사용하여 웹 브라우저로 실시간 텍스트 데이터를 단방향으로 푸시 전송할 수 있게 하는 서버 푸시 기술(SSE)입니다." }
     },
     {
       id: "git_stash_command",
@@ -22665,7 +22665,7 @@
       related: [],
       example: {"git":"git stash save 'WIP details'; git checkout master;"},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "git stash 명령", explanation: "현재 작업 디렉토리의 커밋되지 않은 중간 변경 사항들을 별도의 안전한 보관소에 일시적으로 저장(stash)하여 작업 트리를 깨끗하게 비우고 다른 브랜치 작업을 처리할 수 있게 돕는 Git 명령입니다." }
     },
     {
       id: "git_reflog_history",
@@ -22689,7 +22689,7 @@
       related: ["git_stash_command"],
       example: {"git":"If you lose a commit during a bad rebase, use git reflog to find its SHA-1 hash."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "git reflog 이력", explanation: "로컬 저장소에서 HEAD 포인터와 브랜치 참조가 변경된 모든 이력(커밋, 체크아웃, 재설정 등)을 순차적으로 기록하여 복구를 돕는 참조 로그 매커니즘입니다." }
     },
     {
       id: "integration_testing_stage",
@@ -22713,7 +22713,7 @@
       related: [],
       example: {"text":"Integration testing stage reveals interface mismatches between the database service and the backend."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "통합 테스트 단계", explanation: "개별적으로 단위 테스트를 마친 모듈들을 조합하여 이들이 유기적으로 상호작용하고 데이터가 올바르게 전달되는지 검증하는 소프트웨어 테스트 단계입니다." }
     },
     {
       id: "regression_testing_stage",
@@ -22737,7 +22737,7 @@
       related: ["integration_testing_stage"],
       example: {"text":"Automated test suites are highly effective for running repetitive tests in the regression testing stage."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "회귀 테스트 단계", explanation: "소프트웨어 변경(오류 수정 또는 기능 추가)이 도입된 후, 기존 기능들이 문제없이 여전히 잘 동작하는지 확인하기 위해 이미 통과한 테스트 케이스를 재실행하는 테스트 단계입니다." }
     },
     {
       id: "git_squash_commit",
@@ -22761,7 +22761,7 @@
       related: ["git_reflog_history"],
       example: {"git":"We perform a git squash commit during pull request merges to keep a clean commit history."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "git squash 커밋", explanation: "브랜치를 병합하기 전에 로컬의 자잘한 커밋 내역 여러 개를 깔끔하게 하나의 단일 커밋으로 합쳐서 Git 커밋 이력을 단순화하고 정돈하는 작업입니다." }
     },
     {
       id: "copyright_protection",
@@ -22785,7 +22785,7 @@
       related: [],
       example: {"text":"Software code is protected by copyright protection immediately upon its creation."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "저작권 보호", explanation: "문학, 예술, 학술 및 컴퓨터 소프트웨어 등 독창적인 저작물 창작자에게 독점적인 복제, 배포 권한을 법적으로 보장하는 지식재산권 보호 제도입니다." }
     },
     {
       id: "patent_right",
@@ -22809,7 +22809,7 @@
       related: ["copyright_protection"],
       example: {"text":"Our technology team filed a patent right application for the new database query optimizer."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "특허권", explanation: "발명가가 개발한 기술적 발명을 보호하고 장려하기 위해, 정부 기관에 출원 및 등록을 마친 후 일정 기간 그 발명을 독점적·배타적으로 사용할 수 있게 보장하는 권리입니다." }
     },
     {
       id: "unfair_competition_prevention_act",
@@ -22833,7 +22833,7 @@
       related: ["patent_right"],
       example: {"text":"Under the Unfair Competition Prevention Act, stealing a competitor's customer list is illegal."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "부정경쟁방지법", explanation: "사업자 간의 공정한 경쟁 질서를 확립하고 타인의 영업 비밀 유출이나 타인의 상표·브랜드를 무단 도용하는 부정경쟁 행위를 금지하여 건전한 시장 거래를 도모하는 법률입니다." }
     },
     {
       id: "product_liability_act",
@@ -22857,7 +22857,7 @@
       related: [],
       example: {"text":"The Product Liability Act applies to software when it is embedded in physical hardware like cars."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "제조물 책임법", explanation: "제조물의 결함으로 인해 소비자나 제3자가 신체적·재산적 손해를 입은 경우, 제조업체의 과실 여부와 상관없이 손해 배상 책임을 지우는 법적 제도(PL법)입니다." }
     },
     {
       id: "act_on_the_protection_of_personal_information",
@@ -22881,7 +22881,7 @@
       related: [],
       example: {"text":"Our user database updates comply with the Act on the Protection of Personal Information guidelines."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "개인정보 보호법", explanation: "개인 정보의 유용성을 고려하면서도 개인의 권리와 이익을 보호하기 위해, 개인 정보를 수집·가공·활용하는 기업 및 기관이 준수해야 할 법적 의무를 정의한 법률입니다." }
     },
     {
       id: "non_disclosure_agreement",
@@ -22905,7 +22905,7 @@
       related: ["unfair_competition_prevention_act"],
       example: {"text":"All external contractors must sign a non-disclosure agreement before accessing the codebase."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "비밀유지계약", explanation: "거래나 협력 과정에서 상대방에게 제공한 영업 비밀이나 핵심 기술 정보를 제3자에게 누설하거나 목적 외로 사용하지 않을 것을 합의하는 법적 계약(NDA)입니다." }
     },
     {
       id: "distributed_database",
@@ -22929,7 +22929,7 @@
       related: ["read_write_splitting"],
       example: {"text":"A distributed database improves fault tolerance and read access speed in local regions."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "분산 데이터베이스", explanation: "네트워크를 통해 서로 연결된 물리적으로 분산된 다수의 컴퓨터 노드에 데이터를 나누어 저장하되, 사용자에게는 하나의 통합된 데이터베이스로 인식되도록 관리하는 시스템입니다." }
     },
     {
       id: "nosql_key_value_store",
@@ -22953,7 +22953,7 @@
       related: ["distributed_database"],
       example: {"text":"NoSQL key-value stores are ideal for managing user session states and temporary caches."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "NoSQL 키-값 저장소", explanation: "가장 단순한 데이터 구조인 유일한 '키(Key)'와 그에 대응하는 '값(Value)'의 쌍으로 데이터를 빠르게 저장하고 조회할 수 있도록 최적화된 NoSQL 데이터베이스입니다." }
     },
     {
       id: "nosql_document_store",
@@ -22977,7 +22977,7 @@
       related: ["nosql_key_value_store"],
       example: {"text":"MongoDB is a widely used NoSQL document store that supports flexible schemas."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "NoSQL 문서 저장소", explanation: "데이터를 테이블의 행과 열 대신 JSON, BSON, XML 등의 유연한 반구조화된 문서(Document) 형태로 저장하고 인덱싱하는 비관계형 데이터베이스입니다." }
     },
     {
       id: "nosql_column_family_store",
@@ -23001,7 +23001,7 @@
       related: ["nosql_document_store"],
       example: {"text":"NoSQL column-family stores like Cassandra are designed to handle petabytes of structured log data."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "NoSQL 열 패밀리 저장소", explanation: "데이터를 행 단위가 아닌 열(Column) 단위의 집합으로 묶어 저장함으로써, 특정 열 데이터에 대한 대규모 집계 및 읽기/쓰기 성능을 극대화한 비관계형 데이터베이스입니다." }
     },
     {
       id: "nosql_graph_database",
@@ -23025,7 +23025,7 @@
       related: ["nosql_document_store"],
       example: {"text":"Social networks use a NoSQL graph database to trace friendships and recommend mutual connections."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "NoSQL 그래프 데이터베이스", explanation: "엔티티를 나타내는 노드(Node), 엔티티 간의 관계를 뜻하는 에지(Edge), 이들의 속성을 결합한 그래프 구조를 사용하여 복잡한 연결 관계를 처리하는 데 특화된 NoSQL 데이터베이스입니다." }
     },
     {
       id: "cap_theorem",
@@ -23049,7 +23049,7 @@
       related: ["distributed_database"],
       example: {"text":"NoSQL databases often prioritize availability and partition tolerance over immediate consistency, referencing the CAP theorem."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "CAP 정리", explanation: "분산 데이터 저장 시스템이 일관성(Consistency), 가용성(Availability), 분할 허용성(Partition Tolerance)의 세 가지 보장 중 최대 두 가지만 동시에 충족할 수 있다는 컴퓨터 과학의 정리입니다." }
     },
     {
       id: "java_weak_reference",
@@ -23073,7 +23073,7 @@
       related: ["java_concurrency_utilities"],
       example: {"java":"WeakReference<MyCache> ref = new WeakReference<>(new MyCache());"},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Java 약한 참조", explanation: "참조 대상 객체가 가비지 컬렉터(GC)에 의해 언제든지 회수될 수 있도록 허용하는 참조 유형으로, 주로 메모리 리스크가 큰 캐시 데이터 관리에 쓰입니다." }
     },
     {
       id: "java_jdbc_driver",
@@ -23097,7 +23097,7 @@
       related: ["read_write_splitting"],
       example: {"java":"Class.forName(\"com.mysql.cj.jdbc.Driver\");"},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Java JDBC 드라이버", explanation: "Java 애플리케이션이 공통된 JDBC API를 사용하여 특정 관계형 데이터베이스 엔진에 접속하고 통신할 수 있게 중간에서 중계하는 소프트웨어 구성요소입니다." }
     },
     {
       id: "java_annotation_type",
@@ -23121,7 +23121,7 @@
       related: [],
       example: {"java":"@Override\npublic String toString() { return \"Custom\"; }"},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Java 어노테이션 타입", explanation: "코드 소스 내에 덧붙여 프로그램 자체의 논리적인 흐름에는 영향을 주지 않으면서, 컴파일러나 프레임워크에 유용한 메타데이터를 제공하는 어노테이션 정의 형식입니다." }
     },
     {
       id: "java_generic_types",
@@ -23145,7 +23145,7 @@
       related: ["java_annotation_type"],
       example: {"java":"List<String> names = new ArrayList<>();"},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Java 제네릭 타입", explanation: "클래스, 인터페이스, 메서드를 정의할 때 사용할 타입을 매개변수화하여 컴파일 타임에 타입 안전성을 강력하게 검증하고 캐스팅 오류를 줄여주는 Java 기능입니다." }
     },
     {
       id: "java_marker_interface",
@@ -23169,7 +23169,7 @@
       related: ["java_generic_types"],
       example: {"java":"public class User implements java.io.Serializable {}"},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Java 마커 인터페이스", explanation: "선언된 추상 메서드나 필드가 없으며, 단지 특정 클래스가 어떤 속성이나 실행 권한을 가지고 있음을 JVM이나 컴파일러에게 표시하기 위해 사용하는 빈 인터페이스입니다." }
     },
     {
       id: "python_f_strings",
@@ -23193,7 +23193,7 @@
       related: [],
       example: {"python":"name = 'World'\nprint(f'Hello, {name}!')"},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Python f-문자열", explanation: "문자열 앞에 'f' 또는 'F' 접두사를 붙이고 중괄호 {} 안에 변수나 계산식을 입력하여 문자열 내부에서 즉시 값을 평가하고 포맷팅하는 Python 3.6 이상 사양입니다." }
     },
     {
       id: "python_list_pop",
@@ -23217,7 +23217,7 @@
       related: [],
       example: {"python":"my_list = [10, 20]\nlast_item = my_list.pop()"},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Python list pop 메서드", explanation: "Python 리스트에서 지정한 인덱스 위치의 요소를 삭제한 후 그 값을 반환하며, 인덱스를 지정하지 않으면 기본적으로 마지막 요소를 제거하고 반환하는 기본 메서드입니다." }
     },
     {
       id: "python_lambda_syntax",
@@ -23241,7 +23241,7 @@
       related: ["python_f_strings"],
       example: {"python":"square = lambda x: x ** 2\nprint(square(4))"},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Python lambda 구문", explanation: "lambda 키워드를 사용해 한 줄로 즉석에서 작성하여 호출할 수 있는 이름 없는 소형 익명 함수를 생성하는 간결한 구문입니다." }
     },
     {
       id: "python_docstring",
@@ -23265,7 +23265,7 @@
       related: [],
       example: {"python":"def add(a, b):\n    \"\"\"Return the sum of a and b.\"\"\"\n    return a + b"},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Python docstring", explanation: "모듈, 클래스, 메서드, 함수 정의의 가장 첫 줄에 작성되어 해당 코드 블록의 사용 목적과 기능 설명을 포함하는 문서용 문자열 리터럴입니다." }
     },
     {
       id: "python_pep8_style",
@@ -23289,7 +23289,7 @@
       related: ["python_docstring"],
       example: {"text":"Linting tools like flake8 check if your source code follows the PEP 8 style guide."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Python PEP 8 스타일 가이드", explanation: "Python 코드를 일관성 있고 가독성 있게 작성할 수 있도록 들여쓰기, 네이밍 룰 등을 규정한 Python 공식 코딩 표준 규칙 가이드입니다." }
     },
     {
       id: "smoke_testing_stage",
@@ -23313,7 +23313,7 @@
       related: ["regression_testing_stage"],
       example: {"text":"The pipeline runs a smoke testing stage automatically after container deployment."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "스모크 테스트 단계", explanation: "새로운 소프트웨어 빌드가 출시되었을 때, 전체 시스템이 동작 불능 상태인지 파악하기 위해 핵심 기능 위주로 빠르게 진행하는 얕은 강도의 초기 소프트웨어 테스트 단계입니다." }
     },
     {
       id: "rolling_deployment_strategy",
@@ -23337,7 +23337,7 @@
       related: [],
       example: {"text":"We configured our Kubernetes deployment to use a rolling deployment strategy with maxSurge=1."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "롤링 배포 전략", explanation: "운영 중인 인스턴스들을 한 번에 교체하지 않고 순차적으로 일부분씩 최신 버전으로 업데이트하여, 배포 과정에서 서비스가 전면 중단되지 않게 하는 무중단 배포 방식입니다." }
     },
     {
       id: "microservices_architecture",
@@ -23361,7 +23361,7 @@
       related: ["rolling_deployment_strategy"],
       example: {"text":"Switching to a microservices architecture allowed our payment team to deploy updates without redeploying the shop application."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "마이크로서비스 아키텍처", explanation: "하나의 복잡한 대형 애플리케이션을 가볍고 느슨하게 결합되어 독립적으로 배포 및 개발이 가능한 여러 개의 작은 서비스들의 집합으로 설계하는 아키텍처입니다." }
     },
     {
       id: "endpoint_detection_and_response",
@@ -23385,7 +23385,7 @@
       related: ["zero_trust_security_model"],
       example: {"text":"We installed an EDR agent on all employee laptops to trace advanced persistent threats."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "엔드포인트 탐지 및 대응", explanation: "PC, 노트북, 서버 등 최종 사용자 기기(엔드포인트)의 행동을 지속적으로 모니터링하여 악성코드 감염이나 침입 위협을 감지하고 차단하는 보안 기술(EDR)입니다." }
     },
     {
       id: "security_information_and_event_management",
@@ -23409,7 +23409,7 @@
       related: ["endpoint_detection_and_response"],
       example: {"text":"Our SIEM solution triggered an alert when multiple failed login attempts occurred across ten different servers."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "보안 정보 및 이벤트 관리", explanation: "다양한 네트워크 장비, 서버 등으로부터 실시간 보안 로그와 위협 이벤트를 통합 수집하고 상관관계를 자동 분석하여 사이버 공격 징후를 탐지하는 보안 솔루션(SIEM)입니다." }
     },
     {
       id: "identity_and_access_management",
@@ -23433,7 +23433,7 @@
       related: ["zero_trust_security_model"],
       example: {"text":"We configured IAM roles in AWS to grant developers write access only to the sandbox repository."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "계정 및 접근 관리", explanation: "조직 내의 사용자 계정 ID와 이들이 기업 내부의 IT 리소스에 접근할 수 있는 권한을 일정한 정책에 따라 중앙에서 제어하고 관리하는 보안 프레임워크(IAM)입니다." }
     },
     {
       id: "sql_injection_prevention",
@@ -23457,7 +23457,7 @@
       related: [],
       example: {"sql":"Using prepared statements is the most reliable way of SQL injection prevention."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "SQL 인젝션 방어", explanation: "매개변수화된 쿼리(Prepared Statement)를 사용하거나 사용자 입력값을 엄격히 필터링하고 이스케이프하여, 악의적인 SQL 명령어가 주입되어 데이터베이스가 변조되는 것을 예방하는 보안 코딩 기법입니다." }
     },
     {
       id: "cross_site_scripting_prevention",
@@ -23481,7 +23481,7 @@
       related: [],
       example: {"text":"Converting < to &lt; is a fundamental step in cross-site scripting prevention."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "크로스 사이트 스크립팅 방어", explanation: "HTML 출력 문자 이스케이프 처리, 입력 필터링, 그리고 브라우저 내 콘텐츠 보안 정책(CSP) 적용을 통해 사용자 브라우저에 원치 않는 악성 스크립트가 유입되어 실행되는 일을 방어하는 보안 방법입니다." }
     },
     {
       id: "buffer_overflow_prevention",
@@ -23505,7 +23505,7 @@
       related: [],
       example: {"text":"Compiler options like stack canaries are automated tools for buffer overflow prevention."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "버퍼 오버플로우 방어", explanation: "데이터 쓰기 작업 시 메모리 경계 범위를 철저히 확인하고, 컴파일러 경계 감지 옵션이나 ASLR, DEP 같은 운영체제 메모리 보호 기법을 사용하여 메모리 버퍼 오버플로우 취약점을 차단하는 대책입니다." }
     },
     {
       id: "direct_memory_access_controller",
@@ -23529,7 +23529,7 @@
       related: [],
       example: {"text":"The network card offloads data transmission to the direct memory access controller to reduce CPU load."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "직접 메모리 접근 컨트롤러", explanation: "CPU의 개입 없이 주변 기기(네트워크 카드, 디스크 등)와 메인 메모리 간에 데이터를 고속으로 직접 주고받을 수 있도록 제어하는 전용 하드웨어 칩(DMAC)입니다." }
     },
     {
       id: "raid_levels_config",
@@ -23553,7 +23553,7 @@
       related: ["direct_memory_access_controller"],
       example: {"text":"A RAID 5 levels config provides single-drive failure protection with parity data."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "RAID 구성", explanation: "여러 개의 물리적 디스크를 결합하여 하나의 가상 디스크로 사용하며, 성능을 올리는 스트라이핑과 결함 허용 능력을 보장하는 미러링/패리티 구성 방식(RAID 0, 1, 5, 6, 10)입니다." }
     },
     {
       id: "solid_state_drive_structure",
@@ -23577,7 +23577,7 @@
       related: ["raid_levels_config"],
       example: {"text":"The solid state drive structure lacks moving parts, making it more durable than traditional HDDs."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "SSD 구조", explanation: "반도체 플래시 메모리(NAND Flash) 소자와 컨트롤러 칩을 탑재하여, 기계적인 움직임 없이 데이터를 전기적으로 신속하게 보관하고 전송하는 저장 매체의 하드웨어 구조입니다." }
     },
     {
       id: "hard_disk_drive_structure",
@@ -23601,7 +23601,7 @@
       related: ["solid_state_drive_structure"],
       example: {"text":"Physical shocks can damage the delicate platters inside the hard disk drive structure."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "HDD 구조", explanation: "고속으로 회전하는 원판 모양의 자기 디스크(플래터), 디스크 위를 기계적으로 수평 이동하며 읽고 쓰는 자기 헤드, 액추에이터 등으로 이루어진 전자기적 데이터 저장 장치 구조입니다." }
     },
     {
       id: "http_status_codes_2xx",
@@ -23625,7 +23625,7 @@
       related: [],
       example: {"text":"The server returns HTTP status codes 2xx when resources are successfully retrieved."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "HTTP 상태 코드 2xx", explanation: "클라이언트가 요청한 HTTP 요청이 서버 측에서 정상적으로 수신되고, 분석되어 성공적으로 완료되었음을 알려주는 성공 응답군(200 OK, 201 Created 등)입니다." }
     },
     {
       id: "http_status_codes_3xx",
@@ -23649,7 +23649,7 @@
       related: ["http_status_codes_2xx"],
       example: {"text":"HTTP status codes 3xx tell search engines to update their link index to the new URL."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "HTTP 상태 코드 3xx", explanation: "클라이언트가 요청한 자원에 대한 추가적인 변경이 있어, 다른 위치로 재접속(리다이렉션)하라는 추가 동작을 브라우저에 지시하는 응답 코드군(301, 302 등)입니다." }
     },
     {
       id: "http_status_codes_4xx",
@@ -23673,7 +23673,7 @@
       related: ["http_status_codes_3xx"],
       example: {"text":"A broken link typically returns HTTP status codes 4xx, specifically 404 Not Found."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "HTTP 상태 코드 4xx", explanation: "클라이언트의 요청 구문 오류, 인증 누락, 혹은 잘못된 자원 이름 요구 등 송신 주체에 문제가 있음을 가리키는 오류 코드군(400, 401, 403, 404 등)입니다." }
     },
     {
       id: "http_status_codes_5xx",
@@ -23697,7 +23697,7 @@
       related: ["http_status_codes_4xx"],
       example: {"text":"We checked the backend server logs when users reported seeing HTTP status codes 5xx."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "HTTP 상태 코드 5xx", explanation: "서버가 유효한 클라이언트의 요청을 수행하는 과정에서 자체 내부 에러나 과부하 등 시스템 장애를 겪었을 때 발생시키는 서버 측 에러 코드군(500, 503 등)입니다." }
     },
     {
       id: "http_cookies_cookies",
@@ -23721,7 +23721,7 @@
       related: ["cors_mechanism"],
       example: {"text":"The Secure and HttpOnly flags should be configured on sensitive HTTP cookies."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "HTTP 쿠키", explanation: "상태정보를 기억하지 않는 무상태(stateless) HTTP 환경에서 사용자의 세션 식별, 로그인 유지 및 브라우저 맞춤 정보를 저장하기 위해 브라우저 측에 전송되는 소량의 텍스트 조각입니다." }
     },
     {
       id: "container_runtime_engine",
@@ -23745,7 +23745,7 @@
       related: [],
       example: {"text":"Kubernetes uses the CRI protocol to communicate with the local container runtime engine."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "컨테이너 런타임 엔진", explanation: "호스트 운영체제(OS)에서 사전에 패키징된 컨테이너 이미지를 기반으로 실제 격리된 컨테이너를 생성하고 실행, 수명 주기를 제어하는 시스템 소프트웨어입니다." }
     },
     {
       id: "infrastructure_as_code_tools",
@@ -23769,7 +23769,7 @@
       related: ["container_runtime_engine"],
       example: {"text":"We use Terraform as our primary infrastructure as code tools to spin up cloud environments."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "인프라 정의 코드화 도구", explanation: "Terraform이나 Ansible 등 수동 조작 대신 기계가 읽을 수 있는 명세서 코드를 활용하여 데이터 센터, 클라우드 리소스 및 서버 인프라를 자동으로 배포하고 조율하는 도구입니다." }
     },
     {
       id: "rolling_update_strategy",
@@ -23793,7 +23793,7 @@
       related: ["infrastructure_as_code_tools"],
       example: {"text":"By default, Kubernetes uses a rolling update strategy to replace pod instances."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "롤링 업데이트 전략", explanation: "Kubernetes 등 가상 환경에서 기존 버전의 파드(Pod)나 가상 컨테이너들을 단계적으로 제거하고 새 버전의 파드를 기동하여 무중단 시스템 업그레이드를 보장하는 기법입니다." }
     },
     {
       id: "chaos_engineering_principles",
@@ -23817,7 +23817,7 @@
       related: ["rolling_update_strategy"],
       example: {"text":"We applied chaos engineering principles by randomly killing pods using Chaos Mesh."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "카오스 엔지니어링 원칙", explanation: "운영 중인 분산 시스템에 강제로 고의적인 네트워크 마비, 인스턴스 셧다운 등의 결함을 주입하여 시스템의 예기치 못한 비정상 작동과 회복 능력을 능동적으로 측정·보완하는 기법입니다." }
     },
     {
       id: "stack_data_structure",
@@ -23841,7 +23841,7 @@
       related: [],
       example: {"text":"A browser's history is managed using a stack data structure to handle the back button."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "스택 자료구조", explanation: "데이터의 입력과 출력이 동일한 한쪽 끝에서만 이루어지도록 설계되어, 가장 마지막에 입력된 값이 가장 먼저 삭제되는 후입선출(LIFO) 원칙의 선형 자료구조입니다." }
     },
     {
       id: "queue_data_structure",
@@ -23865,7 +23865,7 @@
       related: ["stack_data_structure"],
       example: {"text":"Printer tasks are processed sequentially using a queue data structure."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "큐 자료구조", explanation: "한쪽 끝(rear)에서는 데이터의 입력만 일어나고 반대쪽 끝(front)에서는 데이터의 제거만 수행되도록 보장하는 선입선출(FIFO) 기반의 선형 자료구조입니다." }
     },
     {
       id: "binary_search_algorithm",
@@ -23889,7 +23889,7 @@
       related: ["queue_data_structure"],
       example: {"text":"Binary search algorithm is much faster than linear search for large sorted collections."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "이진 탐색 알고리즘", explanation: "오름차순 또는 내림차순으로 이미 완전히 정렬된 데이터 집합에서 중간값을 기준으로 탐색 대상 범위를 매 단계마다 절반씩 좁혀 나가며 원하는 항목을 찾는 고속 검색 알고리즘입니다." }
     },
     {
       id: "depth_first_search_dfs",
@@ -23913,7 +23913,7 @@
       related: ["binary_search_algorithm"],
       example: {"text":"We used a depth-first search algorithm implemented with a stack to find cycles in the graph."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "깊이 우선 탐색 알고리즘", explanation: "트리나 그래프 탐색 시 루트 노드에서 출발해 한 경로의 가장 깊은 리프 노드까지 먼저 파고들며 탐색한 후, 막다른 길에 이르면 직전 분기점으로 되돌아와 다른 가지를 찾는 탐색 기법(DFS)입니다." }
     },
     {
       id: "deep_learning_concepts",
@@ -23937,7 +23937,7 @@
       related: [],
       example: {"text":"Deep learning concepts power modern computer vision and generative language models."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "딥러닝 개념", explanation: "인간 뇌의 신경망 구조를 모방한 다층 인공 신경망(DNN)을 구축하여, 컴퓨터가 원시 데이터로부터 스스로 고차원적인 특징들을 유추하고 정교하게 학습해 나가는 기법입니다." }
     },
     {
       id: "neural_network_layers",
@@ -23961,7 +23961,7 @@
       related: ["deep_learning_concepts"],
       example: {"text":"Adding more hidden neural network layers allows the model to learn more complex decision boundaries."},
       source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "신경망 계층", explanation: "입력 데이터를 전달받는 입력층(input layer), 학습 및 특성 계산을 담당하는 은닉층(hidden layers), 최종 분류 및 예측값을 도출하는 출력층(output layer) 등 인공 신경망 내부를 구성하는 정보 전달 필터층들입니다." }
     },
   {
     id: "responsibility_assignment_matrix",
@@ -24021,7 +24021,7 @@
       text: "We updated the responsibility assignment matrix to clarify who is accountable for SQL database replication tasks."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "책임 분담 매트릭스", explanation: "각 프로젝트 업무에 할당된 실무 인원들의 역할과 관리 책임을 RACI(실무 책임자, 의사 결정자, 자문 제공자, 정보 수신자) 등을 기반으로 맵핑한 그리드 형태의 문서입니다." }
     },
   {
     id: "critical_chain_project_management",
@@ -24080,7 +24080,7 @@
       text: "Using critical chain project management helped us deliver the software update three weeks ahead of schedule."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "핵심 체인 프로젝트 관리", explanation: "작업자의 리소스 한계와 자원 충돌 제약을 고려하여 세부 업무 일정을 조정하고, 버퍼 관리 기법을 투입해 일정 지연과 부하 리스크를 상쇄하는 스케줄링 이론(CCPM)입니다." }
     },
   {
     id: "business_portfolio_analysis",
@@ -24139,7 +24139,7 @@
       text: "Management carried out a business portfolio analysis and decided to focus on cloud database solutions."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "사업 포트폴리오 분석", explanation: "기업이 현재 운영하고 있는 다수의 사업군 또는 제품 라인을 시장 매력도와 시장 점유율 등을 바탕으로 종합 비교 평가하여 기업 자원의 투자 분배율을 결정하는 전략 분석입니다." }
     },
   {
     id: "configuration_management_database",
@@ -24198,7 +24198,7 @@
       text: "We registered the new database servers in our configuration management database."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "구성 관리 데이터베이스", explanation: "IT 서비스 환경 내에 속한 하드웨어, 소프트웨어, 라이선스 문서 등 모든 구성 항목(CI)들의 사양 정보와 이들 상호 간의 의존 연관관계를 보관하는 통합 데이터베이스(CMDB)입니다." }
     },
   {
     id: "business_process_reengineering",
@@ -24257,7 +24257,7 @@
       text: "The consulting firm suggested business process reengineering to automate invoice matching."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "비즈니스 프로세스 재설계", explanation: "기업의 업무 비효율성을 해소하고 업무 품질, 단가, 속도 등의 극적인 성장을 도모하기 위해 기존 조직 구조와 핵심 업무 프로세스를 바닥부터 완전히 개조하여 다시 조직하는 기법(BPR)입니다." }
     },
   {
     id: "knowledge_management",
@@ -24316,7 +24316,7 @@
       text: "We set up a central wiki platform to improve knowledge management within the DevOps team."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "지식 관리", explanation: "조직 구성원들의 개인적 노하우나 암묵지를 겉으로 표출된 형식지로 규격화하여, 조직 전체에 신속하게 축적·공유하고 비즈니스 시너지를 창출하도록 돕는 체계적 경영 프로세스입니다." }
     },
   {
     id: "lean_startup",
@@ -24373,7 +24373,7 @@
       text: "Our engineering team used the lean startup model to validate the new dashboard feature."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "린 스타트업", explanation: "자본 투입을 최소화한 최소 기능 제품(MVP)을 신속히 시장에 내놓은 뒤 고객들의 피드백을 실시간 수집·반영하여 비즈니스 모델을 유연하게 계속 조정해 나가는 창업 방법론입니다." }
     },
   {
     id: "matrix_organization",
@@ -24430,7 +24430,7 @@
       text: "In our matrix organization, developers consult their functional head for career development but report to project leads daily."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "매트릭스 조직", explanation: "전통적인 기능별 부서(종축)와 수시로 결성되는 프로젝트별 실무단(횡축)을 바둑판 형태로 결합하여, 직원들이 다차원적 명령 체계 아래 소속되어 유연하게 협업하는 조직 형태입니다." }
     },
   {
     id: "corporate_identity",
@@ -24489,7 +24489,7 @@
       text: "The marketing team created a new design system to refresh our corporate identity."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "기업 이미지 통합", explanation: "기업이 대외적인 공신력을 다지고 고유 정체성을 확보하기 위해 경영 가치관, 행동 패턴, 마크나 시각 이미지(VI) 등을 통일성 있게 일원화하는 브랜드 전략(CI)입니다." }
     },
   {
     id: "product_lifecycle_management",
@@ -24548,7 +24548,7 @@
       text: "Automotive companies rely heavily on product lifecycle management software to sync global engineering designs."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "제품 수명 주기 관리", explanation: "하나의 공업 제품이 최초 기획 및 개발 단계를 거쳐 생산, 판매, 유통, 고객 A/S, 그리고 최종적으로 용도 폐기나 회수되는 전 생애 과정을 단일 IT 정보 체계로 일관 관리하는 경영 기법(PLM)입니다." }
     },
   {
     id: "service_level_management",
@@ -24607,7 +24607,7 @@
       text: "Monthly uptime reviews are a critical part of our team's service level management routine."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "서비스 수준 관리", explanation: "합의된 서비스 수준 계약(SLA)의 품질 기준선을 항시 유지 및 상향시키기 위해 성능 보고서 수집, 주기적 미팅, 미달 요소 교정 작업을 무한히 순환 추진하는 프로세스(SLM)입니다." }
     },
   {
     id: "organizational_breakdown_structure",
@@ -24666,7 +24666,7 @@
       text: "We mapped the work breakdown structure to the organizational breakdown structure to assign coding responsibilities."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "조직 분할 구조", explanation: "프로젝트 진행 및 작업 완수를 담당하는 실제 조직의 계층 구조를 직관적으로 세분화하여 표현하고, WBS의 각 워크 패키지 담당 책임 부서를 매칭하여 매트릭스화한 도표(OBS)입니다." }
     },
   {
     id: "database_federation",
@@ -24723,7 +24723,7 @@
       text: "Our reporting engine queries a database federation that aggregates data from sales and logistics systems."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "데이터베이스 연합", explanation: "여러 개의 물리적이고 다른 종류의 데이터베이스 시스템을 메타데이터 맵핑 레이어로 연동하여, 사용자로 하여금 단일한 가상 데이터베이스에 요청을 보내는 것처럼 동작하게 만든 구조입니다." }
     },
   {
     id: "write_ahead_logging",
@@ -24780,7 +24780,7 @@
       text: "PostgreSQL uses write-ahead logging to guarantee crash recovery without losing committed transactions."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "로그 선행 쓰기", explanation: "데이터베이스의 쓰기 시 원자성과 지속성을 입증하기 위해, 물리 테이블 페이지를 가공하기 전 반드시 일련의 변경 쿼리 동작을 연속된 트랜잭션 로그 디스크 영역에 먼저 안착시키는 기법(WAL)입니다." }
     },
   {
     id: "database_sharding_key",
@@ -24837,7 +24837,7 @@
       text: "Choosing user_id as the database sharding key ensures all orders from a single user reside in the same partition."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "샤딩 키", explanation: "수평적 데이터베이스 샤딩 기법을 도입할 때, 특정 데이터 행이 과연 어떤 물리적 노드 및 인스턴스로 라우팅되어 적재될지 찾아내는 해시 계산 목적의 특정 컬럼입니다." }
     },
   {
     id: "database_connection_pooling",
@@ -24894,7 +24894,7 @@
       text: "We configured a database connection pooling size of 50 to prevent connection timeouts under load."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "데이터베이스 커넥션 풀링", explanation: "클라이언트 쿼리가 인입될 때마다 고비용의 데이터베이스 TCP 연결을 열었다 닫지 않고, 백그라운드에 사전에 생성해 둔 연결 인스턴스들을 풀에 두고 반복 재사용하여 응답 속도를 개선하는 방식입니다." }
     },
   {
     id: "slow_query_log",
@@ -24949,7 +24949,7 @@
       text: "Analyzing the slow query log revealed a missing composite index on the orders table."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "슬로우 쿼리 로그", explanation: "데이터베이스에서 실행되는 도중 사전에 정해 둔 한계 기준 시간 이상 소요되어 병목 현상을 유발한 쿼리 목록을 수집하여 디버깅 목적으로 파일에 기록한 분석 로그입니다." }
     },
   {
     id: "database_clustering",
@@ -25006,7 +25006,7 @@
       text: "We set up active-passive database clustering to minimize downtime during hardware failures."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "데이터베이스 클러스터링", explanation: "동일한 데이터베이스 데이터 파일 저장소를 두고 여러 대의 서버 인스턴스를 하나로 묶어 동작하게 하거나 분산 동기화하여 고가용성(HA)과 처리 가용성을 구축하는 네트워크 배포 방식입니다." }
     },
   {
     id: "base_consistency_model",
@@ -25064,7 +25064,7 @@
       text: "NoSQL databases often opt for the BASE consistency model to achieve high scale."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "BASE 일관성 모델", explanation: "전통적인 ACID의 엄격한 상호 잠금 규칙과 반대로, 분산 NoSQL 데이터베이스에서 성능과 가용성을 취하기 위해 기본적인 서비스 가용(Basically Available), 유연한 소프트 상태(Soft-state), 최종적 일관성(Eventual consistency)을 수용하는 모델입니다." }
     },
   {
     id: "database_indexing_btree",
@@ -25121,7 +25121,7 @@
       text: "Adding a B-Tree indexing on the creation date significantly speeded up our chronological query."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "B-Tree 인덱싱", explanation: "데이터베이스 테이블에서 등가 조회뿐만 아니라 범위 검색, 정렬 조건(ORDER BY) 하에서 데이터의 위치를 대칭형 이진 탐색 트리 구조로 포인팅하여 단시간에 쿼리 효율을 끌어올리는 기본적인 물리 인덱스 모델입니다." }
     },
   {
     id: "foreign_key_constraint",
@@ -25178,7 +25178,7 @@
       text: "A foreign key constraint prevents us from inserting an order for a customer ID that does not exist."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "외래키 제약조건", explanation: "하나의 관계형 테이블 속 열 데이터가 반드시 연계된 부모 테이블 행의 주키(Primary Key) 공간 내에 위치해야 한다는 정합성을 유지하여 두 테이블 간의 참조 무결성을 보존하는 제약 장치입니다." }
     },
   {
     id: "database_transaction_isolation",
@@ -25235,7 +25235,7 @@
       text: "We changed the database transaction isolation level to Repeatable Read to prevent dirty reads."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "데이터베이스 트랜잭션 격리 수준", explanation: "동시에 병렬적으로 쿼리를 돌리는 서로 다른 트랜잭션들이 특정 원천 데이터를 건드릴 때, 이들의 상태 간섭과 변경 사항 노출 수위를 상호 배척하는 4단계 격리 설정 지표입니다." }
     },
   {
     id: "write_skew_anomaly",
@@ -25292,7 +25292,7 @@
       text: "Write skew anomaly allowed two doctors to go off-call simultaneously because the validation checked active schedules concurrently."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "라이트 스큐 이상", explanation: "스냅샷 격리 환경에서 나타나는 현상으로, 두 트랜잭션이 동일한 전제 조회를 기반으로 행을 가공하되 서로 다른 대상 행들을 동시에 커밋함으로써 논리적 제약 기준을 회피해 깨뜨리는 동시성 버그입니다." }
     },
   {
     id: "lost_update_anomaly",
@@ -25349,7 +25349,7 @@
       text: "We applied pessimistic locking to avoid the lost update anomaly on the ticket reservation count."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "갱신 손실 이상", explanation: "두 트랜잭션이 어떤 데이터 행의 현재 수치를 읽은 상태에서 동시에 수정을 가한 후 순서대로 세션을 닫을 때, 먼저 작업을 완료한 트랜잭션의 결과가 후발 주자의 값으로 아무 경고 없이 덮어써져 날아가는 증상입니다." }
     },
   {
     id: "java_compiler_tool",
@@ -25406,7 +25406,7 @@
       text: "Run 'javac Main.java' in the command line to invoke the Java compiler tool."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Java 컴파일러", explanation: "개발자가 텍스트로 완성한 .java 소스 코드를 읽어 들여 Java 가상 머신(JVM)이 원활하게 이해할 수 있는 이진 바이트코드 형태의 .class 파일을 만드는 빌드 프로그램(javac)입니다." }
     },
     {
     id: "java_native_interface_jni",
@@ -25463,7 +25463,7 @@
       text: "We used the Java Native Interface to access high-performance graphics hardware directly."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Java 네이티브 인터페이스", explanation: "JVM 실행 환경 내의 Java 애플리케이션 코드가 시스템 로컬 하드웨어나 타 언어(C, C++ 등)로 제작된 이진 기계어 라이브러리와 양방향으로 상호 호출될 수 있도록 지원하는 프레임워크(JNI)입니다." }
     },
   {
     id: "java_garbage_collection_process",
@@ -25521,7 +25521,7 @@
       text: "Tuning the Java garbage collection process parameters helped us reduce application pause time."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Java 가비지 컬렉션", explanation: "JVM 메모리 중 힙(Heap) 영역을 스스로 주기 점검하여, 어느 변수 참조망에서도 도달할 수 없는 쓸모없는 객체들을 알아서 해제하여 메모리 고갈을 자동 방지하는 백그라운드 관리입니다." }
     },
   {
     id: "java_class_loader_mechanism",
@@ -25578,7 +25578,7 @@
       text: "We implemented a custom class loader mechanism to decrypt Java class bytes before executing them."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Java 클래스 로더 메커니즘", explanation: "Java 런타임 환경이 특정 프로그램의 명령을 수행하는 시점에 수많은 .class 바이너리 파일 중 적재가 필요한 바이트코드를 찾아 메모리에 로드하고 검증을 실행하는 하위 서브시스템입니다." }
     },
   {
     id: "java_reflection_mechanism",
@@ -25635,7 +25635,7 @@
       text: "Spring framework uses the Java reflection mechanism to inject dependencies into class properties."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Java 리플렉션", explanation: "프로그램이 돌아가는 도중에 런타임 상에서 특정 클래스의 생성자, 속성, 메서드 내부 구조를 동적으로 정밀 조회하고 호출 권한을 강제 획득하여 실행할 수 있는 고급 메타프로그래밍입니다." }
     },
   {
     id: "java_annotation_metadata",
@@ -25692,7 +25692,7 @@
       text: "The @Override java annotation metadata tells the compiler that the method is overriding a parent method."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Java 어노테이션", explanation: "@ 기호 접두어로 시작하는 주석 형태의 부가 코드로, Java 클래스 구조나 멤버 선언 단락에 추가 정보를 더해 컴파일 검증을 시키거나 런타임 시 특정 프레임워크의 동작 방식을 제어합니다." }
     },
   {
     id: "java_executor_framework",
@@ -25750,7 +25750,7 @@
       text: "We utilized the java executor framework with a fixed thread pool of ten to handle incoming socket requests."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Java Executor 프레임워크", explanation: "멀티스레딩 프로그래밍 중 직접 스레드 생명 주기를 제어하지 않고, 비동기 작업 큐와 내부 스레드 풀을 활용해 복잡한 실행 로직을 안정적이고 빠르게 일원화하여 구동하는 자바 라이브러리입니다." }
     },
   {
     id: "java_servlet_api",
@@ -25807,7 +25807,7 @@
       text: "Historically, the java servlet api served as the bedrock for modern Java enterprise web frameworks."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Java 서블릿 API", explanation: "자바 언어 환경의 웹 컨테이너에서 기동하여 클라이언트로부터 날아오는 웹 HTTP 패킷 요청을 제어하고, 동적으로 다양한 결과를 연산해 주는 전통적인 자바 표준 백엔드 라이프사이클 API 사양입니다." }
     },
   {
     id: "java_spring_framework",
@@ -25864,7 +25864,7 @@
       text: "We configured our database transaction management using the java spring framework's declarative annotations."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Spring 프레임워크", explanation: "자바 생태계에서 가장 유명한 기업용 애플리케이션 개발 프레임워크로, 컴포넌트 간 결합도를 낮추는 의존성 주입(DI)과 횡단 관심사를 자동 분리하는 관점 지향 프로그래밍(AOP)을 핵심으로 제공합니다." }
     },
   {
     id: "java_maven_build",
@@ -25922,7 +25922,7 @@
       text: "Adding the database driver coordinates in the java maven build file imports the JAR automatically."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Apache Maven", explanation: "자바 소프트웨어 빌드 및 종속 라이브러리 연계 관리를 구조화하는 빌드 자동화 도구로, 프로젝트 루트에 선언된 pom.xml 설정에 기반하여 라이브러리를 공식 원격 중앙 저장소에서 자동 다운로드합니다." }
     },
   {
     id: "python_package_installer_pip",
@@ -25979,7 +25979,7 @@
       text: "We used the python package installer pip to add the PostgreSQL driver to our deployment environment."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "pip", explanation: "파이썬 개발 시 전 세계 커뮤니티가 기여한 외부 패키지들을 저장하는 공식 PyPI 원격 창고로부터 필요한 외부 모듈을 편리하게 조회, 설치, 갱신해 주는 기본 패키지 인스톨러 도구입니다." }
     },
   {
     id: "python_decorator_pattern",
@@ -26037,7 +26037,7 @@
       text: "We created a custom python decorator pattern called @log_query to record SQL execution times."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Python 데코레이터", explanation: "기존의 파이썬 함수나 클래스를 새로 만들거나 뜯어고치지 않고, @ 함수명 표기 래퍼를 통해 공통 실행할 부가 로직(로깅, 인증 등)을 간단히 장식해 주는 유연한 프로그래밍 기법입니다." }
     },
   {
     id: "python_generator_yield",
@@ -26095,7 +26095,7 @@
       text: "A python generator yield is perfect for streaming millions of rows from a database table."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Python 제네레이터", explanation: "메모리에 연산 결과를 한꺼번에 리스트화하여 올려두지 않고, yield 분기로 멈춘 상태를 기억하며 루프 회차마다 결과 한 건을 그때그때 연산(Lazy Evaluation)해 주는 저용량 이터레이터 방식입니다." }
     },
   {
     id: "python_interpreter_engine",
@@ -26153,7 +26153,7 @@
       text: "When you run a script, the python interpreter engine parses syntax and runs the bytecode loop."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Python 인터프리터", explanation: "파이썬으로 구현한 소스 코드를 읽어 들인 직후, 내부 기계어 해석 작업을 실행 중에 런타임으로 즉석에서 번역하여 연산을 진행하는 핵심 구동 엔진(일반적으로 CPython)입니다." }
     },
   {
     id: "python_asyncio_framework",
@@ -26210,7 +26210,7 @@
       text: "We used the python asyncio framework to run twenty independent API calls in parallel."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Python asyncio", explanation: "단일 스레드 기반의 이벤트 루프 루틴을 구성하여, 다수의 지연을 수반하는 네트워크 및 파일 I/O 처리를 비동기 async/await 구문으로 설계할 수 있게 돕는 파이썬 기본 탑재 모듈입니다." }
     },
   {
     id: "python_dunder_methods",
@@ -26268,7 +26268,7 @@
       text: "Implementing the __len__ python dunder method allows the class instance to support the built-in len() function."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "던더 메서드", explanation: "파이썬 클래스 구조 내에서 __init__ 또는 __str__과 같이 시작과 끝이 두 개의 언더바로 감싸진 특수한 형태의 예약 메서드로, 파이썬 인터프리터의 기본 작동 방식을 재정의합니다." }
     },
   {
     id: "python_pandas_library",
@@ -26325,7 +26325,7 @@
       text: "We loaded the SQL query results directly into a python pandas library DataFrame to compute correlation coefficients."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "pandas", explanation: "파이썬 환경에서 대량의 데이터를 수치 표(DataFrame) 형태로 구성하여 필터링, 정렬, 그룹핑 연산 및 통계 가공을 손쉽게 행할 수 있게 해 주는 독보적 성능의 데이터 분석 외부 모듈입니다." }
     },
   {
     id: "python_numpy_library",
@@ -26382,7 +26382,7 @@
       text: "The machine learning algorithm converts image pixels into a python numpy library array first."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "NumPy", explanation: "파이썬 환경에서 고성능 다차원 수치 배열(ndarray) 연산을 가능하게 만드는 수치해석 라이브러리로, C로 짜여진 하부 행렬 계산 모듈을 활용해 강력한 연산력을 보장합니다." }
     },
   {
     id: "python_poetry_tool",
@@ -26439,7 +26439,7 @@
       text: "We migrated our dependency specification to python poetry tool to avoid library version mismatches."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Poetry", explanation: "의존성 라이브러리의 버전 충돌을 영리하게 예방하는 파이썬 전용 의존성 관리 및 패키징 프레임워크로, pyproject.toml와 poetry.lock 명세를 조합하여 무결한 가상 실행 환경을 빌드합니다." }
     },
   {
     id: "python_docstring_format",
@@ -26496,7 +26496,7 @@
       text: "We updated the python docstring format on all database access functions to include param types."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Python docstring", explanation: "파이썬 스크립트 작성 시 함수, 클래스, 모듈 선언 단락 직후에 삼중 따옴표(\"\"\")로 감싸 기록한 정보 기술 문서화 블록으로, 런타임 시에 __doc__ 속성이나 help() 호출을 통해 참조할 수 있습니다." }
     },
   {
     id: "ospf_routing_protocol",
@@ -26555,7 +26555,7 @@
       text: "Our core enterprise switches are configured with the ospf routing protocol to route traffic dynamically."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "OSPF", explanation: "자율 시스템(AS) 내에 구축된 인접 라우터 노드들 간에 회선 연결 상태를 서로 주기 전송하여, 다익스트라(Dijkstra) 공식에 기반해 최단 전달 경로를 동적으로 개조 및 관리하는 내부 라우팅 규약입니다." }
     },
   {
     id: "reverse_address_resolution_protocol",
@@ -26614,7 +26614,7 @@
       text: "Modern setups use DHCP instead of the reverse address resolution protocol because DHCP is more robust."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "RARP", explanation: "ARP 프로토콜의 작동 기전을 역이용하여, 네트워크 초기 시동 시 하드웨어 카드에 새겨진 로컬 MAC 주소를 공통 브로드캐스트함으로써 주 서버로부터 해당하는 IP 주소를 공급받는 구형 통신 규약입니다." }
     },
   {
     id: "dynamic_routing_protocol",
@@ -26673,7 +26673,7 @@
       text: "We configured a dynamic routing protocol to ensure our packets find an alternate route if the primary WAN line fails."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "동적 라우팅 프로토콜", explanation: "네트워크 망 내의 각 라우터 장비들이 서로 인접 연결 정보를 정기 교환하며 임의의 링크 단절이나 장애 경로가 일어났을 때 수작업 없이 라우팅 테이블 정보를 능동적으로 복구하는 규칙군입니다." }
     },
   {
     id: "network_time_protocol",
@@ -26732,7 +26732,7 @@
       text: "Database clustering requires the network time protocol to prevent write timestamp overlaps."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "NTP", explanation: "전체 네트워크 환경에 연결된 복수의 컴퓨터 및 라우터 서버들의 현재 시스템 시각을 오차 범위 수 밀리초 내로 일치시키기 위해 참조 시간 서버와 동기화하는 네트워크 시각 규약입니다." }
     },
   {
     id: "simple_network_management_protocol",
@@ -26791,7 +26791,7 @@
       text: "We configured simple network management protocol traps to notify us immediately when a switch port goes down."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "SNMP", explanation: "TCP/IP 망 내의 라우터, 스위치, 방화벽, 서버 등의 하드웨어 성능 데이터 및 정상 가동 여부 등을 멀리서 주기 관제하고 경보 알림을 획득하기 위한 공통 네트워크 관리 규약입니다." }
     },
   {
     id: "virtual_private_network_vpn",
@@ -26850,7 +26850,7 @@
       text: "Remote developers must connect to the corporate virtual private network vpn to access the staging database."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "VPN", explanation: "일반 대중망인 공용 인터넷 회선에 암호화 터널 프로토콜 기술을 씌워, 마치 기업만의 독점적인 전용선 회선을 타고 통신을 주고받는 수준의 철저한 보안성을 구현하는 가상 통신망입니다." }
     },
     {
     id: "subnet_mask_config",
@@ -26910,7 +26910,7 @@
       text: "A class C IP address typical uses 255.255.255.0 as its subnet mask config."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "서브넷 마스크", explanation: "32비트 길이의 이진 마스크 주소로, IP 주소와의 논리 연산을 처리해 앞단의 네트워크 고유 식별 주소 영역과 뒷단의 로컬 호스트 단말기 할당 대역을 상호 분별해 주는 구분자입니다." }
     },
   {
     id: "transmission_control_protocol_handshake",
@@ -26970,7 +26970,7 @@
       text: "We optimized TCP socket creation because the transmission control protocol handshake takes time over sat connections."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "TCP 3-way 핸드셰이크", explanation: "송신 클라이언트와 수신 서버 단말기 간에 본격적으로 가상의 통신 회선을 확보하기 위하여, 동기(SYN), 동기확인(SYN-ACK), 전송승인(ACK)이라는 3단계 상태 신호를 왕복시키는 절차입니다." }
     },
   {
     id: "domain_name_resolution_process",
@@ -27030,7 +27030,7 @@
       text: "Domain name resolution process queries local caches first before querying root DNS servers."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "도메인 네임 해석", explanation: "사람이 문자 형태로 읽고 암기하기 편리한 인터넷 주소 명칭(예: example.com)을 컴퓨터 브라우저가 직접 접근할 수 있는 물리적 숫자 IP 주소(예: 192.0.2.1)로 변환해 주는 통신 가공 과정입니다." }
     },
   {
     id: "packet_filtering_firewall",
@@ -27089,7 +27089,7 @@
       text: "Our router acts as a packet filtering firewall that drops all incoming Telnet connection requests."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "패킷 필터링 방화벽", explanation: "지나가는 패킷의 불건전한 징후를 감지했을 때, 경고 알림만 날리는 단순 탐지(IDS)의 한계를 뛰어넘어 직접 비정상 연결 커넥션을 실시간 강제 드롭 및 물리 격리하는 활동형 보안 차단 장비(IPS)입니다." }
     },
   {
     id: "cross_site_scripting_xss",
@@ -27148,7 +27148,7 @@
       text: "Sanitizing user-submitted comment inputs is vital to prevent cross site scripting xss attacks."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "크로스 사이트 스크립팅", explanation: "입력값 검증 처리가 미흡한 게시판이나 서비스 화면에 공격자가 임의의 악성 브라우저 스크립트를 올린 뒤, 일반 방문객들이 그 화면을 부지불식간에 열었을 때 브라우저 권한을 갈취해 탈취하는 XSS 취약점입니다." }
     },
   {
     id: "malware_ransomware_threat",
@@ -27207,7 +27207,7 @@
       text: "Offline backups are the best defense against a devastating malware ransomware threat."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "랜섬웨어", explanation: "피해자의 저장 자산에 불법 접근하여 주요 시스템 및 비즈니스 파일들의 내부 암호 키를 잠가 인질로 삼고, 이를 정상화해 주는 대가로 가상화폐 등의 불법 몸값을 압박하는 악성 프로그램입니다." }
     },
   {
     id: "phishing_attack_method",
@@ -27266,7 +27266,7 @@
       text: "We trained employees to inspect email sender domains carefully to thwart phishing attack method attempts."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "피싱", explanation: "신뢰도 높은 정식 금융사, 서비스 고객센터 메일 문서로 오인하도록 위장하여 사용자를 가짜 결제 사이트로 끌어들인 뒤 일회용 비번이나 인증 키를 그대로 편취하는 고전적인 기만 공격 기법입니다." }
     },
   {
     id: "multifactor_authentication_mfa",
@@ -27327,7 +27327,7 @@
       text: "Enforcing multifactor authentication mfa reduced account hijacking cases to almost zero."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "다요소 인증", explanation: "단순히 머리로 알고 있는 계정의 암호 외에도, 별도 스마트폰 소유 상태(OTP 등), 신체 특징(안면 인식, 지문 등)처럼 성격이 완연히 다른 복수 요건을 교차 인증해야 통과시키는 고강도 보안 장치(MFA)입니다." }
     },
   {
     id: "identity_provider_idp",
@@ -27386,7 +27386,7 @@
       text: "We configured our SaaS application to trust Microsoft Azure AD as our primary identity provider idp."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "IdP", explanation: "다양한 이기종 외부 클라우드 플랫폼 서비스들에 대해 사용자의 개인정보와 접속 권한 신원을 중앙 관리 및 보장하고, 한 번의 로그인(SSO)으로 접속 상태를 전파해 주는 공인 신원 공급 솔루션입니다." }
     },
   {
     id: "symmetric_key_cryptography",
@@ -27446,7 +27446,7 @@
       text: "We use symmetric key cryptography for local database storage encryption to maintain fast read speeds."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "대칭키 암호화", explanation: "데이터를 읽을 수 없게 혼재시키는 암호화 연산과 이를 정상 상태로 환원하는 복호화 처리 시점에 완전히 똑같이 일치하는 단일한 비밀 키를 사용하므로 계산 속도가 매우 빠른 암호 설계 모델입니다." }
     },
   {
     id: "asymmetric_key_cryptography",
@@ -27506,7 +27506,7 @@
       text: "Asymmetric key cryptography is used in SSH to authenticate developers without sending passwords."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "비대칭키 암호화", explanation: "모든 사용자에게 다 노출하는 암호화 전용의 '공개키'와 수신 당사자만 깊이 밀봉 보관하는 복호화 전용의 '개인키'라는 수학적 한 쌍의 키를 나누어 연산에 이용하는 안전성 중심의 현대적 암호 설계 방식입니다." }
     },
   {
     id: "advanced_encryption_standard_aes",
@@ -27566,7 +27566,7 @@
       text: "We configure AES-256 for symmetric encrypting of backups containing sensitive customer table dumps."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "AES", explanation: "미국 국립표준기술연구소(NIST)가 인정한 강력한 성능의 블록 대칭키 암호화 표준 규격으로, 하드웨어 내 연산 속도가 뛰어나며 128비트, 192비트, 256비트의 긴 키 길이를 탑재해 기밀성을 보장합니다." }
     },
   {
     id: "secure_hash_algorithm_sha",
@@ -27626,7 +27626,7 @@
       text: "We store password hashes generated via SHA-256 with salts in our user database."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "SHA", explanation: "임의의 문자열을 넣었을 때 절대 역추적이 불가능한 고정된 글자 수의 고유 지문값을 변환해 주는 해시 설계 표준으로, 패스워드 원본 검증이나 파일의 오염 및 무결성을 증명하기 위해 쓰입니다." }
     },
   {
     id: "transport_layer_security_tls",
@@ -27686,7 +27686,7 @@
       text: "The web browser displays a padlock icon when the server connection uses transport layer security tls."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "TLS", explanation: "네트워크 세션 통신망 위에 암호화 모듈을 씌워 제3자의 스니핑, 변조, 위장을 철저히 방지하는 웹 통신 암호 규격으로, 구형 SSL 기술을 개선 및 계승해 오늘날 HTTPS 통신에 범용적으로 활용됩니다." }
     },
   {
     id: "distributed_denial_of_service_ddos",
@@ -27746,7 +27746,7 @@
       text: "We enabled a cloud scrubbing service to absorb the distributed denial of service ddos attack on our SQL APIs."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "분산 서비스 거부 공격", explanation: "악성 바이러스에 걸려 좀비 상태가 된 다수의 감염 단말기들을 네트워크 원격 조종하여, 표적이 된 특정 웹 서비스 서버에 과부하 쓰레기 호출을 일시에 동시 퍼부어 자원을 마비시키는 DDoS 공격입니다." }
     },
   {
     id: "intrusion_prevention_system_ips",
@@ -27805,7 +27805,7 @@
       text: "An intrusion prevention system ips can automatically update firewall rules when it detects port scanning."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "침입 방지 시스템", explanation: "지나가는 패킷의 불건전한 징후를 감지했을 때, 경고 알림만 날리는 단순 탐지(IDS)의 한계를 뛰어넘어 직접 비정상 연결 커넥션을 실시간 강제 드롭 및 물리 격리하는 활동형 보안 차단 장비(IPS)입니다." }
     },
   {
     id: "read_only_memory_rom",
@@ -27864,7 +27864,7 @@
       text: "The system bootloader is typically stored in a read only memory rom chip on the motherboard."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "ROM", explanation: "제조 공정 시 내부 데이터 기록 작업을 완료한 후에는 오직 불러와 읽기만 가능하며, 전원 스위치를 내려도 저장된 바이너리 기록들이 영구 소거되지 않고 남는 불휘발성 반도체 메모리 장치입니다." }
     },
   {
     id: "arithmetic_logic_unit_alu",
@@ -27923,7 +27923,7 @@
       text: "When computing index offsets, the CPU coordinates the arithmetic logic unit alu to perform binary additions."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "산술 논리 장치", explanation: "컴퓨터 중앙처리장치(CPU)를 이루는 물리 코어의 내부 핵심 엔진으로, 명령 레지스터로부터 읽어 들인 가산, 감산 등의 수학적 산술 연산과 AND, OR 등의 부울 대수적 논리 연산을 도맡아 수행하는 디지털 회로(ALU)입니다." }
     },
   {
     id: "direct_memory_access_dma",
@@ -27982,7 +27982,7 @@
       text: "Using direct memory access dma allows network cards to buffer high-speed database packet streams directly in RAM."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "직접 메모리 접근", explanation: "대량의 데이터 블록을 전송할 때 똑똑한 버스 중재 장치(DMAC)를 이용하여, 바쁜 메인 연산 프로세서(CPU)의 간섭 명령을 매번 받지 않고 메인 RAM 주소와 하드웨어 장치 간에 곧바로 데이터를 싣고 나르는 I/O 방식(DMA)입니다." }
     },
   {
     id: "virtual_memory_system",
@@ -28042,7 +28042,7 @@
       text: "When physical RAM is exhausted, the virtual memory system swaps database pages to the SSD."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "가상 메모리 시스템", explanation: "컴퓨터에 꽂힌 물리적 RAM 반도체의 소형 용량을 한계 극복하기 위해, 대용량 보조 기억 장치(HDD/SSD)의 일부분을 논리적 메모리 주소 영역으로 맵핑 전환하여 대형 응용프로그램을 돌릴 수 있게 해 주는 메모리 설계 구조입니다." }
     },
   {
     id: "interrupt_handling_process",
@@ -28102,7 +28102,7 @@
       text: "Network card packet arrivals trigger an interrupt handling process in the operating system kernel."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "인터럽트 처리", explanation: "외부의 마우스 입력, 주변장치의 연산 응답 및 예상하지 못한 0으로 나누기 연산 등이 검출되었을 때, CPU가 현재 순차 가동하던 메인 루틴의 상태값을 보존해 두고 우선순위 처리 루틴으로 점프해 대응하는 컴퓨터 구조적 제어 현상입니다." }
     },
   {
     id: "kernel_space_user_space",
@@ -28161,7 +28161,7 @@
       text: "A context switch occurs when the database transitions from user space to kernel space to write disk blocks."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "커널 공간과 사용자 공간", explanation: "운영체제 시스템의 안정적 보호를 위해 가상 주소 영역을 물리 격리한 것으로, 하드웨어 접근이 가능한 핵심 시스템 호출단(커널)과 단순 일반 애플리케이션 코드가 노는 안전 링 영역(유저)의 분리입니다." }
     },
   {
     id: "hard_disk_drive_hdd",
@@ -28221,7 +28221,7 @@
       text: "Compared to modern SSDs, a hard disk drive hdd exhibits slower random read performance."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "하드 디스크 드라이브", explanation: "자성 물질로 특수 표면 코팅된 원형 알루미늄 판(플래터)들을 초분당 수천 회 정밀 회전시키고, 자석 코일 형태의 정밀 헤드가 미세 비접촉 상태로 위치 이동해 가며 정보를 영구 자기 기록하는 컴퓨터 대용량 보조 저장 장치(HDD)입니다." }
     },
   {
     id: "bios_firmware_system",
@@ -28281,7 +28281,7 @@
       text: "The bios firmware system performs a power-on self-test before reading the master boot record."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "BIOS", explanation: "컴퓨터 전원 단추를 눌렀을 때 메인보드 중앙 칩에서 즉각 부팅 시동을 개시하는 극초기 하드웨어 진단 제어 펌웨어로, 각종 부품 장치의 동작 상태를 정상 테스트한 뒤 마스터 부트 레코드(MBR) 영역의 OS 커널 구동기를 로드해 줍니다." }
     },
   {
     id: "grpc_framework",
@@ -28340,7 +28340,7 @@
       text: "Our internal microservices communicate using the grpc_framework to minimize JSON parsing overhead."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "gRPC", explanation: "구글사가 적극 주도하여 오픈소스로 발주한 현대적 RPC 프레임워크로, 차세대 웹 통신 규약인 HTTP/2 아키텍처 환경 위에 바이너리 압축률이 우수한 Protocol Buffers(프로토콜 버퍼) 포맷을 사용하여 저지연 통신을 지원합니다." }
     },
     {
     id: "representational_state_transfer_rest",
@@ -28400,7 +28400,7 @@
       text: "We designed a representational state transfer rest API to expose our SQL tables to mobile clients."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "REST", explanation: "인터넷 웹 아키텍처 표준을 존중하여 클라이언트와 서버 간 데이터 통신 성능을 배가하는 설계 방법론으로, HTTP 고유의 메서드(GET, POST, PUT, DELETE 등)와 고유 URI 리소스를 규칙에 맞게 매칭하는 API 설계 스타일입니다." }
     },
   {
     id: "hypertext_transfer_protocol_secure_https",
@@ -28459,7 +28459,7 @@
       text: "All login portals must enforce hypertext transfer protocol secure https to prevent password eavesdropping."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "HTTPS", explanation: "클라이언트 브라우저가 일반 웹 주소와 데이터를 송수신할 때, 비인가자가 중간에서 패킷을 엿보아 기밀 사항을 도난당하지 않게 중간에 TLS/SSL 암호화 래퍼를 씌운 세큐어용 네트워크 웹 포트 연결 프로토콜입니다." }
     },
   {
     id: "session_cookie_management",
@@ -28518,7 +28518,7 @@
       text: "Proper session cookie management requires setting HttpOnly and Secure flags to block XSS access."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "세션 및 쿠키 관리", explanation: "통신 시 이전의 상태 기록을 저장하지 않는 순수 웹 HTTP 요청 간에, 사용자의 이전 장바구니나 로그인 인증 유지를 관리하기 위해 서버용 상태 보관처(세션)와 클라이언트 브라우저용 식별자 꼬리표(쿠키)를 연동 제어하는 개발 설계 영역입니다." }
     },
   {
     id: "cross_origin_resource_sharing_cors",
@@ -28577,7 +28577,7 @@
       text: "We updated the cross origin resource sharing cors settings on the API server to allow our web public domain access."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "CORS", explanation: "프론트엔드 스크립트 단에서 원래 자신을 다운로드해 준 원 서버의 도메인(Origin)이 아닌, 외부의 이기종 API 주소 사이트에 쿼리 패킷을 안전 전송할 수 있도록 헤더를 이용해 상호 도메인 자원 공유를 특별 허용하는 브라우저 보안 규약입니다." }
     },
   {
     id: "server_side_rendering_ssr",
@@ -28636,7 +28636,7 @@
       text: "We implemented server side rendering ssr in Next.js to improve loading times and search engine indexing."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "서버 사이드 렌더링", explanation: "웹 화면을 브라우저에 표시할 때 모든 컴포넌트 데이터가 완성된 형태의 무거운 정적 HTML 코드로 서버에서 사전에 빌드 연산하여 한 번에 클라이언트로 제공해 주는 화면 출화 기술(SSR)입니다." }
     },
   {
     id: "web_application_firewall_waf",
@@ -28695,7 +28695,7 @@
       text: "We configured a web application firewall waf to automatically block suspicious SQL query parameters."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "웹 애플리케이션 방화벽", explanation: "일반 하드웨어 방화벽이 차단하기 힘든 고도화된 80/443 포트 인입 애플리케이션 악성 페이로드를 지켜보고 걸러내는 방화벽으로, SQL 인젝션, 파일 다운로드 취약점, XSS 호출을 패턴 매칭해 차단해 주는 필터 솔루션(WAF)입니다." }
     },
   {
     id: "json_web_token_jwt",
@@ -28754,7 +28754,7 @@
       text: "After a successful login, the server returns a signed json web token jwt to the client."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "JSON Web Token", explanation: "인증 정보를 JSON 개체 형식 안에 밀봉하고 비밀키로 암호화 디지털 서명(HMAC 또는 RSA) 처리를 해 두어 위변조가 불가능하도록 만들어진 토큰 규약으로, 세션 상태를 저장하지 않는 분산 마이크로서비스 인증 체계에 특화되었습니다." }
     },
   {
     id: "git_cherry_pick_operation",
@@ -28813,7 +28813,7 @@
       text: "We used git cherry_pick_operation to apply the critical SQL patch commit directly to the release branch."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "git cherry-pick", explanation: "버전 관리 저장소의 분화된 개발 브랜치에서, 전체 머지 작업을 일으키지 않고 단 한두 건의 필요한 중요 버그 수정 커밋(Commit) 내역만 핀셋처럼 특정 조준해 현재 작업 브랜치로 가져와 덮어씌우는 병합 행위입니다." }
     },
   {
     id: "mock_object_testing",
@@ -28873,7 +28873,7 @@
       text: "We used mock object testing to simulate database query return values without launching a live SQL instance."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "모크 객체 테스트", explanation: "소프트웨어 유닛 성능 평가 시, 연결이 닿지 않거나 응답 시간이 매우 느린 라이브러리 및 데이터베이스, 결제 대행망 등의 외부 모듈을 대체하기 위해 껍데기만 흉내 내는 가짜 Mock 객체를 배치해 속도를 올리는 기법입니다." }
     },
   {
     id: "integration_testing_level",
@@ -28932,7 +28932,7 @@
       text: "During integration testing level, we verified that the Java service saves the user payload to the SQL DB successfully."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "통합 테스트", explanation: "소프트웨어 개발 완성 단계에서, 각 기능을 담당하는 세부 클래스 단위의 자체 로직 테스트가 안전 판정된 이후, 이들을 하나로 결합하고 조립하여 상호 API 정합성과 연결 버그를 색출하는 넓은 단위의 품질 테스트입니다." }
     },
   {
     id: "regression_testing_type",
@@ -28992,7 +28992,7 @@
       text: "We ran a suite of automated API test scripts as a regression testing type after migrating database drivers."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "회귀 테스트", explanation: "새로운 패치 버전 배포나 버그 패치를 코드에 반영한 뒤, 원래 무결하고 잘 정돈되어 문제없이 흘러가던 주변의 타 연계 기능 소스들에 엉뚱한 부수 효과(디그레이드 오류)가 발생했는지 재확인하는 품질 시험 절차입니다." }
     },
   {
     id: "continuous_integration_ci",
@@ -29051,7 +29051,7 @@
       text: "Our continuous integration ci server rejects pull requests if any unit test fails."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "지속적 통합", explanation: "소프트웨어 릴리즈 효율을 고도화하기 위해, 매번 개발진이 완료하고 푸시한 수정 소스를 형상 관리 저장소에 수시 자동 병합(Merge)한 뒤, 자동으로 정밀 컴파일 빌드와 툴 단위 테스트를 구동시키는 협업 파이프라인(CI)입니다." }
     },
   {
     id: "integrated_development_environment_ide",
@@ -29110,7 +29110,7 @@
       text: "Modern integrated development environment ide tools provide smart auto-completions using neural network models."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "통합 개발 환경", explanation: "프로그래머가 소프트웨어를 수월하게 작성하도록 소스 코드 에디터, 컴파일 기능, 로컬 디버거 툴, 패키지 매니저 및 깃 형상 관리 기능 등을 단일 모니터 화면 환경에 결합해 둔 복합 코딩 애플리케이션(IDE)입니다." }
     },
   {
     id: "infrastructure_as_code_iac",
@@ -29169,7 +29169,7 @@
       text: "Writing our database schema deployments as infrastructure as code iac makes environment setup repeatable."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "코드 기반 인프라", explanation: "클라우드 서비스 가상 서버 생성 및 네트워크 대역 보안 그룹 구성을 수작업 클릭 없이 텍스트형 설정 파일 양식(YAML, JSON 등)에 소스 코드로 적어 두고, 이를 소프트웨어 에이전트가 자동 읽어 구동 배포하는 인프라 구축 개념(IaC)입니다." }
     },
   {
     id: "serverless_computing_architecture",
@@ -29230,7 +29230,7 @@
       text: "We migrated our database cleanup script to serverless computing architecture to avoid keeping a VM running 24/7."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "서버리스 컴퓨팅", explanation: "사용자가 백그라운드 서버 OS를 상시 모니터링 및 패치하지 않고, 오직 호출 시 작동할 짧은 프로그램 함수(Function)만을 클라우드에 등재하면, 호출량에 따라 서버가 자동 증설 가동되어 종량 요금만 물리는 실행 패턴입니다." }
     },
   {
     id: "hypervisor_virtualization",
@@ -29291,7 +29291,7 @@
       text: "VMware ESXi is a bare-metal hypervisor virtualization tool widely used in data centers."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "하이퍼바이저 가상화", explanation: "하드웨어 물리 장치 최하단 또는 호스트 OS 링 위에 가상 컴퓨터 모니터러인 하이퍼바이저 소프트웨어를 설치하여, CPU 메모리 등의 하부 리소스를 여러 대의 Guest VM(가상 머신) 운영체제에 완전 물리 할당해 주는 가상화 기법입니다." }
     },
   {
     id: "cloud_computing_saas",
@@ -29350,7 +29350,7 @@
       text: "Our issue tracking web tool operates on a cloud computing saas subscription model."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "SaaS", explanation: "인터넷 서버 공간에 구축되어 구동되는 완제품 형태의 소프트웨어를 사용자가 별도의 내 컴퓨터 PC 설치 없이 웹 브라우저 접속을 통해 정기 구독료 방식으로 소비하는 클라우드 유통 모델입니다." }
     },
   {
     id: "cloud_computing_paas",
@@ -29409,7 +29409,7 @@
       text: "Deploying our Java app to a cloud computing paas allowed us to focus on SQL code rather than OS updates."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "PaaS", explanation: "개발자가 코드를 업로드하여 동작시킬 수 있는 OS 런타임, 연동 데이터베이스 플랫폼, 보안 라이브러리 등이 사전에 정돈되어 제공되는 클라우드 환경으로, 인프라 관리 고충 없이 제작에만 매달리게 돕는 서비스입니다." }
     },
   {
     id: "cloud_computing_iaas",
@@ -29468,7 +29468,7 @@
       text: "We rented five virtual machines from a cloud computing iaas provider to build a custom DB cluster."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "IaaS", explanation: "클라우드 서비스 공급자 측에서 가상 리소스인 하드웨어 컴퓨터 연산력(vCPU), 가상 하드디스크 볼륨, 전용 스위치 가상 네트워크 대역 등을 날것의 원재료 형태로 임대 빌려주는 가장 자유도 높은 구조(IaaS)입니다." }
     },
   {
     id: "binary_search_tree_bst",
@@ -29527,7 +29527,7 @@
       text: "A binary search tree_bst allows search, insertion, and deletion operations to run in logarithmic time on average."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "이진 탐색 트리", explanation: "중앙 부모 노드를 기점으로 좌측 서브트리의 모든 잎 노드들의 값은 부모보다 작게 채우고, 우측 서브트리의 값들은 부모보다 크게 채우는 수학적 규격화로 연산 속도를 O(log n)까지 단축하는 이진 트리(BST) 구조입니다." }
     },
   {
     id: "insertion_sort_algorithm",
@@ -29586,7 +29586,7 @@
       text: "The insertion sort algorithm is highly efficient for sorting nearly sorted datasets."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "삽입 정렬", explanation: "정렬 대상 배열을 이미 질서 정연해진 앞부분 그룹과 정리가 더 필요한 뒷부분 그룹으로 나눈 뒤, 미정렬된 전방 원소 한 개를 앞선 그룹 내의 최적 자리를 찾아 '삽입'하는 비교식 단순 정렬 알고리즘입니다." }
     },
   {
     id: "breadth_first_search_bfs",
@@ -29645,7 +29645,7 @@
       text: "We implemented a breadth first search bfs using a queue to find the shortest path in an unweighted routing graph."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "너비 우선 탐색", explanation: "그래프 자료구조에서 현재 출발점이 속한 계층(동일 깊이 홉)에 속한 모든 인접 이웃 노드들을 가로 방향으로 먼저 큐(Queue)에 넣어 선입선출 방문한 뒤, 한 계층 더 밑으로 파고드는 넓이 탐색 공식(BFS)입니다." }
     },
   {
     id: "dijkstra_shortest_path",
@@ -29705,7 +29705,7 @@
       text: "The routing daemon runs dijkstra shortest path algorithm to recalculate the optimal packet forward path."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "다익스트라 알고리즘", explanation: "가중치가 표기된 유향 그래프에서, 시작점이 되는 단일 지점으로부터 다른 모든 종점 노드들까지 도달하는 최소 비용 경로를 최단 도식화 계산하는 대표적 길 찾기 알고리즘입니다." }
     },
   {
     id: "machine_learning_supervised",
@@ -29764,7 +29764,7 @@
       text: "We used machine learning supervised models to classify SQL query logs into malicious or safe categories."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "지도 학습", explanation: "알고리즘을 훈련시킬 때 정답에 해당하는 명확한 설명 레이블(Label) 값이 붙은 정렬된 훈련 데이터를 엮어 기계에 전달함으로써 신규 문제의 정답 결과를 알아맞히게 유도하는 머신러닝 방식입니다." }
     },
   {
     id: "natural_language_processing_nlp",
@@ -29823,7 +29823,7 @@
       text: "Generative search agents rely heavily on natural language processing nlp to translate user prompts into SQL queries."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "자연어 처리", explanation: "일상생활에서 사람이 자유롭게 언어 생활로 영위하는 비정형 말소리 및 텍스트 정보(자연어)를 컴퓨터 기계가 정형 데이터로 분석하여 문맥 이해, 감성 분류, 기계 번역을 가능케 하는 AI 공학 기술(NLP)입니다." }
     },
     {
     id: "service_portfolio_management",
@@ -29882,7 +29882,7 @@
       text: "Service portfolio management evaluates the business case for new SQL support offerings."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "서비스 포트폴리오 관리", explanation: "IT 서비스 업체가 개발 준비 중인 서비스, 현재 고객이 사용 중인 실시간 서비스, 용도 폐기되어 회수된 이전 규격을 포괄해 투자 타당성을 검토하고 조율하는 ITIL 관리 절차입니다." }
     },
   {
     id: "service_catalog_management",
@@ -29939,7 +29939,7 @@
       text: "We added the cloud database backup utility to our service catalog management system."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "서비스 카탈로그 관리", explanation: "현재 고객이나 내부 팀원들이 일상적으로 요청하여 활발하게 제공받을 수 있는 정돈된 IT 서비스 항목 목록(카탈로그)을 정확하고 사용하기 쉽게 지속 업데이트하는 ITIL 관리 방식입니다." }
     },
   {
     id: "capacity_management_process",
@@ -29998,7 +29998,7 @@
       text: "Our capacity management process triggered an alert to scale up SSD storage before it reached 90% capacity."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "용량 관리", explanation: "IT 시스템의 하드웨어 리소스 처리 파워나 네트워크 대역폭, 스토리지 가용 공간을 최적화된 최소 단가 비용으로 설계 및 예측하여 현재와 미래의 비즈니스 트래픽 규모에 항시 맞추는 ITIL 과정입니다." }
     },
   {
     id: "availability_management_process",
@@ -30057,7 +30057,7 @@
       text: "Database clustering configuration falls under the design phase of availability management process."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "가용성 관리", explanation: "제공하는 서비스 인프라의 평균 무고장 가동 시간, 신속한 유지보수 조치력 등의 가용성 백분율 수치들을 설계 단계부터 보장해 고객과 약조한 SLA 신뢰 가치를 지키기 위한 관리 프로세스입니다." }
     },
   {
     id: "it_service_continuity_management",
@@ -30116,7 +30116,7 @@
       text: "The cross-region database backup schedule is verified annually under IT service continuity management."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "IT 서비스 연속성 관리", explanation: "예측하지 못한 자연재해, 테러, 혹은 데이터 센터 완전 셧다운 시 비즈니스 업무 정지 기간을 감당 가능한 수 시간 이내로 축소하기 위해 복구 대안 및 DR 센터 가동 시나리오를 점검하는 프로세스(ITSCM)입니다." }
     },
   {
     id: "information_security_management_system",
@@ -30176,7 +30176,7 @@
       text: "Earning the ISO 27001 certificate proves that our database server operations follow a strict information security management system."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "정보 보호 관리 체계", explanation: "조직 내 기밀 정보들의 기밀성 보장, 변경 유실 예방(완전성), 필요 시 즉시 접근 능력(가용성)이라는 3대 가치를 사수하고 법률 준수를 관리하기 위해 ISO 27001 등 공인 표준에 입각해 세운 보안 규정 체계(ISMS)입니다." }
     },
   {
     id: "incident_management_process",
@@ -30235,7 +30235,7 @@
       text: "We followed the incident management process to reboot the SQL service immediately after it crashed."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "인시던트 관리", explanation: "예기치 못한 장애가 일어나 IT 서비스에 돌발 셧다운이나 응답 저하를 겪을 때, 일시적 우회 대책을 포함해 최단 시간 내에 서비스를 원래 정상 운영 궤도로 회복시켜 유저 이탈을 막는 데 주력하는 ITIL 활동입니다." }
     },
   {
     id: "problem_management_process",
@@ -30294,7 +30294,7 @@
       text: "Our problem management process team identified a slow SQL JOIN query as the root cause of the memory leaks."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "문제 관리", explanation: "여러 번 반복되는 인시던트 에러들의 현상 속에 숨겨진 고질적인 시스템 설계상의 근본 취약점 원인(Root Cause)을 깊이 분석하고 픽스하여, 향후 동일 고장 발생률을 원천 제거하는 ITIL 품질 개선 활동입니다." }
     },
   {
     id: "release_and_deployment_management",
@@ -30351,7 +30351,7 @@
       text: "Automated CI/CD pipelines have accelerated the release and deployment management process."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "릴리즈 및 배포 관리", explanation: "철저히 테스트와 승인 검사를 통과한 신규 애플리케이션 코딩 산출물이나 수정 패치 바이너리 파일들을 정식 패키지 세트로 조립해 고객이 운용하는 실서버 영역에 안전 배치해 통수시키는 관리 과정입니다." }
     },
   {
     id: "service_asset_and_configuration_management",
@@ -30410,7 +30410,7 @@
       text: "We verified server license ownership using the tools provided by our service asset and configuration management framework."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "서비스 자산 및 구성 관리", explanation: "IT 서비스 인도에 필요한 서버 하드웨어 대수, 소프트웨어 라이선스 만료일 등 모든 유무형 자산과 시스템 부속(CI)들의 세부 이력 정보와 연동 지형도를 최신으로 확인하고 장부에 기록하는 과정(SACM)입니다." }
     },
   {
     id: "request_fulfilment_process",
@@ -30469,7 +30469,7 @@
       text: "The service desk team resolved the password reset request following the request fulfilment process."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "요청 이행", explanation: "비정상 오류나 시스템 이상 복구(인시던트)와 달리, PC 부품 신규 지급, 계정 암호 초기화 같은 고객 사용자의 반복적이고 표준화된 정식 서비스 청구 요구(Service Request)를 빠르고 친절하게 해결해 주는 순환 절차입니다." }
     },
   {
     id: "access_management_process",
@@ -30528,7 +30528,7 @@
       text: "Revoking SQL write access for an employee who transferred departments is handled by our access management process."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "접근 관리", explanation: "정보 보안 지침 규정에 근거하여 사내 내부 업무 인원이나 외부 외주 요원이 보유한 신분 권한에 일치하는 적합 리소스에만 로그인 및 열람이 가능하도록 방패벽을 열어주고 권한 회수를 감독하는 프로세스입니다." }
     },
   {
     id: "continual_service_improvement",
@@ -30587,7 +30587,7 @@
       text: "We initiated a continual service improvement cycle to reduce latency on DB API responses."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "지속적 서비스 개선", explanation: "비즈니스 지형 변화에 신속 발맞추어, 현재 정립된 IT 서비스 지표, 시스템 튜닝 포인트, 인적 프로세스를 7단계 개선 절차 등의 피드백 순환 구도를 활용해 계속 품질을 다듬어 가는 수명 주기 단계(CSI)입니다." }
     },
   {
     id: "deming_cycle_pdca",
@@ -30647,7 +30647,7 @@
       text: "The security team uses the Deming cycle to review and upgrade our threat protection rules every quarter."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "데밍 사이클", explanation: "품질 관리 사상가 데밍이 널리 전파한 연속 개선 모델로, 목표 기획(Plan) - 실천 실행(Do) - 성과 측정 검토(Check) - 개선 반영(Act)이라는 4단계 피드백 순환 과정을 반복하여 품질을 진일보시키는 방법론입니다." }
     },
   {
     id: "total_quality_management_tqm",
@@ -30706,7 +30706,7 @@
       text: "Total quality management tqm guidelines require setting up feedback loops with both end users and QA engineers."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "전사적 품질 경영", explanation: "조직 내의 몇몇 테스터 요원들만 품질 검사를 하는 수준에 머물지 않고, 최고경영진부터 말단 생산 직원에 이르기까지 회사 전 직원이 한마음으로 고객 만족을 위해 불량을 줄이고 공정을 개선해 가는 경영 기법(TQM)입니다." }
     },
   {
     id: "six_sigma_methodology",
@@ -30766,7 +30766,7 @@
       text: "We used Six Sigma methodology tools to identify the cause of packet loss in the router gateway."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "식스 시그마", explanation: "모든 프로세스의 편차와 에러율을 통계적으로 정밀 측정하여 백만 개 제품 중 단 3.4개의 불량률 범위 내로 제어하는 정밀 품질 개선 운동으로, 정의(D) - 측정(M) - 분석(A) - 개선(I) - 통제(C) 단계를 축으로 합니다." }
     },
   {
     id: "kaizen_continuous_improvement",
@@ -30826,7 +30826,7 @@
       text: "Conducting a brief weekly retro helped our development team embrace the Kaizen philosophy."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "카이젠", explanation: "작업장의 현장 생산 실무자들이 주도 세력이 되어, 값비싼 최신기계 도입 이전에 업무 동선 단축, 공정 낭비 배제 등의 작은 아이디어들을 끊임없이 제안하여 조금씩 업무 체질을 개선해 나가는 일본식 혁신 사상입니다." }
     },
   {
     id: "just_in_time_production",
@@ -30886,7 +30886,7 @@
       text: "Just-in-time production rules prevent us from deploying costly redundant cloud compute nodes before customer traffic rises."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "적기 공급 생산", explanation: "필요한 원재료나 반제품을 '딱 필요한 순간에, 필요한 양만, 필요한 곳에' 가져다 놓고 즉시 가공하게 통제하여, 창고 내에 악성 재고가 쌓이고 자금이 묶이는 낭비 요소를 원천 봉쇄하는 린 생산 관리 시스템(JIT)입니다." }
     },
   {
     id: "kanban_board_system",
@@ -30945,7 +30945,7 @@
       text: "We set up a digital kanban board system in our project space to track SQL optimization tasks."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "칸반", explanation: "제조 라인이나 애자일 소프트웨어 협업 진행 시, 작업 카드인 '칸반'을 대시보드 열(대기, 작업 중, 검수, 완료)에 붙이고, 현재 가동 중인 작업(WIP) 대수를 엄격히 락 제한하여 리드타임을 짧게 관리하는 시각화 도구입니다." }
     },
   {
     id: "corporate_social_responsibility_csr",
@@ -31005,7 +31005,7 @@
       text: "Recycling old hardware in our data centers is part of our corporate social responsibility csr initiative."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "기업의 사회적 책임", explanation: "영리 단체인 기업이 주주를 위한 순수 이윤 창출 활동에 머물지 않고, 환경 보호 정책 준수, 취약 계층 복지 지원, 윤리 경영 준수 등 사회 전반에 대해 공익적 환원을 행해야 한다는 실천 가치(CSR)입니다." }
     },
   {
     id: "business_model_canvas",
@@ -31064,7 +31064,7 @@
       text: "We used the business model canvas to design the pricing tiers of our new SQL translation software."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "비즈니스 모델 캔버스", explanation: "스타트업이나 신사업 구상 시 비즈니스의 생리 구조를 핵심 파트너, 가치 제안, 고객군, 유통 채널, 수익 모델 등 9가지의 본질적 기둥 칸으로 분류해 큰 보드판에 한눈에 가시화해 정리하는 비즈니스 기획 캔버스(BMC)입니다." }
     },
   {
     id: "swot_analysis_framework",
@@ -31123,7 +31123,7 @@
       text: "A SWOT analysis framework helped us recognize that our SQL tool's offline capacity is a huge strength."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "SWOT 분석", explanation: "회사의 전략을 도출할 때 활용하는 분석 툴로, 내부적 역량인 강점(Strengths)과 약점(Weaknesses), 외부적 여건 요인인 기회(Opportunities)와 위협(Threats)의 4대 요소 사분면을 교차 대조하는 기법입니다." }
     },
   {
     id: "porter_five_forces_model",
@@ -31183,7 +31183,7 @@
       text: "We used Porter's five forces model to evaluate the threat of new database startup entries."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "포터의 5대 경쟁 요인 모델", explanation: "마이클 포터 교수가 고안한 시장 경쟁 분석 도구로, 기존 시장 내의 경쟁 강도, 신규 참여 기업의 진입 장벽, 대체 상품의 위협, 납품업자의 협상력, 구매 고객의 협상력이라는 5가지 힘을 평가해 매력도를 측정합니다." }
     },
   {
     id: "boston_consulting_group_matrix",
@@ -31244,7 +31244,7 @@
       text: "The board looked at the BCG matrix and decided to reinvest Cash Cow profits into Star AI projects."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "BCG 매트릭스", explanation: "자사의 여러 상품이나 개별 사업 유닛을 '시장 성장 가능성'과 '경쟁 지분율'의 2축에 따라 스타(Star), 캐시카우(Cash Cow), 퀘스천마크(Question Mark), 독(Dog)의 사분면 영역으로 맵핑하여 투자 완급을 설계하는 도구입니다." }
     },
   {
     id: "product_portfolio_management",
@@ -31303,7 +31303,7 @@
       text: "Regular product portfolio management reviews prevent redundant software services from co-existing."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "제품 포트폴리오 관리", explanation: "자사 브랜드 하에 산재된 여러 개 개별 제품 및 파생 파트의 시장 분포도를 일목요연하게 짚어내고, 시장 도태 위험을 상쇄할 성장기 신제품에 회사 자원을 배분하여 장기 안정적 마진율을 도모하는 통제(PPM)입니다." }
     },
   {
     id: "key_goal_indicator_kgi",
@@ -31362,7 +31362,7 @@
       text: "Our KGI for the SQL learning app is to achieve 10,000 monthly active users by year-end."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "핵심 목표 지표", explanation: "조직이나 진행 프로젝트가 궁극적으로 획득하고자 정한 전략적 결과물 상태를 매출액 달성, 특정 시장 점유율 안착처럼 명시적인 숫자로 나타내어 결과를 사후 검수하는 잣대(KGI)입니다." }
     },
     {
     id: "critical_success_factor_csf",
@@ -31421,7 +31421,7 @@
       text: "Ensuring 99.99% database uptime is a critical success factor csf for our financial app launch."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "핵심 성공 요인", explanation: "특정 프로젝트나 기업 전략적 성과 지표(KGI)를 최종 쟁취하기 위해, 부서원들이 가장 심혈을 기울여 달성하고 장악해야만 하는 핵심적인 필요 요건이나 전략적 중점 활동 분야(CSF)입니다." }
     },
   {
     id: "enterprise_resource_planning_erp",
@@ -31480,7 +31480,7 @@
       text: "Integrating our SQL database with the corporate enterprise resource planning erp system synchronized customer accounts."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "전사적 자원 관리", explanation: "기업 내의 독립 부서들이 각자 사용하던 자재 창고, 경리 장부, 인사 기록 시스템을 통합 관리하도록 단일 공통 DB 테이블 위에 설계한 코어 업무용 기간계 애플리케이션 프레임워크(ERP)입니다." }
     },
   {
     id: "supply_chain_management_scm",
@@ -31539,7 +31539,7 @@
       text: "Adopting supply chain management scm software reduced our raw component inventory holding time by 40%."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "공급망 관리", explanation: "부품 제조 원자재의 최초 구매 조달 단계부터 본사 공장 조립 생산, 도소매 유통망 운송, 그리고 최종 일반 소비자의 수령지에 이르기까지 전체 물류 동선의 낭비와 대기 시간을 축소하는 통합 관리 체계(SCM)입니다." }
     },
   {
     id: "customer_relationship_management_crm",
@@ -31598,7 +31598,7 @@
       text: "We migrated customer database records to a cloud-based customer relationship management crm software."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "고객 관계 관리", explanation: "회사의 마케터와 서비스 센터가 각 소비자의 생일 등의 신상 정보, 과거 구매 목록, 애프터서비스 불만 문의 내역 등을 데이터베이스에 누적 관리하여 타겟 마케팅 및 평생 고객 충성도를 이끌어내는 체제(CRM)입니다." }
     },
   {
     id: "business_to_business_b2b",
@@ -31658,7 +31658,7 @@
       text: "Our SQL licensing service is exclusively designed for business to business b2b software companies."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "B2B", explanation: "거래 계약을 진행하고 재화나 기술을 납품하는 과정에서, 공급 주체와 구매 수요 주체 양측이 모두 회사 또는 법인 기관 관계인 비즈니스 거래 형태(기업 간 거래)입니다." }
     },
   {
     id: "business_to_consumer_b2c",
@@ -31718,7 +31718,7 @@
       text: "We developed a mobile payment app designed for the business to consumer b2c retail market."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "B2C", explanation: "기업이 자사 생산 제품 또는 온라인 소스 콘텐츠를 상점에 등재하여, 중간 중개 도매상을 건너뛰고 최하단 최종 일반 소비자(개인)에게 직접 소매 거래를 트는 사업 구조(기업과 소비자 간 거래)입니다." }
     },
   {
     id: "consumer_to_consumer_c2c",
@@ -31778,7 +31778,7 @@
       text: "Online auction sites are the most famous examples of the consumer to consumer c2c business model."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "C2C", explanation: "오픈마켓 중개 브릿지나 모바일 중고 거래 앱 마켓플레이스를 통하여, 사업자 등록증이 없는 일반 개인 유저들 상호 간에 물품을 직접 흥정 거래하고 송금하는 거래 방식(소비자 간 거래)입니다." }
     },
   {
     id: "earned_value_management_evm",
@@ -31837,7 +31837,7 @@
       text: "Using earned value management evm, the project manager determined that we are under budget but slightly behind schedule."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "획득 가치 관리", explanation: "프로젝트 관리 중 예산 소모와 공정 진척도를 객관적 수치로 가시화하기 위해, 계획가치(PV), 실제원가(AC), 획득가치(EV)라는 회계적 화폐 가치 단위로 환산하여 진도를 모니터링하는 기법(EVM)입니다." }
     },
   {
     id: "project_management_body_of_knowledge",
@@ -31897,7 +31897,7 @@
       text: "Our team structure aligns closely with the project management body of knowledge guidelines."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "PMBOK", explanation: "미국 프로젝트 관리 협회(PMI)에서 제정 및 주기 개정하는 사실상의 세계 업계 지표 표준 지침서로, 프로젝트를 완수하기 위해 수용해야 할 10대 프로세스 지식 체계와 매뉴얼을 담고 있습니다." }
     },
   {
     id: "gantt_chart_scheduling",
@@ -31956,7 +31956,7 @@
       text: "We updated the gantt chart scheduling to account for three days of backend integration delays."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "간트 차트", explanation: "각각의 실무 태스크들이 시작 및 중단되는 기한과 예상 소요 기간을 세로축 태스크명과 가로축 날짜 타임라인에 맞춰 직관적인 막대 그래픽(Bar) 형태로 나열해 진도를 파악하는 공정 관리표입니다." }
     },
   {
     id: "database_normalization_1nf",
@@ -32013,7 +32013,7 @@
       text: "To satisfy the database normalization 1nf rule, we split the multi-valued phone_numbers string into individual rows."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "제1정규형", explanation: "관계형 데이터베이스 논리 설계 시, 테이블 속 모든 컬럼 속성에 담긴 행 값들이 더 이상 나눌 수 없는 단 하나의 원자성(Atomic Value) 값으로만 기록되도록 정돈해 다중값 중복을 없앤 기본 정규화(1NF) 상태입니다." }
     },
   {
     id: "database_normalization_2nf",
@@ -32070,7 +32070,7 @@
       text: "We achieved database normalization 2nf by moving order details into a separate table to resolve partial dependencies."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "제2정규형", explanation: "제1정규형 요건을 완전 통과한 상태에서, 기본키(PK)가 복수 컬럼으로 엮인 융합 키일 때 기본키의 일부분에만 함수 종속되어 독립 기재되는 컬럼(부분 함수 종속)들을 해체해 완전 함수 종속 구조로 전향한 상태(2NF)입니다." }
     },
   {
     id: "database_normalization_3nf",
@@ -32127,7 +32127,7 @@
       text: "Moving the manager_name field out of the department_id mapping satisfies database normalization 3nf."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "제3정규형", explanation: "제2정규형 규칙을 준수하는 중에, 키가 아닌 일반 속성 컬럼 A가 다른 일반 속성 컬럼 B에 종속되고 B가 다시 주키(PK)에 연결되는 간접 징검다리 종속(이행적 함수 종속)을 해체해 독자 테이블로 쪼갠 상태(3NF)입니다." }
     },
   {
     id: "database_normalization_bcnf",
@@ -32185,7 +32185,7 @@
       text: "We restructured the course-instructor schedule table to conform to database normalization bcnf."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "BCNF", explanation: "제3정규형을 훨씬 까다롭게 강화한 규칙으로, 테이블 내에 존재하는 모든 함수 종속 관계(X -> Y)가 성립할 때마다 그 결정자 X는 테이블의 무결한 후보 키(Candidate Key) 속성이어야만 성립하는 강한 정규화 상태입니다." }
     },
   {
     id: "referential_integrity_rule",
@@ -32242,7 +32242,7 @@
       text: "Our database engine enforced the referential integrity rule, blocking us from deleting a customer who has pending orders."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "참조 무결성", explanation: "관계형 데이터베이스에서 데이터를 저장, 갱신할 때 테이블 관계를 보장하는 원칙으로, 자식 테이블의 특정 행에 표기된 외래키(FK) 값은 반드시 그에 매칭되는 부모 테이블 주키 행이 무조건 현존해야 함을 지시합니다." }
     },
   {
     id: "entity_relationship_diagram_erd",
@@ -32300,7 +32300,7 @@
       text: "The engineering team reviewed the entity relationship diagram erd to plan the new database migrations."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "ERD", explanation: "데이터베이스 모델링 작업 중, 설계할 주요 실체 데이터 군집(Entity), 실체 속의 세부 항목(Attribute), 실체들 간의 연계 선(Relationship) 관계를 다이어그램 형태로 나타낸 개체 관계 설계도입니다." }
     },
   {
     id: "database_schema_definition",
@@ -32357,7 +32357,7 @@
       text: "We updated the database schema definition to add a verified_at timestamp to the users table."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "데이터베이스 스키마", explanation: "데이터베이스가 담고 있는 테이블 설계 명세, 각 컬럼의 자료형 규격, 테이블 간 키 관계 제약조건, 가상 보기 뷰 등의 전체 논리 구조와 물리 보관 방식의 청사진을 총칭하는 논리적 골격 정보입니다." }
     },
   {
     id: "database_data_dictionary",
@@ -32415,7 +32415,7 @@
       text: "Querying the database data dictionary system tables retrieves the maximum length allowed for the varchar columns."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "데이터 사전", explanation: "데이터베이스 엔진 내부에서 동작하는 시스템 관리용 테이블군으로, 전체 테이블명, 소유자 ID, 사용자별 읽기 권한, 컬럼 설명 등 메타데이터 정보를 저장하고 있어 일반 사용자는 조회만 가능합니다." }
     },
   {
     id: "structured_query_language_ddl",
@@ -32472,7 +32472,7 @@
       text: "CREATE TABLE is one of the most common structured query language ddl statements."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "데이터 정의 언어", explanation: "관계형 데이터베이스에서 테이블 틀을 새로 짜거나(CREATE), 기존 데이터 컬럼 사양을 고치고(ALTER), 노후화된 인덱스 구조를 통째 영구 제거하는(DROP) 등의 구조 제어 목적 SQL 명령어군(DDL)입니다." }
     },
   {
     id: "structured_query_language_dml",
@@ -32529,7 +32529,7 @@
       text: "Adding new student records requires writing a structured query language dml statement like INSERT INTO."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "데이터 조작 언어", explanation: "데이터베이스 내의 각 테이블 행에 담겨 있는 실제 알맹이 데이터를 선별 조회하고(SELECT), 신규 행을 추가 입력하며(INSERT), 기존 수치를 정정하고(UPDATE), 행을 지우는(DELETE) 조작 목적의 SQL 구문군(DML)입니다." }
     },
   {
     id: "structured_query_language_dcl",
@@ -32586,7 +32586,7 @@
       text: "The administrator runs a structured query language dcl command to GRANT select permissions to the developer."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "데이터 제어 언어", explanation: "데이터베이스의 보안 정책 관리를 주도하기 위해 특정 사용자 접속 계정에 특정 테이블 읽기 권한을 이양해 주거나(GRANT), 이양했던 실행 권한을 다시 강제 회수(REVOKE)하는 제어용 SQL 문장군(DCL)입니다." }
     },
   {
     id: "database_transaction_savepoint",
@@ -32644,7 +32644,7 @@
       text: "We set a database transaction savepoint before updating the user balance to revert easily if the subsequent order insert fails."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "세이브포인트", explanation: "한 번에 처리되는 트랜잭션의 여러 실행 단계 사이에 표시 깃발을 꽂아 두어, 뒷단 작업에서 예외 오류가 나 복구할 때 앞에서 정상 통과된 내용까지 날리지 않고 표시 깃발 지점(Savepoint)까지만 선택 롤백하게 해 줍니다." }
     },
   {
     id: "database_concurrency_lock_shared",
@@ -32702,7 +32702,7 @@
       text: "We used a database concurrency lock shared to read customer invoices while preventing other threads from modifying them."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "공유 잠금", explanation: "어느 한 트랜잭션이 특정 데이터를 독서용으로 읽고 있을 때 다른 동료 트랜잭션의 읽기 접근(Shared Lock)은 병렬적으로 승인하되, 그 조회가 끝날 때까지 데이터에 어떤 쓰기 수정 가공도 못 하게 막아주는 잠금(S-Lock)입니다." }
     },
   {
     id: "database_concurrency_lock_exclusive",
@@ -32760,7 +32760,7 @@
       text: "An database concurrency lock exclusive is held during the UPDATE statement to safeguard account debit routines."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "배타적 잠금", explanation: "어느 한 트랜잭션이 특정 데이터 행을 갱신하거나 지우기 위해(Exclusive Lock) 쓰기 독점권을 가졌을 때, 작업이 마칠 때까지 다른 어떠한 동료 세션의 읽기 공유 잠금이나 쓰기 접근도 완벽히 불허 차단하는 잠금(X-Lock)입니다." }
     },
   {
     id: "database_concurrency_lock_intent",
@@ -32818,7 +32818,7 @@
       text: "The database engine automatically places a database concurrency lock intent on the table before granting a row-level write lock."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "의도 잠금 (인텐트 락)", explanation: "테이블 내의 행에 대해 공유 또는 배타적 잠금을 획득하려는 의도를 나타내는 테이블 수준의 잠금 구조입니다." }
     },
     {
     id: "optimistic_concurrency_control_occ",
@@ -32876,7 +32876,7 @@
       text: "We configured optimistic concurrency control occ in Hibernate to avoid DB thread starvation."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "낙관적 동시성 제어 (OCC)", explanation: "데이터 업데이트 시 충돌이 거의 발생하지 않는다고 가정하고, 잠금을 걸지 않은 채 커밋 시 버전 비교 등으로 데이터 정합성을 확인하는 동시성 제어 기법입니다." }
     },
   {
     id: "pessimistic_concurrency_control_pcc",
@@ -32934,7 +32934,7 @@
       text: "Pessimistic concurrency control pcc is essential for bank account transfers to guarantee zero balance anomalies."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "비관적 동시성 제어 (PCC)", explanation: "데이터 충돌이 빈번하게 발생한다고 가정하고, 데이터를 읽는 시점부터 배타적 잠금을 획득하여 트랜잭션이 완료될 때까지 충돌을 방지하는 동시성 제어 기법입니다." }
     },
   {
     id: "database_indexing_hash",
@@ -32991,7 +32991,7 @@
       text: "Memory engine tables in MySQL use hash indexing by default."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "해시 인덱스", explanation: "해시 함수를 사용하여 특정 키에 대응하는 행의 물리적 위치를 빠르게 계산하는 인덱스 구조입니다. 등가 비교(=) 검색은 매우 빠르지만, 범위 검색에는 적합하지 않습니다." }
     },
   {
     id: "database_indexing_clustered",
@@ -33048,7 +33048,7 @@
       text: "The primary key of an InnoDB table automatically acts as a database indexing clustered key."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "클러스터형 인덱스", explanation: "데이터베이스 테이블의 물리적인 데이터 정렬 순서가 인덱스 키 순서와 일치하도록 정렬하여 저장하는 인덱스입니다. 테이블당 단 하나만 생성할 수 있으며, 리프 노드가 실제 데이터 페이지입니다." }
     },
   {
     id: "database_indexing_nonclustered",
@@ -33106,7 +33106,7 @@
       text: "We created a database indexing nonclustered key on the email column to optimize user login lookups."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "비클러스터형 인덱스", explanation: "실제 데이터의 물리적 정렬 순서와는 다른 논리적 키와 포인터(행 위치)를 가진 인덱스 구조입니다. 테이블당 여러 개를 생성할 수 있습니다." }
     },
   {
     id: "database_query_execution_plan",
@@ -33165,7 +33165,7 @@
       text: "Looking at the database query execution plan, we noticed it was doing a full table scan instead of using our index."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "쿼리 실행 계획", explanation: "SQL 쿼리를 처리하기 위해 데이터베이스 옵티마이저가 생성한 하위 수준의 구체적인 데이터 검색 경로 및 작업 단계를 나타내는 실행 계획입니다. EXPLAIN 문으로 확인합니다." }
     },
   {
     id: "database_table_scan_full",
@@ -33223,7 +33223,7 @@
       text: "A missing index on user_status caused a database table scan full, blocking the CPU queue."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "전체 테이블 스캔 (풀 테이블 스캔)", explanation: "인덱스를 사용하지 않고 테이블의 첫 번째 행부터 마지막 행까지 모든 물리 데이터를 순차적으로 읽어 조건에 부합하는 데이터를 찾는 I/O 밀집형 작업입니다." }
     },
   {
     id: "database_index_scan_full",
@@ -33280,7 +33280,7 @@
       text: "The query planner performed a database index scan full because the SELECT list requested fields covered by the composite index."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "전체 인덱스 스캔", explanation: "특정 키를 직접 찾는 대신 인덱스 트리의 모든 리프 노드를 처음부터 끝까지 스캔하는 작업입니다. 테이블 전체 스캔보다는 가볍지만, 특정 범위나 단일 키 검색보다 느립니다." }
     },
   {
     id: "database_index_seek",
@@ -33337,7 +33337,7 @@
       text: "We optimized the query, turning the slow scan into a fast database index seek."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "인덱스 검색 (인덱스 시크)", explanation: "인덱스의 B-Tree 구조를 활용하여 특정 키값에 기초해 원하는 데이터의 물리적 위치로 직접 점프하여 검색하는 가장 효율적인 인덱스 조회 방식입니다." }
     },
   {
     id: "database_join_nested_loop",
@@ -33394,7 +33394,7 @@
       text: "The database planner selected database_join_nested_loop join because the orders table has a primary key index."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "중첩 루프 조인", explanation: "외부 드라이빙 테이블의 각 행에 대해 내부 피드라이빙 테이블을 반복하여 순회하며 조인 조건에 일치하는 데이터를 찾는 가장 기본적인 조인 알고리즘입니다. 외부 테이블이 작고 내부 테이블에 인덱스가 있을 때 가장 효율적입니다." }
     },
   {
     id: "database_join_hash",
@@ -33451,7 +33451,7 @@
       text: "For complex analytical reports, PostgreSQL often employs a database_join_hash join to crunch millions of records."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "해시 조인", explanation: "한쪽 테이블(보통 작은 쪽)의 데이터를 기반으로 메모리에 해시 테이블을 생성하고, 다른 쪽 테이블의 각 행을 해시 함수로 비교하면서 조인하는 알고리즘입니다. 인덱스가 없고 대용량인 테이블 간의 조인에 적합합니다." }
     },
   {
     id: "database_join_sort_merge",
@@ -33509,7 +33509,7 @@
       text: "If the database indexing clustered keys already sort both tables, a database_join_sort_merge join is selected automatically."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "정렬 병합 조인", explanation: "조인할 두 테이블을 조인 키 기준으로 각각 정렬한 후, 양쪽 포인터를 순차적으로 이동하면서 비교하여 조인하는 알고리즘입니다. 두 테이블이 이미 정렬되어 있는 경우 매우 빠릅니다." }
     },
   {
     id: "database_backup_full",
@@ -33566,7 +33566,7 @@
       text: "We perform a database backup full every Sunday night during low-traffic hours."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "전체 백업 (풀 백업)", explanation: "데이터베이스 내의 모든 데이터 객체, 테이블 구조, 로그, 시스템 설정 등을 포함하여 전체 데이터를 완벽하게 다른 물리적 저장 매체에 복제하여 저장하는 백업 방식입니다." }
     },
   {
     id: "database_backup_incremental",
@@ -33623,7 +33623,7 @@
       text: "We configure database backup incremental runs every 6 hours to minimize data loss risk."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "증분 백업", explanation: "가장 최근의 백업(전체 백업 또는 마지막 증분 백업) 이후에 생성 및 수정된 변경된 데이터만을 백업하는 방식입니다. 저장 공간과 시간을 절약하지만, 복구 시에는 모든 백업본을 순차적으로 적용해야 합니다." }
     },
   {
     id: "database_backup_differential",
@@ -33680,7 +33680,7 @@
       text: "A database backup differential is scheduled nightly, so recovery only requires Sunday's full file and yesterday's file."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "차분 백업 (차이 백업)", explanation: "마지막 '전체 백업' 이후에 변경된 모든 데이터를 백업하는 방식입니다. 복구 시에는 마지막 전체 백업과 최종 차분 백업 파일만 필요하므로 증분 백업보다 복구가 빠릅니다." }
     },
   {
     id: "database_recovery_point_objective",
@@ -33737,7 +33737,7 @@
       text: "Our business continuity team set a database recovery point objective of 1 hour for financial transaction tables."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "목표 복구 시점 (RPO)", explanation: "시스템 장애 발생 시 조직이 감수할 수 있는 데이터 손실의 최대 허용 기간을 의미하며, 백업 주기와 정책을 결정하는 기준이 됩니다." }
     },
   {
     id: "database_recovery_time_objective",
@@ -33794,7 +33794,7 @@
       text: "To meet a database recovery time objective of 15 minutes, we implemented automated failover scripts."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "목표 복구 시간 (RTO)", explanation: "시스템이나 서비스 장애 발생 후, 정상 가동 상태로 복구하기 위해 허용되는 최대 목표 시간을 의미합니다." }
     },
   {
     id: "database_point_in_time_recovery",
@@ -33851,7 +33851,7 @@
       text: "Database point in time recovery pitr saved us after a developer mistakenly ran a DELETE statement without a WHERE clause."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "시점 복구 (PITR)", explanation: "전체 백업과 연속적인 트랜잭션 로그를 결합하여, 과거의 특정 날짜 및 시각(분·초 단위)의 정확한 데이터베이스 상태로 복원하는 기술입니다." }
     },
   {
     id: "database_two_phase_commit",
@@ -33908,7 +33908,7 @@
       text: "We configured database two phase commit for bank transfers involving separate SQL instances."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "2단계 커밋 (2PC)", explanation: "분산 데이터베이스 환경에서 트랜잭션의 원자성을 보장하기 위한 프로토콜로, 준비(Prepare) 단계와 실행(Commit) 단계로 나누어 분산된 모든 노드의 일치된 커밋을 보장합니다." }
     },
   {
     id: "database_three_phase_commit",
@@ -33965,7 +33965,7 @@
       text: "The database three phase commit algorithm reduces split-brain locking risks in distributed cluster topologies."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "3단계 커밋 (3PC)", explanation: "2단계 커밋(2PC)의 동기식 블로킹 문제를 해결하기 위해, 예비 커밋(Pre-Commit) 단계와 타임아웃 메커니즘을 추가하여 비블로킹 상태를 지원하는 분산 트랜잭션 프로토콜입니다." }
     },
   {
     id: "cap_theorem_distributed",
@@ -34022,7 +34022,7 @@
       text: "According to the cap theorem distributed, during a network split we must choose between database consistency and availability."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "CAP 정리", explanation: "분산 시스템에서 일관성(Consistency), 가용성(Availability), 분할 허용성(Partition tolerance) 세 가지 특성을 모두 동시에 만족하는 것은 불가능하며, 최대 두 가지만 선택할 수 있다는 정리입니다." }
     },
   {
     id: "java_object_oriented_encapsulation",
@@ -34079,7 +34079,7 @@
       text: "We achieved java object oriented encapsulation by making member variables private and exposing public getters."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "캡슐화 (객체 지향)", explanation: "객체의 데이터(필드)와 그 데이터를 조작하는 행위(메서드)를 하나의 클래스로 묶고, private 등의 접근 제어자를 통해 외부로부터 직접적인 접근을 제한하여 내부 세부 구현을 숨기는 객체 지향 프로그래밍 기법입니다." }
     },
   {
     id: "java_object_oriented_inheritance",
@@ -34137,7 +34137,7 @@
       text: "In Java, every class implicitly uses java object oriented inheritance from the root Object class."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "상속 (객체 지향)", explanation: "기존의 상위 클래스(부모 클래스)의 필드와 메서드를 하위 클래스(자식 클래스)가 물려받아 재사용하거나 확장하여 새로운 기능을 정의하는 객체 지향 프로그래밍 기법입니다." }
     },
   {
     id: "java_object_oriented_polymorphism",
@@ -34195,7 +34195,7 @@
       text: "Using java object oriented polymorphism, the program calls draw() on a Shape interface without knowing if it's a Circle or Rectangle."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "다형성 (객체 지향)", explanation: "동일한 인터페이스나 부모 타입의 참조가 서로 다른 하위 클래스의 인스턴스를 가리킬 수 있게 하여, 동일한 메서드 호출이 실제 인스턴스에 따라 다르게 동작하도록 하는 성질입니다." }
     },
     {
     id: "java_interface_contract",
@@ -34252,7 +34252,7 @@
       text: "We defined a ConnectionPool java interface contract to standardize different database client plugins."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Java 인터페이스", explanation: "상수와 메서드 시그니처(추상 메서드) 등을 정의한 참조 타입으로, 구현 클래스가 반드시 준수해야 하는 행동 규칙(계약)을 강제하며 다중 상속을 지원하는 역할을 합니다." }
     },
   {
     id: "java_static_nested_class",
@@ -34309,7 +34309,7 @@
       text: "The Builder pattern is often implemented using a java_static_nested_class inside the target class."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "정적 중첩 클래스", explanation: "다른 외부 클래스 내부에 static 키워드로 선언된 클래스입니다. 외부 클래스의 인스턴스 없이도 단독으로 인스턴스화할 수 있으며 외부 클래스의 정적 멤버에만 접근할 수 있습니다." }
     },
   {
     id: "java_package_namespace",
@@ -34366,7 +34366,7 @@
       text: "We import classes from the java_package_namespace called java.util.concurrent to use thread pools."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Java 패키지", explanation: "관련된 클래스, 인터페이스, 애너테이션 등을 하나의 디렉터리로 그룹화하여 이름 공간의 충돌을 방지하고 관련 소스코드들을 효율적으로 관리하는 메커니즘입니다." }
     },
   {
     id: "java_access_modifier_private",
@@ -34423,7 +34423,7 @@
       text: "Using the java_access_modifier_private on the password field prevents unauthorized classes from reading it."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "private 접근 제어자", explanation: "가장 엄격한 Java의 접근 제어자로, 동일한 클래스 내부에서만 멤버(필드, 메서드)의 접근을 허용하고 외부 클래스나 상속받은 자식 클래스에서의 직접 접근을 제한하여 캡슐화를 지원합니다." }
     },
   {
     id: "java_access_modifier_protected",
@@ -34480,7 +34480,7 @@
       text: "We declared the DB connection factory method using java_access_modifier_protected so subclass extensions can override it."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "protected 접근 제어자", explanation: "동일한 패키지 내의 모든 클래스와 다른 패키지에 있더라도 해당 클래스를 상속받은 하위 자식 클래스에서만 멤버에 접근할 수 있도록 권한을 설정하는 Java 접근 제어자입니다." }
     },
   {
     id: "java_access_modifier_public",
@@ -34537,7 +34537,7 @@
       text: "We exposed the SQL connection manager class constructor using the java_access_modifier_public."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "public 접근 제어자", explanation: "어떤 패키지의 어떤 클래스에서든 제한 없이 접근할 수 있도록 가장 넓은 권한을 부여하는 Java 접근 제어자입니다." }
     },
   {
     id: "java_keyword_static",
@@ -34595,7 +34595,7 @@
       text: "Utility functions like Math.max() are marked with the java_keyword_static modifier."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "static 키워드", explanation: "인스턴스가 아닌 클래스 자체에 바인딩되는 변수나 메서드를 정의할 때 사용하는 키워드로, 프로그램 시작 시 메모리(메소드 영역)에 할당되어 모든 인스턴스가 단 하나의 메모리를 공유하도록 합니다." }
     },
   {
     id: "java_keyword_final",
@@ -34652,7 +34652,7 @@
       text: "We marked the database configuration path as a java_keyword_final String to prevent runtime alteration."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "final 키워드", explanation: "Java에서 변경 불가능한 개체를 정의하는 키워드로, 변수에 사용하면 상수가 되고, 메서드에 사용하면 오버라이딩을 금지하며, 클래스에 사용하면 상속을 할 수 없게 만듭니다." }
     },
   {
     id: "java_string_immutable",
@@ -34710,7 +34710,7 @@
       text: "Due to java_string_immutable, concatenating a string actually creates a brand new String object under the hood."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Java String 불변성", explanation: "Java의 String 객체는 메모리에 한 번 할당되면 내부 캐릭터 배열의 값이 변경될 수 없는 특성입니다. 이를 통해 문자열 풀의 재사용과 멀티스레드 환경에서의 안전성을 보장합니다." }
     },
   {
     id: "java_string_builder_buffer",
@@ -34768,7 +34768,7 @@
       text: "We swapped the legacy loop concatenation with a java_string_builder_buffer implementation to save memory."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "StringBuilder와 StringBuffer", explanation: "가변 문자열을 다룰 수 있는 클래스들로, 동적으로 문자열을 변경할 수 있습니다. StringBuffer는 동기화를 지원하여 멀티스레드 환경에서 안전하고, StringBuilder는 동기화를 처리하지 않아 싱글스레드 및 고성능 연산에 유리합니다." }
     },
   {
     id: "java_collections_arraylist",
@@ -34825,7 +34825,7 @@
       text: "We fetched the rows from SQL and loaded them into a java_collections_arraylist of custom Java objects."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "ArrayList", explanation: "Java 컬렉션 프레임워크의 대표적인 List 구현체로, 내부적으로 크기가 자동으로 조정되는 배열을 사용합니다. 인덱스(Index) 기반의 데이터 임의 접근이 O(1)로 빠르다는 특징이 있습니다." }
     },
   {
     id: "java_collections_hashmap",
@@ -34882,7 +34882,7 @@
       text: "We used a java_collections_hashmap to cache active user sessions in memory using user_id as the key."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "HashMap", explanation: "키-값(Key-Value) 쌍을 해시 테이블 구조로 저장하는 Java Map 인터페이스의 구현체입니다. 키의 중복을 허용하지 않으며 요소 탐색의 평균 시간 복잡도는 O(1)입니다." }
     },
   {
     id: "java_collections_linkedlist",
@@ -34939,7 +34939,7 @@
       text: "We implemented a Queue using java_collections_linkedlist since it implements the Deque interface."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "LinkedList", explanation: "Java에서 이중 연결 리스트(Doubly Linked List) 구조로 요소를 저장하는 컬렉션입니다. 요소의 빈번한 삽입과 삭제 연산은 O(1)로 매우 빠르지만, 임의의 인덱스로 접근하는 데는 O(N)의 시간이 걸립니다." }
     },
   {
     id: "java_collections_hashset",
@@ -34996,7 +34996,7 @@
       text: "To filter out duplicate transaction codes, we dumped them into a java_collections_hashset."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "HashSet", explanation: "중복 요소를 저장하지 않고 순서를 보장하지 않는 Java Set 인터페이스의 구현체입니다. 내부적으로 HashMap 구조를 사용하며 요소들을 해시 테이블을 통해 고유하게 관리합니다." }
     },
   {
     id: "java_exception_checked",
@@ -35053,7 +35053,7 @@
       text: "SQLException is a java_exception_checked, meaning we must wrap database connection calls in try-catch."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "체크 예외 (Checked Exception)", explanation: "Java 컴파일러가 컴파일 시점에 예외 처리(try-catch 또는 throws)를 강제하는 예외 유형입니다. Exception을 상속받지만 RuntimeException 계열이 아닌 예외들입니다." }
     },
   {
     id: "java_exception_unchecked",
@@ -35111,7 +35111,7 @@
       text: "NullPointerException is a classic java_exception_unchecked resulting from programming errors."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "언체크 예외 (Unchecked Exception)", explanation: "컴파일러가 확인하지 않고 실행 시점(Runtime)에 프로그램 논리적 오류 등으로 발생하는 예외입니다. RuntimeException 및 그 자식 클래스들이 해당하며, 예외 처리를 강제하지 않습니다." }
     },
   {
     id: "java_try_catch_finally",
@@ -35168,7 +35168,7 @@
       text: "We used a java_try_catch_finally block to close the database statement even if a SQLException occurred."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "try-catch-finally 블록", explanation: "Java의 예외 처리 기본 구조입니다. try 블록에 오류 가능성이 있는 코드를 작성하고, catch에서 발생한 예외를 처리하며, finally 블록은 예외 발생 여부와 상관없이 항상 마지막에 실행되어 정리 작업을 수행합니다." }
     },
   {
     id: "java_try_with_resources",
@@ -35226,7 +35226,7 @@
       text: "Using java_try_with_resources ensures that our database connection closes automatically without needing a finally block."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "try-with-resources 문", explanation: "Java 7에서 도입된 구문으로, AutoCloseable 인터페이스를 구현한 자원 객체(스트림, DB 커넥션 등)를 try 괄호 안에 선언하면, 블록을 벗어날 때 자원을 자동으로 반납(close)해 주는 메커니즘입니다." }
     },
   {
     id: "java_generics_type_safety",
@@ -35284,7 +35284,7 @@
       text: "Java generics type safety allows us to define List<String> to ensure only String elements are inserted."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Java 제네릭", explanation: "클래스나 메서드에서 사용할 타입을 매개변수화하여 정의하는 기법입니다. 컴파일 타임에 엄격한 타입 검사를 수행하므로, 런타임에 부적절한 타입 변환 오류(ClassCastException)를 방지하여 타입 안전성을 높여줍니다." }
     },
   {
     id: "java_functional_interface_annotation",
@@ -35341,7 +35341,7 @@
       text: "The Runnable interface is marked with the java_functional_interface_annotation to allow thread lambda declarations."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "함수형 인터페이스 애너테이션", explanation: "단 하나의 추상 메서드만을 가지고 있어 람다식으로 표현할 수 있는 인터페이스임을 명시하고 컴파일러가 이를 검증하도록 돕는 `@FunctionalInterface` 애너테이션입니다." }
     },
   {
     id: "java_functional_interfaces",
@@ -35398,7 +35398,7 @@
       text: "We passed a Predicate from the java_functional_interfaces collection to filter user records dynamically."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Java 표준 함수형 인터페이스", explanation: "Java 8의 java.util.function 패키지에서 제공하는 Predicate(조건 판별), Consumer(소비), Function(매핑), Supplier(공급) 등 표준적으로 정의된 범용 함수형 인터페이스들입니다." }
     },
   {
     id: "java_stream_terminal_operations",
@@ -35456,7 +35456,7 @@
       text: "We used collect(Collectors.toList()) as one of the java_stream_terminal_operations to convert the queried database records."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "스트림 최종 연산", explanation: "Java Stream API에서 스트림의 요소들을 처리하여 최종 결과(List, 수량, 값 등)를 산출하고 스트림 파이프라인을 닫는 연산입니다. collect(), forEach(), reduce() 등이 있습니다." }
     },
     {
     id: "java_thread_states_enum",
@@ -35513,7 +35513,7 @@
       text: "We checked java_thread_states_enum to debug why our DB connection worker was stuck in WAITING state."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Java 스레드 상태", explanation: "JVM 내 스레드의 라이프사이클 상태(NEW, RUNNABLE, BLOCKED, WAITING, TIMED_WAITING, TERMINATED)를 정의하는 Thread.State 열거형(Enum)입니다." }
     },
   {
     id: "java_deadlock_detection",
@@ -35570,7 +35570,7 @@
       text: "JVM built-in java_deadlock_detection identified that Thread A held the user connection while waiting for Thread B."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Java 데드록 감지", explanation: "두 개 이상의 스레드가 서로의 잠금 해제를 대기하며 영원히 차단되는 교착 상태(데드록)를 JVM API(ThreadMXBean)나 스레드 덤프(Thread Dump)를 통해 감지하고 분석하는 기술입니다." }
     },
   {
     id: "java_happens_before_guarantee",
@@ -35628,7 +35628,7 @@
       text: "Unlocking a monitor always has a java_happens_before_guarantee relationship before subsequent acquisitions of the same monitor."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Happens-Before 관계", explanation: "Java 메모리 모델(JMM)에서 정의하는 편순서 관계 규칙으로, 작업 A의 메모리 쓰기 결과가 작업 B의 읽기 시점에 무조건 가시성이 있음을 보장하여 컴파일러 재정렬로 인한 스레드 간 데이터 불일치를 방지합니다." }
     },
   {
     id: "java_reentrant_lock",
@@ -35685,7 +35685,7 @@
       text: "We preferred java_reentrant_lock to synchronized blocks because we needed tryLock() with timeout."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "재진입 가능 잠금 (ReentrantLock)", explanation: "java.util.concurrent 패키지에서 제공하는 고급 동기화 도구로, 특정 잠금을 보유하고 있는 스레드가 데드록 없이 같은 잠금을 재차 획득할 수 있도록 허용하며, 공정성이나 타임아웃 같은 추가 기능을 제공합니다." }
     },
   {
     id: "java_atomic_variables",
@@ -35743,7 +35743,7 @@
       text: "Using java_atomic_variables for the hit counter eliminated the synchronized synchronization overhead."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Java 원자적 변수 클래스", explanation: "하드웨어의 CAS(Compare-And-Swap) 명령어에 기반하여 락-프리(Lock-free) 방식으로 단일 변수에 대해 안전한 스레드 간 업데이트 연산을 지원하는 java.util.concurrent.atomic 패키지의 클래스들입니다." }
     },
   {
     id: "python_dynamic_typing",
@@ -35800,7 +35800,7 @@
       text: "Because of python_dynamic_typing, a variable can reference an integer, then later refer to a SQL query string."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "동적 타이핑", explanation: "변수 선언 시 데이터 타입을 명시하지 않고, 프로그램이 실행(Runtime)될 때 대입되는 값에 따라 변수의 타입이 결정되고 언제든지 바뀔 수 있는 프로그래밍 언어의 특징입니다." }
     },
   {
     id: "python_strongly_typed",
@@ -35857,7 +35857,7 @@
       text: "Python is python_strongly_typed, so running 'age' + 25 throws a TypeError."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "강타입 특징", explanation: "동적 타이핑 언어이더라도 다른 타입 간의 암묵적인 변환(예: 문자열 + 숫자)을 허용하지 않고, 호환되지 않는 타입 연산 시 에러를 유발하는 파이썬의 엄격한 타입 메커니즘입니다." }
     },
   {
     id: "python_data_type_list",
@@ -35914,7 +35914,7 @@
       text: "We stored the query field values in a python_data_type_list to process them sequentially."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "파이썬 리스트", explanation: "대괄호 `[]`로 선언하는 순서가 있고 변경 가능한(Mutable) 요소들의 시퀀스 데이터 구조입니다. 중복 데이터를 포함하고 여러 다양한 타입의 객체를 함께 저장할 수 있습니다." }
     },
   {
     id: "python_data_type_tuple",
@@ -35971,7 +35971,7 @@
       text: "We used a python_data_type_tuple to return both coordinate points from the geography calculator."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "파이썬 튜플", explanation: "괄호 `()`로 표현하는 순서가 있고 수정이 불가능한(Immutable) 요소들의 시퀀스입니다. 선언 이후 데이터 추가, 삭제, 수정이 불가능하며 함수의 다중 반환값 등에 주로 활용됩니다." }
     },
   {
     id: "python_data_type_dict",
@@ -36029,7 +36029,7 @@
       text: "We parsed the database configuration JSON into a python_data_type_dict for quick access."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "파이썬 딕셔너리", explanation: "중괄호 `{}`를 사용해 키-값(Key-Value) 쌍을 저장하는 가변(Mutable) 해시 맵 구조의 컬렉션입니다. 키는 고유하고 변경 불가능해야 하며 해시 조회가 매우 빠릅니다." }
     },
   {
     id: "python_data_type_set",
@@ -36086,7 +36086,7 @@
       text: "Converting the user role array to a python_data_type_set automatically eliminated duplicates."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "파이썬 세트", explanation: "중괄호 `{}`를 사용해 선언하는 순서가 없고 중복 요소가 없는 가변(Mutable) 집합 자료구조입니다. 합집합, 교집합, 차집합 등의 수학적 집합 연산을 수행하는 데 최적화되어 있습니다." }
     },
   {
     id: "python_list_methods_append",
@@ -36143,7 +36143,7 @@
       text: "We used python_list_methods_append to collect records returned by our SQL cursor loop."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "append() 메서드", explanation: "파이썬 리스트의 내장 메서드로, 전달된 단일 객체나 값을 기존 리스트의 맨 마지막 자리에 추가하며 원본을 직접 수정합니다." }
     },
   {
     id: "python_dict_methods_get",
@@ -36200,7 +36200,7 @@
       text: "Using python_dict_methods_get allows us to set fallback configuration options easily."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "get() 메서드", explanation: "파이썬 딕셔너리의 키 검색 메서드입니다. 찾고자 하는 키가 존재하지 않을 때 KeyError 에러를 일으키지 않고 None 또는 지정된 기본값을 반환하도록 설계되었습니다." }
     },
   {
     id: "python_mutable_vs_immutable",
@@ -36257,7 +36257,7 @@
       text: "Knowing python_mutable_vs_immutable is crucial, as using a list as a dictionary key causes a TypeError."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "가변 객체와 불변 객체", explanation: "파이썬 객체 모델의 핵심 분류로, 생성 후 내부 상태를 직접 변경할 수 있는 가변 객체(List, Dict, Set)와 값을 수정하면 새로운 객체가 생성되는 불변 객체(Tuple, String, Int)의 구분입니다." }
     },
   {
     id: "python_lambda_function",
@@ -36315,7 +36315,7 @@
       text: "We passed a python_lambda_function to sorted() to sort our database dictionary list by query count."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "파이썬 람다 함수", explanation: "`lambda` 키워드를 사용해 정의하는 이름 없는 단일 행의 익명 함수입니다. def 키워드 없이 선언하며 map, filter, sort 등의 인자로 가볍게 쓰입니다." }
     },
   {
     id: "python_map_filter_reduce",
@@ -36372,7 +36372,7 @@
       text: "Using python_map_filter_reduce is often faster than standard for-loops in native Python runtimes."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "map/filter/reduce", explanation: "파이썬의 내장 함수형 프로그래밍 도구들로, map은 시퀀스 각 요소에 함수를 적용하고, filter는 조건에 맞는 요소만 추출하며, reduce는 누적 연산을 수행합니다." }
     },
   {
     id: "python_shallow_vs_deep_copy",
@@ -36429,7 +36429,7 @@
       text: "We used copy.deepcopy() under python_shallow_vs_deep_copy rules to duplicate our nested database mock dict safely."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "얕은 복사와 깊은 복사", explanation: "파이썬 객체 복제의 방식으로, 얕은 복사는 최상위 객체 참조만 새로 생성하고 내부에 중첩된 객체는 원본과 동일 주소를 공유하는 반면, 깊은 복사는 재귀적으로 모든 하위 중첩 객체들까지 독자적인 복제본으로 만듭니다." }
     },
   {
     id: "python_comprehension_set",
@@ -36486,7 +36486,7 @@
       text: "Using python_comprehension_set allows us to quickly extract unique category tags from our glossary list."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "세트 컴프리헨션", explanation: "중괄호 `{}` 내부에 for 루프와 if 조건식을 포함시켜 중복을 배제한 세트(Set) 객체를 파이썬답고 간결하게 생성하는 문법입니다." }
     },
   {
     id: "python_comprehension_dict",
@@ -36543,7 +36543,7 @@
       text: "A python_comprehension_dict makes mapping database row IDs to index objects extremely concise."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "딕셔너리 컴프리헨션", explanation: "중괄호 `{key: value}` 구조와 내포된 for 루프를 통해 반복 가능한 객체로부터 가독성 높은 코드로 새로운 딕셔너리 객체를 빠르게 빌드하는 문법입니다." }
     },
   {
     id: "python_iterator_protocol",
@@ -36600,7 +36600,7 @@
       text: "Implementing the python_iterator_protocol allows our custom database cursor to be iterated directly in a for-loop."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "이터레이터 프로토콜", explanation: "파이썬에서 반복 조회가 가능한 클래스를 구현하기 위한 규약입니다. 객체가 `__iter__()` 메서드를 구현하여 자신을 반환하고 `__next__()` 메서드를 호출해 다음 값을 반환하게 하며 더 이상 값이 없으면 StopIteration 예외를 던지도록 요구합니다." }
     },
   {
     id: "python_iterable_object",
@@ -36657,7 +36657,7 @@
       text: "A database query result proxy is a python_iterable_object that yields row tuples."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "반복 가능한 객체 (이터러블)", explanation: "for 루프를 통해 요소를 하나씩 꺼내어 순회할 수 있는 파이썬 객체입니다. 클래스 내부에 `__iter__()`가 정의되어 이터레이터 객체를 반환할 수 있는 리스트, 튜플, 세트, 문자열 등이 있습니다." }
     },
   {
     id: "python_exception_handling_try",
@@ -36715,7 +36715,7 @@
       text: "We wrapped the database cursor execution in a python_exception_handling_try to gracefully catch connection drops."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "try-except 문", explanation: "파이썬에서 프로그램 예외를 제어하기 위한 제어문입니다. try 블록 내부의 오류가 발생할 수 있는 코드를 모니터링하고, 발생한 특정 예외를 except 블록에서 받아 처리합니다." }
     },
   {
     id: "python_keyword_with",
@@ -36772,7 +36772,7 @@
       text: "Opening files using the python_keyword_with statement guarantees they close even if an exception occurs."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "with 문", explanation: "컨텍스트 매니저를 통해 리소스의 획득과 해제(예: 파일 열기/닫기, 잠금 획득/해제) 작업을 자동으로 안전하게 보장해 주는 제어문 구조입니다." }
     },
   {
     id: "python_context_manager_protocol",
@@ -36829,7 +36829,7 @@
       text: "We implemented the python_context_manager_protocol on our custom SQL connection class to auto-commit transactions."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "컨텍스트 매니저 프로토콜", explanation: "with 문과 연동하기 위해 클래스에 `__enter__()`와 `__exit__()` 마술 메서드를 구현하여 리소스의 사전 준비와 사후 정리(예외 처리 포함)를 처리하도록 규정하는 파이썬 프로토콜입니다." }
     },
     {
     id: "python_namespace_resolution_legb",
@@ -36887,7 +36887,7 @@
       text: "Understanding the python_namespace_resolution_legb is key to avoiding UnboundLocalError during execution."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "LEGB 규칙", explanation: "파이썬 인터프리터가 변수 이름을 검색하여 식별할 때 거치는 우선순위 스코프 범위로, 로컬(Local), 바깥쪽 함수(Enclosing), 전역(Global), 내장 영역(Built-in)의 순서를 의미합니다." }
     },
   {
     id: "python_module_import_system",
@@ -36945,7 +36945,7 @@
       text: "The python_module_import_system caches loaded modules in sys.modules to prevent multiple executions."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "파이썬 임포트 시스템", explanation: "`import` 문을 통해 다른 파이썬 파일이나 패키지의 코드를 로드하여 현재 소스코드의 네임스페이스로 병합하고 재사용할 수 있게 만드는 모듈 탑재 메커니즘입니다." }
     },
   {
     id: "python_virtual_environment_venv",
@@ -37002,7 +37002,7 @@
       text: "We initialized a python_virtual_environment_venv using 'python -m venv .venv' before installing Django."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "venv", explanation: "프로젝트별로 격리된 파이썬 실행 환경을 구축하여 전역 파이썬 패키지 간의 종속성 및 버전 충돌을 차단하기 위해 기본 탑재된 파이썬 가상환경 생성 모듈입니다." }
     },
   {
     id: "python_package_manager_pipenv",
@@ -37059,7 +37059,7 @@
       text: "The python_package_manager_pipenv tool automatically creates virtual environments and tracks locks."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Pipenv", explanation: "pip의 패키지 관리 기능과 virtualenv의 가상환경 기능을 결합하여, Pipfile 및 Pipfile.lock 파일로 명확한 빌드 의존성을 보장하고 관리하는 파이썬 개발 패키징 도구입니다." }
     },
   {
     id: "python_unit_testing_unittest",
@@ -37117,7 +37117,7 @@
       text: "We subclassed unittest.TestCase in our python_unit_testing_unittest file to verify the SQL parser module."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "unittest", explanation: "Java의 JUnit에서 영감을 받아 설계된 파이썬 표준 라이브러리의 공식 단위 테스트 프레임워크입니다. 테스트 케이스 작성, 스위트 빌드 및 단언 메서드들을 제공합니다." }
     },
   {
     id: "python_unittest_mock",
@@ -37175,7 +37175,7 @@
       text: "We used python_unittest_mock to stub the PostgreSQL connection pool during offline tests."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "unittest.mock", explanation: "파이썬 단위 테스트 진행 시 네트워크 호출이나 특정 함수와 같은 부분을 모조 객체(Mock)로 대체하고, 테스트 타깃 코드의 호출 검증 등을 손쉽게 패치할 수 있는 모킹 표준 라이브러리입니다." }
     },
   {
     id: "python_web_framework_django",
@@ -37232,7 +37232,7 @@
       text: "The startup opted for the python_web_framework_django framework because it provides a secure admin dashboard immediately."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Django", explanation: "파이썬 기반의 가장 대중적인 고성능 풀스택 웹 애플리케이션 프레임워크입니다. 자체적인 MVT 패턴 구조를 띄며 ORM, 관리자 페이지, 인증 시스템 등을 기본적으로 모두 내장하고 있습니다." }
     },
   {
     id: "python_web_framework_flask",
@@ -37289,7 +37289,7 @@
       text: "We implemented our REST APIs using the python_web_framework_flask because it requires minimal boilerplate."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Flask", explanation: "최소한의 가벼운 기능(라우팅과 템플릿 엔진)만 탑재하여 자유도를 극대화하고 개발자가 필요에 따라 모듈을 확장하도록 설계된 파이썬 마이크로 웹 프레임워크입니다." }
     },
   {
     id: "python_fastapi_framework",
@@ -37346,7 +37346,7 @@
       text: "The microservice is powered by the python_fastapi_framework to leverage native async database clients."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "FastAPI", explanation: "파이썬 타입 힌트와 Pydantic을 활용하여 성능이 매우 뛰어나고 API 명세(Swagger) 자동화 및 비동기 개발(asyncio)을 원천 지원하는 최신 파이썬 웹 API 프레임워크입니다." }
     },
   {
     id: "python_object_oriented_class",
@@ -37403,7 +37403,7 @@
       text: "We defined a User record manager using the python_object_oriented_class syntax."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "파이썬 클래스", explanation: "`class` 키워드를 사용하여 변수와 메서드를 선언해 객체를 모델링하는 템플릿 구문입니다. 다중 상속을 지원하며 메서드 정의 시 인스턴스를 지칭할 첫 인자로 `self`를 반드시 받아야 합니다." }
     },
   {
     id: "python_dunder_init_method",
@@ -37461,7 +37461,7 @@
       text: "We bind the database client parameter inside the class using the python_dunder_init_method."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "파이썬 __init__", explanation: "클래스에 속한 새 객체 인스턴스가 생겨날 때 인터프리터에 의해 자동으로 호출되는 생성자 성격의 마술 메서드로, 주로 인스턴스 멤버 변수를 지정하고 조율합니다." }
     },
   {
     id: "osi_model_physical_layer",
@@ -37521,7 +37521,7 @@
       text: "Ethernet cables, hubs, and fiber optic transceivers operate at the osi_model_physical_layer."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "OSI 물리 계층", explanation: "OSI 7계층 참조 모델의 제1계층입니다. 전선, 광섬유, 무선 주파수 등의 물리 매체를 통해 디지털 비트 데이터를 전기나 빛 신호로 변환하여 물리적으로 송수신하는 하드웨어 규격입니다." }
     },
   {
     id: "osi_model_data_link_layer",
@@ -37581,7 +37581,7 @@
       text: "Network switches and network interface cards analyze headers at the osi_model_data_link_layer."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "OSI 데이터 링크 계층", explanation: "OSI 7계층 모델의 제2계층입니다. 동일 네트워크 내 인접 노드 간의 안전한 데이터 통로(링크)를 구축하며 MAC 주소 지정, 프레임 동기화 및 전송 에러 제어를 수행합니다." }
     },
   {
     id: "osi_model_network_layer",
@@ -37641,7 +37641,7 @@
       text: "Routers forward packets between subnets by analyzing headers at the osi_model_network_layer."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "OSI 네트워크 계층", explanation: "OSI 7계층 모델의 제3계층입니다. 논리적 주소(IP)를 사용해 패킷을 목적지까지 전달하기 위해 노드 간 최적의 경로를 정하는 라우팅(Routing)을 처리합니다." }
     },
   {
     id: "osi_model_transport_layer",
@@ -37701,7 +37701,7 @@
       text: "Port numbers, TCP handshake, and sequence tracking exist at the osi_model_transport_layer."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "OSI 전송 계층", explanation: "OSI 7계층 모델의 제4계층입니다. 송수신 프로세스 간 신뢰성 있는 종단 간(End-to-End) 데이터 전달을 보장하기 위해 오류 정정, 흐름 제어 및 포트 분배(TCP, UDP)를 수행합니다." }
     },
   {
     id: "osi_model_session_layer",
@@ -37761,7 +37761,7 @@
       text: "Session checkpoints and RPC call controls are managed at the osi_model_session_layer."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "OSI 세션 계층", explanation: "OSI 7계층 모델의 제5계층입니다. 통신하는 시스템 상호 애플리케이션 간의 대화 연결을 수립하고 모니터링하며 지속적으로 연동 세션을 끊지 않고 유지 및 종료하는 제어 기능을 담당합니다." }
     },
   {
     id: "osi_model_presentation_layer",
@@ -37821,7 +37821,7 @@
       text: "JPEG formatting and TLS/SSL cryptographic translation are conceptualized at the osi_model_presentation_layer."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "OSI 표현 계층", explanation: "OSI 7계층 모델의 제6계층입니다. 송수신 시스템 간 다른 포맷(문자 인코딩, 이미지 뷰, 압축 스키마)의 데이터를 상호 변환하여 호환성을 확보하고 보안 암호화 및 복호화를 처리합니다." }
     },
   {
     id: "osi_model_application_layer",
@@ -37881,7 +37881,7 @@
       text: "Web browsers fetch pages using HTTP, which is an protocol residing at the osi_model_application_layer."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "OSI 응용 계층", explanation: "OSI 7계층 참조 모델의 최상위 제7계층입니다. 사용자가 다루는 실제 브라우저, 메일 등 소프트웨어와 직접 통신하며 다양한 네트워크 프로토콜(HTTP, FTP, DNS 등)을 응용 프로그램에 제공합니다." }
     },
   {
     id: "tcp_ip_protocol_suite",
@@ -37941,7 +37941,7 @@
       text: "Every modern operating system implements the tcp_ip_protocol_suite natively inside its kernel space."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "TCP/IP 프로토콜 스택", explanation: "인터넷 통신의 기본이 되는 프로토콜 체계입니다. 크게 응용, 전송, 인터넷, 네트워크 인터페이스의 4개 계층 구조를 보이며 TCP와 IP를 핵심으로 다양한 관련 통신 표준을 묶어 부르는 명칭입니다." }
     },
   {
     id: "internet_protocol_version_4",
@@ -38001,7 +38001,7 @@
       text: "The local loopback IP address in internet_protocol_version_4 is defined as 127.0.0.1."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "IPv4", explanation: "32비트(4바이트) 길이의 주소 체계를 가지는 제4버전의 인터넷 프로토콜입니다. 최대 약 43억 개의 고유 인터넷 주소를 표현할 수 있으나 현재 주소 고갈 한계점에 직면해 있습니다." }
     },
     {
     id: "internet_protocol_version_6",
@@ -38061,7 +38061,7 @@
       text: "Large ISPs are migrating their backbones to internet_protocol_version_6 to accommodate billions of IoT devices."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "IPv6", explanation: "128비트 주소 체계를 가지는 차세대 인터넷 프로토콜입니다. IPv4의 주소 개수 부족 현상을 근본적으로 해결하기 위해 넓은 IP 영역을 설계하였으며 기본 보안성(IPsec) 및 자동 설정을 포함합니다." }
     },
   {
     id: "ip_address_classful_routing",
@@ -38121,7 +38121,7 @@
       text: "Modern routers no longer use ip_address_classful_routing due to its high address waste rate."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "클래스풀 주소 지정 방식", explanation: "초기 IP 할당 아키텍처로, IP 주소의 넷마스크 길이를 고정하여 클래스 A, B, C, D, E로 배분하여 관리하던 라우팅 형태입니다." }
     },
   {
     id: "classless_inter_domain_routing",
@@ -38181,7 +38181,7 @@
       text: "We configured the VPC subnet with classless_inter_domain_routing block 10.0.0.0/16."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "CIDR (사이더)", explanation: "클래스 구분을 사용하지 않고 IP 주소 뒤에 서브넷 길이를 빗금(/) 기호로 명시(예: /24)하여 가변적으로 네트워크 크기를 분배하는 효율적인 무등급 도메인 간 라우팅 기술입니다." }
     },
   {
     id: "private_ip_address_range",
@@ -38241,7 +38241,7 @@
       text: "Make sure you allocate a sub-segment from the private_ip_address_range to the database servers."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "사설 IP 주소", explanation: "인터넷 공용 라우터로 직접 나가지 않고, 사내망이나 홈 네트워크 등 격리된 랜(LAN) 내부에서만 활용하기 위해 RFC 1918 등에 지정해 놓은 사설 주소 영역입니다." }
     },
   {
     id: "loopback_ip_address",
@@ -38302,7 +38302,7 @@
       text: "We tested the Web server locally using the loopback_ip_address before releasing it to staging."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "루프백 주소", explanation: "시스템 자신이 스스로를 지칭할 수 있도록 마련해 둔 고유 테스트 IP 주소(localhost)입니다. IPv4에서는 127.0.0.1, IPv6에서는 ::1을 가리킵니다." }
     },
   {
     id: "mac_address_filtering",
@@ -38362,7 +38362,7 @@
       text: "Although mac_address_filtering adds a layer of security, hackers can easily bypass it by spoofing their MAC address."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "MAC 주소 필터링", explanation: "각 네트워크 랜카드가 보유한 48비트 물리 주소(MAC) 정보를 검토하여 무선 공유기나 통신 네트워크 접속 가부를 제어하는 보안 접근 제어 기법입니다." }
     },
   {
     id: "ethernet_frame_format",
@@ -38422,7 +38422,7 @@
       text: "We analyzed the captured traffic in Wireshark to inspect the preamble of the ethernet_frame_format."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "이더넷 프레임", explanation: "유선 네트워크의 데이터 링크 계층에서 정보를 주고받는 전송 단위 구조입니다. 목적지/출발지 MAC 주소, 타입 식별자, 데이터 본문 및 에러를 검사할 FCS 영역을 지닙니다." }
     },
   {
     id: "address_resolution_protocol_arp",
@@ -38482,7 +38482,7 @@
       text: "A host sends an ARP broadcast request to obtain the MAC address associated with the default gateway."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "ARP", explanation: "동일 로컬 네트워크에서 상대방의 IP 주소를 토대로 물리적인 인터페이스 카드 주(MAC 주소)를 매핑해 찾아내기 위한 주소 분석 프로토콜입니다." }
     },
   {
     id: "transmission_control_protocol_tcp",
@@ -38541,7 +38541,7 @@
       text: "Database query connections and file transfers rely on transmission_control_protocol_tcp for message delivery."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "TCP", explanation: "인터넷 전송 계층의 대표적인 프로토콜로, 연결 지향적이고 오류 없는 안전한 패킷 수송과 흐름 통제 및 재전송 제어를 지원하여 패킷 분실 없는 원활한 신뢰성 통신을 확보합니다." }
     },
   {
     id: "user_datagram_protocol_udp",
@@ -38600,7 +38600,7 @@
       text: "Voice over IP (VoIP) and online gaming choose user_datagram_protocol_udp over TCP to minimize latency."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "UDP", explanation: "비연결성 전송 프로토콜로, 송수신 경로 설정 과정인 핸드셰이크를 건너뛰고 오버헤드가 적어 수송 속도가 대단히 빠릅니다. 손실 위험을 감수하는 오디오/비디오 스트리밍이나 DNS에 널리 활용됩니다." }
     },
   {
     id: "tcp_window_sliding_flow_control",
@@ -38660,7 +38660,7 @@
       text: "We optimized the tcp_window_sliding_flow_control settings on Linux servers to support high-throughput data replication."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "슬라이딩 윈도우 흐름 제어", explanation: "TCP의 흐름 제어 기법으로, 수신 측이 수락 가능한 버퍼 잔량 크기(윈도우 크기)를 송신자에게 능동 전달함으로써 상대의 패킷 발행 속도를 과부하가 걸리지 않게 방지합니다." }
     },
   {
     id: "tcp_congestion_control_algorithm",
@@ -38720,7 +38720,7 @@
       text: "TCP BBR is a modern tcp_congestion_control_algorithm developed by Google that measures bottleneck bandwidth."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "TCP 혼잡 제어", explanation: "네트워크 선로의 데이터 포화 및 중단 사고를 막기 위한 기술로, 슬로우 스타트(Slow Start) 및 혼잡 회피(Congestion Avoidance) 정책을 적용해 실시간 망 사정에 맞춰 패킷 발행량을 적절히 조율합니다." }
     },
   {
     id: "domain_name_system_query_recursive",
@@ -38780,7 +38780,7 @@
       text: "Most client operating systems submit a domain_name_system_query_recursive to their local resolver."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "재귀적 DNS 쿼리", explanation: "클라이언트가 네임서버에 도메인 조회를 보냈을 때, 서버가 직접 다른 상위 서버들과 교류하여 최종 결과물 IP를 구해주거나 에러를 확인해 반환하도록 요청하는 질의 형태입니다." }
     },
   {
     id: "domain_name_system_query_iterative",
@@ -38840,7 +38840,7 @@
       text: "Local DNS servers resolve public domains by performing a series of domain_name_system_query_iterative steps across root servers."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "반복적 DNS 쿼리", explanation: "네임서버가 질의받은 도메인의 매핑 주소를 모를 때, 직접 하위 경로를 알아다 주는 게 아니라 대신 탐문해 볼 수 있는 다른 하위 DNS 주소를 클라이언트에 되돌려주어 직접 계속 탐색하게 만드는 질의 방법입니다." }
     },
   {
     id: "hypertext_transfer_protocol_http",
@@ -38900,7 +38900,7 @@
       text: "Traditional hypertext_transfer_protocol_http transmits credentials in plaintext, which is insecure."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "HTTP", explanation: "웹에서 브라우저와 웹 서버가 HTML, 이미지, JSON 텍스트 리소스 등을 전송하고 교환하는 데 사용하는 통상의 애플리케이션 계층 전송 프로토콜입니다." }
     },
   {
     id: "dynamic_host_configuration_protocol_dhcp",
@@ -38960,7 +38960,7 @@
       text: "Our office Wi-Fi router runs a dynamic_host_configuration_protocol_dhcp server to lease IP addresses to employees."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "DHCP", explanation: "네트워크 내 각 컴퓨터 호스트 장비들에게 IP 주소, 서브넷 마스크, 기본 게이트웨이 등의 구성을 임포트 서버가 중앙에서 동적으로 자동 대여하고 배급해 주는 관리 프로토콜입니다." }
     },
   {
     id: "routing_information_protocol_rip",
@@ -39020,7 +39020,7 @@
       text: "Because of its slow convergence and hop count limit, routing_information_protocol_rip has been replaced by OSPF in enterprise networks."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "RIP", explanation: "거리 벡터(Distance Vector) 경로 탐색 로직을 취하는 단순화된 내부 라우팅 프로토콜로, 경유하는 라우터 가치(Hop Count)만 헤아려 전송 길을 조율합니다. 최대 홉 수가 15로 제한되어 소형 망에만 쓰입니다." }
     },
   {
     id: "border_gateway_protocol_bgp",
@@ -39080,7 +39080,7 @@
       text: "A configuration error in border_gateway_protocol_bgp propagation can take entire web platforms offline globally."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "BGP", explanation: "서로 다른 전역 자율망(AS) 간에 대단위 인터넷 패킷 소통 라우팅을 체결하는 거대 외부 관문 프로토콜로, 경로 벡터(Path Vector) 방식으로 망 전체 연계를 잇는 근간입니다." }
     },
   {
     id: "network_address_translation_nat",
@@ -39139,7 +39139,7 @@
       text: "We set up static network_address_translation_nat to map our database server to a dedicated external IP."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "네트워크 주소 변환 (NAT)", explanation: "방화벽이나 게이트웨이 경계에서 내부망의 사설 IP 주소군과 외부용 공인 IP 주소를 1대1로 서로 상호 매핑해 전환함으로써 제한된 공인 IP를 아끼고 내부 정보를 은폐하는 기술입니다." }
     },
   {
     id: "port_address_translation_pat",
@@ -39200,7 +39200,7 @@
       text: "Most consumer routers utilize port_address_translation_pat to allow all home devices to access the internet simultaneously."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "포트 주소 변환 (PAT)", explanation: "NAT의 일종(NAPT)으로, 다수의 로컬 사설 IP 장비가 서로 다른 소스 포트 번호를 지정하여 오직 한 개의 외부 공인 IP를 공유해 동시 다발적 웹 교류를 누리게 해 주는 장치입니다." }
     },
   {
     id: "virtual_local_area_network_vlan",
@@ -39260,7 +39260,7 @@
       text: "We configured a separate virtual_local_area_network_vlan for database communications to isolate SQL database traffic from corporate desktops."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "가상 LAN (VLAN)", explanation: "물리 랜 스위치의 배치 연결 형태와 무관하게 허브 설정을 통해 논리적으로 별개의 전송 격리 구역(브로드캐스트 도메인)을 나눠 네트워크를 구축하고 보안을 다지는 기법입니다." }
     },
     {
     id: "confidentiality_integrity_availability",
@@ -39320,7 +39320,7 @@
       text: "Any security policy must seek to balance the parameters of the confidentiality_integrity_availability."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "정보 보안의 3대 요소 (CIA)", explanation: "정보 자산을 침해로부터 수호하기 위한 핵심 체계로, 권한 없는 자의 접근을 막는 기밀성(Confidentiality), 데이터 위조 및 훼손을 방지하는 완전성(Integrity), 적시에 정보 사용을 보장하는 가용성(Availability)의 머리글자입니다." }
     },
   {
     id: "authentication_verification",
@@ -39380,7 +39380,7 @@
       text: "Multi-factor authentication_verification significantly improves security compared to password-only access."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "인증 (Authentication)", explanation: "어떤 리소스나 서버에 로그인하려는 유저나 장비의 ID 및 자격 증명 정보가 진짜 소유자의 것인지 검토하고 실체를 확인하는 필수 절차입니다." }
     },
   {
     id: "authorization_access_control",
@@ -39440,7 +39440,7 @@
       text: "The system checked the user's role during authorization_access_control and blocked access to the SQL database configuration."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "인가 (Authorization)", explanation: "자격 요건 확인(인증)을 완수한 사용자 혹은 실행 프로세스에 한해 내부의 폴더 접근이나 문서의 읽기/쓰기/지우기 등 허가 범위(권한)를 선별적으로 부여하는 정책입니다." }
     },
   {
     id: "non_repudiation_security",
@@ -39499,7 +39499,7 @@
       text: "Using digital signatures on contracts provides non_repudiation_security in legal transactions."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "부인 방지", explanation: "디지털 데이터를 송출했거나 승인한 행위자 본인이 훗날 '나는 그런 지시를 내리지 않았다'고 시치미 뗄 수 없도록 전자 서명 등을 활용하여 행위 발자취의 유효성을 실증하는 기법입니다." }
     },
   {
     id: "malware_computer_virus",
@@ -39559,7 +39559,7 @@
       text: "We ran a full scan because a legacy host was infected by an executable file containing a malware_computer_virus."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "컴퓨터 바이러스", explanation: "스스로는 가동되지 못해 정상 프로그램(EXE 등) 파일 내부에 기생하여 생존하며, 사용자가 매체를 통해 실행할 때 복제 증식을 거쳐 디스크를 파괴하는 해로운 감염성 악성코드 유형입니다." }
     },
   {
     id: "malware_computer_worm",
@@ -39619,7 +39619,7 @@
       text: "The malware_computer_worm spread rapidly through the office subnet by exploiting an unpatched SMB vulnerability."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "컴퓨터 웜", explanation: "다른 숙주 파일에 묶일 필요 없이 독자 실행 파일 형태로 구동되며, 통신망이나 이메일 취약점을 타고 타 컴퓨터로 알아서 번져 나가 대역폭을 마비시키고 장비를 훼손하는 해로운 네트워크 전염 프로그램입니다." }
     },
   {
     id: "malware_trojan_horse",
@@ -39679,7 +39679,7 @@
       text: "The utility we downloaded contained a malware_trojan_horse that installed a keylogger."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "트로이 목마", explanation: "겉으로 보기에는 유용한 무료 앱이나 정상 툴인 것처럼 위장하여 설치를 유도한 후, 실상은 사용자 몰래 백도어 통로를 열어 주거나 개인정보를 외부로 유출하는 지능적 악성코드입니다." }
     },
   {
     id: "malware_spyware_adware",
@@ -39739,7 +39739,7 @@
       text: "Anti-malware tools detect and remove malware_spyware_adware to protect user privacy and improve machine performance."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "스파이웨어 및 애드웨어", explanation: "유저 몰래 시스템에서 입력값이나 은밀한 비밀번호를 수집해 외부로 빼내는 스파이웨어와, 동의 없이 무차별적인 팝업 배너 광고창을 띄우거나 브라우저 홈 화면을 무단으로 납치하는 애드웨어입니다." }
     },
   {
     id: "social_engineering_shoulder_surfing",
@@ -39799,7 +39799,7 @@
       text: "Using privacy filter screens on laptops helps mitigate the risk of social_engineering_shoulder_surfing in public spaces."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "숄더 서핑", explanation: "물리적 시야 범위 내에서 사용자가 입력하는 계정 비밀번호나 현금카드 PIN 번호를 뒤나 옆에서 직접 눈으로 훔쳐보는 대표적 사회공학 공격 방식입니다." }
     },
   {
     id: "social_engineering_dumpster_diving",
@@ -39859,7 +39859,7 @@
       text: "We mandate cross-cut shredding for all operational drafts to prevent social_engineering_dumpster_diving."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "덤프스터 다이빙", explanation: "기업이나 가정이 버린 쓰레기 수거함을 뒤져서 파쇄되지 않은 문서나 기밀 보고서, 회로망 설계서, 계정 암호 메모 등을 노획해 침해 단서를 찾는 사회공학 도굴 수법입니다." }
     },
   {
     id: "social_engineering_spoofing",
@@ -39919,7 +39919,7 @@
       text: "Deploying SPF, DKIM, and DMARC prevents email-based social_engineering_spoofing."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "스푸핑", explanation: "패킷을 조작하여 통신 출발지의 IP 주소나 메일 발송 주소 등을 마치 믿을 수 있는 안전한 인물이나 허가된 내부 라우터 주소인 것처럼 위장하여 기만하는 침투 기법입니다." }
     },
   {
     id: "phishing_spear_phishing",
@@ -39979,7 +39979,7 @@
       text: "Our CEO was targeted with a sophisticated phishing_spear_phishing attempt disguised as a subpoena from local courts."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "스피어 피싱 (표적형 피싱)", explanation: "무차별 대다수 대상이 아닌, 특정 기획 부서나 기업 임원 등 특정 표적을 겨냥해 사전에 입수한 정보를 활용해 매우 교묘하게 위장된 이메일을 발송하고 금융 자격 정보를 갈취하는 수법입니다." }
     },
   {
     id: "phishing_whaling_attack",
@@ -40039,7 +40039,7 @@
       text: "A whaling attack often mimics legitimate legal subpoenas or urgent board resolutions to pressure the CFO into approving wire transfers."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "웨일링 공격", explanation: "스피어 피싱의 변형으로, 파괴적 파급력이 높은 고위 경영진(CEO, CFO 등)을 정밀 표적으로 지목하여 기업 내부 결재 지시 메일을 거짓으로 대용하여 불법 자금 이체를 성사시키려는 시도입니다." }
     },
   {
     id: "man_in_the_middle_mitm",
@@ -40099,7 +40099,7 @@
       text: "Enforcing HTTPS with strict certificate checking blocks any attempts at man_in_the_middle_mitm."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "중간자 공격 (MITM)", explanation: "두 장치 간 무선 혹은 인터넷 통신 라인 가운데에 몰래 잠입하여 전송되는 패킷을 수집·도청하고, 심지어 허위 정보로 변경하여 상대방에게 중계하는 악랄한 보안 위협 행위입니다." }
     },
   {
     id: "replay_attack_method",
@@ -40159,7 +40159,7 @@
       text: "Using timestamps or challenge-response nonces prevents replay_attack_method on API endpoints."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "재전송 공격 (리플레이 공격)", explanation: "통신 경로 상에서 정상적으로 성립된 로그인 비밀번호 세션 요구값이나 금융 거래 메시지를 미리 캡처해 둔 뒤, 조금 후 서버에 그대로 복사해서 전달하여 불법으로 재인증을 통과하려는 침입 기법입니다." }
     },
   {
     id: "denial_of_service_dos_attack",
@@ -40220,7 +40220,7 @@
       text: "The network was hit by a massive distributed denial_of_service_dos_attack that saturated all downstream ISP links."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "DoS 공격 (서비스 거부 공격)", explanation: "목표 서버가 감당할 수 없을 정도의 가짜 연결 트래픽이나 정크 데이터를 순간 폭주시켜 과부하를 유발하고 일반 유저가 서버에 접속하지 못하게 무력화하는 테러 기법입니다. 전방위 분산 버전은 DDoS입니다." }
     },
   {
     id: "parameterized_query_security",
@@ -40280,7 +40280,7 @@
       text: "Always use a parameterized_query_security library when writing SQL commands that handle dynamic Web search bars."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "매개변수화 쿼리", explanation: "데이터베이스 쿼리를 설계할 때 실행 구문 형식과 사용자가 써넣은 데이터를 철저히 격리해 컴파일하는 설계 방식입니다. 이를 통해 외부 문구 유입으로 쿼리 구조가 어긋나는 SQL 인젝션 공격을 예방합니다." }
     },
   {
     id: "input_sanitization_xss",
@@ -40341,7 +40341,7 @@
       text: "Without proper input_sanitization_xss, arbitrary JavaScript injected into a comments section will run inside other users' browsers."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "입력값 검증 및 정화 (새니타이징)", explanation: "사용자가 입력 폼에 기재한 텍스트에서 악성 태그나 스크립트 문자열(`< > &` 등)을 필터링하거나 문자로 변환하여 브라우저에서 스크립트가 실행되는 크로스 사이트 스크립팅(XSS) 등의 해킹을 원천 차단하는 정화 처리입니다." }
     },
   {
     id: "cross_site_request_forgery_csrf",
@@ -40402,7 +40402,7 @@
       text: "Adding anti-CSRF synchronizer tokens to forms is the industry-standard way to defend against cross_site_request_forgery_csrf."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "크로스 사이트 요청 위조 (CSRF)", explanation: "피해자가 로그인된 정상 사이트에 머무는 동안, 악의적 공격용 가짜 페이지 링크를 밟도록 유도하여 본인 브라우저 세션 자격을 오용해 사이트에 마음대로 송금이나 비밀번호 변경 요청을 넣는 해킹 공격입니다." }
     },
   {
     id: "zero_day_vulnerability",
@@ -40462,7 +40462,7 @@
       text: "The security team isolated the affected servers immediately because a new zero_day_vulnerability in the library was being actively exploited."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "제로데이 취약점", explanation: "특정 소프트웨어의 보안 맹점이나 오작동 오류가 드러났으나, 아직 제조사 측에서 공식 보안 패치 배포를 하지 않아 무방비 상태인 취약점 및 이를 노린 불법 해킹 행위를 칭합니다." }
     },
   {
     id: "stack_buffer_overflow_exploit",
@@ -40523,7 +40523,7 @@
       text: "C programmers should use safe alternatives like strncpy instead of strcpy to prevent stack_buffer_overflow_exploit vulnerability."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "스택 버퍼 오버플로우", explanation: "프로그램의 스택 메모리 공간에 할당량보다 더 긴 값을 억지로 밀어 넣어 경계를 넘어가게 함으로써 인접한 시스템 작동 리턴 어드레스를 덮어써서 해커가 원하는 악성 쉘코드를 강제 구동시키는 해킹 수법입니다." }
     },
   {
     id: "brute_force_attack_prevention",
@@ -40583,7 +40583,7 @@
       text: "We configured brute_force_attack_prevention on our SSH server by blocking IPs after three failed login attempts."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "무차별 대입 공격 방어", explanation: "계정 비밀번호를 맞추기 위해 예상되는 문자열 조합을 다 시도해 로그인하는 브루트포스 해킹을 차단하는 기술입니다. 연속 실패 시 차단, 보안 문자 입력(CAPTCHA), 접근 딜레이 등을 구성합니다." }
     },
   {
     id: "intrusion_detection_system_ids",
@@ -40644,7 +40644,7 @@
       text: "While our intrusion_detection_system_ids flags anomalies, the IPS is configured to actually block the malicious IP address."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "침입 감지 시스템 (IDS)", explanation: "서버망의 트래픽 흐름이나 시스템 기록 파일을 실시간 조회하여 사전에 입력된 해킹 시그니처와 대조해 이상 징후를 감시하고 관리자에게 신속 통보하는 탐지 솔루션입니다. 침입을 막지는 않고 신고합니다." }
     },
   {
     id: "symmetric_encryption_des",
@@ -40704,7 +40704,7 @@
       text: "We migrated our database encryption parameters away from symmetric_encryption_des to AES-256."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "DES", explanation: "1970년대 미 연방 표준이었던 56비트 대칭형 블록 암호 방식입니다. 현재의 고사양 하드웨어 처리력 하에선 순식간에 복호 해독이 가능하여 심각한 취약으로 취급되어 현재 폐기되었습니다." }
     },
   {
     id: "symmetric_encryption_3des",
@@ -40765,7 +40765,7 @@
       text: "Legacy banking terminals still support symmetric_encryption_3des for backward compatibility, but are slowly phasing it out."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "트리플 DES (3DES)", explanation: "기존의 취약한 DES 방식의 신뢰도를 증강하기 위해, 한 데이터 블록에 대해 3중으로 암호화-복호화-암호화 연산을 돌려 보완한 방식입니다. 그러나 암호 처리가 너무 느려 현대에는 대체로 AES로 전향했습니다." }
     },
     {
     id: "asymmetric_encryption_rsa",
@@ -40825,7 +40825,7 @@
       text: "We generated a 2048-bit asymmetric_encryption_rsa keypair to encrypt the API payload."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "RSA 암호화 알고리즘", explanation: "공개키 암호 체계의 시초가 되는 방식으로, 소인수분해의 매우 복잡하고 어려운 계산 성질을 바탕으로 암호와 복호 및 디지털 전자 서명 등의 처리에 광범위하게 쓰이는 비대칭 암호 구조입니다." }
     },
   {
     id: "asymmetric_encryption_ecc",
@@ -40885,7 +40885,7 @@
       text: "Modern mobile browsers prefer TLS cipher suites using asymmetric_encryption_ecc because of their lower CPU overhead."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "타원곡선 암호 (ECC)", explanation: "타원 곡선 위에서의 이산대수 기하학 정리를 응용한 비대칭 공개키 암호 기술입니다. RSA에 비해 획기적으로 짧은 킬로비트 키 크기로도 동일한 밀도의 강력한 방어를 구현하여 처리 연산 부담을 아낍니다." }
     },
   {
     id: "diffie_hellman_key_exchange",
@@ -40945,7 +40945,7 @@
       text: "The TLS handshake uses diffie_hellman_key_exchange to establish a temporary symmetric session key."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "디피-헬먼 키 교환", explanation: "해커가 엿볼 수 있는 공용 통신 채널 상에서 대칭키 암호화에 쓸 공용의 세션 대칭키를 직접 보내지 않고, 양자 간 수학적 비밀 연산을 통해 서로 동일한 비밀 키를 동시 유도하고 획득해 내는 고안입니다." }
     },
   {
     id: "cryptographic_salt_value",
@@ -41005,7 +41005,7 @@
       text: "Always combine the user's password with a unique, cryptographically secure cryptographic_salt_value before running SHA-256."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "솔트 (Salt)", explanation: "사용자 비밀번호의 해시 값을 저장하기 전에 무작위 난수 텍스트(소금)를 첨가하여 해시 연산을 조율하는 기술입니다. 이를 통해 똑같은 원본 비밀번호이더라도 다른 해시 결과를 나오게 유도해 레인보우 테이블 공격을 예방합니다." }
     },
   {
     id: "digital_signature_mechanism",
@@ -41065,7 +41065,7 @@
       text: "We verified the authenticity of the update package by validating its digital_signature_mechanism."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "디지털 서명", explanation: "정보의 보낸 사람 명의와 문서 무결성을 입증하기 위해, 발송인의 비밀 개인키로 텍스트 해시값을 암호화해 첨부하는 서명 기술입니다. 받는 이는 그의 공개키로 이를 풀어보고 검증하여 부인 방지를 보장합니다." }
     },
   {
     id: "digital_certificate_ssl_tls",
@@ -41126,7 +41126,7 @@
       text: "Web browsers display a security warning if the website's digital_certificate_ssl_tls is expired or self-signed."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "디지털 인증서 (SSL/TLS 인증서)", explanation: "신뢰받는 공인 제3기관(CA)에서 발급하는 공개키 증명 증서입니다. 대상 서버의 법적 신뢰도를 공증하고, 클라이언트가 서버와 접속 시 중간 변조 위험 없는 HTTPS 보안 암호 통신을 맺도록 주관합니다." }
     },
   {
     id: "public_key_infrastructure_pki",
@@ -41185,7 +41185,7 @@
       text: "Enterprise security depends on a well-maintained public_key_infrastructure_pki to issue internal certificates."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "공개키 기반 구조 (PKI)", explanation: "비대칭형 공개키와 공인 인증서를 생성하고 배포, 관리, 사용 및 파기 검증 등 보안 관문을 이루기 위해 필요한 법적 제도, 서버 장치, CA 등 사회적 인프라 총체를 일컫습니다." }
     },
   {
     id: "certificate_authority_ca_role",
@@ -41245,7 +41245,7 @@
       text: "We requested a wildcard certificate from a public certificate_authority_ca_role to secure all our subdomains."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "인증 기관 (CA)", explanation: "개인이나 법인 신청자의 자격을 엄밀히 심사하여 공개키 검증 증서(인증서)를 전자 서명하여 발행하고 관리하는 신뢰할 수 있는 제3자 공인 인증 단체입니다." }
     },
   {
     id: "security_policy_governance",
@@ -41305,7 +41305,7 @@
       text: "Every new hire is required to read and sign the corporate security_policy_governance during onboarding."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "보안 정책", explanation: "특정 사내 혹은 조직의 정보 자원을 해킹으로부터 규범적으로 수호하고 보안을 유지하기 위해 정의해 둔 상위 개념의 의무 규정, 행동 매뉴얼 및 대처 지침 명세 문서입니다." }
     },
   {
     id: "access_control_list_acl",
@@ -41366,7 +41366,7 @@
       text: "We updated the router's access_control_list_acl to deny all incoming traffic from the untrusted subnet."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "접근 제어 목록 (ACL)", explanation: "각 리소스(폴더, 특정 파일 또는 방화벽 포트)마다 지정되어, 해당 구역에 드나들 수 있는 사용자 계정명 혹은 패킷 IP 주소의 출입 권한 허용/거부 리스트입니다." }
     },
   {
     id: "least_privilege_principle",
@@ -41426,7 +41426,7 @@
       text: "By following the least_privilege_principle, database accounts for web apps should not have database creation permissions."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "최소 권한의 원칙", explanation: "시스템 보안 설계의 핵심 가치로, 소속 사원이나 특정 가동 프로그램에 대해 해당 업무 임무를 마치는 데 필수적으로 갖춰야 할 아주 작고 좁은 자격(최소한의 권한)만을 한정해 부여하여 사고 범위를 축소하는 원리입니다." }
     },
   {
     id: "von_neumann_architecture",
@@ -41486,7 +41486,7 @@
       text: "The CPU bottleneck created by sharing a single bus for instructions and data is known as the von_neumann_architecture bottleneck."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "폰 노이만 아키텍처", explanation: "현대 대다수 전자계산기의 기본 골격을 형성한 구조로, 수행할 프로그램 지시 코드와 처리할 데이터를 하나의 메인 메모리 저장 영역에 통합해 두고 CPU가 차례대로 한 문장씩 읽어와 작동하게 만드는 방식입니다." }
     },
   {
     id: "central_processing_unit_cpu",
@@ -41547,7 +41547,7 @@
       text: "Our server has a high-core-count central_processing_unit_cpu to handle thousands of concurrent SQL transactions."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "CPU (중앙 처리 장치)", explanation: "컴퓨터의 가장 기초가 되는 핵심 부품으로, 주기억장치에 얹어진 각종 소프트웨어 명령을 순차 판독해 계산하고 시스템 내부 각 주변 장치를 조율 및 지배하는 두뇌에 해당합니다." }
     },
   {
     id: "control_unit_cpu",
@@ -41607,7 +41607,7 @@
       text: "The control_unit_cpu fetches the next program counter instruction and generates routing signals for the registers."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "제어 장치 (CPU)", explanation: "중앙처리장치(CPU) 내부의 핵심 하부 조직으로, 주기억장치에 놓인 기계어 명령을 가져와 해독한 뒤 연산 장치(ALU)나 데이터 레지스터에 처리 동기 클럭 지시를 배정하는 모듈입니다." }
     },
   {
     id: "registers_cpu_cache",
@@ -41669,7 +41669,7 @@
       text: "The CPU accumulator is a special registers_cpu_cache used to store the results of the arithmetic logic unit."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "CPU 레지스터", explanation: "CPU 칩셋 속에 직접 탑재된 초소형 극초고속 연산 전용 버퍼 메모리입니다. 현재 연산을 수행하기 위해 입력된 변수 데이터나 복귀 주소 및 명령어 바이트를 찰나의 순간 동안 붙잡아 둡니다." }
     },
   {
     id: "cache_memory_l1_l2_l3",
@@ -41732,7 +41732,7 @@
       text: "A high cache_memory_l1_l2_l3 hit rate prevents the CPU from waiting for the slower system RAM."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "캐시 메모리", explanation: "속도가 느린 물리 RAM 장치와 빠른 CPU 사이의 정보 전송 속도 간극을 상쇄하기 위해 마련해 둔 SRAM 기반 고속 메모리입니다. 점유 위치와 가속 역할에 따라 L1, L2, L3 계층으로 계열이 세분됩니다." }
     },
   {
     id: "random_access_memory_ram",
@@ -41793,7 +41793,7 @@
       text: "Adding more random_access_memory_ram lets the operating system run multiple heavy services concurrently without swapping to disk."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "RAM (임의 접근 메모리)", explanation: "전원이 유지되는 동안에만 정보를 담는 휘발성 주기억장치입니다. CPU가 당장 구동하고 있는 다양한 소프트웨어 프로세스들과 연동 텍스트 데이터들을 일시적으로 적재하여 가동하는 장소입니다." }
     },
   {
     id: "static_random_access_memory_sram",
@@ -41853,7 +41853,7 @@
       text: "Because it does not require capacitor refreshing, static_random_access_memory_sram latency is measured in nanoseconds."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "SRAM (정적 RAM)", explanation: "플립플롭 구조의 소자로 설계되어 데이터 전송 성능이 극히 빠른 휘발성 메모리입니다. 전원이 들어오는 한 리프레시 동작 없이 안정적으로 정보를 지키며, 가격이 고가라 주로 CPU 내부 캐시 메모리에 탑재됩니다." }
     },
   {
     id: "dynamic_random_access_memory_dram",
@@ -41913,7 +41913,7 @@
       text: "Modern computer mainboards employ DDR5 dynamic_random_access_memory_dram modules."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "DRAM (동적 RAM)", explanation: "축전기(콘덴서)에 전하를 담아 1과 0을 표기하는 가성비 높은 범용 메모리입니다. 시간이 지나면 전하가 누전되므로 매번 충전 갱신(Refresh) 연산이 필요하며, 일반 컴퓨터 조립 시 쓰는 램 칩이 이에 속합니다." }
     },
   {
     id: "solid_state_drive_ssd",
@@ -41974,7 +41974,7 @@
       text: "We replaced our server storage array with enterprise solid_state_drive_ssd modules to handle high-IOPS database operations."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "SSD (고체 상태 드라이브)", explanation: "플래시 메모리(NAND Flash) 반도체 판들을 엮어 정보를 영구 소장하는 보조 기억 매체입니다. 기계적으로 고속 회전하는 헤드가 없기 때문에 충격에 안전하고 하드디스크 대비 월등히 빠른 읽기/쓰기 스펙을 제공합니다." }
     },
   {
     id: "graphics_processing_unit_gpu",
@@ -42035,7 +42035,7 @@
       text: "Training deep neural networks requires a high-performance cluster of enterprise graphics_processing_unit_gpu chips."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "GPU (그래픽 처리 장치)", explanation: "3D 영상 스크린 프레임 드로잉 및 다채널 병렬 계산에 초점을 맞춘 복합 그래픽 칩셋입니다. 수많은 가벼운 계산 코어를 활용하여 대단위 연산을 처리하며, 현대에는 AI 딥러닝 고속 학습 및 계산 가속화의 선두 주자로 쓰입니다." }
     },
   {
     id: "operating_system_structure",
@@ -42095,7 +42095,7 @@
       text: "Modern kernel-based designs ensure that faults in user apps cannot crash the core operating_system_structure."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "운영체제 구조", explanation: "사용자 애플리케이션 및 하드웨어 연계를 조율하는 시스템 내부 아키텍처입니다. 기본적으로 디스크 기기를 통제하는 커널(Kernel) 구역과 일반 앱들이 운용되는 사용자(User) 공간 계층으로 구분됩니다." }
     },
   {
     id: "operating_system_process_control_block",
@@ -42155,7 +42155,7 @@
       text: "When performing context switching, the OS saves the current CPU state into the active operating_system_process_control_block."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "프로세스 제어 블록 (PCB)", explanation: "운영체제 커널이 가동되는 모든 단일 태스크(프로세스)마다 부여하여 관리하는 메타 데이터 정보 블록입니다. 스레드 ID, CPU 레지스터 스냅샷, 가상 메모리 범위 레코드를 소유합니다." }
     },
   {
     id: "operating_system_thread",
@@ -42216,7 +42216,7 @@
       text: "To maximize Web request throughput, our backend spawns an independent operating_system_thread per incoming TCP socket."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "스레드", explanation: "운영체제가 하드웨어 CPU 연산 주기를 배당하는 가장 기본 단위의 가동 흐름입니다. 하나의 프로세스 내부에 여러 갈래의 스레드가 얽혀 구동될 수 있으며 부모의 자원(힙 영역)을 분할 공유해 동작 속도가 민첩합니다." }
     },
   {
     id: "process_scheduling_algorithm",
@@ -42277,7 +42277,7 @@
       text: "Interactive shells rely on a round-robin process_scheduling_algorithm to provide responsive feedback to user keystrokes."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "프로세스 스케줄링 알고리즘", explanation: "한정된 하드웨어 CPU 연산 점유권을 대기 중인 여러 활성 프로세스들에게 골고루 공평하게 대여해 주기 위해 커널 스케줄러가 차용하는 조율 기법(라운드 로빈, 우선순위, FCFS 등)입니다." }
     },
     {
     id: "process_state_transitions",
@@ -42338,7 +42338,7 @@
       text: "An I/O interrupt triggers one of the process_state_transitions, moving it from Blocked to Ready."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "프로세스 상태 전이", explanation: "운영체제의 스케줄러 통제 속에서 단일 작업 프로세스가 생애 주기 동안 겪는 라이프사이클의 움직임입니다. 주로 생성(New), 준비(Ready), 실행(Running), 대기(Blocked), 종료(Terminated) 상태 간을 오갑니다." }
     },
   {
     id: "system_deadlock_conditions",
@@ -42398,7 +42398,7 @@
       text: "Ensuring an ordering of lock acquisition breaks the circular wait of the system_deadlock_conditions."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "교착 상태 발생 조건 (데드록 조건)", explanation: "서로 다른 스레드나 프로세스들이 각자 쥐고 있는 자원을 내주지 않으면서 대치 상황을 일으키는 데드록이 발발하기 위한 4가지 수학적 필수 여건으로, 상호 배제, 점유와 대기, 비선점, 환형 대기를 아우릅니다." }
     },
   {
     id: "virtual_memory_translation_lookaside_buffer",
@@ -42458,7 +42458,7 @@
       text: "A virtual_memory_translation_lookaside_buffer miss forces the MMU to query the multi-level page table in main RAM."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "TLB", explanation: "가상 물리 주소와 시스템의 실제 램 메모리 주소를 매칭해 주는 주소 변환표(페이지 테이블)의 최신 이력 사본을 보관하는 하드웨어 캐시 버퍼입니다. 주소 추적 중 발생하는 참조 시간을 아끼기 위해 CPU 내에 머뭅니다." }
     },
   {
     id: "virtual_memory_segmentation",
@@ -42518,7 +42518,7 @@
       text: "Unlike paging, virtual_memory_segmentation is visible to the programmer and supports modular protection flags."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "세그멘테이션 기법", explanation: "시스템 가상 메모리를 관리할 때, 고정 등분이 아닌 프로그램 구성상의 논리적 구분(코드, 데이터, 스택 공간 등)에 따라 길이가 서로 다른 조각(세그먼트) 단위로 구획을 나누어 보호하고 관리하는 기법입니다." }
     },
   {
     id: "page_replacement_algorithm_lru",
@@ -42578,7 +42578,7 @@
       text: "The OS implemented a page_replacement_algorithm_lru queue to keep hot database records cached in high-speed RAM."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "LRU", explanation: "가상 메모리 페이지 교체 규칙의 하나로, 물리 램이 가득 찬 상태에서 새 데이터를 얹어야 할 때 사용 이력을 거꾸로 훑어 '가장 오랫동안 액세스되지 않은' 노후 페이지를 선별해 스왑 하드로 강제 추출하는 로직입니다." }
     },
   {
     id: "page_fault_handling",
@@ -42639,7 +42639,7 @@
       text: "Frequent page_fault_handling and disk swapping degrade system performance, causing severe thrashing."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "페이지 폴트 (페이지 결함)", explanation: "프로그램이 요청한 메모리 정보가 지금 당장 물리 메인 램에 부재하여 발생시키는 내부 인터럽트 신호입니다. 해당 경고가 접수되면 운영체제가 즉시 보조 저장매체 스왑 공간에서 요구하는 페이지 데이터를 찾아 램에 적재합니다." }
     },
   {
     id: "device_driver_architecture",
@@ -42699,7 +42699,7 @@
       text: "When installing a new network card, you must install the appropriate device_driver_architecture for the OS to communicate with it."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "디바이스 드라이버", explanation: "모니터, 마우스, 비디오 카드 등 장착한 다양한 제3사 제조 부속품들을 운영체제 커널이나 소속 응용 프로그램이 매끄럽게 알아듣고 다룰 수 있게 신호를 가공하여 연계해 주는 제어용 인터페이스 소프트웨어입니다." }
     },
   {
     id: "polling_input_output",
@@ -42759,7 +42759,7 @@
       text: "Although simple to write, polling_input_output wastes many CPU cycles compared to interrupt-driven I/O."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "폴링 I/O", explanation: "프로세서(CPU)가 특정 외장 장치가 보내오는 신호 유입이나 데이터 접수 완료 가부를 판독하기 위해, 백그라운드에서 주기적으로 외부 상태 레지스터의 수치를 무한 반복해서 루프로 체크하는 고전적 입출력 대기 기술입니다." }
     },
   {
     id: "basic_input_output_system_uefi",
@@ -42820,7 +42820,7 @@
       text: "We configured the server's basic_input_output_system_uefi to boot from the network PXE interface instead of the local disk."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "BIOS 및 UEFI", explanation: "컴퓨터 전원을 처음 인가했을 때 마더보드 롬 칩셋에서 즉시 구동되는 하드웨어 검사용 내장 펌웨어 소프트웨어입니다. 내부 장치 테스트(POST)를 자율 통과한 후 하드디스크의 OS 부트 로더로 주권을 양도합니다." }
     },
   {
     id: "redundant_array_of_independent_disks",
@@ -42884,7 +42884,7 @@
       text: "We set up RAID 5 using redundant_array_of_independent_disks to survive a single drive failure without any database downtime."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "RAID", explanation: "복수의 개별 디스크 장치를 논리적으로 묶어 하나의 큰 드라이브처럼 연동 운영하는 스토리지 관리 체계입니다. 데이터 전송 속도를 높이기 위한 스트라이핑(RAID 0), 안전한 보관을 위한 미러링(RAID 1), 오류 정정 패리티(RAID 5)를 응용합니다." }
     },
   {
     id: "world_wide_web_consortium",
@@ -42943,7 +42943,7 @@
       text: "We checked the validator hosted by the world_wide_web_consortium to ensure our HTML templates were fully compliant."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "W3C", explanation: "월드 와이드 웹(World Wide Web)의 확장 발전과 표준화 규범을 이끌기 위해 결성된 비영리 국제 연합 기관입니다. HTML5, CSS 등 웹 설계에 필수적인 기술 명세서 표준안을 수립합니다." }
     },
   {
     id: "uniform_resource_identifier",
@@ -43003,7 +43003,7 @@
       text: "The XML schema definition namespace is defined as a uniform_resource_identifier rather than an actual webpage address."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "URI (통합 자원 식별자)", explanation: "인터넷 웹상에 올려진 물리적 혹은 논리적인 자원을 유일무이하게 좌표 지칭하기 위한 명명 규칙의 틀입니다. 위치를 나타내는 URL과 고유 명칭 규격인 URN을 모두 포괄하는 큰 체계입니다." }
     },
   {
     id: "uniform_resource_locator",
@@ -43064,7 +43064,7 @@
       text: "We updated the API uniform_resource_locator to point to the secure HTTPS server."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "URL (통합 자원 위치 지정자)", explanation: "일반적으로 널리 쓰이는 인터넷 웹페이지의 주소 표기 체계입니다. 목적 리소스의 논리적 위치뿐 아니라 거기에 접근하기 위한 전송 수단 프로토콜 명칭(예: http://, ftp://)까지 세부 기재하도록 요구합니다." }
     },
   {
     id: "hypertext_markup_language_html",
@@ -43125,7 +43125,7 @@
       text: "We built our landing page template by writing clean semantic hypertext_markup_language_html tags."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "HTML", explanation: "웹 브라우저 스크린에 텍스트, 이미지, 서식 등을 구조적으로 배치해 표현하기 위해 작성하는 표준 마크업 문서 문법입니다. 괄호 태그 문자들(`<p>, <div>` 등)을 기치로 작성합니다." }
     },
   {
     id: "cascading_style_sheets_css",
@@ -43186,7 +43186,7 @@
       text: "We applied cascading_style_sheets_css rule overlays to style our database dashboard with dark mode properties."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "CSS", explanation: "HTML 마크업으로 레이아웃 틀을 잡은 문서 위에 글자 폰트, 배경 색상, 외곽 디자인, 마진 공간 등 다채로운 미적 스타일 요소를 제어해 입히는 시각 장식용 선언어 규칙입니다." }
     },
   {
     id: "javascript_scripting_language",
@@ -43247,7 +43247,7 @@
       text: "Our glossary table is rendered dynamically using client-side javascript_scripting_language code."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "JavaScript", explanation: "정적인 웹페이지 구조 위에 키보드 클릭 이벤트 반응, DOM 동적 교체, 백그라운드 데이터 비동기 연계 호출 등의 동적 상호 작용 성능을 이식하기 위해 브라우저에서 수행하는 웹용 핵심 인터프리터 스크립트 언어입니다." }
     },
   {
     id: "document_object_model_dom",
@@ -43308,7 +43308,7 @@
       text: "We performance-optimized the application by minimizing direct writes to the document_object_model_dom tree."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "DOM (문서 객체 모델)", explanation: "웹 브라우저가 읽어 들인 HTML 문서를 프로그래밍 언어(JavaScript 등)가 읽고 수정할 수 있도록 계층형 부모-자식 트리 구조의 자바스크립트 객체 인스턴스 체계로 풀어 제공하는 인터페이스입니다." }
     },
   {
     id: "http_request_method_get",
@@ -43368,7 +43368,7 @@
       text: "Web browsers utilize the http_request_method_get when you enter a URL in the address bar."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "HTTP GET 메서드", explanation: "HTTP 통신 규약의 데이터 요청 방식 중 하나로, 특정 도메인의 리소스를 단순히 긁어와 읽기 위해 요청하는 메서드입니다. 요청 파라미터가 URL 주소 뒤 쿼리 스트링으로 고스란히 노출되며 안전성과 멱등성을 보장합니다." }
     },
   {
     id: "http_request_method_post",
@@ -43428,7 +43428,7 @@
       text: "Submitting the register form executes an http_request_method_post with the username and password in the request body."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "HTTP POST 메서드", explanation: "HTTP 요청 방식으로, 서버로 사용자가 작성한 새로운 게시글, 파일 업로드 바이트 등의 신규 가치 데이터를 전송하여 서버 데이터베이스를 조작·생성하게 만드는 요구입니다. 데이터는 URL이 아닌 본문(Request Body)에 실어 배달됩니다." }
     },
   {
     id: "http_request_method_put",
@@ -43488,7 +43488,7 @@
       text: "We updated the profile record with an http_request_method_put containing the complete updated User JSON."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "HTTP PUT 메서드", explanation: "HTTP 데이터 요청 규약의 일부로, 특정 리소스에 대해 새로 전달하는 데이터 구조로 기존 내용을 완전히 갈아끼워 버리는 통째 수정(Update) 요구입니다. 같은 자료를 반복 전송 시 항상 상태를 복제하므로 멱등적입니다." }
     },
   {
     id: "http_request_method_delete",
@@ -43548,7 +43548,7 @@
       text: "We sent an http_request_method_delete to /api/users/42 to remove the user from the SQL database."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "HTTP DELETE 메서드", explanation: "HTTP 요청 방식으로, 지목한 특정 경로 위치의 데이터를 완전히 서버 보관소에서 지워 줄 것을 요구하는 삭제 요청 메서드입니다. 여러 차례 호출하더라도 동일한 리소스 부재 상태를 유지하므로 멱등적입니다." }
     },
   {
     id: "http_status_code_200_ok",
@@ -43608,7 +43608,7 @@
       text: "The API returned an http_status_code_200_ok alongside the requested glossary entries."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "HTTP 200 OK", explanation: "웹 서버가 상대 브라우저가 전달한 웹 리소스 요청 문장을 오류 없이 순조롭게 받아들여 무사히 응답 작업을 성사시켰음을 통보하는 대표적 성공 응답 코드입니다." }
     },
   {
     id: "http_status_code_301_moved",
@@ -43668,7 +43668,7 @@
       text: "We set up an http_status_code_301_moved from HTTP to HTTPS to ensure all legacy links are redirected securely."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "HTTP 301 Moved Permanently", explanation: "클라이언트가 요구한 특정 웹페이지 주소가 영구적으로 새 목적지 위치(URL)로 이전했음을 알려주는 전향 통보 코드입니다. 브라우저는 해당 코드를 만나면 명시된 새 목적지로 즉시 자동 이동(리다이렉트)시킵니다." }
     },
   {
     id: "http_status_code_400_bad",
@@ -43728,7 +43728,7 @@
       text: "If you omit the password string in the JSON payload, the authentication API returns an http_status_code_400_bad."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "HTTP 400 Bad Request", explanation: "브라우저(클라이언트)가 웹 서버에 접수한 요구 명세에 구문상 중대 결함이 있거나 전송 파라미터가 유효하지 않아, 서버가 연산 처리를 시작하지도 못한 채 거부했음을 보여주는 요청 실패 코드입니다." }
     },
   {
     id: "http_status_code_401_unauthorized",
@@ -43788,7 +43788,7 @@
       text: "If you provide an expired token, the server responds with an http_status_code_401_unauthorized."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "HTTP 401 Unauthorized", explanation: "클라이언트가 요구한 해당 비밀 구역 페이지에 드나들기 위해 필요한 로그인 ID/비밀번호 혹은 통신 자격 증명 토큰 등의 유효한 인증 요건이 누락되었거나 거절당했음을 표명하는 인증 요구 코드입니다." }
     },
     {
     id: "http_status_code_403_forbidden",
@@ -43848,7 +43848,7 @@
       text: "Trying to access administrative console folders directly will trigger an http_status_code_403_forbidden."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "HTTP 403 Forbidden", explanation: "요청자의 접속 아이디 신원은 파악되었으나, 해당 회원이 요청한 특정 관리자용 도메인이나 디렉토리에는 아예 들어갈 수 있는 물리 권한이 결여되어 접근 요구 자체를 영영 거부하는 권한 반려 코드입니다." }
     },
   {
     id: "http_status_code_404_not_found",
@@ -43908,7 +43908,7 @@
       text: "We set up a custom catch-all route to display a friendly user page instead of the default browser http_status_code_404_not_found error."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "HTTP 404 Not Found", explanation: "브라우저가 요구한 목적 주소(URL) 위치의 페이지나 API 리소스가 웹 서버의 로컬 하드 디스크 경로에 아예 부재함을 최종 선언하는 주소 부재 실패 코드입니다." }
     },
   {
     id: "http_status_code_500_internal",
@@ -43969,7 +43969,7 @@
       text: "A Python traceback or unhandled database crash usually results in an http_status_code_500_internal returned to the frontend."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "HTTP 500 Internal Server Error", explanation: "브라우저의 요청은 구조적으로 정상 유입되었으나, 웹 서버 내부의 애플리케이션 코드가 처리 도중 미처 예방 처리를 하지 못한 버그(NullPointer, 런타임 충돌 등)를 일으켜 터진 서버 측 작동 정지 장애 안내 코드입니다." }
     },
   {
     id: "http_status_code_503_unavailable",
@@ -44029,7 +44029,7 @@
       text: "During flash sales, server instances scale up automatically to prevent returning an http_status_code_503_unavailable."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "HTTP 503 Service Unavailable", explanation: "서버 장비 자체는 켜져 있으나, 동시 접속자 수 제한 폭주로 인한 버퍼 오버플로우나 혹은 정기 시스템 점검 보수 과정 때문에 일시적으로 웹 서비스를 받아들여 처리해 줄 수 없음을 긴급 표기하는 경고 응답 코드입니다." }
     },
   {
     id: "single_page_application_spa",
@@ -44089,7 +44089,7 @@
       text: "We built the dashboard as a single_page_application_spa using React to ensure a highly responsive user experience."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "단일 페이지 애플리케이션 (SPA)", explanation: "전체 화면을 구성할 기초 HTML 파일은 맨 처음 딱 1회만 다운로드하고, 이후 유저 조작에 맞춰 화면 변경이 필요할 땐 페이지 전체를 갱신하지 않고 자바스크립트로 뒷단 API에서 데이터만 받아와 해당 영역의 DOM만 동적 부분 변경하는 웹 구현 방식입니다." }
     },
   {
     id: "soap_protocol_web_services",
@@ -44149,7 +44149,7 @@
       text: "While modern APIs prefer JSON over REST, legacy enterprise integrations still rely on soap_protocol_web_services."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "SOAP 프로토콜", explanation: "분산 통신 환경에서 서로 다른 시스템 기기 간 구조화된 데이터 문서를 안전하게 주고받기 위해 고안된 XML 스키마 기반 규격 프로토콜입니다. 사양 명세가 극히 깐깐하며 WSDL 문서 등에 바인딩 형식을 엄밀하게 사전에 규정해 놓습니다." }
     },
   {
     id: "graphql_query_language_api",
@@ -44208,7 +44208,7 @@
       text: "We adopted graphql_query_language_api to combine multiple REST API requests into a single network round-trip."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "GraphQL", explanation: "페이스북이 제작한 모던 웹 API용 쿼리 기술 언어입니다. 백엔드에서 주는 대로 받는 게 아니라, 클라이언트 브라우저 측에서 본인들이 갖고 싶은 특정 객체 변수 구조를 JSON 타입과 비슷하게 작성해 요구하면 그대로 오차 없이 반환받는 조회 방식입니다." }
     },
   {
     id: "web_server_nginx_apache",
@@ -44270,7 +44270,7 @@
       text: "We deployed Nginx as our primary web_server_nginx_apache to handle HTTPS redirection and static asset serving."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "웹 서버 (Nginx/Apache)", explanation: "네트워크 앞단에 자리 잡아 외부 클라이언트로부터 들어오는 통상의 HTTP 전송 요구를 직접 맞닥뜨려 처리하고, 로컬 디스크의 정적 자료(HTML, 이미지 등)를 즉각 되돌려주거나 동적 질의는 백엔드 WAS 서버로 안내 및 릴레이해 주는 대표적 통신 중계 소프트웨어 패키지입니다." }
     },
   {
     id: "reverse_proxy_server",
@@ -44330,7 +44330,7 @@
       text: "We configured Nginx as a reverse_proxy_server to protect our SQL DB application servers from direct Internet access."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "리버스 프록시", explanation: "외부의 인터넷 일반 공격 세력과 내부 사내 메인 서비스 인프라 사이의 완충지대에 배치되어, 대리인 신분으로 요청을 최초 접수한 뒤 정해진 스케줄 정책에 맞춰 내부의 진짜 물리 서버군으로 골고루 통신 패킷을 전달해 주는 보안 가속화 구조입니다." }
     },
   {
     id: "version_control_system_vcs",
@@ -44391,7 +44391,7 @@
       text: "Using a version_control_system_vcs is mandatory for managing enterprise SQL schema deployment scripts."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "버전 관리 시스템 (VCS)", explanation: "작성하는 텍스트 코드와 설계 서류의 시간에 따른 수정 변화 발자취를 빈틈없이 추적하여, 소스 오류 시 원하는 특정 과거 시점 리비전으로 되돌려 보거나 공동 작업 팀원들이 충돌 없이 코드를 공유 병합하게 보조하는 제어용 소프트웨어 체계입니다." }
     },
   {
     id: "git_repository_local_remote",
@@ -44452,7 +44452,7 @@
       text: "We pushed our local changes to the GitHub git_repository_local_remote server."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "로컬 및 원격 저장소 (Git)", explanation: "깃(Git) 도구가 다루는 아카이브 보관 공간입니다. 개발자 본인 PC 디렉토리에 자리 잡아 전체 스냅샷 수정 역사를 빠르게 수집하는 로컬 저장소(Local)와, GitHub 같은 공용 웹 클라우드 서버에 배포해 팀원들과 변경 사항을 집적 통합 공유하는 원격 저장소(Remote)로 구성됩니다." }
     },
   {
     id: "git_commit_history",
@@ -44513,7 +44513,7 @@
       text: "Analyzing the git_commit_history helped us locate the exact date when the SQL parser error was introduced."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Git 커밋 이력", explanation: "깃 버전 관리 도구에 등록 보관된 과거 변경 분기점(커밋)들의 시간 순서에 따른 연결 기록 계보입니다. 각 커밋마다 부여된 고유 해시번호와 작성자 이메일, 수정한 세부 구문 코드를 log 명령으로 확인해 역추적할 수 있습니다." }
     },
   {
     id: "git_branching_model",
@@ -44574,7 +44574,7 @@
       text: "We adopted a strict trunk-based git_branching_model to deploy changes to production daily."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Git 가지치기 모델 (브랜치 모델)", explanation: "개발팀 내에서 단일 소스코드를 기반으로 동시에 신규 코딩을 수행할 때 브랜치 생성, 기능 보완, 통합 테스트 완료, 실서버 릴리즈 병합까지의 관리 일정을 구조화해 실천하는 개발팀 관리 가이드(예: Git Flow) 약속입니다." }
     },
   {
     id: "git_merge_conflict_resolution",
@@ -44635,7 +44635,7 @@
       text: "We spent two hours on git_merge_conflict_resolution after merging the massive backend refactor branch."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Git 병합 충돌 해결", explanation: "서로 다른 개발 분기 브랜치들이 한 소스 파일 내 동일한 줄의 텍스트를 제각각 고친 상황에서 무리하게 통합하려 할 때 발생하는 충돌(Conflict) 현상입니다. 깃이 스스로 자동 연동해 합치지 못하므로, 사람이 소스코드 충돌 마커를 살펴 원하는 최종 코드로 합친 뒤 커밋해야 합니다." }
     },
   {
     id: "git_rebase_workflow",
@@ -44695,7 +44695,7 @@
       text: "Using a git_rebase_workflow before opening a pull request keeps our main commit branch extremely clean."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Git 리베이스 워크플로", explanation: "개발용 가지 브랜치의 시작점을 본 프로젝트 가지(Master/Main)의 가장 최신 완성 커밋 지점으로 떼어 붙임(Rebase)으로써, 프로젝트 전체의 개정 역사가 중간에 마구 꼬이지 않고 오직 한 줄의 매끄러운 수평 직선 형태로 보이게 정리하는 깃 작업 흐름입니다." }
     },
   {
     id: "git_clone_pull_push",
@@ -44756,7 +44756,7 @@
       text: "First, you must execute a git_clone_pull_push clone command to set up the local repository on your workstation."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Git 클론, 풀, 푸시", explanation: "깃 네트워크 연계 핵심 기능입니다. 인터넷 저장소의 소스코드를 본인 컴퓨터로 다 받아오는 복제(Clone), 다른 이가 원격지에 수정한 최근 개정분을 로컬로 당겨와 병합하는 다운로드(Pull), 로컬의 수정을 원격 저장소에 올리는 업로드(Push)를 말합니다." }
     },
   {
     id: "unit_testing_level_dev",
@@ -44816,7 +44816,7 @@
       text: "Writing robust unit_testing_level_dev cases ensures that later refactoring doesn't break individual system methods."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "단위 테스트 (유닛 테스트)", explanation: "소프트웨어 검증의 가장 초입 관문으로, 작성된 개별적인 함수식이나 클래스 객체 메서드 단 하나가 기획 사양 설계에 정의된 범위의 출력값을 오차 없이 뽑아내는지 외부 자원 연계 없이 독립적으로 고립 테스트하는 단계입니다." }
     },
   {
     id: "integration_testing_level_dev",
@@ -44876,7 +44876,7 @@
       text: "We configured our database connectors to run during integration_testing_level_dev to verify connection pool limits."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "통합 테스트 (결합 테스트)", explanation: "개별적으로 통과한 소형 프로그램 모듈이나 서브 컴포넌트들을 합쳐 놓은 뒤, 모듈 간의 매끄러운 통신 연동 여부 및 데이터 인자 가공 전달의 정밀함 등 모듈 간 인터페이스의 건전함을 검토하는 테스트입니다." }
     },
   {
     id: "system_testing_level_dev",
@@ -44936,7 +44936,7 @@
       text: "Our system_testing_level_dev procedures include performance benchmarks under simulated user loads."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "시스템 테스트", explanation: "개별 모듈들이 온전히 조립되어 완성된 통합 소프트웨어 시스템을 실제 납품 실서버 환경과 가깝게 시뮬레이션 구축한 후, 비즈니스 시나리오 전개의 완벽성과 해킹 위협, 접속자 폭주 부하, 응답 속도 성능 등을 전방위로 최종 확인하는 관문입니다." }
     },
   {
     id: "acceptance_testing_level",
@@ -44997,7 +44997,7 @@
       text: "We deployed the code to a staging environment so key customers could complete their acceptance_testing_level check."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "인수 테스트 (UAT)", explanation: "시스템을 완성하여 실제 사용자나 발주처 기업 측에 소프트웨어를 완전히 이전 인도하기 전에, 고객들이 자기 분야 실무 장치 규격에 대조해 도입할 수 있는 완성품임을 확인하고 인수 승인서에 도장을 찍기 위해 벌이는 최후의 비즈니스 시나리오 테스트입니다." }
     },
   {
     id: "regression_testing_maintenance",
@@ -45057,7 +45057,7 @@
       text: "We automate our regression_testing_maintenance suite inside the CI pipeline to run on every commit."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "회귀 테스트", explanation: "시스템의 결함을 고쳐 코드를 새로 교체하거나 보안 패치를 수행한 직후에 시행하는 재확인 테스트입니다. 새로 고친 부분 외에 과거부터 이미 순조롭게 굴러가고 있던 본연의 엉뚱한 타 기능들까지 돌발적인 오작동(회귀 장애)을 일으켰는지 안심 여부를 추적합니다." }
     },
   {
     id: "black_box_testing_method",
@@ -45117,7 +45117,7 @@
       text: "The QA analyst conducted black_box_testing_method by entering invalid SQL injection strings in the username form."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "블랙박스 테스트", explanation: "대상 내부의 구문 알고리즘 소스코드를 들여다보지 않은 채, 오로지 제공되는 사용자 명세 설명서 규정에 의거하여 적합한 테스트용 인풋을 입력해 보아 반환되는 최종 동작 결과(아웃풋)의 부합성만 겉에서 모니터링하는 검증 기술입니다." }
     },
   {
     id: "white_box_testing_method",
@@ -45178,7 +45178,7 @@
       text: "We performed white_box_testing_method to ensure that all catch blocks in our SQL driver classes were traversed during simulation."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "화이트박스 테스트", explanation: "제품 내부의 프로그래밍 코드를 속속들이 파악하고 있는 상태에서, 각 연산 분기문이나 루프 경로 등 설계한 시스템 제어선들을 하나씩 밟아가며 코딩 수준의 예기치 못한 논리 루프나 막힌 경로가 없는지 검토하는 심층 검사입니다." }
     },
   {
     id: "static_code_analysis_tool",
@@ -45240,7 +45240,7 @@
       text: "Our pipeline executes a static_code_analysis_tool to enforce formatting consistency and prevent SQL syntax vulnerabilities before merging."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "정적 코드 분석", explanation: "작성한 소스코드를 실제 인터프리터에 올려 가동하지 않은 채로, 텍스트 구조 자체를 전용 도구(Linter 등)로 기계 스캔하여 잠재적인 구문 오류, 표준 코딩 서식 탈선, 혹은 치명적인 해킹 취약 오타를 찾아 검진하는 방식입니다." }
     },
   {
     id: "dynamic_code_analysis_tool",
@@ -45302,7 +45302,7 @@
       text: "We used a dynamic_code_analysis_tool to profile the thread safety of the database pool during concurrent requests."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "동적 코드 분석", explanation: "실제 컴퓨터 장치나 가상 에뮬레이터 위에서 소프트웨어를 띄워 작동을 시키는 동시에 모니터링 툴을 엮어, 실시간 램 메모리 누수나 CPU 부하 급등 및 잠금 경합 등 런타임 환경에서만 포착할 수 있는 장애 지점을 계측 분석하는 기법입니다." }
     },
     {
     id: "bug_tracking_system_issue",
@@ -45364,7 +45364,7 @@
       text: "We registered the SQL database connection error in our bug_tracking_system_issue tracker."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "버그 추적 시스템 (BTS)", explanation: "소프트웨어 개발 프로젝트 진행 중 발견되는 크고 작은 오작동 장애(버그)들의 최초 등록일, 긴급 순위, 보수 담당 프로그래머 배정, 고쳐진 소스 내역, 최종 결함 클로즈 여부 등 진척 전 과정을 일목요연하게 이력 기록하는 종합 업무 보조 툴입니다." }
     },
   {
     id: "continuous_deployment_cd_dev",
@@ -45424,7 +45424,7 @@
       text: "Our server configuration enables continuous_deployment_cd_dev to push updates directly to staging when PRs are merged."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "지속적 배포 (CD)", explanation: "개발팀이 고친 자바나 파이썬 소스가 원격 빌드 자동 통합 과정을 자율적으로 통과한 즉시, 중간에 수동 통보 결재를 기다리지 않고 바로 실서버 운영 환경에 코드가 패키징 릴리즈되어 사용자에게 도달할 수 있도록 설계한 고도화 자동화 체제입니다." }
     },
   {
     id: "cloud_computing_characteristics",
@@ -45484,7 +45484,7 @@
       text: "Rapid elasticity is one of the key cloud_computing_characteristics that allowed our Web app to survive the traffic spike."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "클라우드 컴퓨팅 특징", explanation: "미국 NIST 표준 정의에 따른 현대 인터넷 클라우드 인프라의 5대 의무 조건으로, 요청 즉시 할당되는 셀프서비스, 범용 통신망 접속, 연동 장비의 풀 자원 공유, 부하 폭증 시 유연한 탄력 확장, 그리고 사용량에 비례해 요금이 가산되는 계측 유틸리티를 뜻합니다." }
     },
   {
     id: "infrastructure_as_service_iaas",
@@ -45543,7 +45543,7 @@
       text: "AWS EC2 and Google Compute Engine are classic examples of infrastructure_as_service_iaas."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "IaaS (서비스형 인프라)", explanation: "사용자가 서버실 물리 하드웨어를 직접 사지 않고, 인터넷 가상망을 통해 가상 머신(VM), 디스크 스토리지, 로드 밸런서 등 기초 정보 처리 하드웨어 인프라 자원을 필요한 기간만큼 임대해 쓰는 클라우드 대여 모형입니다." }
     },
   {
     id: "platform_as_service_paas",
@@ -45602,7 +45602,7 @@
       text: "Heroku and AWS Elastic Beanstalk are well-known platform_as_service_paas options that simplify application deployment."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "PaaS (서비스형 플랫폼)", explanation: "프로그래머가 소스코드 개발과 컴파일러 가동에만 역량을 쏟을 수 있게, OS 라이선스 관리나 미들웨어 셋업, 오토 스케일링 구성 등 복잡한 인프라 실행 환경(플랫폼) 일체를 클라우드 공급사가 미리 빌드해 제공하는 대여 양식입니다." }
     },
   {
     id: "software_as_service_saas",
@@ -45661,7 +45661,7 @@
       text: "Google Workspace is a popular software_as_service_saas suite that integrates email, documents, and spreadsheets."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "SaaS (서비스형 소프트웨어)", explanation: "사용자가 장치 내에 특정 응용 프로그램을 설치해 구동할 필요 없이, 웹 브라우저를 띄워 인터넷 클라우드에 구축 완료된 완제품 소프트웨어 서비스(예: 오피스 365, Gmail)를 가볍게 사용하는 배급 형식입니다." }
     },
   {
     id: "public_cloud_deployment",
@@ -45720,7 +45720,7 @@
       text: "Our startup decided to host our database servers on a public_cloud_deployment to save on initial hardware costs."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "퍼블릭 클라우드 (공용 클라우드)", explanation: "AWS, Azure 등 글로벌 호스팅 전문 클라우드 회사가 세운 대형 데이터센터 인프라를 인터넷 선로를 통해 임의의 수많은 외부 불특정 다수 기업과 개인 유저들에게 멀티 테넌트 방식으로 필요한 용량만큼 분할 임대하는 구축 형태입니다." }
     },
   {
     id: "private_cloud_deployment",
@@ -45779,7 +45779,7 @@
       text: "Large banks prefer a private_cloud_deployment due to regulatory requirements and strict data residency policies."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "프라이빗 클라우드 (사설 클라우드)", explanation: "특정 단일 대기업이나 국가 공공 기관 등의 엄격한 보안을 준수하기 위해 해당 조직 일원들만 독점 가용하도록 격리 구축한 클라우드 망입니다. 기업이 자체 전산실에 설치하거나 사설 공간에 전적으로 하우징하여 운영합니다." }
     },
   {
     id: "hybrid_cloud_deployment",
@@ -45838,7 +45838,7 @@
       text: "We implemented a hybrid_cloud_deployment, keeping sensitive patient SQL databases in our private database and using the public cloud for web scaling."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "하이브리드 클라우드", explanation: "대중적인 공용 퍼블릭 클라우드 망과 자체적으로 엄격하게 제어하는 사설 프라이빗 클라우드망, 혹은 고유 사내 온프레미스 레거시 서버를 하나의 가상 터널 통신망으로 긴밀히 엮어 핵심 기밀성과 유연한 용량 증폭 편의를 동시 달성하는 혼합 모델입니다." }
     },
   {
     id: "cloud_virtualization_technology",
@@ -45899,7 +45899,7 @@
       text: "The hypervisor uses cloud_virtualization_technology to multiplex CPU and memory channels to different guest operating systems."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "가상화 기술", explanation: "단일한 물리 고사양 컴퓨터 본체에 하이퍼바이저(Hypervisor) 논리 구획 엔진을 적용하여, CPU 코어와 주기억장치 등을 개별 분할해 여러 대의 서로 다른 운영체제(가상 머신)가 동시 실행되게 만드는 클라우드 핵심 공학입니다." }
     },
   {
     id: "docker_containerization",
@@ -45959,7 +45959,7 @@
       text: "Using docker_containerization solved the 'it works on my machine' issue during developer handoff."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "Docker (도커 컨테이너 기술)", explanation: "자신의 가동 어플리케이션 소스코드와 실행용 미들웨어, 의존 도구 패키지 세트를 가볍고 작은 단위의 표준 샌드박스 이미지로 밀봉(컨테이너화)하여 어디서든 실행 가능하게 제어하는 기술입니다. OS 커널을 공유하므로 가상 머신에 비해 월등히 가볍고 기동 속도가 빠릅니다." }
     },
   {
     id: "container_orchestration_system",
@@ -46020,7 +46020,7 @@
       text: "We configured our deployment yaml on a container_orchestration_system to handle auto-healing and rollbacks."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "컨테이너 오케스트레이션", explanation: "수백, 수천 개의 컨테이너(도커 등)들이 수많은 가상 머신 클러스터 군에서 동시다발 가동될 때 이들의 통합 배포 일정, 부하에 맞춘 대수 증설, 네트워크 내부 중계 라우팅, 그리고 죽은 컨테이너 복원(자가 치유) 등을 관리하는 통합 스케줄러 프레임워크(예: Kubernetes)입니다." }
     },
   {
     id: "continuous_integration_ci_pipeline",
@@ -46080,7 +46080,7 @@
       text: "Our continuous_integration_ci_pipeline runs eslint and mocha test suits on GitHub Actions."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "지속적 통합 (CI)", explanation: "모든 개발자가 커밋한 코드가 공유 원격 저장소에 업로드될 때마다, 원격 빌드 에이전트가 작동하여 소스코드를 빌드하고 자동 단위 테스트와 규격 정적 검사를 즉시 가동하여 연동 결함을 조기에 탐지해 내는 규칙입니다." }
     },
   {
     id: "continuous_delivery_cd_pipeline",
@@ -46139,7 +46139,7 @@
       text: "While continuous deployment deploys automatically, continuous_delivery_cd_pipeline guarantees the build is deployable but waits for business approval."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "지속적 인도 (CD)", explanation: "테스트를 통과한 패키지 제품을 최종 본업 스테이징 테스트 서버에 무사 탑재하거나 바로 라이브 배포할 수 있는 배포 파일 준비(Artifact) 단계까지의 자동 릴리즈 과정을 안전히 확립해 둔 개발 파이프라인 형태입니다." }
     },
   {
     id: "infrastructure_as_code_terraform",
@@ -46200,7 +46200,7 @@
       text: "We migrated our cloud setup to infrastructure_as_code_terraform to ensure our staging and production environments are identical."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "IaC (코드 기반 인프라)", explanation: "서버망, 가상 포트, 서브넷 대역 등 인프라의 복잡한 배치 상태를 개발자가 텍스트 스키마 문서(Terraform 설정 등)로 정의하여, 해당 스크립트를 기계 구동하기만 하면 언제든 똑같은 스펙의 서버망을 자동으로 일관성 있게 구성해 내는 방법론입니다." }
     },
   {
     id: "configuration_management_ansible",
@@ -46260,7 +46260,7 @@
       text: "We wrote an Ansible playbook to automate the configuration_management_ansible of our PostgreSQL cluster."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "구성 관리 (Ansible 등)", explanation: "다수의 독립 서버에 특정 서비스 계정 설정, 최신 엔진 설치, 파일 디렉터리 구성 등의 시스템 최적화 설정을 자동 통제해 주는 도구(Ansible 등)입니다. 항상 같은 구문 실행 결과를 낳는 멱등성(Idempotency)에 기초합니다." }
     },
   {
     id: "devops_culture_collaboration",
@@ -46319,7 +46319,7 @@
       text: "Embracing devops_culture_collaboration helped break down the silos between our database administrators and software engineers."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "DevOps (데브옵스)", explanation: "품질을 다지는 코딩 개발(Development) 조직과, 매일 실서버를 정밀 모니터링하는 인프라 운영(Operations) 조직 간의 고정 장벽을 허물고 협력하여 민첩하게 시스템 업데이트 버전을 고품질로 릴리즈해 가기 위한 통합 문화이자 실천 사상입니다." }
     },
   {
     id: "microservices_architecture_pattern",
@@ -46380,7 +46380,7 @@
       text: "We migrated our monolith application to the microservices_architecture_pattern to allow different teams to deploy SQL updates independently."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "마이크로서비스 아키텍처 (MSA)", explanation: "과거의 거대한 단일 monolithic 어플리케이션 설계를 해체하고, 결제, 회원, 장바구니 등 서비스 핵심 비즈니스별로 독자 데이터베이스와 가벼운 실행 런타임을 가지는 아주 작고 얇은 마이크로 서버들로 쪼갠 후 이들을 통신 API로 연계 작동시키는 아키텍처입니다." }
     },
   {
     id: "load_balancer_cloud",
@@ -46441,7 +46441,7 @@
       text: "Our cloud load_balancer_cloud automatically routes SQL database read queries to dynamic read-replicas."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "로드 밸런서 (부하 분산기)", explanation: "인터넷 포트 앞단에 대기하며 외부에서 전송해 오는 불특정 트래픽 요건을 접수한 후, 준비된 백엔드 다수 웹 서버군으로 패킷을 고르게 쪼개어 중계 송출해 줌으로써 서버의 과부하 정지를 지연시키고 가용성을 높이는 장치입니다." }
     },
   {
     id: "auto_scaling_cloud_resources",
@@ -46502,7 +46502,7 @@
       text: "During the product launch event, auto_scaling_cloud_resources spun up 15 new container instances within minutes."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "오토 스케일링", explanation: "클라우드 서비스가 제공하는 탄력성 기능으로, 실시간 접속자 부하나 서버 CPU 이용 비율을 모니터링하다가 임계치를 넘으면 가상 서버 인스턴스를 즉각 복제 증설(Scale-Out)하고, 한가해지면 다시 반납(Scale-In)하여 리스크와 예산을 관리해 주는 기능입니다." }
     },
   {
     id: "big_o_notation_complexity",
@@ -46563,7 +46563,7 @@
       text: "Using a nested loop to search the glossary table results in a time complexity of big_o_notation_complexity O(N^2)."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "빅오 표기법", explanation: "입력 데이터 크기인 N이 점점 거대해짐에 따라, 본 알고리즘 연산 수행 시 발생하는 총 계산 시간(시간 복잡도)이나 필요한 램 저장 용량(공간 복잡도)이 수학적으로 급증하는 최악의 비율 형태를 `O(N)`, `O(log N)` 등으로 표현하는 표기법입니다." }
     },
   {
     id: "linear_data_structure_array",
@@ -46623,7 +46623,7 @@
       text: "We loaded the static glossary list into a contiguous linear_data_structure_array to enable index searches."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "배열", explanation: "가장 기본적인 선형 데이터 구조로, 동일 자료형의 메모리 방들을 램의 인접한 연속 주소에 빈틈없이 붙여 배치합니다. 요소의 상대 위치 번호인 인덱스(Index) 주소 연산을 통해 O(1)의 매우 신속한 임의 접근 성능을 보장합니다." }
     },
   {
     id: "linear_data_structure_linkedlist",
@@ -46684,7 +46684,7 @@
       text: "Implementing the queue using a linear_data_structure_linkedlist avoids array resizing costs."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "연결 리스트", explanation: "데이터를 담는 각 노드(Node)가 물리적 메모리에 연속 배치될 필요 없이, 각 노드가 보관한 다음 노드의 주소 참조 포인터 링크(Pointer)를 따라 줄줄이 사슬처럼 엮인 형태의 구조입니다. 노드 중간 삽입과 삭제를 O(1) 내에 성사시킬 수 있습니다." }
     },
   {
     id: "data_structure_stack_lifo",
@@ -46745,7 +46745,7 @@
       text: "The browser's undo-redo stack and function recursion call stacks are based on the data_structure_stack_lifo design."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "스택", explanation: "한쪽 끝 구멍으로만 데이터를 집어넣고 꺼낼 수 있는 선형 데이터 구조입니다. 늦게 얹어진 것이 제일 먼저 들려 나가는 후입선출(LIFO) 원칙을 따르며, 자료 입력을 푸시(Push), 인출을 팝(Pop)이라 부릅니다." }
     },
   {
     id: "data_structure_queue_fifo",
@@ -46806,7 +46806,7 @@
       text: "We implemented a database query buffer using the data_structure_queue_fifo to process SQL write operations sequentially."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "큐", explanation: "대기 줄처럼 데이터가 한쪽 꼬리(Rear)로만 삽입되고 반대편 앞머리(Front)로만 먼저 빠져나가는 선형 자료구조입니다. 먼저 들어간 객체가 먼저 배출되는 선입선출(FIFO) 규칙을 바탕으로 버퍼 등에 널리 쓰입니다." }
     },
   {
     id: "data_structure_tree_root",
@@ -46868,7 +46868,7 @@
       text: "Relational database index systems typically use B+ trees, which is a specialized variant of the data_structure_tree_root."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "트리 구조", explanation: "컴퓨터 폴더 경로처럼, 시발점이 되는 최상위 뿌리 노드(Root)에서 밑으로 여러 가지 잎사귀 자식 노드들이 계층적인 부모-자식 연계를 그리며 아래로 뻗어 내려가는 형태의 비선형 계층형 자료 구조(이진 트리 등)입니다." }
     },
   {
     id: "data_structure_graph_networks",
@@ -46929,7 +46929,7 @@
       text: "Social network connections and routing tables are modeled internally using a data_structure_graph_networks structure."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "그래프 구조", explanation: "현실의 네트워크 결사체나 지하철 노선망처럼, 여러 개별 정점(Vertex) 노드들과 이들 사이를 상호 연결해 관계 밀도를 표현하는 선인 에지(Edge)의 집합으로 얽힌 다대다(N:M) 망상 자료구조입니다." }
     },
   {
     id: "linear_search_algorithm_basic",
@@ -46989,7 +46989,7 @@
       text: "If the list is unsorted, linear_search_algorithm_basic is our only choice to find the target element."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "선형 검색 (선형 탐색)", explanation: "찾고자 하는 특정 타겟 데이터가 존재하는지 대조하기 위해, 무질서한 임의 리스트 목록의 첫 인덱스부터 마지막 인덱스까지 하나씩 순서대로 전부 대조해 나가는 단순한 순차 검색 방식(시간 복잡도 O(N))입니다." }
     },
   {
     id: "binary_search_algorithm_sorted",
@@ -47049,7 +47049,7 @@
       text: "To search the sorted glossary IDs quickly, the application utilizes binary_search_algorithm_sorted to reduce retrieval time."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "이진 검색 (이진 탐색)", explanation: "정렬이 완수되어 있는 수치 목록 리스트에서, 매번 중앙 지점 수치와 검색 타겟을 대조해 본 후 타겟이 속하지 않은 나머지 절반 영역을 과감히 연산 대상에서 버리며 가용 범위를 O(log N) 속도로 좁혀가는 고속 검색 알고리즘입니다." }
     },
   {
     id: "bubble_sort_algorithm_basic",
@@ -47109,7 +47109,7 @@
       text: "Because bubble_sort_algorithm_basic has poor performance on large datasets, it is primarily used for teaching programming basics."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "거품 정렬 (버블 정렬)", explanation: "오름차순 정렬 시, 배열의 앞단부터 인접한 두 항목의 대소를 차례로 비교하며 순서가 꼬인 경우 서로 맞바꾸는 조작을 반복하는 고전 정렬 방식입니다. 구현이 단순하나 최악의 계산 효율인 O(N^2)의 복잡도를 띱니다." }
     },
   {
     id: "quick_sort_algorithm_fast",
@@ -47169,7 +47169,7 @@
       text: "Standard language libraries compile default sorting behaviors using quick_sort_algorithm_fast implementations."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "퀵 정렬", explanation: "대단히 빠른 분할 정복형 정렬 기법입니다. 임의의 중심 기준축(Pivot) 원소를 임의 선정해 기준보다 작은 항목군과 큰 항목군 두 개의 하위 그룹으로 갈라 세운 뒤, 각 서브 그룹을 재귀적으로 퀵 정렬하여 정렬을 매조지합니다. 평균 O(N log N)으로 작동합니다." }
     },
   {
     id: "dijkstra_shortest_path_graph",
@@ -47229,7 +47229,7 @@
       text: "Dynamic routing protocols like OSPF use dijkstra_shortest_path_graph inside the link-state database calculations."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "다익스트라 알고리즘", explanation: "망상 그래프 회로 구조에서, 고정 시발점으로 점 찍은 단일 정점 노드로부터 그래프 내 존재하는 다른 모든 정점 노드 지점들까지 경로 간의 가중치 합이 가장 미미한 최단 경로(최소 이동 비용)를 탐색해 내는 획기적인 그리디 알고리즘입니다." }
     },
   {
     id: "artificial_intelligence_ml_dl",
@@ -47291,7 +47291,7 @@
       text: "Understanding the hierarchy of artificial_intelligence_ml_dl helps clarify that not all AI models are deep learning neural networks."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "인공지능, 머신러닝, 딥러닝", explanation: "지능형 시스템 기술의 상호 겹쳐진 포함 구조입니다. 인간의 복합 인지 사고 능력을 흉내 내는 인공지능(AI)이 가장 겉 영역을 차지하고, 데이터의 수학적 경향을 기반으로 지식을 귀납 학습하는 머신러닝(ML)이 그 안에 있으며, 생체 뇌 뉴런 망을 흉내 낸 다층 인공 신경망에 근거하는 딥러닝(DL)이 가장 깊은 핵심에 위치합니다." }
     },
   {
     id: "machine_learning_concepts_basic",
@@ -47352,7 +47352,7 @@
       text: "We optimized our GPU server parameters to speed up the training phase of our machine_learning_concepts_basic script."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "머신러닝 기본 모델 (학습과 추론)", explanation: "머신러닝의 2대 추진 과정입니다. 수집된 다량의 역사적 특징 데이터 세트를 분석하여 관계식을 규정하고 신경망 가중치를 보정하는 학습(Training) 페이즈와, 그렇게 빚어낸 가중치 모델에 신규 단서를 제공해 정답을 예견해 내는 추론(Inference) 페이즈로 진행됩니다." }
     },
   {
     id: "supervised_learning_models",
@@ -47412,7 +47412,7 @@
       text: "We trained a supervised_learning_models algorithm to categorize database logs using historic DBA labels."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "지도 학습", explanation: "인간 교사가 미리 정답 레이블(Label)을 달아 둔 인풋과 아웃풋 페어의 학습 교재를 컴퓨터 신경망에 주입하여, 특징적인 경향성을 발견하고 입력된 신규 인풋에 대해 목표 레이블을 정확히 판단(분류 및 회귀)하도록 조율하는 기계 학습 방식입니다." }
     },
   {
     id: "unsupervised_learning_models",
@@ -47472,7 +47472,7 @@
       text: "We used unsupervised_learning_models like K-Means to segment database users based on access behavior without predefined roles."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "비지도 학습", explanation: "목표 정답 표식(레이블)을 주지 않은 원본 상태의 날것 데이터를 컴퓨터에 주고, 통계 로직 스스로 데이터 간 구조적 패턴, 은밀한 성향, 유사도 밀도를 스스로 터득해 내도록 유도하여 그룹(군집화/클러스터링)을 묶는 학습 방식입니다." }
     },
   {
     id: "reinforcement_learning_models",
@@ -47532,7 +47532,7 @@
       text: "Autonomous vehicles and game-playing AIs (like AlphaGo) heavily rely on reinforcement_learning_models to plan actions."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "강화 학습", explanation: "스마트 기기(에이전트)를 임의의 환경 속에 밀어 넣고, 에이전트가 돌발 시도하는 다양한 거동 행동 결과에 대해 환경이 칭찬(Reward)과 감점(Penalty) 보상을 가해 줌으로써 누적 벌점을 낮추고 칭찬을 극대화하는 행동 전략 노하우를 깨우치게 만드는 탐구 기법입니다." }
     },
   {
     id: "deep_learning_neural_networks",
@@ -47594,7 +47594,7 @@
       text: "LLMs like GPT are built using deep_learning_neural_networks using transformer architectures containing billions of parameters."
     },
     source: "project-glossary-v2",
-      ko: { term: "PLACEHOLDER", explanation: "PLACEHOLDER" }
+      ko: { term: "딥러닝", explanation: "생물의 대뇌 시냅스 세포들의 전기적 신호 임계 전달을 프로그래밍 모델링한 다층형 인공 신경망(Neural Network) 구조를 설계하여, 사람이 일일이 지정해 주기 곤란한 복잡한 시각 사물 인식이나 자연어 번역 요소를 다차원 행렬 가중치 연산으로 터득해 해소하는 기계 학습의 지류입니다." }
     },
 ];
 
