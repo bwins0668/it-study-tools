@@ -37,6 +37,9 @@ body {
   overflow: hidden; /* Hide outer browser window scrollbars completely */
   height: 100vh;
 }
+ html {
+   overflow-x: hidden;
+ }
 
 /* SQL result table: horizontal scroll wrapper */
 .table-scroll-wrapper {
@@ -6674,6 +6677,7 @@ body.i18n-active .lang-tab {
 .maximize-btn,
 .reset-all-btn,
 .header-challenge-btn-start,
+ #glossary-open-btn,
 .language-toggle-btn {
   line-height: 1.2 !important;
   white-space: nowrap !important;
@@ -7324,8 +7328,9 @@ body.mobile-playground-open .mobile-backdrop {
     width: clamp(200px, 15vw, 240px);
   }
   .playground-section {
-    flex: 0 0 clamp(360px, 28vw, 420px);
-    min-width: 360px;
+    flex: 0 0 clamp(376px, 28vw, 420px);
+    min-width: 376px;
+    padding: 20px 16px 20px 0;
   }
 }
 
@@ -7337,6 +7342,7 @@ body.mobile-playground-open .mobile-backdrop {
   .playground-section {
     flex: 0 0 clamp(400px, 30vw, 560px);
     min-width: 400px;
+    padding: 24px 16px 24px 0;
   }
 }
 
