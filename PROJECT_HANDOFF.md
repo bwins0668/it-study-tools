@@ -6566,3 +6566,83 @@ ode_modules/, ackups/, supabase-config.local.js, etc.)
 #### Next
 
 - **Round 19.4.1**: Post-release stability audit, or **Round 19.5**: Bookmarks deletion sync and dual-device conflict testing.
+- **Round 19.4.1**: Post-release stability audit ? PASS.
+
+### Round 19.4.1 - UI ?âª?íËî≈?ïzç@?íËê´?? (2026-06-13)
+
+**Status**: PASS
+
+**Type**: Read-only audit (no code changes needed)
+
+#### Release ZIP Check
+
+| Item | Result |
+|---|---|
+| File exists | ? ackups\Study-Tools-Portable-v2026.6.13-r19.4.zip |
+| SHA256 matches | ? 1AB6E0F2D901C3957E5E95C56588553D8BFBB3410552C80FCF37F3CD60A33632 |
+| ZIP security | ? No .git/, 
+ode_modules/, ackups/, supabase-config.local.js, .env, etc. |
+| Key files in ZIP | ? index.html, ssets/css/index.css, ssets/js/app.js, ssets/js/sync-engine.js |
+| Total files | 1802 |
+
+#### Web Cache Check
+
+| Item | Expected | Actual | Result |
+|---|---|---|---|
+| ssetVersion | v2026.6.13-r19.4 | v2026.6.13-r19.4 | ? Match |
+| eleaseUrl | v2026.6.13-r19.4 | v2026.6.13-r19.4 | ? Match |
+| CACHE_NAME | study-tools-web-v2026-6-13-r19-4 | study-tools-web-v2026-6-13-r19-4 | ? Match |
+| sset-manifest.json | valid JSON | valid JSON (dict) | ? OK |
+| i18n_content/manifest.json | valid JSON | valid JSON (dict) | ? OK |
+
+#### UI Smoke Test (7 viewports)
+
+| Viewport | Overflow | Playground | SQL Editor | Run Btn | Output | Glossary | Auth | Drawer |
+|---|---|---|---|---|---|---|---|---|
+| 1920Å~1080 | No | 560px | 504Å~273 | ? | ? | Horizontal | ? | ? |
+| 1366Å~768 | No | 410px | 354Å~148 | ? | ? | Horizontal | ? | ? |
+| 1200Å~800 | No | 400px | 344Å~148 | ? | ? | Horizontal | ? | ? |
+| 1000Å~800 | No | 376px | 320Å~148 | ? | ? | Horizontal | ? | ? |
+| 900Å~800 | No | 450px (drawer) | 377Å~202 | ? | ? | Horizontal | ? | PG drawer ? |
+| 720Å~800 | No | 450px (drawer) | 377Å~202 | ? | ? | Horizontal | ? | Both drawers ? |
+| 390Å~844 | No | 351px (drawer) | 278Å~192 | ? | ? | Horizontal | ? | Both drawers ? |
+
+- **Horizontal overflow**: None in any viewport
+- **?1200px thresholds**: playground ? 400 ? / sql-editor ? 340 ? / editor h ? 100 ?
+- **901-1199px thresholds**: playground ? 360 ? / sql-editor ? 320 ?
+- **?900px**: Playground drawer toggle + content accessible ?
+- **?720px**: Sidebar drawer toggle + content accessible ?
+- **Auth panel**: No overflow in any viewport ?
+- **Glossary button**: Horizontal in all viewports ?
+
+#### Functional Assessment
+
+| Check | Result |
+|---|---|
+| Glossary 1500 (dual-end SHA match) | ? PASS |
+| JS syntax (Windows & Web, 4 files each) | ? PASS |
+| Sync is manual-only (no auto-sync) | ? Confirmed (codebase review) |
+| AI cache/API key upload | ? None |
+| Real Supabase credentials committed | ? None |
+| Course/glossary/backend/sandbox modified | ? None |
+| Bookmarks deletion sync | ? Deferred (not done) |
+| User translation UI | ? Deferred (not done) |
+
+#### Security Declarations
+
+- ? No auto-sync
+- ? No AI cache/API key upload
+- ? No real Supabase credentials, JWT, tokens committed
+- ? No course/glossary/backend/sandbox modifications
+
+#### Commits
+
+- **Windows main (previous)**: d10e828 docs: record UI polish stable release
+- **Web master**: 4d3667e chore: release UI polish web cache update
+- **Web**: No changes this round (read-only audit)
+- **Windows handoff commit**: (this commit) docs: record UI polish post-release audit
+- **Release**: v2026.6.13-r19.4 at [GitHub](https://github.com/bwins0668/it-study-tools/releases/tag/v2026.6.13-r19.4)
+
+#### Next
+
+- **Round 19.5**: Bookmarks deletion sync and dual-device conflict special testing.
