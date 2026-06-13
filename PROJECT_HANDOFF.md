@@ -4930,3 +4930,116 @@ Response: `{"status": "deleted"}`
 #### Next
 
 - **Round 17.1** (recommended): Sync queue data structure, progress normalization, and Supabase project setup.
+
+---
+
+### Round 17.1 - Sync Queue Data Structure + Supabase Init Draft
+
+**Status: PASS**
+
+#### Scope
+- Created `assets/js/sync-engine.js` on both Windows and Web repositories with local-only sync foundation.
+- Created `tools/init_supabase.sql` with 7 sync tables DDL draft (devices, user_settings, learning_progress, quiz_results, user_translations, bookmarks, sync_log).
+- Created `docs/sync_architecture.md` on both ends documenting architecture, sync scope, queue structure, and roadmap.
+- Updated `index.html` on both ends to load `sync-engine.js` before `app.js`.
+- Added `window.StudySync` debug entry fallback in `app.js` on both ends.
+
+#### sync-engine.js Feature Summary
+
+| Function | Purpose | Status |
+|:---|:---|:---|
+| `getOrCreateDeviceId()` | Generate & persist UUID as `study_tools_device_id` | ✅ |
+| `getDeviceId()` | Read existing device ID | ✅ |
+| `getSyncQueue()` | Read pending sync events from queue | ✅ |
+| `enqueueSyncEvent(type, payload, options)` | Add event to sync queue (priority-sorted) | ✅ |
+| `markSyncEventDone(eventId)` | Remove completed event from queue | ✅ |
+| `markSyncEventFailed(eventId, error)` | Mark event as failed with retry tracking | ✅ |
+| `clearSyncQueue()` | Clear all pending events | ✅ |
+| `getAllLocalProgress()` | Read-only snapshot of 5-subject completions + quiz + progress | ✅ |
+| `getLocalUserSettings()` | Read language & theme preferences (excludes AI config) | ✅ |
+| `getSyncStatus()` | Queue meta: pending count, last_sync_at, sync_enabled | ✅ |
+| `exportLocalSyncSnapshot()` | Full JSON snapshot for backup/debug (excludes AI keys & cache) | ✅ |
+| `setLastSyncAt(iso)` | Record last sync timestamp | ✅ |
+| `setSyncEnabled(enabled)` | Toggle sync enabled flag | ✅ |
+
+#### localStorage Keys Used by sync-engine.js
+
+| Key | Purpose |
+|:---|:---|
+| `study_tools_device_id` | UUID device identifier |
+| `study_tools_sync_queue` | JSON array of pending/failed sync events |
+| `study_tools_last_sync_at` | ISO timestamp of last sync |
+| `study_tools_sync_enabled` | Boolean flag for sync activation |
+
+#### Excluded from sync-engine.js
+
+- ❌ AI API keys (`sessionStorage` / `study-ai-api-key`)
+- ❌ AI provider config (`study-ai-provider`, `study-ai-model`, `study-ai-ollama-url`)
+- ❌ AI translation cache (`study-tools-i18n-cache-v4`, ~500KB)
+- ❌ Active exam state (in-memory)
+- ❌ Service Worker cache data
+
+#### Supabase SQL DDL Draft (`tools/init_supabase.sql`)
+
+| Table | Key Columns | Includes |
+|:---|:---|:---|
+| `devices` | `id` (UUID PK, client-generated), `user_id`, `device_type` | RLS policy comments, indexes |
+| `user_settings` | `user_id` (PK), `language`, `theme`, `sync_version` | RLS policy comments |
+| `learning_progress` | `(user_id, subject, lesson_id)` UNIQUE, JSONB quiz indices | RLS, indexes, soft delete |
+| `quiz_results` | BIGSERIAL, `user_id`, `subject`, `lesson_id`, `quiz_index` | RLS, indexes |
+| `user_translations` | `(user_id, source_text, target_lang)` UNIQUE | RLS, indexes, soft delete |
+| `bookmarks` | `(user_id, bookmark_type, reference_id)` UNIQUE | RLS, indexes, soft delete |
+| `sync_log` | BIGSERIAL, `user_id`, `device_id`, sync status | RLS, indexes |
+
+**No real project URL, API key, or secret** is included in the SQL file.
+
+#### Verification Results
+
+| Check | Result |
+|:---|:---|
+| `node --check` Windows sync-engine.js | ✅ PASS |
+| `node --check` Web sync-engine.js | ✅ PASS |
+| `node --check` Windows app.js | ✅ PASS |
+| `node --check` Web app.js | ✅ PASS |
+| `node tools/verify_glossary.js` | ✅ PASS, 1500 terms |
+| StudySync smoke test (14 assertions) | ✅ ALL PASS |
+
+#### Smoke Test Details (StudySync API via Node.js)
+
+1. ✅ Device ID generated with `st-` prefix
+2. ✅ Device ID stable across re-reads
+3. ✅ Event enqueue succeeds
+4. ✅ Queue length reflects enqueue
+5. ✅ Mark done removes event
+6. ✅ Queue empty after done
+7. ✅ Mark failed preserves event with status
+8. ✅ Failed event has correct status
+9. ✅ `getAllLocalProgress()` returns structured courses object
+10. ✅ `getLocalUserSettings()` returns language/theme
+11. ✅ `exportLocalSyncSnapshot()` returns full snapshot
+12. ✅ Snapshot excludes AI API key
+13. ✅ `clearSyncQueue()` empties queue
+14. ✅ Queue overflow capped at 1000
+
+#### Git & Handoff Commits
+
+- **Round 17.0 Handoff Commit**: `7e86f9b` (docs: record login sync architecture audit)
+- **Windows Code Commit**: `0560e75` (feat: add local sync queue foundation)
+- **Web Commit**: `7e80c41` (feat: sync local sync queue foundation)
+- **Windows Handoff Commit**: `(pending)` — current commit
+
+#### Explicitly not done
+
+- Did not implement login UI
+- Did not integrate Supabase SDK (no real connection)
+- Did not create real database
+- Did not implement cloud sync
+- Did not modify course data, glossary, i18n content, backend (`server.py`/`study_ai.py`), sandbox, version/service-worker
+- Did not package Portable
+- Did not create tag or Release
+- Did not add or delete terms (total remains 1500)
+- Did not modify `data/i18n_content` content packs
+
+#### Next
+
+- **Round 17.2** (recommended): Auth UI prototype — login/signup page, anonymous indicator, user menu in app header.
