@@ -3768,3 +3768,63 @@ ode --check service-worker.js | PASS |
 #### Next
 
 - **Round 16.2** (recommended): Add `ko` field to all 1500 glossary terms, upgrade `verify_glossary.js`, update `glossary.js` and `content-i18n.js` to support Korean glossary rendering and search.
+
+---
+
+### Round 16.2 - Korean Glossary Fields and Validation
+
+**Status: PASS**
+
+#### Scope
+
+- Added `ko: { term, explanation }` field to all 1500 glossary terms.
+- Upgraded `tools/verify_glossary.js`: `ko` moved from optional to required language.
+- Upgraded `assets/js/glossary.js`: `normalizeLang` now recognizes `ko`; `collectSearchFields` includes `ko` term.
+- Upgraded `assets/js/content-i18n.js`: `normalizeLang` now recognizes `ko`.
+- `STATIC_UI_TRANSLATIONS.ko` confirmed complete (68 entries vs en's 29).
+- Did not add content language packs. Did not update Web cache/version. Did not create Release.
+
+#### Modified files
+
+| File | Change |
+| :--- | :--- |
+| `data/glossary/it_terms.js` | Added `ko` field to all 1500 terms |
+| `assets/js/glossary.js` | Added `ko` to `normalizeLang` and `collectSearchFields` |
+| `assets/js/content-i18n.js` | Added `ko` to `normalizeLang` |
+| `tools/verify_glossary.js` | `ko` moved from optionalLangs to required langInfo |
+| `PROJECT_HANDOFF.md` | This record |
+
+#### Validation
+
+| Check | Result |
+| :--- | :--- |
+| `node tools/verify_glossary.js` | **PASS** |
+| Term count | 1500 |
+| Errors | 0 |
+| Warnings | 0 |
+| Windows/Web `it_terms.js` SHA256 | `a653384443389cfb69c1d4a29141e96ede98d9c6a85a6d929b0db513eb309a26` (matched) |
+| `glossary.js` dual SHA256 | `604f81fe12ac459900449c1a7060529c3b09501180741f7ec78a60c05d90c22c` (matched) |
+| `content-i18n.js` dual SHA256 | `5822ce5372267ae3012f881bb839b9a97c0d8c7d9f1d4fc264eac1ad3abc80c6` (matched) |
+| `node --check` all files | PASS |
+
+#### Git
+
+| Repo | Commit hash | Message |
+| :--- | :--- | :--- |
+| Windows glossary | `4fb70be` | `feat: add Korean glossary fields and validation` |
+| Web glossary | `64c327d` | `feat: sync Korean glossary support` |
+
+#### Explicitly not done
+
+- Did not add/delete any terms.
+- Did not add content language packs.
+- Did not update Web cache version.
+- Did not modify `service-worker.js` / manifests.
+- Did not repackage Portable.
+- Did not create tag or GitHub Release.
+- Did not modify course data, backend, or sandbox.
+- Did not replace PLACEHOLDER with actual Korean translations (pending).
+
+#### Next
+
+- **Round 16.3** (recommended): Korean Glossary search experience, aliases optimization, smoke test coverage
