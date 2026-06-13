@@ -254,3 +254,77 @@ Full DDL: `tools/init_supabase.sql`
 | **19.2** | UI Decluttering & Mobile Layout Optimization | Released |
 | **19.3.1** | SQL Playground desktop width regression fix | Released |
 
+### Round 19.5: Typing Bookmarks Delete Sync (Tombstone)
+
+Round 19.5 implements soft-delete synchronization for Japanese typing article bookmarks using a tombstone strategy.
+
+#### Sync State Key
+
+A new localStorage key study-tools-typing-bookmarks-sync-v1 tracks the sync state:
+
+`json
+{
+  "knownFavorites": ["id1", "id2"],
+  "deletedFavorites": { "id1": "2026-06-13T00:00:00Z" },
+  "lastSyncedAt": "2026-06-13T00:00:00Z",
+  "version": 1
+}
+`
+
+- knownFavorites: snapshot of favorites at last sync, used to detect deletions.
+- deletedFavorites: map of bookmark ID Å® ISO timestamp of deletion (tombstones).
+- lastSyncedAt: timestamp of last successful bookmark sync.
+
+#### Soft-Delete Strategy
+
+- Deleted bookmarks are NOT physically removed from the Supabase ookmarks table.
+- Instead, deleted_at is set to the deletion timestamp.
+- Physical deletion is never performed (safe-guard against data loss).
+
+#### Conflict Resolution Rules
+
+| Scenario | Resolution |
+|---|---|
+| Local add, remote absent | Push active bookmark (deleted_at = null) |
+| Remote add, local absent | Pull active bookmark into local favorites |
+| Local delete | Push tombstone (deleted_at = timestamp) |
+| Remote delete newer than local activity | Remove from local favorites |
+| Local re-add after remote delete | Remove tombstone, push restore (sets deleted_at back to null) |
+| Later delete wins (newer timestamp) | The more recent deleted_at takes precedence |
+| Remote empty array | Never clears local favorites |
+
+#### New Functions in sync-engine.js
+
+| Function | Description |
+|---|---|
+| getTypingBookmarkSyncState() | Read sync state from localStorage |
+| setTypingBookmarkSyncState(state) | Write sync state to localStorage |
+| detectTypingBookmarkDeletions(current, state) | Compare current favorites with knownFavorites, record tombstones |
+| pushBookmarkTombstones(ctx) | Upsert deleted bookmarks to Supabase with deleted_at set |
+| pullBookmarkTombstones(ctx) | Fetch remote rows with deleted_at IS NOT NULL for 	yping_article |
+| pplyTypingBookmarkDeletes(state, tombstones, local) | Apply remote tombstones to local favorites |
+| mergeBookmarksWithTombstones(ctx) | Unified operation: push tombstones Å® pull tombstones Å® apply deletes Å® pull active Å® merge |
+
+#### Integration
+
+- detectTypingBookmarkDeletions is called before the sync step loop starts.
+- mergeBookmarksWithTombstones replaces the old pullBookmarks step.
+- pushBookmarks still pushes active favorites (unchanged).
+- All bookmark sync errors are non-fatal: single-step failure does not abort settings/progress/quiz sync.
+
+#### Sync Summary Fields
+
+New summary counters reported in the Auth Panel:
+
+- ookmarks_deleted_pushed: Number of tombstone entries pushed to remote.
+- ookmarks_deleted_pulled: Number of remote tombstone entries processed.
+- ookmarks_restored: Number of bookmarks restored (re-added after remote delete).
+- ookmarks_conflicts_resolved: Number of active bookmarks merged from remote.
+
+#### Scope Limitations
+
+- Only applies to 	yping_article bookmark type.
+- Does NOT sync course/term/wrong-question bookmarks.
+- Does NOT physically delete remote rows.
+- Does NOT sync AI translation cache or API keys.
+| **19.5** | Bookmark delete sync (tombstone) | Released |

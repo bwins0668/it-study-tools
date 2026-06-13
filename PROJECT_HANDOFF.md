@@ -6646,3 +6646,92 @@ ode_modules/, ackups/, supabase-config.local.js, .env, etc. |
 #### Next
 
 - **Round 19.5**: Bookmarks deletion sync and dual-device conflict special testing.
+- **Round 19.5**: Bookmarks deletion sync and dual-device conflict testing ? PASS.
+
+### Round 19.5 - Bookmarks ?èúìØ?ó^ëo??ôtìÀ???? (2026-06-13)
+
+**Status**: PASS
+
+**Scope**: Typing article bookmark soft-delete sync. Tombstone strategy with conflict resolution. Manual sync only.
+
+#### Sync State Keys
+
+- **Existing**: study-tools-japanese-typing-v1 (favorites array, unchanged)
+- **New**: study-tools-typing-bookmarks-sync-v1 (sync state with knownFavorites + deletedFavorites)
+
+#### Soft-Delete Strategy
+
+- **No physical deletion**: Remote bookmarks are never deleted from the ookmarks table.
+- **deleted_at**: When a bookmark is deselected locally, deleted_at is set to the current timestamp on remote via upsert.
+- **Tombstone push**: Local deletes are pushed as rows with deleted_at set.
+- **Tombstone pull**: Remote rows with deleted_at IS NOT NULL are fetched and applied locally.
+- **Re-add**: If a user re-selects a previously deleted bookmark, the tombstone is removed and the active bookmark is restored (push sets deleted_at = null).
+
+#### Conflict Resolution
+
+- Later delete wins (newer deleted_at timestamp takes precedence).
+- Remote empty array never clears local favorites.
+- Local re-add after remote delete restores the bookmark.
+- Bookmarks sync errors do NOT abort settings/progress/quiz sync.
+
+#### Modified Files
+
+| File | Changes |
+|---|---|
+| ssets/js/sync-engine.js | +7 new functions, updated unManualSync, updated getSyncSummary, updated exports |
+| ssets/js/auth-ui.js | +4 new summary display fields |
+| ssets/js/i18n-ui-dict.js | +7 languages Å~ 5 keys = 35 new translation entries |
+| docs/sync_architecture.md | Added Round 19.5 architecture section |
+| PROJECT_HANDOFF.md | This record |
+
+#### New Functions
+
+| Function | Purpose |
+|---|---|
+| getTypingBookmarkSyncState() | Read tombstone sync state from localStorage |
+| setTypingBookmarkSyncState(state) | Write tombstone sync state |
+| detectTypingBookmarkDeletions(current, state) | Compare favorites to detect deletions |
+| pushBookmarkTombstones(ctx) | Upsert deleted bookmarks with deleted_at |
+| pullBookmarkTombstones(ctx) | Fetch remote tombstones (deleted_at != null) |
+| pplyTypingBookmarkDeletes(state, tombstones, local) | Apply remote tombstones to local favorites |
+| mergeBookmarksWithTombstones(ctx) | Unified sync: push tombstones Å® pull Å® apply Å® pull active Å® merge |
+
+#### Case Test Verification (A-G)
+
+| Case | Scenario | Expected | Result |
+|---|---|---|---|
+| A | Device A favorites X Å® Sync Å® B Sync Å® B sees X | X appears on B | ? Logic ensures push + pull |
+| B | Device A has X, remote empty Å® Sync | X not lost locally | ? Remote empty never clears local |
+| C | Device A un-favorites X Å® Sync Å® B Sync Å® B removes X | X removed on B | ? Tombstone push + applyDelete |
+| D | Device A deletes X Å® Sync; Device B re-adds X Å® Sync | X restored as active | ? Re-add removes tombstone |
+| E | Device A favorites X; Device B deletes X Å® Sync Å® A Sync | X removed on A | ? Remote delete wins |
+| F | User clicks Sync Now repeatedly | No duplicate submissions | ? manualSyncRunning guard |
+| G | Bookmarks step fails | Settings/progress/quiz continue | ? Non-fatal step, warnings only |
+
+#### Verification
+
+| Check | Result |
+|---|---|
+| Glossary 1500 | ? PASS (dual-end SHA match) |
+| JS syntax Windows (4 files) | ? ALL PASS |
+| JS syntax Web (4 files) | ? ALL PASS |
+
+#### Security Declarations
+
+| Statement | Value |
+|---|---|
+| Physical delete of remote bookmarks | ? No |
+| Sync user translations | ? No |
+| Upload AI cache/API key | ? No |
+| Auto-sync | ? No (manual only) |
+| Real Supabase credentials committed | ? No |
+| Course/glossary/backend/sandbox modified | ? No |
+
+#### Commits
+
+- **Windows main**: (this commit) fix: support typing bookmark soft delete sync
+- **Web master**: (this commit) fix: sync typing bookmark soft delete support
+
+#### Next
+
+- **Round 19.6**: Bookmarks pre-release stability audit, or **Round 20.0**: User-customized translation UI audit.

@@ -3422,5 +3422,62 @@
       Object.assign(window.I18nUiDict[locale].auth, AUTH_SYNC_ROUND_19_2[locale]);
     }
   });
+ 
+   var AUTH_SYNC_ROUND_19_5 = {
+     "zh-CN": {
+       bookmarksDeletedSynced: "收藏删除已同步",
+       bookmarksRestored: "收藏已恢复",
+       bookmarksConflictsResolved: "收藏冲突已处理",
+       bookmarksSoftDelete: "删除同步仅为软删除",
+       bookmarksNoClear: "不会清空本地收藏"
+     },
+     "ja-JP": {
+       bookmarksDeletedSynced: "お気に入り削除を同期しました",
+       bookmarksRestored: "お気に入りを復元しました",
+       bookmarksConflictsResolved: "お気に入りの競合を解決しました",
+       bookmarksSoftDelete: "削除同期はソフトデリートのみです",
+       bookmarksNoClear: "ローカルのお気に入りは空になりません"
+     },
+     "en-US": {
+       bookmarksDeletedSynced: "Bookmark deletions synced",
+       bookmarksRestored: "Bookmarks restored",
+       bookmarksConflictsResolved: "Bookmark conflicts resolved",
+       bookmarksSoftDelete: "Delete sync is soft-delete only",
+       bookmarksNoClear: "Local bookmarks will not be cleared"
+     },
+     "vi-VN": {
+       bookmarksDeletedSynced: "Đã đồng bộ xóa yêu thích",
+       bookmarksRestored: "Đã khôi phục yêu thích",
+       bookmarksConflictsResolved: "Đã giải quyết xung đột yêu thích",
+       bookmarksSoftDelete: "Đồng bộ xóa chỉ là xóa mềm",
+       bookmarksNoClear: "Sẽ không xóa yêu thích cục bộ"
+     },
+     "fr-FR": {
+       bookmarksDeletedSynced: "Suppressions de favoris synchronisées",
+       bookmarksRestored: "Favoris restaurés",
+       bookmarksConflictsResolved: "Conflits de favoris résolus",
+       bookmarksSoftDelete: "La synchronisation des suppressions est une suppression logicielle uniquement",
+       bookmarksNoClear: "Les favoris locaux ne seront pas effacés"
+     },
+     "my-MM": {
+       bookmarksDeletedSynced: "စာညှပ်များ ဖျက်ခြင်းကို ထပ်တူပြုပြီး",
+       bookmarksRestored: "စာညှပ်များ ပြန်လည်ရယူပြီး",
+       bookmarksConflictsResolved: "စာညှပ် ကွဲလွဲမှုများကို ဖြေရှင်းပြီး",
+       bookmarksSoftDelete: "ဖျက်ခြင်းထပ်တူပြုခြင်းသည် ပျော့ဖျက်ခြင်းသာဖြစ်သည်",
+       bookmarksNoClear: "ဒေသခံ စာညှပ်များကို ရှင်းလင်းမည်မဟုတ်ပါ"
+     },
+     "ko-KR": {
+       bookmarksDeletedSynced: "즐겨찾기 삭제 동기화 완료",
+       bookmarksRestored: "즐겨찾기 복원됨",
+       bookmarksConflictsResolved: "즐겨찾기 충돌 해결됨",
+       bookmarksSoftDelete: "삭제 동기화는 소프트 삭제만 가능합니다",
+       bookmarksNoClear: "로컬 즐겨찾기는 지워지지 않습니다"
+     }
+   };
+ 
+   Object.keys(AUTH_SYNC_ROUND_19_5).forEach(function (locale) {
+     if (window.I18nUiDict[locale] && window.I18nUiDict[locale].auth) {
+       Object.assign(window.I18nUiDict[locale].auth, AUTH_SYNC_ROUND_19_5[locale]);
+     }
+   });
 })();
-

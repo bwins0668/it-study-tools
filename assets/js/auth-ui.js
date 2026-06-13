@@ -295,6 +295,10 @@
     var bookmarksPushed = summaryDetails ? summaryDetails.bookmarks_pushed : 0;
     var bookmarksPulled = summaryDetails ? summaryDetails.bookmarks_pulled : 0;
     var bookmarksMerged = summaryDetails ? summaryDetails.bookmarks_merged : 0;
+    var bookmarksDeletedPushed = summaryDetails ? summaryDetails.bookmarks_deleted_pushed : 0;
+    var bookmarksDeletedPulled = summaryDetails ? summaryDetails.bookmarks_deleted_pulled : 0;
+    var bookmarksRestored = summaryDetails ? summaryDetails.bookmarks_restored : 0;
+    var bookmarksConflictsResolved = summaryDetails ? summaryDetails.bookmarks_conflicts_resolved : 0;
     var conflictsResolved = summaryDetails ? summaryDetails.conflicts_resolved : 0;
     var warnings = summaryDetails && summaryDetails.warnings ? summaryDetails.warnings : [];
     var syncDuration = summaryDetails ? summaryDetails.duration_ms : 0;
@@ -322,6 +326,9 @@
       if (bookmarksPushed) detailsList += '<li><i class="fa-solid fa-star-of-life"></i> ' + esc(t("auth.bookmarksPushed", "收藏上传")) + ': ' + bookmarksPushed + '</li>';
       if (bookmarksPulled) detailsList += '<li><i class="fa-solid fa-star-half-stroke"></i> ' + esc(t("auth.bookmarksPulled", "收藏下载")) + ': ' + bookmarksPulled + '</li>';
       if (bookmarksMerged) detailsList += '<li><i class="fa-solid fa-star"></i> ' + esc(t("auth.bookmarksMerged", "收藏已合并")) + ': ' + bookmarksMerged + '</li>';
+      if (bookmarksDeletedPushed) detailsList += '<li><i class="fa-solid fa-trash-can"></i> ' + esc(t("auth.bookmarksDeletedSynced", "收藏删除已同步")) + ': ' + bookmarksDeletedPushed + '</li>';
+      if (bookmarksRestored) detailsList += '<li><i class="fa-solid fa-arrow-rotate-left"></i> ' + esc(t("auth.bookmarksRestored", "收藏已恢复")) + ': ' + bookmarksRestored + '</li>';
+      if (bookmarksConflictsResolved) detailsList += '<li><i class="fa-solid fa-code-merge"></i> ' + esc(t("auth.bookmarksConflictsResolved", "收藏冲突已处理")) + ': ' + bookmarksConflictsResolved + '</li>';
       if (conflictsResolved) detailsList += '<li><i class="fa-solid fa-code-merge"></i> ' + esc(t("auth.conflictsResolved", "已合并远端进度")) + ': ' + conflictsResolved + '</li>';
 
       summaryHtml =

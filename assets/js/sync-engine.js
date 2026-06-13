@@ -763,7 +763,209 @@
     }
   }
 
-  function getSyncSummary() {
+ 
+ /* Bookmark delete sync (tombstone) state management */
+ var TYPING_BOOKMARK_SYNC_KEY = "study-tools-typing-bookmarks-sync-v1";
+ 
+ function getTypingBookmarkSyncState() {
+   try {
+     var raw = localStorage.getItem(TYPING_BOOKMARK_SYNC_KEY);
+     if (raw) {
+       var parsed = JSON.parse(raw);
+       if (parsed && typeof parsed === "object" && parsed.version === 1) {
+         return parsed;
+       }
+     }
+   } catch (_) {}
+   return { knownFavorites: [], deletedFavorites: {}, lastSyncedAt: null, version: 1 };
+ }
+ 
+ function setTypingBookmarkSyncState(state) {
+   try {
+     localStorage.setItem(TYPING_BOOKMARK_SYNC_KEY, JSON.stringify(state));
+   } catch (_) {}
+ }
+ 
+ function detectTypingBookmarkDeletions(currentFavorites, syncState) {
+   if (!Array.isArray(currentFavorites)) currentFavorites = [];
+   if (!syncState || typeof syncState !== "object") syncState = { knownFavorites: [], deletedFavorites: {} };
+   if (!Array.isArray(syncState.knownFavorites)) syncState.knownFavorites = [];
+   if (!syncState.deletedFavorites || typeof syncState.deletedFavorites !== "object") syncState.deletedFavorites = {};
+   var now = new Date().toISOString();
+   var currentSet = {};
+   currentFavorites.forEach(function (id) { currentSet[String(id)] = true; });
+   (syncState.knownFavorites || []).forEach(function (id) {
+     var sid = String(id);
+     if (!currentSet[sid] && !syncState.deletedFavorites[sid]) {
+       syncState.deletedFavorites[sid] = now;
+     }
+   });
+   currentFavorites.forEach(function (id) {
+     var sid = String(id);
+     if (syncState.deletedFavorites[sid]) {
+       delete syncState.deletedFavorites[sid];
+     }
+   });
+   syncState.knownFavorites = currentFavorites.slice();
+   return syncState;
+ }
+ 
+ async function pushBookmarkTombstones(context) {
+   var ctx = context;
+   if (!ctx || !ctx.client) {
+     var checked = await getRemoteContext();
+     if (!checked.ok) return checked;
+     ctx = checked.data;
+   }
+   var syncState = getTypingBookmarkSyncState();
+   var deleteIds = Object.keys(syncState.deletedFavorites || {});
+   if (!deleteIds.length) return syncSuccess({ count: 0 });
+   var timestamp = nowISO();
+   var rows = deleteIds.map(function (id) {
+     return {
+       user_id: ctx.user.id,
+       bookmark_type: "typing_article",
+       reference_id: String(id),
+       label: "",
+       created_at: timestamp,
+       updated_at: timestamp,
+       deleted_at: syncState.deletedFavorites[id] || timestamp,
+     };
+   });
+   try {
+     var result = await ctx.client.from("bookmarks").upsert(rows, {
+       onConflict: "user_id,bookmark_type,reference_id",
+     });
+     if (result && result.error) return syncError("bookmarks_tombstone_push_failed", result.error.message, result.error);
+     return syncSuccess({ count: rows.length });
+   } catch (error) {
+     var friendly = friendlyRemoteError(error, "bookmarks_tombstone_push_failed");
+     return syncError(friendly.code, friendly.message);
+   }
+ }
+ 
+ async function pullBookmarkTombstones(context) {
+   var ctx = context;
+   if (!ctx || !ctx.client) {
+     var checked = await getRemoteContext();
+     if (!checked.ok) return checked;
+     ctx = checked.data;
+   }
+   try {
+     var result = await ctx.client.from("bookmarks")
+       .select("reference_id,deleted_at")
+       .eq("user_id", ctx.user.id)
+       .eq("bookmark_type", "typing_article")
+       .not("deleted_at", "is", null);
+     if (result && result.error) return syncError("bookmarks_tombstone_pull_failed", result.error.message, result.error);
+     var data = result && result.data ? result.data : [];
+     return syncSuccess({ count: data.length, data: data });
+   } catch (error) {
+     var friendly = friendlyRemoteError(error, "bookmarks_tombstone_pull_failed");
+     return syncError(friendly.code, friendly.message);
+   }
+ }
+ 
+ function applyTypingBookmarkDeletes(syncState, remoteTombstones, localFavorites) {
+   if (!Array.isArray(localFavorites)) localFavorites = [];
+   var removed = 0;
+   var restored = 0;
+   var newFavorites = localFavorites.slice();
+   if (!remoteTombstones || !Array.isArray(remoteTombstones)) remoteTombstones = [];
+   if (!syncState || typeof syncState !== "object") syncState = { deletedFavorites: {} };
+   if (!syncState.deletedFavorites || typeof syncState.deletedFavorites !== "object") syncState.deletedFavorites = {};
+   remoteTombstones.forEach(function (row) {
+     if (!row || !row.reference_id || !row.deleted_at) return;
+     var rid = String(row.reference_id);
+     var idx = -1;
+     for (var i = 0; i < newFavorites.length; i++) {
+       if (String(newFavorites[i]) === rid) { idx = i; break; }
+     }
+     if (idx >= 0) {
+       var localFav = getTypingFavorites();
+       var inLocalFavs = false;
+       for (var k = 0; k < localFav.length; k++) {
+         if (String(localFav[k]) === rid) { inLocalFavs = true; break; }
+       }
+       if (inLocalFavs) {
+         newFavorites.splice(idx, 1);
+         removed++;
+         syncState.deletedFavorites[rid] = row.deleted_at;
+       }
+     } else {
+       if (!syncState.deletedFavorites[rid]) {
+         syncState.deletedFavorites[rid] = row.deleted_at;
+       }
+     }
+   });
+   (getTypingFavorites() || []).forEach(function (id) {
+     var sid = String(id);
+     if (syncState.deletedFavorites[sid]) {
+       delete syncState.deletedFavorites[sid];
+       restored++;
+     }
+   });
+   remoteTombstones.forEach(function (row) {
+     if (!row || !row.reference_id || !row.deleted_at) return;
+     var rid = String(row.reference_id);
+     var inLocal = false;
+     var localFav = getTypingFavorites();
+     for (var i = 0; i < localFav.length; i++) {
+       if (String(localFav[i]) === rid) { inLocal = true; break; }
+     }
+     if (inLocal && syncState.deletedFavorites[rid]) {
+       delete syncState.deletedFavorites[rid];
+       restored++;
+     }
+   });
+   return { favorites: newFavorites, removed: removed, restored: restored };
+ }
+ 
+ async function mergeBookmarksWithTombstones(context) {
+   var ctx = context;
+   if (!ctx || !ctx.client) {
+     var checked = await getRemoteContext();
+     if (!checked.ok) return checked;
+     ctx = checked.data;
+   }
+   var syncState = getTypingBookmarkSyncState();
+   var localFavorites = getTypingFavorites();
+   var out = { deleted_pushed: 0, deleted_pulled: 0, restored: 0, conflicts_resolved: 0 };
+   try {
+     var pushResult = await pushBookmarkTombstones(ctx);
+     if (pushResult.ok) out.deleted_pushed = (pushResult.data && pushResult.data.count) || 0;
+     var pullResult = await pullBookmarkTombstones(ctx);
+     if (pullResult.ok) {
+       var remoteTombstones = (pullResult.data && pullResult.data) || [];
+       out.deleted_pulled = remoteTombstones.length;
+       var applyResult = applyTypingBookmarkDeletes(syncState, remoteTombstones, localFavorites);
+       if (applyResult.removed > 0 || applyResult.restored > 0) {
+         setTypingFavorites(applyResult.favorites);
+         out.restored = applyResult.restored;
+       }
+     }
+     var pullActiveResult = await ctx.client.from("bookmarks")
+       .select("bookmark_type,reference_id,deleted_at")
+       .eq("user_id", ctx.user.id)
+       .eq("bookmark_type", "typing_article")
+       .is("deleted_at", null);
+     if (!pullActiveResult || pullActiveResult.error) {
+       /* Non-fatal */
+     } else {
+       var activeData = pullActiveResult.data || [];
+       var mergeResult = mergeBookmarks(activeData);
+       if (mergeResult && mergeResult.merged > 0) out.conflicts_resolved = mergeResult.merged;
+     }
+     syncState.lastSyncedAt = new Date().toISOString();
+     setTypingBookmarkSyncState(syncState);
+     return syncSuccess(out);
+   } catch (error) {
+     var friendly = friendlyRemoteError(error, "bookmarks_merge_tombstones_failed");
+     return syncError(friendly.code, friendly.message);
+   }
+ }
+ 
+ function getSyncSummary() {
     var status = getSyncStatus();
     var lastResult = safeGet(KEYS.LAST_SYNC_RESULT, null);
     var summary = lastResult && lastResult.ok ? lastResult.data : null;
@@ -789,6 +991,10 @@
         bookmarks_merged: summary.bookmarks_merged || 0,
         conflicts_detected: summary.conflicts_detected || 0,
         conflicts_resolved: summary.conflicts_resolved || 0,
+         bookmarks_deleted_pushed: summary.bookmarks_deleted_pushed || 0,
+         bookmarks_deleted_pulled: summary.bookmarks_deleted_pulled || 0,
+         bookmarks_restored: summary.bookmarks_restored || 0,
+         bookmarks_conflicts_resolved: summary.bookmarks_conflicts_resolved || 0,
         warnings: summary.warnings || [],
       } : null,
       scope: ["user_settings", "learning_progress", "quiz_results", "bookmarks"],
@@ -814,11 +1020,13 @@
       var conflictsDetected = 0;
       var conflictsResolved = 0;
       var results = {};
+       // Detect bookmark deletions before sync starts
+       detectTypingBookmarkDeletions(getTypingFavorites(), getTypingBookmarkSyncState());
       var stepKeys = [
         ["device", registerDeviceRemote],
         ["settings_pull", pullUserSettings],
         ["progress_pull", pullLearningProgress],
-        ["bookmarks_pull", pullBookmarks],
+        ["bookmarks_sync", mergeBookmarksWithTombstones],
         ["settings_push", pushUserSettings],
         ["progress_push", pushLearningProgress],
         ["quiz_push", pushQuizResults],
@@ -858,8 +1066,12 @@
         progress_pulled: results.progress_pull && results.progress_pull.ok ? (results.progress_pull.data && results.progress_pull.data.count) || 0 : 0,
         quiz_pushed: results.quiz_push && results.quiz_push.ok ? (results.quiz_push.data && results.quiz_push.data.count) || 0 : 0,
         bookmarks_pushed: results.bookmarks_push && results.bookmarks_push.ok ? (results.bookmarks_push.data && results.bookmarks_push.data.count) || 0 : 0,
-        bookmarks_pulled: results.bookmarks_pull && results.bookmarks_pull.ok ? (results.bookmarks_pull.data && results.bookmarks_pull.data.count) || 0 : 0,
-        bookmarks_merged: results.bookmarks_pull && results.bookmarks_pull.ok ? (results.bookmarks_pull.data && results.bookmarks_pull.data.merged) || 0 : 0,
+        bookmarks_pulled: results.bookmarks_sync && results.bookmarks_sync.ok ? (results.bookmarks_sync.data && results.bookmarks_sync.data.deleted_pulled) || 0 : 0,
+        bookmarks_merged: results.bookmarks_sync && results.bookmarks_sync.ok ? (results.bookmarks_sync.data && results.bookmarks_sync.data.conflicts_resolved) || 0 : 0,
+        bookmarks_deleted_pushed: results.bookmarks_sync && results.bookmarks_sync.ok ? (results.bookmarks_sync.data && results.bookmarks_sync.data.deleted_pushed) || 0 : 0,
+        bookmarks_deleted_pulled: results.bookmarks_sync && results.bookmarks_sync.ok ? (results.bookmarks_sync.data && results.bookmarks_sync.data.deleted_pulled) || 0 : 0,
+        bookmarks_restored: results.bookmarks_sync && results.bookmarks_sync.ok ? (results.bookmarks_sync.data && results.bookmarks_sync.data.restored) || 0 : 0,
+        bookmarks_conflicts_resolved: results.bookmarks_sync && results.bookmarks_sync.ok ? (results.bookmarks_sync.data && results.bookmarks_sync.data.conflicts_resolved) || 0 : 0,
         conflicts_detected: conflictsDetected,
         conflicts_resolved: conflictsResolved,
         warnings: warnings,
@@ -922,6 +1134,12 @@
     pushBookmarks:        pushBookmarks,
     pullBookmarks:        pullBookmarks,
     mergeBookmarks:       mergeBookmarks,
+    getTypingBookmarkSyncState: getTypingBookmarkSyncState,
+    detectTypingBookmarkDeletions: detectTypingBookmarkDeletions,
+    pushBookmarkTombstones: pushBookmarkTombstones,
+    pullBookmarkTombstones: pullBookmarkTombstones,
+    applyTypingBookmarkDeletes: applyTypingBookmarkDeletes,
+    mergeBookmarksWithTombstones: mergeBookmarksWithTombstones,
     runManualSync:        runManualSync,
     getSyncSummary:       getSyncSummary,
     _keys:                KEYS,
