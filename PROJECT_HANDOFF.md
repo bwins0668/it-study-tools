@@ -5815,3 +5815,143 @@ Three interacting issues:
 #### Next
 
 - **Round 17.9**: Sync conflict handling and UX patch, or **Round 18.0**: Login/sync stable release.
+
+---
+
+### Round 17.9 - Sync Conflict Handling & UX Patch
+
+**Status: PASS**
+
+#### Files modified
+
+| File | Change |
+|------|--------|
+| `assets/js/sync-engine.js` | Reworked `runManualSync()` with non-abort-at-failure, structured summary, double-click protection (`already_syncing`), `started_at/finished_at/duration_ms`, persistent partial results. Enhanced `mergeRemoteProgress()` returns `{merged, warnings}`. Added `collectQuizRows()` helper. Fixed bug in quiz row collection (wrong `ctx` ref). |
+| `assets/js/auth-ui.js` | Panel shows sync summary after success (progress pushed/pulled, quiz results, conflicts resolved, duration). Better `syncInProgress` state handling. |
+| `assets/js/i18n-ui-dict.js` | Added SYNC_ROUND_17_9 block: `alreadySyncing`, `syncFailedDetail`, `progressPushed`, `progressPulled`, `quizPushed`, `conflictsResolved`, `mergedRemote`, `localKept`, `noDataToSync`, `syncSummaryTitle`, `noAiDataUpload` — all 7 languages. |
+| `docs/sync_architecture.md` | Added Round 17.9 conflict handling rules section documenting union merge, LWW settings, OR merge for detail flags, partial failure, double-click protection. |
+| `PROJECT_HANDOFF.md` | This entry |
+
+No changes to web-exclusive files this round (sync-engine.js, auth-ui.js, i18n-ui-dict.js, sync_architecture.md copied to web-public).
+
+#### Conflict handling strategy
+
+| Data | Strategy | Details |
+|------|----------|---------|
+| Course completion | Union merge | Remote `is_completed: false` never removes local completion |
+| Quiz indices | Union merge | Empty remote array does NOT clear local non-empty array |
+| Per-lesson detail | OR merge | `quizDone` / `codeRun` only adds true flags |
+| User settings | LWW by `updated_at` | Invalid/empty remote does NOT overwrite local |
+| Quiz results | Push-only + upsert | Conflict key: `(user_id, subject, lesson_id, quiz_index, device_id)` |
+
+#### Key behaviors verified by code review
+
+| Feature | Status |
+|---------|--------|
+| Double-click prevention (`already_syncing`) | ✓ |
+| Non-abort on partial step failure | ✓ |
+| Structured sync summary (progress, quiz, conflicts, duration) | ✓ |
+| `last_sync_at` updated only on full success | ✓ |
+| Warnings collected, not dropped | ✓ |
+| No local progress deleted on pull | ✓ |
+| No remote `is_completed: false` overrides local | ✓ |
+| No empty remote array clears local | ✓ |
+
+#### Verification checks
+
+| Check | Result |
+|-------|--------|
+| Glossary count | 1500 ✓ (SHA256 match) |
+| main JS syntax (4 files) | All OK ✓ |
+| web JS syntax (4 files) | All OK ✓ |
+| `.gitignore` local config (main) | `.gitignore:15` ✓ |
+| `.gitignore` local config (web) | `.gitignore:39` ✓ |
+| Auto sync | OFF (manual only) ✓ |
+| AI sensitive data uploaded | NO ✓ |
+| `service_role` key used | NO ✓ |
+| Real keys in Git | NO ✓ |
+| `git add .` / `git add -A` | NO ✓ |
+
+#### Commits
+
+- **main**: `(this commit)` fix: improve manual sync conflict handling and UX
+- **web**: `(this commit)` fix: sync manual sync conflict handling and UX
+- **PROJECT_HANDOFF.md**: this entry
+
+#### Explicitly not done
+
+- Did not implement automatic/background sync (by design).
+- Did not synchronize user_translations (not yet wired).
+- Did not synchronize bookmarks (not yet wired).
+- Did not synchronize AI caches, AI keys, provider/model settings, or Ollama URLs.
+- Did not implement account deletion.
+- Did not test two-device sync.
+- Did not modify courses, glossary data, backend, sandbox, service-worker, manifest, or version.
+- Did not package Portable or create a Release.
+
+#### Next
+
+- **Round 17.10**: Auth UI polyglot and layout slimming.
+
+---
+
+### Round 17.10 - Auth UI 多语言秒切与界面瘦身优化
+
+**Status: PASS**
+
+#### Files modified
+
+| File | Change |
+|------|--------|
+| `assets/js/i18n-ui-dict.js` | Added `AUTH_SYNC_ROUND_17_10` translation dictionary block containing `account`, `localMode`, `signedIn`, `notLoggedIn`, `currentUser`, `supabaseConnected`, `supabaseNotConfigured`, `sdkMissing`, `sync`, `syncNow`, `syncingNow`, `syncSuccess`, `syncFailed`, `lastSync`, `pendingSync`, `syncSummaryTitle`, `conflictsResolved`, `localKept`, `syncScope`, `noAiKeyUpload`, `magicLinkTitle`, `sendMagicLink`, `email`, `password`, `passwordTest`, `passwordSignIn`, `signOut`, `continueLocal`, `mockSignIn`, `mockSignOut`, `close`, `signInFirst`, `noAutoSync`, `syncIntro`, `deviceId` for all 7 supported languages. |
+| `assets/js/auth-ui.js` | Added event listener for `i18n:languageChanged` in `initAuthUI()` to immediately redraw both header button and open auth panel without page refresh. Restructured HTML to divide panel body into 4 concise zones (A. Status, B. Syncing, C. Login, D. Privacy). Truncated Device ID to 12 chars. Wrapped recent sync summary in native `<details>` element for collapsible display. |
+| `assets/css/index.css` | Added css styles for auth panel sections, native details/summary, grid system layout, danger buttons, and privacy bullets. Ensured mobile responsive adaptations. |
+| `docs/sync_architecture.md` | Added Round 17.10 Section detailing polyglot instant language switching and 4-zone layout slimming. |
+| `PROJECT_HANDOFF.md` | This entry |
+
+#### Key behaviors verified
+
+| Feature | Status |
+|---------|--------|
+| All-language coverage (7 languages) | PASS (zh-CN, ja-JP, en-US, vi-VN, fr-FR, my-MM, ko-KR) |
+| Instant switching (Header + Panel) | PASS (on `i18n:languageChanged` event) |
+| Layout slimming (4 sections) | PASS (A. Status, B. Syncing, C. Login, D. Privacy) |
+| Collapsible summary details | PASS (using `<details>`) |
+| Truncated Device ID | PASS (truncated to 12 chars + "...") |
+| Mobile View Adaptations | PASS (scrollable 95vw max width) |
+| Dark theme readability | PASS (uses design system CSS variables) |
+
+#### Verification checks
+
+| Check | Result |
+|-------|--------|
+| Glossary count | 1500 ✓ (SHA256 match) |
+| main JS syntax (4 files) | All OK ✓ |
+| web JS syntax (4 files) | All OK ✓ |
+| `.gitignore` local config (main) | `.gitignore:15` ✓ |
+| `.gitignore` local config (web) | `.gitignore:39` ✓ |
+| Auto sync | OFF (manual only) ✓ |
+| AI sensitive data uploaded | NO ✓ |
+| `service_role` key used | NO ✓ |
+| Real keys in Git | NO ✓ |
+| `git add .` / `git add -A` | NO ✓ |
+
+#### Commits
+
+- **main**: `7aa72a1` fix: polish localized auth UI and sync panel layout
+- **web**: `e71a4ed` fix: sync localized auth UI and sync panel layout
+- **PROJECT_HANDOFF.md**: *(this commit)* docs: record Round 17.10 handoff
+
+#### Explicitly not done
+
+- Did not implement automatic/background sync (by design).
+- Did not synchronize user_translations (not yet wired).
+- Did not synchronize bookmarks (not yet wired).
+- Did not synchronize AI caches, AI keys, provider/model settings, or Ollama URLs.
+- Did not test two-device sync.
+- Did not modify courses, glossary data, backend, sandbox, service-worker, manifest, or version.
+- Did not package Portable or create a Release.
+
+#### Next
+
+- **Round 18.0**: Login/sync stable release — full smoke, final documentation, and version bump.
