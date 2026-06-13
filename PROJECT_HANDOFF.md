@@ -6068,3 +6068,80 @@ No changes to web-exclusive files this round (sync-engine.js, auth-ui.js, i18n-u
 
 #### Next
 - **Round 19.0**: User translations & bookmarks sync architecture audit.
+
+---
+
+### Round 19.0 - 用户翻译与 bookmarks 同步架构审计
+
+**Status: PASS**
+
+#### 1. 当前用户翻译数据现状
+- **UI 现状**：目前应用中**完全没有**用户手动编辑、保存或自定义翻译的 UI，也无任何对应的存储键。
+- **自定义翻译存储**：目前由于没有该功能，不存在用户自定义翻译的数据源。
+- **localStorage 键**：无。注意，`study-tools-i18n-cache-v4` 是 **AI 自动生成的翻译缓存**，并非用户手动翻译。
+- **SQLite 缓存**：Windows 端 SQLite 中的 `translation_cache` 仅供 AI 动态翻译结果缓存使用。
+- **缓存与用户翻译的区别**：
+  - `AI 自动翻译缓存`：大容量（常达数千条，重达数百 KB），由大模型根据原文生成。它是多变的、临时的，因模型、服务商不同而异。
+  - `用户自定义翻译`：用户手动纠错或录入的翻译，通常属于极高价值、低容量的数据。
+- **结论**：**AI 自动翻译缓存、API 密钥、AI 模型/服务商设置、聊天记录绝对不能上传或同步**。未来仅同步用户手动编辑的 `user_translations`。
+
+#### 2. 当前 bookmarks / favorites 数据现状
+- **UI 现状**：仅在 **日语打字 (日本語タイピング)** 模块中存在“收藏”按钮（`#typing-favorite-btn`）和收藏功能。
+- **localStorage 键**：存储在 `study-tools-japanese-typing-v1` 中，其中包含 `favorites` 数组（例如 `["news_20260608_1"]`）。
+- **分类**：目前仅支持打字文章 ID 的收藏。**不存在**课程收藏、术语收藏或错题收藏。
+- **双端一致性**：Web 和 Windows 端在此处的数据结构和代码完全一致。
+
+#### 3. Supabase 表审计结果
+对 `tools/init_supabase.sql` 草案的审计结论如下：
+- **`user_translations` 表**：
+  - 字段：`id` (BIGSERIAL), `user_id` (UUID), `source_text` (TEXT), `source_lang` (VARCHAR), `target_lang` (VARCHAR), `translated_text` (TEXT), `context` (VARCHAR), `updated_at`, `deleted_at` 等。
+  - 约束：`uq_user_translations UNIQUE (user_id, source_text, target_lang)` 合理。
+  - 评估：字段完全足够，能良好支持多语种翻译的覆盖，并通过 `deleted_at` 软删除保证设备间同步删除。
+- **`bookmarks` 表**：
+  - 字段：`id` (BIGSERIAL), `user_id` (UUID), `bookmark_type` (VARCHAR), `reference_id` (VARCHAR), `label` (VARCHAR), `updated_at`, `deleted_at`。
+  - 约束：`uq_bookmarks UNIQUE (user_id, bookmark_type, reference_id)` 保证单一记录唯一性。
+  - 评估：设计极其通用，`bookmark_type` 支持 `'typing_article'`、`'lesson'` 或 `'glossary_term'`，完美适配未来扩展。
+- **RLS 安全性**：均已开启 RLS，且 Policy 采用 `auth.uid() = user_id` 并包含 `WITH CHECK`，安全性完备。
+
+#### 4. 推荐同步策略
+- **`user_translations` 同步**：
+  - **推送/拉取**：由于数据集极小，可进行全量对比或 `updated_at` 增量推送。
+  - **冲突合并**：采用 **LWW (Last-Write-Wins)**，最新修改（`updated_at` 最大者）覆盖旧修改。
+  - **软删除**：本地删除时将该条目设为 `deleted_at = nowISO()`，同步至云端。拉取时如云端有 `deleted_at`，本地对应执行物理删除。
+- **`bookmarks` 同步**：
+  - **推送/拉取**：增量/全量同步。
+  - **合并**：采用 **Union Merge (并集) + Soft Delete (软删除)** 策略。
+  - **去重**：利用 `uq_bookmarks` 唯一约束保证数据库级别不重复；本地拉取时通过 JS 集合去重。
+  - **软删除冲突**：若设备 A 在 $T_1$ 删除了收藏（写 `deleted_at`），设备 B 在 $T_2$ ($T_2 > T_1$) 重新添加，则以最新的 LWW（重新置为有效）为准。
+
+#### 5. 隐私与安全
+- **敏感数据拦截**：必须在同步 payload 构建时硬编码过滤，禁止读取 `study-tools-i18n-cache-v4`、sessionStorage 中的 AI 密钥和 API 地址。
+- **用户隐私提示**：在 Auth 面板中新增静态隐私说明（如“打字收藏与自定义设置将同步至云端，不包含 AI Key 及敏感配置”），保护用户知情权。
+
+#### 6. UI 建议
+- Auth 面板无需为翻译/收藏设计单独的开关，可直接统一归入“手动同步”的同步范围展示中。
+- 采用 collapsible `<details>` 方式在同步摘要中展示：
+  - `打字收藏上传/下载数`。
+
+#### 7. Round 19.1 推荐执行方案
+- **稳健路线**：**优先仅实现 `bookmarks` (打字收藏) 的同步**。
+- **原因**：打字收藏目前已有成熟的 UI 和 `localStorage` 真实数据源（`study-tools-japanese-typing-v1`）；而用户自定义翻译目前尚无 UI，单独为其构建 UI 会导致 Round 19.1 变动范围过大。通过先同步 `bookmarks`，可最小化验证同步引擎的通用性与安全性。
+
+#### 8. 风险点
+- **Resurrection (复活) 风险**：必须严格处理本地与云端 `deleted_at` 标记，否则被删除的收藏可能会因为另一台未同步的设备上线而重新被上传复活。
+- **打包过滤**：打字库大文件不参与同步，仅同步其 ID (如 `news_20260608_1`)。
+
+#### Commits
+- **Windows main**: `(this commit)` docs: record Round 19.0 handoff
+- **Web master**: `none` (no code changes needed)
+
+#### Explicitly Not Done (By Design)
+- 未编写任何实际同步代码。
+- 未修改任何数据库结构或云端表。
+- 未同步用户翻译与 bookmarks。
+- 未同步 AI 缓存、AI key 等敏感数据。
+- 未新增后台自动同步。
+- 未打包，未 Release。
+
+#### Next
+- **Round 19.1**: 打字收藏 bookmarks 的手动同步网络实现。
