@@ -445,15 +445,7 @@
   }
 
   function showI18nError(error) {
-    const now = Date.now();
-    if (now - toastCooldown < 8000) return;
-    toastCooldown = now;
-    const message = friendlyI18nError(error);
-    if (typeof window.showToast === "function") {
-      window.showToast(message, "error");
-    } else {
-      console.warn("[I18n]", error);
-    }
+    console.warn("[I18n] Translation failed (silent fallback applied):", error);
   }
 
   function resetToDefaultAfterTranslationFailure(error) {
@@ -696,7 +688,6 @@
     if (!lesson) return;
     markManaged();
     updateCourseLabels();
-    applyLessonTargetLayout(isActive());
 
     const titleJaEl = document.getElementById("lesson-title-ja");
     const titleTargetEl = document.getElementById("lesson-title-zh");
@@ -704,10 +695,9 @@
     const conceptTargetEl = document.getElementById("concept-zh-body");
     if (!titleJaEl || !titleTargetEl || !conceptJaEl || !conceptTargetEl) return;
 
-    titleJaEl.textContent = lesson.titleJa || "";
-    conceptJaEl.innerHTML = renderOriginalConcept(lesson.conceptJa || "");
-
     const normLang = normalizeLanguageCode(currentLang);
+
+    // 1. If baseline language (ja, zh, default-ja-zh), directly render and return
     if (normLang === "ja-JP" || normLang === "zh-CN" || normLang === "default-ja-zh") {
       applyLessonTargetLayout(normLang !== "default-ja-zh");
       if (normLang === "ja-JP") {
@@ -723,59 +713,65 @@
       return;
     }
 
-    // Prefer static ContentI18n package content if available
+    // 2. Prefer static ContentI18n package content if available
     const subject = getActiveSubject();
+    let titleText = "";
+    let conceptHtml = "";
+    let found = false;
+
     if (subject && window.ContentI18n && typeof window.ContentI18n.get === "function") {
-      const localized = window.ContentI18n.get(subject, lesson.id, currentLang);
-      if (localized && (localized.title || localized.concept)) {
-        titleTargetEl.textContent = localized.title || lesson.titleZh || lesson.titleJa || "";
-        conceptTargetEl.innerHTML = renderOriginalConcept(localized.concept || lesson.conceptZh || lesson.conceptJa || "");
+      const hasLoadPack = typeof window.ContentI18n.isPackLoaded === "function";
+
+      // A. Try target language pack
+      const isLoaded = !hasLoadPack || window.ContentI18n.isPackLoaded(subject, currentLang);
+      if (isLoaded) {
+        const localized = window.ContentI18n.get(subject, lesson.id, currentLang);
+        if (localized && (localized.title || localized.concept)) {
+          titleText = localized.title || "";
+          conceptHtml = renderOriginalConcept(localized.concept || "");
+          found = true;
+        }
+      } else {
+        // Pack is not loaded yet (Web dynamic load fallback). Show loading and return
+        applyLessonTargetLayout(true);
+        const loadingText = (window.I18n && typeof window.I18n.t === "function" ? window.I18n.t("common.loading") : "") || "Loading...";
+        titleTargetEl.textContent = loadingText;
+        conceptTargetEl.innerHTML = `<div style="opacity: 0.6; padding: 20px; text-align: center;">${loadingText}</div>`;
         titleJaEl.textContent = lesson.titleJa || "";
         conceptJaEl.innerHTML = renderOriginalConcept(lesson.conceptJa || "");
-        if (typeof wrapAllTablesWithScrollWrapper === "function") wrapAllTablesWithScrollWrapper();
         return;
+      }
+
+      // B. If not found in target language, fallback to "en" pack (only if loaded/exists)
+      if (!found && normLang !== "en-US") {
+        const enLoaded = !hasLoadPack || window.ContentI18n.isPackLoaded(subject, "en");
+        if (enLoaded) {
+          const enLocalized = window.ContentI18n.get(subject, lesson.id, "en");
+          if (enLocalized && (enLocalized.title || enLocalized.concept)) {
+            titleText = enLocalized.title || "";
+            conceptHtml = renderOriginalConcept(enLocalized.concept || "");
+            found = true;
+          }
+        }
       }
     }
 
-    const titleItem = {
-      id: "lesson-title",
-      key: `lesson:${lesson.id}:title:${currentLang}`,
-      sourceLang: "ja",
-      targetLang: currentLang,
-      text: lesson.titleJa || "",
-      format: "text",
-      context: "Study lesson title",
-    };
-    const conceptItem = {
-      id: "lesson-concept",
-      key: `lesson:${lesson.id}:concept:${currentLang}`,
-      sourceLang: "ja",
-      targetLang: currentLang,
-      text: conceptJaEl.innerHTML,
-      format: "html",
-      context: "Study lesson body. Preserve HTML tags and technical terms.",
-    };
-
-    const targetLangAtStart = currentLang;
-    const cachedTitle = getCachedTranslation(titleItem);
-    const cachedConcept = getCachedTranslation(conceptItem);
-    titleTargetEl.textContent = cachedTitle || lesson.titleZh || lesson.titleJa || "";
-    titleJaEl.textContent = lesson.titleJa || "";
-    conceptTargetEl.innerHTML = sanitizeHtml(cachedConcept || renderOriginalConcept(lesson.conceptZh || lesson.conceptJa || ""));
-    if (typeof wrapAllTablesWithScrollWrapper === "function") wrapAllTablesWithScrollWrapper();
-
-    try {
-      const translated = await translateBatch([titleItem, conceptItem]);
-      if (!isActive() || currentLang !== targetLangAtStart) return;
-      const translatedTitle = translated["lesson-title"] || lesson.titleZh || lesson.titleJa || "";
-      titleTargetEl.textContent = translatedTitle;
+    if (found) {
+      applyLessonTargetLayout(true); // Single language layout
+      titleTargetEl.textContent = titleText || lesson.titleZh || lesson.titleJa || "";
+      conceptTargetEl.innerHTML = conceptHtml || renderOriginalConcept(lesson.conceptZh || lesson.conceptJa || "");
       titleJaEl.textContent = lesson.titleJa || "";
-      conceptTargetEl.innerHTML = sanitizeHtml(translated["lesson-concept"] || renderOriginalConcept(lesson.conceptZh || ""));
-    } catch (error) {
-      showI18nError(error);
-    } finally {
-      if (typeof wrapAllTablesWithScrollWrapper === "function") wrapAllTablesWithScrollWrapper();
+      conceptJaEl.innerHTML = renderOriginalConcept(lesson.conceptJa || "");
+    } else {
+      // C. Fallback immediately to default-ja-zh (bilingual layout)
+      applyLessonTargetLayout(false);
+      titleTargetEl.textContent = lesson.titleZh || "";
+      conceptTargetEl.innerHTML = renderOriginalConcept(lesson.conceptZh || "");
+      titleJaEl.textContent = lesson.titleJa || "";
+      conceptJaEl.innerHTML = renderOriginalConcept(lesson.conceptJa || "");
     }
+
+    if (typeof wrapAllTablesWithScrollWrapper === "function") wrapAllTablesWithScrollWrapper();
   }
 
   function restoreGenericTranslations() {

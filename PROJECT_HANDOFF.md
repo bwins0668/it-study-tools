@@ -4002,5 +4002,78 @@ ode --check service-worker.js | PASS |
 
 #### Next
 
-- **Round 16.6** (recommended): Korean content package strategy audit, or **Round 17.0** (recommended): Glossary 1500 -> 1800 expansion.
+- **Round 16.6** (completed): Korean content package strategy audit.
+
+### Round 16.6 - Language Instant-Switch Architecture Audit and No-AI-Fallback Strategy
+
+**Status: PASS**
+
+#### Scope
+- Conducted a read-only architecture audit of the language instant-switch system and AI fallback strategy.
+- Identified visual flashing/flickering causes during asynchronous content pack loading on Web.
+- Highlighted the issue of offline Windows clients popping up error toasts during AI fallback attempts when content packs (e.g., Korean) are missing.
+- Outlined three stabilization paths (Options A, B, and C) and drafted the implementation strategy for Option C.
+
+### Round 16.7 - Language System Stabilization: Background Preheating, No-AI-Fallback Optimization, and Visual Blink Elimination
+
+**Status: PASS**
+
+#### Scope
+- Implemented `ContentI18n.preheatAllPacks()` on Web to asynchronously preheat all 20 translation content packs 1.5 seconds after `DOMContentLoaded`. Added `fetchpriority="low"` for preheating requests.
+- Optimized Web `loadPack(subject, lang)` to support swapped parameter orders (lang, subject) and validated bounds to prevent requests to non-existent packs (e.g. `*_ko.js`, `*_ja.js`, `*_zh.js`).
+- Stabilized dynamic language pack loading in `loadPack` to safely reuse the same Promise for concurrent calls and avoid duplicate script tag injection.
+- Eliminated visual flickering/flashing during language switching:
+  - If a content pack is not loaded yet, `applyLessonTranslation` synchronously renders the localized target language's "Loading..." indicator (using `window.I18n.t("common.loading")`) rather than rendering default Chinese/Japanese first.
+  - Switched `loadPack` trigger to high priority (`fetchpriority="high"`) during user-initiated lesson/language loads.
+- Blocked AI translation endpoint calls for lesson translations:
+  - Intercepted missing content packs and immediately triggered localized fallbacks without calling `translateBatch`.
+  - Suppressed AI fallback error notifications: modified `showI18nError` to only log warnings to the console, completely removing Toast alerts on both Web and Windows repositories.
+- Implemented immediate fallback chain for missing packs:
+  1. Selected target pack (if loaded)
+  2. English pack `en` (if loaded)
+  3. `default-ja-zh` (bilingual side-by-side)
+  4. `ja` (Japanese original)
+- Switched `ko-KR` to immediately fallback to `default-ja-zh` bilingual side-by-side without making any script load requests or AI requests.
+- Enhanced Playwright smoke test (`scripts/online_smoke_test.py`) with assertions for zero `_ko.js` pack calls, zero `/api/i18n/translate` API requests, zero console errors, and version cache-busting checks. Passed 40/40 smoke tests.
+
+#### Verification & Smoke Test Results
+
+| Check | Result | Detail |
+| :--- | :--- | :--- |
+| `node tools/verify_glossary.js` | **PASS** | 0 errors, 0 warnings (Both Windows/Web) |
+| Term count | 1500 | Unchanged |
+| Windows/Web `it_terms.js` SHA256 | `0ca85e48506cce9f2f40a9bafdc72b2098d24fe8b726ea5b38f64d2fab4f12e7` | **PASS** |
+| Windows `i18n.js` SHA256 | `60288599EBBE0F536B5442B0B5CF4D61FCF89313FC9C356EBE7E78E943543709` | **PASS** |
+| Web `content-i18n.js` SHA256 | `0B114614918242A0D0FDF0995C6BFB636FF917FDA6441CEE5F2BD05980648644` | **PASS** |
+| Web `i18n.js` SHA256 | `D9F6A881CFE636681C791FAFFAAB814E14B7022ED6E3B5A50F43FD7D4E81806A` | **PASS** |
+| Web `app.js` SHA256 | `5320429EA00A5EAC3214ED81E46FE9149ADC08509BB9F4B6C8AE078E27CBA413` | **PASS** |
+| Web `online_smoke_test.py` SHA256 | `D34571C09981F03AE2AD959804639F6388674603E21AC9D10E0863D2549BE211` | **PASS** |
+| Playwright Smoke Test | **PASS** | 40/40 passed, 0 failed, 0 P0 console errors, 0 network 404s (tested locally) |
+
+#### Dual-End Differences and Rationale
+
+- **`assets/js/i18n.js`**: Web public version blocks AI translate via `isWebPublicRuntime()` and calls `loadPack` during language change. Windows version allows backend `/api/i18n/translate` for UI elements, but both double-ends now silences translation errors (no Toast alerts) and share the identical blink-free fallback loader for lesson content.
+- **`assets/js/content-i18n.js`**: Web public version has dynamic script load (`loadPack`), boundary checking, and background preheating, whereas the Windows version statically bundles all 20 packages in `index.html`.
+- **`assets/js/app.js`**: Web version includes `ensureContentPackForCurrentLesson` to dynamically trigger pack loading, while the Windows version statically loads everything.
+
+#### Git & Handoff Commits
+
+- **Windows Handoff Commit**: `(current commit)`
+- **Windows Code Commit**: `(current commit)`
+- **Web Commit**: `(current commit)`
+
+#### Explicitly not done
+
+- Did not add or delete any terms (total count remains exactly 1500).
+- Did not add Korean content language packs (`data/i18n_content/*_ko.js`).
+- Did not modify dynamic translated course content.
+- Did not update Web cache version in `version.js` or `service-worker.js`.
+- Did not modify manifests or PWA service worker config.
+- Did not package portable client zip.
+- Did not create tag or GitHub Release.
+- Did not modify course data, Python/Java sandbox, or backend `server.py` / `study_ai.py`.
+
+#### Next
+
+- **Round 16.8** (recommended): Language system stable release + Web cache update + Portable repack + GitHub Release.
 
