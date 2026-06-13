@@ -2922,3 +2922,59 @@ node tools/verify_glossary.js --web <path>
 
 - **Round 15.13**: Optional deeper localization polish for selected high-impact 700-term entries.
 - Or begin the next glossary expansion only after a new round explicitly authorizes it.
+
+---
+
+### Round 15.13 - Glossary 700 to 800 Expansion
+
+**Status: PASS**
+
+#### Scope
+
+- Expanded glossary from **700** to **800** terms.
+- Added exactly **100** terms in 4 batches of 25.
+- No release work was performed in this round.
+
+#### Batch validation
+
+| Batch | Terms | Validator |
+| :--- | :--- | :--- |
+| Batch 1 | 700 -> 725 | PASS, 0 errors, 0 warnings |
+| Batch 2 | 725 -> 750 | PASS, 0 errors, 0 warnings |
+| Batch 3 | 750 -> 775 | PASS, 0 errors, 0 warnings |
+| Batch 4 | 775 -> 800 | PASS, 0 errors, 0 warnings |
+
+#### Final validation
+
+| Check | Result |
+| :--- | :--- |
+| `node tools/verify_glossary.js` | PASS |
+| Term count | 800 |
+| Errors | 0 |
+| Warnings | 0 |
+| Windows/Web SHA256 match | PASS |
+| Windows/Web `data/glossary/it_terms.js` SHA256 | `1ec36bb7929a07363704cc515a174b88b5d4f32153f8112e4f6e7c1d6a743a04` |
+| Web `node --check data/glossary/it_terms.js` | PASS |
+
+#### Git
+
+| Repo | Branch | Commit hash | Push |
+| :--- | :--- | :--- | :--- |
+| Windows glossary | main | `09213af` | PASS |
+| Web glossary | master | `46dc8c8` | PASS |
+| Windows handoff | main | Recorded by `docs: record glossary 800 expansion` | PASS |
+
+#### Explicitly not done
+
+- Did not update Web cache version.
+- Did not update `assets/js/version.js`.
+- Did not update `service-worker.js`.
+- Did not package Portable.
+- Did not create a tag or GitHub Release.
+- Did not add a `ko` field.
+- Did not add Korean UI.
+- Did not modify course data, content language packs, backend, or sandbox.
+
+#### Next
+
+- **Round 15.14**: 800-term quality review and localization polish + Web cache update + Portable repack + GitHub Release.
