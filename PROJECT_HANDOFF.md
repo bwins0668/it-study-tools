@@ -3185,3 +3185,60 @@ Fixed legacy IDs:
 
 - **Round 15.17**: 900-term quality review and localization polish + Web cache update + Portable repack + GitHub Release
 
+---
+
+### Round 15.17 - 900-term Quality Review & Release
+
+**Status: PASS**
+
+#### Scope
+
+- Conducted a strict quality review and localization polish on all 900 terms (0 fixes required).
+- Updated Web cache metadata to enforce browser cache reload.
+- Repackaged Windows Portable client.
+- Created Git Tag and GitHub Release.
+
+#### Final validation
+
+| Check | Result |
+| :--- | :--- |
+| `node tools/verify_glossary.js` | PASS |
+| Term count | 900 |
+| Errors | 0 |
+| Warnings | 0 |
+| Windows/Web SHA256 match | PASS |
+| Windows/Web `data/glossary/it_terms.js` SHA256 | `f13492bd6c3f7722b74f02d302c012f81211be1f4d15d8f2682fff54175c53f4` |
+| Web `node --check assets/js/version.js` | PASS |
+| Web `node --check service-worker.js` | PASS |
+
+#### Release info
+
+- **Web assetVersion**: `v2026.6.13-r15.17`
+- **Web CACHE_NAME**: `study-tools-web-v2026-6-13-r15-17`
+- **Portable zip filename**: `Study-Tools-Portable-v2026.6.13-r15.17.zip`
+- **Portable zip SHA256**: `B2DEC79E381DAA2AF7567E896FCD9B34B06B6BFA2531C745D8F6406A3564622B`
+- **GitHub Release URL**: `https://github.com/bwins0668/it-study-tools/releases/tag/v2026.6.13-r15.17`
+
+#### Git
+
+| Repo | Branch | Commit hash | Push |
+| :--- | :--- | :--- | :--- |
+| Windows glossary | main | [Unchanged in r15.17] | PASS |
+| Web glossary/cache | master | `fcd7ac4` | PASS |
+| Windows handoff | main | Recorded by `docs: record glossary 900 release` | PASS |
+
+#### Explicitly not done
+
+- Did not expand to 1000 terms.
+- Did not add a `ko` field.
+- Did not add Korean UI.
+- Did not modify course data.
+- Did not modify content language packs.
+- Did not modify backend (`server.py` / `study_ai.py`).
+- Did not modify Java/Python sandbox.
+
+#### Next
+
+- **Round 15.18**: Begin 900 -> 1000 term expansion (Batch 1: 900 -> 925).
+
+
