@@ -6991,3 +6991,165 @@ ode_modules/, ackups/, supabase-config.local.js, .env, etc. |
 #### Next
 
 - **Round 20.0**: User-customized translation UI audit.
+- **Round 20.0**: User-customized translation UI & sync architecture audit ? PASS.
+
+### Round 20.0 - óp?é©íË?ñ|? UI ó^ìØ?âÀ??? (2026-06-13)
+
+**Status**: PASS
+
+**Type**: Read-only architecture audit (no code changes)
+
+#### 1. Current User Translation UI Status
+
+| Check | Result |
+|---|---|
+| Custom translation UI exists | ? **Not implemented** |
+| "Save My Translation" button exists | ? Not found |
+| Edit/delete custom translation UI | ? Not found |
+| Translation system | ? Built-in i18n dictionary (i18n-ui-dict.js, 7 languages) |
+| Glossary translations | ? content-i18n.js data, AI-assisted via i_assistant.js |
+
+**Conclusion**: The app uses a static i18n dictionary and AI-assisted inline translation. No user custom translation storage or UI exists.
+
+#### 2. AI Translation Cache Status
+
+| Storage | Key / Table | Size Limit | Synced? |
+|---|---|---|---|
+| Web localStorage | study-tools-i18n-cache-v4 | ~5000 entries (capped) | ? **Never** |
+| Windows SQLite | 	ranslation_cache table | Not capped | ? **Never** |
+| AI response cache (Web) | study-ai-responses-v1 | Not checked | ? **Never** |
+
+**AI cache is explicitly excluded from sync** ? confirmed in sync-engine.js comments:
+> "Excludes: AI API keys (sessionStorage), AI provider configs (provider, model, Ollama URL), AI translation cache (~500 kB, wasteful)"
+
+#### 3. AI Configuration Storage
+
+| Setting | Storage | Synced? |
+|---|---|---|
+| study-ai-provider | localStorage | ? Never |
+| study-ai-model | localStorage | ? Never |
+| study-ai-ollama-url | localStorage | ? Never |
+| study-ai-api-key | sessionStorage | ? Never |
+
+All AI config is excluded from sync scope.
+
+#### 4. Supabase user_translations Table Audit
+
+Source: 	ools/init_supabase.sql lines 125-148
+
+| Field | Type | Assessment |
+|---|---|---|
+| id | BIGSERIAL PK | ? OK |
+| user_id | UUID FKÅ®auth.users | ? RLS isolated, ON DELETE CASCADE |
+| source_text | TEXT | ? Needed, but add source_text_hash for indexing |
+| source_lang | VARCHAR(10) DEFAULT 'ja' | ? OK |
+| 	arget_lang | VARCHAR(10) | ? Supports 7 languages |
+| 	ranslated_text | TEXT | ? Needed |
+| context | VARCHAR(100) | ? Supports multi-module context |
+| created_at | TIMESTAMPTZ | ? OK |
+| updated_at | TIMESTAMPTZ | ? Supports LWW conflict resolution |
+| deleted_at | TIMESTAMPTZ | ? Supports soft delete (tombstone) |
+| sync_version | INTEGER | ?? **Missing** ? add for sync tracking |
+| Constraint | UNIQUE (user_id, source_text, target_lang) | ? Good, but context should be in constraint too |
+| RLS | uth.uid() = user_id | ? Secure |
+
+**Gaps identified**:
+1. No source_text_hash ? consider adding for index efficiency
+2. Unique constraint should include context to support same source_text in multiple modules
+3. No character limit on source_text / 	ranslated_text ? add 500/2000 limit
+4. sync_version field not in table ? add INTEGER DEFAULT 0
+
+#### 5. Data Classification
+
+| Category | Example | Exists? | Can Sync? |
+|---|---|---|---|
+| User-edited translations | "I prefer translating X to Y" | ? No storage yet | ? Future |
+| AI translation cache | study-tools-i18n-cache-v4 | ? Web + SQLite | ? **NEVER** |
+| AI config | provider, model, Ollama URL | ? localStorage | ? **NEVER** |
+| API key | study-ai-api-key | ? sessionStorage | ? **NEVER** |
+| Chat history | AI assistant messages | ? In-memory only | ? **NEVER** |
+
+#### 6. Privacy & Security Conclusion
+
+- ? AI cache is NOT synced
+- ? API keys are NOT synced (sessionStorage, excluded in sync scope)
+- ? Ollama URLs are NOT synced
+- ? No auto-sync is enabled
+- ? All sync is manual (Sync Now)
+- ?? **Risk**: If user_translations sync is added, users may accidentally save sensitive text that gets synced. Mitigation: explicit "Save" action + manual sync only.
+
+#### 7. Risk Assessment
+
+| Risk | Severity | Mitigation |
+|---|---|---|
+| AI cache uploaded as user translation | High | Separate storage keys; explicit "Save My Translation" button |
+| API key leaked via sync | Critical | Only in sessionStorage, excluded from sync scope |
+| Privacy: sensitive user text synced | Medium | User must actively save; manual sync only |
+| source_text too long Å® table bloat | Medium | Add 500-char limit |
+| Multi-module context collision | Low | Include context in unique constraint |
+| Delete sync permanently loses data | Medium | Soft delete (tombstone) pattern |
+| Web/Windows storage divergence | Medium | Same key name study-tools-user-translations-v1 |
+| UI overload | Medium | Minimal: pencil icon Å® text area Å® save/delete |
+
+#### 8. UI Design Recommendations (Round 20.1+)
+
+Minimal viable UX:
+1. **Pencil icon** next to any AI-translated text or glossary term
+2. Click Å® **inline text area** shows current translation, editable
+3. **"Save" button** Å® saves to localStorage study-tools-user-translations-v1
+4. **"Reset" button** Å® deletes custom translation, reverts to AI/built-in
+5. Auth Panel sync summary adds: "user translations uploaded/downloaded"
+6. **Scope string**: ["user_settings", "learning_progress", "quiz_results", "bookmarks", "user_translations"]
+7. Mobile: same pencil icon, full-width text area below the translated text
+
+**Requirements**:
+- Never auto-save AI output as user translation
+- User must click "Save" explicitly
+- Clear label: "My translation (synced across devices)"
+- Deletable via "Reset to default"
+
+#### 9. Sync Strategy Recommendations
+
+- **Sync trigger**: Manual Sync Now only (same as all other data types)
+- **Mechanism**: Same as bookmarks:
+  - pushUserTranslations() ? upsert active rows (deleted_at = null)
+  - pullUserTranslations() ? pull active + tombstone rows
+  - mergeUserTranslations() ? LWW by updated_at
+  - detectUserTranslationDeletions() ? tombstone detection
+- **Conflict rule**: Latest updated_at wins (LWW)
+- **Tombstone**: Soft delete with deleted_at
+- **Empty remote**: Never clears local
+- **AI cache**: NEVER included in sync scope
+- **API key**: NEVER included
+
+#### 10. Recommended Route for Round 20.1+
+
+**Recommended order: A Å® B Å® C Å® D**
+
+| Phase | Scope | Deliverable |
+|---|---|---|
+| **20.1** | Local-only prototype | study-tools-user-translations-v1 localStorage, "Save"/"Reset" UI on AI translations, no Supabase |
+| **20.2** | Supabase sync integration | pushUserTranslations + pullUserTranslations + mergeUserTranslations, add to unManualSync |
+| **20.3** | Conflict & tombstone | LWW, deleted_at soft delete, remote empty protection, auth UI summary |
+| **20.4** | Stable release | Web cache update, portable ZIP, tag, GitHub Release, docs |
+
+**This is the safest route**: local-first, then sync, then polish, then release. Avoids regressions in existing sync features.
+
+#### Security Declarations
+
+| Statement | Value |
+|---|---|
+| Sync AI translation cache | ? Never |
+| Sync API key / provider / Ollama URL | ? Never |
+| Auto-sync | ? Never (manual only) |
+| Package / Release this round | ? None (read-only audit) |
+
+#### Commits
+
+- **Windows main**: d4754ab docs: record bookmarks sync post-release audit (previous)
+- **Web master**: 4ead0c3 (no changes this round)
+- **Windows handoff commit**: (this commit) docs: audit user translation UI sync architecture
+
+#### Next
+
+- **Round 20.1**: User-customized translation UI prototype (local-only, no sync)
