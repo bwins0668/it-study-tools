@@ -4077,3 +4077,56 @@ ode --check service-worker.js | PASS |
 
 - **Round 16.8** (recommended): Language system stable release + Web cache update + Portable repack + GitHub Release.
 
+---
+
+### Round 16.8 - Language System Stable Release: Web Cache Update, Portable Repack, and GitHub Release
+
+**Status: PASS**
+
+#### Scope
+- Published Round 16.5~16.7 Korean MVP support and language switching stabilization as a formal release.
+- Updated Web asset version to `v2026.6.13-r16.8` in `assets/js/version.js`.
+- Updated Service Worker CACHE_NAME to `study-tools-web-v2026-6-13-r16-8` in `service-worker.js`.
+- Regenerated both Web manifests (`assets/asset-manifest.json`, `data/i18n_content/manifest.json`).
+- Packaged Windows Portable zip: `Study-Tools-Portable-v2026.6.13-r16.8.zip` (288.42 MB, 1794 files).
+- Created Git tag `v2026.6.13-r16.8` and GitHub Release with Chinese release notes.
+
+#### Verification & Smoke Test Results
+
+| Check | Result | Detail |
+| :--- | :--- | :--- |
+| `node tools/verify_glossary.js` | **PASS** | 0 errors, 0 warnings (Both Windows/Web) |
+| Term count | 1500 | Unchanged |
+| Web `version.js` syntax | **PASS** | `node --check` |
+| Web `service-worker.js` syntax | **PASS** | `node --check` |
+| Web `i18n.js` syntax | **PASS** | `node --check` |
+| Web `content-i18n.js` syntax | **PASS** | `node --check` |
+| Web `app.js` syntax | **PASS** | `node --check` |
+| Windows JS syntax (all) | **PASS** | `node --check` |
+| Web assetVersion | `v2026.6.13-r16.8` | Updated in `version.js` |
+| Web CACHE_NAME | `study-tools-web-v2026-6-13-r16-8` | Updated in `service-worker.js` |
+| Web manifests assetVersion | `v2026.6.13-r16.8` | Both manifests match |
+| Playwright Smoke Test | **39/40 PASS** | 1 pre-existing flakiness: `python:1 fr` async timing |
+| Web no `/api/i18n/translate` | **PASS** | 0 calls confirmed |
+| Web no `*_ko.js` requests | **PASS** | 0 calls confirmed |
+| Web no Toast errors | **PASS** | 0 console errors |
+| Windows Portable zip | `Study-Tools-Portable-v2026.6.13-r16.8.zip` | 288.42 MB, 1794 files |
+| Portable SHA256 | `310DCD709E01D788E090F4652A4E50B7E891CD3FF98EE5487F6973BE6750D1EA` | |
+| GitHub Release | [v2026.6.13-r16.8](https://github.com/bwins0668/it-study-tools/releases/tag/v2026.6.13-r16.8) | Created with Chinese notes |
+
+#### Git & Handoff Commits
+
+- **Windows Handoff Commit**: `f038020` (docs: correct handoff commit hash)
+- **Windows Code Commit**: `070798c` (fix: stabilize language switching and fallback behavior) — unchanged this round
+- **Web Commit**: `edbb592` (chore: release language system stable web cache update)
+
+#### Explicitly not done
+
+- Did not add or delete any terms (total count remains exactly 1500).
+- Did not add Korean content language packs (`data/i18n_content/*_ko.js`).
+- Did not modify dynamic translated course content.
+- Did not modify course data, Python/Java sandbox, or backend `server.py` / `study_ai.py`.
+
+#### Next
+
+- **Round 17.0** (recommended): User login and cross-device sync architecture audit.
