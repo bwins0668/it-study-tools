@@ -6337,3 +6337,77 @@ In Round 19.2, `.playground-section` was assigned a flex ratio of `0.7` relative
 #### Next
 - **Round 19.3.2**: Header/Sidebar minor detail regressions, or **Round 19.4**: Bookmarks deletion sync and dual-device conflict testing.
 
+
+---
+
+### Round 19.3.2 - UI ïzã«éw?âÒ?ó^î˜? (2026-06-13)
+
+**Status**: PASS
+
+**Objective**: UI layout metrics regression check and fine-tuning across 8 viewports. No new features, no packaging, no Release.
+
+#### Changes Made (assets/css/index.css)
+
+1. **html { overflow-x: hidden; }** ? Prevents document-level horizontal overflow when sidebar/playground are rendered off-screen via position:fixed at ?720px/?900px breakpoints. Resolves scrollWidth > innerWidth at 720px and 390px.
+
+2. **#glossary-open-btn added to white-space:nowrap group** ? Prevents Chinese text "??ï\" from stacking vertically when the header flex container compresses the button at 1000?1200px widths. Button stays horizontal (w?36, h?36 on desktop).
+
+3. **901?1199px playground section** ? Increased min-width from 360px to 376px, reduced right padding from 24px to 16px. Ensures sql-editor width ? 320px threshold in three-column mode.
+
+4. **?1200px playground section** ? Added padding: 24px 16px 24px 0 (right padding reduced from 24px to 16px). Ensures console-card ? 380px and sql-editor ? 340px at the 1200px breakpoint.
+
+#### Viewport Verification Results (all PASS)
+
+| Viewport | Overflow | Glossary | Playground | Console | SqlEditor | RunBtn | Output | Drawers |
+|---|---|---|---|---|---|---|---|---|
+| 1920x1080 | No | 63Å~20 horiz | 560px | 544px | 504Å~273 | visible | visible | ? |
+| 1600x900 | No | 63Å~20 horiz | 480px | 464px | 424Å~150 | visible | visible | ? |
+| 1366x768 | No | 63Å~20 horiz | 410px | 394px | 354Å~148 | visible | visible | ? |
+| 1200x800 | No | 63Å~20 horiz | 400px | 384px | 344Å~148 | visible | visible | ? |
+| 1000x800 | No | 63Å~20 horiz | 376px | 360px | 320Å~148 | visible | visible | ? |
+| 900x800 | No | 36Å~36 (icon) | drawer 450px | 417px | 377Å~203 | visible | visible | Playground drawer OK |
+| 720x800 | No | 36Å~36 (icon) | drawer 450px | 417px | 377Å~203 | visible | visible | Both drawers OK |
+| 390x844 | No | 36Å~36 (icon) | drawer 351px | 318px | 278Å~193 | visible | visible | Both drawers OK, auth ? vp-16 |
+
+#### Key Metrics Validation
+
+- **?1200px**: playground ? 400 ?, console-card ? 380 ?, sql-editor ? 340 ?, editor h ? 150 ?, run btn + output visible ?, no overflow ?
+- **901?1199px**: playground ? 360 ?, sql-editor ? 320 ?, no overflow ?
+- **?900px**: playground enters drawer ?, toggle visible ?, SQL input/exec button/output accessible ?
+- **?720px**: sidebar enters drawer ?, toggle visible ?, no overflow ?
+- **?390px**: auth panel width ? vp-16 ?, glossary button not vertical ?, SQL drawer usable ?
+
+#### Files Modified
+
+- ssets/css/index.css (+8/-2 lines)
+
+#### Verification
+
+- 
+ode tools/verify_glossary.js: PASS (1500 terms, SHA256 matches)
+- 
+ode --check assets/js/app.js: PASS
+- 
+ode --check assets/js/auth-ui.js: PASS
+- 
+ode --check assets/js/i18n-ui-dict.js: PASS
+- 
+ode --check assets/js/sync-engine.js: PASS
+
+#### Commits
+
+- **Windows main**: 5debceb fix: polish UI layout metrics regressions
+- **Web master**: 96bb1f0 fix: sync UI layout metrics polish
+- **Windows handoff commit**: (this commit) docs: record Round 19.3.2 handoff
+
+#### Explicitly Deferred Tasks (unchanged)
+
+- Bookmarks deletion sync and dual-device conflict testing.
+- User-customized translation UI audit.
+- User translation synchronization.
+- Course/term/wrong-question bookmarks synchronization.
+- Portable client packaging & new GitHub Release.
+
+#### Next
+
+- **Round 19.3.3**: Further UI detail regression fixes, or **Round 19.4**: Bookmarks deletion sync and dual-device conflict testing.
