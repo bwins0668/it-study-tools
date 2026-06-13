@@ -5587,3 +5587,79 @@ The following functions are exposed through `window.StudySync`:
 #### Next
 
 - **Round 17.7:** synchronization conflict handling and real two-device testing, or **Round 17.6.1:** manual synchronization experience patch.
+
+---
+
+### Round 17.7 - Real Supabase Sandbox E2E Validation
+
+**Status: PASS** (18/18 tests)
+
+#### Key events
+
+- Round resumed after prior model quota cut-off: baseline checks (git status, Node, glossary, check-ignore, no Supabase CLI/token) confirmed.
+- **supabase-config.local.js** was initially missing (template default). User manually filled in Project URL + anon key + set `enabled: true`.
+- **CRITICAL FIX**: `supabase-config.example.js` in both repos was accidentally filled with real values during copy-paste. Recovered to template `(enabled: false, url: "", anonKey: "")` — no real key leaked to Git.
+- `index.html` temporarily uncommented `<script src="supabase-config.local.js">` + `<supabase-js SDK>` for local testing; re-commented before commit.
+- E2E test executed via Node.js REST API (direct Supabase REST calls), not browser UI (local CSS loading issues prevented UI testing).
+
+#### SQL & DB
+
+- All 8 tables created via Supabase SQL Editor (`tools/init_supabase.sql`): devices, user_settings, learning_progress, quiz_results, user_translations, bookmarks, sync_log, schema_migrations.
+- All tables RLS-enabled with `FOR ALL TO authenticated` policies (`USING` + `WITH CHECK`).
+- All indexes confirmed: unique constraints on learning_progress `(user_id, subject, lesson_id)`, quiz_results `(user_id, subject, lesson_id, quiz_index, device_id)`, etc.
+
+#### E2E test results (18/18 PASS)
+
+| # | Test | Result |
+|---|------|--------|
+| 1 | REST API connectivity | ✓ |
+| 2 | 8 tables exist | ✓ |
+| 3 | Sign in (***@tsb-yyg.ac.jp) | ✓ |
+| 4 | getCurrentUser() | ✓ |
+| 5 | registerDeviceRemote() | ✓ |
+| 6 | pushUserSettings() | ✓ |
+| 7 | pullUserSettings() | ✓ |
+| 8 | pushLearningProgress() | ✓ |
+| 9 | pullLearningProgress() (1 row) | ✓ |
+| 10 | pushQuizResults() | ✓ |
+| 11 | UNION merge (no data loss) | ✓ |
+| 12 | No auto background sync | ✓ |
+| 13 | RLS active | ✓ |
+| 14 | No AI keys uploaded | ✓ |
+| 15 | No provider/model/Ollama URL uploaded | ✓ |
+| 16 | No AI translation cache uploaded | ✓ |
+| 17 | No AI chat data uploaded | ✓ |
+| 18 | No real keys in Git | ✓ |
+
+#### Verification checks
+
+| Check | Result |
+|-------|--------|
+| Glossary count | 1500 ✓ (SHA256 match) |
+| main JS syntax (4 files) | All OK ✓ |
+| web JS syntax (4 files) | All OK ✓ |
+| `.gitignore` local config (main) | `.gitignore:15` ✓ |
+| `.gitignore` local config (web) | `.gitignore:39` ✓ |
+| No `service_role` key used | ✓ |
+| No `git add .` / `git add -A` | ✓ |
+
+#### Commits
+
+- **main**: no code changes this round (validation only)
+- **web**: no code changes this round (validation only)
+- **PROJECT_HANDOFF.md**: this entry
+
+#### Explicitly not done
+
+- Did not test browser UI (CSS loading/path issues in local HTTP server prevented auth panel login/sync buttons testing).
+- Did not test `user_translations` push/pull (not yet wired in sync-engine.js).
+- Did not test `bookmarks` sync (not yet wired in sync-engine.js).
+- Did not implement automatic/background sync (by design — manual only).
+- Did not implement conflict detection/resolution.
+- Did not test two-device sync (only one test device registered).
+- Did not package Portable or create a Release.
+
+#### Next
+
+- **Round 17.8** (recommended): UI smoke test — fix local CSS/JS path resolution for browser-based E2E, then manually verify auth panel display, "立即同步" button interaction, logout sync-disable behavior, and sync success/failure toast messages.
+- **Round 17.7.1** (if urgent): Complete remaining sync endpoints (user_translations, bookmarks) wiring in sync-engine.js.
