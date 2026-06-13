@@ -3690,3 +3690,81 @@ ode --check service-worker.js | PASS |
 #### Next
 
 - **Round 15.25** (recommended): 1500-term search experience optimization and performance stress test, or continue expansion 1500 -> 1800
+
+---
+
+### Round 16.1 - Korean UI Dictionary and Language Switch Foundation
+
+**Status: PASS**
+
+#### Scope
+
+- Added complete `ko-KR` language block to `i18n-ui-dict.js`.
+- Confirmed `LANGUAGES` list already includes `ko` (no duplicate added).
+- Added `ko → ko-KR` mapping to `normalizeLanguageCode()` in `i18n.js`.
+- Verified `STATIC_UI_TRANSLATIONS.ko` already existed with 30+ entries (sufficient coverage for Round 16.1).
+- Did not modify any glossary, content pack, course data, backend, or sandbox files.
+
+#### Modified files (Windows + Web)
+
+| File | Change |
+| :--- | :--- |
+| `assets/js/i18n-ui-dict.js` | Added `"ko-KR"` language block with all sub-sections (common, nav, subnav, sidebar, sandbox, exam, toast, dialog, message, settings, lesson, flashcard, glossary, quiz, typing, console) |
+| `assets/js/i18n.js` | Added `ko → ko-KR` to `normalizeLanguageCode()` |
+
+#### Validation
+
+| Check | Result |
+| :--- | :--- |
+| node --check `assets/js/i18n-ui-dict.js` (Windows) | PASS |
+| node --check `assets/js/i18n.js` (Windows) | PASS |
+| node --check `assets/js/i18n-ui-dict.js` (Web) | PASS |
+| node --check `assets/js/i18n.js` (Web) | PASS |
+| `node tools/verify_glossary.js` (Windows) | PASS |
+| Glossary term count | 1500 (unchanged) |
+| Glossary errors/warnings | 0/0 |
+| Windows/Web `it_terms.js` SHA256 | `327ffb4c95c3fc1decf02936308ba1de4c29987acf5aca62ef531a77acb73e53` (unchanged) |
+| `i18n-ui-dict.js` dual SHA256 match | PASS (`d1dd7451b18a91893d654180cc29f05586ea87a156e8b4ea862064442949c7d6`) |
+| `i18n.js` dual SHA256 match | PASS (`38a4f63278d750e6683b7561c8970d43442ea906a58a60736a89ff806a284ffb`) |
+| Language selector contains `ko` | CONFIRMED (pre-existing) |
+| `normalizeLanguageCode` supports `ko → ko-KR` | CONFIRMED |
+
+#### Smoke test
+
+- Language selector shows "Korean / 한국어" (pre-existing in LANGUAGES list).
+- After selecting Korean, `STATIC_UI_TRANSLATIONS` renders UI text in Korean.
+- `I18nUiDict["ko-KR"]` loads for `translateStatic()` calls (Key UI dictionary).
+- Glossary still fallback to English (expected — Round 16.2 handles glossary ko field).
+- No console errors.
+
+#### Git
+
+| Repo | Branch | Commit hash | Push |
+| :--- | :--- | :--- | :--- |
+| Windows | main | `bfe3ea7` `feat: add Korean UI dictionary and language support` | PASS |
+| Web | master | `fa64f95` `feat: sync Korean UI dictionary` | PASS |
+| Windows handoff | main | *(this commit)* | PASS |
+
+#### SHA256 Summary
+
+| File | SHA256 |
+| :--- | :--- |
+| Windows `it_terms.js` | `327ffb4c95c3fc1decf02936308ba1de4c29987acf5aca62ef531a77acb73e53` |
+| Web `it_terms.js` | `327ffb4c95c3fc1decf02936308ba1de4c29987acf5aca62ef531a77acb73e53` |
+| `i18n-ui-dict.js` | `d1dd7451b18a91893d654180cc29f05586ea87a156e8b4ea862064442949c7d6` |
+| `i18n.js` | `38a4f63278d750e6683b7561c8970d43442ea906a58a60736a89ff806a284ffb` |
+
+#### Explicitly not done
+
+- Did not add glossary `ko` field.
+- Did not modify `data/glossary/it_terms.js`.
+- Did not modify content language packs.
+- Did not update Web cache version.
+- Did not modify `service-worker.js` / `manifest.json`.
+- Did not repackage Portable client.
+- Did not create tag or GitHub Release.
+- Did not modify course data, backend, or sandbox.
+
+#### Next
+
+- **Round 16.2** (recommended): Add `ko` field to all 1500 glossary terms, upgrade `verify_glossary.js`, update `glossary.js` and `content-i18n.js` to support Korean glossary rendering and search.
