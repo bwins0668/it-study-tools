@@ -5247,3 +5247,128 @@ Web:
 #### Next
 
 - **Round 17.4** (recommended): controlled Supabase SDK loading and a real Auth pilot only after project creation, RLS policy completion, and a dedicated security review.
+
+---
+
+### Round 17.4 - Supabase Manual Setup and Local Configuration Validation
+
+**Status: PASS**
+
+#### Modified files
+
+Windows:
+
+- `assets/js/supabase-client.js`
+- `assets/js/auth-ui.js`
+- `index.html`
+- `docs/supabase_setup.md`
+- `docs/sync_architecture.md`
+- `tools/init_supabase.sql`
+- `PROJECT_HANDOFF.md`
+
+Web:
+
+- `assets/js/supabase-client.js`
+- `assets/js/auth-ui.js`
+- `index.html`
+- `docs/supabase_setup.md`
+- `docs/sync_architecture.md`
+
+`.gitignore` was reviewed but did not require modification.
+
+#### Project and local configuration status
+
+- **Real Supabase project created:** No.
+- **Final `assets/js/supabase-config.local.js` status:** Does not exist.
+- A temporary placeholder-only local config was created for local recognition testing, confirmed ignored, and deleted before commit.
+- No local config value was recorded in documentation or this handoff.
+
+#### Ignore protection
+
+- `git check-ignore -v assets/js/supabase-config.local.js`: PASS on Windows and Web.
+- `.env`, `.env.local`, and `*.secret`: PASS on Windows and Web.
+- The temporary local config never appeared in `git status`.
+
+#### `init_supabase.sql` review
+
+- No real project URL, API key, JWT, token, or password is present.
+- All seven architecture tables remain present: `devices`, `user_settings`, `learning_progress`, `quiz_results`, `user_translations`, `bookmarks`, and `sync_log`.
+- All seven user-owned tables reference `auth.users(id)`.
+- Required timestamp, soft-delete, `sync_version`, and `device_id` fields are present across the schema.
+- `devices.user_id` is now required.
+- RLS is enabled on all seven user-owned tables.
+- Every policy is restricted to `authenticated` and includes both:
+  - `USING (auth.uid() = user_id)`
+  - `WITH CHECK (auth.uid() = user_id)`
+- `CREATE INDEX CONCURRENTLY` was replaced with transaction-safe `CREATE INDEX IF NOT EXISTS`.
+- SQL was reviewed only and was not executed against a real database.
+
+#### Client status recognition
+
+| Condition | Status | Client creation | Requests |
+|:---|:---|:---|:---|
+| Missing config | `not_configured` | No | 0 |
+| Complete config, `enabled: false` | `disabled` | No | 0 |
+| Complete config, enabled, SDK missing | `sdk_missing` | No | 0 |
+| Complete config, enabled, SDK present | `ready_to_initialize` | Only after explicit `initClient()` | 0 in fake SDK smoke |
+
+- `initClient()` remains non-throwing.
+- Unavailable `signInWithEmail()` returns a local error object.
+- Passwords, sessions, and tokens are not persisted by the adapter.
+
+#### Auth UI and SDK loading strategy
+
+- Account panel displays `未配置`, `已配置但未启用`, `SDK 未加载`, or `可初始化`.
+- Account panel clearly states that the app remains a local prototype and real passwords/login must not be used.
+- `index.html` loads the local `supabase-client.js` directly.
+- Local config and external SDK entries are comments only.
+- The Supabase CDN remains disabled by default.
+- Offline/no-network startup remains functional.
+
+#### Verification results
+
+| Check | Result |
+|:---|:---|
+| Windows `node tools/verify_glossary.js` | PASS, 1500 terms |
+| Windows `node --check assets/js/supabase-client.js` | PASS |
+| Windows `node --check assets/js/auth-ui.js` | PASS |
+| Windows `node --check assets/js/sync-engine.js` | PASS |
+| Web `node --check assets/js/supabase-client.js` | PASS |
+| Web `node --check assets/js/auth-ui.js` | PASS |
+| Web `node --check assets/js/sync-engine.js` | PASS |
+| SQL structure/RLS assertions | PASS |
+| Four-state adapter smoke | PASS |
+| Local auth mock sign-in/sign-out smoke | PASS |
+| Secret scan | PASS |
+
+#### Browser smoke results
+
+- Windows and Web pages opened normally.
+- No JavaScript console errors were observed.
+- `window.StudySupabase` integration was confirmed through the rendered `未配置` status.
+- Only the local `supabase-client.js` was loaded; the optional external SDK was not loaded.
+- Auth account panel and safety notice rendered correctly.
+- Mock auth controls and snapshot export action remained present; local auth state transitions passed controlled storage smoke.
+- No Supabase project request or real auth/sync request was generated.
+- SQL lesson content rendered normally.
+- Glossary opened normally and reported 1500 terms.
+
+#### Git commits
+
+- **Windows Code Commit**: `(this commit; recorded by follow-up handoff commit)`
+- **Web Commit**: `d842e9c` (chore: sync Supabase setup preparation)
+- **Windows Handoff Commit**: `(follow-up handoff commit)`
+
+#### Explicitly not done
+
+- Did not implement real login or registration.
+- Did not implement real cloud synchronization.
+- Did not create or connect a real Supabase project.
+- Did not submit real URL, anon key, `service_role`, JWT, token, or password.
+- Did not execute SQL against a real database.
+- Did not create a Release or package Portable.
+- Did not modify courses, glossary data, backend, sandbox, service worker, manifest, or version.
+
+#### Next
+
+- **Round 17.5** (recommended): minimal real Supabase Auth login integration after manual project creation, or continue manual project setup before integration.

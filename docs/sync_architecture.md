@@ -29,6 +29,15 @@ Preparation files:
 | `assets/js/supabase-client.js` | Fail-closed client adapter exposed as `window.StudySupabase` |
 | `docs/supabase_setup.md` | Beginner setup and RLS safety guide |
 
+## Round 17.4: Manual Setup Validation
+
+- No real Supabase project was created or contacted during repository validation.
+- `index.html` contains only commented optional slots for local config and the SDK CDN; external loading remains disabled.
+- The committed client loads locally and reports `not_configured`, `disabled`, `sdk_missing`, or `ready_to_initialize` without throwing.
+- A complete local config with `enabled: false` is recognized but cannot initialize a client.
+- The SQL draft now enables RLS on all seven user-owned tables and uses both `USING` and `WITH CHECK` with `auth.uid() = user_id`.
+- Real login UI and cloud synchronization remain outside this round.
+
 ## Authentication Strategy
 
 We **do not self-host passwords**. Auth is delegated to **Supabase Auth** (built-in):
@@ -130,8 +139,8 @@ Full DDL: `tools/init_supabase.sql`
 |:---|:---|
 | **17.2** | Auth UI prototype: login/signup page, anonymous indicator, user menu |
 | **17.3** | Supabase Auth preparation layer, disabled config template, no-network adapter |
-| **17.4** | Controlled SDK loading and real Auth pilot after RLS/security review |
-| **17.5** | Settings, translations, bookmarks sync |
+| **17.4** | Manual project/config validation, optional SDK loading slot, RLS draft review |
+| **17.5** | Minimal real Supabase Auth integration after manual project creation, or defer until the project exists |
 | **17.6** | Windows sync engine (Python), dual-write to local SQLite |
 | **17.7** | Conflict resolution, offline queue edge cases, sync status indicator |
 | **17.8** | Stable release: Web cache update + Portable repack + tag + Release |

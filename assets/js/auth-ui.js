@@ -185,8 +185,8 @@
     var status = window.StudySupabase.getStatus();
     var labels = {
       not_configured: "未配置",
-      sdk_not_loaded: "SDK 未加载",
-      disabled: "已禁用",
+      sdk_missing: "SDK 未加载",
+      disabled: "已配置但未启用",
       initialization_error: "初始化失败",
       ready_to_initialize: "可初始化",
       ready: "已就绪",
@@ -283,6 +283,9 @@
         '<div class="auth-notice">' +
           '<i class="fa-solid fa-info-circle"></i> ' +
           esc(t("auth.syncInDev", "同步功能开发中")) +
+        '</div>' +
+        '<div class="auth-privacy-note" data-i18n-skip="true">' +
+          '<i class="fa-solid fa-shield-halved"></i> 当前仍是本地原型模式；请勿输入真实密码或发起真实登录。真实 Supabase Auth 将在后续 Round 接入。' +
         '</div>' +
 
         // Device info

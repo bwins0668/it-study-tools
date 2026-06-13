@@ -43,7 +43,7 @@ Round 17.3 不要求实际创建项目；以上步骤仅供以后人工配置。
 Copy-Item assets/js/supabase-config.example.js assets/js/supabase-config.local.js
 ```
 
-只编辑 `assets/js/supabase-config.local.js`。该文件已被 `.gitignore` 忽略。Round 17.3 应保持：
+只编辑 `assets/js/supabase-config.local.js`。该文件已被 `.gitignore` 忽略。Round 17.4 验证时应保持：
 
 ```js
 window.STUDY_TOOLS_SUPABASE_CONFIG = {
@@ -101,3 +101,58 @@ CREATE POLICY example_isolation ON public.example_table
 - 未保存密码、JWT 或 token
 - 未执行 `init_supabase.sql`
 - 未启用云同步
+
+## Round 17.4 手动配置检查清单
+
+### 配置 Auth Providers
+
+在 Supabase Dashboard 打开 **Authentication > Providers**：
+
+1. 保留 Email provider 时，先确认是否要求邮箱验证。
+2. Google、GitHub 等 OAuth provider 默认不要随意开启；启用前必须配置对应平台的 Client ID、Client Secret 和 Redirect URL。
+3. Redirect URL 必须是自己控制的地址，不要复制陌生教程中的回调地址。
+4. Round 17.4 只检查设置页面，不进行真实注册或登录。
+
+### 本地文件加载顺序
+
+`index.html` 已提供注释式可选加载位。需要人工验证本地配置时：
+
+1. 复制模板为 `assets/js/supabase-config.local.js`。
+2. 保持 `enabled: false`。
+3. 在本机临时取消 `supabase-config.local.js` 那一行的 HTML 注释。
+4. 不要取消外部 Supabase SDK CDN 的注释；本轮不需要联网加载 SDK。
+5. 确认加载顺序为：local config、可选 SDK、`supabase-client.js`、`auth-ui.js`。
+6. 验证结束后，不得提交 local 文件或任何真实配置值。
+
+### 状态验证
+
+在浏览器控制台只检查布尔值和状态码，不要打印完整配置：
+
+```js
+StudySupabase.isConfigured()
+StudySupabase.isEnabled()
+StudySupabase.getStatus().code
+StudySupabase.getClient()
+```
+
+预期状态：
+
+| 条件 | 状态 |
+|:---|:---|
+| URL 或 anon key 为空 | `not_configured` |
+| 配置完整但 `enabled: false` | `disabled` |
+| 已启用但 SDK 不存在 | `sdk_missing` |
+| 已启用且 SDK 存在，但尚未初始化 | `ready_to_initialize` |
+
+本轮不要调用真实登录方法，也不要在控制台输出 URL、anon key、密码、session 或 token。
+
+### 执行 SQL 后检查 RLS
+
+未来在真实项目中执行 `tools/init_supabase.sql` 后，应在 **Database > Tables** 或 SQL Editor 检查七张用户表均已启用 RLS，并确认策略同时包含：
+
+```sql
+USING (auth.uid() = user_id)
+WITH CHECK (auth.uid() = user_id)
+```
+
+应使用两个独立测试用户验证互相无法读取、插入、更新或删除对方数据。完成这项隔离测试前，不得进入真实登录或云同步阶段。

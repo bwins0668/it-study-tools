@@ -1,5 +1,5 @@
 /**
- * Study Tools Supabase adapter (Round 17.3).
+ * Study Tools Supabase adapter (Round 17.4).
  *
  * This layer is inert unless a complete config explicitly enables it and the
  * Supabase browser SDK is already available. It never stores credentials.
@@ -49,7 +49,7 @@
       return { code: "disabled", ready: false, message: "Supabase is disabled." };
     }
     if (!getSdkFactory()) {
-      return { code: "sdk_not_loaded", ready: false, message: "Supabase SDK is not loaded." };
+      return { code: "sdk_missing", ready: false, message: "Supabase SDK is not loaded." };
     }
     if (initError) {
       return { code: "initialization_error", ready: false, message: initError.message || "Supabase initialization failed." };
