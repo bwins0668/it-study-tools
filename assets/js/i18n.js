@@ -1,4 +1,4 @@
-// Study Tools language switcher and AI-backed translation runtime.
+﻿// Study Tools language switcher and AI-backed translation runtime.
 (function () {
   "use strict";
 
@@ -1519,7 +1519,7 @@ function attachUserTranslationControl(el, origText, transText, ctx) {
   var btn = document.createElement('button');
   btn.className = 'ut-edit-btn';
   btn.type = 'button';
-  btn.title = (typeof translateStatic === 'function' ? translateStatic('userTranslationEdit') : null) || 'Edit';
+  btn.title = (typeof translateStatic === 'function' ? translateStatic('auth.userTranslationEdit') : null) || 'Edit';
   btn.textContent = '\u270E';
   btn.addEventListener('click', function(e) {
     e.stopPropagation();
@@ -1556,9 +1556,9 @@ function openUtEditor(el, origText, transText, ctx) {
   };
   pop = document.createElement('div');
   pop.className = 'ut-popup';
-  var tp = i18nT('userTranslationTextareaPlaceholder', 'Your translation');
-  var sl = i18nT('userTranslationSave', 'Save');
-  var cl = i18nT('userTranslationCancel', 'Cancel');
+  var tp = i18nT('auth.userTranslationTextareaPlaceholder', 'Your translation');
+  var sl = i18nT('auth.userTranslationSave', 'Save');
+  var cl = i18nT('auth.userTranslationCancel', 'Cancel');
   pop.innerHTML =
     '<div class=\"ut-backdrop\"></div>' +
     '<div class=\"ut-box\">' +
@@ -1566,7 +1566,7 @@ function openUtEditor(el, origText, transText, ctx) {
       '<div class=\"ut-actions\">' +
         '<button class=\"ut-save\" type=\"button\">' + sl + '</button>' +
         '<button class=\"ut-cancel\" type=\"button\">' + cl + '</button>' +
-        ((saved && !saved.deletedAt) ? '<button class=\"ut-reset\" type=\"button\">' + i18nT('userTranslationReset', 'Reset') + '</button>' : '') +
+        ((saved && !saved.deletedAt) ? '<button class=\"ut-reset\" type=\"button\">' + i18nT('auth.userTranslationReset', 'Reset') + '</button>' : '') +
       '</div>' +
     '</div>';
   document.body.appendChild(pop);
@@ -1574,8 +1574,9 @@ function openUtEditor(el, origText, transText, ctx) {
   pop.querySelector('.ut-save').addEventListener('click', function() {
     var ta = pop.querySelector('.ut-ta');
     var val = (ta.value || '').trim();
-    if (!val) { alert(i18nT('userTranslationInvalid', 'Cannot be empty')); return; }
-    if (val.length > 2000) { alert(i18nT('userTranslationTooLong', 'Too long')); return; }
+    if (!val) { alert(i18nT('auth.userTranslationInvalid', 'Cannot be empty')); return; }
+    if (origText.length > 500) { alert(i18nT('auth.userTranslationTooLong', 'Source too long (max 500 chars)')); return; }
+    if (val.length > 2000) { alert(i18nT('auth.userTranslationTooLong', 'Too long')); return; }
     saveUserTranslationItem(origText, currentLang, currentLang, val, ctx);
     el.textContent = val;
     if (!el.parentNode.querySelector('.ut-badge')) {
