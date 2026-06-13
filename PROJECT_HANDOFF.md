@@ -6902,3 +6902,92 @@ ode_modules/, ackups/, supabase-config.local.js, .env, etc. |
 #### Next
 
 - **Round 19.7**: Post-release stability audit, or **Round 20.0**: User-customized translation UI audit.
+- **Round 19.6.1**: Bookmarks sync post-release audit ? PASS.
+
+### Round 19.6.1 - Bookmarks ìØ??íËî≈?ïzç@?? (2026-06-13)
+
+**Status**: PASS
+
+**Type**: Read-only audit (no code changes needed)
+
+#### Release ZIP Check
+
+| Item | Result |
+|---|---|
+| File exists | ? ackups\Study-Tools-Portable-v2026.6.13-r19.6.zip |
+| SHA256 matches | ? F964DD27783A5C2DA5B54ABB2E949813E699944E70D5F9D3A455070C4DDA7624 |
+| ZIP security | ? No prohibited files |
+| Key files in ZIP | ? index.html, ssets/css/index.css, ssets/js/app.js, ssets/js/sync-engine.js |
+
+#### Web Cache Check
+
+| Item | Value | Result |
+|---|---|---|
+| ssetVersion | 2026.6.13-r19.6 | ? Match |
+| CACHE_NAME | study-tools-web-v2026-6-13-r19-6 | ? Match |
+| sset-manifest.json | Valid JSON | ? OK |
+| i18n_content/manifest.json | Valid JSON | ? OK |
+
+#### Bookmarks Smoke
+
+| Check | Result |
+|---|---|
+| 6 tombstone sync functions exist | ? All present |
+| Auth UI shows bookmarksDeletedSynced / bookmarksRestored / bookmarksConflictsResolved | ? Displayed with icons |
+| pushBookmarkTombstones upserts deleted_at | ? In code |
+| pullBookmarkTombstones queries deleted_at IS NOT NULL | ? In code |
+| pplyTypingBookmarkDeletes removes locally | ? In code |
+| Remote empty does not clear local | ? mergeBookmarks unchanged |
+| No physical DELETE on remote | ? Upsert only |
+
+#### Security Audit
+
+| Check | Result |
+|---|---|
+| Syncs study-tools-i18n-cache-v4 | ? Not found in sync paths |
+| Syncs 	ranslation_cache | ? Not found |
+| Syncs AI API keys | ? Excluded (explicit in code comments) |
+| Syncs provider/model/Ollama URL | ? Excluded |
+| Syncs AI chat content | ? Not present |
+| Syncs user_translations | ? Not in scope |
+
+#### UI Smoke Test (7 viewports)
+
+| Viewport | Overflow | Result |
+|---|---|---|
+| 1920Å~1080 | No | PASS |
+| 1366Å~768 | No | PASS |
+| 1200Å~800 | No | PASS |
+| 1000Å~800 | No | PASS |
+| 900Å~800 | No | PASS |
+| 720Å~800 | No | PASS |
+| 390Å~844 | No | PASS |
+
+#### Verification
+
+| Check | Result |
+|---|---|
+| Glossary 1500 (dual-end SHA match) | ? PASS |
+| JS syntax Windows (4 files) | ? ALL PASS |
+| JS syntax Web (4 files) | ? ALL PASS |
+
+#### Security Declarations
+
+| Statement | Value |
+|---|---|
+| Physical delete of remote bookmarks | ? No |
+| Sync user translations | ? No |
+| Upload AI cache/API key | ? No |
+| Auto-sync | ? No (manual only) |
+| Real Supabase credentials committed | ? No |
+
+#### Commits
+
+- **Windows main (previous)**: 98af6c4 docs: record bookmarks sync stable release
+- **Web master (previous)**: 4ead0c3 chore: release bookmarks sync web cache update
+- **Web**: No changes this round (read-only audit)
+- **Windows handoff commit**: (this commit) docs: record bookmarks sync post-release audit
+
+#### Next
+
+- **Round 20.0**: User-customized translation UI audit.
