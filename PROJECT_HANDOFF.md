@@ -5026,7 +5026,7 @@ Response: `{"status": "deleted"}`
 - **Round 17.0 Handoff Commit**: `7e86f9b` (docs: record login sync architecture audit)
 - **Windows Code Commit**: `0560e75` (feat: add local sync queue foundation)
 - **Web Commit**: `7e80c41` (feat: sync local sync queue foundation)
-- **Windows Handoff Commit**: `(pending)` — current commit
+- **Windows Handoff Commit**: `a786334` (docs: record sync queue foundation)
 
 #### Explicitly not done
 
