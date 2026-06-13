@@ -4130,3 +4130,803 @@ ode --check service-worker.js | PASS |
 #### Next
 
 - **Round 17.0** (recommended): User login and cross-device sync architecture audit.
+
+---
+
+### Round 17.0 - User Login and Cross-Device Sync Architecture Audit
+
+**Status: PASS** (Read-only audit, no files modified)
+
+#### Audit Scope
+
+Comprehensive read-only architecture audit for designing a user login and cross-device sync system for the Study Tools project. No code was modified, no database was created, no commit was made during this round.
+
+---
+
+### 1. Current Local Data Storage Status
+
+| Storage Mechanism | Data Stored | Persists Restarts? | Server/Client |
+|:---|:---|:---|:---|
+| **localStorage** (17+ keys) | Lesson completions, quiz progress, language pref, theme, AI settings, typing history | Yes | Client |
+| **sessionStorage** (1 key) | AI API key (`study-ai-api-key`) | No (tab close) | Client |
+| **SQLite** (`data/study_ai.db`, 5 tables) | Learning events, daily plans, generated questions, translation cache, app metadata | Yes | Windows backend only |
+| **In-memory JS globals** (~30+ vars) | Current UI state, active exams, chat messages, flashcard position | No | Client |
+| **Service Worker Cache** | Static assets, HTML, WASM | Yes (auto-managed) | Web only |
+| **CSV files** (read-only) | Sample SQL exercise data | Static | Static |
+| **IndexedDB** | **Not used** | — | — |
+| **Cookies** | **Not used** | — | — |
+
+**Detailed localStorage breakdown:**
+
+| Key | Data Type | Size Estimate | Category |
+|:---|:---|:---|:---|
+| `sql_hub_completed` | Array of lesson IDs | <1 KB | Learning progress |
+| `{subject}_completed_lessons` (×4) | Array of lesson IDs | <10 KB total | Learning progress |
+| `{lang}_quiz_completed_{id}` (dynamic) | Array of quiz indices | <50 KB total | Quiz results |
+| `{lang}_progress_{id}` | `{quizDone, codeRun}` | <10 KB total | Per-lesson detail |
+| `study-tools-language` | Language code | <0.1 KB | Settings |
+| `study-tools-theme` | `"dark"` / `"light"` | <0.1 KB | Settings |
+| `study-tools-i18n-cache-v4` | Array of [hash, text] pairs, max 5000 | ~200-500 KB | AI translation cache |
+| `study-ai-provider` / `study-ai-model` / `study-ai-ollama-url` | Provider strings | <0.5 KB | AI settings |
+| `study-ai-recent-{subject}` (×5) | Boolean arrays (10 each) | <1 KB | AI adaptive state |
+| `study-tools-japanese-typing-v1` | Favorites, history (50), review IDs | <10 KB | Typing records |
+
+**Key finding:** ~100% of user data is client-side only. No data crosses devices.
+
+---
+
+### 2. Windows vs Web Architectural Differences
+
+| Aspect | Windows Desktop | Web Public |
+|:---|:---|:---|
+| **Backend** | `server.py` (Python, localhost:8080) | **None** (pure static) |
+| **Database** | `data/study_ai.db` (SQLite, server-side) | **None** |
+| **SQL execution** | Python `sqlite3` (server subprocess) | WASM SQLite (browser) |
+| **Java execution** | Local JDK subprocess | Unavailable |
+| **Python execution** | Local Python subprocess | Unavailable |
+| **AI chat/hint/debug/trace** | Server calls to Gemini/OpenAI/Ollama | Unavailable (blocked by `STUDY_TOOLS_DISABLE_LOCAL_BACKEND`) |
+| **AI translation** | `POST /api/i18n/translate` via AI | `isWebPublicRuntime()` → returns `{}` silently |
+| **Learning dashboard** | Server-computed analytics from SQLite | Unavailable (API blocked) |
+| **PWA / Service Worker** | None | Registered for offline asset caching |
+| **Multi-language packs** | 20 `*.js` loaded as `<script>` tags | Loaded dynamically via ContentI18n |
+| **Exam data files** | All exam data files loaded | `it_passport_past_exams.js`, `sg_past_exams.js`, `sql_exam_questions.js` commented out |
+| **Heartbeat** | Every ~3s → 45s idle auto-shutdown | Never called |
+| **Web version metadata** | Not present | `version.js` with assetVersion and release URL |
+
+**Critical insight for sync design:**
+- Web has **zero server-side storage** — all sync must go to an external cloud database
+- Windows has a local SQLite (`study_ai.db`) that currently records learning events but does NOT sync anywhere
+- The SQLite DB is **excluded from Portable zip** — it's created fresh on each first server start
+- Windows local backend cannot be accessed from mobile/Web
+
+---
+
+### 3. Sync Object Classification
+
+#### Must Sync (high user value, request cross-device continuity)
+
+| Data | Current Storage | Priority | Rationale |
+|:---|:---|:---|:---|
+| Lesson completions (all 5 subjects) | localStorage | P0 | Core progress — user expects to continue where they left off |
+| Per-lesson quiz completed indices | localStorage | P0 | Prevents re-taking passed quizzes |
+| Per-lesson progress flags (`quizDone`, `codeRun`) | localStorage | P0 | Completes the picture of lesson mastery |
+| Language preference | localStorage | P0 | UI language should follow user across devices |
+| Theme preference | localStorage | P0 | Visual consistency |
+| Bookmarks/favorites (typing, glossary) | localStorage | P1 | User-curated collections |
+
+#### Should Sync (nice to have, but can be device-local)
+
+| Data | Current Storage | Priority | Rationale |
+|:---|:---|:---|:---|
+| Japanese typing history (last 50) | localStorage | P2 | Practice record — useful but not critical |
+| AI adaptive difficulty state | localStorage | P2 | AI question difficulty tuning — can re-learn |
+| Daily plan completion | Windows SQLite only | P2 | Dashboard data — visible only on Windows currently |
+| AI-generated questions history | Windows SQLite only | P2 | Review purposes |
+
+#### Should NOT Sync
+
+| Data | Current Storage | Rationale |
+|:---|:---|:---|:---|
+| AI API key (`sessionStorage`) | sessionStorage | Security — never transmit API keys to cloud; each device configures independently |
+| AI translation cache (`localStorage`) | localStorage | Device-specific AI model configs differ; cache = ~500KB, wasteful to sync |
+| Active exam state (in-memory) | In-memory | Ephemeral — lost on reload anyway; no value in syncing partial exams |
+| AI chat messages (in-memory) | In-memory | Ephemeral session context |
+| Service Worker cache | Cache Storage API | Managed automatically by browser; not user data |
+| Local learning analytics (mastery %) | Windows SQLite | Can be recomputed from raw events on each device |
+
+#### Local-Only (keep per device, never upload)
+
+| Data | Current Storage | Rationale |
+|:---|:---|:---|
+| AI provider config (provider, model, Ollama URL) | localStorage | Each device may use different AI providers; user chooses per environment |
+| Generated questions validation data | Windows SQLite | Server-side only, no cross-device value |
+| SQL exercise database schema state | In-memory | Ephemeral query results |
+
+---
+
+### 4. Login Solution Comparison
+
+#### Solution A: Supabase Auth + Postgres
+
+| Aspect | Assessment |
+|:---|:---|
+| **Auth providers** | Email/password, Google, GitHub, Magic Link, Anonymous built-in |
+| **Database** | Postgres with Row Level Security (RLS) |
+| **Client SDK** | `@supabase/supabase-js` (browser) or REST API (Windows `requests`) |
+| **Pricing (Free tier)** | Unlimited users, 50K monthly active users, 500 MB DB, 5 GB bandwidth, 2 GB storage |
+| **Pros** | Free tier generous; built-in auth UI components; RLS maps directly to sync permissions; Postgres JSONB supports flexible schemas; Python SDK available for Windows backend; anonymous auth allows unregistered use then upgrade |
+| **Cons** | External dependency; requires internet; Windows Portable needs bundled REST calls (no Node SDK); learning curve for RLS policies |
+| **Cross-device sync** | Excellent — single Postgres database, any client connects via REST |
+| **Windows backend integration** | Python `httpx`/`requests` calls to Supabase REST API (`supabase-py` exists for sync operations); existing `server.py` becomes proxy for local DB → cloud DB |
+| **Web integration** | Direct `@supabase/supabase-js` in browser; works with Cloudflare Pages |
+| **Offline support** | Requires custom offline queue — Supabase doesn't provide built-in offline sync |
+| **Suitability** | **★★★★★ (Best fit)** — Free tier sufficient; auth + DB in one service; Python SDK available |
+
+#### Solution B: Firebase Auth + Firestore
+
+| Aspect | Assessment |
+|:---|:---|
+| **Auth providers** | Email/password, Google, GitHub, Apple, Anonymous |
+| **Database** | Firestore (NoSQL document DB) |
+| **Client SDK** | Firebase JS SDK (browser); Admin SDK (Python/Node) |
+| **Pricing (Free tier)** | Unlimited auth users; Firestore: 1 GB stored, 50K reads/day, 20K writes/day, 20K deletes/day |
+| **Pros** | Excellent offline support (Firestore persists to IndexedDB automatically); real-time listeners; robust conflict resolution; mature SDKs |
+| **Cons** | Free tier read/write quotas can be tight for sync; NoSQL limits query flexibility (e.g., no JOINs for analytics); Google ecosystem dependency; Firestore write limits (1 write/sec per document sustained); Windows needs REST API or Python Admin SDK |
+| **Cross-device sync** | Very good — Firestore offline persistence + real-time sync |
+| **Windows backend integration** | Python Admin SDK (`firebase-admin`); but offline-first on Windows means using Firestore REST API directly |
+| **Web integration** | Excellent — JS SDK works directly; offline persistence built-in |
+| **Offline support** | **Best of all options** — Firestore automatically queues writes offline and syncs when online |
+| **Suitability** | **★★★★☆** — Best offline sync, but NoSQL constraints and read/write quotas may become bottlenecks for progress tracking queries and analytics |
+
+#### Solution C: Self-Hosted FastAPI + SQLite/Postgres + JWT
+
+| Aspect | Assessment |
+|:---|:---|
+| **Auth** | Custom JWT (access + refresh tokens); bcrypt password hashing |
+| **Database** | SQLite (MVP) → Postgres (scale-up) |
+| **API** | FastAPI with OpenAPI docs; async support |
+| **Pricing** | Free (self-hosted); hosting cost if deployed (e.g., $5-10/mo VPS) |
+| **Pros** | Full control; familiar tech stack (Python); can extend existing `server.py` patterns; no vendor lock-in; unlimited storage/bandwidth |
+| **Cons** | **High maintenance burden** — auth security audit, password reset flows, rate limiting, email verification, token rotation, server monitoring, DDoS protection; significant security risk with custom auth; no free forever; requires a reachable server (cannot work from localhost-only); DevOps for TLS, deployment, backups |
+| **Windows backend integration** | Natural — both use Python; existing server.py can be extended |
+| **Web integration** | Standard REST API calls; CORS must be configured |
+| **Offline support** | Must be built from scratch — custom offline queue, conflict resolution |
+| **Suitability** | **★★☆☆☆** — Overkill for a personal project; security liability; maintenance time outweighs benefits for single-developer project |
+
+#### Solution D (Optional): Lightweight Alternatives
+
+| Option | Description | Pros | Cons |
+|:---|:---|:---|:---|
+| **GitHub OAuth only** | Login via GitHub, custom simple backend | Simple, users likely have GitHub accounts | No email/password option; GitHub availability dependency |
+| **Cloudflare Workers + D1** | Serverless SQL via Cloudflare | Same hosting as current (Cloudflare Pages); Workers free tier 100K req/day; D1 free tier 5 GB storage | No auth provider — must integrate 3rd party (Auth0, Clerk) or self-build; Workers cold start latency; no Python |
+| **Manual import/export** | JSON export → file → import on other device | Zero infrastructure, fully offline | Manual process; no real-time; user friction |
+| **AppData folder sync** | Windows saves to cloud folder (OneDrive/Dropbox) | Zero server cost; automatic file sync | Windows-only; Web can't participate; race conditions |
+
+**Recommended: Supabase Auth + Postgres (Solution A)**
+- Free tier sufficient for personal project scale
+- Built-in auth eliminates security liability of self-hosting
+- Postgres RLS maps naturally to per-user data isolation
+- Python SDK exists for Windows integration
+- Anonymous auth allows unregistered use with upgrade path
+- Can be augmented with local SQLite for Windows offline (dual-write pattern)
+
+---
+
+### 5. Recommended Auth Approach
+
+| Auth Method | Pros | Cons | Recommendation |
+|:---|:---|:---|:---|
+| **Email + Password** | Universal; no external dependency | Password management burden; reset flow needed | **Primary** — Supabase built-in, serves all users |
+| **Google Login** | Low friction, users likely have Google | Requires Google account | **Enable** — OAuth convenience |
+| **GitHub Login** | Developer audience fits project | Not all users have GitHub | **Enable** — natural for IT learners |
+| **Magic Link** | No password to remember | Email delivery delay; not available offline | Optional — nice UX add-on |
+| **Anonymous Auth** | Start using immediately, no signup friction | Data lost if user never upgrades | **Critical** — enables offline-first with cloud sync optional |
+| **Local-only (no account)** | Zero friction, fully offline | No sync possible | **Always available** — base mode, no change needed |
+
+**Recommended flow:**
+1. **Default: Anonymous local mode** (no account needed) — works as today, all data in localStorage
+2. **Optional: Anonymous cloud mode** (Supabase anonymous auth) — sync starts automatically, user can upgrade later
+3. **Upgrade: Permanent account** (email + Google/GitHub OAuth) — link anonymous data to permanent identity
+
+Windows handles auth via embedded WebView or REST API calls to Supabase.
+
+---
+
+### 6. Data Sync Model
+
+#### Core Principles
+
+1. **Offline-first**: All writes go to local storage first, cloud sync is asynchronous
+2. **Last-write-wins (LWW)** at the field level for most data
+3. **User-owned data**: Every row has `user_id`, no cross-user access
+4. **Device-aware**: `device_id` and `updated_at` on every syncable row
+5. **Soft delete**: `deleted_at` field for sync propagation of deletes
+6. **Pull-based sync**: Client pulls changes since `last_sync_at`, pushes local changes
+
+#### Sync Strategy by Data Type
+
+| Data Type | Conflict Strategy | Rationale |
+|:---|:---|:---|
+| Lesson completions (array of IDs) | **Union merge** — sync takes `local ∪ remote` | User completed on either device → marks as complete |
+| Quiz completed indices | **Union merge** — sync takes `local ∪ remote` | Same logic as completions |
+| Per-lesson progress flags | **LWW per field** — latest `updated_at` wins | Simple, acceptable precision |
+| Language preference | **LWW** — latest change wins | Single value, last set is correct |
+| Theme preference | **LWW** — latest change wins | Single value |
+| Bookmarks/favorites | **LWW per item** — last add/remove wins | Individual items, no ordering dependency |
+| Japanese typing history | **Merge by timestamp** — append unique entries | Timeline data, naturally mergeable |
+| User translations | **LWW per term** — latest `updated_at` wins | Custom dictionary entries |
+
+#### Conflict Resolution Flow
+
+```
+[User makes change offline]
+        ↓
+[Write to localStorage immediately]
+        ↓
+[Queue change to sync buffer: {table, row_id, field, value, updated_at, device_id}]
+        ↓
+[When online: push all pending changes]
+        ↓
+[Server compares updated_at for each field]
+        ↓
+[LWW: if remote.updated_at > local.updated_at → remote wins]
+[Union: for arrays, merge remote + local → deduplicate]
+        ↓
+[Server returns merged result]
+        ↓
+[Client applies merged result to localStorage]
+```
+
+For **concurrent edits on two devices** within the same sync cycle:
+- LWW means the last one to sync wins (acceptable for a personal tool)
+- No multi-user editing, so complex CRDT/OT is unnecessary
+
+#### device_id Strategy
+
+- Generated once per browser/install: `crypto.randomUUID()` stored in localStorage key `study-tools-device-id`
+- Windows: stored in a JSON file in app data directory (e.g., `%LOCALAPPDATA%\StudyTools\device.json`)
+- Sent with every sync request as `X-Device-Id` header
+
+---
+
+### 7. Database Table Design
+
+#### `users`
+
+| Column | Type | Constraints | Notes |
+|:---|:---|:---|:---|
+| `id` | UUID | PK, default `gen_random_uuid()` | Managed by Supabase Auth |
+| `email` | VARCHAR(255) | UNIQUE, nullable | Populated on email signup or OAuth |
+| `display_name` | VARCHAR(100) | nullable | From OAuth profile or user-set |
+| `avatar_url` | TEXT | nullable | From OAuth provider |
+| `auth_provider` | VARCHAR(20) | NOT NULL | `email`, `google`, `github`, `anonymous` |
+| `created_at` | TIMESTAMPTZ | NOT NULL, default NOW() | |
+| `updated_at` | TIMESTAMPTZ | NOT NULL, default NOW() | |
+| `last_active_at` | TIMESTAMPTZ | nullable | Updated on each sync |
+| `is_deleted` | BOOLEAN | NOT NULL, default FALSE | Soft delete for GDPR |
+
+**Privacy sensitivity: HIGH** — PII data, encrypted at rest by Supabase
+**Sync direction:** Cloud-only (created by auth system)
+**Indexes:** `email` (UNIQUE), `auth_provider`
+
+#### `devices`
+
+| Column | Type | Constraints | Notes |
+|:---|:---|:---|:---|
+| `id` | UUID | PK | Client-generated `device_id` |
+| `user_id` | UUID | FK → `users.id`, NOT NULL | |
+| `device_name` | VARCHAR(100) | nullable | User-friendly: "My Windows PC", "iPhone" |
+| `device_type` | VARCHAR(20) | NOT NULL | `windows`, `web`, `mobile` |
+| `last_sync_at` | TIMESTAMPTZ | NOT NULL | |
+| `app_version` | VARCHAR(20) | nullable | e.g., `v2026.6.13-r16.8` |
+| `created_at` | TIMESTAMPTZ | NOT NULL, default NOW() | |
+
+**Privacy sensitivity: MEDIUM** — device fingerprint, but no PII
+**Sync direction:** Created on first sync, updated on each sync
+**Indexes:** `user_id`, `(user_id, last_sync_at)`
+
+#### `user_settings`
+
+| Column | Type | Constraints | Notes |
+|:---|:---|:---|:---|
+| `user_id` | UUID | FK → `users.id`, PK | One row per user |
+| `language` | VARCHAR(20) | NOT NULL, default `'default-ja-zh'` | UI language code |
+| `theme` | VARCHAR(10) | NOT NULL, default `'dark'` | `dark` / `light` |
+| `updated_at` | TIMESTAMPTZ | NOT NULL | For LWW conflict resolution |
+| `sync_version` | INTEGER | NOT NULL, default 1 | Optimistic locking |
+
+**Privacy sensitivity: LOW** — preferences only
+**Sync direction:** Bidirectional
+**Conflict resolution:** LWW on field level (language and theme are independent)
+
+#### `learning_progress`
+
+| Column | Type | Constraints | Notes |
+|:---|:---|:---|:---|
+| `id` | BIGSERIAL | PK | |
+| `user_id` | UUID | FK → `users.id`, NOT NULL | |
+| `subject` | VARCHAR(20) | NOT NULL | `sql`, `java`, `python`, `itpass`, `sg` |
+| `lesson_id` | INTEGER | NOT NULL | |
+| `is_completed` | BOOLEAN | NOT NULL, default FALSE | |
+| `quiz_done` | BOOLEAN | NOT NULL, default FALSE | |
+| `code_run` | BOOLEAN | NOT NULL, default FALSE | |
+| `quiz_completed_indices` | JSONB | NOT NULL, default `'[]'` | Array of completed quiz question indices |
+| `updated_at` | TIMESTAMPTZ | NOT NULL | |
+| `device_id` | UUID | FK → `devices.id` | Last-updating device |
+| `deleted_at` | TIMESTAMPTZ | nullable | Soft delete |
+
+**Unique constraint:** `(user_id, subject, lesson_id)`
+**Privacy sensitivity: LOW** — learning progress only
+**Sync direction:** Bidirectional
+**Conflict resolution:** Union merge for `quiz_completed_indices`; LWW for `is_completed`, `quiz_done`, `code_run`
+**Indexes:** `(user_id, subject)`, `(user_id, updated_at)` for sync pull query
+
+#### `quiz_results`
+
+| Column | Type | Constraints | Notes |
+|:---|:---|:---|:---|
+| `id` | BIGSERIAL | PK | |
+| `user_id` | UUID | FK → `users.id`, NOT NULL | |
+| `subject` | VARCHAR(20) | NOT NULL | |
+| `lesson_id` | INTEGER | NOT NULL | |
+| `quiz_index` | INTEGER | NOT NULL | Question index within lesson |
+| `is_correct` | BOOLEAN | NOT NULL | |
+| `attempt_count` | INTEGER | NOT NULL, default 1 | |
+| `answered_at` | TIMESTAMPTZ | NOT NULL | |
+| `device_id` | UUID | FK → `devices.id` | |
+
+**Privacy sensitivity: LOW**
+**Sync direction:** Bidirectional (append-only, no conflict)
+**Notes:** This is the raw quiz history. The `learning_progress` table derives `is_completed` from these results. Keeping raw events allows history display and re-computation of analytics.
+**Indexes:** `(user_id, subject, lesson_id)`, `(user_id, answered_at)`
+
+#### `user_translations`
+
+| Column | Type | Constraints | Notes |
+|:---|:---|:---|:---|
+| `id` | BIGSERIAL | PK | |
+| `user_id` | UUID | FK → `users.id`, NOT NULL | |
+| `source_text` | TEXT | NOT NULL | Original Japanese text |
+| `source_lang` | VARCHAR(10) | NOT NULL, default `'ja'` | |
+| `target_lang` | VARCHAR(10) | NOT NULL | e.g., `'vi'`, `'my'`, `'fr'` |
+| `translated_text` | TEXT | NOT NULL | User's custom translation |
+| `context` | VARCHAR(100) | nullable | e.g., `'sql:lesson5:title'` |
+| `updated_at` | TIMESTAMPTZ | NOT NULL | |
+| `deleted_at` | TIMESTAMPTZ | nullable | Soft delete |
+
+**Unique constraint:** `(user_id, source_text, target_lang)`
+**Privacy sensitivity: LOW** — user-generated translations, no PII
+**Sync direction:** Bidirectional
+**Conflict resolution:** LWW per row (last updated wins)
+**Indexes:** `(user_id, target_lang)`, `(user_id, updated_at)`
+
+#### `bookmarks`
+
+| Column | Type | Constraints | Notes |
+|:---|:---|:---|:---|
+| `id` | BIGSERIAL | PK | |
+| `user_id` | UUID | FK → `users.id`, NOT NULL | |
+| `bookmark_type` | VARCHAR(20) | NOT NULL | `lesson`, `glossary_term`, `typing_article` |
+| `reference_id` | VARCHAR(100) | NOT NULL | e.g., `'sql:12'`, `'glossary:42'`, `'typing:7'` |
+| `label` | VARCHAR(200) | nullable | User-defined label |
+| `created_at` | TIMESTAMPTZ | NOT NULL | |
+| `deleted_at` | TIMESTAMPTZ | nullable | Soft delete |
+
+**Unique constraint:** `(user_id, bookmark_type, reference_id)`
+**Privacy sensitivity: LOW**
+**Sync direction:** Bidirectional
+**Conflict resolution:** LWW — last add/remove wins
+**Indexes:** `(user_id, bookmark_type)`, `(user_id, created_at)`
+
+#### `sync_log`
+
+| Column | Type | Constraints | Notes |
+|:---|:---|:---|:---|
+| `id` | BIGSERIAL | PK | |
+| `user_id` | UUID | FK → `users.id`, NOT NULL | |
+| `device_id` | UUID | FK → `devices.id` | |
+| `sync_type` | VARCHAR(10) | NOT NULL | `push`, `pull`, `full` |
+| `started_at` | TIMESTAMPTZ | NOT NULL | |
+| `completed_at` | TIMESTAMPTZ | nullable | NULL = in progress |
+| `status` | VARCHAR(20) | NOT NULL | `success`, `conflict`, `error` |
+| `records_pushed` | INTEGER | NOT NULL, default 0 | |
+| `records_pulled` | INTEGER | NOT NULL, default 0 | |
+| `error_message` | TEXT | nullable | |
+
+**Privacy sensitivity: LOW** — operational logs
+**Sync direction:** Cloud-only (written by server)
+**Indexes:** `(user_id, started_at)`
+
+---
+
+### 8. API Draft
+
+All endpoints are prefixed with `/api/v1/`. All requests require `Authorization: Bearer <supabase_jwt>` header.
+
+#### Auth Endpoints (handled by Supabase Auth SDK)
+
+| Endpoint | Method | Purpose |
+|:---|:---|:---|
+| `/auth/v1/signup` | POST | Email + password registration |
+| `/auth/v1/login` | POST | Email + password login |
+| `/auth/v1/oauth/google` | GET | Google OAuth redirect |
+| `/auth/v1/oauth/github` | GET | GitHub OAuth redirect |
+| `/auth/v1/anonymous` | POST | Create anonymous session |
+| `/auth/v1/link-identity` | POST | Link anonymous → permanent account |
+| `/auth/v1/logout` | POST | Invalidate session |
+| `/auth/v1/reset-password` | POST | Password reset email |
+
+Note: Supabase Auth SDK handles these client-side. No custom auth endpoints needed.
+
+#### Custom Sync Endpoints
+
+**GET /api/v1/sync/status**
+Get current user's sync status.
+
+Response:
+```json
+{
+  "user_id": "uuid",
+  "last_sync_at": "2026-06-13T12:00:00Z",
+  "devices": [
+    {"id": "uuid", "device_name": "Windows PC", "last_sync_at": "..."},
+    {"id": "uuid", "device_name": "iPhone Safari", "last_sync_at": "..."}
+  ],
+  "pending_local_changes": 5
+}
+```
+
+**POST /api/v1/sync/push**
+Push local changes to server.
+
+Request:
+```json
+{
+  "device_id": "uuid",
+  "last_sync_at": "2026-06-13T11:00:00Z",
+  "changes": {
+    "learning_progress": [
+      {
+        "subject": "sql",
+        "lesson_id": 12,
+        "is_completed": true,
+        "quiz_done": true,
+        "quiz_completed_indices": [0, 1, 2],
+        "updated_at": "2026-06-13T11:30:00Z"
+      }
+    ],
+    "user_settings": {
+      "language": "vi",
+      "theme": "dark",
+      "updated_at": "2026-06-13T11:00:00Z"
+    },
+    "user_translations": [
+      {
+        "source_text": "SELECT文",
+        "target_lang": "vi",
+        "translated_text": "Câu lệnh SELECT",
+        "updated_at": "2026-06-13T11:00:00Z"
+      }
+    ],
+    "bookmarks": [
+      {
+        "bookmark_type": "lesson",
+        "reference_id": "sql:12",
+        "deleted_at": null
+      }
+    ],
+    "deleted_progress_ids": ["sql:15", "java:3"]
+  }
+}
+```
+
+Response:
+```json
+{
+  "status": "ok",
+  "conflicts": [],
+  "server_updated_at": "2026-06-13T12:00:00Z"
+}
+```
+
+**POST /api/v1/sync/pull**
+Pull remote changes since `last_sync_at`.
+
+Request:
+```json
+{
+  "device_id": "uuid",
+  "last_sync_at": "2026-06-13T11:00:00Z"
+}
+```
+
+Response:
+```json
+{
+  "changes": {
+    "learning_progress": [...],
+    "user_settings": {...},
+    "user_translations": [...],
+    "bookmarks": [...]
+  },
+  "server_updated_at": "2026-06-13T12:00:00Z",
+  "has_more": false
+}
+```
+
+**POST /api/v1/sync/full**
+Full bidirectional sync (push + pull in one transaction).
+
+Request:
+```json
+{
+  "device_id": "uuid",
+  "last_sync_at": "2026-06-13T11:00:00Z",
+  "changes": {...}
+}
+```
+
+Response:
+```json
+{
+  "push_result": {"status": "ok", "conflicts": []},
+  "pull_result": {"changes": {...}},
+  "server_updated_at": "2026-06-13T12:00:00Z"
+}
+```
+
+**GET /api/v1/export**
+Export all user data as JSON.
+
+Response: `application/json` with full user data dump.
+
+**DELETE /api/v1/user**
+Delete user account and all data.
+
+Response: `{"status": "deleted"}`
+
+---
+
+### 9. Security & Privacy Assessment
+
+| Risk | Current State | Proposed Mitigation |
+|:---|:---|:---|
+| **Password storage** | N/A (no auth yet) | **Don't self-store** — use Supabase Auth which handles bcrypt/hashing server-side |
+| **JWT token storage (Web)** | N/A | `httpOnly` cookie for Web (prevents XSS access); Supabase stores session in localStorage by default — acceptable for this project's audience, but add `SameSite=Strict` |
+| **JWT token storage (Windows)** | N/A | Store in encrypted platform storage (`Credential Manager` on Windows via `keyring` Python library, or encrypted file in `%LOCALAPPDATA%\StudyTools\`) |
+| **XSS** | Low risk — no user-generated content rendered as HTML | Supabase JWT in localStorage is XSS-vulnerable by nature; mitigate via Content Security Policy headers (already partially configured); sanitize any user display name rendering |
+| **CSRF** | Low risk — GET-only for static, POST with JSON | Supabase JWT in `Authorization` header (not cookie) = immune to CSRF; if cookie-based session is used, add `SameSite=Strict` + CSRF token |
+| **CORS** | Windows server already handles OPTIONS preflight | Supabase project settings control allowed origins; restrict to `study-tools-web-pages.pages.dev` and `localhost` |
+| **Rate limiting** | None | Supabase Auth has built-in rate limiting (30 req/min per IP by default); add application-level rate limiting on sync endpoints (100 req/min per user) |
+| **Data deletion** | No user data can be deleted centrally | `DELETE /api/v1/user` triggers cascade delete; Supabase Admin API can delete auth user; provide 30-day grace period (soft delete) before hard delete |
+| **Data export** | Not possible | `GET /api/v1/export` returns all user data as JSON; GDPR compliance |
+| **Mobile Web security** | N/A (static site) | No sensitive data in URL params; tokens in localStorage are sandboxed per origin; no mixed content (all HTTPS) |
+| **Windows local token** | N/A | Encrypt token at rest using Windows `CryptProtectData` (DPAPI) via Python `keyring` or `cryptography`; never store plaintext JWT in local files |
+| **Should NOT upload** | — | AI API keys (`sessionStorage`), provider configs, translation cache (~500KB), device-local WASM/asset cache |
+
+**GDPR / Privacy considerations:**
+- User data is limited to email (if provided), display name, and learning progress
+- No tracking, no analytics cookies, no third-party scripts
+- Supabase is SOC 2 compliant; data stored in region of choice
+- Provide data export and account deletion endpoint
+
+---
+
+### 10. Offline-First Strategy
+
+#### Principles
+
+1. **Unregistered = fully functional** — current behavior unchanged
+2. **Registered offline = sync queued** — all changes stored locally, synced when online
+3. **No error noise** — network failures are silent until user checks sync status
+4. **Graceful degradation** — app works identically with or without network
+
+#### Architecture
+
+```
+[Browser / Windows App]
+        │
+        ├── localStorage (immediate write)
+        ├── sync queue (in-memory + localStorage backup)
+        │
+        └── sync engine (background, event-driven)
+                │
+                ├── online? → push queue → pull remote → apply to localStorage
+                └── offline? → wait for `online` event → retry
+```
+
+#### Sync Trigger Events
+
+| Event | Trigger | Behavior |
+|:---|:---|:---|
+| Page load | `DOMContentLoaded` | Pull remote changes silently |
+| Lesson complete | After `saveProgress()` | Push single change |
+| Quiz answer | After recording result | Push single change |
+| Language change | After `setLanguage()` | Push settings change |
+| Theme change | After saving theme | Push settings change |
+| Periodic | Every 5 minutes while app open | Full sync if changes pending |
+| Manual | User taps "Sync now" button | Immediate full sync |
+| Online transition | `window.addEventListener('online', ...)` | Push all queued changes |
+
+#### Offline Queue
+
+- Stored in localStorage under key `study-tools-sync-queue`
+- Array of pending operations: `[{type, table, data, created_at}]`
+- On successful push: remove from queue
+- On push failure: keep in queue, retry on next trigger
+- Max queue size: 1000 operations (unlikely to exceed in practice)
+- Queue overflow: show subtle warning "Sync queue full. Please connect to internet."
+
+#### Sync Status UI
+
+- Small indicator in app header: cloud icon with checkmark (synced), arrow (syncing), exclamation (error), slash (offline)
+- Tooltip shows "Last synced: 5 minutes ago"
+- Click indicator → opens sync status panel
+- Sync status panel shows: last sync time, pending changes count, connected devices list
+
+#### Offline on Windows
+
+- local `server.py` + `study_ai.db` continue to work as today
+- When online, sync engine reads from `study_ai.db` and pushes to cloud
+- Dual-write: lesson completion → `localStorage` + `study_ai.db` + sync queue
+
+#### Offline on Web
+
+- All data in localStorage (as today)
+- Sync engine reads from localStorage and pushes to cloud via REST
+- Service Worker continues to serve cached assets offline
+
+---
+
+### 11. MVP Scope (Round 17.1)
+
+**Minimum Viable Product for Round 17.1 — "Local Account State & Architecture Preparation"**
+
+#### What to build:
+
+1. **Sync queue data structure in localStorage**
+   - Key: `study-tools-sync-queue` (JSON array of pending operations)
+   - Key: `study-tools-device-id` (UUID, generated once)
+   - Key: `study-tools-last-sync-at` (ISO timestamp, nullable)
+   - No server dependency — purely client-side prep
+
+2. **Progress normalization**
+   - Create a unified `getAllLocalProgress()` function that reads all 5 subjects' completions + quiz results + progress flags into a single JSON structure
+   - This becomes the "baseline" data shape for sync
+
+3. **Supabase project initialization**
+   - Create free Supabase project
+   - Run SQL migration (the `CREATE TABLE` statements from Table Design section)
+   - Configure auth providers (email + Google + GitHub)
+   - Set up Row Level Security policies for user data isolation
+
+4. **Anonymous auth flow (optional — if time allows)**
+   - Add Supabase JS SDK to Web
+   - Implement `supabase.auth.signInAnonymously()`
+   - Store session in localStorage
+   - Basic "Signed in as Anonymous" indicator
+
+#### Scope boundaries (NOT doing in 17.1):
+
+- No UI changes (no login button, no sync panel)
+- No actual sync logic
+- No Windows Python changes
+- No conflict resolution
+- No data migration
+- No user-facing features
+
+#### Deliverables:
+
+| Item | Type | Status target |
+|:---|:---|:---|
+| `sync-queue.md` design doc | Doc | Draft |
+| Sync queue keys in localStorage | Code | Working |
+| `getAllLocalProgress()` helper | Code | Working (not called yet) |
+| Supabase project + SQL migration | Infra | Created |
+| Anonymous auth integration | Code (Web) | Working (optional) |
+
+---
+
+### 12. Phased Roadmap
+
+| Round | Phase | Scope | Est. Effort |
+|:---|:---|:---|:---|
+| **17.0** | Audit | Read-only architecture audit ✅ DONE | 1 session |
+| **17.1** | Prep | Sync queue data structure, progress normalization, Supabase project setup | 1-2 sessions |
+| **17.2** | Auth UI | Login/signup page, anonymous auth, user menu in app header, device registration | 2-3 sessions |
+| **17.3** | Cloud Integration | Supabase Postgres tables + RLS policies + basic push/pull API (via Supabase REST or edge functions) | 2-3 sessions |
+| **17.4** | Progress Sync | `learning_progress` + `quiz_results` sync between Web ↔ Supabase; pull on load, push on complete | 2 sessions |
+| **17.5** | Settings + Bookmarks Sync | `user_settings`, `user_translations`, `bookmarks` sync | 1-2 sessions |
+| **17.6** | Windows Sync | Python sync engine for Windows backend; dual-write to local SQLite + cloud; sync status UI | 2-3 sessions |
+| **17.7** | Conflict Resolution | Edge case handling: concurrent edits, offline queue overflow, sync failure recovery; sync indicator in header | 1-2 sessions |
+| **17.8** | Stable Release | Web cache update, Portable repack, tag/Release, final QA across all devices | 1 session |
+
+**Total: ~8-9 rounds** after 17.0 (17.1 through 17.8).
+
+#### Risk Factors
+
+1. **Supabase free tier limits** — 50K monthly active users fine; 500 MB DB adequate; but 2 GB file storage may limit if user-translation images considered
+2. **Windows Python SDK** — `supabase-py` is community-maintained; may need REST API fallback
+3. **Offline sync complexity** — union merge for arrays is simple but edge cases (delete-after-sync) need care
+4. **Portable zip size increase** — Adding Supabase SDK may increase bundle size; evaluate tree-shaking
+
+---
+
+### 13. Recommended Round 17.1 Execution Prompt Draft
+
+```
+执行 Round 17.1：登录/同步架构准备与本地数据盘点。
+
+本轮定位：
+* 不修改用户可见功能
+* 不添加 UI
+* 不修改 server.py / study_ai.py
+* 准备本地同步数据结构和云端基础设施
+
+范围：
+1. 在 Web 仓库 assets/js/sync-engine.js 新建 sync engine 骨架
+   - 生成 device_id：crypto.randomUUID() 存入 localStorage key 'study-tools-device-id'
+   - 建立 sync queue 结构：localStorage key 'study-tools-sync-queue'，格式为 JSON 数组
+   - 每个 queue entry：{type, table, data, created_at, retry_count}
+   - 建立 last_sync_at：localStorage key 'study-tools-last-sync-at'
+
+2. 在 Windows 仓库同步添加（可复用逻辑）
+   - 在 assets/js/ 下创建相同的 sync-engine.js
+   - Windows 版用 crypt.randomUUID() → electron/CEF 或 Python uuid 生成 device_id
+   - storage 路径改为 %LOCALAPPDATA%\StudyTools\device.json
+
+3. 创建 tools/init_supabase.sql（仅 SQL 文件，不执行）
+   - 包含所有 sync 表的 CREATE TABLE 语句
+   - 包含 RLS 策略草案（注释形式）
+   - 此文件只作为文档，不实际连接数据库
+
+4. Supabase 项目创建（手动操作）
+   - 创建新 Supabase 项目
+   - 注册 SQL 迁移到 Supabase SQL Editor
+   - 开启 Email Auth / Google OAuth / GitHub OAuth
+   - 记录项目 URL 和 anon key 到本地 .env.local 文件中
+
+5. 验证
+   - node --check assets/js/sync-engine.js（Web + Windows）
+   - 确认设备重新加载后 device_id 不变
+   - 确认 sync queue 可写入/读取/清空
+   - 确认不影响现有功能（正常加载页面、切换语言、完成课程、AI 使用均不变）
+
+硬性规则：
+* 不新增术语
+* 不删除术语
+* 不修改 data/i18n_content
+* 不修改课程数据
+* 不修改后端 server.py / study_ai.py
+* 不修改 sandbox
+* 不更新 Web cache version
+* 不打包 Portable
+* 不创建 tag/Release
+* 禁止 git add .
+* 禁止 git add -A
+```
+
+---
+
+### Git & Handoff
+
+- **Round 17.0** is read-only. No commits, no tags, no release.
+- Report appended to PROJECT_HANDOFF.md (this section).
+
+---
+
+#### Explicitly not done
+
+- Did not modify any files in either repository
+- Did not create any database
+- Did not implement any login functionality
+- Did not implement any API
+- Did not create any tag or Release
+- Did not commit to either repository
+- Did not package Portable
+- Did not add or delete terms
+- Did not modify course data, glossary, i18n content, backend, or sandbox
+
+#### Next
+
+- **Round 17.1** (recommended): Sync queue data structure, progress normalization, and Supabase project setup.
