@@ -5372,3 +5372,96 @@ Web:
 #### Next
 
 - **Round 17.5** (recommended): minimal real Supabase Auth login integration after manual project creation, or continue manual project setup before integration.
+
+---
+
+### Round 17.5 - Minimal Supabase Auth Integration
+
+**Status: PASS**
+
+#### Modified files
+
+Windows:
+
+- `assets/js/supabase-client.js`
+- `assets/js/auth-ui.js`
+- `assets/js/i18n-ui-dict.js`
+- `index.html`
+- `docs/supabase_setup.md`
+- `docs/sync_architecture.md`
+- `PROJECT_HANDOFF.md`
+
+Web:
+
+- `assets/js/supabase-client.js`
+- `assets/js/auth-ui.js`
+- `assets/js/i18n-ui-dict.js`
+- `index.html`
+- `docs/supabase_setup.md`
+- `docs/sync_architecture.md`
+
+`.gitignore` was reviewed but did not require modification.
+
+#### Configuration and security
+
+- **Local `assets/js/supabase-config.local.js`:** Does not exist.
+- `git check-ignore -v assets/js/supabase-config.local.js`: PASS in both repositories.
+- The Supabase SDK CDN and local configuration script are optional commented loading points. Default startup remains local and no-network.
+- No real Supabase URL, anon key, `service_role` key, JWT, token, or password was committed.
+- No learning data is uploaded and no cloud synchronization is implemented.
+
+#### Auth integration
+
+- Optional Supabase SDK initialization is supported only when configuration is complete, `enabled` is true, and the SDK exists.
+- Missing configuration, disabled configuration, and missing SDK return friendly local errors without requests or page crashes.
+- Magic Link login is implemented through `signInWithOtp`.
+- Email/password login is implemented as an explicitly labeled test-only option.
+- Passwords and tokens are not written to custom storage; session persistence is delegated only to the Supabase SDK.
+- Current session/user detection, auth-state subscription, and Supabase sign-out are implemented.
+- The account panel shows Supabase status, current user email, Magic Link controls, test password controls, sign-out, local-use, and mock-development controls.
+- Signed-in Supabase users set local auth mode to `signed_in`; sign-out returns it to `local_anonymous`.
+- Auth text was added for `zh-CN`, `ja-JP`, `en-US`, `vi-VN`, `fr-FR`, `my-MM`, and `ko-KR`.
+
+#### Verification results
+
+| Check | Result |
+|:---|:---|
+| Windows `node tools/verify_glossary.js` | PASS, 1500 terms |
+| Windows client/Auth/i18n/sync syntax checks | PASS |
+| Web client/Auth/i18n/sync syntax checks | PASS |
+| Seven-locale dictionary assertions | PASS |
+| Missing/disabled/SDK-missing fail-closed smoke | PASS, 0 network calls |
+| Fake SDK initialization/session/Auth/sign-out smoke | PASS |
+| Password/token custom-storage check | PASS, 0 writes |
+| Learning upload/sync API static scan | PASS, none present |
+| Secret scan | PASS |
+| `git diff --check` | PASS |
+
+#### Browser smoke results
+
+- Windows and Web pages opened normally with no JavaScript console errors.
+- `window.StudySupabase` exists and the account panel displays the unconfigured status.
+- With no local configuration, Auth network controls remain disabled and no external Supabase SDK is loaded.
+- Magic Link, password-test, local-use, mock-development, sign-out, and snapshot-export paths remain isolated from learning-data synchronization.
+- Optional enabled configuration with a fake SDK initialized successfully; an unauthenticated current user returned `null`.
+- Auth state controls rendered correctly, course content remained available, and language dictionaries remained valid.
+- No Supabase project, real Auth, sync API, or learning-data request was made.
+- Glossary validation remains PASS at 1500 terms.
+
+#### Git commits
+
+- **Windows Code Commit**: `a7eb40f` (feat: add minimal Supabase auth integration)
+- **Web Commit**: `b428c05` (feat: sync minimal Supabase auth integration)
+- **Windows Handoff Commit**: `(this commit: docs: record Round 17.5 handoff)`
+
+#### Explicitly not done
+
+- Did not implement learning-progress cloud synchronization.
+- Did not upload any user learning data.
+- Did not submit real Supabase credentials.
+- Did not package Portable or create a Release.
+- Did not modify courses, glossary data, backend, sandbox, service worker, manifest, or version.
+
+#### Next
+
+- **Round 17.6:** learning-progress push/pull architecture integration, or **Round 17.5.1:** Auth login experience patch.
