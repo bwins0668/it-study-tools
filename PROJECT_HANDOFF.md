@@ -3127,3 +3127,61 @@ Fixed legacy IDs:
 #### Next
 
 - **Round 15.16**: Glossary 825 -> 900 expansion, or continue full expansion after switching model.
+
+---
+
+### Round 15.16 - Glossary 825 to 900 Expansion
+
+**Status: PASS**
+
+#### Scope
+
+- Expanded glossary from **825** to **900** terms.
+- Added exactly **75** terms.
+- Kept this as a glossary-only expansion round.
+- No release, cache, tag, or Portable packaging work was performed.
+
+#### Batches
+
+- **Batch 1**: 825 -> 850, validator PASS
+- **Batch 2**: 850 -> 875, validator PASS
+- **Batch 3**: 875 -> 900, validator PASS
+
+#### Final validation
+
+| Check | Result |
+| :--- | :--- |
+| `node tools/verify_glossary.js` | PASS |
+| Term count | 900 |
+| Errors | 0 |
+| Warnings | 0 |
+| Windows/Web SHA256 match | PASS |
+| Windows/Web `data/glossary/it_terms.js` SHA256 | `f13492bd6c3f7722b74f02d302c012f81211be1f4d15d8f2682fff54175c53f4` |
+| Web `node --check data/glossary/it_terms.js` | PASS |
+
+#### Git
+
+| Repo | Branch | Commit hash | Push |
+| :--- | :--- | :--- | :--- |
+| Windows glossary | main | Recorded by `feat: expand glossary to 900 terms` | PASS |
+| Web glossary | master | `906ef06` | PASS |
+| Windows handoff | main | Recorded by `feat: expand glossary to 900 terms` | PASS |
+
+#### Explicitly not done
+
+- Did not update Web cache version.
+- Did not modify `assets/js/version.js`.
+- Did not modify `service-worker.js`.
+- Did not package Portable.
+- Did not create a tag or GitHub Release.
+- Did not add a `ko` field.
+- Did not add Korean UI.
+- Did not modify course data.
+- Did not modify content language packs.
+- Did not modify backend (`server.py` / `study_ai.py`).
+- Did not modify Java/Python sandbox.
+
+#### Next
+
+- **Round 15.17**: 900-term quality review and localization polish + Web cache update + Portable repack + GitHub Release
+
