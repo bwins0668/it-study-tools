@@ -317,6 +317,30 @@
         unanswered: "未回答",
         questionNotFound: "問題データが見つかりません"
       },
+      wrongBook: {
+        title: "間違いノート",
+        subtitle: "間違えた問題を復習",
+        emptyTitle: "間違えた問題はまだありません",
+        emptyDesc: "間違えた問題は自動的にここへ保存されます",
+        all: "すべて",
+        unmastered: "未習得",
+        mastered: "習得済み",
+        markMastered: "習得済みにする",
+        unmarkMastered: "未習得に戻す",
+        remove: "削除",
+        wrongCount: "間違えた回数",
+        lastWrongAt: "最終間違い日時",
+        yourAnswer: "あなたの誤答",
+        correctAnswer: "正解",
+        explanation: "解説",
+        source: "出典",
+        confirmRemove: "この問題を間違いノートから削除しますか？",
+        viewDetails: "詳細を見る",
+        hideDetails: "詳細を閉じる",
+        choices: "選択肢",
+        question: "問題",
+        unknownAnswer: "記録なし"
+      },
       message: {
         inputSqlRequired: "SQLクエリを入力してください。"
       },
@@ -755,6 +779,30 @@
         unanswered: "未答",
         questionNotFound: "题目数据未找到"
       },
+      wrongBook: {
+        title: "错题本",
+        subtitle: "复习答错的题目",
+        emptyTitle: "还没有错题",
+        emptyDesc: "答错的题目会自动收集到这里",
+        all: "全部",
+        unmastered: "未掌握",
+        mastered: "已掌握",
+        markMastered: "标记已掌握",
+        unmarkMastered: "取消已掌握",
+        remove: "移除",
+        wrongCount: "答错次数",
+        lastWrongAt: "最近答错",
+        yourAnswer: "我的错误答案",
+        correctAnswer: "正确答案",
+        explanation: "解析",
+        source: "来源",
+        confirmRemove: "确定从错题本移除这道题吗？",
+        viewDetails: "展开详情",
+        hideDetails: "收起详情",
+        choices: "选项",
+        question: "题目",
+        unknownAnswer: "未记录"
+      },
       message: {
         inputSqlRequired: "请输入 SQL 语句."
       },
@@ -1192,6 +1240,30 @@
         unanswered: "Unanswered",
         questionNotFound: "Question data not found"
       },
+      wrongBook: {
+        title: "Wrong Book",
+        subtitle: "Review questions you answered incorrectly",
+        emptyTitle: "No wrong answers yet",
+        emptyDesc: "Incorrect answers will be collected here automatically",
+        all: "All",
+        unmastered: "Unmastered",
+        mastered: "Mastered",
+        markMastered: "Mark mastered",
+        unmarkMastered: "Mark unmastered",
+        remove: "Remove",
+        wrongCount: "Wrong count",
+        lastWrongAt: "Last wrong",
+        yourAnswer: "Your wrong answer",
+        correctAnswer: "Correct answer",
+        explanation: "Explanation",
+        source: "Source",
+        confirmRemove: "Remove this question from the wrong book?",
+        viewDetails: "View details",
+        hideDetails: "Hide details",
+        choices: "Choices",
+        question: "Question",
+        unknownAnswer: "Not recorded"
+      },
       message: {
         inputSqlRequired: "Please enter an SQL query."
       },
@@ -1599,6 +1671,30 @@
         correctAnswer: "Correct answer",
         unanswered: "Unanswered",
         questionNotFound: "Question data not found"
+      },
+      wrongBook: {
+        title: "Wrong Book",
+        subtitle: "Review questions you answered incorrectly",
+        emptyTitle: "No wrong answers yet",
+        emptyDesc: "Incorrect answers will be collected here automatically",
+        all: "All",
+        unmastered: "Unmastered",
+        mastered: "Mastered",
+        markMastered: "Mark mastered",
+        unmarkMastered: "Mark unmastered",
+        remove: "Remove",
+        wrongCount: "Wrong count",
+        lastWrongAt: "Last wrong",
+        yourAnswer: "Your wrong answer",
+        correctAnswer: "Correct answer",
+        explanation: "Explanation",
+        source: "Source",
+        confirmRemove: "Remove this question from the wrong book?",
+        viewDetails: "View details",
+        hideDetails: "Hide details",
+        choices: "Choices",
+        question: "Question",
+        unknownAnswer: "Not recorded"
       },
       message: {
         inputSqlRequired: "SQL query ထည့်ပါ။"
@@ -2008,6 +2104,30 @@
         unanswered: "Chưa trả lời",
         questionNotFound: "Không tìm thấy dữ liệu câu hỏi"
       },
+      wrongBook: {
+        title: "Wrong Book",
+        subtitle: "Review questions you answered incorrectly",
+        emptyTitle: "No wrong answers yet",
+        emptyDesc: "Incorrect answers will be collected here automatically",
+        all: "All",
+        unmastered: "Unmastered",
+        mastered: "Mastered",
+        markMastered: "Mark mastered",
+        unmarkMastered: "Mark unmastered",
+        remove: "Remove",
+        wrongCount: "Wrong count",
+        lastWrongAt: "Last wrong",
+        yourAnswer: "Your wrong answer",
+        correctAnswer: "Correct answer",
+        explanation: "Explanation",
+        source: "Source",
+        confirmRemove: "Remove this question from the wrong book?",
+        viewDetails: "View details",
+        hideDetails: "Hide details",
+        choices: "Choices",
+        question: "Question",
+        unknownAnswer: "Not recorded"
+      },
       message: {
         inputSqlRequired: "Vui lòng nhập câu lệnh SQL."
       },
@@ -2416,6 +2536,30 @@
         unanswered: "Sans réponse",
         questionNotFound: "Données de question introuvables"
       },
+      wrongBook: {
+        title: "Wrong Book",
+        subtitle: "Review questions you answered incorrectly",
+        emptyTitle: "No wrong answers yet",
+        emptyDesc: "Incorrect answers will be collected here automatically",
+        all: "All",
+        unmastered: "Unmastered",
+        mastered: "Mastered",
+        markMastered: "Mark mastered",
+        unmarkMastered: "Mark unmastered",
+        remove: "Remove",
+        wrongCount: "Wrong count",
+        lastWrongAt: "Last wrong",
+        yourAnswer: "Your wrong answer",
+        correctAnswer: "Correct answer",
+        explanation: "Explanation",
+        source: "Source",
+        confirmRemove: "Remove this question from the wrong book?",
+        viewDetails: "View details",
+        hideDetails: "Hide details",
+        choices: "Choices",
+        question: "Question",
+        unknownAnswer: "Not recorded"
+      },
       message: {
         inputSqlRequired: "Vui lòng nhập câu lệnh SQL."
       },
@@ -2821,6 +2965,30 @@
         correctAnswer: "정답",
         unanswered: "미답변",
         questionNotFound: "문제 데이터를 찾을 수 없습니다"
+      },
+      wrongBook: {
+        title: "오답 노트",
+        subtitle: "틀린 문제 복습",
+        emptyTitle: "아직 오답이 없습니다",
+        emptyDesc: "틀린 문제는 자동으로 여기에 저장됩니다",
+        all: "전체",
+        unmastered: "미숙달",
+        mastered: "숙달",
+        markMastered: "숙달로 표시",
+        unmarkMastered: "미숙달로 변경",
+        remove: "삭제",
+        wrongCount: "오답 횟수",
+        lastWrongAt: "최근 오답",
+        yourAnswer: "내 오답",
+        correctAnswer: "정답",
+        explanation: "해설",
+        source: "출처",
+        confirmRemove: "이 문제를 오답 노트에서 삭제할까요?",
+        viewDetails: "상세 보기",
+        hideDetails: "상세 숨기기",
+        choices: "선택지",
+        question: "문제",
+        unknownAnswer: "기록 없음"
       },
       message: {
         inputSqlRequired: "SQL 쿼리를 입력해 주세요."
@@ -3259,6 +3427,30 @@
       correctAnswer: "正确答案 / 正解",
       unanswered: "未答 / 未回答",
       questionNotFound: "题目数据未找到 / 問題データが見つかりません"
+    },
+    wrongBook: {
+      title: "错题本 / 間違いノート",
+      subtitle: "复习答错的题目 / 間違えた問題を復習",
+      emptyTitle: "还没有错题 / 間違えた問題はまだありません",
+      emptyDesc: "答错的题目会自动收集到这里 / 間違えた問題は自動的にここへ保存されます",
+      all: "全部 / すべて",
+      unmastered: "未掌握 / 未習得",
+      mastered: "已掌握 / 習得済み",
+      markMastered: "标记已掌握 / 習得済みにする",
+      unmarkMastered: "取消已掌握 / 未習得に戻す",
+      remove: "移除 / 削除",
+      wrongCount: "答错次数 / 間違えた回数",
+      lastWrongAt: "最近答错 / 最終間違い日時",
+      yourAnswer: "我的错误答案 / あなたの誤答",
+      correctAnswer: "正确答案 / 正解",
+      explanation: "解析 / 解説",
+      source: "来源 / 出典",
+      confirmRemove: "确定从错题本移除这道题吗？ / この問題を間違いノートから削除しますか？",
+      viewDetails: "展开详情 / 詳細を見る",
+      hideDetails: "收起详情 / 詳細を閉じる",
+      choices: "选项 / 選択肢",
+      question: "题目 / 問題",
+      unknownAnswer: "未记录 / 記録なし"
     },
     message: {
       inputSqlRequired: "请输入 SQL 语句。 / SQLクエリを入力してください。"
@@ -4276,6 +4468,9 @@
     if (!window.I18nUiDict[locale]) window.I18nUiDict[locale] = {};
     if (!window.I18nUiDict[locale].codingTyping) window.I18nUiDict[locale].codingTyping = {};
     Object.assign(window.I18nUiDict[locale].codingTyping, CODING_TYPING_ROUND_22_1_1[locale]);
+    if (!window.I18nUiDict[locale].wrongBook && window.I18nUiDict["en-US"].wrongBook) {
+      window.I18nUiDict[locale].wrongBook = Object.assign({}, window.I18nUiDict["en-US"].wrongBook);
+    }
   });
 })();
 

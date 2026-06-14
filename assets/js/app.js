@@ -2004,6 +2004,7 @@ function checkQuizAnswer() {
     } else {
       feedback.innerHTML = `<strong>不正解。(答错了，再想想。)</strong><br>ヒント: ${lesson.quiz.hint}`;
       feedback.className = "quiz-feedback error";
+      recordLessonQuizWrongAnswer('sql', lesson, lesson.quiz, 0, selectedQuizOption);
     }
   } else if (currentSubject === 'java') {
     // Java Mode
@@ -2036,6 +2037,7 @@ function checkQuizAnswer() {
     } else {
       feedback.innerHTML = `<strong>不正解。(答错了，再想想。)</strong><br>ヒント: ${quiz.hint}`;
       feedback.className = "quiz-feedback error";
+      recordLessonQuizWrongAnswer('java', lesson, quiz, javaQuizIdx, selectedJavaQuizOption);
     }
   } else if (currentSubject === 'python') {
     const lesson = (typeof PYTHON_LESSONS !== 'undefined') ? PYTHON_LESSONS.find(l => l.id === currentPythonLessonId) : null;
@@ -2052,6 +2054,9 @@ function checkQuizAnswer() {
       ? `<strong>回答正确！ / 正解！</strong><br>${quiz.hint}`
       : `<strong>回答错误，请再想想。 / 不正解です。</strong><br>${quiz.hint}`;
     feedback.className = `quiz-feedback ${isCorrect ? 'success' : 'error'}`;
+    if (!isCorrect) {
+      recordLessonQuizWrongAnswer('python', lesson, quiz, pythonQuizIdx, selectedPythonQuizOption);
+    }
     if (isCorrect) {
       if (!lesson.completedQuizIndices) lesson.completedQuizIndices = [];
       if (!lesson.completedQuizIndices.includes(pythonQuizIdx)) {
@@ -2103,6 +2108,7 @@ function checkQuizAnswer() {
     } else {
       feedback.innerHTML = `<strong>不正解。(答错了，再想想。)</strong><br>ヒント: ${quiz.hint}`;
       feedback.className = "quiz-feedback error";
+      recordLessonQuizWrongAnswer('sg', lesson, quiz, sgQuizIdx, selectedSgQuizOption);
     }
   } else {
     // IT Passport Mode
@@ -2134,6 +2140,7 @@ function checkQuizAnswer() {
     } else {
       feedback.innerHTML = `<strong>不正解。(答错了，再想想。)</strong><br>ヒント: ${quiz.hint}`;
       feedback.className = "quiz-feedback error";
+      recordLessonQuizWrongAnswer('itpass', lesson, quiz, itpassQuizIdx, selectedItPassQuizOption);
     }
   }
 }
@@ -3258,9 +3265,276 @@ function buildExamHistoryRecord(exam, reviews, scoreData) {
   };
 }
 
+// ── Local Wrong Book Persistence (Round 23.3) ─────────────────────
+const WRONG_BOOK_STORAGE_KEY = 'study-tools-exam-wrong-book-v1';
+
+function stableWrongBookHash(value) {
+  var hash = 2166136261;
+  var text = String(value || '');
+  for (var i = 0; i < text.length; i++) {
+    hash ^= text.charCodeAt(i);
+    hash = Math.imul(hash, 16777619);
+  }
+  return (hash >>> 0).toString(16).padStart(8, '0');
+}
+
+function makeWrongQuestionKey(item) {
+  item = item && typeof item === 'object' ? item : {};
+  var moduleName = String(item.module || item.subject || 'unknown').toLowerCase();
+  var stableId = item.stableId || item.qId || item.id || item.qid;
+  if (stableId !== undefined && stableId !== null && String(stableId).trim()) {
+    return moduleName + ':' + String(stableId).trim();
+  }
+  var source = item.source && typeof item.source === 'object' ? item.source : {};
+  var choices = Array.isArray(item.choices) ? item.choices : [];
+  var fingerprint = JSON.stringify({
+    source: source,
+    module: moduleName,
+    questionText: item.questionText || item.question || '',
+    choices: choices
+  });
+  return moduleName + ':hash:' + stableWrongBookHash(fingerprint);
+}
+
+function normalizeWrongBookAnswer(answer) {
+  if (answer && typeof answer === 'object') {
+    return {
+      index: Number.isInteger(answer.index) ? answer.index : null,
+      label: answer.label == null ? '' : String(answer.label),
+      text: answer.text == null ? '' : String(answer.text)
+    };
+  }
+  if (answer === undefined || answer === null) {
+    return { index: null, label: '', text: '' };
+  }
+  return { index: null, label: '', text: String(answer) };
+}
+
+function normalizeWrongBookItem(item) {
+  item = item && typeof item === 'object' ? item : {};
+  var now = new Date().toISOString();
+  var source = item.source && typeof item.source === 'object' ? item.source : {};
+  var choices = Array.isArray(item.choices)
+    ? item.choices.map(function (choice) {
+        if (choice && typeof choice === 'object' && choice.text !== undefined) return String(choice.text);
+        return choice == null ? '' : String(choice);
+      })
+    : [];
+  var tags = Array.isArray(item.tags)
+    ? item.tags.filter(function (tag) { return tag !== undefined && tag !== null && String(tag).trim(); }).map(String)
+    : [];
+  var wrongCount = Number(item.wrongCount);
+  return {
+    schemaVersion: 1,
+    key: String(item.key || makeWrongQuestionKey(item)),
+    module: String(item.module || item.subject || 'unknown').toLowerCase(),
+    source: {
+      type: source.type == null ? '' : String(source.type),
+      mode: source.mode == null ? '' : String(source.mode),
+      year: source.year == null ? '' : String(source.year),
+      yearId: source.yearId == null ? '' : String(source.yearId),
+      category: source.category == null ? '' : String(source.category),
+      subcategory: source.subcategory == null ? '' : String(source.subcategory),
+      topic: source.topic == null ? '' : String(source.topic),
+      lessonId: source.lessonId == null ? null : source.lessonId,
+      lessonTitle: source.lessonTitle == null ? '' : String(source.lessonTitle)
+    },
+    questionText: item.questionText == null ? '' : String(item.questionText),
+    choices: choices,
+    correctAnswer: normalizeWrongBookAnswer(item.correctAnswer),
+    userAnswer: normalizeWrongBookAnswer(item.userAnswer),
+    explanation: item.explanation == null ? '' : String(item.explanation),
+    tags: tags,
+    firstWrongAt: item.firstWrongAt || now,
+    lastWrongAt: item.lastWrongAt || now,
+    wrongCount: Number.isFinite(wrongCount) && wrongCount > 0 ? Math.floor(wrongCount) : 1,
+    mastered: item.mastered === true,
+    archived: item.archived === true
+  };
+}
+
+function loadWrongBook() {
+  try {
+    var raw = localStorage.getItem(WRONG_BOOK_STORAGE_KEY);
+    if (!raw) return [];
+    var parsed = JSON.parse(raw);
+    if (!Array.isArray(parsed)) return [];
+    return parsed.filter(function (item) { return item && typeof item === 'object'; }).map(normalizeWrongBookItem);
+  } catch (e) {
+    console.warn('[WrongBook] Failed to read localStorage:', e);
+    return [];
+  }
+}
+
+function saveWrongBook(items) {
+  try {
+    localStorage.setItem(WRONG_BOOK_STORAGE_KEY, JSON.stringify(Array.isArray(items) ? items : []));
+    return true;
+  } catch (e) {
+    console.warn('[WrongBook] Failed to save localStorage:', e);
+    return false;
+  }
+}
+
+function recordWrongBookItem(rawItem) {
+  try {
+    var item = normalizeWrongBookItem(rawItem);
+    var items = loadWrongBook();
+    var existing = items.find(function (entry) { return entry.key === item.key; });
+    var now = new Date().toISOString();
+    if (existing) {
+      var firstWrongAt = existing.firstWrongAt || item.firstWrongAt || now;
+      var mastered = existing.mastered === true;
+      var previousWrongCount = Math.max(1, Number(existing.wrongCount) || 1);
+      Object.assign(existing, item);
+      existing.firstWrongAt = firstWrongAt;
+      existing.lastWrongAt = now;
+      existing.wrongCount = previousWrongCount + 1;
+      existing.mastered = mastered;
+      existing.archived = false;
+    } else {
+      item.firstWrongAt = item.firstWrongAt || now;
+      item.lastWrongAt = now;
+      item.wrongCount = 1;
+      items.push(item);
+    }
+    return saveWrongBook(items);
+  } catch (e) {
+    console.warn('[WrongBook] Unexpected record error:', e);
+    return false;
+  }
+}
+
+function makeWrongBookAnswer(index, choices, rawText) {
+  var alphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
+  var safeChoices = Array.isArray(choices) ? choices : [];
+  var text = rawText;
+  if ((text === undefined || text === null || text === '') && Number.isInteger(index) && safeChoices[index] !== undefined) {
+    text = safeChoices[index];
+  }
+  return {
+    index: Number.isInteger(index) ? index : null,
+    label: Number.isInteger(index) ? (alphabet[index] || String(index + 1)) : '',
+    text: text == null ? '' : stripHtmlToText(String(text))
+  };
+}
+
+function recordLessonQuizWrongAnswer(moduleName, lesson, quiz, quizIndex, selectedIndex) {
+  try {
+    lesson = lesson && typeof lesson === 'object' ? lesson : {};
+    quiz = quiz && typeof quiz === 'object' ? quiz : {};
+    var rawChoices = quiz.options || quiz.choices || [];
+    var choices = Array.isArray(rawChoices)
+      ? rawChoices.map(function (choice) { return stripHtmlToText(choice && choice.text !== undefined ? choice.text : choice); })
+      : [];
+    var correctIndex = Number.isInteger(quiz.answerIdx) ? quiz.answerIdx : (Number.isInteger(quiz.answer) ? quiz.answer : null);
+    var lessonId = lesson.id == null ? '' : lesson.id;
+    var lessonTitle = lesson.titleZh || lesson.titleJa || lesson.title || '';
+    recordWrongBookItem({
+      module: moduleName,
+      stableId: quiz.id ? [lessonId, quiz.id].join(':') : [lessonId, 'quiz', quizIndex].join(':'),
+      source: {
+        type: 'lesson-quiz',
+        mode: 'practice',
+        category: lesson.category || lesson.chapterName || '',
+        topic: lesson.topic || '',
+        lessonId: lessonId,
+        lessonTitle: lessonTitle
+      },
+      questionText: stripHtmlToText(quiz.question || quiz.questionZh || quiz.questionJa || quiz.prompt || lessonTitle),
+      choices: choices,
+      correctAnswer: makeWrongBookAnswer(correctIndex, choices),
+      userAnswer: makeWrongBookAnswer(selectedIndex, choices),
+      explanation: stripHtmlToText(quiz.explanation || quiz.hint || ''),
+      tags: [].concat(Array.isArray(quiz.tags) ? quiz.tags : [], lesson.chapterName || [], lesson.category || [])
+    });
+  } catch (e) {
+    console.warn('[WrongBook] Failed to record lesson quiz:', e);
+  }
+}
+
+function restoreCbtChoices(options) {
+  if (!Array.isArray(options)) return [];
+  return options.map(function (option, displayIndex) {
+    return {
+      originalIdx: option && Number.isInteger(option.originalIdx) ? option.originalIdx : displayIndex,
+      text: stripHtmlToText(option && option.text !== undefined ? option.text : option)
+    };
+  }).sort(function (a, b) { return a.originalIdx - b.originalIdx; }).map(function (option) { return option.text; });
+}
+
+function recordWrongQuestionsFromResult(reviews, exam) {
+  try {
+    if (!Array.isArray(reviews)) return;
+    reviews.filter(function (review) {
+      return review && review.isAnswered && !review.isCorrect;
+    }).forEach(function (review) {
+      var choices = restoreCbtChoices(review.options);
+      recordWrongBookItem({
+        module: review.subject || (exam && exam.subject) || 'itpass',
+        stableId: review.qId || review.fallbackId,
+        source: {
+          type: 'cbt',
+          mode: 'exam',
+          year: review.year || '',
+          yearId: review.yearId || '',
+          category: review.category || '',
+          subcategory: review.subcategory || '',
+          topic: review.topic || ''
+        },
+        questionText: stripHtmlToText(review.question || ''),
+        choices: choices,
+        correctAnswer: makeWrongBookAnswer(review.correctIdx, choices),
+        userAnswer: makeWrongBookAnswer(review.userOriginalIdx, choices),
+        explanation: stripHtmlToText(review.explanation || ''),
+        tags: [review.category, review.subcategory, review.topic].filter(Boolean)
+      });
+    });
+  } catch (e) {
+    console.warn('[WrongBook] Failed to record CBT result:', e);
+  }
+}
+
+function recordCodingExamWrongQuestions(exam) {
+  try {
+    if (!exam || !Array.isArray(exam.questions)) return;
+    exam.questions.forEach(function (question) {
+      if (exam.userStatuses[question.id] !== 'failed') return;
+      recordWrongBookItem({
+        module: exam.subject || 'unknown',
+        stableId: question.id,
+        source: {
+          type: 'coding-exam',
+          mode: 'exam',
+          category: question.category || '',
+          topic: question.titleZh || question.titleJa || question.title || ''
+        },
+        questionText: [question.taskZh, question.taskJa].filter(Boolean).join('\n'),
+        choices: [],
+        correctAnswer: {
+          index: null,
+          label: '',
+          text: question.expectedOutput || question.solutionQuery || question.solutionCode || ''
+        },
+        userAnswer: {
+          index: null,
+          label: '',
+          text: exam.userCodes[question.id] || ''
+        },
+        explanation: question.explanationZh || question.explanationJa || question.hint || '',
+        tags: [question.difficulty, question.category].filter(Boolean)
+      });
+    });
+  } catch (e) {
+    console.warn('[WrongBook] Failed to record coding exam:', e);
+  }
+}
+
 // ── Exam History Modal UI (Round 23.2) ─────────────────────────────
 
 var _examHistoryCurrentFilter = 'all';
+var _examHistoryActiveTab = 'history';
+var _wrongBookCurrentFilter = 'all';
 var _examHistoryEscHandler = null;
 
 function stripHtmlToText(html) {
@@ -3291,9 +3565,10 @@ function openExamHistoryModal() {
   modal.removeAttribute('hidden');
   document.body.style.overflow = 'hidden';
   _examHistoryCurrentFilter = 'all';
+  _wrongBookCurrentFilter = 'all';
   var btns = modal.querySelectorAll('.exam-history-filter-btn');
   btns.forEach(function (b) { b.classList.toggle('active', b.getAttribute('data-filter') === 'all'); });
-  renderExamHistoryList();
+  setExamHistoryTab('history');
   if (!_examHistoryEscHandler) {
     _examHistoryEscHandler = function (e) {
       if (e.key === 'Escape') {
@@ -3321,6 +3596,183 @@ function setExamHistoryFilter(filter) {
   var btns = document.querySelectorAll('#exam-history-filters .exam-history-filter-btn');
   btns.forEach(function (b) { b.classList.toggle('active', b.getAttribute('data-filter') === filter); });
   renderExamHistoryList();
+}
+
+function setExamHistoryTab(tab) {
+  _examHistoryActiveTab = tab === 'wrong-book' ? 'wrong-book' : 'history';
+  var historyView = document.getElementById('exam-history-view');
+  var wrongBookView = document.getElementById('wrong-book-view');
+  if (historyView) historyView.toggleAttribute('hidden', _examHistoryActiveTab !== 'history');
+  if (wrongBookView) wrongBookView.toggleAttribute('hidden', _examHistoryActiveTab !== 'wrong-book');
+  document.querySelectorAll('#exam-history-tabs .exam-history-tab-btn').forEach(function (button) {
+    button.classList.toggle('active', button.getAttribute('data-tab') === _examHistoryActiveTab);
+  });
+  var title = document.getElementById('exam-history-title');
+  var subtitle = title && title.parentElement ? title.parentElement.querySelector('p') : null;
+  var t = function (key, fallback) { return typeof I18n !== 'undefined' ? I18n.t(key) : fallback; };
+  if (_examHistoryActiveTab === 'wrong-book') {
+    if (title) title.textContent = t('wrongBook.title', '错题本');
+    if (subtitle) subtitle.textContent = t('wrongBook.subtitle', '复习答错的题目');
+    renderWrongBook();
+  } else {
+    if (title) title.textContent = t('examHistory.title', '最近考试历史');
+    if (subtitle) subtitle.textContent = t('examHistory.subtitle', '查看已保存的模拟考试结果');
+    renderExamHistoryList();
+  }
+}
+
+function setWrongBookFilter(filter) {
+  _wrongBookCurrentFilter = ['all', 'unmastered', 'mastered'].includes(filter) ? filter : 'all';
+  document.querySelectorAll('#wrong-book-filters .exam-history-filter-btn').forEach(function (button) {
+    button.classList.toggle('active', button.getAttribute('data-filter') === _wrongBookCurrentFilter);
+  });
+  renderWrongBook();
+}
+
+function escapeWrongBookHtml(value) {
+  return String(value == null ? '' : value).replace(/[&<>"']/g, function (char) {
+    return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[char];
+  });
+}
+
+function getWrongBookModuleLabel(moduleName) {
+  var labels = { itpass: 'IT Passport', sg: 'SG', sql: 'SQL', java: 'Java', python: 'Python' };
+  return labels[moduleName] || String(moduleName || 'Unknown').toUpperCase();
+}
+
+function buildWrongBookSourceLabel(item) {
+  var source = item.source || {};
+  return [
+    source.mode === 'practice' ? source.lessonTitle : '',
+    source.year,
+    source.category,
+    source.topic
+  ].filter(Boolean).join(' · ') || source.type || '-';
+}
+
+function formatWrongBookAnswer(answer, fallback) {
+  answer = normalizeWrongBookAnswer(answer);
+  var prefix = answer.label ? answer.label + '. ' : '';
+  return prefix + (answer.text || fallback || '-');
+}
+
+function buildWrongBookDetailHtml(item) {
+  var t = function (key, fallback) { return typeof I18n !== 'undefined' ? I18n.t(key) : fallback; };
+  var html = '<div class="wrong-book-detail">';
+  html += '<h4>' + escapeWrongBookHtml(t('wrongBook.question', '题目')) + '</h4>';
+  html += '<div class="wrong-book-question">' + escapeWrongBookHtml(item.questionText || '-') + '</div>';
+  if (item.choices.length) {
+    html += '<h4>' + escapeWrongBookHtml(t('wrongBook.choices', '选项')) + '</h4>';
+    html += '<ol class="wrong-book-choices">';
+    item.choices.forEach(function (choice, index) {
+      var classes = [];
+      if (item.correctAnswer.index === index) classes.push('is-correct');
+      if (item.userAnswer.index === index) classes.push('is-user-answer');
+      html += '<li class="' + classes.join(' ') + '">' + escapeWrongBookHtml(choice) + '</li>';
+    });
+    html += '</ol>';
+  }
+  html += '<div class="wrong-book-answer-grid">';
+  html += '<div><strong>' + escapeWrongBookHtml(t('wrongBook.yourAnswer', '我的错误答案')) + '</strong><pre>' +
+    escapeWrongBookHtml(formatWrongBookAnswer(item.userAnswer, t('wrongBook.unknownAnswer', '未记录'))) + '</pre></div>';
+  html += '<div><strong>' + escapeWrongBookHtml(t('wrongBook.correctAnswer', '正确答案')) + '</strong><pre>' +
+    escapeWrongBookHtml(formatWrongBookAnswer(item.correctAnswer, t('wrongBook.unknownAnswer', '未记录'))) + '</pre></div>';
+  html += '</div>';
+  html += '<h4>' + escapeWrongBookHtml(t('wrongBook.explanation', '解析')) + '</h4>';
+  html += '<div class="wrong-book-explanation">' + escapeWrongBookHtml(item.explanation || '-') + '</div>';
+  html += '</div>';
+  return html;
+}
+
+function renderWrongBook() {
+  var container = document.getElementById('wrong-book-list');
+  if (!container) return;
+  var t = function (key, fallback) { return typeof I18n !== 'undefined' ? I18n.t(key) : fallback; };
+  var items = loadWrongBook().filter(function (item) { return !item.archived; });
+  items.sort(function (a, b) { return (b.lastWrongAt || '').localeCompare(a.lastWrongAt || ''); });
+  if (_wrongBookCurrentFilter === 'mastered') {
+    items = items.filter(function (item) { return item.mastered; });
+  } else if (_wrongBookCurrentFilter === 'unmastered') {
+    items = items.filter(function (item) { return !item.mastered; });
+  }
+  if (!items.length) {
+    container.innerHTML = '<div class="exam-history-empty">' +
+      '<p class="exam-history-empty__title">' + escapeWrongBookHtml(t('wrongBook.emptyTitle', '还没有错题')) + '</p>' +
+      '<p class="exam-history-empty__hint">' + escapeWrongBookHtml(t('wrongBook.emptyDesc', '答错的题目会自动收集到这里')) + '</p>' +
+      '</div>';
+    return;
+  }
+  container.innerHTML = '';
+  items.forEach(function (item) {
+    var card = document.createElement('article');
+    card.className = 'wrong-book-card';
+    var dateText = '';
+    try { dateText = new Date(item.lastWrongAt).toLocaleString(); } catch (_) { dateText = item.lastWrongAt || ''; }
+    var questionSummary = item.questionText || '-';
+    if (questionSummary.length > 180) questionSummary = questionSummary.slice(0, 180) + '…';
+    var masteredLabel = item.mastered ? t('wrongBook.mastered', '已掌握') : t('wrongBook.unmastered', '未掌握');
+    card.innerHTML =
+      '<div class="wrong-book-card__summary">' +
+        '<div class="wrong-book-card__meta">' +
+          '<span class="exam-history-card__subject">' + escapeWrongBookHtml(getWrongBookModuleLabel(item.module)) + '</span>' +
+          '<span class="wrong-book-card__source">' + escapeWrongBookHtml(buildWrongBookSourceLabel(item)) + '</span>' +
+          '<span class="wrong-book-card__count">' + escapeWrongBookHtml(t('wrongBook.wrongCount', '答错次数')) + ': ' + item.wrongCount + '</span>' +
+          '<span class="wrong-book-card__date">' + escapeWrongBookHtml(t('wrongBook.lastWrongAt', '最近答错')) + ': ' + escapeWrongBookHtml(dateText) + '</span>' +
+          '<span class="wrong-book-card__mastery ' + (item.mastered ? 'is-mastered' : '') + '">' + escapeWrongBookHtml(masteredLabel) + '</span>' +
+        '</div>' +
+        '<p class="wrong-book-card__question">' + escapeWrongBookHtml(questionSummary) + '</p>' +
+        '<div class="wrong-book-card__actions">' +
+          '<button type="button" class="wrong-book-action wrong-book-toggle-detail">' + escapeWrongBookHtml(t('wrongBook.viewDetails', '展开详情')) + '</button>' +
+          '<button type="button" class="wrong-book-action wrong-book-toggle-mastered">' +
+            escapeWrongBookHtml(item.mastered ? t('wrongBook.unmarkMastered', '取消已掌握') : t('wrongBook.markMastered', '标记已掌握')) +
+          '</button>' +
+          '<button type="button" class="wrong-book-action wrong-book-remove">' + escapeWrongBookHtml(t('wrongBook.remove', '移除')) + '</button>' +
+        '</div>' +
+      '</div>' +
+      '<div class="wrong-book-card__detail" hidden></div>';
+    var detail = card.querySelector('.wrong-book-card__detail');
+    var detailButton = card.querySelector('.wrong-book-toggle-detail');
+    var toggleDetail = function () {
+      var opening = detail.hasAttribute('hidden');
+      detail.toggleAttribute('hidden', !opening);
+      if (opening && !detail.dataset.loaded) {
+        detail.innerHTML = buildWrongBookDetailHtml(item);
+        detail.dataset.loaded = '1';
+      }
+      detailButton.textContent = opening ? t('wrongBook.hideDetails', '收起详情') : t('wrongBook.viewDetails', '展开详情');
+    };
+    detailButton.addEventListener('click', function (event) {
+      event.stopPropagation();
+      toggleDetail();
+    });
+    card.querySelector('.wrong-book-toggle-mastered').addEventListener('click', function (event) {
+      event.stopPropagation();
+      toggleWrongBookMastered(item.key);
+    });
+    card.querySelector('.wrong-book-remove').addEventListener('click', function (event) {
+      event.stopPropagation();
+      removeWrongBookItem(item.key);
+    });
+    card.querySelector('.wrong-book-card__question').addEventListener('click', toggleDetail);
+    container.appendChild(card);
+  });
+}
+
+function toggleWrongBookMastered(key) {
+  var items = loadWrongBook();
+  var item = items.find(function (entry) { return entry.key === key; });
+  if (!item) return;
+  item.mastered = !item.mastered;
+  if (saveWrongBook(items)) renderWrongBook();
+}
+
+function removeWrongBookItem(key) {
+  var t = function (translationKey, fallback) {
+    return typeof I18n !== 'undefined' ? I18n.t(translationKey) : fallback;
+  };
+  if (!window.confirm(t('wrongBook.confirmRemove', '确定从错题本移除这道题吗？'))) return;
+  var items = loadWrongBook().filter(function (entry) { return entry.key !== key; });
+  if (saveWrongBook(items)) renderWrongBook();
 }
 
 function renderExamHistoryList() {
@@ -3504,6 +3956,20 @@ function initExamHistoryModal() {
     filters.addEventListener('click', function (e) {
       var btn = e.target.closest('.exam-history-filter-btn');
       if (btn) setExamHistoryFilter(btn.getAttribute('data-filter'));
+    });
+  }
+  var tabs = document.getElementById('exam-history-tabs');
+  if (tabs) {
+    tabs.addEventListener('click', function (e) {
+      var button = e.target.closest('.exam-history-tab-btn');
+      if (button) setExamHistoryTab(button.getAttribute('data-tab'));
+    });
+  }
+  var wrongBookFilters = document.getElementById('wrong-book-filters');
+  if (wrongBookFilters) {
+    wrongBookFilters.addEventListener('click', function (e) {
+      var button = e.target.closest('.exam-history-filter-btn');
+      if (button) setWrongBookFilter(button.getAttribute('data-filter'));
     });
   }
 }
@@ -4051,6 +4517,11 @@ function submitCbtExam(auto = false) {
     saveExamHistoryRecord(_record);
   } catch (_histErr) {
     console.warn('[ExamHistory] Unexpected error during save:', _histErr);
+  }
+  try {
+    recordWrongQuestionsFromResult(reviews, activeCbtExam);
+  } catch (_wrongBookErr) {
+    console.warn('[WrongBook] Unexpected error during CBT save:', _wrongBookErr);
   }
 
   activeCbtExam = null;
@@ -5336,6 +5807,11 @@ function submitCodingExam(auto = false) {
       source: 'official',
       metadata: { passed, total, autoSubmitted: auto }
     });
+  }
+  try {
+    recordCodingExamWrongQuestions(activeCodingExam);
+  } catch (_wrongBookErr) {
+    console.warn('[WrongBook] Unexpected error during coding exam save:', _wrongBookErr);
   }
   
   // Show results view

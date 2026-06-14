@@ -1548,12 +1548,26 @@
           <span class="sr-only" data-i18n="examHistory.close">关闭</span>
         </button>
       </header>
-      <div class="exam-history-modal__filters" id="exam-history-filters">
-        <button type="button" class="exam-history-filter-btn active" data-filter="all" data-i18n="examHistory.filterAll">全部</button>
-        <button type="button" class="exam-history-filter-btn" data-filter="itpass">IT Passport</button>
-        <button type="button" class="exam-history-filter-btn" data-filter="sg">SG</button>
+      <div class="exam-history-modal__tabs" id="exam-history-tabs">
+        <button type="button" class="exam-history-tab-btn active" data-tab="history" data-i18n="examHistory.title">考试历史</button>
+        <button type="button" class="exam-history-tab-btn" data-tab="wrong-book" data-i18n="wrongBook.title">错题本</button>
       </div>
-      <div id="exam-history-list" class="exam-history-list"></div>
+      <div id="exam-history-view" class="exam-history-view">
+        <div class="exam-history-modal__filters" id="exam-history-filters">
+          <button type="button" class="exam-history-filter-btn active" data-filter="all" data-i18n="examHistory.filterAll">全部</button>
+          <button type="button" class="exam-history-filter-btn" data-filter="itpass">IT Passport</button>
+          <button type="button" class="exam-history-filter-btn" data-filter="sg">SG</button>
+        </div>
+        <div id="exam-history-list" class="exam-history-list"></div>
+      </div>
+      <div id="wrong-book-view" class="exam-history-view" hidden>
+        <div class="exam-history-modal__filters" id="wrong-book-filters">
+          <button type="button" class="exam-history-filter-btn active" data-filter="all" data-i18n="wrongBook.all">全部</button>
+          <button type="button" class="exam-history-filter-btn" data-filter="unmastered" data-i18n="wrongBook.unmastered">未掌握</button>
+          <button type="button" class="exam-history-filter-btn" data-filter="mastered" data-i18n="wrongBook.mastered">已掌握</button>
+        </div>
+        <div id="wrong-book-list" class="exam-history-list wrong-book-list"></div>
+      </div>
     </section>
   </div>
 

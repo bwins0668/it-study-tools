@@ -1188,6 +1188,23 @@ body[data-theme="light"] .exam-history-modal__close:hover {
   background: rgba(0, 0, 0, 0.06);
 }
 
+body[data-theme="light"] .exam-history-modal__tabs {
+  border-bottom-color: #e5e7eb;
+}
+
+body[data-theme="light"] .exam-history-tab-btn {
+  color: #6b7280;
+}
+
+body[data-theme="light"] .exam-history-tab-btn:hover {
+  color: #111827;
+}
+
+body[data-theme="light"] .exam-history-tab-btn.active {
+  color: #0369a1;
+  border-bottom-color: #0284c7;
+}
+
 body[data-theme="light"] .exam-history-filter-btn {
   color: #374151;
   background: #f3f4f6;
@@ -1295,4 +1312,78 @@ body[data-theme="light"] .exam-q-wrong {
 
 body[data-theme="light"] .exam-q-unanswered {
   color: #9ca3af;
+}
+
+body[data-theme="light"] .wrong-book-card {
+  background: #f9fafb;
+  border-color: #e5e7eb;
+}
+
+body[data-theme="light"] .wrong-book-card__source,
+body[data-theme="light"] .wrong-book-card__count,
+body[data-theme="light"] .wrong-book-card__date {
+  color: #4b5563;
+}
+
+body[data-theme="light"] .wrong-book-card__question,
+body[data-theme="light"] .wrong-book-question,
+body[data-theme="light"] .wrong-book-explanation,
+body[data-theme="light"] .wrong-book-choices {
+  color: #1f2937;
+}
+
+body[data-theme="light"] .wrong-book-card__mastery {
+  color: #92400e;
+  background: #fef3c7;
+  border-color: #fcd34d;
+}
+
+body[data-theme="light"] .wrong-book-card__mastery.is-mastered {
+  color: #065f46;
+  background: #d1fae5;
+  border-color: #6ee7b7;
+}
+
+body[data-theme="light"] .wrong-book-action {
+  color: #1f2937;
+  background: #ffffff;
+  border-color: #d1d5db;
+}
+
+body[data-theme="light"] .wrong-book-action:hover {
+  background: #f3f4f6;
+}
+
+body[data-theme="light"] .wrong-book-remove {
+  color: #b91c1c;
+  border-color: #fecaca;
+}
+
+body[data-theme="light"] .wrong-book-card__detail {
+  background: #f3f4f6;
+  border-top-color: #e5e7eb;
+}
+
+body[data-theme="light"] .wrong-book-detail h4,
+body[data-theme="light"] .wrong-book-answer-grid strong {
+  color: #4b5563;
+}
+
+body[data-theme="light"] .wrong-book-answer-grid > div {
+  background: #ffffff;
+  border-color: #d1d5db;
+}
+
+body[data-theme="light"] .wrong-book-answer-grid pre {
+  color: #111827;
+}
+
+body[data-theme="light"] .wrong-book-choices li.is-user-answer {
+  color: #991b1b;
+  background: #fee2e2;
+}
+
+body[data-theme="light"] .wrong-book-choices li.is-correct {
+  color: #065f46;
+  background: #d1fae5;
 }
