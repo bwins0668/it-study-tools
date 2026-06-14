@@ -87,6 +87,9 @@ let activeCodingExam = null;
 // Header elements references
 let logoIcon = null;
 let mainTitle = null;
+let moduleSwitchTrigger = null;
+let moduleSwitchPanel = null;
+let moduleSwitchOpen = false;
 
 // SG original textbook PDF
 const SG_TEXTBOOK_PDF = "情報セキュリティー.pdf";
@@ -102,6 +105,8 @@ const sqlEngine = new MockSQLEngine();
 document.addEventListener("DOMContentLoaded", () => {
   logoIcon = document.getElementById("main-logo-icon");
   mainTitle = document.getElementById("main-title-text");
+  moduleSwitchTrigger = document.getElementById("module-switch-trigger");
+  moduleSwitchPanel = document.getElementById("module-switch-panel");
   maximizeAppWindow();
   loadCompletedProgress();
   initSidebar();
@@ -110,7 +115,7 @@ document.addEventListener("DOMContentLoaded", () => {
   updateProgressUI();
   setupEditorLineNumbers();
   setupKeyboardShortcuts();
-  
+
   // Set default values for calculators in IT Passport Mode
   initItPassCalculators();
 
@@ -120,6 +125,9 @@ document.addEventListener("DOMContentLoaded", () => {
   // Initialize auth UI (try/catch — feature may not exist)
   try { if (window.StudyAuthUI) window.StudyAuthUI.initAuthUI(); }
   catch (_) { console.warn("[App] AuthUI init skipped"); }
+
+  // Initialize module switch panel
+  initModuleSwitch();
 
   // Trigger initial subject setup (SQL) so that the sub-header and all widgets are correctly initialized on load
   currentSubject = "";
@@ -303,14 +311,14 @@ function switchSubject(subject) {
   const mainAppBody = document.getElementById("main-app-body");
   if (mainAppBody) mainAppBody.style.display = "flex";
   
-  // Toggle tab buttons
-  document.getElementById("subject-tab-sql").classList.toggle("active", subject === "sql");
-  document.getElementById("subject-tab-itpass").classList.toggle("active", subject === "itpass");
-  document.getElementById("subject-tab-java").classList.toggle("active", subject === "java");
-  document.getElementById("subject-tab-sg").classList.toggle("active", subject === "sg");
-  document.getElementById("subject-tab-python").classList.toggle("active", subject === "python");
-  document.getElementById("subject-tab-typing").classList.toggle("active", subject === "typing");
-  document.getElementById("subject-tab-coding-typing").classList.toggle("active", subject === "coding-typing");
+  // Toggle tab buttons — replaced by module switch panel
+  // Keep tab DOM elements alive for any legacy dependencies; remove visual classes
+  document.querySelectorAll(".subject-tab").forEach(function(t) { t.classList.remove("active"); });
+
+  // Update module switch panel active state
+  document.querySelectorAll(".module-switch-option").forEach(function(opt) {
+    opt.classList.toggle("active", opt.getAttribute("data-module") === subject);
+  });
   
   // Update header content  // Clear body mode classes
   document.body.classList.remove('mode-java');
@@ -4822,6 +4830,80 @@ function startWithSubject(subject) {
     loadItPassLesson(1);
   }
   dismissGuidance();
+}
+
+/* ====================================================
+   Module Switch Panel (Round 22.2)
+   ==================================================== */
+
+function initModuleSwitch() {
+  if (!moduleSwitchTrigger || !moduleSwitchPanel) return;
+
+  // Toggle panel on trigger click
+  moduleSwitchTrigger.addEventListener("click", function(e) {
+    e.stopPropagation();
+    toggleModuleSwitchPanel();
+  });
+
+  // Close button
+  var closeBtn = moduleSwitchPanel.querySelector(".module-switch-close");
+  if (closeBtn) {
+    closeBtn.addEventListener("click", function() {
+      closeModuleSwitchPanel();
+    });
+  }
+
+  // Click outside to close
+  document.addEventListener("click", function(e) {
+    if (moduleSwitchOpen && !moduleSwitchPanel.contains(e.target) && e.target !== moduleSwitchTrigger && !moduleSwitchTrigger.contains(e.target)) {
+      closeModuleSwitchPanel();
+    }
+  });
+
+  // Escape key to close
+  document.addEventListener("keydown", function(e) {
+    if (e.key === "Escape" && moduleSwitchOpen) {
+      closeModuleSwitchPanel();
+    }
+  });
+
+  // Close panel when switching modules
+  moduleSwitchPanel.addEventListener("click", function(e) {
+    var option = e.target.closest(".module-switch-option");
+    if (option && option.hasAttribute("data-module")) {
+      closeModuleSwitchPanel();
+    }
+  });
+}
+
+function toggleModuleSwitchPanel() {
+  if (moduleSwitchOpen) {
+    closeModuleSwitchPanel();
+  } else {
+    openModuleSwitchPanel();
+  }
+}
+
+function openModuleSwitchPanel() {
+  if (!moduleSwitchPanel || !moduleSwitchTrigger) return;
+  moduleSwitchPanel.hidden = false;
+  moduleSwitchOpen = true;
+  moduleSwitchTrigger.setAttribute("aria-expanded", "true");
+  moduleSwitchTrigger.classList.add("active");
+  // Small delay then focus first option
+  requestAnimationFrame(function() {
+    var first = moduleSwitchPanel.querySelector(".module-switch-option");
+    if (first) first.focus();
+  });
+}
+
+function closeModuleSwitchPanel() {
+  if (!moduleSwitchPanel || !moduleSwitchTrigger) return;
+  moduleSwitchPanel.hidden = true;
+  moduleSwitchOpen = false;
+  moduleSwitchTrigger.setAttribute("aria-expanded", "false");
+  moduleSwitchTrigger.classList.remove("active");
+  moduleSwitchTrigger.focus();
 }
 
 /* ====================================================

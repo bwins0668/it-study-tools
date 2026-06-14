@@ -37,6 +37,20 @@
         codingTyping: "プログラミングタイピング",
         sqlChallenge: "総合ランダム挑戦"
       },
+      moduleSwitch: {
+        title: "学習セクションを選択",
+        close: "閉じる",
+        triggerLabel: "セクション選択を開く"
+      },
+      moduleDesc: {
+        sql: "データベース基礎、クエリ、練習、サンドボックス",
+        sg: "情報セキュリティマネジメント試験対策",
+        itpass: "ITパスポート基礎と過去問演習",
+        typing: "日本語入力とタイピング練習",
+        codingTyping: "コード入力と構文練習",
+        java: "Java の基礎、構文、練習",
+        python: "Python の基礎、構文、練習"
+      },
       codingTyping: {
         title: "プログラミングタイピング練習",
         subtitle: "タイピング練習でプログラミング文法をマスター。言語とカテゴリを選んで始めましょう。",
@@ -402,6 +416,20 @@
         typing: "日本语打字",
         codingTyping: "编程打字",
         sqlChallenge: "综合随机挑战"
+      },
+      moduleSwitch: {
+        title: "选择学习版块",
+        close: "关闭",
+        triggerLabel: "打开版块选择"
+      },
+      moduleDesc: {
+        sql: "数据库基础、查询、练习与沙盒",
+        sg: "情報セキュリティマネジメント試験対策",
+        itpass: "IT Passport 基础与真题练习",
+        typing: "日本语输入与打字练习",
+        codingTyping: "代码输入与语法练习",
+        java: "Java 基础、语法与练习",
+        python: "Python 基础、语法与练习"
       },
       codingTyping: {
         title: "编程打字练习",
@@ -769,6 +797,20 @@
         codingTyping: "Coding Typing",
         sqlChallenge: "Random Challenge"
       },
+      moduleSwitch: {
+        title: "Select learning section",
+        close: "Close",
+        triggerLabel: "Open section selector"
+      },
+      moduleDesc: {
+        sql: "Database basics, queries, practice, and sandbox",
+        sg: "Information Security Management exam prep",
+        itpass: "IT Passport basics and past questions",
+        typing: "Japanese input and typing practice",
+        codingTyping: "Code input and syntax practice",
+        java: "Java basics, syntax, and practice",
+        python: "Python basics, syntax, and practice"
+      },
       codingTyping: {
         title: "Coding Typing Practice",
         subtitle: "Master programming syntax through typing practice. Select a language and category to begin.",
@@ -1135,6 +1177,20 @@
         codingTyping: "ကိုဒ်ရိုကြင်း",
         sqlChallenge: "ကျပန်းစိန်ခေါ်မှု"
       },
+      moduleSwitch: {
+        title: "သင်ယူမှုကဏ္ဍကိုရွေးချယ်ပါ",
+        close: "ပိတ်မည်",
+        triggerLabel: "ကဏ္ဍရွေးချယ်မှုဖွင့်ရန်"
+      },
+      moduleDesc: {
+        sql: "ဒေတာဘေ့စ်အခြေခံ၊ မေးခွန်းထုတ်ခြင်း၊ လေ့ကျင့်ခြင်းနှင့် ဆန်းဘောက်စ်",
+        sg: "သတင်းအချက်အလက်လုံခြုံရေးစီမံခန့်ခွဲမှုစာမေးပွဲပြင်ဆင်မှု",
+        itpass: "IT Passport အခြေခံနှင့် မေးခွန်းဟောင်းလေ့ကျင့်ခန်း",
+        typing: "ဂျပန်စာရိုက်ခြင်းနှင့် လေ့ကျင့်ခန်း",
+        codingTyping: "ကုဒ်ရိုက်ခြင်းနှင့် syntax လေ့ကျင့်ခန်း",
+        java: "Java အခြေခံ၊ syntax နှင့် လေ့ကျင့်ခန်း",
+        python: "Python အခြေခံ၊ syntax နှင့် လေ့ကျင့်ခန်း"
+      },
       codingTyping: {
         title: "ကုဒ်ရိုက်ခြင်းလေ့ကျင့်ခန်း",
         subtitle: "ကုဒ်ရေးနည်းကို ရိုက်ခြင်းဖြင့် လေ့လာပါ။",
@@ -1470,6 +1526,20 @@
         typing: "Gõ tiếng Nhật",
         codingTyping: "Gõ mã nguồn",
         sqlChallenge: "Thử thách ngẫu nhiên"
+      },
+      moduleSwitch: {
+        title: "Chọn khu vực học tập",
+        close: "Đóng",
+        triggerLabel: "Mở bảng chọn khu vực"
+      },
+      moduleDesc: {
+        sql: "Cơ sở dữ liệu, truy vấn, thực hành và sandbox",
+        sg: "Luyện thi Quản lý An toàn Thông tin",
+        itpass: "IT Passport cơ bản và đề thi cũ",
+        typing: "Nhập và luyện gõ tiếng Nhật",
+        codingTyping: "Nhập mã và luyện cú pháp",
+        java: "Java cơ bản, cú pháp và thực hành",
+        python: "Python cơ bản, cú pháp và thực hành"
       },
       codingTyping: {
         title: "Luyện gõ mã nguồn",
@@ -1807,6 +1877,20 @@
         codingTyping: "Frappe de code",
         sqlChallenge: "Défi aléatoire"
       },
+      moduleSwitch: {
+        title: "Choisir une section d'apprentissage",
+        close: "Fermer",
+        triggerLabel: "Ouvrir le sélecteur de section"
+      },
+      moduleDesc: {
+        sql: "Bases de données, requêtes, pratique et bac à sable",
+        sg: "Préparation à l'examen de gestion de la sécurité",
+        itpass: "IT Passport : bases et annales",
+        typing: "Saisie japonaise et pratique",
+        codingTyping: "Saisie de code et pratique de syntaxe",
+        java: "Java : bases, syntaxe et pratique",
+        python: "Python : bases, syntaxe et pratique"
+      },
       codingTyping: {
         title: "Exercice de frappe de code",
         subtitle: "Maîtrisez la syntaxe en tapant du code. Choisissez un langage.",
@@ -2142,6 +2226,20 @@
         typing: "일본어 타자",
         codingTyping: "코딩 타자",
         sqlChallenge: "랜덤 도전"
+      },
+      moduleSwitch: {
+        title: "학습 섹션 선택",
+        close: "닫기",
+        triggerLabel: "섹션 선택 열기"
+      },
+      moduleDesc: {
+        sql: "데이터베이스 기초, 쿼리, 연습, 샌드박스",
+        sg: "정보보안 관리 시험 대비",
+        itpass: "IT Passport 기초와 기출문제 연습",
+        typing: "일본어 입력 및 타자 연습",
+        codingTyping: "코드 입력 및 구문 연습",
+        java: "Java 기초, 구문, 연습",
+        python: "Python 기초, 구문, 연습"
       },
       codingTyping: {
         title: "코딩 타자 연습",
@@ -2479,6 +2577,20 @@
       typing: "日本语打字 / 日本語タイピング",
       codingTyping: "编程打字 / プログラミングタイピング",
       sqlChallenge: "综合随机挑战 / 総合ランダム挑戦"
+    },
+    moduleSwitch: {
+      title: "选择学习版块 / 学習セクションを選択",
+      close: "关闭 / 閉じる",
+      triggerLabel: "打开版块选择 / セクション選択を開く"
+    },
+    moduleDesc: {
+      sql: "数据库基础、查询、练习与沙盒 / データベース基礎、クエリ、練習、サンドボックス",
+      sg: "情報セキュリティマネジメント試験対策",
+      itpass: "IT Passport 基础与真题练习 / ITパスポート基礎と過去問演習",
+      typing: "日本语输入与打字练习 / 日本語入力とタイピング練習",
+      codingTyping: "代码输入与语法练习 / コード入力と構文練習",
+      java: "Java 基础、语法与练习 / Java の基礎、構文、練習",
+      python: "Python 基础、语法与练习 / Python の基礎、構文、練習"
     },
     codingTyping: {
       title: "编程打字练习 / プログラミングタイピング練習",

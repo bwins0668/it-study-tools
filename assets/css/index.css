@@ -222,7 +222,47 @@ body[data-theme="light"] .guidance-btn:hover {
 .header-logo {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 8px;
+}
+
+/* Module Switch Trigger — replaces old header-logo inline content */
+.module-switch-trigger {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  padding: 4px 10px 4px 4px;
+  cursor: pointer;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  transition: all 0.2s ease;
+  max-width: 280px;
+}
+.module-switch-trigger:hover {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+.module-switch-trigger:focus-visible {
+  outline: 2px solid var(--neon-cyan);
+  outline-offset: 2px;
+}
+.module-switch-trigger.active {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+.brand-caret {
+  font-size: 10px;
+  color: var(--text-muted);
+  transition: transform 0.2s ease;
+  flex-shrink: 0;
+  line-height: 1;
+}
+.module-switch-trigger.active .brand-caret {
+  transform: rotate(180deg);
 }
 
 .logo-icon {
@@ -6490,8 +6530,8 @@ body[data-i18n-dir="rtl"].i18n-active .language-option-main {
 }
 
 .header-logo {
-  flex: 0 0 260px;
-  min-width: 220px;
+  flex: 0 0 auto;
+  min-width: 0;
 }
 
 .logo-text h1 {
@@ -6499,24 +6539,24 @@ body[data-i18n-dir="rtl"].i18n-active .language-option-main {
   font-size: 18px;
   line-height: 1.18;
   letter-spacing: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .logo-text span {
   font-size: 11.5px;
   line-height: 1.35;
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
+/* Round 22.2: Hide the old subject tab selector from visual layout.
+   Keep DOM elements alive for any legacy references. */
 .header-subject-selector {
-  align-items: stretch;
-  flex: 1 1 auto;
-  min-width: 0;
-  max-width: 1010px;
-  overflow-x: auto;
-  scrollbar-width: none;
-}
-
-.header-subject-selector::-webkit-scrollbar {
-  display: none;
+  display: none !important;
 }
 
 .subject-tab,
@@ -7242,6 +7282,151 @@ body.i18n-active :where(
 }
 .auth-privacy-list li .fa-ban {
   color: var(--error-color);
+}
+
+/* ==========================================================================
+   Round 22.2: Module Switch Panel
+   ========================================================================== */
+
+/* Panel overlay */
+.module-switch-panel {
+  position: fixed;
+  top: 68px;
+  left: 24px;
+  width: 360px;
+  max-width: calc(100vw - 48px);
+  max-height: calc(100vh - 88px);
+  overflow-y: auto;
+  background: rgba(14, 20, 34, 0.96);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+  z-index: 900;
+  animation: moduleSwitchSlideIn 0.18s ease-out;
+}
+
+@keyframes moduleSwitchSlideIn {
+  from { opacity: 0; transform: translateY(-6px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Panel header */
+.module-switch-panel__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+.module-switch-panel__header strong {
+  font-size: 14px;
+  color: var(--text-main);
+}
+.module-switch-close {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 20px;
+  cursor: pointer;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  transition: all 0.15s;
+}
+.module-switch-close:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--text-main);
+}
+.module-switch-close:focus-visible {
+  outline: 2px solid var(--neon-cyan);
+  outline-offset: 1px;
+}
+
+/* Panel body */
+.module-switch-panel__body {
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* Option buttons */
+.module-switch-option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 12px;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  cursor: pointer;
+  color: var(--text-main);
+  font: inherit;
+  text-align: left;
+  transition: all 0.15s ease;
+}
+.module-switch-option:hover {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.06);
+}
+.module-switch-option:focus-visible {
+  outline: 2px solid var(--neon-cyan);
+  outline-offset: 1px;
+}
+.module-switch-option.active {
+  background: linear-gradient(135deg, rgba(6, 182, 212, 0.12), rgba(59, 130, 246, 0.12));
+  border-color: rgba(6, 182, 212, 0.25);
+}
+.module-switch-option__icon {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.04);
+}
+.module-switch-option.active .module-switch-option__icon {
+  color: var(--neon-cyan);
+}
+
+.module-switch-option__text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+.module-switch-option__text strong {
+  font-size: 14px;
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.module-switch-option__text span {
+  font-size: 11.5px;
+  color: var(--text-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Mobile: full-width panel from left edge */
+@media (max-width: 720px) {
+  .module-switch-panel {
+    top: 60px;
+    left: 12px;
+    width: calc(100vw - 24px);
+    max-width: calc(100vw - 24px);
+    max-height: calc(100vh - 76px);
+  }
 }
 
 /* ==========================================================================
