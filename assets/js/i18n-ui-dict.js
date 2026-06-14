@@ -3923,16 +3923,16 @@
   });
 
   var CODING_TYPING_ROUND_21_8 = {
-    "zh-CN": { switchedToSandbox: "已切换到沙盒", codeSentAndOpened: "代码已发送并打开沙盒" },
-    "ja-JP": { switchedToSandbox: "サンドボックスに切り替えました", codeSentAndOpened: "コードを送信し、サンドボックスを開きました" },
-    "en-US": { switchedToSandbox: "Switched to the sandbox", codeSentAndOpened: "Code sent and sandbox opened" },
-    "ko-KR": { switchedToSandbox: "샌드박스로 전환했습니다", codeSentAndOpened: "코드를 보내고 샌드박스를 열었습니다" },
-    "vi-VN": { switchedToSandbox: "Đã chuyển sang sandbox", codeSentAndOpened: "Đã gửi mã và mở sandbox" },
-    "my-MM": { switchedToSandbox: "Sandbox သို့ ပြောင်းပြီးပါပြီ", codeSentAndOpened: "ကုဒ်ပို့ပြီး Sandbox ကို ဖွင့်ထားပါသည်" },
-    "fr-FR": { switchedToSandbox: "Passage au bac à sable effectué", codeSentAndOpened: "Code envoyé et bac à sable ouvert" },
-    "th-TH": { switchedToSandbox: "สลับไปยังแซนด์บ็อกซ์แล้ว", codeSentAndOpened: "ส่งโค้ดและเปิดแซนด์บ็อกซ์แล้ว" },
-    "id-ID": { switchedToSandbox: "Beralih ke sandbox", codeSentAndOpened: "Kode dikirim dan sandbox dibuka" },
-    "default-ja-zh": { switchedToSandbox: "已切换到沙盒 / サンドボックスに切り替えました", codeSentAndOpened: "代码已发送并打开沙盒 / コードを送信し、サンドボックスを開きました" }
+    "zh-CN": { switchedToSandbox: "已切换到沙盒", codeSentAndOpened: "代码已发送并打开沙盒", sqlSeedIncluded: "已附带建表与测试数据并打开 SQL 沙盒" },
+    "ja-JP": { switchedToSandbox: "サンドボックスに切り替えました", codeSentAndOpened: "コードを送信し、サンドボックスを開きました", sqlSeedIncluded: "テーブル定義とテストデータを添えて SQL サンドボックスを開きました" },
+    "en-US": { switchedToSandbox: "Switched to the sandbox", codeSentAndOpened: "Code sent and sandbox opened", sqlSeedIncluded: "SQL sandbox opened with table definitions and test data" },
+    "ko-KR": { switchedToSandbox: "샌드박스로 전환했습니다", codeSentAndOpened: "코드를 보내고 샌드박스를 열었습니다", sqlSeedIncluded: "테이블 정의와 테스트 데이터를 포함해 SQL 샌드박스를 열었습니다" },
+    "vi-VN": { switchedToSandbox: "Đã chuyển sang sandbox", codeSentAndOpened: "Đã gửi mã và mở sandbox", sqlSeedIncluded: "Đã mở sandbox SQL kèm định nghĩa bảng và dữ liệu kiểm thử" },
+    "my-MM": { switchedToSandbox: "Sandbox သို့ ပြောင်းပြီးပါပြီ", codeSentAndOpened: "ကုဒ်ပို့ပြီး Sandbox ကို ဖွင့်ထားပါသည်", sqlSeedIncluded: "ဇယားသတ်မှတ်ချက်နှင့် စမ်းသပ်ဒေတာပါသော SQL Sandbox ကို ဖွင့်ထားပါသည်" },
+    "fr-FR": { switchedToSandbox: "Passage au bac à sable effectué", codeSentAndOpened: "Code envoyé et bac à sable ouvert", sqlSeedIncluded: "Bac à sable SQL ouvert avec les tables et les données de test" },
+    "th-TH": { switchedToSandbox: "สลับไปยังแซนด์บ็อกซ์แล้ว", codeSentAndOpened: "ส่งโค้ดและเปิดแซนด์บ็อกซ์แล้ว", sqlSeedIncluded: "เปิดแซนด์บ็อกซ์ SQL พร้อมโครงสร้างตารางและข้อมูลทดสอบแล้ว" },
+    "id-ID": { switchedToSandbox: "Beralih ke sandbox", codeSentAndOpened: "Kode dikirim dan sandbox dibuka", sqlSeedIncluded: "Sandbox SQL dibuka dengan definisi tabel dan data uji" },
+    "default-ja-zh": { switchedToSandbox: "已切换到沙盒 / サンドボックスに切り替えました", codeSentAndOpened: "代码已发送并打开沙盒 / コードを送信し、サンドボックスを開きました", sqlSeedIncluded: "已附带建表与测试数据 / テーブル定義とテストデータを添えました" }
   };
 
   Object.keys(CODING_TYPING_ROUND_21_8).forEach(function (locale) {

@@ -882,3 +882,149 @@ window.CODING_TYPING_DATA_SQL = [
     "source": "builtin"
   }
 ];
+
+(function () {
+  var fixtures = {
+    "sql-select-001": {
+      sqlSchema: "DROP TABLE IF EXISTS users;\nCREATE TABLE users (id INTEGER, name TEXT, age INTEGER, email TEXT);",
+      sqlSeed: "INSERT INTO users (id, name, age, email) VALUES (1, 'Alice', 25, 'alice@example.com');\nINSERT INTO users (id, name, age, email) VALUES (2, 'Bob', 31, 'bob@example.com');\nINSERT INTO users (id, name, age, email) VALUES (3, 'Aoi', 22, 'aoi@example.com');",
+      expectedRows: 3,
+      expectedColumns: ["id", "name", "age", "email"],
+      expectedResultNote: { "zh-CN": "返回 users 表的全部 3 行。", "ja-JP": "users テーブルの全3行を返します。", "en-US": "Returns all three rows from users." }
+    },
+    "sql-select-002": {
+      sqlSchema: "DROP TABLE IF EXISTS employees;\nCREATE TABLE employees (id INTEGER, name TEXT, age INTEGER, department TEXT, salary INTEGER);",
+      sqlSeed: "INSERT INTO employees (id, name, age, department, salary) VALUES (1, 'Aoi', 24, 'Sales', 42000);\nINSERT INTO employees (id, name, age, department, salary) VALUES (2, 'Ren', 32, 'Engineering', 56000);\nINSERT INTO employees (id, name, age, department, salary) VALUES (3, 'Mika', 28, 'Sales', 47000);",
+      expectedRows: 3,
+      expectedColumns: ["name", "age"],
+      expectedResultNote: { "zh-CN": "返回 3 名员工的姓名和年龄。", "ja-JP": "3名の従業員の名前と年齢を返します。", "en-US": "Returns the names and ages of three employees." }
+    },
+    "sql-select-003": {
+      sqlSchema: "DROP TABLE IF EXISTS customers;\nCREATE TABLE customers (id INTEGER, name TEXT, city TEXT);",
+      sqlSeed: "INSERT INTO customers (id, name, city) VALUES (1, 'Alice', 'Tokyo');\nINSERT INTO customers (id, name, city) VALUES (2, 'Bob', 'Osaka');\nINSERT INTO customers (id, name, city) VALUES (3, 'Carol', 'Tokyo');",
+      expectedRows: 2,
+      expectedColumns: ["city"],
+      expectedResultNote: { "zh-CN": "去重后返回 Tokyo 和 Osaka。", "ja-JP": "重複を除き Tokyo と Osaka を返します。", "en-US": "Returns Tokyo and Osaka without duplicates." }
+    },
+    "sql-where-001": {
+      sqlSchema: "DROP TABLE IF EXISTS products;\nCREATE TABLE products (id INTEGER, name TEXT, price REAL, stock INTEGER);",
+      sqlSeed: "INSERT INTO products (id, name, price, stock) VALUES (1, 'Keyboard', 120, 8);\nINSERT INTO products (id, name, price, stock) VALUES (2, 'Mouse', 45, 20);\nINSERT INTO products (id, name, price, stock) VALUES (3, 'Monitor', 280, 5);",
+      expectedRows: 2,
+      expectedResultNote: { "zh-CN": "返回价格大于 100 的 Keyboard 和 Monitor。", "ja-JP": "価格が100より高い Keyboard と Monitor を返します。", "en-US": "Returns Keyboard and Monitor, whose prices exceed 100." }
+    },
+    "sql-where-002": {
+      sqlSchema: "DROP TABLE IF EXISTS users;\nCREATE TABLE users (id INTEGER, name TEXT, age INTEGER);",
+      sqlSeed: "INSERT INTO users (id, name, age) VALUES (1, 'Alice', 25);\nINSERT INTO users (id, name, age) VALUES (2, 'Bob', 31);\nINSERT INTO users (id, name, age) VALUES (3, 'Aoi', 22);",
+      expectedRows: 1,
+      expectedResultNote: { "zh-CN": "只返回 Alice。", "ja-JP": "Alice の行だけを返します。", "en-US": "Returns only Alice." }
+    },
+    "sql-where-003": {
+      sqlSchema: "DROP TABLE IF EXISTS orders;\nCREATE TABLE orders (id INTEGER, customer_id INTEGER, amount REAL, status TEXT);",
+      sqlSeed: "INSERT INTO orders (id, customer_id, amount, status) VALUES (1, 1, 80, 'shipped');\nINSERT INTO orders (id, customer_id, amount, status) VALUES (2, 2, 40, 'shipped');\nINSERT INTO orders (id, customer_id, amount, status) VALUES (3, 1, 120, 'pending');",
+      expectedRows: 1,
+      expectedResultNote: { "zh-CN": "返回金额大于 50 且已发货的订单。", "ja-JP": "金額が50より大きく発送済みの注文を返します。", "en-US": "Returns shipped orders with an amount greater than 50." }
+    },
+    "sql-where-004": {
+      sqlSchema: "DROP TABLE IF EXISTS students;\nCREATE TABLE students (id INTEGER, name TEXT, grade TEXT, score INTEGER);",
+      sqlSeed: "INSERT INTO students (id, name, grade, score) VALUES (1, 'Aoi', 'A', 92);\nINSERT INTO students (id, name, grade, score) VALUES (2, 'Ren', 'B', 81);\nINSERT INTO students (id, name, grade, score) VALUES (3, 'Mika', 'C', 68);",
+      expectedRows: 2,
+      expectedResultNote: { "zh-CN": "返回等级为 A 或 B 的两名学生。", "ja-JP": "成績が A または B の学生2名を返します。", "en-US": "Returns the two students whose grades are A or B." }
+    },
+    "sql-order-001": {
+      sqlSchema: "DROP TABLE IF EXISTS products;\nCREATE TABLE products (id INTEGER, name TEXT, price REAL);",
+      sqlSeed: "INSERT INTO products (id, name, price) VALUES (1, 'Keyboard', 120);\nINSERT INTO products (id, name, price) VALUES (2, 'Mouse', 45);\nINSERT INTO products (id, name, price) VALUES (3, 'Monitor', 280);",
+      expectedRows: 3,
+      expectedResultNote: { "zh-CN": "按价格从高到低返回商品。", "ja-JP": "商品を価格の高い順に返します。", "en-US": "Returns products ordered by price from highest to lowest." }
+    },
+    "sql-order-003": {
+      sqlSchema: "DROP TABLE IF EXISTS orders;\nCREATE TABLE orders (id INTEGER, total REAL, created_at TEXT);",
+      sqlSeed: "INSERT INTO orders (id, total, created_at) VALUES (1, 80, '2026-06-01');\nINSERT INTO orders (id, total, created_at) VALUES (2, 40, '2026-06-10');\nINSERT INTO orders (id, total, created_at) VALUES (3, 120, '2026-06-12');",
+      expectedRows: 2,
+      expectedResultNote: { "zh-CN": "筛选总额大于 50 的订单并按日期降序排列。", "ja-JP": "合計が50より大きい注文を日付の降順で返します。", "en-US": "Returns orders over 50 sorted by newest date first." }
+    },
+    "sql-group-001": {
+      sqlSchema: "DROP TABLE IF EXISTS employees;\nCREATE TABLE employees (id INTEGER, name TEXT, department TEXT, salary INTEGER);",
+      sqlSeed: "INSERT INTO employees (id, name, department, salary) VALUES (1, 'Aoi', 'Sales', 42000);\nINSERT INTO employees (id, name, department, salary) VALUES (2, 'Ren', 'Engineering', 56000);\nINSERT INTO employees (id, name, department, salary) VALUES (3, 'Mika', 'Sales', 47000);\nINSERT INTO employees (id, name, department, salary) VALUES (4, 'Ken', 'Engineering', 61000);",
+      expectedRows: 2,
+      expectedColumns: ["department", "COUNT(*)"],
+      expectedResultNote: { "zh-CN": "按部门统计员工人数。", "ja-JP": "部署ごとの従業員数を集計します。", "en-US": "Counts employees in each department." }
+    },
+    "sql-group-002": {
+      sqlSchema: "DROP TABLE IF EXISTS employees;\nCREATE TABLE employees (id INTEGER, name TEXT, department TEXT, salary INTEGER);",
+      sqlSeed: "INSERT INTO employees (id, name, department, salary) VALUES (1, 'Aoi', 'Sales', 42000);\nINSERT INTO employees (id, name, department, salary) VALUES (2, 'Ren', 'Engineering', 56000);\nINSERT INTO employees (id, name, department, salary) VALUES (3, 'Mika', 'Sales', 48000);\nINSERT INTO employees (id, name, department, salary) VALUES (4, 'Ken', 'Engineering', 64000);",
+      expectedRows: 2,
+      expectedResultNote: { "zh-CN": "返回各部门人数与平均工资。", "ja-JP": "部署ごとの人数と平均給与を返します。", "en-US": "Returns employee count and average salary by department." }
+    },
+    "sql-having-001": {
+      sqlSchema: "DROP TABLE IF EXISTS employees;\nCREATE TABLE employees (id INTEGER, name TEXT, department TEXT);",
+      sqlSeed: "INSERT INTO employees (id, name, department) VALUES (1, 'Aoi', 'Sales');\nINSERT INTO employees (id, name, department) VALUES (2, 'Ren', 'Sales');\nINSERT INTO employees (id, name, department) VALUES (3, 'Mika', 'Sales');\nINSERT INTO employees (id, name, department) VALUES (4, 'Ken', 'Sales');\nINSERT INTO employees (id, name, department) VALUES (5, 'Yui', 'Sales');\nINSERT INTO employees (id, name, department) VALUES (6, 'Sora', 'Sales');\nINSERT INTO employees (id, name, department) VALUES (7, 'Haru', 'Engineering');",
+      expectedRows: 1,
+      expectedResultNote: { "zh-CN": "只返回人数大于 5 的 Sales 部门。", "ja-JP": "人数が5人を超える Sales 部署だけを返します。", "en-US": "Returns only Sales, the department with more than five employees." }
+    },
+    "sql-having-002": {
+      sqlSchema: "DROP TABLE IF EXISTS employees;\nCREATE TABLE employees (id INTEGER, name TEXT, department TEXT, salary INTEGER);",
+      sqlSeed: "INSERT INTO employees (id, name, department, salary) VALUES (1, 'Aoi', 'Sales', 42000);\nINSERT INTO employees (id, name, department, salary) VALUES (2, 'Ren', 'Sales', 48000);\nINSERT INTO employees (id, name, department, salary) VALUES (3, 'Mika', 'Sales', 51000);\nINSERT INTO employees (id, name, department, salary) VALUES (4, 'Ken', 'Support', 33000);\nINSERT INTO employees (id, name, department, salary) VALUES (5, 'Yui', 'Support', 35000);",
+      expectedRows: 1,
+      expectedResultNote: { "zh-CN": "返回平均工资大于 40000 且人数不少于 3 的 Sales 部门。", "ja-JP": "平均給与が40000を超え、3人以上いる Sales 部署を返します。", "en-US": "Returns Sales, whose average salary exceeds 40000 and has at least three employees." }
+    },
+    "sql-join-001": {
+      sqlSchema: "DROP TABLE IF EXISTS orders;\nDROP TABLE IF EXISTS customers;\nCREATE TABLE customers (id INTEGER, name TEXT, city TEXT);\nCREATE TABLE orders (id INTEGER, customer_id INTEGER, amount REAL, status TEXT);",
+      sqlSeed: "INSERT INTO customers (id, name, city) VALUES (1, 'Alice', 'Tokyo');\nINSERT INTO customers (id, name, city) VALUES (2, 'Bob', 'Osaka');\nINSERT INTO orders (id, customer_id, amount, status) VALUES (101, 1, 80, 'shipped');\nINSERT INTO orders (id, customer_id, amount, status) VALUES (102, 2, 45, 'pending');\nINSERT INTO orders (id, customer_id, amount, status) VALUES (103, 1, 120, 'shipped');",
+      expectedRows: 3,
+      expectedResultNote: { "zh-CN": "将 3 条订单与对应客户连接。", "ja-JP": "3件の注文を対応する顧客と結合します。", "en-US": "Joins three orders with their matching customers." }
+    },
+    "sql-update-001": {
+      sqlSchema: "DROP TABLE IF EXISTS users;\nCREATE TABLE users (id INTEGER, name TEXT, age INTEGER);",
+      sqlSeed: "INSERT INTO users (id, name, age) VALUES (1, 'Alice', 25);\nINSERT INTO users (id, name, age) VALUES (2, 'Bob', 31);",
+      expectedRows: 1,
+      expectedResultNote: { "zh-CN": "将 Alice 的年龄更新为 26。", "ja-JP": "Alice の年齢を26に更新します。", "en-US": "Updates Alice's age to 26." }
+    },
+    "sql-update-002": {
+      sqlSchema: "DROP TABLE IF EXISTS products;\nCREATE TABLE products (id INTEGER, name TEXT, price REAL, stock INTEGER);",
+      sqlSeed: "INSERT INTO products (id, name, price, stock) VALUES (5, 'Keyboard', 35.5, 20);\nINSERT INTO products (id, name, price, stock) VALUES (6, 'Mouse', 18.0, 50);",
+      expectedRows: 1,
+      expectedResultNote: { "zh-CN": "将 id 为 5 的商品价格和库存一起更新。", "ja-JP": "id が5の商品について価格と在庫を更新します。", "en-US": "Updates both price and stock for product 5." }
+    },
+    "sql-delete-001": {
+      sqlSchema: "DROP TABLE IF EXISTS users;\nCREATE TABLE users (id INTEGER, name TEXT);",
+      sqlSeed: "INSERT INTO users (id, name) VALUES (9, 'Aoi');\nINSERT INTO users (id, name) VALUES (10, 'Ren');\nINSERT INTO users (id, name) VALUES (11, 'Mika');",
+      expectedRows: 1,
+      expectedResultNote: { "zh-CN": "删除 id 为 10 的一行。", "ja-JP": "id が10の1行を削除します。", "en-US": "Deletes the row whose id is 10." }
+    },
+    "sql-delete-002": {
+      sqlSchema: "DROP TABLE IF EXISTS orders;\nCREATE TABLE orders (id INTEGER, status TEXT, created_at TEXT);",
+      sqlSeed: "INSERT INTO orders (id, status, created_at) VALUES (1, 'cancelled', '2023-10-01');\nINSERT INTO orders (id, status, created_at) VALUES (2, 'cancelled', '2024-02-01');\nINSERT INTO orders (id, status, created_at) VALUES (3, 'shipped', '2023-08-01');",
+      expectedRows: 1,
+      expectedResultNote: { "zh-CN": "删除 2024 年前已取消的订单。", "ja-JP": "2024年より前にキャンセルされた注文を削除します。", "en-US": "Deletes cancelled orders created before 2024." }
+    },
+    "sql-count-001": {
+      sqlSchema: "DROP TABLE IF EXISTS students;\nCREATE TABLE students (id INTEGER, name TEXT, score INTEGER);",
+      sqlSeed: "INSERT INTO students (id, name, score) VALUES (1, 'Aoi', 92);\nINSERT INTO students (id, name, score) VALUES (2, 'Ren', 81);\nINSERT INTO students (id, name, score) VALUES (3, 'Mika', 68);",
+      expectedRows: 1,
+      expectedColumns: ["COUNT(*)"],
+      expectedResultNote: { "zh-CN": "返回学生总数 3。", "ja-JP": "学生数3を返します。", "en-US": "Returns a student count of three." }
+    },
+    "sql-like-001": {
+      sqlSchema: "DROP TABLE IF EXISTS users;\nCREATE TABLE users (id INTEGER, name TEXT);",
+      sqlSeed: "INSERT INTO users (id, name) VALUES (1, 'Alice');\nINSERT INTO users (id, name) VALUES (2, 'Aoi');\nINSERT INTO users (id, name) VALUES (3, 'Bob');",
+      expectedRows: 2,
+      expectedResultNote: { "zh-CN": "返回名字以 A 开头的 Alice 和 Aoi。", "ja-JP": "名前が A で始まる Alice と Aoi を返します。", "en-US": "Returns Alice and Aoi, whose names begin with A." }
+    },
+    "sql-limit-001": {
+      sqlSchema: "DROP TABLE IF EXISTS products;\nCREATE TABLE products (id INTEGER, name TEXT, price REAL);",
+      sqlSeed: "INSERT INTO products (id, name, price) VALUES (1, 'P1', 10);\nINSERT INTO products (id, name, price) VALUES (2, 'P2', 20);\nINSERT INTO products (id, name, price) VALUES (3, 'P3', 30);\nINSERT INTO products (id, name, price) VALUES (4, 'P4', 40);\nINSERT INTO products (id, name, price) VALUES (5, 'P5', 50);\nINSERT INTO products (id, name, price) VALUES (6, 'P6', 60);\nINSERT INTO products (id, name, price) VALUES (7, 'P7', 70);\nINSERT INTO products (id, name, price) VALUES (8, 'P8', 80);\nINSERT INTO products (id, name, price) VALUES (9, 'P9', 90);\nINSERT INTO products (id, name, price) VALUES (10, 'P10', 100);\nINSERT INTO products (id, name, price) VALUES (11, 'P11', 110);\nINSERT INTO products (id, name, price) VALUES (12, 'P12', 120);",
+      expectedRows: 10,
+      expectedResultNote: { "zh-CN": "按价格降序返回前 10 个商品。", "ja-JP": "価格の降順で上位10商品を返します。", "en-US": "Returns the ten highest-priced products." }
+    }
+  };
+
+  window.CODING_TYPING_DATA_SQL.forEach(function (item) {
+    var fixture = fixtures[item.id];
+    if (!fixture) return;
+    fixture.sqlSchema = fixture.sqlSchema.replace(
+      /\bCREATE TABLE (?!IF NOT EXISTS)/gi,
+      "CREATE TABLE IF NOT EXISTS "
+    );
+    Object.assign(item, fixture);
+  });
+})();

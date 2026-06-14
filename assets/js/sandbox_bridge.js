@@ -20,7 +20,7 @@
       return SB.detectAvailability(item.language);
     },
 
-    sendCode: function(lang, code) {
+    sendCode: function(lang, code, item) {
       if (!code || !SB.detectAvailability(lang)) return Promise.resolve(false);
 
       return SB.openSandboxPanel(lang).then(function(opened) {
@@ -34,7 +34,11 @@
           } else if (lang === 'sql') {
             var el = document.getElementById('sql-editor');
             if (!el) return false;
-            el.value = code;
+            SB._pendingSqlItem = item && (item.sqlSchema || item.sqlSeed) ? item : null;
+            SB._installSqlRunHooks();
+            el.value = SB._pendingSqlItem
+              ? [item.sqlSchema, item.sqlSeed, code].filter(Boolean).join('\n\n')
+              : code;
             el.dispatchEvent(new Event('input', { bubbles: true }));
             el.dispatchEvent(new Event('change', { bubbles: true }));
             el.focus();
@@ -65,6 +69,7 @@
         }
       } else if (lang === 'sql') {
         if (typeof window.runPlaygroundQuery === 'function') {
+          SB._preparePendingSqlRun();
           runPlaygroundQuery();
           return true;
         }
@@ -107,6 +112,121 @@
 
     _getEditor: function(lang) {
       return document.getElementById(lang + '-editor');
+    },
+
+    _pendingSqlItem: null,
+    _sqlRunHooksInstalled: false,
+
+    _installSqlRunHooks: function() {
+      if (SB._sqlRunHooksInstalled) return;
+      SB._sqlRunHooksInstalled = true;
+
+      document.addEventListener('click', function(event) {
+        var button = event.target && event.target.closest
+          ? event.target.closest('#run-query-btn')
+          : null;
+        if (button) SB._preparePendingSqlRun();
+      }, true);
+
+      document.addEventListener('keydown', function(event) {
+        if (event.key !== 'Enter' || (!event.ctrlKey && !event.metaKey)) return;
+        if (event.target && event.target.id === 'sql-editor') {
+          SB._preparePendingSqlRun();
+        }
+      }, true);
+    },
+
+    _preparePendingSqlRun: function() {
+      var item = SB._pendingSqlItem;
+      if (!item) return true;
+
+      try {
+        if (!SB._applySqlFixture(item)) return false;
+
+        var editor = document.getElementById('sql-editor');
+        if (!editor) return false;
+        editor.value = String(item.code || '').replace(/\bINNER\s+JOIN\b/gi, 'JOIN');
+        editor.dispatchEvent(new Event('input', { bubbles: true }));
+        editor.dispatchEvent(new Event('change', { bubbles: true }));
+        return true;
+      } catch (err) {
+        console.warn('[SandboxBridge] Failed to prepare SQL fixture:', err);
+        return false;
+      }
+    },
+
+    _applySqlFixture: function(item) {
+      if (typeof sqlEngine === 'undefined' || !sqlEngine || !sqlEngine.db) return false;
+
+      String(item.sqlSchema || '').split(';').forEach(function(statement) {
+        var sql = statement.trim();
+        if (!sql) return;
+
+        var dropMatch = sql.match(/^DROP\s+TABLE\s+IF\s+EXISTS\s+(\w+)$/i);
+        if (dropMatch) {
+          delete sqlEngine.db[dropMatch[1].toLowerCase()];
+          return;
+        }
+
+        var createMatch = sql.match(/^CREATE\s+TABLE(?:\s+IF\s+NOT\s+EXISTS)?\s+(\w+)\s*\(/i);
+        if (createMatch) sqlEngine.db[createMatch[1].toLowerCase()] = [];
+      });
+
+      String(item.sqlSeed || '').split(';').forEach(function(statement) {
+        var sql = statement.trim();
+        if (!sql) return;
+
+        var insertMatch = sql.match(/^INSERT\s+INTO\s+(\w+)\s*\(([^)]+)\)\s*VALUES\s*\(([\s\S]+)\)$/i);
+        if (!insertMatch) return;
+
+        var tableName = insertMatch[1].toLowerCase();
+        var columns = insertMatch[2].split(',').map(function(column) {
+          return column.trim();
+        });
+        var values = SB._splitSqlValues(insertMatch[3]).map(SB._parseSqlValue);
+        var row = {};
+        columns.forEach(function(column, index) {
+          row[column] = values[index];
+        });
+        if (!sqlEngine.db[tableName]) sqlEngine.db[tableName] = [];
+        sqlEngine.db[tableName].push(row);
+      });
+
+      return true;
+    },
+
+    _splitSqlValues: function(source) {
+      var values = [];
+      var current = '';
+      var quoted = false;
+
+      for (var i = 0; i < source.length; i += 1) {
+        var char = source[i];
+        if (char === "'") {
+          if (quoted && source[i + 1] === "'") {
+            current += "''";
+            i += 1;
+            continue;
+          }
+          quoted = !quoted;
+        }
+        if (char === ',' && !quoted) {
+          values.push(current.trim());
+          current = '';
+        } else {
+          current += char;
+        }
+      }
+      values.push(current.trim());
+      return values;
+    },
+
+    _parseSqlValue: function(value) {
+      var text = String(value).trim();
+      if (/^NULL$/i.test(text)) return null;
+      if (/^'.*'$/.test(text)) return text.slice(1, -1).replace(/''/g, "'");
+      if (/^-?\d+(?:\.\d+)?$/.test(text)) return Number(text);
+      return text;
     },
 
     _showLanguageWidgets: function(lang) {
