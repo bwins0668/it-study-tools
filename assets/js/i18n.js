@@ -379,9 +379,38 @@
     if (!clean) return;
     translationCache.set(cacheKey(item), clean);
     persistCacheSoon();
+  function safeRememberTranslation(item, translatedText) {
+    if (!isMojibakeFree(translatedText)) {
+      console.warn("[I18n] Skipping mojibake translation cache entry");
+      return;
+    }
+    rememberTranslation(item, translatedText);
+  }
+
   }
 
   loadPersistentCache();
+  // [R22.11] Prevent mojibake in translation cache
+  var MOJIBAKE_RE = /[\u9B2B\u9B2E\u9B77\u9B6C\u9B54\u9B36\u9B30\u9B2C\u9B3B\u9B48\u9B41\u9B3E\u9B32\u9B44\u9B34\u9B6B]/;
+  function isMojibakeFree(text) {
+    return text && typeof text === "string" ? !MOJIBAKE_RE.test(text) : true;
+  }
+  
+  function clearBadI18nCache() {
+    var cleaned = 0;
+    translationCache.forEach(function(value, key) {
+      if (!isMojibakeFree(value)) {
+        translationCache.delete(key);
+        cleaned++;
+      }
+    });
+    if (cleaned > 0) {
+      console.log("[I18n] Cleaned " + cleaned + " mojibake entries from cache");
+      persistCacheSoon();
+    }
+  }
+  clearBadI18nCache();
+
 
   function langInfo(code = currentLang) {
     return languageByCode.get(code) || languageByCode.get(DEFAULT_LANG);
