@@ -3177,8 +3177,7 @@ function renderCbtQuestion() {
   document.getElementById("cbt-exam-display-title").innerText = activeCbtExam.title;
   document.getElementById("cbt-q-number-text").innerText = `第 ${idx + 1} 题 / 問 ${q.number}`;
 
-  // Build short summary: year · 問number · category (or last subsegment)
-  const yearShort = q.year ? q.year.replace(/[年](.*)/, '年') : "";
+  // Build short summary: year · category
   const catShort = q.subcategory || q.topic || q.category || "";
   const summary = [q.year, catShort].filter(Boolean).join(" / ");
   document.getElementById("cbt-q-field-text").innerHTML = summary ? `<span class="cbt-q-summary-text" title="${summary.replace(/"/g,'&quot;')}">${summary}</span>` : "";
@@ -3196,7 +3195,6 @@ function renderCbtQuestion() {
 
   // Show/hide the toggle button based on whether full metadata has extra info beyond summary
   const toggleBtn = document.getElementById("cbt-q-meta-toggle");
-  const summaryText = document.getElementById("cbt-q-field-text");
   const metaFullSection = document.getElementById("cbt-q-meta-full");
   if (toggleBtn && metaFullSection) {
     // Reset to collapsed state on each question
@@ -3205,7 +3203,7 @@ function renderCbtQuestion() {
     // Show toggle only if there is meaningful metadata beyond year+category
     if (metaFullText.length > 0 && (q.subcategory || q.topic)) {
       toggleBtn.removeAttribute("hidden");
-      toggleBtn.innerHTML = `<span data-i18n="exam.metaExpand">${I18n.t("exam.metaExpand")} <i class="fa-solid fa-chevron-down"></i></span>`;
+      toggleBtn.innerHTML = `${I18n.t("exam.metaExpand")}`;
     } else {
       toggleBtn.setAttribute("hidden", "");
     }
@@ -3251,8 +3249,8 @@ window.toggleCbtQuestionMeta = function() {
   toggleBtn.setAttribute("aria-expanded", expanded ? "false" : "true");
   metaFull.hidden = expanded;
   toggleBtn.innerHTML = expanded
-    ? `${I18n.t("exam.metaExpand")} <i class="fa-solid fa-chevron-down"></i>`
-    : `${I18n.t("exam.metaCollapse")} <i class="fa-solid fa-chevron-up"></i>`;
+    ? `${I18n.t("exam.metaExpand")}`
+    : `${I18n.t("exam.metaCollapse")}`;
 };
 
 function selectCbtAnswer(oIdx) {
