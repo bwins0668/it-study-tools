@@ -3,9 +3,13 @@
 
   var SB = {
     detectAvailability: function(lang) {
-      if (lang === 'python') return typeof window.PythonSandbox !== 'undefined';
-      if (lang === 'java') return typeof window.JavaSandbox !== 'undefined';
-      if (lang === 'sql') return true; // SQL is always available via DOM
+      if (lang === 'python') {
+        return !!(window.PythonSandbox && typeof window.PythonSandbox.setTemplate === 'function');
+      }
+      if (lang === 'java') {
+        return !!(window.JavaSandbox && typeof window.JavaSandbox.setTemplate === 'function');
+      }
+      if (lang === 'sql') return !!document.getElementById('sql-editor');
       return false;
     },
 
@@ -17,30 +21,35 @@
     },
 
     sendCode: function(lang, code) {
-      if (!code) return;
-      if (lang === 'python') {
-        if (typeof window.PythonSandbox !== 'undefined') {
-          PythonSandbox.setTemplate(code);
-          SB.openSandboxPanel('python');
-        } else {
-          console.warn('PythonSandbox not available');
+      if (!code || !SB.detectAvailability(lang)) return Promise.resolve(false);
+
+      return SB.openSandboxPanel(lang).then(function(opened) {
+        if (!opened) return false;
+
+        try {
+          if (lang === 'python') {
+            window.PythonSandbox.setTemplate(code);
+          } else if (lang === 'java') {
+            window.JavaSandbox.setTemplate(code);
+          } else if (lang === 'sql') {
+            var el = document.getElementById('sql-editor');
+            if (!el) return false;
+            el.value = code;
+            el.dispatchEvent(new Event('input', { bubbles: true }));
+            el.dispatchEvent(new Event('change', { bubbles: true }));
+            el.focus();
+          } else {
+            return false;
+          }
+          return true;
+        } catch (err) {
+          console.warn('[SandboxBridge] Failed to inject code:', err);
+          return false;
         }
-      } else if (lang === 'java') {
-        if (typeof window.JavaSandbox !== 'undefined') {
-          JavaSandbox.setTemplate(code);
-          SB.openSandboxPanel('java');
-        } else {
-          console.warn('JavaSandbox not available');
-        }
-      } else if (lang === 'sql') {
-        var el = document.getElementById('sql-editor');
-        if (el) {
-          el.value = code;
-          el.dispatchEvent(new Event('input', { bubbles: true }));
-          el.dispatchEvent(new Event('change', { bubbles: true }));
-          SB.openSandboxPanel('sql');
-        }
-      }
+      }).catch(function(err) {
+        console.warn('[SandboxBridge] Failed to open sandbox:', err);
+        return false;
+      });
     },
 
     runCode: function(lang) {
@@ -64,49 +73,59 @@
     },
 
     openSandboxPanel: function(lang) {
-      // Try to switch to the correct subject tab so sandbox is visible
-      if (lang === 'python') {
-        // Python sandbox cards have class python-widget
-        var cards = document.querySelectorAll('.python-widget');
-        cards.forEach(function(el) { el.style.display = ''; });
-        // Collapse others
-        document.querySelectorAll('.sql-widget').forEach(function(el) { el.style.display = 'none'; });
-        document.querySelectorAll('.java-widget').forEach(function(el) { el.style.display = 'none'; });
-        // If in coding typing mode, try to show sandbox area
-        if (document.body.classList.contains('mode-coding-typing')) {
-          SB._ensurePlaygroundVisible();
-        }
-      } else if (lang === 'java') {
-        document.querySelectorAll('.java-widget').forEach(function(el) { el.style.display = ''; });
-        document.querySelectorAll('.sql-widget').forEach(function(el) { el.style.display = 'none'; });
-        document.querySelectorAll('.python-widget').forEach(function(el) { el.style.display = 'none'; });
-        if (document.body.classList.contains('mode-coding-typing')) {
-          SB._ensurePlaygroundVisible();
-        }
-      } else if (lang === 'sql') {
-        document.querySelectorAll('.sql-widget').forEach(function(el) { el.style.display = ''; });
-        document.querySelectorAll('.java-widget').forEach(function(el) { el.style.display = 'none'; });
-        document.querySelectorAll('.python-widget').forEach(function(el) { el.style.display = 'none'; });
-        if (document.body.classList.contains('mode-coding-typing')) {
-          SB._ensurePlaygroundVisible();
-        }
+      if (['python', 'java', 'sql'].indexOf(lang) === -1) return Promise.resolve(false);
+
+      var switchAvailable = typeof window.switchSubject === 'function';
+      try {
+        if (switchAvailable) window.switchSubject(lang);
+      } catch (err) {
+        console.warn('[SandboxBridge] Subject switch unavailable:', err);
       }
+
+      return new Promise(function(resolve) {
+        var schedule = window.requestAnimationFrame || function(callback) {
+          return window.setTimeout(callback, 0);
+        };
+        schedule(function() {
+          schedule(function() {
+            var tab = document.getElementById('subject-tab-' + lang);
+            if (switchAvailable && tab && !tab.classList.contains('active')) {
+              resolve(false);
+              return;
+            }
+
+            SB._showLanguageWidgets(lang);
+            SB._ensurePlaygroundVisible();
+
+            var editor = SB._getEditor(lang);
+            if (editor && typeof editor.focus === 'function') editor.focus();
+            resolve(!!editor);
+          });
+        });
+      });
+    },
+
+    _getEditor: function(lang) {
+      return document.getElementById(lang + '-editor');
+    },
+
+    _showLanguageWidgets: function(lang) {
+      ['sql', 'java', 'python'].forEach(function(widgetLang) {
+        document.querySelectorAll('.' + widgetLang + '-widget').forEach(function(el) {
+          el.style.display = widgetLang === lang ? '' : 'none';
+        });
+      });
     },
 
     _ensurePlaygroundVisible: function() {
-      // Temporarily exit full coding-typing mode to allow play area to be visible
-      var hub = document.getElementById('coding-typing-hub');
-      if (hub) {
-        hub.style.display = 'block';
-        hub.classList.add('is-active');
+      var playground = document.getElementById('playground-section');
+      if (!playground) return false;
+
+      if (window.innerWidth <= 900) {
+        document.body.classList.add('mobile-playground-open');
+        document.body.classList.remove('mobile-sidebar-open');
       }
-      // Open mobile playground drawer if on mobile
-      if (typeof toggleMobilePlayground === 'function') {
-        // Check if mobile by viewport width
-        if (window.innerWidth < 768) {
-          toggleMobilePlayground();
-        }
-      }
+      return true;
     }
   };
 

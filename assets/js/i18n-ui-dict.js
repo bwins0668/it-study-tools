@@ -3921,5 +3921,24 @@
       Object.assign(window.I18nUiDict[locale].codingTyping, CODING_TYPING_ROUND_21_4[locale]);
     }
   });
+
+  var CODING_TYPING_ROUND_21_8 = {
+    "zh-CN": { switchedToSandbox: "已切换到沙盒", codeSentAndOpened: "代码已发送并打开沙盒" },
+    "ja-JP": { switchedToSandbox: "サンドボックスに切り替えました", codeSentAndOpened: "コードを送信し、サンドボックスを開きました" },
+    "en-US": { switchedToSandbox: "Switched to the sandbox", codeSentAndOpened: "Code sent and sandbox opened" },
+    "ko-KR": { switchedToSandbox: "샌드박스로 전환했습니다", codeSentAndOpened: "코드를 보내고 샌드박스를 열었습니다" },
+    "vi-VN": { switchedToSandbox: "Đã chuyển sang sandbox", codeSentAndOpened: "Đã gửi mã và mở sandbox" },
+    "my-MM": { switchedToSandbox: "Sandbox သို့ ပြောင်းပြီးပါပြီ", codeSentAndOpened: "ကုဒ်ပို့ပြီး Sandbox ကို ဖွင့်ထားပါသည်" },
+    "fr-FR": { switchedToSandbox: "Passage au bac à sable effectué", codeSentAndOpened: "Code envoyé et bac à sable ouvert" },
+    "th-TH": { switchedToSandbox: "สลับไปยังแซนด์บ็อกซ์แล้ว", codeSentAndOpened: "ส่งโค้ดและเปิดแซนด์บ็อกซ์แล้ว" },
+    "id-ID": { switchedToSandbox: "Beralih ke sandbox", codeSentAndOpened: "Kode dikirim dan sandbox dibuka" },
+    "default-ja-zh": { switchedToSandbox: "已切换到沙盒 / サンドボックスに切り替えました", codeSentAndOpened: "代码已发送并打开沙盒 / コードを送信し、サンドボックスを開きました" }
+  };
+
+  Object.keys(CODING_TYPING_ROUND_21_8).forEach(function (locale) {
+    if (!window.I18nUiDict[locale]) window.I18nUiDict[locale] = {};
+    if (!window.I18nUiDict[locale].codingTyping) window.I18nUiDict[locale].codingTyping = {};
+    Object.assign(window.I18nUiDict[locale].codingTyping, CODING_TYPING_ROUND_21_8[locale]);
+  });
 })();
 

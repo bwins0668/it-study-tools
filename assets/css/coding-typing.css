@@ -809,3 +809,14 @@ body[data-theme="light"] .ct-diff-btn {
     justify-content: center;
   }
 }
+
+@media (max-width: 900px) {
+  body.mobile-playground-open .app-header > :not(.header-subject-selector) {
+    display: none !important;
+  }
+
+  body.mobile-playground-open .header-subject-selector {
+    flex: 1 1 100%;
+    max-width: 100%;
+  }
+}
