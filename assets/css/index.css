@@ -8678,6 +8678,181 @@ body.mobile-playground-open .mobile-backdrop {
   font-size: 20px;
 }
 
+/* ── Round 23.5: retry settings row ──────────────────────────────── */
+.wrong-book-retry-settings-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  width: 100%;
+  padding-top: 8px;
+  margin-top: 4px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+.wrong-book-retry-setting {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--text-muted, #94a3b8);
+  cursor: pointer;
+}
+.wrong-book-retry-setting span { white-space: nowrap; }
+.wrong-book-limit-select {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 6px;
+  color: var(--text-main, #e2e8f0);
+  padding: 4px 8px;
+  font-size: 12px;
+  cursor: pointer;
+  min-width: 72px;
+}
+.wrong-book-limit-select:focus {
+  outline: none;
+  border-color: rgba(0, 242, 254, 0.35);
+}
+.wrong-book-shuffle-track {
+  position: relative;
+  display: inline-block;
+  width: 32px;
+  height: 18px;
+  border-radius: 9px;
+  background: rgba(255, 255, 255, 0.1);
+  transition: background 0.2s ease;
+  flex-shrink: 0;
+}
+.wrong-book-shuffle-track.is-on { background: var(--neon-cyan, #00f2fe); }
+.wrong-book-shuffle-thumb {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #fff;
+  transition: transform 0.2s ease;
+}
+.wrong-book-shuffle-track.is-on .wrong-book-shuffle-thumb { transform: translateX(14px); }
+.wrong-book-retry-count-hint {
+  margin-left: auto;
+  font-size: 11px;
+  color: var(--text-muted, #94a3b8);
+  white-space: nowrap;
+}
+
+/* ── Round 23.5: practice trend panel ────────────────────────────── */
+.wrong-book-trend-panel {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  margin: 8px 0;
+  overflow: hidden;
+}
+.wrong-book-trend-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 14px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-muted, #94a3b8);
+  background: rgba(255, 255, 255, 0.02);
+  user-select: none;
+}
+.wrong-book-trend-head:hover { color: var(--text-main, #e2e8f0); }
+.wrong-book-trend-head i { font-size: 10px; }
+.wrong-book-trend-body { padding: 10px 14px; }
+.wrong-book-trend-empty {
+  text-align: center;
+  padding: 16px 0;
+  color: var(--text-muted, #94a3b8);
+  font-size: 12px;
+}
+.wrong-book-trend-last { margin-bottom: 12px; }
+.wrong-book-trend-last small,
+.wrong-book-trend-summary small {
+  display: block;
+  font-size: 11px;
+  color: var(--text-muted, #94a3b8);
+  margin-bottom: 6px;
+}
+.wrong-book-trend-last-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(70px, 1fr));
+  gap: 6px;
+}
+.wrong-book-trend-last-grid > div {
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 6px;
+  padding: 6px 8px;
+  font-size: 12px;
+  text-align: center;
+}
+.wrong-book-trend-summary { margin-bottom: 12px; }
+.wrong-book-trend-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+}
+.wrong-book-trend-summary-grid > div {
+  text-align: center;
+  padding: 8px 4px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 6px;
+}
+.wrong-book-trend-summary-grid strong {
+  display: block;
+  font-size: 18px;
+  color: var(--neon-cyan, #00f2fe);
+}
+.wrong-book-trend-summary-grid span {
+  font-size: 10px;
+  color: var(--text-muted, #94a3b8);
+}
+.wrong-book-trend-list {
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  padding-top: 8px;
+}
+.wrong-book-trend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 0;
+  font-size: 11px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+}
+.wrong-book-trend-item-time {
+  flex: 0 0 auto;
+  color: var(--text-muted, #94a3b8);
+  min-width: 120px;
+}
+.wrong-book-trend-item-stats {
+  flex: 1;
+  color: var(--text-main, #e2e8f0);
+}
+.wrong-book-trend-item-bar {
+  flex: 0 0 40px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.wrong-book-trend-item-bar > span {
+  display: block;
+  height: 100%;
+  background: var(--neon-cyan, #00f2fe);
+  border-radius: 2px;
+}
+
+/* ── Round 23.5: enhanced card meta ──────────────────────────────── */
+.wrong-book-card__practiced,
+.wrong-book-card__retry-count {
+  font-size: 11px;
+  color: var(--text-muted, #94a3b8);
+  opacity: 0.8;
+}
+
 @media (max-width: 720px) {
   .app-header {
     flex-wrap: wrap;
@@ -8728,6 +8903,12 @@ body.mobile-playground-open .mobile-backdrop {
   .wrong-book-retry-summary-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+  /* Round 23.5 mobile */
+  .wrong-book-retry-settings-row { gap: 8px; }
+  .wrong-book-trend-item { flex-wrap: wrap; gap: 4px; }
+  .wrong-book-trend-item-time { min-width: 100px; font-size: 10px; }
+  .wrong-book-trend-summary-grid { grid-template-columns: repeat(3, 1fr); }
+  .wrong-book-trend-last-grid { grid-template-columns: repeat(2, 1fr); }
 }
 
 @media (max-width: 390px) {

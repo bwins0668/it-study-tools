@@ -4552,5 +4552,62 @@
     if (!window.I18nUiDict[locale].toolbar) window.I18nUiDict[locale].toolbar = {};
     Object.assign(window.I18nUiDict[locale].toolbar, TOOLBAR_ROUND_23_4[locale] || TOOLBAR_ROUND_23_4["en-US"]);
   });
+
+  /* ── Round 23.5: retry settings, history, trends ─────────────── */
+  var WRONG_BOOK_ROUND_23_5_EN = {
+    retryLimit: "Questions", retryLimit10: "10", retryLimit20: "20", retryLimit30: "30",
+    retryLimitAll: "All", shuffle: "Shuffle", shuffleOn: "On", shuffleOff: "Off",
+    retryHistory: "Retry history", retryHistoryEmpty: "No retry records yet",
+    lastRetry: "Last retry", recentRetries: "Recent 7 retries summary",
+    averageAccuracy: "Avg accuracy", totalPracticed: "Total practiced", totalNewMastered: "Newly mastered",
+    duration: "Duration", lastPracticedAt: "Last practiced", correctRetryCount: "Retry correct"
+  };
+  var WRONG_BOOK_ROUND_23_5 = {
+    "zh-CN": {
+      retryLimit: "题量", retryLimit10: "10 题", retryLimit20: "20 题", retryLimit30: "30 题",
+      retryLimitAll: "全部", shuffle: "随机顺序", shuffleOn: "开", shuffleOff: "关",
+      retryHistory: "重练历史", retryHistoryEmpty: "暂无重练记录",
+      lastRetry: "最近一次重练", recentRetries: "最近 7 次重练摘要",
+      averageAccuracy: "平均正确率", totalPracticed: "总练习题数", totalNewMastered: "新掌握总数",
+      duration: "用时", lastPracticedAt: "最近练习", correctRetryCount: "重练答对"
+    },
+    "ja-JP": {
+      retryLimit: "問題数", retryLimit10: "10問", retryLimit20: "20問", retryLimit30: "30問",
+      retryLimitAll: "すべて", shuffle: "ランダム順序", shuffleOn: "入", shuffleOff: "切",
+      retryHistory: "再練習履歴", retryHistoryEmpty: "再練習記録はありません",
+      lastRetry: "最近の再練習", recentRetries: "直近7回の再練習サマリー",
+      averageAccuracy: "平均正答率", totalPracticed: "総練習問題数", totalNewMastered: "新規習得数",
+      duration: "所要時間", lastPracticedAt: "最近の練習", correctRetryCount: "再練習正解"
+    },
+    "ko-KR": {
+      retryLimit: "문제 수", retryLimit10: "10문제", retryLimit20: "20문제", retryLimit30: "30문제",
+      retryLimitAll: "전체", shuffle: "랜덤 순서", shuffleOn: "켜기", shuffleOff: "끄기",
+      retryHistory: "재연습 기록", retryHistoryEmpty: "재연습 기록이 없습니다",
+      lastRetry: "최근 재연습", recentRetries: "최근 7회 재연습 요약",
+      averageAccuracy: "평균 정답률", totalPracticed: "총 연습 문제 수", totalNewMastered: "새로 숙달한 수",
+      duration: "소요 시간", lastPracticedAt: "최근 연습", correctRetryCount: "재연습 정답"
+    },
+    "en-US": WRONG_BOOK_ROUND_23_5_EN,
+    "vi-VN": WRONG_BOOK_ROUND_23_5_EN,
+    "my-MM": WRONG_BOOK_ROUND_23_5_EN,
+    "fr-FR": WRONG_BOOK_ROUND_23_5_EN,
+    "th-TH": WRONG_BOOK_ROUND_23_5_EN,
+    "id-ID": WRONG_BOOK_ROUND_23_5_EN,
+    "default-ja-zh": Object.assign({}, WRONG_BOOK_ROUND_23_5_EN, {
+      retryLimit: "题量 / 問題数", retryLimit10: "10 题 / 10問", retryLimit20: "20 题 / 20問",
+      retryLimit30: "30 题 / 30問", retryLimitAll: "全部 / すべて",
+      shuffle: "随机顺序 / ランダム順序", shuffleOn: "开 / 入", shuffleOff: "关 / 切",
+      retryHistory: "重练历史 / 再練習履歴", retryHistoryEmpty: "暂无重练记录 / 再練習記録はありません",
+      lastRetry: "最近一次重练 / 最近の再練習", recentRetries: "最近 7 次重练摘要 / 直近7回の再練習サマリー",
+      averageAccuracy: "平均正确率 / 平均正答率", totalPracticed: "总练习题数 / 総練習問題数",
+      totalNewMastered: "新掌握总数 / 新規習得数", duration: "用时 / 所要時間",
+      lastPracticedAt: "最近练习 / 最近の練習", correctRetryCount: "重练答对 / 再練習正解"
+    })
+  };
+  Object.keys(WRONG_BOOK_ROUND_23_5).forEach(function (locale) {
+    if (!window.I18nUiDict[locale]) window.I18nUiDict[locale] = {};
+    if (!window.I18nUiDict[locale].wrongBook) window.I18nUiDict[locale].wrongBook = {};
+    Object.assign(window.I18nUiDict[locale].wrongBook, WRONG_BOOK_ROUND_23_5[locale]);
+  });
 })();
 

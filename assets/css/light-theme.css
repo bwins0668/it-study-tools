@@ -875,6 +875,69 @@ body[data-theme="light"] .wrong-book-retry-feedback.is-wrong {
   border-color: #dc2626 !important;
 }
 
+/* ---- Round 23.5: retry settings + trend panel light theme ---- */
+body[data-theme="light"] .wrong-book-retry-settings-row {
+  border-top-color: rgba(0, 0, 0, 0.08);
+}
+body[data-theme="light"] .wrong-book-retry-setting,
+body[data-theme="light"] .wrong-book-retry-count-hint {
+  color: #4b5563 !important;
+}
+body[data-theme="light"] .wrong-book-limit-select {
+  background: #ffffff !important;
+  border-color: #d1d5db !important;
+  color: #111111 !important;
+}
+body[data-theme="light"] .wrong-book-shuffle-track {
+  background: #d1d5db !important;
+}
+body[data-theme="light"] .wrong-book-shuffle-track.is-on {
+  background: #0ea5e9 !important;
+}
+body[data-theme="light"] .wrong-book-trend-panel {
+  border-color: #d1d5db !important;
+}
+body[data-theme="light"] .wrong-book-trend-head {
+  background: #f9fafb !important;
+  color: #374151 !important;
+}
+body[data-theme="light"] .wrong-book-trend-head:hover {
+  color: #111111 !important;
+}
+body[data-theme="light"] .wrong-book-trend-empty,
+body[data-theme="light"] .wrong-book-trend-last small,
+body[data-theme="light"] .wrong-book-trend-summary small {
+  color: #6b7280 !important;
+}
+body[data-theme="light"] .wrong-book-trend-last-grid > div,
+body[data-theme="light"] .wrong-book-trend-summary-grid > div {
+  background: #f3f4f6 !important;
+  color: #111111 !important;
+}
+body[data-theme="light"] .wrong-book-trend-summary-grid strong {
+  color: #0369a1 !important;
+}
+body[data-theme="light"] .wrong-book-trend-summary-grid span,
+body[data-theme="light"] .wrong-book-trend-item-time {
+  color: #6b7280 !important;
+}
+body[data-theme="light"] .wrong-book-trend-item {
+  border-bottom-color: #f3f4f6 !important;
+}
+body[data-theme="light"] .wrong-book-trend-item-bar {
+  background: #e5e7eb !important;
+}
+body[data-theme="light"] .wrong-book-trend-item-bar > span {
+  background: #0ea5e9 !important;
+}
+body[data-theme="light"] .wrong-book-card__practiced,
+body[data-theme="light"] .wrong-book-card__retry-count {
+  color: #6b7280 !important;
+}
+body[data-theme="light"] .wrong-book-trend-list {
+  border-top-color: #e5e7eb !important;
+}
+
 /* ---- Typing highlights ---- */
 body[data-theme="light"] .typing-char-correct {
   color: #059669 !important;

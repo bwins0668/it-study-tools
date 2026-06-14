@@ -3335,6 +3335,9 @@ function buildExamHistoryRecord(exam, reviews, scoreData) {
 // ── Local Wrong Book Persistence (Round 23.3) ─────────────────────
 const WRONG_BOOK_STORAGE_KEY = 'study-tools-exam-wrong-book-v1';
 const WRONG_BOOK_RETRY_LIMIT = 30;
+const WRONG_BOOK_RETRY_ALL_LIMIT = 100;
+const WRONG_BOOK_RETRY_SETTINGS_KEY = 'study-tools-wrong-book-retry-settings-v1';
+const WRONG_BOOK_RETRY_HISTORY_KEY = 'study-tools-wrong-book-retry-history-v1';
 
 function stableWrongBookHash(value) {
   var hash = 2166136261;
@@ -3797,11 +3800,60 @@ function getWrongBookRetryCorrectIndex(item) {
   return item.choices.findIndex(function (choice) { return String(choice).trim() === text; });
 }
 
+/* ── Round 23.5: retry settings & history helpers ─────────────── */
+function loadWrongBookRetrySettings() {
+  try {
+    var raw = localStorage.getItem(WRONG_BOOK_RETRY_SETTINGS_KEY);
+    if (!raw) return { limit: 20, shuffle: false };
+    var parsed = JSON.parse(raw);
+    return {
+      limit: typeof parsed.limit === 'number' && parsed.limit > 0 ? parsed.limit : 20,
+      shuffle: parsed.shuffle === true
+    };
+  } catch (_) {
+    return { limit: 20, shuffle: false };
+  }
+}
+
+function saveWrongBookRetrySettings(settings) {
+  try { localStorage.setItem(WRONG_BOOK_RETRY_SETTINGS_KEY, JSON.stringify(settings)); } catch (_) {}
+}
+
+function loadWrongBookRetryHistory() {
+  try {
+    var raw = localStorage.getItem(WRONG_BOOK_RETRY_HISTORY_KEY);
+    if (!raw) return [];
+    var parsed = JSON.parse(raw);
+    return Array.isArray(parsed) ? parsed : [];
+  } catch (_) {
+    return [];
+  }
+}
+
+function saveWrongBookRetryHistory(history) {
+  try { localStorage.setItem(WRONG_BOOK_RETRY_HISTORY_KEY, JSON.stringify(history)); } catch (_) {}
+}
+
+function shuffleArray(arr) {
+  var result = arr.slice();
+  for (var i = result.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    var temp = result[i];
+    result[i] = result[j];
+    result[j] = temp;
+  }
+  return result;
+}
+
 function getWrongBookRetryCandidates() {
-  return getFilteredWrongBookItems().filter(function (item) {
+  var settings = loadWrongBookRetrySettings();
+  var limit = settings.limit === -1 ? WRONG_BOOK_RETRY_ALL_LIMIT : Math.min(settings.limit, WRONG_BOOK_RETRY_ALL_LIMIT);
+  var candidates = getFilteredWrongBookItems().filter(function (item) {
     if (_wrongBookCurrentFilter !== 'mastered' && item.mastered) return false;
     return getWrongBookRetryCorrectIndex(item) >= 0;
-  }).slice(0, WRONG_BOOK_RETRY_LIMIT);
+  });
+  if (settings.shuffle) candidates = shuffleArray(candidates);
+  return candidates.slice(0, limit);
 }
 
 function renderWrongBookModuleFilter(allItems) {
@@ -3846,16 +3898,20 @@ function renderWrongBook() {
   renderWrongBookModuleFilter(allItems);
   var items = getFilteredWrongBookItems();
   var retryButton = document.getElementById('wrong-book-retry-start');
+  var retryItems = getWrongBookRetryCandidates();
   if (retryButton) {
-    var retryItems = getWrongBookRetryCandidates();
     retryButton.disabled = retryItems.length === 0;
     retryButton.title = retryItems.length ? t('wrongBook.startRetry', 'Start retry') : t('wrongBook.retryDisabled', 'No retryable questions in the current filter');
   }
+  /* Round 23.5: render retry settings row + trend panel */
+  renderRetrySettingsRow(retryItems.length, t);
+  renderTrendPanel(t);
   if (!items.length) {
     container.innerHTML = '<div class="exam-history-empty">' +
       '<p class="exam-history-empty__title">' + escapeWrongBookHtml(t('wrongBook.emptyTitle', '还没有错题')) + '</p>' +
       '<p class="exam-history-empty__hint">' + escapeWrongBookHtml(t('wrongBook.emptyDesc', '答错的题目会自动收集到这里')) + '</p>' +
       '</div>';
+    bindRetrySettingsEvents();
     return;
   }
   container.innerHTML = '';
@@ -3867,6 +3923,10 @@ function renderWrongBook() {
     var questionSummary = item.questionText || '-';
     if (questionSummary.length > 180) questionSummary = questionSummary.slice(0, 180) + '…';
     var masteredLabel = item.mastered ? t('wrongBook.mastered', '已掌握') : t('wrongBook.unmastered', '未掌握');
+    /* Round 23.5: enhanced meta with practice info */
+    var practicedText = '';
+    if (item.lastPracticedAt) { try { practicedText = new Date(item.lastPracticedAt).toLocaleString(); } catch (_) { practicedText = item.lastPracticedAt || ''; } }
+    var retryCountVal = Number(item.correctRetryCount) || 0;
     card.innerHTML =
       '<div class="wrong-book-card__summary">' +
         '<div class="wrong-book-card__meta">' +
@@ -3875,6 +3935,8 @@ function renderWrongBook() {
           '<span class="wrong-book-card__count">' + escapeWrongBookHtml(t('wrongBook.wrongCount', '答错次数')) + ': ' + item.wrongCount + '</span>' +
           '<span class="wrong-book-card__date">' + escapeWrongBookHtml(t('wrongBook.lastWrongAt', '最近答错')) + ': ' + escapeWrongBookHtml(dateText) + '</span>' +
           '<span class="wrong-book-card__mastery ' + (item.mastered ? 'is-mastered' : '') + '">' + escapeWrongBookHtml(masteredLabel) + '</span>' +
+          (practicedText ? '<span class="wrong-book-card__practiced">' + escapeWrongBookHtml(t('wrongBook.lastPracticedAt', '最近练习')) + ': ' + escapeWrongBookHtml(practicedText) + '</span>' : '') +
+          (retryCountVal > 0 ? '<span class="wrong-book-card__retry-count">' + escapeWrongBookHtml(t('wrongBook.correctRetryCount', '重练答对')) + ': ' + retryCountVal + '</span>' : '') +
         '</div>' +
         '<p class="wrong-book-card__question">' + escapeWrongBookHtml(questionSummary) + '</p>' +
         '<div class="wrong-book-card__actions">' +
@@ -3912,6 +3974,126 @@ function renderWrongBook() {
     card.querySelector('.wrong-book-card__question').addEventListener('click', toggleDetail);
     container.appendChild(card);
   });
+  bindRetrySettingsEvents();
+}
+
+/* ── Round 23.5: retry settings row (limit + shuffle) ──────────── */
+function renderRetrySettingsRow(retryCount, t) {
+  var toolbar = document.querySelector('.wrong-book-toolbar');
+  if (!toolbar) return;
+  var old = toolbar.querySelector('.wrong-book-retry-settings-row');
+  if (old) old.remove();
+  var settings = loadWrongBookRetrySettings();
+  var row = document.createElement('div');
+  row.className = 'wrong-book-retry-settings-row';
+  var options = [
+    { value: '10', label: t('wrongBook.retryLimit10', '10 题') },
+    { value: '20', label: t('wrongBook.retryLimit20', '20 题') },
+    { value: '30', label: t('wrongBook.retryLimit30', '30 题') },
+    { value: '-1', label: t('wrongBook.retryLimitAll', '全部') }
+  ];
+  var selectHtml = '<label class="wrong-book-retry-setting"><span>' + escapeWrongBookHtml(t('wrongBook.retryLimit', '题量')) + '</span><select class="wrong-book-limit-select">';
+  options.forEach(function (opt) {
+    var selected = String(settings.limit) === opt.value ? ' selected' : '';
+    selectHtml += '<option value="' + opt.value + '"' + selected + '>' + escapeWrongBookHtml(opt.label) + '</option>';
+  });
+  selectHtml += '</select></label>';
+  var shuffleHtml = '<label class="wrong-book-retry-setting wrong-book-shuffle-toggle">' +
+    '<span class="wrong-book-shuffle-track' + (settings.shuffle ? ' is-on' : '') + '"><span class="wrong-book-shuffle-thumb"></span></span>' +
+    '<span>' + escapeWrongBookHtml(t('wrongBook.shuffle', '随机顺序')) +
+    ' <small>(' + escapeWrongBookHtml(settings.shuffle ? t('wrongBook.shuffleOn', '开') : t('wrongBook.shuffleOff', '关')) + ')</small></span></label>';
+  var countHtml = '<span class="wrong-book-retry-count-hint">' + retryCount + ' ' + escapeWrongBookHtml(t('wrongBook.retryLimit', '题量')) + '</span>';
+  row.innerHTML = selectHtml + shuffleHtml + countHtml;
+  toolbar.appendChild(row);
+}
+
+/* ── Round 23.5: practice trend panel ──────────────────────────── */
+function renderTrendPanel(t) {
+  var browser = document.getElementById('wrong-book-browser');
+  if (!browser) return;
+  var old = browser.querySelector('.wrong-book-trend-panel');
+  if (old) old.remove();
+  var history = loadWrongBookRetryHistory();
+  var panel = document.createElement('div');
+  panel.className = 'wrong-book-trend-panel';
+  var headHtml = '<div class="wrong-book-trend-head" data-wb-toggleTrend>' +
+    '<span>' + escapeWrongBookHtml(t('wrongBook.retryHistory', '重练历史')) + '</span>' +
+    '<i class="fa-solid fa-chevron-down"></i></div>';
+  var bodyHtml = '<div class="wrong-book-trend-body" hidden>';
+  if (!history.length) {
+    bodyHtml += '<p class="wrong-book-trend-empty">' + escapeWrongBookHtml(t('wrongBook.retryHistoryEmpty', '暂无重练记录')) + '</p>';
+  } else {
+    var last = history[0];
+    var lastTime = '';
+    try { lastTime = new Date(last.finishedAt || last.startedAt).toLocaleString(); } catch (_) { lastTime = ''; }
+    bodyHtml += '<div class="wrong-book-trend-last">' +
+      '<small>' + escapeWrongBookHtml(t('wrongBook.lastRetry', '最近一次重练')) + '</small>' +
+      '<div class="wrong-book-trend-last-grid">' +
+        '<div><span>' + escapeWrongBookHtml(lastTime) + '</span></div>' +
+        '<div><span>' + last.total + ' ' + escapeWrongBookHtml(t('wrongBook.retryLimit', '题')) + '</span></div>' +
+        '<div><span>' + last.accuracy + '%</span></div>' +
+        '<div><span>+' + last.newMastered + ' ' + escapeWrongBookHtml(t('wrongBook.newMastered', '新掌握')) + '</span></div>' +
+      '</div></div>';
+    var recent = history.slice(0, 7);
+    var totalQ = 0, totalAcc = 0, totalNM = 0;
+    recent.forEach(function (h) { totalQ += (h.total || 0); totalAcc += (h.accuracy || 0); totalNM += (h.newMastered || 0); });
+    var avgAcc = recent.length ? Math.round(totalAcc / recent.length) : 0;
+    bodyHtml += '<div class="wrong-book-trend-summary">' +
+      '<small>' + escapeWrongBookHtml(t('wrongBook.recentRetries', '最近 7 次重练摘要')) + '</small>' +
+      '<div class="wrong-book-trend-summary-grid">' +
+        '<div><strong>' + totalQ + '</strong><span>' + escapeWrongBookHtml(t('wrongBook.totalPracticed', '总练习题数')) + '</span></div>' +
+        '<div><strong>' + avgAcc + '%</strong><span>' + escapeWrongBookHtml(t('wrongBook.averageAccuracy', '平均正确率')) + '</span></div>' +
+        '<div><strong>' + totalNM + '</strong><span>' + escapeWrongBookHtml(t('wrongBook.totalNewMastered', '新掌握总数')) + '</span></div>' +
+      '</div></div>';
+    bodyHtml += '<div class="wrong-book-trend-list">';
+    history.slice(0, 10).forEach(function (h) {
+      var hTime = '';
+      try { hTime = new Date(h.finishedAt || h.startedAt).toLocaleString(); } catch (_) { hTime = ''; }
+      var dur = h.durationSeconds ? Math.round(h.durationSeconds / 60) + 'min' : '';
+      bodyHtml += '<div class="wrong-book-trend-item">' +
+        '<span class="wrong-book-trend-item-time">' + escapeWrongBookHtml(hTime) + '</span>' +
+        '<span class="wrong-book-trend-item-stats">' + h.total + ' ' + escapeWrongBookHtml(t('wrongBook.retryLimit', '题')) +
+        ' · ' + h.accuracy + '%' + (dur ? ' · ' + dur : '') +
+        ' · +' + h.newMastered + '</span>' +
+        '<span class="wrong-book-trend-item-bar"><span style="width:' + Math.min(100, h.accuracy || 0) + '%"></span></span>' +
+        '</div>';
+    });
+    bodyHtml += '</div>';
+  }
+  bodyHtml += '</div>';
+  panel.innerHTML = headHtml + bodyHtml;
+  var list = browser.querySelector('#wrong-book-list');
+  if (list) browser.insertBefore(panel, list);
+  else browser.appendChild(panel);
+  panel.querySelector('[data-wb-toggleTrend]').addEventListener('click', function () {
+    var body = panel.querySelector('.wrong-book-trend-body');
+    var icon = panel.querySelector('.fa-chevron-down, .fa-chevron-up');
+    if (body) body.toggleAttribute('hidden');
+    if (icon) { icon.classList.toggle('fa-chevron-down'); icon.classList.toggle('fa-chevron-up'); }
+  });
+}
+
+/* ── Round 23.5: bind settings row events ─────────────────────── */
+function bindRetrySettingsEvents() {
+  var limitSelect = document.querySelector('.wrong-book-limit-select');
+  if (limitSelect) {
+    limitSelect.addEventListener('change', function () {
+      var s = loadWrongBookRetrySettings();
+      s.limit = parseInt(limitSelect.value, 10) || 20;
+      saveWrongBookRetrySettings(s);
+      renderWrongBook();
+    });
+  }
+  var shuffleToggle = document.querySelector('.wrong-book-shuffle-toggle');
+  if (shuffleToggle) {
+    shuffleToggle.addEventListener('click', function (e) {
+      e.preventDefault();
+      var s = loadWrongBookRetrySettings();
+      s.shuffle = !s.shuffle;
+      saveWrongBookRetrySettings(s);
+      renderWrongBook();
+    });
+  }
 }
 
 function startWrongBookRetry() {
@@ -3923,7 +4105,8 @@ function startWrongBookRetry() {
     answers: [],
     selectedIndex: null,
     submitted: false,
-    newMastered: 0
+    newMastered: 0,
+    startedAt: new Date()
   };
   renderWrongBookRetryQuestion();
 }
@@ -4049,6 +4232,14 @@ function finishWrongBookRetry() {
   var correct = state.answers.filter(function (answer) { return answer && answer.correct; }).length;
   var wrong = total - correct;
   var accuracy = total ? Math.round((correct / total) * 100) : 0;
+  /* Round 23.5: calculate duration */
+  var now = new Date();
+  var durationSec = state.startedAt ? Math.round((now - state.startedAt) / 1000) : 0;
+  var min = Math.floor(durationSec / 60);
+  var sec = durationSec % 60;
+  var durationText = min > 0 ? min + 'm ' + sec + 's' : sec + 's';
+  /* Round 23.5: record retry session to history */
+  recordWrongBookRetrySession(state, total, correct, wrong, accuracy, now, durationSec);
   view.innerHTML = '<div class="wrong-book-retry-summary">' +
     '<h3>' + escapeWrongBookHtml(t('wrongBook.retryResult', 'Retry result')) + '</h3>' +
     '<div class="wrong-book-retry-summary-grid">' +
@@ -4057,6 +4248,7 @@ function finishWrongBookRetry() {
       '<div><span>' + escapeWrongBookHtml(t('wrongBook.retryWrong', 'Wrong')) + '</span><strong>' + wrong + '</strong></div>' +
       '<div><span>' + escapeWrongBookHtml(t('wrongBook.retryAccuracy', 'Accuracy')) + '</span><strong>' + accuracy + '%</strong></div>' +
       '<div><span>' + escapeWrongBookHtml(t('wrongBook.newMastered', 'Newly mastered')) + '</span><strong>' + state.newMastered + '</strong></div>' +
+      '<div><span>' + escapeWrongBookHtml(t('wrongBook.duration', '用时')) + '</span><strong>' + escapeWrongBookHtml(durationText) + '</strong></div>' +
     '</div>' +
     '<div class="wrong-book-retry-actions">' +
       '<button type="button" class="wrong-book-action" data-retry-action="back">' +
@@ -4064,6 +4256,32 @@ function finishWrongBookRetry() {
       '<button type="button" class="wrong-book-retry-primary" data-retry-action="again">' +
         escapeWrongBookHtml(t('wrongBook.retryAgain', 'Retry again')) + '</button>' +
     '</div></div>';
+}
+
+/* ── Round 23.5: record retry session to history ─────────────── */
+function recordWrongBookRetrySession(state, total, correct, wrong, accuracy, now, durationSec) {
+  try {
+    var settings = loadWrongBookRetrySettings();
+    var session = {
+      id: 'retry_' + now.getTime(),
+      startedAt: state.startedAt ? state.startedAt.toISOString() : now.toISOString(),
+      finishedAt: now.toISOString(),
+      total: total,
+      correct: correct,
+      wrong: wrong,
+      accuracy: accuracy,
+      newMastered: state.newMastered,
+      moduleFilter: _wrongBookCurrentModule,
+      statusFilter: _wrongBookCurrentFilter,
+      limit: settings.limit,
+      shuffle: settings.shuffle,
+      durationSeconds: durationSec
+    };
+    var history = loadWrongBookRetryHistory();
+    history.unshift(session);
+    if (history.length > 100) history = history.slice(0, 100);
+    saveWrongBookRetryHistory(history);
+  } catch (_) {}
 }
 
 function backToWrongBook() {
