@@ -8682,17 +8682,6 @@ body.mobile-playground-open .mobile-backdrop {
   padding: 0;
 }
 
-/* ---- Light Theme Overrides ---- */
-body:not(.i18n-active) .exam-history-modal__panel,
-html:not([data-theme="dark"]) .exam-history-modal__panel {
-  background: rgba(255, 255, 255, 0.97);
-  border-color: var(--border-color, #e2e8f0);
-}
-
-body:not(.i18n-active) .exam-history-modal__backdrop {
-  background: rgba(0,0,0,0.3);
-}
-
 /* ---- Responsive: Tablet ---- */
 @media (max-width: 720px) {
   .exam-history-modal__panel {

@@ -1162,3 +1162,137 @@ body[data-theme="light"] ::placeholder {
   color: #333333 !important;
   opacity: 1 !important;
 }
+
+/* ---- Exam History Modal (Round 23.2.3) ---- */
+body[data-theme="light"] .exam-history-modal__panel {
+  background: rgba(255, 255, 255, 0.97);
+  border-color: #d0d7de;
+  box-shadow: 0 24px 72px rgba(0, 0, 0, 0.15);
+  color: #1f2937;
+}
+
+body[data-theme="light"] .exam-history-modal__header h2 {
+  color: #111827;
+}
+
+body[data-theme="light"] .exam-history-modal__header p {
+  color: #4b5563;
+}
+
+body[data-theme="light"] .exam-history-modal__close {
+  color: #6b7280;
+}
+
+body[data-theme="light"] .exam-history-modal__close:hover {
+  color: #111827;
+  background: rgba(0, 0, 0, 0.06);
+}
+
+body[data-theme="light"] .exam-history-filter-btn {
+  color: #374151;
+  background: #f3f4f6;
+  border-color: #d1d5db;
+}
+
+body[data-theme="light"] .exam-history-filter-btn:hover {
+  background: #e5e7eb;
+}
+
+body[data-theme="light"] .exam-history-filter-btn.active {
+  color: #0f172a;
+  background: rgba(56, 189, 248, 0.85);
+  border-color: rgba(56, 189, 248, 0.6);
+}
+
+body[data-theme="light"] .exam-history-empty__title {
+  color: #1f2937;
+}
+
+body[data-theme="light"] .exam-history-empty__hint {
+  color: #6b7280;
+}
+
+body[data-theme="light"] .exam-history-card {
+  background: #f9fafb;
+  border-color: #e5e7eb;
+  color: #1f2937;
+}
+
+body[data-theme="light"] .exam-history-card__subject {
+  color: #1e40af;
+  background: #dbeafe;
+}
+
+body[data-theme="light"] .exam-history-card__date,
+body[data-theme="light"] .exam-history-card__stat {
+  color: #4b5563;
+}
+
+body[data-theme="light"] .exam-history-pass {
+  color: #065f46;
+  background: #d1fae5;
+}
+
+body[data-theme="light"] .exam-history-fail {
+  color: #991b1b;
+  background: #fee2e2;
+}
+
+body[data-theme="light"] .exam-history-card__toggle {
+  color: #2563eb;
+}
+
+body[data-theme="light"] .exam-history-card__detail {
+  background: #f3f4f6;
+  border-color: #e5e7eb;
+  color: #1f2937;
+}
+
+body[data-theme="light"] .exam-detail-section h4 {
+  color: #111827;
+}
+
+body[data-theme="light"] .exam-detail-field-row {
+  color: #374151;
+}
+
+body[data-theme="light"] .exam-q-row {
+  background: #ffffff;
+  border-color: #e5e7eb;
+  color: #1f2937;
+}
+
+body[data-theme="light"] .exam-q-num {
+  color: #1e40af;
+}
+
+body[data-theme="light"] .exam-q-id,
+body[data-theme="light"] .exam-q-year,
+body[data-theme="light"] .exam-q-cat,
+body[data-theme="light"] .exam-q-topic {
+  color: #4b5563;
+}
+
+body[data-theme="light"] .exam-q-answers {
+  color: #374151;
+}
+
+body[data-theme="light"] .exam-q-preview {
+  color: #4b5563;
+}
+
+body[data-theme="light"] .exam-q-preview--missing {
+  color: #9ca3af;
+}
+
+body[data-theme="light"] .exam-q-correct {
+  color: #059669;
+}
+
+body[data-theme="light"] .exam-q-wrong {
+  color: #dc2626;
+}
+
+body[data-theme="light"] .exam-q-unanswered {
+  color: #9ca3af;
+}
