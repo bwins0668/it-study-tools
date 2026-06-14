@@ -6340,7 +6340,7 @@ In Round 19.2, `.playground-section` was assigned a flex ratio of `0.7` relative
 
 ---
 
-### Round 19.3.2 - UI �z�ǎw?��?�^��? (2026-06-13)
+### Round 19.3.2 - UI �z�ǎw?��?�^��? (2026-06-13)
 
 **Status**: PASS
 
@@ -6350,7 +6350,7 @@ In Round 19.2, `.playground-section` was assigned a flex ratio of `0.7` relative
 
 1. **html { overflow-x: hidden; }** ? Prevents document-level horizontal overflow when sidebar/playground are rendered off-screen via position:fixed at ?720px/?900px breakpoints. Resolves scrollWidth > innerWidth at 720px and 390px.
 
-2. **#glossary-open-btn added to white-space:nowrap group** ? Prevents Chinese text "??�\" from stacking vertically when the header flex container compresses the button at 1000?1200px widths. Button stays horizontal (w?36, h?36 on desktop).
+2. **#glossary-open-btn added to white-space:nowrap group** ? Prevents Chinese text "??�\" from stacking vertically when the header flex container compresses the button at 1000?1200px widths. Button stays horizontal (w?36, h?36 on desktop).
 
 3. **901?1199px playground section** ? Increased min-width from 360px to 376px, reduced right padding from 24px to 16px. Ensures sql-editor width ? 320px threshold in three-column mode.
 
@@ -6360,14 +6360,14 @@ In Round 19.2, `.playground-section` was assigned a flex ratio of `0.7` relative
 
 | Viewport | Overflow | Glossary | Playground | Console | SqlEditor | RunBtn | Output | Drawers |
 |---|---|---|---|---|---|---|---|---|
-| 1920x1080 | No | 63�~20 horiz | 560px | 544px | 504�~273 | visible | visible | ? |
-| 1600x900 | No | 63�~20 horiz | 480px | 464px | 424�~150 | visible | visible | ? |
-| 1366x768 | No | 63�~20 horiz | 410px | 394px | 354�~148 | visible | visible | ? |
-| 1200x800 | No | 63�~20 horiz | 400px | 384px | 344�~148 | visible | visible | ? |
-| 1000x800 | No | 63�~20 horiz | 376px | 360px | 320�~148 | visible | visible | ? |
-| 900x800 | No | 36�~36 (icon) | drawer 450px | 417px | 377�~203 | visible | visible | Playground drawer OK |
-| 720x800 | No | 36�~36 (icon) | drawer 450px | 417px | 377�~203 | visible | visible | Both drawers OK |
-| 390x844 | No | 36�~36 (icon) | drawer 351px | 318px | 278�~193 | visible | visible | Both drawers OK, auth ? vp-16 |
+| 1920x1080 | No | 63�~20 horiz | 560px | 544px | 504�~273 | visible | visible | ? |
+| 1600x900 | No | 63�~20 horiz | 480px | 464px | 424�~150 | visible | visible | ? |
+| 1366x768 | No | 63�~20 horiz | 410px | 394px | 354�~148 | visible | visible | ? |
+| 1200x800 | No | 63�~20 horiz | 400px | 384px | 344�~148 | visible | visible | ? |
+| 1000x800 | No | 63�~20 horiz | 376px | 360px | 320�~148 | visible | visible | ? |
+| 900x800 | No | 36�~36 (icon) | drawer 450px | 417px | 377�~203 | visible | visible | Playground drawer OK |
+| 720x800 | No | 36�~36 (icon) | drawer 450px | 417px | 377�~203 | visible | visible | Both drawers OK |
+| 390x844 | No | 36�~36 (icon) | drawer 351px | 318px | 278�~193 | visible | visible | Both drawers OK, auth ? vp-16 |
 
 #### Key Metrics Validation
 
@@ -6413,7 +6413,7 @@ ode --check assets/js/sync-engine.js: PASS
 - **Round 19.3.3**: Further UI detail regression fixes, or **Round 19.4**: Bookmarks deletion sync and dual-device conflict testing.
 - **Round 19.3.2A (??)**: Double-end CSS consistency verification ? PASS.
 
-### Round 19.3.2A - �o�[ CSS �����v��?? (2026-06-13)
+### Round 19.3.2A - �o�[ CSS �����v��?? (2026-06-13)
 
 **Status**: PASS
 
@@ -6476,7 +6476,7 @@ No patch commit needed. Both repos have identical CSS with all 4 Round 19.3.2 fi
 - **Round 19.3.2A (??)**: Double-end CSS consistency verification ? PASS.
 - **Round 19.4**: UI polish stable release ? PASS.
 
-### Round 19.4 - UI ?��?���?�z (2026-06-13)
+### Round 19.4 - UI ?��?���?�z (2026-06-13)
 
 **Status**: PASS
 
@@ -6526,7 +6526,7 @@ ode_modules/, ackups/, supabase-config.local.js, etc.)
 | 390x844 | PASS | Auth panel ? vp-16, glossary not vertical, drawers usable |
 
 - **Horizontal overflow**: None in any viewport (confirmed with html { overflow-x: hidden })
-- **SQL Playground**: Desktop visible, editor ? 200�~100px all viewports
+- **SQL Playground**: Desktop visible, editor ? 200�~100px all viewports
 - **Execute button**: Visible and clickable all viewports
 - **Output area**: Visible all viewports
 - **Glossary button**: Horizontal (not vertical) at all widths > 900px
@@ -6568,7 +6568,7 @@ ode_modules/, ackups/, supabase-config.local.js, etc.)
 - **Round 19.4.1**: Post-release stability audit, or **Round 19.5**: Bookmarks deletion sync and dual-device conflict testing.
 - **Round 19.4.1**: Post-release stability audit ? PASS.
 
-### Round 19.4.1 - UI ?��?���?�z�@?�萫?? (2026-06-13)
+### Round 19.4.1 - UI ?��?���?�z�@?�萫?? (2026-06-13)
 
 **Status**: PASS
 
@@ -6590,7 +6590,8 @@ ode_modules/, ackups/, supabase-config.local.js, .env, etc. |
 | Item | Expected | Actual | Result |
 |---|---|---|---|
 | ssetVersion | v2026.6.13-r19.4 | v2026.6.13-r19.4 | ? Match |
-| eleaseUrl | v2026.6.13-r19.4 | v2026.6.13-r19.4 | ? Match |
+| 
+eleaseUrl | v2026.6.13-r19.4 | v2026.6.13-r19.4 | ? Match |
 | CACHE_NAME | study-tools-web-v2026-6-13-r19-4 | study-tools-web-v2026-6-13-r19-4 | ? Match |
 | sset-manifest.json | valid JSON | valid JSON (dict) | ? OK |
 | i18n_content/manifest.json | valid JSON | valid JSON (dict) | ? OK |
@@ -6599,13 +6600,13 @@ ode_modules/, ackups/, supabase-config.local.js, .env, etc. |
 
 | Viewport | Overflow | Playground | SQL Editor | Run Btn | Output | Glossary | Auth | Drawer |
 |---|---|---|---|---|---|---|---|---|
-| 1920�~1080 | No | 560px | 504�~273 | ? | ? | Horizontal | ? | ? |
-| 1366�~768 | No | 410px | 354�~148 | ? | ? | Horizontal | ? | ? |
-| 1200�~800 | No | 400px | 344�~148 | ? | ? | Horizontal | ? | ? |
-| 1000�~800 | No | 376px | 320�~148 | ? | ? | Horizontal | ? | ? |
-| 900�~800 | No | 450px (drawer) | 377�~202 | ? | ? | Horizontal | ? | PG drawer ? |
-| 720�~800 | No | 450px (drawer) | 377�~202 | ? | ? | Horizontal | ? | Both drawers ? |
-| 390�~844 | No | 351px (drawer) | 278�~192 | ? | ? | Horizontal | ? | Both drawers ? |
+| 1920�~1080 | No | 560px | 504�~273 | ? | ? | Horizontal | ? | ? |
+| 1366�~768 | No | 410px | 354�~148 | ? | ? | Horizontal | ? | ? |
+| 1200�~800 | No | 400px | 344�~148 | ? | ? | Horizontal | ? | ? |
+| 1000�~800 | No | 376px | 320�~148 | ? | ? | Horizontal | ? | ? |
+| 900�~800 | No | 450px (drawer) | 377�~202 | ? | ? | Horizontal | ? | PG drawer ? |
+| 720�~800 | No | 450px (drawer) | 377�~202 | ? | ? | Horizontal | ? | Both drawers ? |
+| 390�~844 | No | 351px (drawer) | 278�~192 | ? | ? | Horizontal | ? | Both drawers ? |
 
 - **Horizontal overflow**: None in any viewport
 - **?1200px thresholds**: playground ? 400 ? / sql-editor ? 340 ? / editor h ? 100 ?
@@ -6648,7 +6649,7 @@ ode_modules/, ackups/, supabase-config.local.js, .env, etc. |
 - **Round 19.5**: Bookmarks deletion sync and dual-device conflict special testing.
 - **Round 19.5**: Bookmarks deletion sync and dual-device conflict testing ? PASS.
 
-### Round 19.5 - Bookmarks ?����?�^�o??�t��???? (2026-06-13)
+### Round 19.5 - Bookmarks ?����?�^�o??�t��???? (2026-06-13)
 
 **Status**: PASS
 
@@ -6678,9 +6679,10 @@ ode_modules/, ackups/, supabase-config.local.js, .env, etc. |
 
 | File | Changes |
 |---|---|
-| ssets/js/sync-engine.js | +7 new functions, updated unManualSync, updated getSyncSummary, updated exports |
+| ssets/js/sync-engine.js | +7 new functions, updated 
+unManualSync, updated getSyncSummary, updated exports |
 | ssets/js/auth-ui.js | +4 new summary display fields |
-| ssets/js/i18n-ui-dict.js | +7 languages �~ 5 keys = 35 new translation entries |
+| ssets/js/i18n-ui-dict.js | +7 languages �~ 5 keys = 35 new translation entries |
 | docs/sync_architecture.md | Added Round 19.5 architecture section |
 | PROJECT_HANDOFF.md | This record |
 
@@ -6694,17 +6696,17 @@ ode_modules/, ackups/, supabase-config.local.js, .env, etc. |
 | pushBookmarkTombstones(ctx) | Upsert deleted bookmarks with deleted_at |
 | pullBookmarkTombstones(ctx) | Fetch remote tombstones (deleted_at != null) |
 | pplyTypingBookmarkDeletes(state, tombstones, local) | Apply remote tombstones to local favorites |
-| mergeBookmarksWithTombstones(ctx) | Unified sync: push tombstones �� pull �� apply �� pull active �� merge |
+| mergeBookmarksWithTombstones(ctx) | Unified sync: push tombstones �� pull �� apply �� pull active �� merge |
 
 #### Case Test Verification (A-G)
 
 | Case | Scenario | Expected | Result |
 |---|---|---|---|
-| A | Device A favorites X �� Sync �� B Sync �� B sees X | X appears on B | ? Logic ensures push + pull |
-| B | Device A has X, remote empty �� Sync | X not lost locally | ? Remote empty never clears local |
-| C | Device A un-favorites X �� Sync �� B Sync �� B removes X | X removed on B | ? Tombstone push + applyDelete |
-| D | Device A deletes X �� Sync; Device B re-adds X �� Sync | X restored as active | ? Re-add removes tombstone |
-| E | Device A favorites X; Device B deletes X �� Sync �� A Sync | X removed on A | ? Remote delete wins |
+| A | Device A favorites X �� Sync �� B Sync �� B sees X | X appears on B | ? Logic ensures push + pull |
+| B | Device A has X, remote empty �� Sync | X not lost locally | ? Remote empty never clears local |
+| C | Device A un-favorites X �� Sync �� B Sync �� B removes X | X removed on B | ? Tombstone push + applyDelete |
+| D | Device A deletes X �� Sync; Device B re-adds X �� Sync | X restored as active | ? Re-add removes tombstone |
+| E | Device A favorites X; Device B deletes X �� Sync �� A Sync | X removed on A | ? Remote delete wins |
 | F | User clicks Sync Now repeatedly | No duplicate submissions | ? manualSyncRunning guard |
 | G | Bookmarks step fails | Settings/progress/quiz continue | ? Non-fatal step, warnings only |
 
@@ -6737,7 +6739,7 @@ ode_modules/, ackups/, supabase-config.local.js, .env, etc. |
 - **Round 19.6**: Bookmarks pre-release stability audit, or **Round 20.0**: User-customized translation UI audit.
 - **Round 19.5.1**: Bookmarks sync stability audit ? PASS.
 
-### Round 19.5.1 - Bookmarks ��??�z�O?�萫?? (2026-06-13)
+### Round 19.5.1 - Bookmarks ��??�z�O?�萫?? (2026-06-13)
 
 **Status**: PASS
 
@@ -6759,11 +6761,13 @@ ode_modules/, ackups/, supabase-config.local.js, .env, etc. |
 | 7 new functions exist (getTypingBookmarkSyncState, setTypingBookmarkSyncState, detectTypingBookmarkDeletions, pushBookmarkTombstones, pullBookmarkTombstones, pplyTypingBookmarkDeletes, mergeBookmarksWithTombstones) | ? All present |
 | Functions exported in SyncEngine | ? All exported |
 | Summary fields in getSyncSummary | ? ookmarks_deleted_pushed, ookmarks_deleted_pulled, ookmarks_restored, ookmarks_conflicts_resolved |
-| Summary fields in unManualSync summaryData | ? All 4 fields computed from esults.bookmarks_sync |
+| Summary fields in 
+unManualSync summaryData | ? All 4 fields computed from 
+esults.bookmarks_sync |
 | detectTypingBookmarkDeletions called before step loop | ? At line 1019 |
 | ookmarks_sync replaces old ookmarks_pull step | ? In stepKeys array |
 | auth-ui.js reads + displays new fields | ? ookmarksDeletedPushed, ookmarksRestored, ookmarksConflictsResolved with icons |
-| i18n keys for all 7 languages | ? 5 keys �~ 7 languages = 35 entries |
+| i18n keys for all 7 languages | ? 5 keys �~ 7 languages = 35 entries |
 | manualSyncRunning still protects duplicate clicks | ? Unchanged |
 | Single-step failure does not block settings/progress/quiz | ? Error handled, lastError recorded, loop continues |
 
@@ -6776,7 +6780,8 @@ ode_modules/, ackups/, supabase-config.local.js, .env, etc. |
 | Syncs AI API keys (sessionStorage) | ? Excluded per documentation |
 | Syncs provider/model/Ollama URL | ? Excluded |
 | Syncs AI chat content | ? Not present in sync scope |
-| Bookmarks sync scope | ? Only 	yping_article with eference_id and deleted_at |
+| Bookmarks sync scope | ? Only 	yping_article with 
+eference_id and deleted_at |
 
 #### localStorage Audit
 
@@ -6800,11 +6805,11 @@ ode_modules/, ackups/, supabase-config.local.js, .env, etc. |
 
 | Case | Mechanism | Result |
 |---|---|---|
-| A: A favorites X �� Sync �� B �� B sees X | pushBookmarks sends active; mergeBookmarksWithTombstones pulls active via pullActiveResult | ? Correct |
-| B: A has X, remote empty �� X not lost | mergeBookmarks does not clear local if remote empty | ? Correct |
-| C: A un-favorites X �� Sync �� B removes X | detectTypingBookmarkDeletions records tombstone; pushBookmarkTombstones pushes; pplyTypingBookmarkDeletes removes locally on B | ? Correct |
-| D: A deletes X; B re-adds X �� X restored | pplyTypingBookmarkDeletes detects local re-add and removes tombstone | ? Correct |
-| E: A has X; B deletes X �� A removes X | Remote tombstone pulled; pplyTypingBookmarkDeletes removes from A's local | ? Correct |
+| A: A favorites X �� Sync �� B �� B sees X | pushBookmarks sends active; mergeBookmarksWithTombstones pulls active via pullActiveResult | ? Correct |
+| B: A has X, remote empty �� X not lost | mergeBookmarks does not clear local if remote empty | ? Correct |
+| C: A un-favorites X �� Sync �� B removes X | detectTypingBookmarkDeletions records tombstone; pushBookmarkTombstones pushes; pplyTypingBookmarkDeletes removes locally on B | ? Correct |
+| D: A deletes X; B re-adds X �� X restored | pplyTypingBookmarkDeletes detects local re-add and removes tombstone | ? Correct |
+| E: A has X; B deletes X �� A removes X | Remote tombstone pulled; pplyTypingBookmarkDeletes removes from A's local | ? Correct |
 | F: Repeated Sync Now clicks | manualSyncRunning guard returns error immediately | ? Correct |
 | G: Bookmarks step fails | Error handled, loop continues, lastError set, warnings populated | ? Correct |
 
@@ -6839,7 +6844,7 @@ ode_modules/, ackups/, supabase-config.local.js, .env, etc. |
 - **Round 19.6**: Bookmarks sync stable release, or **Round 20.0**: User-customized translation UI audit.
 - **Round 19.6**: Bookmarks sync stable release ? PASS.
 
-### Round 19.6 - Bookmarks ��??���?�z (2026-06-13)
+### Round 19.6 - Bookmarks ��??���?�z (2026-06-13)
 
 **Status**: PASS
 
@@ -6904,7 +6909,7 @@ ode_modules/, ackups/, supabase-config.local.js, .env, etc. |
 - **Round 19.7**: Post-release stability audit, or **Round 20.0**: User-customized translation UI audit.
 - **Round 19.6.1**: Bookmarks sync post-release audit ? PASS.
 
-### Round 19.6.1 - Bookmarks ��??���?�z�@?? (2026-06-13)
+### Round 19.6.1 - Bookmarks ��??���?�z�@?? (2026-06-13)
 
 **Status**: PASS
 
@@ -6955,13 +6960,13 @@ ode_modules/, ackups/, supabase-config.local.js, .env, etc. |
 
 | Viewport | Overflow | Result |
 |---|---|---|
-| 1920�~1080 | No | PASS |
-| 1366�~768 | No | PASS |
-| 1200�~800 | No | PASS |
-| 1000�~800 | No | PASS |
-| 900�~800 | No | PASS |
-| 720�~800 | No | PASS |
-| 390�~844 | No | PASS |
+| 1920�~1080 | No | PASS |
+| 1366�~768 | No | PASS |
+| 1200�~800 | No | PASS |
+| 1000�~800 | No | PASS |
+| 900�~800 | No | PASS |
+| 720�~800 | No | PASS |
+| 390�~844 | No | PASS |
 
 #### Verification
 
@@ -6993,7 +6998,7 @@ ode_modules/, ackups/, supabase-config.local.js, .env, etc. |
 - **Round 20.0**: User-customized translation UI audit.
 - **Round 20.0**: User-customized translation UI & sync architecture audit ? PASS.
 
-### Round 20.0 - �p?����?�|? UI �^��?��??? (2026-06-13)
+### Round 20.0 - �p?����?�|? UI �^��?��??? (2026-06-13)
 
 **Status**: PASS
 
@@ -7040,7 +7045,7 @@ Source: 	ools/init_supabase.sql lines 125-148
 | Field | Type | Assessment |
 |---|---|---|
 | id | BIGSERIAL PK | ? OK |
-| user_id | UUID FK��auth.users | ? RLS isolated, ON DELETE CASCADE |
+| user_id | UUID FK��auth.users | ? RLS isolated, ON DELETE CASCADE |
 | source_text | TEXT | ? Needed, but add source_text_hash for indexing |
 | source_lang | VARCHAR(10) DEFAULT 'ja' | ? OK |
 | 	arget_lang | VARCHAR(10) | ? Supports 7 languages |
@@ -7085,19 +7090,19 @@ Source: 	ools/init_supabase.sql lines 125-148
 | AI cache uploaded as user translation | High | Separate storage keys; explicit "Save My Translation" button |
 | API key leaked via sync | Critical | Only in sessionStorage, excluded from sync scope |
 | Privacy: sensitive user text synced | Medium | User must actively save; manual sync only |
-| source_text too long �� table bloat | Medium | Add 500-char limit |
+| source_text too long �� table bloat | Medium | Add 500-char limit |
 | Multi-module context collision | Low | Include context in unique constraint |
 | Delete sync permanently loses data | Medium | Soft delete (tombstone) pattern |
 | Web/Windows storage divergence | Medium | Same key name study-tools-user-translations-v1 |
-| UI overload | Medium | Minimal: pencil icon �� text area �� save/delete |
+| UI overload | Medium | Minimal: pencil icon �� text area �� save/delete |
 
 #### 8. UI Design Recommendations (Round 20.1+)
 
 Minimal viable UX:
 1. **Pencil icon** next to any AI-translated text or glossary term
-2. Click �� **inline text area** shows current translation, editable
-3. **"Save" button** �� saves to localStorage study-tools-user-translations-v1
-4. **"Reset" button** �� deletes custom translation, reverts to AI/built-in
+2. Click �� **inline text area** shows current translation, editable
+3. **"Save" button** �� saves to localStorage study-tools-user-translations-v1
+4. **"Reset" button** �� deletes custom translation, reverts to AI/built-in
 5. Auth Panel sync summary adds: "user translations uploaded/downloaded"
 6. **Scope string**: ["user_settings", "learning_progress", "quiz_results", "bookmarks", "user_translations"]
 7. Mobile: same pencil icon, full-width text area below the translated text
@@ -7124,12 +7129,13 @@ Minimal viable UX:
 
 #### 10. Recommended Route for Round 20.1+
 
-**Recommended order: A �� B �� C �� D**
+**Recommended order: A �� B �� C �� D**
 
 | Phase | Scope | Deliverable |
 |---|---|---|
 | **20.1** | Local-only prototype | study-tools-user-translations-v1 localStorage, "Save"/"Reset" UI on AI translations, no Supabase |
-| **20.2** | Supabase sync integration | pushUserTranslations + pullUserTranslations + mergeUserTranslations, add to unManualSync |
+| **20.2** | Supabase sync integration | pushUserTranslations + pullUserTranslations + mergeUserTranslations, add to 
+unManualSync |
 | **20.3** | Conflict & tombstone | LWW, deleted_at soft delete, remote empty protection, auth UI summary |
 | **20.4** | Stable release | Web cache update, portable ZIP, tag, GitHub Release, docs |
 
@@ -7155,7 +7161,7 @@ Minimal viable UX:
 - **Round 20.1**: User-customized translation UI prototype (local-only, no sync)
 - **Round 20.1**: User translation UI prototype + SQL right panel layout fixes ? PASS.
 
-### Round 20.1 - �p?����?�|? UI ���^ + SQL �E?�z�ǏC?
+### Round 20.1 - �p?����?�|? UI ���^ + SQL �E?�z�ǏC?
 
 **Status**: PASS
 
@@ -7182,10 +7188,10 @@ Minimal viable UX:
 |---|---|
 | console-card-body | overflow: auto !important ? enables scroll while footer sticks |
 | console-footer | position: sticky; bottom: 0; z-index: 5; flex-shrink: 0 ? always visible |
-| editor-container min-height | 180px �� **200px** |
-| console-card min-height (base) | 220px �� **280px** |
-| console-card min-height (901px+) | 280px �� **320px** |
-| playground-task-desc padding | 12px 20px �� **8px 16px** (compact) |
+| editor-container min-height | 180px �� **200px** |
+| console-card min-height (base) | 220px �� **280px** |
+| console-card min-height (901px+) | 280px �� **320px** |
+| playground-task-desc padding | 12px 20px �� **8px 16px** (compact) |
 
 **Result**: Execute button is always visible at the bottom of the card, regardless of editor height. Editor area scrolls internally while footer stays sticky.
 
@@ -7204,13 +7210,13 @@ Minimal viable UX:
 
 | Viewport | Overflow | Run Btn | SQL Editor | Output | Glossary | Auth | Drawers |
 |---|---|---|---|---|---|---|---|
-| **375�~667** | No | ? Visible | ? ?150�~80 | ? Visible | ? Horiz | ? No overflow | ? Both drawers |
-| **390�~844** | No | ? Visible | ? ?150�~80 | ? Visible | ? Horiz | ? No overflow | ? Both drawers |
-| **430�~932** | No | ? Visible | ? ?150�~80 | ? Visible | ? Horiz | ? No overflow | ? Both drawers |
-| **768�~1024** | No | ? Visible | ? ?150�~80 | ? Visible | ? Horiz | ? No overflow | ? Playground drawer |
-| **900�~700** | No | ? Visible | ? ?150�~80 | ? Visible | ? Horiz | ? No overflow | ? Playground drawer |
-| **1280�~720** | No | ? Visible | ? ?150�~80 | ? Visible | ? Horiz | ? No overflow | ? |
-| **1440�~900** | No | ? Visible | ? ?150�~80 | ? Visible | ? Horiz | ? No overflow | ? |
+| **375�~667** | No | ? Visible | ? ?150�~80 | ? Visible | ? Horiz | ? No overflow | ? Both drawers |
+| **390�~844** | No | ? Visible | ? ?150�~80 | ? Visible | ? Horiz | ? No overflow | ? Both drawers |
+| **430�~932** | No | ? Visible | ? ?150�~80 | ? Visible | ? Horiz | ? No overflow | ? Both drawers |
+| **768�~1024** | No | ? Visible | ? ?150�~80 | ? Visible | ? Horiz | ? No overflow | ? Playground drawer |
+| **900�~700** | No | ? Visible | ? ?150�~80 | ? Visible | ? Horiz | ? No overflow | ? Playground drawer |
+| **1280�~720** | No | ? Visible | ? ?150�~80 | ? Visible | ? Horiz | ? No overflow | ? |
+| **1440�~900** | No | ? Visible | ? ?150�~80 | ? Visible | ? Horiz | ? No overflow | ? |
 
 #### 5. User Translation UI Prototype (P1)
 
@@ -7262,7 +7268,7 @@ Minimal viable UX:
 - **Round 20.2**: User translation UI buttons (save/reset on AI translated text), or **Round 19.7**: Post-release audit.
 - **Round 20.2**: User translation UI controls ? PASS.
 
-### Round 20.2 - �p?����?�|? UI ��?���n
+### Round 20.2 - �p?����?�|? UI ��?���n
 
 **Status**: PASS
 
@@ -7273,7 +7279,7 @@ Minimal viable UX:
 | File | Changes |
 |---|---|
 | ssets/js/i18n.js | Hook in pplyTextJob to attach controls; +6 control functions (simpleHash, ttachUserTranslationControl, pplySavedUserTrans, openUtEditor, isUtEligible, helper closures); updated saveUserTranslationItem to store additional fields (sourceTextHash, sourceLang, targetLang, context, deletedAt, syncVersion, origin) |
-| ssets/js/i18n-ui-dict.js | +USER_TRANSLATIONS_ROUND_20_2 block with 13 keys �~ 7 languages = 91 entries |
+| ssets/js/i18n-ui-dict.js | +USER_TRANSLATIONS_ROUND_20_2 block with 13 keys �~ 7 languages = 91 entries |
 | ssets/css/index.css | +20 CSS rules for .ut-wrapper, .ut-edit-btn, .ut-badge, .ut-popup, .ut-backdrop, .ut-box, .ut-ta, .ut-actions, .ut-save, .ut-cancel, .ut-reset |
 
 #### UI Entry Point
@@ -7281,7 +7287,7 @@ Minimal viable UX:
 - **Location**: A small ? (pencil) icon appears next to translated content elements (text elements with data-i18n that have text length ? 10 chars, excluding buttons, inputs, headers, and nav elements)
 - **Click**: Opens a centered popup with a textarea pre-filled with the current translation
 - **Buttons**: Save / Cancel / Reset (if custom translation exists)
-- **Badge**: A �� indicator appears next to elements with user-saved translations
+- **Badge**: A �� indicator appears next to elements with user-saved translations
 
 #### Data Storage
 
@@ -7290,21 +7296,21 @@ Minimal viable UX:
 | localStorage key | study-tools-user-translations-v1 |
 | Saved fields | sourceText, sourceTextHash, sourceLang, 	argetLang, 	ranslatedText, context, updatedAt, deletedAt, syncVersion, origin |
 | Character limits | sourceText ? 500, translatedText ? 2000 |
-| Deletion | Soft delete (deletedAt: null �� timestamp) |
+| Deletion | Soft delete (deletedAt: null �� timestamp) |
 
 #### Display Priority
 
 `	ext
-User custom translation �� Built-in i18n dict �� AI translation cache �� Original text
+User custom translation �� Built-in i18n dict �� AI translation cache �� Original text
 `
 
 #### Feature Operations
 
 | Action | Implementation |
 |---|---|
-| **Save** | saveUserTranslationItem() �� localStorage �� element textContent updated �� �� badge shown |
+| **Save** | saveUserTranslationItem() �� localStorage �� element textContent updated �� �� badge shown |
 | **Cancel** | Popup closed, no changes |
-| **Reset** | deleteUserTranslationItem() �� element reverts to AI translation �� �� badge removed |
+| **Reset** | deleteUserTranslationItem() �� element reverts to AI translation �� �� badge removed |
 | **Refresh persistence** | pplySavedUserTrans() called on page load via translation hook; re-applies saved translations from localStorage |
 | **Eligibility filter** | Skips buttons, inputs, selects, textareas; skips header/sidebar/auth-panel elements; skips text < 10 chars |
 
@@ -7337,13 +7343,13 @@ User custom translation �� Built-in i18n dict �� AI translation cache �� Origina
 
 | Viewport | Overflow | Run Btn | Editor | UT Controls |
 |---|---|---|---|---|
-| **375�~667** | No | ? Visible | ? ?150�~80 | ? Hook present (appears on translation) |
-| **390�~844** | No | ? Visible | ? ?150�~80 | ? |
-| **430�~932** | No | ? Visible | ? ?150�~80 | ? |
-| **768�~1024** | No | ? Visible | ? ?150�~80 | ? |
-| **900�~700** | No | ? Visible | ? ?150�~80 | ? |
-| **1280�~720** | No | ? Visible | ? ?150�~80 | ? |
-| **1440�~900** | No | ? Visible | ? ?150�~80 | ? |
+| **375�~667** | No | ? Visible | ? ?150�~80 | ? Hook present (appears on translation) |
+| **390�~844** | No | ? Visible | ? ?150�~80 | ? |
+| **430�~932** | No | ? Visible | ? ?150�~80 | ? |
+| **768�~1024** | No | ? Visible | ? ?150�~80 | ? |
+| **900�~700** | No | ? Visible | ? ?150�~80 | ? |
+| **1280�~720** | No | ? Visible | ? ?150�~80 | ? |
+| **1440�~900** | No | ? Visible | ? ?150�~80 | ? |
 
 #### Verification
 
@@ -7368,3 +7374,95 @@ User custom translation �� Built-in i18n dict �� AI translation cache �� Origina
 #### Next
 
 - **Round 20.3**: User translation sync (Supabase + sync-engine integration), or **Round 19.7**: Post-release audit.
+
+---
+
+### Round 22.x UI / 布局稳定版闭环（2026-06-14）
+
+**Status**: PASS — 全部 13 个子轮已完成，双仓已推送
+
+**Scope**: 编程打字修复、顶部导航整合、工具抽屉、模拟考试优化、SQL 学习页清理、Web 版本一致性修复
+
+#### 子轮摘要
+
+| 子轮 | 内容 | 状态 |
+|---|---|---|
+| 22.1 | 编程打字版块排版修复、裸露 \r\n 修复、三步使用引导 | PASS |
+| 22.1.1 | 编程打字移动端稳定化、沙盒反馈修复 | PASS |
+| 22.2 | 顶部版块选择整合进左上角面板，旧横向按钮移除 | PASS |
+| 22.3 | 模拟考试开始后长题目 metadata 默认折叠 | PASS |
+| 22.4 | 提交考试后结果页改为卡片式，删除结果主列表「考核知识点」列 | PASS |
+| 22.5 | 删除 SQL 学习页新手建议卡片 | PASS |
+| 22.6 | 双仓发布后一致性审计，修复 i18n / CSS / 版本残留 | PASS |
+| 22.7 | 同步 Web 已有的 ct-exam-insight 到 Windows | PASS |
+| 22.8 | 设置 / 术语表 / 重置进度整合进右侧工具抽屉 | PASS |
+| 22.9 | 工具抽屉发布后稳定性审计（只读） | PASS |
+| 22.10 | 工具抽屉 Esc stopPropagation、<480px 全屏适配、legacy CSS 注释 | PASS |
+| 22.10.1 | 修复 Web 版本号与缓存一致性，统一到 r22.27 | PASS |
+| 22.10.2 | 线上 Web Smoke 测试，确认 r22.27 资源加载与功能正常 | PASS |
+
+#### 关键功能状态
+
+| 功能 | 状态 | 验证方式 |
+|---|---|---|
+| 编程打字：顶部重叠修复 | PASS | 代码审查 + 线上验证 |
+| 编程打字：裸露 \r\n 修复 | PASS | DT() 函数处理 \r\n -> \n |
+| 编程打字：三步引导 | PASS | HTML + CSS 结构完整 |
+| 编程打字：沙盒发送/运行反馈 | PASS | 按钮 + 状态区正常 |
+| 编程打字：ct-exam-insight 双端同步 | PASS | fc 文件一致 |
+| 编程打字：Symbols 场景 | PASS | coding_symbols.js 已加载 |
+| 左上角版块选择面板 | PASS | module-switch-panel 结构完整，7个模块可切换 |
+| 旧顶部横向版块按钮 | 已移除 | 无 module-nav/top-module-bar 匹配 |
+| 右侧工具抽屉 | PASS | tools-drawer 结构完整，3个功能入口 |
+| 术语表 | PASS | 1500个术语正常加载 |
+| 设置面板 | PASS | AI Provider 设置 (Gemini/OpenAI/Ollama) |
+| 重置进度自定义确认 | PASS | 唯一自定义弹窗，无浏览器原生 confirm |
+| Esc 关闭确认弹窗 | PASS | stopPropagation + preventDefault + capture phase |
+| <480px 工具抽屉全屏 | PASS | @media (max-width: 480px) 规则存在 |
+| 模拟考试 metadata 折叠 | PASS | collapsed class 默认应用 |
+| 提交后结果页卡片化 | PASS | cbt-results-card + 成绩摘要卡片 |
+| SQL 新手建议卡片 | 已删除 | 无 newbie/beginner-card 匹配 |
+
+#### Web 版本状态
+
+| 项目 | 值 |
+|---|---|
+| 稳定版本 | v2026.6.14-r22.27 |
+| Service Worker Cache | study-tools-web-v2026-6-14-r22-27 |
+| CSS/JS 资源参数 | ?v=r22.27（Round 22.x 修改的资源） |
+| version.js webVersion | v2026.6.14-r22.27 |
+| version.js assetVersion | v2026.6.14-r22.27 |
+| version.js desktopVersion | v2026.6.14-r22.19（Windows 镜像，未改） |
+| 线上 Smoke | Round 22.10.2 全项 PASS |
+
+#### 双仓一致性（Round 22.11 审计）
+
+| 文件 | 一致性 |
+|---|---|
+| assets/js/app.js | 完全一致 |
+| assets/js/i18n-ui-dict.js | 完全一致 |
+| assets/js/coding_typing.js | 完全一致 |
+| assets/css/index.css | 完全一致 |
+| assets/css/coding-typing.css | 完全一致 |
+| assets/js/ai_assistant.js | 完全一致 |
+
+允许差异：index.html（版本参数/平台资源）、service-worker.js、version.js、manifest、Windows/Web 专用配置。
+
+#### 未改动的核心
+
+- 题库数据（data/*.js/json）
+- 术语表数据（data/glossary*）
+- Supabase 配置（supabase-client.js / supabase-config.local.js）
+- SQL sandbox 核心逻辑（sqlite-adapter.js / sandbox_bridge.js）
+
+#### Commits
+
+- **Windows main**: `a6b232c` - 微调顶部工具抽屉移动端与确认交互
+- **Web master**: `4f5fec2` - 修正 Web 版本号与缓存一致性
+
+#### 后续建议（Round 23）
+
+1. 考试历史记录、错题本、成绩趋势
+2. 移动端真实设备适配（iOS Safari / Android Chrome）
+3. 清理旧 i18n key / legacy CSS 注释
+4. Java 课程数据 JSON 懒加载（Web 首屏优化）
