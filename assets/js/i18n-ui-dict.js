@@ -4003,5 +4003,24 @@
     if (!window.I18nUiDict[locale].codingTyping) window.I18nUiDict[locale].codingTyping = {};
     Object.assign(window.I18nUiDict[locale].codingTyping, CODING_TYPING_ROUND_22_1[locale]);
   });
+
+  var CODING_TYPING_ROUND_22_1_1 = {
+    "zh-CN": { sentToSandbox: "已发送到沙盒", sendingAndRunning: "正在发送并运行", ranInSandbox: "已在沙盒中运行", runFailed: "运行失败", sendFailed: "发送到沙盒失败", directRunUnsupported: "当前练习不支持直接运行" },
+    "ja-JP": { sentToSandbox: "サンドボックスに送信しました", sendingAndRunning: "送信して実行しています", ranInSandbox: "サンドボックスで実行しました", runFailed: "実行に失敗しました", sendFailed: "サンドボックスへの送信に失敗しました", directRunUnsupported: "この練習は直接実行に対応していません" },
+    "en-US": { sentToSandbox: "Sent to sandbox", sendingAndRunning: "Sending and running", ranInSandbox: "Ran in sandbox", runFailed: "Run failed", sendFailed: "Failed to send to sandbox", directRunUnsupported: "This practice item does not support direct run" },
+    "ko-KR": { sentToSandbox: "샌드박스로 전송했습니다", sendingAndRunning: "전송 후 실행 중입니다", ranInSandbox: "샌드박스에서 실행했습니다", runFailed: "실행에 실패했습니다", sendFailed: "샌드박스 전송에 실패했습니다", directRunUnsupported: "이 연습은 직접 실행을 지원하지 않습니다" },
+    "vi-VN": { sentToSandbox: "Đã gửi đến sandbox", sendingAndRunning: "Đang gửi và chạy", ranInSandbox: "Đã chạy trong sandbox", runFailed: "Chạy thất bại", sendFailed: "Không thể gửi đến sandbox", directRunUnsupported: "Bài luyện này không hỗ trợ chạy trực tiếp" },
+    "my-MM": { sentToSandbox: "Sandbox သို့ ပို့ပြီးပါပြီ", sendingAndRunning: "ပို့ပြီး လုပ်ဆောင်နေသည်", ranInSandbox: "Sandbox တွင် လုပ်ဆောင်ပြီးပါပြီ", runFailed: "လုပ်ဆောင်မှု မအောင်မြင်ပါ", sendFailed: "Sandbox သို့ မပို့နိုင်ပါ", directRunUnsupported: "ဤလေ့ကျင့်ခန်းကို တိုက်ရိုက်လုပ်ဆောင်၍ မရပါ" },
+    "fr-FR": { sentToSandbox: "Envoyé au bac à sable", sendingAndRunning: "Envoi et exécution en cours", ranInSandbox: "Exécuté dans le bac à sable", runFailed: "Échec de l’exécution", sendFailed: "Échec de l’envoi au bac à sable", directRunUnsupported: "Cet exercice ne prend pas en charge l’exécution directe" },
+    "th-TH": { sentToSandbox: "ส่งไปยังแซนด์บ็อกซ์แล้ว", sendingAndRunning: "กำลังส่งและรัน", ranInSandbox: "รันในแซนด์บ็อกซ์แล้ว", runFailed: "รันไม่สำเร็จ", sendFailed: "ส่งไปยังแซนด์บ็อกซ์ไม่สำเร็จ", directRunUnsupported: "แบบฝึกหัดนี้ไม่รองรับการรันโดยตรง" },
+    "id-ID": { sentToSandbox: "Dikirim ke sandbox", sendingAndRunning: "Mengirim dan menjalankan", ranInSandbox: "Dijalankan di sandbox", runFailed: "Gagal menjalankan", sendFailed: "Gagal mengirim ke sandbox", directRunUnsupported: "Latihan ini tidak mendukung eksekusi langsung" },
+    "default-ja-zh": { sentToSandbox: "已发送到沙盒 / サンドボックスに送信しました", sendingAndRunning: "正在发送并运行 / 送信して実行しています", ranInSandbox: "已在沙盒中运行 / サンドボックスで実行しました", runFailed: "运行失败 / 実行に失敗しました", sendFailed: "发送失败 / 送信に失敗しました", directRunUnsupported: "当前练习不支持直接运行 / この練習は直接実行に対応していません" }
+  };
+
+  Object.keys(CODING_TYPING_ROUND_22_1_1).forEach(function (locale) {
+    if (!window.I18nUiDict[locale]) window.I18nUiDict[locale] = {};
+    if (!window.I18nUiDict[locale].codingTyping) window.I18nUiDict[locale].codingTyping = {};
+    Object.assign(window.I18nUiDict[locale].codingTyping, CODING_TYPING_ROUND_22_1_1[locale]);
+  });
 })();
 

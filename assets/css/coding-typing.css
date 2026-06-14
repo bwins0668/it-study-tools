@@ -583,11 +583,13 @@ body.mode-coding-typing .coding-typing-hub {
     border-bottom: 1px solid var(--border-color, #1e293b);
     padding-bottom: 12px;
     margin-bottom: 4px;
-    max-height: none;
+    flex: 0 0 auto;
+    max-height: min(42vh, 360px);
     overflow-y: auto;
   }
   
   .ct-main-panel {
+    flex: 0 0 auto;
     padding-left: 0;
     overflow: visible;
   }
@@ -615,6 +617,10 @@ body.mode-coding-typing .coding-typing-hub {
   .ct-textarea {
     font-size: 12px;
     min-height: 60px;
+  }
+
+  .ct-input-section {
+    scroll-margin-bottom: 42vh;
   }
   
   .ct-compare-display {
@@ -877,6 +883,21 @@ body[data-theme="light"] .ct-diff-btn {
   transform: translateY(-1px);
 }
 
+.ct-sandbox-btn:disabled,
+.ct-sandbox-run-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+  transform: none;
+}
+
+.ct-sandbox-status {
+  flex: 1 1 100%;
+  color: var(--text-muted, #94a3b8);
+  font-size: 11px;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+
 /* ===== Toast Notification ===== */
 .ct-toast {
   position: fixed;
@@ -915,6 +936,13 @@ body[data-theme="light"] .ct-diff-btn {
   .ct-sandbox-run-btn {
     width: 100%;
     justify-content: center;
+  }
+
+  .ct-toast {
+    bottom: 16px;
+    width: calc(100vw - 32px);
+    max-width: 420px;
+    text-align: center;
   }
 }
 
