@@ -71,7 +71,18 @@
         normalizeFullWidth: "全角→半角",
         lenientIndent: "インデント寛容",
         sendToSandbox: "サンドボックスに送信",        runInSandbox: "サンドボックスで実行",        sandboxUnavailable: "サンドボックス利用不可",        sentToSandbox: "サンドボックスに送信しました",        openSandbox: "サンドボックスを開く",        shortcutHelp: "ショートカット: Alt+N 次 / Alt+R 再 / Alt+S 随机",
-        summaryLine: "CPM: {cpm} | 正確率: {acc}% | エラー: {err} | 時間: {time}"
+        summaryLine: "CPM: {cpm} | 正確率: {acc}% | エラー: {err} | 時間: {time}",
+        examInsight: "試験理解カード",
+        examRelevance: "出題頻度",
+        examTargets: "試験対策対象",
+        relatedTerms: "関連用語",
+        meaning: "意味",
+        memoryHook: "覚え方",
+        examPoint: "試験ポイント",
+        commonMistake: "間違えやすい点",
+        high: "高",
+        medium: "中",
+        low: "低"
       },
       subnav: {
         lessons: "テキスト・演習",
@@ -426,7 +437,18 @@
         normalizeFullWidth: "全角→半角",
         lenientIndent: "缩进宽容",
         sendToSandbox: "发送到沙盒",        runInSandbox: "在沙盒中运行",        sandboxUnavailable: "沙盒不可用",        sentToSandbox: "已发送到沙盒",        openSandbox: "打开沙盒",        shortcutHelp: "快捷键: Alt+N 下一题 / Alt+R 重来 / Alt+S 随机",
-        summaryLine: "CPM: {cpm} | 正确率: {acc}% | 错误: {err} | 用时: {time}"
+        summaryLine: "CPM: {cpm} | 正确率: {acc}% | 错误: {err} | 用时: {time}",
+        examInsight: "考试理解卡片",
+        examRelevance: "考试相关性",
+        examTargets: "考试目标",
+        relatedTerms: "相关术语",
+        meaning: "含义",
+        memoryHook: "记忆法",
+        examPoint: "考点",
+        commonMistake: "易错点",
+        high: "高",
+        medium: "中",
+        low: "低"
       },
       subnav: {
         lessons: "教科书与演练沙盒",
@@ -781,7 +803,18 @@
         normalizeFullWidth: "Fullwidth→Halfwidth",
         lenientIndent: "Lenient Indent",
         sendToSandbox: "Send to Sandbox",        runInSandbox: "Run in Sandbox",        sandboxUnavailable: "Sandbox unavailable",        sentToSandbox: "Sent to sandbox",        openSandbox: "Open sandbox",        shortcutHelp: "Shortcuts: Alt+N Next / Alt+R Restart / Alt+S Random",
-        summaryLine: "CPM: {cpm} | Accuracy: {acc}% | Errors: {err} | Time: {time}"
+        summaryLine: "CPM: {cpm} | Accuracy: {acc}% | Errors: {err} | Time: {time}",
+        examInsight: "Exam Insight",
+        examRelevance: "Exam Relevance",
+        examTargets: "Exam Targets",
+        relatedTerms: "Related Terms",
+        meaning: "Meaning",
+        memoryHook: "Memory Hook",
+        examPoint: "Exam Point",
+        commonMistake: "Common Mistake",
+        high: "High",
+        medium: "Medium",
+        low: "Low"
       },
       subnav: {
         lessons: "Textbook & Practice Sandbox",
@@ -2479,7 +2512,18 @@
       symbols: "符号 / 記号",
       normalizeFullWidth: "全角→半角 / 全角→半角",
       lenientIndent: "缩进宽容 / インデント寛容",
-      sendToSandbox: "发送到沙盒 / サンドボックスに送信",      runInSandbox: "在沙盒中运行 / サンドボックスで実行",      sandboxUnavailable: "沙盒不可用 / サンドボックス利用不可",      sentToSandbox: "已发送到沙盒 / サンドボックスに送信しました",      openSandbox: "打开沙盒 / サンドボックスを開く",      shortcutHelp: "快捷键: Alt+N 下一题 / Alt+R 重来 / Alt+S 随机 / 快捷键: Alt+N 次の問題 / Alt+R やり直し / Alt+S ランダム"
+      sendToSandbox: "发送到沙盒 / サンドボックスに送信",      runInSandbox: "在沙盒中运行 / サンドボックスで実行",      sandboxUnavailable: "沙盒不可用 / サンドボックス利用不可",      sentToSandbox: "已发送到沙盒 / サンドボックスに送信しました",      openSandbox: "打开沙盒 / サンドボックスを開く",      shortcutHelp: "快捷键: Alt+N 下一题 / Alt+R 重来 / Alt+S 随机 / 快捷键: Alt+N 次の問題 / Alt+R やり直し / Alt+S ランダム",
+      examInsight: "考试理解卡片 / 試験理解カード",
+      examRelevance: "考试相关性 / 出題頻度",
+      examTargets: "考试目标 / 試験対策対象",
+      relatedTerms: "相关术语 / 関連用語",
+      meaning: "含义 / 意味",
+      memoryHook: "记忆法 / 覚え方",
+      examPoint: "考点 / 試験ポイント",
+      commonMistake: "易错点 / 間違えやすい点",
+      high: "高 / 高",
+      medium: "中 / 中",
+      low: "低 / 低"
     },
     subnav: {
       lessons: "教科书与演练沙盒 / テキスト・演習",
