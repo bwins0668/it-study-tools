@@ -132,6 +132,9 @@ document.addEventListener("DOMContentLoaded", () => {
   // Initialize tools drawer
   initToolsDrawer();
 
+  // Initialize exam history modal (Round 23.2)
+  initExamHistoryModal();
+
   // Trigger initial subject setup (SQL) so that the sub-header and all widgets are correctly initialized on load
   currentSubject = "";
   switchSubject('sql');
@@ -725,6 +728,12 @@ function initToolsDrawer() {
 
     if (action === 'reset-progress') {
       showResetConfirm();
+      return;
+    }
+
+    if (action === 'open-exam-history') {
+      closeDrawer();
+      openExamHistoryModal();
       return;
     }
   });
@@ -3247,6 +3256,256 @@ function buildExamHistoryRecord(exam, reviews, scoreData) {
 
     questionResults: questionResults
   };
+}
+
+// ── Exam History Modal UI (Round 23.2) ─────────────────────────────
+
+var _examHistoryCurrentFilter = 'all';
+var _examHistoryEscHandler = null;
+
+function stripHtmlToText(html) {
+  if (!html) return '';
+  var div = document.createElement('div');
+  div.innerHTML = html;
+  return (div.textContent || div.innerText || '').trim();
+}
+
+function findCbtQuestionById(subject, qId) {
+  if (!qId) return null;
+  var pool = null;
+  if (subject === 'sg' && typeof SG_PAST_EXAMS !== 'undefined') {
+    pool = SG_PAST_EXAMS;
+  } else if (typeof IT_PASSPORT_PAST_EXAMS !== 'undefined') {
+    pool = IT_PASSPORT_PAST_EXAMS;
+  }
+  if (!pool) return null;
+  for (var i = 0; i < pool.length; i++) {
+    if (pool[i].id === qId) return pool[i];
+  }
+  return null;
+}
+
+function openExamHistoryModal() {
+  var modal = document.getElementById('exam-history-modal');
+  if (!modal) return;
+  modal.removeAttribute('hidden');
+  document.body.style.overflow = 'hidden';
+  _examHistoryCurrentFilter = 'all';
+  var btns = modal.querySelectorAll('.exam-history-filter-btn');
+  btns.forEach(function (b) { b.classList.toggle('active', b.getAttribute('data-filter') === 'all'); });
+  renderExamHistoryList();
+  if (!_examHistoryEscHandler) {
+    _examHistoryEscHandler = function (e) {
+      if (e.key === 'Escape') {
+        var m = document.getElementById('exam-history-modal');
+        if (m && !m.hasAttribute('hidden')) {
+          e.stopPropagation();
+          e.preventDefault();
+          closeExamHistoryModal();
+        }
+      }
+    };
+    document.addEventListener('keydown', _examHistoryEscHandler, true);
+  }
+}
+
+function closeExamHistoryModal() {
+  var modal = document.getElementById('exam-history-modal');
+  if (!modal) return;
+  modal.setAttribute('hidden', '');
+  document.body.style.overflow = '';
+}
+
+function setExamHistoryFilter(filter) {
+  _examHistoryCurrentFilter = filter;
+  var btns = document.querySelectorAll('#exam-history-filters .exam-history-filter-btn');
+  btns.forEach(function (b) { b.classList.toggle('active', b.getAttribute('data-filter') === filter); });
+  renderExamHistoryList();
+}
+
+function renderExamHistoryList() {
+  var container = document.getElementById('exam-history-list');
+  if (!container) return;
+  var history = getExamHistory();
+  history.sort(function (a, b) { return (b.submittedAt || '').localeCompare(a.submittedAt || ''); });
+  if (_examHistoryCurrentFilter !== 'all') {
+    history = history.filter(function (r) { return r.subject === _examHistoryCurrentFilter; });
+  }
+  if (history.length === 0) {
+    container.innerHTML = '<div class="exam-history-empty">' +
+      '<p class="exam-history-empty__title">' + (typeof I18n !== 'undefined' ? I18n.t('examHistory.empty') : '还没有考试历史') + '</p>' +
+      '<p class="exam-history-empty__hint">' + (typeof I18n !== 'undefined' ? I18n.t('examHistory.emptyHint') : '完成一次模拟考试后，这里会显示记录') + '</p>' +
+      '</div>';
+    return;
+  }
+  container.innerHTML = '';
+  history.forEach(function (rec) {
+    var card = document.createElement('div');
+    card.className = 'exam-history-card';
+    card.id = 'exam-hist-' + rec.sessionId;
+
+    var subjectLabel = rec.subject === 'sg' ? 'SG' : 'IT Passport';
+    var dateStr = '';
+    try { dateStr = new Date(rec.submittedAt).toLocaleString(); } catch (_) { dateStr = rec.submittedAt || ''; }
+    var elapsed = rec.elapsedSeconds || 0;
+    var mm = Math.floor(elapsed / 60);
+    var ss = elapsed % 60;
+    var timeStr = (mm < 10 ? '0' : '') + mm + ':' + (ss < 10 ? '0' : '') + ss;
+    var passLabel = rec.isPassed
+      ? (typeof I18n !== 'undefined' ? I18n.t('examHistory.passed') : '合格')
+      : (typeof I18n !== 'undefined' ? I18n.t('examHistory.failed') : '未合格');
+    var passClass = rec.isPassed ? 'exam-history-pass' : 'exam-history-fail';
+
+    var t = function (key, fallback) { return typeof I18n !== 'undefined' ? I18n.t(key) : fallback; };
+
+    card.innerHTML =
+      '<div class="exam-history-card__summary" data-session-id="' + rec.sessionId + '">' +
+        '<span class="exam-history-card__subject">' + subjectLabel + '</span>' +
+        '<span class="exam-history-card__date">' + dateStr + '</span>' +
+        '<span class="exam-history-card__stat">' + t('examHistory.questions', '题量') + ': ' + (rec.totalQuestions || 0) + '</span>' +
+        '<span class="exam-history-card__stat">' + t('examHistory.correct', '正确') + ': ' + (rec.correctCount || 0) + '/' + (rec.totalQuestions || 0) + '</span>' +
+        '<span class="exam-history-card__stat">' + t('examHistory.accuracy', '正确率') + ': ' + (rec.accuracy || 0) + '%</span>' +
+        '<span class="exam-history-card__stat">' + t('examHistory.score', '分数') + ': ' + (rec.scoreTotal || 0) + '</span>' +
+        '<span class="exam-history-card__badge ' + passClass + '">' + passLabel + '</span>' +
+        '<span class="exam-history-card__stat">' + t('examHistory.time', '用时') + ': ' + timeStr + '</span>' +
+        '<button type="button" class="exam-history-card__toggle" aria-expanded="false">' +
+          '<span>' + t('examHistory.viewDetails', '查看详情') + '</span> <i class="fa-solid fa-chevron-down"></i>' +
+        '</button>' +
+      '</div>' +
+      '<div class="exam-history-card__detail" hidden></div>';
+
+    var summaryRow = card.querySelector('.exam-history-card__summary');
+    var toggleBtn = card.querySelector('.exam-history-card__toggle');
+    var detailDiv = card.querySelector('.exam-history-card__detail');
+
+    var toggleDetail = function () {
+      var isHidden = detailDiv.hasAttribute('hidden');
+      if (isHidden) {
+        detailDiv.removeAttribute('hidden');
+        toggleBtn.setAttribute('aria-expanded', 'true');
+        toggleBtn.querySelector('span').textContent = t('examHistory.hideDetails', '收起详情');
+        toggleBtn.querySelector('i').className = 'fa-solid fa-chevron-up';
+        if (!detailDiv.dataset.loaded) {
+          detailDiv.innerHTML = buildExamDetailHtml(rec);
+          detailDiv.dataset.loaded = '1';
+        }
+      } else {
+        detailDiv.setAttribute('hidden', '');
+        toggleBtn.setAttribute('aria-expanded', 'false');
+        toggleBtn.querySelector('span').textContent = t('examHistory.viewDetails', '查看详情');
+        toggleBtn.querySelector('i').className = 'fa-solid fa-chevron-down';
+      }
+    };
+
+    toggleBtn.addEventListener('click', function (e) { e.stopPropagation(); toggleDetail(); });
+    summaryRow.addEventListener('click', function (e) {
+      if (e.target.closest('.exam-history-card__toggle')) return;
+      toggleDetail();
+    });
+
+    container.appendChild(card);
+  });
+}
+
+function buildExamDetailHtml(rec) {
+  var t = function (key, fallback) { return typeof I18n !== 'undefined' ? I18n.t(key) : fallback; };
+  var html = '';
+
+  // Exam config
+  html += '<div class="exam-detail-section">';
+  html += '<h4>' + t('examHistory.examConfig', '考试配置') + '</h4>';
+  html += '<div class="exam-detail-grid">';
+  html += '<span>' + t('examHistory.yearFilter', '年度筛选') + ': ' + (rec.examConfig ? rec.examConfig.yearFilter || 'all' : '-') + '</span>';
+  html += '<span>' + t('examHistory.questions', '题量') + ': ' + (rec.totalQuestions || 0) + '</span>';
+  var dateStr2 = '';
+  try { dateStr2 = new Date(rec.submittedAt).toLocaleString(); } catch (_) { dateStr2 = ''; }
+  html += '<span>' + t('examHistory.submittedAt', '提交时间') + ': ' + dateStr2 + '</span>';
+  var elapsed = rec.elapsedSeconds || 0;
+  var mm = Math.floor(elapsed / 60); var ss = elapsed % 60;
+  html += '<span>' + t('examHistory.time', '用时') + ': ' + (mm < 10 ? '0' : '') + mm + ':' + (ss < 10 ? '0' : '') + ss + '</span>';
+  html += '</div></div>';
+
+  // Field scores
+  if (rec.fieldScores) {
+    html += '<div class="exam-detail-section">';
+    html += '<h4>' + t('examHistory.fieldScores', '分类子分') + '</h4>';
+    var fields = [
+      { key: 'strat', label: 'ストラテジ系' },
+      { key: 'man', label: 'マネジメント系' },
+      { key: 'tech', label: 'テクノロジ系' },
+      { key: 'subB', label: '科目B' }
+    ];
+    fields.forEach(function (f) {
+      var fs = rec.fieldScores[f.key];
+      if (!fs) return;
+      var passStr = fs.passes ? t('examHistory.passed', '合格') : t('examHistory.failed', '未合格');
+      html += '<div class="exam-detail-field-row">';
+      html += '<strong>' + f.label + '</strong>: ';
+      html += fs.score + '/1000 (' + fs.correct + '/' + fs.count + ') — ' + passStr;
+      html += '</div>';
+    });
+    html += '</div>';
+  }
+
+  // Per-question results
+  if (rec.questionResults && rec.questionResults.length > 0) {
+    html += '<div class="exam-detail-section">';
+    html += '<h4>' + t('examHistory.questionResults', '逐题结果') + '</h4>';
+    rec.questionResults.forEach(function (qr) {
+      var statusIcon = !qr.isAnswered ? '—' : (qr.isCorrect ? '✓' : '✗');
+      var statusClass = !qr.isAnswered ? 'exam-q-unanswered' : (qr.isCorrect ? 'exam-q-correct' : 'exam-q-wrong');
+      var alphabet = ['ア', 'イ', 'ウ', 'エ', 'オ', 'カ', 'キ', 'ク', 'ケ', 'コ'];
+      var userAns = qr.isAnswered && qr.userAnswerIdx >= 0 ? alphabet[qr.userAnswerIdx] || '?' : t('examHistory.unanswered', '未答');
+      var correctAns = qr.correctAnswerIdx >= 0 ? alphabet[qr.correctAnswerIdx] || '?' : '?';
+
+      html += '<div class="exam-q-row">';
+      html += '<span class="exam-q-num">#' + qr.num + '</span>';
+      html += '<span class="exam-q-id">' + (qr.qId || '-') + '</span>';
+      if (qr.year) html += '<span class="exam-q-year">' + qr.year + '</span>';
+      if (qr.category) html += '<span class="exam-q-cat">' + qr.category + '</span>';
+      if (qr.topic) html += '<span class="exam-q-topic">' + qr.topic + '</span>';
+      html += '<span class="exam-q-answers">';
+      html += t('examHistory.yourAnswer', '用户答案') + ': <strong>' + userAns + '</strong> | ';
+      html += t('examHistory.correctAnswer', '正确答案') + ': <strong>' + correctAns + '</strong>';
+      html += '</span>';
+      html += '<span class="' + statusClass + '">' + statusIcon + '</span>';
+
+      // Question preview from question bank
+      var found = findCbtQuestionById(rec.subject, qr.qId);
+      if (found) {
+        var preview = stripHtmlToText(found.question);
+        if (preview.length > 120) preview = preview.substring(0, 120) + '…';
+        html += '<div class="exam-q-preview">' + preview + '</div>';
+      } else {
+        html += '<div class="exam-q-preview exam-q-preview--missing">' + t('examHistory.questionNotFound', '题目数据未找到') + '</div>';
+      }
+
+      html += '</div>';
+    });
+    html += '</div>';
+  }
+
+  return html;
+}
+
+// Init exam history modal events (called from DOMContentLoaded)
+function initExamHistoryModal() {
+  var modal = document.getElementById('exam-history-modal');
+  if (!modal) return;
+  // Backdrop + close buttons
+  modal.addEventListener('click', function (e) {
+    if (e.target.closest('[data-exam-history-close]')) {
+      closeExamHistoryModal();
+    }
+  });
+  // Filter buttons
+  var filters = document.getElementById('exam-history-filters');
+  if (filters) {
+    filters.addEventListener('click', function (e) {
+      var btn = e.target.closest('.exam-history-filter-btn');
+      if (btn) setExamHistoryFilter(btn.getAttribute('data-filter'));
+    });
+  }
 }
 
 const getExamPool = () => {

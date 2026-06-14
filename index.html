@@ -98,6 +98,17 @@
         </div>
 
         <div class="tools-drawer__section">
+          <div class="tools-drawer__section-title" data-i18n="tools.examTools">考试工具</div>
+          <button type="button" class="tools-drawer-item" data-action="open-exam-history">
+            <span class="tools-drawer-item__icon">📝</span>
+            <span class="tools-drawer-item__text">
+              <strong data-i18n="tools.examHistory">考试历史</strong>
+              <small data-i18n="tools.examHistoryDesc">查看最近的模拟考试记录</small>
+            </span>
+          </button>
+        </div>
+
+        <div class="tools-drawer__section">
           <div class="tools-drawer__section-title" data-i18n="tools.settings">设置</div>
           <button type="button" class="tools-drawer-item" data-action="open-settings">
             <span class="tools-drawer-item__icon">⚙️</span>
@@ -1520,6 +1531,29 @@
       </div>
       <div id="glossary-count" class="glossary-count"></div>
       <div id="glossary-results" class="glossary-results"></div>
+    </section>
+  </div>
+
+  <!-- Exam History Modal (Round 23.2) -->
+  <div id="exam-history-modal" class="exam-history-modal" hidden>
+    <div class="exam-history-modal__backdrop" data-exam-history-close></div>
+    <section class="exam-history-modal__panel" role="dialog" aria-modal="true" aria-labelledby="exam-history-title">
+      <header class="exam-history-modal__header">
+        <div>
+          <h2 id="exam-history-title" data-i18n="examHistory.title">最近考试历史</h2>
+          <p data-i18n="examHistory.subtitle">查看已保存的模拟考试结果</p>
+        </div>
+        <button type="button" class="exam-history-modal__close" data-exam-history-close>
+          <i class="fa-solid fa-xmark"></i>
+          <span class="sr-only" data-i18n="examHistory.close">关闭</span>
+        </button>
+      </header>
+      <div class="exam-history-modal__filters" id="exam-history-filters">
+        <button type="button" class="exam-history-filter-btn active" data-filter="all" data-i18n="examHistory.filterAll">全部</button>
+        <button type="button" class="exam-history-filter-btn" data-filter="itpass">IT Passport</button>
+        <button type="button" class="exam-history-filter-btn" data-filter="sg">SG</button>
+      </div>
+      <div id="exam-history-list" class="exam-history-list"></div>
     </section>
   </div>
 
