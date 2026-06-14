@@ -3137,6 +3137,118 @@ const CBT_FALLBACK_QUESTIONS = [
   }
 ];
 
+// ── Exam History Persistence (Round 23.1) ──────────────────────────
+const EXAM_HISTORY_STORAGE_KEY = 'study-tools-exam-history-v1';
+const EXAM_HISTORY_MAX_RECORDS = 50;
+
+function createExamSessionId() {
+  try {
+    if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') {
+      return crypto.randomUUID();
+    }
+  } catch (_) { /* fallback below */ }
+  return 'exam-' + Date.now() + '-' + Math.random().toString(36).slice(2, 8);
+}
+
+function getExamHistory() {
+  try {
+    const raw = localStorage.getItem(EXAM_HISTORY_STORAGE_KEY);
+    if (!raw) return [];
+    const parsed = JSON.parse(raw);
+    return Array.isArray(parsed) ? parsed : [];
+  } catch (e) {
+    console.warn('[ExamHistory] Failed to read localStorage:', e);
+    return [];
+  }
+}
+
+function clampExamHistory(records) {
+  if (records.length > EXAM_HISTORY_MAX_RECORDS) {
+    return records.slice(records.length - EXAM_HISTORY_MAX_RECORDS);
+  }
+  return records;
+}
+
+function saveExamHistoryRecord(record) {
+  try {
+    const history = getExamHistory();
+    history.push(record);
+    const clamped = clampExamHistory(history);
+    localStorage.setItem(EXAM_HISTORY_STORAGE_KEY, JSON.stringify(clamped));
+    console.info('[ExamHistory] Saved record, total:', clamped.length);
+    return true;
+  } catch (e) {
+    console.warn('[ExamHistory] Failed to save to localStorage:', e);
+    return false;
+  }
+}
+
+function buildExamHistoryRecord(exam, reviews, scoreData) {
+  var now = new Date();
+  var elapsedSeconds = exam.startedAtMs
+    ? Math.round((Date.now() - exam.startedAtMs) / 1000)
+    : 0;
+
+  var questionResults = reviews.map(function (r) {
+    return {
+      num: r.num,
+      qId: r.qId || r.fallbackId || ('unknown:' + r.num),
+      qNum: r.qNum,
+      year: r.year || '',
+      yearId: r.yearId || '',
+      category: r.category || '',
+      subcategory: r.subcategory || '',
+      topic: r.topic || '',
+      isCorrect: r.isCorrect,
+      isAnswered: r.isAnswered,
+      userAnswerIdx: r.userOriginalIdx,
+      correctAnswerIdx: r.correctIdx
+    };
+  });
+
+  var unansweredCount = questionResults.filter(function (r) { return !r.isAnswered; }).length;
+  var wrongCount = questionResults.filter(function (r) { return r.isAnswered && !r.isCorrect; }).length;
+  var accuracy = scoreData.totalQuestions > 0
+    ? Math.round((scoreData.correctCount / scoreData.totalQuestions) * 1000) / 10
+    : 0;
+
+  return {
+    schemaVersion: 1,
+    sessionId: createExamSessionId(),
+    subject: exam.subject || 'itpass',
+    submittedAt: now.toISOString(),
+    startedAt: exam.startedAt || now.toISOString(),
+    elapsedSeconds: elapsedSeconds,
+
+    totalQuestions: scoreData.totalQuestions,
+    correctCount: scoreData.correctCount,
+    wrongCount: wrongCount,
+    unansweredCount: unansweredCount,
+    accuracy: accuracy,
+
+    scoreTotal: scoreData.scoreTotal,
+    isPassed: scoreData.isPassed,
+
+    fieldScores: {
+      strat: scoreData.fieldScores.strat,
+      man: scoreData.fieldScores.man,
+      tech: scoreData.fieldScores.tech,
+      subB: scoreData.fieldScores.subB
+    },
+
+    examConfig: exam.examConfig || {
+      subject: exam.subject || 'itpass',
+      yearFilter: 'all',
+      questionCount: scoreData.totalQuestions,
+      source: 'cbt',
+      shuffle: true,
+      version: 1
+    },
+
+    questionResults: questionResults
+  };
+}
+
 const getExamPool = () => {
   if (currentSubject === 'sg') {
     return (typeof SG_PAST_EXAMS !== 'undefined' && SG_PAST_EXAMS.length > 0) ? SG_PAST_EXAMS : [];
@@ -3214,13 +3326,28 @@ function startCbtExam() {
   };
 
   // Setup exam state
+  var _now = new Date();
   activeCbtExam = {
     title: yearSelect === "all" ? "综合随机模拟考试" : `${yearsMapping[yearSelect] || yearSelect} 公开问题 模拟考试`,
+    subject: currentSubject === 'sg' ? 'sg' : 'itpass',
+    year: yearSelect !== "all" ? (yearsMapping[yearSelect] || yearSelect) : 'all',
+    yearFilter: yearSelect,
+    startedAt: _now.toISOString(),
+    startedAtMs: Date.now(),
     questions: preparedQuestions,
     answers: new Array(preparedQuestions.length).fill(-1),
     flags: new Array(preparedQuestions.length).fill(false),
     currentQIdx: 0,
-    timeRemaining: countSelect * 72 // 72 seconds per question
+    timeRemaining: countSelect * 72, // 72 seconds per question
+    examConfig: {
+      subject: currentSubject === 'sg' ? 'sg' : 'itpass',
+      yearFilter: yearSelect,
+      questionCount: countSelect,
+      source: 'cbt',
+      shuffle: optShuffle,
+      noCalc: optNoCalc,
+      version: 1
+    }
   };
   
   // Hide config screen, show testing screen
@@ -3497,10 +3624,14 @@ function submitCbtExam(auto = false) {
     
     reviews.push({
       num: idx + 1,
+      qId: q.id || `${currentSubject === 'sg' ? 'sg' : 'itpass'}:${q.yearId || 'unknown'}:${q.number || (idx + 1)}`,
+      year: q.year || '',
+      yearId: q.yearId || '',
       qNum: q.number,
       category: q.category,
       topic: q.topic,
       subcategory: q.subcategory,
+      subject: currentSubject === 'sg' ? 'sg' : 'itpass',
       question: q.question,
       options: q.options,
       correctIdx: q.answer,
@@ -3642,7 +3773,27 @@ function submitCbtExam(auto = false) {
 
     reviewList.appendChild(card);
   });
-  
+
+  // ── Persist exam history to localStorage (Round 23.1) ──
+  try {
+    var _scoreData = {
+      totalQuestions: totalQuestions,
+      correctCount: correctCount,
+      scoreTotal: scoreTotal,
+      isPassed: isPassed,
+      fieldScores: {
+        strat: { score: scoreStrat, count: fields["ストラテジ系"].total, correct: fields["ストラテジ系"].correct, passes: passesStrat },
+        man:   { score: scoreMan,   count: fields["マネジメント系"].total, correct: fields["マネジメント系"].correct, passes: passesMan },
+        tech:  { score: scoreTech,  count: fields["テクノロジ系"].total, correct: fields["テクノロジ系"].correct, passes: passesTech },
+        subB:  hasSubB ? { score: scoreSubB, count: fields["科目B"].total, correct: fields["科目B"].correct, passes: passesSubB } : null
+      }
+    };
+    var _record = buildExamHistoryRecord(activeCbtExam, reviews, _scoreData);
+    saveExamHistoryRecord(_record);
+  } catch (_histErr) {
+    console.warn('[ExamHistory] Unexpected error during save:', _histErr);
+  }
+
   activeCbtExam = null;
   
   showToastKey(isPassed ? "toast.examPassed" : "toast.examFailed", isPassed ? "success" : "info");
