@@ -1050,10 +1050,19 @@
           <div class="cbt-question-canvas">
             <div class="cbt-q-card-header">
               <span class="cbt-q-number" id="cbt-q-number-text">第 1 题 / 問 1</span>
-              <span class="cbt-q-field" id="cbt-q-field-text">テクノロジ系 / ネットワーク</span>
+              <div class="cbt-q-meta-wrap">
+                <span class="cbt-q-field" id="cbt-q-field-text">テクノロジ系 / ネットワーク</span>
+                <button class="cbt-q-meta-toggle" id="cbt-q-meta-toggle" type="button" aria-expanded="false" onclick="toggleCbtQuestionMeta()" hidden>
+                  <span data-i18n="exam.metaExpand">题目信息 <i class="fa-solid fa-chevron-down"></i></span>
+                </button>
+              </div>
               <button class="cbt-q-flag-btn" id="cbt-q-flag-btn" onclick="toggleCbtQuestionFlag()">
                 <i class="fa-regular fa-flag"></i> <span data-i18n="exam.flagReview">标记此题复查</span>
               </button>
+            </div>
+            <div class="cbt-q-meta-full" id="cbt-q-meta-full" hidden>
+              <span class="cbt-q-meta-full-label" data-i18n="exam.metaSource">出典：</span>
+              <span id="cbt-q-meta-full-text"></span>
             </div>
             
             <div class="cbt-q-body-text" id="cbt-q-body-text">

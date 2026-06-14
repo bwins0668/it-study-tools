@@ -2214,6 +2214,8 @@ body[data-theme="light"] .guidance-btn:hover {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
   border-bottom: 1px solid var(--border-color);
   padding-bottom: 10px;
 }
@@ -2222,11 +2224,72 @@ body[data-theme="light"] .guidance-btn:hover {
   font-size: 15px;
   font-weight: 700;
   color: #c084fc;
+  flex-shrink: 0;
+}
+
+.cbt-q-meta-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1 1 auto;
+  min-width: 0;
 }
 
 .cbt-q-field {
   font-size: 12px;
   color: var(--text-muted);
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cbt-q-summary-text {
+  display: inline-block;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  vertical-align: middle;
+}
+
+.cbt-q-meta-toggle {
+  flex-shrink: 0;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--text-muted);
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+.cbt-q-meta-toggle:hover {
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text-main);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+.cbt-q-meta-toggle[hidden] {
+  display: none;
+}
+
+.cbt-q-meta-full {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--text-muted);
+  word-break: break-word;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}
+
+.cbt-q-meta-full-label {
+  font-weight: 600;
+  color: var(--text-main);
 }
 
 .cbt-q-flag-btn {

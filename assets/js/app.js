@@ -3170,27 +3170,58 @@ function updateCbtNavigatorGridUI() {
 
 function renderCbtQuestion() {
   if (!activeCbtExam) return;
-  
+
   const idx = activeCbtExam.currentQIdx;
   const q = activeCbtExam.questions[idx];
-  
+
   document.getElementById("cbt-exam-display-title").innerText = activeCbtExam.title;
   document.getElementById("cbt-q-number-text").innerText = `第 ${idx + 1} 题 / 問 ${q.number}`;
-  const sub = q.subcategory || q.topic || "";
-  const subText = sub ? ` / ${sub}` : "";
-  document.getElementById("cbt-q-field-text").innerText = `${q.category}${subText} - [${q.year}]`;
-  
+
+  // Build short summary: year · 問number · category (or last subsegment)
+  const yearShort = q.year ? q.year.replace(/[年](.*)/, '年') : "";
+  const catShort = q.subcategory || q.topic || q.category || "";
+  const summary = [q.year, catShort].filter(Boolean).join(" / ");
+  document.getElementById("cbt-q-field-text").innerHTML = summary ? `<span class="cbt-q-summary-text" title="${summary.replace(/"/g,'&quot;')}">${summary}</span>` : "";
+
+  // Build full metadata string
+  const metaParts = [];
+  if (q.year) metaParts.push(`${I18n.t("exam.metaYear")}: ${q.year}`);
+  if (q.number) metaParts.push(`${I18n.t("exam.metaQNum")}: 問${q.number}`);
+  if (q.category) metaParts.push(`${I18n.t("exam.metaCategory")}: ${q.category}`);
+  if (q.subcategory) metaParts.push(I18n.t("exam.metaSubcategory") + ": " + q.subcategory);
+  if (q.topic) metaParts.push(I18n.t("exam.metaTopic") + ": " + q.topic);
+  const metaFullText = metaParts.join("  |  ");
+  const metaFullEl = document.getElementById("cbt-q-meta-full-text");
+  if (metaFullEl) metaFullEl.innerText = metaFullText;
+
+  // Show/hide the toggle button based on whether full metadata has extra info beyond summary
+  const toggleBtn = document.getElementById("cbt-q-meta-toggle");
+  const summaryText = document.getElementById("cbt-q-field-text");
+  const metaFullSection = document.getElementById("cbt-q-meta-full");
+  if (toggleBtn && metaFullSection) {
+    // Reset to collapsed state on each question
+    toggleBtn.setAttribute("aria-expanded", "false");
+    metaFullSection.hidden = true;
+    // Show toggle only if there is meaningful metadata beyond year+category
+    if (metaFullText.length > 0 && (q.subcategory || q.topic)) {
+      toggleBtn.removeAttribute("hidden");
+      toggleBtn.innerHTML = `<span data-i18n="exam.metaExpand">${I18n.t("exam.metaExpand")} <i class="fa-solid fa-chevron-down"></i></span>`;
+    } else {
+      toggleBtn.setAttribute("hidden", "");
+    }
+  }
+
   document.getElementById("cbt-q-body-text").innerHTML = q.question;
-  
+
   const flagBtn = document.getElementById("cbt-q-flag-btn");
   flagBtn.classList.toggle("flagged", activeCbtExam.flags[idx]);
-  flagBtn.innerHTML = activeCbtExam.flags[idx] 
+  flagBtn.innerHTML = activeCbtExam.flags[idx]
     ? `<i class="fa-solid fa-flag"></i> 已标记复查`
     : `<i class="fa-regular fa-flag"></i> 标记此题复查`;
-    
+
   const optionsList = document.getElementById("cbt-q-options-list");
   optionsList.innerHTML = "";
-  
+
   const alphabet = ["ア", "イ", "ウ", "エ", "オ", "カ", "キ", "ク", "ケ", "コ"];
   q.options.forEach((opt, oIdx) => {
     const btn = document.createElement("button");
@@ -3202,7 +3233,7 @@ function renderCbtQuestion() {
     btn.addEventListener("click", () => selectCbtAnswer(oIdx));
     optionsList.appendChild(btn);
   });
-  
+
   updateCbtNavigatorGridUI();
   // Wrap tables for horizontal scroll
   if (window.GlossaryWrapper && typeof window.GlossaryWrapper.wrapAllTables === "function") {
@@ -3211,6 +3242,18 @@ function renderCbtQuestion() {
     wrapAllTablesWithScrollWrapper();
   }
 }
+
+window.toggleCbtQuestionMeta = function() {
+  const toggleBtn = document.getElementById("cbt-q-meta-toggle");
+  const metaFull = document.getElementById("cbt-q-meta-full");
+  if (!toggleBtn || !metaFull) return;
+  const expanded = toggleBtn.getAttribute("aria-expanded") === "true";
+  toggleBtn.setAttribute("aria-expanded", expanded ? "false" : "true");
+  metaFull.hidden = expanded;
+  toggleBtn.innerHTML = expanded
+    ? `${I18n.t("exam.metaExpand")} <i class="fa-solid fa-chevron-down"></i>`
+    : `${I18n.t("exam.metaCollapse")} <i class="fa-solid fa-chevron-up"></i>`;
+};
 
 function selectCbtAnswer(oIdx) {
   if (!activeCbtExam) return;
