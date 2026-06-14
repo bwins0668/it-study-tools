@@ -30,7 +30,35 @@ window.CODING_TYPING_DATA_PYTHON = [
     "expectedOutput": "Hello, world!",
     "difficulty": 1,
     "estimatedTime": 10,
-    "source": "builtin"
+    "source": "builtin",
+    "examRelevance": "medium",
+    "examTargets": [
+     "Python",
+     "IT Passport"
+    ],
+    "glossaryRefs": [
+     "print_function"
+    ],
+    "meaning": {
+     "zh-CN": "print是Python中最基本的输出函数，用于将内容显示到控制台。",
+     "ja-JP": "printはPythonで最も基本的な出力関数で、コンソールに内容を表示します。",
+     "en-US": "print is the most basic output function in Python, used to display content to the console."
+    },
+    "memoryHook": {
+     "zh-CN": "打印到屏幕 → print",
+     "ja-JP": "画面に表示 → print",
+     "en-US": "Think: print this to screen"
+    },
+    "examPoint": {
+     "zh-CN": "常考print的逗号分隔多个参数、sep和end参数的使用。",
+     "ja-JP": "printのカンマ区切り複数引数、sep・endパラメータが頻出。",
+     "en-US": "Commonly tests comma-separated arguments, sep and end parameters."
+    },
+    "commonMistake": {
+     "zh-CN": "忘记括号、字符串忘加引号。",
+     "ja-JP": "カッコ忘れ、文字列の引用符忘れ。",
+     "en-US": "Forgetting parentheses or quotation marks around strings."
+    }
   },
   {
     "id": "py-print-002",
@@ -61,7 +89,35 @@ window.CODING_TYPING_DATA_PYTHON = [
     "expectedOutput": "42",
     "difficulty": 1,
     "estimatedTime": 8,
-    "source": "builtin"
+    "source": "builtin",
+    "examRelevance": "medium",
+    "examTargets": [
+     "Python",
+     "IT Passport"
+    ],
+    "glossaryRefs": [
+     "print_function"
+    ],
+    "meaning": {
+     "zh-CN": "print是Python中最基本的输出函数，用于将内容显示到控制台。",
+     "ja-JP": "printはPythonで最も基本的な出力関数で、コンソールに内容を表示します。",
+     "en-US": "print is the most basic output function in Python, used to display content to the console."
+    },
+    "memoryHook": {
+     "zh-CN": "打印到屏幕 → print",
+     "ja-JP": "画面に表示 → print",
+     "en-US": "Think: print this to screen"
+    },
+    "examPoint": {
+     "zh-CN": "常考print的逗号分隔多个参数、sep和end参数的使用。",
+     "ja-JP": "printのカンマ区切り複数引数、sep・endパラメータが頻出。",
+     "en-US": "Commonly tests comma-separated arguments, sep and end parameters."
+    },
+    "commonMistake": {
+     "zh-CN": "忘记括号、字符串忘加引号。",
+     "ja-JP": "カッコ忘れ、文字列の引用符忘れ。",
+     "en-US": "Forgetting parentheses or quotation marks around strings."
+    }
   },
   {
     "id": "py-print-003",
@@ -92,7 +148,35 @@ window.CODING_TYPING_DATA_PYTHON = [
     "expectedOutput": "Sum: 7",
     "difficulty": 2,
     "estimatedTime": 12,
-    "source": "builtin"
+    "source": "builtin",
+    "examRelevance": "medium",
+    "examTargets": [
+     "Python",
+     "IT Passport"
+    ],
+    "glossaryRefs": [
+     "print_function"
+    ],
+    "meaning": {
+     "zh-CN": "print是Python中最基本的输出函数，用于将内容显示到控制台。",
+     "ja-JP": "printはPythonで最も基本的な出力関数で、コンソールに内容を表示します。",
+     "en-US": "print is the most basic output function in Python, used to display content to the console."
+    },
+    "memoryHook": {
+     "zh-CN": "打印到屏幕 → print",
+     "ja-JP": "画面に表示 → print",
+     "en-US": "Think: print this to screen"
+    },
+    "examPoint": {
+     "zh-CN": "常考print的逗号分隔多个参数、sep和end参数的使用。",
+     "ja-JP": "printのカンマ区切り複数引数、sep・endパラメータが頻出。",
+     "en-US": "Commonly tests comma-separated arguments, sep and end parameters."
+    },
+    "commonMistake": {
+     "zh-CN": "忘记括号、字符串忘加引号。",
+     "ja-JP": "カッコ忘れ、文字列の引用符忘れ。",
+     "en-US": "Forgetting parentheses or quotation marks around strings."
+    }
   },
   {
     "id": "py-print-004",
@@ -123,7 +207,35 @@ window.CODING_TYPING_DATA_PYTHON = [
     "expectedOutput": "Hello ",
     "difficulty": 2,
     "estimatedTime": 15,
-    "source": "builtin"
+    "source": "builtin",
+    "examRelevance": "medium",
+    "examTargets": [
+     "Python",
+     "IT Passport"
+    ],
+    "glossaryRefs": [
+     "print_function"
+    ],
+    "meaning": {
+     "zh-CN": "print是Python中最基本的输出函数，用于将内容显示到控制台。",
+     "ja-JP": "printはPythonで最も基本的な出力関数で、コンソールに内容を表示します。",
+     "en-US": "print is the most basic output function in Python, used to display content to the console."
+    },
+    "memoryHook": {
+     "zh-CN": "打印到屏幕 → print",
+     "ja-JP": "画面に表示 → print",
+     "en-US": "Think: print this to screen"
+    },
+    "examPoint": {
+     "zh-CN": "常考print的逗号分隔多个参数、sep和end参数的使用。",
+     "ja-JP": "printのカンマ区切り複数引数、sep・endパラメータが頻出。",
+     "en-US": "Commonly tests comma-separated arguments, sep and end parameters."
+    },
+    "commonMistake": {
+     "zh-CN": "忘记括号、字符串忘加引号。",
+     "ja-JP": "カッコ忘れ、文字列の引用符忘れ。",
+     "en-US": "Forgetting parentheses or quotation marks around strings."
+    }
   },
   {
     "id": "py-print-005",
@@ -154,7 +266,35 @@ window.CODING_TYPING_DATA_PYTHON = [
     "expectedOutput": "apple, banana, cherry",
     "difficulty": 2,
     "estimatedTime": 15,
-    "source": "builtin"
+    "source": "builtin",
+    "examRelevance": "medium",
+    "examTargets": [
+     "Python",
+     "IT Passport"
+    ],
+    "glossaryRefs": [
+     "print_function"
+    ],
+    "meaning": {
+     "zh-CN": "print是Python中最基本的输出函数，用于将内容显示到控制台。",
+     "ja-JP": "printはPythonで最も基本的な出力関数で、コンソールに内容を表示します。",
+     "en-US": "print is the most basic output function in Python, used to display content to the console."
+    },
+    "memoryHook": {
+     "zh-CN": "打印到屏幕 → print",
+     "ja-JP": "画面に表示 → print",
+     "en-US": "Think: print this to screen"
+    },
+    "examPoint": {
+     "zh-CN": "常考print的逗号分隔多个参数、sep和end参数的使用。",
+     "ja-JP": "printのカンマ区切り複数引数、sep・endパラメータが頻出。",
+     "en-US": "Commonly tests comma-separated arguments, sep and end parameters."
+    },
+    "commonMistake": {
+     "zh-CN": "忘记括号、字符串忘加引号。",
+     "ja-JP": "カッコ忘れ、文字列の引用符忘れ。",
+     "en-US": "Forgetting parentheses or quotation marks around strings."
+    }
   },
   {
     "id": "py-variable-001",
@@ -186,7 +326,37 @@ window.CODING_TYPING_DATA_PYTHON = [
     "expectedOutput": "",
     "difficulty": 1,
     "estimatedTime": 8,
-    "source": "builtin"
+    "source": "builtin",
+    "examRelevance": "medium",
+    "examTargets": [
+     "Python",
+     "IT Passport",
+     "基本情報"
+    ],
+    "glossaryRefs": [
+     "variable",
+     "assignment"
+    ],
+    "meaning": {
+     "zh-CN": "变量是用于存储数据的命名容器，Python中不需要声明类型即可赋值。",
+     "ja-JP": "変数はデータを格納する名前付きコンテナで、Pythonでは型宣言なしで代入できます。",
+     "en-US": "A variable is a named container for storing data; in Python, you can assign without type declaration."
+    },
+    "memoryHook": {
+     "zh-CN": "变量=贴了标签的盒子",
+     "ja-JP": "変数=ラベルを貼った箱",
+     "en-US": "Variable = a labeled box"
+    },
+    "examPoint": {
+     "zh-CN": "变量命名规则、动态类型、多重赋值。",
+     "ja-JP": "変数名の規則、動的型付け、多重代入。",
+     "en-US": "Variable naming rules, dynamic typing, multiple assignment."
+    },
+    "commonMistake": {
+     "zh-CN": "变量未定义就使用、混淆赋值=和比较==。",
+     "ja-JP": "未定義変数の使用、代入=と比較==の混同。",
+     "en-US": "Using undefined variables, confusing = assignment with == comparison."
+    }
   },
   {
     "id": "py-variable-002",
@@ -217,7 +387,37 @@ window.CODING_TYPING_DATA_PYTHON = [
     "expectedOutput": "",
     "difficulty": 1,
     "estimatedTime": 6,
-    "source": "builtin"
+    "source": "builtin",
+    "examRelevance": "medium",
+    "examTargets": [
+     "Python",
+     "IT Passport",
+     "基本情報"
+    ],
+    "glossaryRefs": [
+     "variable",
+     "assignment"
+    ],
+    "meaning": {
+     "zh-CN": "变量是用于存储数据的命名容器，Python中不需要声明类型即可赋值。",
+     "ja-JP": "変数はデータを格納する名前付きコンテナで、Pythonでは型宣言なしで代入できます。",
+     "en-US": "A variable is a named container for storing data; in Python, you can assign without type declaration."
+    },
+    "memoryHook": {
+     "zh-CN": "变量=贴了标签的盒子",
+     "ja-JP": "変数=ラベルを貼った箱",
+     "en-US": "Variable = a labeled box"
+    },
+    "examPoint": {
+     "zh-CN": "变量命名规则、动态类型、多重赋值。",
+     "ja-JP": "変数名の規則、動的型付け、多重代入。",
+     "en-US": "Variable naming rules, dynamic typing, multiple assignment."
+    },
+    "commonMistake": {
+     "zh-CN": "变量未定义就使用、混淆赋值=和比较==。",
+     "ja-JP": "未定義変数の使用、代入=と比較==の混同。",
+     "en-US": "Using undefined variables, confusing = assignment with == comparison."
+    }
   },
   {
     "id": "py-variable-003",
@@ -248,7 +448,37 @@ window.CODING_TYPING_DATA_PYTHON = [
     "expectedOutput": "",
     "difficulty": 2,
     "estimatedTime": 10,
-    "source": "builtin"
+    "source": "builtin",
+    "examRelevance": "medium",
+    "examTargets": [
+     "Python",
+     "IT Passport",
+     "基本情報"
+    ],
+    "glossaryRefs": [
+     "variable",
+     "assignment"
+    ],
+    "meaning": {
+     "zh-CN": "变量是用于存储数据的命名容器，Python中不需要声明类型即可赋值。",
+     "ja-JP": "変数はデータを格納する名前付きコンテナで、Pythonでは型宣言なしで代入できます。",
+     "en-US": "A variable is a named container for storing data; in Python, you can assign without type declaration."
+    },
+    "memoryHook": {
+     "zh-CN": "变量=贴了标签的盒子",
+     "ja-JP": "変数=ラベルを貼った箱",
+     "en-US": "Variable = a labeled box"
+    },
+    "examPoint": {
+     "zh-CN": "变量命名规则、动态类型、多重赋值。",
+     "ja-JP": "変数名の規則、動的型付け、多重代入。",
+     "en-US": "Variable naming rules, dynamic typing, multiple assignment."
+    },
+    "commonMistake": {
+     "zh-CN": "变量未定义就使用、混淆赋值=和比较==。",
+     "ja-JP": "未定義変数の使用、代入=と比較==の混同。",
+     "en-US": "Using undefined variables, confusing = assignment with == comparison."
+    }
   },
   {
     "id": "py-input-001",
@@ -279,7 +509,35 @@ window.CODING_TYPING_DATA_PYTHON = [
     "expectedOutput": "",
     "difficulty": 1,
     "estimatedTime": 10,
-    "source": "builtin"
+    "source": "builtin",
+    "examRelevance": "medium",
+    "examTargets": [
+     "Python",
+     "IT Passport"
+    ],
+    "glossaryRefs": [
+     "input_function"
+    ],
+    "meaning": {
+     "zh-CN": "input()函数用于从控制台获取用户输入，始终返回字符串。",
+     "ja-JP": "input()関数はコンソールからユーザー入力を受け取り、常に文字列を返します。",
+     "en-US": "The input() function reads user input from the console and always returns a string."
+    },
+    "memoryHook": {
+     "zh-CN": "获取输入 → input",
+     "ja-JP": "入力を受け取る → input",
+     "en-US": "Think: Get input from user"
+    },
+    "examPoint": {
+     "zh-CN": "input始终返回字符串、需要类型转换(int/float)。",
+     "ja-JP": "inputは常に文字列を返す、型変換(int/float)が必要。",
+     "en-US": "input() always returns a string, needs type conversion (int/float)."
+    },
+    "commonMistake": {
+     "zh-CN": "忘记将input结果转为数字类型进行比较或计算。",
+     "ja-JP": "input結果を数値型に変換せずに比較・計算してしまう。",
+     "en-US": "Forgetting to convert input() result to numeric type before comparison or calculation."
+    }
   },
   {
     "id": "py-input-002",
@@ -310,7 +568,35 @@ window.CODING_TYPING_DATA_PYTHON = [
     "expectedOutput": "",
     "difficulty": 2,
     "estimatedTime": 15,
-    "source": "builtin"
+    "source": "builtin",
+    "examRelevance": "medium",
+    "examTargets": [
+     "Python",
+     "IT Passport"
+    ],
+    "glossaryRefs": [
+     "input_function"
+    ],
+    "meaning": {
+     "zh-CN": "input()函数用于从控制台获取用户输入，始终返回字符串。",
+     "ja-JP": "input()関数はコンソールからユーザー入力を受け取り、常に文字列を返します。",
+     "en-US": "The input() function reads user input from the console and always returns a string."
+    },
+    "memoryHook": {
+     "zh-CN": "获取输入 → input",
+     "ja-JP": "入力を受け取る → input",
+     "en-US": "Think: Get input from user"
+    },
+    "examPoint": {
+     "zh-CN": "input始终返回字符串、需要类型转换(int/float)。",
+     "ja-JP": "inputは常に文字列を返す、型変換(int/float)が必要。",
+     "en-US": "input() always returns a string, needs type conversion (int/float)."
+    },
+    "commonMistake": {
+     "zh-CN": "忘记将input结果转为数字类型进行比较或计算。",
+     "ja-JP": "input結果を数値型に変換せずに比較・計算してしまう。",
+     "en-US": "Forgetting to convert input() result to numeric type before comparison or calculation."
+    }
   },
   {
     "id": "py-if-001",
@@ -342,7 +628,38 @@ window.CODING_TYPING_DATA_PYTHON = [
     "expectedOutput": "",
     "difficulty": 2,
     "estimatedTime": 15,
-    "source": "builtin"
+    "source": "builtin",
+    "examRelevance": "high",
+    "examTargets": [
+     "Python",
+     "IT Passport",
+     "SG",
+     "基本情報"
+    ],
+    "glossaryRefs": [
+     "if_statement",
+     "conditional"
+    ],
+    "meaning": {
+     "zh-CN": "if语句根据条件真假决定是否执行特定代码块。",
+     "ja-JP": "if文は条件の真偽に応じてコードブロックを実行するかどうかを決定します。",
+     "en-US": "The if statement executes a code block based on whether a condition is true or false."
+    },
+    "memoryHook": {
+     "zh-CN": "如果…就… → if",
+     "ja-JP": "もし…なら… → if",
+     "en-US": "Think: If this is true, do that"
+    },
+    "examPoint": {
+     "zh-CN": "条件表达式、缩进块、elif/else的搭配。",
+     "ja-JP": "条件式、インデントブロック、elif/elseの組み合わせ。",
+     "en-US": "Condition expressions, indented blocks, elif/else chaining."
+    },
+    "commonMistake": {
+     "zh-CN": "忘记冒号:、缩进不一致、=和==混淆。",
+     "ja-JP": "コロン:忘れ、インデント不統一、=と==の混同。",
+     "en-US": "Forgetting colon :, inconsistent indentation, confusing = with ==."
+    }
   },
   {
     "id": "py-if-002",
@@ -374,7 +691,38 @@ window.CODING_TYPING_DATA_PYTHON = [
     "expectedOutput": "",
     "difficulty": 3,
     "estimatedTime": 20,
-    "source": "builtin"
+    "source": "builtin",
+    "examRelevance": "high",
+    "examTargets": [
+     "Python",
+     "IT Passport",
+     "SG",
+     "基本情報"
+    ],
+    "glossaryRefs": [
+     "if_statement",
+     "conditional"
+    ],
+    "meaning": {
+     "zh-CN": "if语句根据条件真假决定是否执行特定代码块。",
+     "ja-JP": "if文は条件の真偽に応じてコードブロックを実行するかどうかを決定します。",
+     "en-US": "The if statement executes a code block based on whether a condition is true or false."
+    },
+    "memoryHook": {
+     "zh-CN": "如果…就… → if",
+     "ja-JP": "もし…なら… → if",
+     "en-US": "Think: If this is true, do that"
+    },
+    "examPoint": {
+     "zh-CN": "条件表达式、缩进块、elif/else的搭配。",
+     "ja-JP": "条件式、インデントブロック、elif/elseの組み合わせ。",
+     "en-US": "Condition expressions, indented blocks, elif/else chaining."
+    },
+    "commonMistake": {
+     "zh-CN": "忘记冒号:、缩进不一致、=和==混淆。",
+     "ja-JP": "コロン:忘れ、インデント不統一、=と==の混同。",
+     "en-US": "Forgetting colon :, inconsistent indentation, confusing = with ==."
+    }
   },
   {
     "id": "py-if-003",
@@ -406,7 +754,38 @@ window.CODING_TYPING_DATA_PYTHON = [
     "expectedOutput": "",
     "difficulty": 3,
     "estimatedTime": 25,
-    "source": "builtin"
+    "source": "builtin",
+    "examRelevance": "high",
+    "examTargets": [
+     "Python",
+     "IT Passport",
+     "SG",
+     "基本情報"
+    ],
+    "glossaryRefs": [
+     "if_statement",
+     "conditional"
+    ],
+    "meaning": {
+     "zh-CN": "if语句根据条件真假决定是否执行特定代码块。",
+     "ja-JP": "if文は条件の真偽に応じてコードブロックを実行するかどうかを決定します。",
+     "en-US": "The if statement executes a code block based on whether a condition is true or false."
+    },
+    "memoryHook": {
+     "zh-CN": "如果…就… → if",
+     "ja-JP": "もし…なら… → if",
+     "en-US": "Think: If this is true, do that"
+    },
+    "examPoint": {
+     "zh-CN": "条件表达式、缩进块、elif/else的搭配。",
+     "ja-JP": "条件式、インデントブロック、elif/elseの組み合わせ。",
+     "en-US": "Condition expressions, indented blocks, elif/else chaining."
+    },
+    "commonMistake": {
+     "zh-CN": "忘记冒号:、缩进不一致、=和==混淆。",
+     "ja-JP": "コロン:忘れ、インデント不統一、=と==の混同。",
+     "en-US": "Forgetting colon :, inconsistent indentation, confusing = with ==."
+    }
   },
   {
     "id": "py-if-004",
@@ -438,7 +817,38 @@ window.CODING_TYPING_DATA_PYTHON = [
     "expectedOutput": "",
     "difficulty": 3,
     "estimatedTime": 25,
-    "source": "builtin"
+    "source": "builtin",
+    "examRelevance": "high",
+    "examTargets": [
+     "Python",
+     "IT Passport",
+     "SG",
+     "基本情報"
+    ],
+    "glossaryRefs": [
+     "if_statement",
+     "conditional"
+    ],
+    "meaning": {
+     "zh-CN": "if语句根据条件真假决定是否执行特定代码块。",
+     "ja-JP": "if文は条件の真偽に応じてコードブロックを実行するかどうかを決定します。",
+     "en-US": "The if statement executes a code block based on whether a condition is true or false."
+    },
+    "memoryHook": {
+     "zh-CN": "如果…就… → if",
+     "ja-JP": "もし…なら… → if",
+     "en-US": "Think: If this is true, do that"
+    },
+    "examPoint": {
+     "zh-CN": "条件表达式、缩进块、elif/else的搭配。",
+     "ja-JP": "条件式、インデントブロック、elif/elseの組み合わせ。",
+     "en-US": "Condition expressions, indented blocks, elif/else chaining."
+    },
+    "commonMistake": {
+     "zh-CN": "忘记冒号:、缩进不一致、=和==混淆。",
+     "ja-JP": "コロン:忘れ、インデント不統一、=と==の混同。",
+     "en-US": "Forgetting colon :, inconsistent indentation, confusing = with ==."
+    }
   },
   {
     "id": "py-for-001",
@@ -470,7 +880,38 @@ window.CODING_TYPING_DATA_PYTHON = [
     "expectedOutput": "",
     "difficulty": 2,
     "estimatedTime": 15,
-    "source": "builtin"
+    "source": "builtin",
+    "examRelevance": "high",
+    "examTargets": [
+     "Python",
+     "IT Passport",
+     "SG",
+     "基本情報"
+    ],
+    "glossaryRefs": [
+     "for_loop",
+     "iteration"
+    ],
+    "meaning": {
+     "zh-CN": "for循环用于遍历序列（如列表、字符串、range）中的每个元素。",
+     "ja-JP": "forループはシーケンス（リスト、文字列、rangeなど）の各要素を反復処理します。",
+     "en-US": "A for loop iterates over each element in a sequence such as a list, string, or range."
+    },
+    "memoryHook": {
+     "zh-CN": "对每个元素做一遍 → for",
+     "ja-JP": "各要素に対して繰り返す → for",
+     "en-US": "Think: For each item, do something"
+    },
+    "examPoint": {
+     "zh-CN": "range()的使用、遍历列表/字典、break/continue。",
+     "ja-JP": "range()の使用、リスト/辞書の走査、break/continue。",
+     "en-US": "Using range(), iterating lists/dicts, break/continue."
+    },
+    "commonMistake": {
+     "zh-CN": "忘记冒号、缩进错误、循环内修改迭代对象。",
+     "ja-JP": "コロン忘れ、インデント誤り、ループ内での反復オブジェクトの変更。",
+     "en-US": "Forgetting colon, indentation errors, modifying the iterable inside the loop."
+    }
   },
   {
     "id": "py-for-002",
@@ -502,7 +943,38 @@ window.CODING_TYPING_DATA_PYTHON = [
     "expectedOutput": "",
     "difficulty": 2,
     "estimatedTime": 12,
-    "source": "builtin"
+    "source": "builtin",
+    "examRelevance": "high",
+    "examTargets": [
+     "Python",
+     "IT Passport",
+     "SG",
+     "基本情報"
+    ],
+    "glossaryRefs": [
+     "for_loop",
+     "iteration"
+    ],
+    "meaning": {
+     "zh-CN": "for循环用于遍历序列（如列表、字符串、range）中的每个元素。",
+     "ja-JP": "forループはシーケンス（リスト、文字列、rangeなど）の各要素を反復処理します。",
+     "en-US": "A for loop iterates over each element in a sequence such as a list, string, or range."
+    },
+    "memoryHook": {
+     "zh-CN": "对每个元素做一遍 → for",
+     "ja-JP": "各要素に対して繰り返す → for",
+     "en-US": "Think: For each item, do something"
+    },
+    "examPoint": {
+     "zh-CN": "range()的使用、遍历列表/字典、break/continue。",
+     "ja-JP": "range()の使用、リスト/辞書の走査、break/continue。",
+     "en-US": "Using range(), iterating lists/dicts, break/continue."
+    },
+    "commonMistake": {
+     "zh-CN": "忘记冒号、缩进错误、循环内修改迭代对象。",
+     "ja-JP": "コロン忘れ、インデント誤り、ループ内での反復オブジェクトの変更。",
+     "en-US": "Forgetting colon, indentation errors, modifying the iterable inside the loop."
+    }
   },
   {
     "id": "py-for-003",
@@ -534,7 +1006,38 @@ window.CODING_TYPING_DATA_PYTHON = [
     "expectedOutput": "",
     "difficulty": 2,
     "estimatedTime": 15,
-    "source": "builtin"
+    "source": "builtin",
+    "examRelevance": "high",
+    "examTargets": [
+     "Python",
+     "IT Passport",
+     "SG",
+     "基本情報"
+    ],
+    "glossaryRefs": [
+     "for_loop",
+     "iteration"
+    ],
+    "meaning": {
+     "zh-CN": "for循环用于遍历序列（如列表、字符串、range）中的每个元素。",
+     "ja-JP": "forループはシーケンス（リスト、文字列、rangeなど）の各要素を反復処理します。",
+     "en-US": "A for loop iterates over each element in a sequence such as a list, string, or range."
+    },
+    "memoryHook": {
+     "zh-CN": "对每个元素做一遍 → for",
+     "ja-JP": "各要素に対して繰り返す → for",
+     "en-US": "Think: For each item, do something"
+    },
+    "examPoint": {
+     "zh-CN": "range()的使用、遍历列表/字典、break/continue。",
+     "ja-JP": "range()の使用、リスト/辞書の走査、break/continue。",
+     "en-US": "Using range(), iterating lists/dicts, break/continue."
+    },
+    "commonMistake": {
+     "zh-CN": "忘记冒号、缩进错误、循环内修改迭代对象。",
+     "ja-JP": "コロン忘れ、インデント誤り、ループ内での反復オブジェクトの変更。",
+     "en-US": "Forgetting colon, indentation errors, modifying the iterable inside the loop."
+    }
   },
   {
     "id": "py-for-004",
@@ -566,7 +1069,38 @@ window.CODING_TYPING_DATA_PYTHON = [
     "expectedOutput": "",
     "difficulty": 3,
     "estimatedTime": 18,
-    "source": "builtin"
+    "source": "builtin",
+    "examRelevance": "high",
+    "examTargets": [
+     "Python",
+     "IT Passport",
+     "SG",
+     "基本情報"
+    ],
+    "glossaryRefs": [
+     "for_loop",
+     "iteration"
+    ],
+    "meaning": {
+     "zh-CN": "for循环用于遍历序列（如列表、字符串、range）中的每个元素。",
+     "ja-JP": "forループはシーケンス（リスト、文字列、rangeなど）の各要素を反復処理します。",
+     "en-US": "A for loop iterates over each element in a sequence such as a list, string, or range."
+    },
+    "memoryHook": {
+     "zh-CN": "对每个元素做一遍 → for",
+     "ja-JP": "各要素に対して繰り返す → for",
+     "en-US": "Think: For each item, do something"
+    },
+    "examPoint": {
+     "zh-CN": "range()的使用、遍历列表/字典、break/continue。",
+     "ja-JP": "range()の使用、リスト/辞書の走査、break/continue。",
+     "en-US": "Using range(), iterating lists/dicts, break/continue."
+    },
+    "commonMistake": {
+     "zh-CN": "忘记冒号、缩进错误、循环内修改迭代对象。",
+     "ja-JP": "コロン忘れ、インデント誤り、ループ内での反復オブジェクトの変更。",
+     "en-US": "Forgetting colon, indentation errors, modifying the iterable inside the loop."
+    }
   },
   {
     "id": "py-while-001",
@@ -598,7 +1132,38 @@ window.CODING_TYPING_DATA_PYTHON = [
     "expectedOutput": "",
     "difficulty": 2,
     "estimatedTime": 15,
-    "source": "builtin"
+    "source": "builtin",
+    "examRelevance": "high",
+    "examTargets": [
+     "Python",
+     "IT Passport",
+     "SG",
+     "基本情報"
+    ],
+    "glossaryRefs": [
+     "while_loop",
+     "infinite_loop"
+    ],
+    "meaning": {
+     "zh-CN": "while循环在条件为真时反复执行代码块，直到条件变为假。",
+     "ja-JP": "whileループは条件が真である間、コードブロックを繰り返し実行します。",
+     "en-US": "A while loop repeatedly executes a code block as long as the condition remains true."
+    },
+    "memoryHook": {
+     "zh-CN": "只要…就一直做 → while",
+     "ja-JP": "…の間はずっと → while",
+     "en-US": "Think: While this is true, keep going"
+    },
+    "examPoint": {
+     "zh-CN": "循环条件、无限循环的避免、break/continue。",
+     "ja-JP": "ループ条件、無限ループ回避、break/continue。",
+     "en-US": "Loop conditions, avoiding infinite loops, break/continue."
+    },
+    "commonMistake": {
+     "zh-CN": "忘记更新循环变量导致无限循环。",
+     "ja-JP": "ループ変数の更新忘れによる無限ループ。",
+     "en-US": "Forgetting to update the loop variable, causing an infinite loop."
+    }
   },
   {
     "id": "py-while-002",
@@ -630,7 +1195,38 @@ window.CODING_TYPING_DATA_PYTHON = [
     "expectedOutput": "",
     "difficulty": 3,
     "estimatedTime": 20,
-    "source": "builtin"
+    "source": "builtin",
+    "examRelevance": "high",
+    "examTargets": [
+     "Python",
+     "IT Passport",
+     "SG",
+     "基本情報"
+    ],
+    "glossaryRefs": [
+     "while_loop",
+     "infinite_loop"
+    ],
+    "meaning": {
+     "zh-CN": "while循环在条件为真时反复执行代码块，直到条件变为假。",
+     "ja-JP": "whileループは条件が真である間、コードブロックを繰り返し実行します。",
+     "en-US": "A while loop repeatedly executes a code block as long as the condition remains true."
+    },
+    "memoryHook": {
+     "zh-CN": "只要…就一直做 → while",
+     "ja-JP": "…の間はずっと → while",
+     "en-US": "Think: While this is true, keep going"
+    },
+    "examPoint": {
+     "zh-CN": "循环条件、无限循环的避免、break/continue。",
+     "ja-JP": "ループ条件、無限ループ回避、break/continue。",
+     "en-US": "Loop conditions, avoiding infinite loops, break/continue."
+    },
+    "commonMistake": {
+     "zh-CN": "忘记更新循环变量导致无限循环。",
+     "ja-JP": "ループ変数の更新忘れによる無限ループ。",
+     "en-US": "Forgetting to update the loop variable, causing an infinite loop."
+    }
   },
   {
     "id": "py-while-003",
@@ -662,7 +1258,38 @@ window.CODING_TYPING_DATA_PYTHON = [
     "expectedOutput": "",
     "difficulty": 3,
     "estimatedTime": 20,
-    "source": "builtin"
+    "source": "builtin",
+    "examRelevance": "high",
+    "examTargets": [
+     "Python",
+     "IT Passport",
+     "SG",
+     "基本情報"
+    ],
+    "glossaryRefs": [
+     "while_loop",
+     "infinite_loop"
+    ],
+    "meaning": {
+     "zh-CN": "while循环在条件为真时反复执行代码块，直到条件变为假。",
+     "ja-JP": "whileループは条件が真である間、コードブロックを繰り返し実行します。",
+     "en-US": "A while loop repeatedly executes a code block as long as the condition remains true."
+    },
+    "memoryHook": {
+     "zh-CN": "只要…就一直做 → while",
+     "ja-JP": "…の間はずっと → while",
+     "en-US": "Think: While this is true, keep going"
+    },
+    "examPoint": {
+     "zh-CN": "循环条件、无限循环的避免、break/continue。",
+     "ja-JP": "ループ条件、無限ループ回避、break/continue。",
+     "en-US": "Loop conditions, avoiding infinite loops, break/continue."
+    },
+    "commonMistake": {
+     "zh-CN": "忘记更新循环变量导致无限循环。",
+     "ja-JP": "ループ変数の更新忘れによる無限ループ。",
+     "en-US": "Forgetting to update the loop variable, causing an infinite loop."
+    }
   },
   {
     "id": "py-def-001",
@@ -694,7 +1321,37 @@ window.CODING_TYPING_DATA_PYTHON = [
     "expectedOutput": "",
     "difficulty": 2,
     "estimatedTime": 12,
-    "source": "builtin"
+    "source": "builtin",
+    "examRelevance": "high",
+    "examTargets": [
+     "Python",
+     "IT Passport",
+     "基本情報"
+    ],
+    "glossaryRefs": [
+     "function_definition",
+     "parameter"
+    ],
+    "meaning": {
+     "zh-CN": "def关键字用于定义函数，将可复用的代码块封装起来。",
+     "ja-JP": "defキーワードは関数を定義し、再利用可能なコードブロックをカプセル化します。",
+     "en-US": "The def keyword defines a function, encapsulating reusable code into a block."
+    },
+    "memoryHook": {
+     "zh-CN": "定义函数 → def",
+     "ja-JP": "関数を定義 → def",
+     "en-US": "Think: def = define function"
+    },
+    "examPoint": {
+     "zh-CN": "函数定义语法、参数传递、return返回值。",
+     "ja-JP": "関数定義の構文、引数渡し、return戻り値。",
+     "en-US": "Function definition syntax, argument passing, return values."
+    },
+    "commonMistake": {
+     "zh-CN": "忘记冒号、忘记return、参数顺序混淆。",
+     "ja-JP": "コロン忘れ、return忘れ、引数の順序混同。",
+     "en-US": "Forgetting colon, missing return, confusing argument order."
+    }
   },
   {
     "id": "py-def-002",
@@ -726,7 +1383,37 @@ window.CODING_TYPING_DATA_PYTHON = [
     "expectedOutput": "",
     "difficulty": 2,
     "estimatedTime": 12,
-    "source": "builtin"
+    "source": "builtin",
+    "examRelevance": "high",
+    "examTargets": [
+     "Python",
+     "IT Passport",
+     "基本情報"
+    ],
+    "glossaryRefs": [
+     "function_definition",
+     "parameter"
+    ],
+    "meaning": {
+     "zh-CN": "def关键字用于定义函数，将可复用的代码块封装起来。",
+     "ja-JP": "defキーワードは関数を定義し、再利用可能なコードブロックをカプセル化します。",
+     "en-US": "The def keyword defines a function, encapsulating reusable code into a block."
+    },
+    "memoryHook": {
+     "zh-CN": "定义函数 → def",
+     "ja-JP": "関数を定義 → def",
+     "en-US": "Think: def = define function"
+    },
+    "examPoint": {
+     "zh-CN": "函数定义语法、参数传递、return返回值。",
+     "ja-JP": "関数定義の構文、引数渡し、return戻り値。",
+     "en-US": "Function definition syntax, argument passing, return values."
+    },
+    "commonMistake": {
+     "zh-CN": "忘记冒号、忘记return、参数顺序混淆。",
+     "ja-JP": "コロン忘れ、return忘れ、引数の順序混同。",
+     "en-US": "Forgetting colon, missing return, confusing argument order."
+    }
   },
   {
     "id": "py-def-003",
@@ -758,7 +1445,37 @@ window.CODING_TYPING_DATA_PYTHON = [
     "expectedOutput": "",
     "difficulty": 4,
     "estimatedTime": 25,
-    "source": "builtin"
+    "source": "builtin",
+    "examRelevance": "high",
+    "examTargets": [
+     "Python",
+     "IT Passport",
+     "基本情報"
+    ],
+    "glossaryRefs": [
+     "function_definition",
+     "parameter"
+    ],
+    "meaning": {
+     "zh-CN": "def关键字用于定义函数，将可复用的代码块封装起来。",
+     "ja-JP": "defキーワードは関数を定義し、再利用可能なコードブロックをカプセル化します。",
+     "en-US": "The def keyword defines a function, encapsulating reusable code into a block."
+    },
+    "memoryHook": {
+     "zh-CN": "定义函数 → def",
+     "ja-JP": "関数を定義 → def",
+     "en-US": "Think: def = define function"
+    },
+    "examPoint": {
+     "zh-CN": "函数定义语法、参数传递、return返回值。",
+     "ja-JP": "関数定義の構文、引数渡し、return戻り値。",
+     "en-US": "Function definition syntax, argument passing, return values."
+    },
+    "commonMistake": {
+     "zh-CN": "忘记冒号、忘记return、参数顺序混淆。",
+     "ja-JP": "コロン忘れ、return忘れ、引数の順序混同。",
+     "en-US": "Forgetting colon, missing return, confusing argument order."
+    }
   },
   {
     "id": "py-import-001",
@@ -790,7 +1507,35 @@ window.CODING_TYPING_DATA_PYTHON = [
     "expectedOutput": "4.0",
     "difficulty": 2,
     "estimatedTime": 12,
-    "source": "builtin"
+    "source": "builtin",
+    "examRelevance": "medium",
+    "examTargets": [
+     "Python",
+     "IT Passport"
+    ],
+    "glossaryRefs": [
+     "import_module"
+    ],
+    "meaning": {
+     "zh-CN": "import语句用于导入模块，以便使用其他文件或库中定义的功能。",
+     "ja-JP": "import文はモジュールをインポートして、他のファイルやライブラリで定義された機能を使用します。",
+     "en-US": "The import statement loads a module to use functionality defined in other files or libraries."
+    },
+    "memoryHook": {
+     "zh-CN": "导入工具箱 → import",
+     "ja-JP": "ツールボックスを読み込む → import",
+     "en-US": "Think: Import a toolbox"
+    },
+    "examPoint": {
+     "zh-CN": "import vs from...import、模块搜索路径。",
+     "ja-JP": "importとfrom...importの違い、モジュール検索パス。",
+     "en-US": "import vs from...import, module search path."
+    },
+    "commonMistake": {
+     "zh-CN": "模块名拼写错误、循环导入。",
+     "ja-JP": "モジュール名のスペルミス、循環インポート。",
+     "en-US": "Misspelling module names, circular imports."
+    }
   },
   {
     "id": "py-import-002",
@@ -822,7 +1567,35 @@ window.CODING_TYPING_DATA_PYTHON = [
     "expectedOutput": "5.0",
     "difficulty": 2,
     "estimatedTime": 12,
-    "source": "builtin"
+    "source": "builtin",
+    "examRelevance": "medium",
+    "examTargets": [
+     "Python",
+     "IT Passport"
+    ],
+    "glossaryRefs": [
+     "import_module"
+    ],
+    "meaning": {
+     "zh-CN": "import语句用于导入模块，以便使用其他文件或库中定义的功能。",
+     "ja-JP": "import文はモジュールをインポートして、他のファイルやライブラリで定義された機能を使用します。",
+     "en-US": "The import statement loads a module to use functionality defined in other files or libraries."
+    },
+    "memoryHook": {
+     "zh-CN": "导入工具箱 → import",
+     "ja-JP": "ツールボックスを読み込む → import",
+     "en-US": "Think: Import a toolbox"
+    },
+    "examPoint": {
+     "zh-CN": "import vs from...import、模块搜索路径。",
+     "ja-JP": "importとfrom...importの違い、モジュール検索パス。",
+     "en-US": "import vs from...import, module search path."
+    },
+    "commonMistake": {
+     "zh-CN": "模块名拼写错误、循环导入。",
+     "ja-JP": "モジュール名のスペルミス、循環インポート。",
+     "en-US": "Misspelling module names, circular imports."
+    }
   },
   {
     "id": "py-list-001",
@@ -853,7 +1626,38 @@ window.CODING_TYPING_DATA_PYTHON = [
     "expectedOutput": "",
     "difficulty": 2,
     "estimatedTime": 12,
-    "source": "builtin"
+    "source": "builtin",
+    "examRelevance": "high",
+    "examTargets": [
+     "Python",
+     "IT Passport",
+     "SG",
+     "基本情報"
+    ],
+    "glossaryRefs": [
+     "list_type",
+     "mutable_sequence"
+    ],
+    "meaning": {
+     "zh-CN": "列表是Python中可变的、有序的序列，可包含不同类型的元素。",
+     "ja-JP": "リストはPythonでミュータブルな順序付きシーケンスで、異なる型の要素を含められます。",
+     "en-US": "A list is a mutable, ordered sequence that can contain elements of different types."
+    },
+    "memoryHook": {
+     "zh-CN": "方括号[] = 能改的序列",
+     "ja-JP": "角かっこ[] = 変更可能な配列",
+     "en-US": "Square brackets [] = changeable sequence"
+    },
+    "examPoint": {
+     "zh-CN": "索引访问、切片、append/extend/insert、列表推导式。",
+     "ja-JP": "インデックスアクセス、スライス、append/extend/insert、リスト内包表記。",
+     "en-US": "Index access, slicing, append/extend/insert, list comprehensions."
+    },
+    "commonMistake": {
+     "zh-CN": "索引从0开始遗忘、sort()原地修改而不返回新列表。",
+     "ja-JP": "インデックスが0から始まることの忘れ、sort()は原地更新で新リストを返さない。",
+     "en-US": "Forgetting 0-based indexing, sort() modifies in-place and returns None."
+    }
   },
   {
     "id": "py-dict-001",
@@ -885,7 +1689,37 @@ window.CODING_TYPING_DATA_PYTHON = [
     "expectedOutput": "Alice",
     "difficulty": 2,
     "estimatedTime": 15,
-    "source": "builtin"
+    "source": "builtin",
+    "examRelevance": "high",
+    "examTargets": [
+     "Python",
+     "IT Passport",
+     "基本情報"
+    ],
+    "glossaryRefs": [
+     "dict_type",
+     "key_value"
+    ],
+    "meaning": {
+     "zh-CN": "字典是键值对的集合，通过键快速查找值。",
+     "ja-JP": "辞書はキーと値のペアの集合で、キーから値を高速に検索できます。",
+     "en-US": "A dict is a collection of key-value pairs for fast lookup by key."
+    },
+    "memoryHook": {
+     "zh-CN": "花括号{:} = 查字典",
+     "ja-JP": "波かっこ{:} = 辞書を引く",
+     "en-US": "Curly braces {:} = look it up by key"
+    },
+    "examPoint": {
+     "zh-CN": "键值对操作、keys()/values()/items()、键的唯一性。",
+     "ja-JP": "キーと値の操作、keys()/values()/items()、キーの一意性。",
+     "en-US": "Key-value operations, keys()/values()/items(), key uniqueness."
+    },
+    "commonMistake": {
+     "zh-CN": "访问不存在的键（用get()避免KeyError）、键必须是不可变类型。",
+     "ja-JP": "存在しないキーのアクセス（get()でKeyError回避）、キーは不変型必須。",
+     "en-US": "Accessing nonexistent keys (use get()), keys must be immutable types."
+    }
   },
   {
     "id": "py-fstring-001",
@@ -917,7 +1751,35 @@ window.CODING_TYPING_DATA_PYTHON = [
     "expectedOutput": "Hello, Alice!",
     "difficulty": 3,
     "estimatedTime": 15,
-    "source": "builtin"
+    "source": "builtin",
+    "examRelevance": "medium",
+    "examTargets": [
+     "Python",
+     "基本情報"
+    ],
+    "glossaryRefs": [
+     "f_string"
+    ],
+    "meaning": {
+     "zh-CN": "f-string是Python 3.6引入的字符串格式化方式，在字符串前加f并用{}嵌入表达式。",
+     "ja-JP": "f-stringはPython 3.6で導入された文字列フォーマットで、fプレフィックスと{}で式を埋め込みます。",
+     "en-US": "f-string is a string formatting method introduced in Python 3.6, embedding expressions with {} after an f prefix."
+    },
+    "memoryHook": {
+     "zh-CN": "f前缀 + {}占位 = 直接嵌入变量",
+     "ja-JP": "f接頭辞 + {}プレースホルダ = 直接変数埋め込み",
+     "en-US": "f prefix + {} placeholder = embed variables directly"
+    },
+    "examPoint": {
+     "zh-CN": "f-string语法、格式化数字、与format()和%格式化的区别。",
+     "ja-JP": "f-string構文、数値フォーマット、format()や%書式との違い。",
+     "en-US": "f-string syntax, number formatting, differences from format() and % formatting."
+    },
+    "commonMistake": {
+     "zh-CN": "忘记f前缀、花括号内写复杂表达式使代码难读。",
+     "ja-JP": "f接頭辞忘れ、{}内に複雑な式を書いて可読性低下。",
+     "en-US": "Forgetting the f prefix, writing complex expressions inside {} reducing readability."
+    }
   },
   {
     "id": "py-comment-001",
@@ -949,7 +1811,34 @@ window.CODING_TYPING_DATA_PYTHON = [
     "expectedOutput": "Hello",
     "difficulty": 1,
     "estimatedTime": 8,
-    "source": "builtin"
+    "source": "builtin",
+    "examRelevance": "medium",
+    "examTargets": [
+     "Python"
+    ],
+    "glossaryRefs": [
+     "comment"
+    ],
+    "meaning": {
+     "zh-CN": "注释是用#开头对代码进行解释说明的文字，不会被程序执行。",
+     "ja-JP": "コメントは#で始まり、コードを説明するための文で、プログラムでは実行されません。",
+     "en-US": "Comments starting with # explain code and are not executed by the program."
+    },
+    "memoryHook": {
+     "zh-CN": "# = 写备注",
+     "ja-JP": "# = メモ書き",
+     "en-US": "Think: # = leave notes in code"
+    },
+    "examPoint": {
+     "zh-CN": "注释的用途、多行注释可以用三重引号。",
+     "ja-JP": "コメントの用途、複数行コメントは三重引用符を使用。",
+     "en-US": "Purpose of comments, multi-line comments using triple quotes."
+    },
+    "commonMistake": {
+     "zh-CN": "注释过少或过多、注释内容与代码实际行为不一致。",
+     "ja-JP": "コメントが少なすぎる/多すぎる、コメントとコードの不一致。",
+     "en-US": "Too few or too many comments, comments not matching actual code behavior."
+    }
   },
   {
     "id": "py-listcomp-001",
@@ -980,7 +1869,34 @@ window.CODING_TYPING_DATA_PYTHON = [
       "comprehension",
       "for"
     ],
-    "code": "squares = [x**2 for x in range(5)]\nprint(squares)"
+    "code": "squares = [x**2 for x in range(5)]\nprint(squares)",
+    "examRelevance": "high",
+    "examTargets": [
+     "Python"
+    ],
+    "glossaryRefs": [
+     "list_comprehension"
+    ],
+    "meaning": {
+     "zh-CN": "列表推导式是简洁地创建列表的语法，格式为[表达式 for 变量 in 可迭代对象 if 条件]。",
+     "ja-JP": "リスト内包表記は簡潔にリストを作成する構文で、[式 for 変数 in イテラブル if 条件]の形式です。",
+     "en-US": "List comprehension is a concise way to create lists in the form [expression for variable in iterable if condition]."
+    },
+    "memoryHook": {
+     "zh-CN": "循环+筛选+变换 → 一行搞定",
+     "ja-JP": "ループ+フィルタ+変換 → 一行で完了",
+     "en-US": "Think: Loop + filter + transform in one line"
+    },
+    "examPoint": {
+     "zh-CN": "基本语法、条件筛选、嵌套循环的列表推导式。",
+     "ja-JP": "基本構文、条件フィルタ、ネストループのリスト内包表記。",
+     "en-US": "Basic syntax, conditional filtering, nested loop comprehensions."
+    },
+    "commonMistake": {
+     "zh-CN": "过度嵌套降低可读性、忘记条件表达式顺序。",
+     "ja-JP": "過度なネストによる可読性低下、条件式の順序忘れ。",
+     "en-US": "Over-nesting reducing readability, forgetting the order of condition expressions."
+    }
   },
   {
     "id": "py-listcomp-002",
@@ -1011,7 +1927,34 @@ window.CODING_TYPING_DATA_PYTHON = [
       "comprehension",
       "if"
     ],
-    "code": "nums = [-1,2,-3,4,0,5]\npos = [x for x in nums if x>0]\nprint(pos)"
+    "code": "nums = [-1,2,-3,4,0,5]\npos = [x for x in nums if x>0]\nprint(pos)",
+    "examRelevance": "high",
+    "examTargets": [
+     "Python"
+    ],
+    "glossaryRefs": [
+     "list_comprehension"
+    ],
+    "meaning": {
+     "zh-CN": "列表推导式是简洁地创建列表的语法，格式为[表达式 for 变量 in 可迭代对象 if 条件]。",
+     "ja-JP": "リスト内包表記は簡潔にリストを作成する構文で、[式 for 変数 in イテラブル if 条件]の形式です。",
+     "en-US": "List comprehension is a concise way to create lists in the form [expression for variable in iterable if condition]."
+    },
+    "memoryHook": {
+     "zh-CN": "循环+筛选+变换 → 一行搞定",
+     "ja-JP": "ループ+フィルタ+変換 → 一行で完了",
+     "en-US": "Think: Loop + filter + transform in one line"
+    },
+    "examPoint": {
+     "zh-CN": "基本语法、条件筛选、嵌套循环的列表推导式。",
+     "ja-JP": "基本構文、条件フィルタ、ネストループのリスト内包表記。",
+     "en-US": "Basic syntax, conditional filtering, nested loop comprehensions."
+    },
+    "commonMistake": {
+     "zh-CN": "过度嵌套降低可读性、忘记条件表达式顺序。",
+     "ja-JP": "過度なネストによる可読性低下、条件式の順序忘れ。",
+     "en-US": "Over-nesting reducing readability, forgetting the order of condition expressions."
+    }
   },
   {
     "id": "py-listcomp-003",
@@ -1042,7 +1985,34 @@ window.CODING_TYPING_DATA_PYTHON = [
       "comprehension",
       "nested"
     ],
-    "code": "coords = [(x,y) for x in range(3) for y in range(2)]\nprint(coords)"
+    "code": "coords = [(x,y) for x in range(3) for y in range(2)]\nprint(coords)",
+    "examRelevance": "high",
+    "examTargets": [
+     "Python"
+    ],
+    "glossaryRefs": [
+     "list_comprehension"
+    ],
+    "meaning": {
+     "zh-CN": "列表推导式是简洁地创建列表的语法，格式为[表达式 for 变量 in 可迭代对象 if 条件]。",
+     "ja-JP": "リスト内包表記は簡潔にリストを作成する構文で、[式 for 変数 in イテラブル if 条件]の形式です。",
+     "en-US": "List comprehension is a concise way to create lists in the form [expression for variable in iterable if condition]."
+    },
+    "memoryHook": {
+     "zh-CN": "循环+筛选+变换 → 一行搞定",
+     "ja-JP": "ループ+フィルタ+変換 → 一行で完了",
+     "en-US": "Think: Loop + filter + transform in one line"
+    },
+    "examPoint": {
+     "zh-CN": "基本语法、条件筛选、嵌套循环的列表推导式。",
+     "ja-JP": "基本構文、条件フィルタ、ネストループのリスト内包表記。",
+     "en-US": "Basic syntax, conditional filtering, nested loop comprehensions."
+    },
+    "commonMistake": {
+     "zh-CN": "过度嵌套降低可读性、忘记条件表达式顺序。",
+     "ja-JP": "過度なネストによる可読性低下、条件式の順序忘れ。",
+     "en-US": "Over-nesting reducing readability, forgetting the order of condition expressions."
+    }
   },
   {
     "id": "py-lambda-001",
@@ -1072,7 +2042,34 @@ window.CODING_TYPING_DATA_PYTHON = [
       "lambda",
       "function"
     ],
-    "code": "double = lambda x: x*2\nprint(double(5))\nprint(double(7))"
+    "code": "double = lambda x: x*2\nprint(double(5))\nprint(double(7))",
+    "examRelevance": "high",
+    "examTargets": [
+     "Python"
+    ],
+    "glossaryRefs": [
+     "lambda_expression"
+    ],
+    "meaning": {
+     "zh-CN": "lambda是定义匿名函数的关键字，适合简单表达式，通常作为参数传递。",
+     "ja-JP": "lambdaは無名関数を定義するキーワードで、簡単な式に適し、引数として渡されます。",
+     "en-US": "lambda defines an anonymous function for simple expressions, often passed as an argument."
+    },
+    "memoryHook": {
+     "zh-CN": "一次性函数 → lambda",
+     "ja-JP": "一回限りの関数 → lambda",
+     "en-US": "Think: lambda = short, inline function"
+    },
+    "examPoint": {
+     "zh-CN": "lambda与sorted/map/filter配合使用、只能写表达式。",
+     "ja-JP": "lambdaとsorted/map/filterの併用、式のみ記述可能。",
+     "en-US": "Using lambda with sorted/map/filter, only expressions allowed."
+    },
+    "commonMistake": {
+     "zh-CN": "lambda体包含语句而非表达式、忘记lambda需要赋值或立即调用。",
+     "ja-JP": "lambda本体に式ではなく文を書いてしまう、代入または即時呼び出しが必要。",
+     "en-US": "Using statements instead of expressions, forgetting lambda needs assignment or immediate call."
+    }
   },
   {
     "id": "py-lambda-002",
@@ -1103,7 +2100,34 @@ window.CODING_TYPING_DATA_PYTHON = [
       "map",
       "list"
     ],
-    "code": "words = [\"hello\",\"world\",\"python\"]\nup = list(map(lambda w: w.upper(), words))\nprint(up)"
+    "code": "words = [\"hello\",\"world\",\"python\"]\nup = list(map(lambda w: w.upper(), words))\nprint(up)",
+    "examRelevance": "high",
+    "examTargets": [
+     "Python"
+    ],
+    "glossaryRefs": [
+     "lambda_expression"
+    ],
+    "meaning": {
+     "zh-CN": "lambda是定义匿名函数的关键字，适合简单表达式，通常作为参数传递。",
+     "ja-JP": "lambdaは無名関数を定義するキーワードで、簡単な式に適し、引数として渡されます。",
+     "en-US": "lambda defines an anonymous function for simple expressions, often passed as an argument."
+    },
+    "memoryHook": {
+     "zh-CN": "一次性函数 → lambda",
+     "ja-JP": "一回限りの関数 → lambda",
+     "en-US": "Think: lambda = short, inline function"
+    },
+    "examPoint": {
+     "zh-CN": "lambda与sorted/map/filter配合使用、只能写表达式。",
+     "ja-JP": "lambdaとsorted/map/filterの併用、式のみ記述可能。",
+     "en-US": "Using lambda with sorted/map/filter, only expressions allowed."
+    },
+    "commonMistake": {
+     "zh-CN": "lambda体包含语句而非表达式、忘记lambda需要赋值或立即调用。",
+     "ja-JP": "lambda本体に式ではなく文を書いてしまう、代入または即時呼び出しが必要。",
+     "en-US": "Using statements instead of expressions, forgetting lambda needs assignment or immediate call."
+    }
   },
   {
     "id": "py-sorted-001",
@@ -1134,7 +2158,35 @@ window.CODING_TYPING_DATA_PYTHON = [
       "key",
       "lambda"
     ],
-    "code": "students = [(\"Alice\",85),(\"Bob\",72),(\"Aoi\",91)]\nsorted_by = sorted(students, key=lambda s: s[1], reverse=True)\nprint(sorted_by)"
+    "code": "students = [(\"Alice\",85),(\"Bob\",72),(\"Aoi\",91)]\nsorted_by = sorted(students, key=lambda s: s[1], reverse=True)\nprint(sorted_by)",
+    "examRelevance": "high",
+    "examTargets": [
+     "Python",
+     "基本情報"
+    ],
+    "glossaryRefs": [
+     "sorted_function"
+    ],
+    "meaning": {
+     "zh-CN": "sorted()函数返回一个新的已排序列表，原列表不变，支持自定义排序规则。",
+     "ja-JP": "sorted()関数は新しいソート済みリストを返し、元のリストは変更されず、カスタムソートルールもサポートします。",
+     "en-US": "The sorted() function returns a new sorted list without modifying the original, supporting custom sort keys."
+    },
+    "memoryHook": {
+     "zh-CN": "排序出新列表 → sorted",
+     "ja-JP": "ソートして新リスト → sorted",
+     "en-US": "Think: sorted = returns new sorted list"
+    },
+    "examPoint": {
+     "zh-CN": "sorted与list.sort()的区别、key参数和reverse参数。",
+     "ja-JP": "sortedとlist.sort()の違い、keyパラメータとreverseパラメータ。",
+     "en-US": "Difference between sorted() and list.sort(), key and reverse parameters."
+    },
+    "commonMistake": {
+     "zh-CN": "混淆sorted()和list.sort()（后者原地修改返回None）。",
+     "ja-JP": "sorted()とlist.sort()の混同（後者は原地更新でNoneを返す）。",
+     "en-US": "Confusing sorted() with list.sort() (the latter is in-place returning None)."
+    }
   },
   {
     "id": "py-try-001",
@@ -1165,7 +2217,35 @@ window.CODING_TYPING_DATA_PYTHON = [
       "except",
       "exception"
     ],
-    "code": "try:\n    num = int(input(\"Enter: \"))\n    print(10/num)\nexcept ValueError:\n    print(\"Invalid!\")\nexcept ZeroDivisionError:\n    print(\"No zero!\")"
+    "code": "try:\n    num = int(input(\"Enter: \"))\n    print(10/num)\nexcept ValueError:\n    print(\"Invalid!\")\nexcept ZeroDivisionError:\n    print(\"No zero!\")",
+    "examRelevance": "high",
+    "examTargets": [
+     "Python",
+     "基本情報"
+    ],
+    "glossaryRefs": [
+     "exception_handling"
+    ],
+    "meaning": {
+     "zh-CN": "try/except用于捕获和处理异常，防止程序因错误而崩溃。",
+     "ja-JP": "try/exceptは例外をキャッチして処理し、エラーによるプログラムのクラッシュを防ぎます。",
+     "en-US": "try/except catches and handles exceptions to prevent program crashes from errors."
+    },
+    "memoryHook": {
+     "zh-CN": "尝试 + 容错 = try/except",
+     "ja-JP": "試す + エラー処理 = try/except",
+     "en-US": "Think: try this, handle errors with except"
+    },
+    "examPoint": {
+     "zh-CN": "try/except/finally结构、捕获特定异常类型。",
+     "ja-JP": "try/except/finally構造、特定の例外型のキャッチ。",
+     "en-US": "try/except/finally structure, catching specific exception types."
+    },
+    "commonMistake": {
+     "zh-CN": "捕获过于宽泛的Exception、忘记finally用于资源释放。",
+     "ja-JP": "広すぎる例外キャッチ、finallyによるリソース解放の忘れ。",
+     "en-US": "Catching too broad Exception, forgetting finally for resource cleanup."
+    }
   },
   {
     "id": "py-try-002",
@@ -1197,7 +2277,35 @@ window.CODING_TYPING_DATA_PYTHON = [
       "else",
       "finally"
     ],
-    "code": "try:\n    f=open(\"data.txt\",\"r\")\n    content=f.read()\nexcept FileNotFoundError:\n    print(\"Not found\")\nelse:\n    print(\"OK\")\nfinally:\n    print(\"Done\")"
+    "code": "try:\n    f=open(\"data.txt\",\"r\")\n    content=f.read()\nexcept FileNotFoundError:\n    print(\"Not found\")\nelse:\n    print(\"OK\")\nfinally:\n    print(\"Done\")",
+    "examRelevance": "high",
+    "examTargets": [
+     "Python",
+     "基本情報"
+    ],
+    "glossaryRefs": [
+     "exception_handling"
+    ],
+    "meaning": {
+     "zh-CN": "try/except用于捕获和处理异常，防止程序因错误而崩溃。",
+     "ja-JP": "try/exceptは例外をキャッチして処理し、エラーによるプログラムのクラッシュを防ぎます。",
+     "en-US": "try/except catches and handles exceptions to prevent program crashes from errors."
+    },
+    "memoryHook": {
+     "zh-CN": "尝试 + 容错 = try/except",
+     "ja-JP": "試す + エラー処理 = try/except",
+     "en-US": "Think: try this, handle errors with except"
+    },
+    "examPoint": {
+     "zh-CN": "try/except/finally结构、捕获特定异常类型。",
+     "ja-JP": "try/except/finally構造、特定の例外型のキャッチ。",
+     "en-US": "try/except/finally structure, catching specific exception types."
+    },
+    "commonMistake": {
+     "zh-CN": "捕获过于宽泛的Exception、忘记finally用于资源释放。",
+     "ja-JP": "広すぎる例外キャッチ、finallyによるリソース解放の忘れ。",
+     "en-US": "Catching too broad Exception, forgetting finally for resource cleanup."
+    }
   },
   {
     "id": "py-try-003",
@@ -1228,7 +2336,35 @@ window.CODING_TYPING_DATA_PYTHON = [
       "as",
       "exception"
     ],
-    "code": "vals = [\"10\",\"abc\",\"20\"]\nfor v in vals:\n    try:\n        print(int(v)**2)\n    except ValueError as e:\n        print(f\"Error: {e}\")"
+    "code": "vals = [\"10\",\"abc\",\"20\"]\nfor v in vals:\n    try:\n        print(int(v)**2)\n    except ValueError as e:\n        print(f\"Error: {e}\")",
+    "examRelevance": "high",
+    "examTargets": [
+     "Python",
+     "基本情報"
+    ],
+    "glossaryRefs": [
+     "exception_handling"
+    ],
+    "meaning": {
+     "zh-CN": "try/except用于捕获和处理异常，防止程序因错误而崩溃。",
+     "ja-JP": "try/exceptは例外をキャッチして処理し、エラーによるプログラムのクラッシュを防ぎます。",
+     "en-US": "try/except catches and handles exceptions to prevent program crashes from errors."
+    },
+    "memoryHook": {
+     "zh-CN": "尝试 + 容错 = try/except",
+     "ja-JP": "試す + エラー処理 = try/except",
+     "en-US": "Think: try this, handle errors with except"
+    },
+    "examPoint": {
+     "zh-CN": "try/except/finally结构、捕获特定异常类型。",
+     "ja-JP": "try/except/finally構造、特定の例外型のキャッチ。",
+     "en-US": "try/except/finally structure, catching specific exception types."
+    },
+    "commonMistake": {
+     "zh-CN": "捕获过于宽泛的Exception、忘记finally用于资源释放。",
+     "ja-JP": "広すぎる例外キャッチ、finallyによるリソース解放の忘れ。",
+     "en-US": "Catching too broad Exception, forgetting finally for resource cleanup."
+    }
   },
   {
     "id": "py-class-001",
@@ -1260,7 +2396,38 @@ window.CODING_TYPING_DATA_PYTHON = [
       "__init__",
       "self"
     ],
-    "code": "class Dog:\n    def __init__(self,name):\n        self.name=name\n    def bark(self):\n        return f\"{self.name} says woof!\"\nd=Dog(\"Rex\")\nprint(d.bark())"
+    "code": "class Dog:\n    def __init__(self,name):\n        self.name=name\n    def bark(self):\n        return f\"{self.name} says woof!\"\nd=Dog(\"Rex\")\nprint(d.bark())",
+    "examRelevance": "high",
+    "examTargets": [
+     "Python",
+     "Java",
+     "SG",
+     "基本情報"
+    ],
+    "glossaryRefs": [
+     "class_definition",
+     "oop"
+    ],
+    "meaning": {
+     "zh-CN": "class关键字用于定义类，类是面向对象编程中创建对象的蓝图。",
+     "ja-JP": "classキーワードはクラスを定義し、クラスはオブジェクト指向プログラミングにおけるオブジェクトの設計図です。",
+     "en-US": "The class keyword defines a class, which is a blueprint for creating objects in OOP."
+    },
+    "memoryHook": {
+     "zh-CN": "蓝图 → class",
+     "ja-JP": "設計図 → class",
+     "en-US": "Think: class = blueprint for objects"
+    },
+    "examPoint": {
+     "zh-CN": "类定义、__init__构造方法、self参数、继承。",
+     "ja-JP": "クラス定義、__init__コンストラクタ、selfパラメータ、継承。",
+     "en-US": "Class definition, __init__ constructor, self parameter, inheritance."
+    },
+    "commonMistake": {
+     "zh-CN": "忘记self参数、方法定义缺少self、构造方法写__init__而不是__init__。",
+     "ja-JP": "selfパラメータ忘れ、メソッド定義にselfがない、コンストラクタの書き方間違い。",
+     "en-US": "Forgetting self parameter, methods without self, miswriting __init__."
+    }
   },
   {
     "id": "py-class-002",
@@ -1292,7 +2459,38 @@ window.CODING_TYPING_DATA_PYTHON = [
       "__str__",
       "return"
     ],
-    "code": "class Rect:\n    def __init__(self,w,h):\n        self.w=w;self.h=h\n    def area(self):\n        return self.w*self.h\n    def __str__(self):\n        return f\"{self.w}x{self.h} rect\"\nr=Rect(3,4)\nprint(r)\nprint(r.area())"
+    "code": "class Rect:\n    def __init__(self,w,h):\n        self.w=w;self.h=h\n    def area(self):\n        return self.w*self.h\n    def __str__(self):\n        return f\"{self.w}x{self.h} rect\"\nr=Rect(3,4)\nprint(r)\nprint(r.area())",
+    "examRelevance": "high",
+    "examTargets": [
+     "Python",
+     "Java",
+     "SG",
+     "基本情報"
+    ],
+    "glossaryRefs": [
+     "class_definition",
+     "oop"
+    ],
+    "meaning": {
+     "zh-CN": "class关键字用于定义类，类是面向对象编程中创建对象的蓝图。",
+     "ja-JP": "classキーワードはクラスを定義し、クラスはオブジェクト指向プログラミングにおけるオブジェクトの設計図です。",
+     "en-US": "The class keyword defines a class, which is a blueprint for creating objects in OOP."
+    },
+    "memoryHook": {
+     "zh-CN": "蓝图 → class",
+     "ja-JP": "設計図 → class",
+     "en-US": "Think: class = blueprint for objects"
+    },
+    "examPoint": {
+     "zh-CN": "类定义、__init__构造方法、self参数、继承。",
+     "ja-JP": "クラス定義、__init__コンストラクタ、selfパラメータ、継承。",
+     "en-US": "Class definition, __init__ constructor, self parameter, inheritance."
+    },
+    "commonMistake": {
+     "zh-CN": "忘记self参数、方法定义缺少self、构造方法写__init__而不是__init__。",
+     "ja-JP": "selfパラメータ忘れ、メソッド定義にselfがない、コンストラクタの書き方間違い。",
+     "en-US": "Forgetting self parameter, methods without self, miswriting __init__."
+    }
   },
   {
     "id": "py-class-003",
@@ -1324,7 +2522,38 @@ window.CODING_TYPING_DATA_PYTHON = [
       "super",
       "__init__"
     ],
-    "code": "class Person:\n    def __init__(self,name):\n        self.name=name\nclass Student(Person):\n    def __init__(self,name,grade):\n        super().__init__(name)\n        self.grade=grade\n    def info(self):\n        return f\"{self.name}: {self.grade}\"\ns=Student(\"Alice\",\"A\")\nprint(s.info())"
+    "code": "class Person:\n    def __init__(self,name):\n        self.name=name\nclass Student(Person):\n    def __init__(self,name,grade):\n        super().__init__(name)\n        self.grade=grade\n    def info(self):\n        return f\"{self.name}: {self.grade}\"\ns=Student(\"Alice\",\"A\")\nprint(s.info())",
+    "examRelevance": "high",
+    "examTargets": [
+     "Python",
+     "Java",
+     "SG",
+     "基本情報"
+    ],
+    "glossaryRefs": [
+     "class_definition",
+     "oop"
+    ],
+    "meaning": {
+     "zh-CN": "class关键字用于定义类，类是面向对象编程中创建对象的蓝图。",
+     "ja-JP": "classキーワードはクラスを定義し、クラスはオブジェクト指向プログラミングにおけるオブジェクトの設計図です。",
+     "en-US": "The class keyword defines a class, which is a blueprint for creating objects in OOP."
+    },
+    "memoryHook": {
+     "zh-CN": "蓝图 → class",
+     "ja-JP": "設計図 → class",
+     "en-US": "Think: class = blueprint for objects"
+    },
+    "examPoint": {
+     "zh-CN": "类定义、__init__构造方法、self参数、继承。",
+     "ja-JP": "クラス定義、__init__コンストラクタ、selfパラメータ、継承。",
+     "en-US": "Class definition, __init__ constructor, self parameter, inheritance."
+    },
+    "commonMistake": {
+     "zh-CN": "忘记self参数、方法定义缺少self、构造方法写__init__而不是__init__。",
+     "ja-JP": "selfパラメータ忘れ、メソッド定義にselfがない、コンストラクタの書き方間違い。",
+     "en-US": "Forgetting self parameter, methods without self, miswriting __init__."
+    }
   },
   {
     "id": "py-tuple-001",
@@ -1355,7 +2584,36 @@ window.CODING_TYPING_DATA_PYTHON = [
       "()",
       "index"
     ],
-    "code": "pt=(3,4)\nprint(pt[0])\nprint(pt[1])"
+    "code": "pt=(3,4)\nprint(pt[0])\nprint(pt[1])",
+    "examRelevance": "high",
+    "examTargets": [
+     "Python",
+     "基本情報"
+    ],
+    "glossaryRefs": [
+     "tuple_type",
+     "immutable_sequence"
+    ],
+    "meaning": {
+     "zh-CN": "元组是不可变的序列，一旦创建不能修改。",
+     "ja-JP": "タプルはイミュータブルなシーケンスで、作成後に変更できません。",
+     "en-US": "A tuple is an immutable sequence that cannot be changed after creation."
+    },
+    "memoryHook": {
+     "zh-CN": "圆括号() = 不能改的序列",
+     "ja-JP": "丸かっこ() = 変更できない配列",
+     "en-US": "Parentheses () = unchangeable sequence"
+    },
+    "examPoint": {
+     "zh-CN": "元组的不可变性、解包赋值、与列表的区别。",
+     "ja-JP": "タプルの不変性、アンパック代入、リストとの違い。",
+     "en-US": "Tuple immutability, unpacking assignment, differences from lists."
+    },
+    "commonMistake": {
+     "zh-CN": "单元素元组忘记加逗号、(1)不是元组而是整数。",
+     "ja-JP": "1要素タプルのカンマ忘れ、(1)はタプルではなく整数。",
+     "en-US": "Forgetting comma for single-element tuple, (1) is an integer not a tuple."
+    }
   },
   {
     "id": "py-tuple-002",
@@ -1386,7 +2644,36 @@ window.CODING_TYPING_DATA_PYTHON = [
       "unpack",
       "="
     ],
-    "code": "name,age,score=(\"Alice\",20,85)\nprint(f\"{name} is {age} years old\")\nprint(f\"Score: {score}\")"
+    "code": "name,age,score=(\"Alice\",20,85)\nprint(f\"{name} is {age} years old\")\nprint(f\"Score: {score}\")",
+    "examRelevance": "high",
+    "examTargets": [
+     "Python",
+     "基本情報"
+    ],
+    "glossaryRefs": [
+     "tuple_type",
+     "immutable_sequence"
+    ],
+    "meaning": {
+     "zh-CN": "元组是不可变的序列，一旦创建不能修改。",
+     "ja-JP": "タプルはイミュータブルなシーケンスで、作成後に変更できません。",
+     "en-US": "A tuple is an immutable sequence that cannot be changed after creation."
+    },
+    "memoryHook": {
+     "zh-CN": "圆括号() = 不能改的序列",
+     "ja-JP": "丸かっこ() = 変更できない配列",
+     "en-US": "Parentheses () = unchangeable sequence"
+    },
+    "examPoint": {
+     "zh-CN": "元组的不可变性、解包赋值、与列表的区别。",
+     "ja-JP": "タプルの不変性、アンパック代入、リストとの違い。",
+     "en-US": "Tuple immutability, unpacking assignment, differences from lists."
+    },
+    "commonMistake": {
+     "zh-CN": "单元素元组忘记加逗号、(1)不是元组而是整数。",
+     "ja-JP": "1要素タプルのカンマ忘れ、(1)はタプルではなく整数。",
+     "en-US": "Forgetting comma for single-element tuple, (1) is an integer not a tuple."
+    }
   },
   {
     "id": "py-set-001",
@@ -1417,6 +2704,35 @@ window.CODING_TYPING_DATA_PYTHON = [
       "{}",
       "in"
     ],
-    "code": "fruits={\"apple\",\"banana\",\"cherry\"}\nfruits.add(\"date\")\nprint(sorted(fruits))"
+    "code": "fruits={\"apple\",\"banana\",\"cherry\"}\nfruits.add(\"date\")\nprint(sorted(fruits))",
+    "examRelevance": "high",
+    "examTargets": [
+     "Python",
+     "IT Passport"
+    ],
+    "glossaryRefs": [
+     "set_type",
+     "unique_elements"
+    ],
+    "meaning": {
+     "zh-CN": "集合是无序的、不重复元素的集合，支持数学集合运算。",
+     "ja-JP": "集合は順序なしの一意な要素の集まりで、数学的な集合演算をサポートします。",
+     "en-US": "A set is an unordered collection of unique elements with mathematical set operations."
+    },
+    "memoryHook": {
+     "zh-CN": "去重 → set",
+     "ja-JP": "重複除去 → set",
+     "en-US": "Think: Remove duplicates → set"
+    },
+    "examPoint": {
+     "zh-CN": "集合的并/交/差运算、去重特性。",
+     "ja-JP": "集合の和/積/差演算、重複除去特性。",
+     "en-US": "Union/intersection/difference operations, deduplication."
+    },
+    "commonMistake": {
+     "zh-CN": "{}创建空字典而非空集合（空集用set()）。",
+     "ja-JP": "{}は空の辞書、空集合はset()で作成。",
+     "en-US": "{} creates an empty dict, not an empty set (use set())."
+    }
   }
 ];

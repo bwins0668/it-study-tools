@@ -30,7 +30,37 @@ window.CODING_TYPING_DATA_JAVA = [
     "expectedOutput": "",
     "difficulty": 1,
     "estimatedTime": 10,
-    "source": "builtin"
+    "source": "builtin",
+    "examRelevance": "high",
+    "examTargets": [
+     "Java",
+     "Python",
+     "SG",
+     "基本情報"
+    ],
+    "glossaryRefs": [
+     "class_definition"
+    ],
+    "meaning": {
+     "zh-CN": "Java类是一个包含字段和方法的蓝图，所有Java代码都在类中定义。",
+     "ja-JP": "Javaのクラスはフィールドとメソッドを含む設計図で、すべてのJavaコードはクラス内で定義されます。",
+     "en-US": "A Java class is a blueprint containing fields and methods; all Java code lives inside classes."
+    },
+    "memoryHook": {
+     "zh-CN": "一切皆类 → class定义",
+     "ja-JP": "すべてはクラス → class定義",
+     "en-US": "Think: 'everything is inside a class'"
+    },
+    "examPoint": {
+     "zh-CN": "类声明、字段和方法、构造方法、访问修饰符。",
+     "ja-JP": "クラス宣言、フィールドとメソッド、コンストラクタ、アクセス修飾子。",
+     "en-US": "Class declaration, fields and methods, constructors, access modifiers."
+    },
+    "commonMistake": {
+     "zh-CN": "类名与文件名不一致、构造方法名与类名不匹配。",
+     "ja-JP": "クラス名とファイル名の不一致、コンストラクタ名とクラス名の不一致。",
+     "en-US": "Class name not matching filename, constructor name not matching class name."
+    },
   },
   {
     "id": "java-main-001",
@@ -62,7 +92,37 @@ window.CODING_TYPING_DATA_JAVA = [
     "expectedOutput": "",
     "difficulty": 2,
     "estimatedTime": 15,
-    "source": "builtin"
+    "source": "builtin",
+    "examRelevance": "high",
+    "examTargets": [
+     "Java",
+     "IT Passport",
+     "SG",
+     "基本情報"
+    ],
+    "glossaryRefs": [
+     "main_method"
+    ],
+    "meaning": {
+     "zh-CN": "main方法是Java程序的入口点，固定签名public static void main(String[] args)。",
+     "ja-JP": "mainメソッドはJavaプログラムのエントリーポイントで、固定シグネチャpublic static void main(String[] args)です。",
+     "en-US": "The main method is the entry point of a Java program with the fixed signature public static void main(String[] args)."
+    },
+    "memoryHook": {
+     "zh-CN": "入口 → public static void main",
+     "ja-JP": "入口 → public static void main",
+     "en-US": "Think: 'main = program entry point'"
+    },
+    "examPoint": {
+     "zh-CN": "main方法签名必须完全匹配、args参数的作用。",
+     "ja-JP": "mainメソッドのシグネチャ完全一致必須、argsパラメータの役割。",
+     "en-US": "Main method signature must match exactly, purpose of args parameter."
+    },
+    "commonMistake": {
+     "zh-CN": "拼写main为mian、忘记String[] args、忘记static。",
+     "ja-JP": "mainをmianとスペルミス、String[] args忘れ、static忘れ。",
+     "en-US": "Misspelling main as mian, forgetting String[] args or static."
+    },
   },
   {
     "id": "java-main-002",
@@ -94,7 +154,37 @@ window.CODING_TYPING_DATA_JAVA = [
     "expectedOutput": "Hello",
     "difficulty": 2,
     "estimatedTime": 20,
-    "source": "builtin"
+    "source": "builtin",
+    "examRelevance": "high",
+    "examTargets": [
+     "Java",
+     "IT Passport",
+     "SG",
+     "基本情報"
+    ],
+    "glossaryRefs": [
+     "main_method"
+    ],
+    "meaning": {
+     "zh-CN": "main方法是Java程序的入口点，固定签名public static void main(String[] args)。",
+     "ja-JP": "mainメソッドはJavaプログラムのエントリーポイントで、固定シグネチャpublic static void main(String[] args)です。",
+     "en-US": "The main method is the entry point of a Java program with the fixed signature public static void main(String[] args)."
+    },
+    "memoryHook": {
+     "zh-CN": "入口 → public static void main",
+     "ja-JP": "入口 → public static void main",
+     "en-US": "Think: 'main = program entry point'"
+    },
+    "examPoint": {
+     "zh-CN": "main方法签名必须完全匹配、args参数的作用。",
+     "ja-JP": "mainメソッドのシグネチャ完全一致必須、argsパラメータの役割。",
+     "en-US": "Main method signature must match exactly, purpose of args parameter."
+    },
+    "commonMistake": {
+     "zh-CN": "拼写main为mian、忘记String[] args、忘记static。",
+     "ja-JP": "mainをmianとスペルミス、String[] args忘れ、static忘れ。",
+     "en-US": "Misspelling main as mian, forgetting String[] args or static."
+    },
   },
   {
     "id": "java-println-001",
@@ -127,7 +217,35 @@ window.CODING_TYPING_DATA_JAVA = [
     "expectedOutput": "Hello, world!",
     "difficulty": 1,
     "estimatedTime": 10,
-    "source": "builtin"
+    "source": "builtin",
+    "examRelevance": "medium",
+    "examTargets": [
+     "Java",
+     "IT Passport"
+    ],
+    "glossaryRefs": [
+     "println_method"
+    ],
+    "meaning": {
+     "zh-CN": "System.out.println是Java中最基本的输出方法，打印内容后换行。",
+     "ja-JP": "System.out.printlnはJavaで最も基本的な出力メソッドで、内容を表示して改行します。",
+     "en-US": "System.out.println is the most basic output method in Java, printing content followed by a newline."
+    },
+    "memoryHook": {
+     "zh-CN": "输出 → System.out.println",
+     "ja-JP": "出力 → System.out.println",
+     "en-US": "Think: 'print line = System.out.println'"
+    },
+    "examPoint": {
+     "zh-CN": "System.out.print与println的区别、字符串拼接。",
+     "ja-JP": "System.out.printとprintlnの違い、文字列連結。",
+     "en-US": "Difference between print() and println(), string concatenation."
+    },
+    "commonMistake": {
+     "zh-CN": "忘记大写S（system→System）、忘记末尾分号。",
+     "ja-JP": "大文字Sを忘れる（system→System）、末尾のセミコロン忘れ。",
+     "en-US": "Lowercase s (system vs System), missing semicolon."
+    },
   },
   {
     "id": "java-println-002",
@@ -159,7 +277,35 @@ window.CODING_TYPING_DATA_JAVA = [
     "expectedOutput": "5",
     "difficulty": 2,
     "estimatedTime": 12,
-    "source": "builtin"
+    "source": "builtin",
+    "examRelevance": "medium",
+    "examTargets": [
+     "Java",
+     "IT Passport"
+    ],
+    "glossaryRefs": [
+     "println_method"
+    ],
+    "meaning": {
+     "zh-CN": "System.out.println是Java中最基本的输出方法，打印内容后换行。",
+     "ja-JP": "System.out.printlnはJavaで最も基本的な出力メソッドで、内容を表示して改行します。",
+     "en-US": "System.out.println is the most basic output method in Java, printing content followed by a newline."
+    },
+    "memoryHook": {
+     "zh-CN": "输出 → System.out.println",
+     "ja-JP": "出力 → System.out.println",
+     "en-US": "Think: 'print line = System.out.println'"
+    },
+    "examPoint": {
+     "zh-CN": "System.out.print与println的区别、字符串拼接。",
+     "ja-JP": "System.out.printとprintlnの違い、文字列連結。",
+     "en-US": "Difference between print() and println(), string concatenation."
+    },
+    "commonMistake": {
+     "zh-CN": "忘记大写S（system→System）、忘记末尾分号。",
+     "ja-JP": "大文字Sを忘れる（system→System）、末尾のセミコロン忘れ。",
+     "en-US": "Lowercase s (system vs System), missing semicolon."
+    },
   },
   {
     "id": "java-println-003",
@@ -190,7 +336,35 @@ window.CODING_TYPING_DATA_JAVA = [
     "expectedOutput": "Sum: 7",
     "difficulty": 2,
     "estimatedTime": 12,
-    "source": "builtin"
+    "source": "builtin",
+    "examRelevance": "medium",
+    "examTargets": [
+     "Java",
+     "IT Passport"
+    ],
+    "glossaryRefs": [
+     "println_method"
+    ],
+    "meaning": {
+     "zh-CN": "System.out.println是Java中最基本的输出方法，打印内容后换行。",
+     "ja-JP": "System.out.printlnはJavaで最も基本的な出力メソッドで、内容を表示して改行します。",
+     "en-US": "System.out.println is the most basic output method in Java, printing content followed by a newline."
+    },
+    "memoryHook": {
+     "zh-CN": "输出 → System.out.println",
+     "ja-JP": "出力 → System.out.println",
+     "en-US": "Think: 'print line = System.out.println'"
+    },
+    "examPoint": {
+     "zh-CN": "System.out.print与println的区别、字符串拼接。",
+     "ja-JP": "System.out.printとprintlnの違い、文字列連結。",
+     "en-US": "Difference between print() and println(), string concatenation."
+    },
+    "commonMistake": {
+     "zh-CN": "忘记大写S（system→System）、忘记末尾分号。",
+     "ja-JP": "大文字Sを忘れる（system→System）、末尾のセミコロン忘れ。",
+     "en-US": "Lowercase s (system vs System), missing semicolon."
+    },
   },
   {
     "id": "java-variable-001",
@@ -222,7 +396,36 @@ window.CODING_TYPING_DATA_JAVA = [
     "expectedOutput": "",
     "difficulty": 1,
     "estimatedTime": 8,
-    "source": "builtin"
+    "source": "builtin",
+    "examRelevance": "medium",
+    "examTargets": [
+     "Java",
+     "IT Passport",
+     "基本情報"
+    ],
+    "glossaryRefs": [
+     "variable"
+    ],
+    "meaning": {
+     "zh-CN": "Java变量必须先声明类型再使用，是强类型语言的典型特征。",
+     "ja-JP": "Javaの変数は型を宣言してから使用する、強く型付けされた言語の典型的な特徴です。",
+     "en-US": "Java variables must be declared with a type before use, a hallmark of strongly-typed languages."
+    },
+    "memoryHook": {
+     "zh-CN": "先声明类型 → 再赋值",
+     "ja-JP": "型を宣言 → 代入",
+     "en-US": "Think: 'declare type first, then assign'"
+    },
+    "examPoint": {
+     "zh-CN": "基本数据类型(int/double/boolean)、变量命名规范。",
+     "ja-JP": "基本データ型(int/double/boolean)、変数命名規則。",
+     "en-US": "Primitive types (int, double, boolean), variable naming conventions."
+    },
+    "commonMistake": {
+     "zh-CN": "变量未初始化就使用、类型不匹配。",
+     "ja-JP": "未初期化の変数を使用、型の不一致。",
+     "en-US": "Using uninitialized variables, type mismatch."
+    },
   },
   {
     "id": "java-variable-002",
@@ -254,7 +457,36 @@ window.CODING_TYPING_DATA_JAVA = [
     "expectedOutput": "",
     "difficulty": 1,
     "estimatedTime": 8,
-    "source": "builtin"
+    "source": "builtin",
+    "examRelevance": "medium",
+    "examTargets": [
+     "Java",
+     "IT Passport",
+     "基本情報"
+    ],
+    "glossaryRefs": [
+     "variable"
+    ],
+    "meaning": {
+     "zh-CN": "Java变量必须先声明类型再使用，是强类型语言的典型特征。",
+     "ja-JP": "Javaの変数は型を宣言してから使用する、強く型付けされた言語の典型的な特徴です。",
+     "en-US": "Java variables must be declared with a type before use, a hallmark of strongly-typed languages."
+    },
+    "memoryHook": {
+     "zh-CN": "先声明类型 → 再赋值",
+     "ja-JP": "型を宣言 → 代入",
+     "en-US": "Think: 'declare type first, then assign'"
+    },
+    "examPoint": {
+     "zh-CN": "基本数据类型(int/double/boolean)、变量命名规范。",
+     "ja-JP": "基本データ型(int/double/boolean)、変数命名規則。",
+     "en-US": "Primitive types (int, double, boolean), variable naming conventions."
+    },
+    "commonMistake": {
+     "zh-CN": "变量未初始化就使用、类型不匹配。",
+     "ja-JP": "未初期化の変数を使用、型の不一致。",
+     "en-US": "Using uninitialized variables, type mismatch."
+    },
   },
   {
     "id": "java-variable-003",
@@ -286,7 +518,36 @@ window.CODING_TYPING_DATA_JAVA = [
     "expectedOutput": "",
     "difficulty": 1,
     "estimatedTime": 8,
-    "source": "builtin"
+    "source": "builtin",
+    "examRelevance": "medium",
+    "examTargets": [
+     "Java",
+     "IT Passport",
+     "基本情報"
+    ],
+    "glossaryRefs": [
+     "variable"
+    ],
+    "meaning": {
+     "zh-CN": "Java变量必须先声明类型再使用，是强类型语言的典型特征。",
+     "ja-JP": "Javaの変数は型を宣言してから使用する、強く型付けされた言語の典型的な特徴です。",
+     "en-US": "Java variables must be declared with a type before use, a hallmark of strongly-typed languages."
+    },
+    "memoryHook": {
+     "zh-CN": "先声明类型 → 再赋值",
+     "ja-JP": "型を宣言 → 代入",
+     "en-US": "Think: 'declare type first, then assign'"
+    },
+    "examPoint": {
+     "zh-CN": "基本数据类型(int/double/boolean)、变量命名规范。",
+     "ja-JP": "基本データ型(int/double/boolean)、変数命名規則。",
+     "en-US": "Primitive types (int, double, boolean), variable naming conventions."
+    },
+    "commonMistake": {
+     "zh-CN": "变量未初始化就使用、类型不匹配。",
+     "ja-JP": "未初期化の変数を使用、型の不一致。",
+     "en-US": "Using uninitialized variables, type mismatch."
+    },
   },
   {
     "id": "java-if-001",
@@ -318,7 +579,37 @@ window.CODING_TYPING_DATA_JAVA = [
     "expectedOutput": "",
     "difficulty": 2,
     "estimatedTime": 15,
-    "source": "builtin"
+    "source": "builtin",
+    "examRelevance": "high",
+    "examTargets": [
+     "Java",
+     "IT Passport",
+     "SG",
+     "基本情報"
+    ],
+    "glossaryRefs": [
+     "if_statement"
+    ],
+    "meaning": {
+     "zh-CN": "if语句根据条件决定程序分支，是控制流的基础。",
+     "ja-JP": "if文は条件に基づいてプログラムの分岐を決定する、制御フローの基本です。",
+     "en-US": "The if statement controls program branching based on conditions, fundamental to control flow."
+    },
+    "memoryHook": {
+     "zh-CN": "条件分支 → if-else",
+     "ja-JP": "条件分岐 → if-else",
+     "en-US": "Think: 'if condition, then branch'"
+    },
+    "examPoint": {
+     "zh-CN": "if-else if-else结构、条件表达式、比较运算符。",
+     "ja-JP": "if-else if-else構造、条件式、比較演算子。",
+     "en-US": "if-else if-else structure, condition expressions, comparison operators."
+    },
+    "commonMistake": {
+     "zh-CN": "if条件中=和==混淆（Java中=不返回boolean会编译错误）。",
+     "ja-JP": "if条件での=と==の混同（Javaでは=はbooleanを返さずコンパイルエラー）。",
+     "en-US": "Confusing = with == in conditions (in Java, = returns non-boolean causing compile error)."
+    },
   },
   {
     "id": "java-if-002",
@@ -350,7 +641,37 @@ window.CODING_TYPING_DATA_JAVA = [
     "expectedOutput": "",
     "difficulty": 2,
     "estimatedTime": 18,
-    "source": "builtin"
+    "source": "builtin",
+    "examRelevance": "high",
+    "examTargets": [
+     "Java",
+     "IT Passport",
+     "SG",
+     "基本情報"
+    ],
+    "glossaryRefs": [
+     "if_statement"
+    ],
+    "meaning": {
+     "zh-CN": "if语句根据条件决定程序分支，是控制流的基础。",
+     "ja-JP": "if文は条件に基づいてプログラムの分岐を決定する、制御フローの基本です。",
+     "en-US": "The if statement controls program branching based on conditions, fundamental to control flow."
+    },
+    "memoryHook": {
+     "zh-CN": "条件分支 → if-else",
+     "ja-JP": "条件分岐 → if-else",
+     "en-US": "Think: 'if condition, then branch'"
+    },
+    "examPoint": {
+     "zh-CN": "if-else if-else结构、条件表达式、比较运算符。",
+     "ja-JP": "if-else if-else構造、条件式、比較演算子。",
+     "en-US": "if-else if-else structure, condition expressions, comparison operators."
+    },
+    "commonMistake": {
+     "zh-CN": "if条件中=和==混淆（Java中=不返回boolean会编译错误）。",
+     "ja-JP": "if条件での=と==の混同（Javaでは=はbooleanを返さずコンパイルエラー）。",
+     "en-US": "Confusing = with == in conditions (in Java, = returns non-boolean causing compile error)."
+    },
   },
   {
     "id": "java-if-003",
@@ -382,7 +703,37 @@ window.CODING_TYPING_DATA_JAVA = [
     "expectedOutput": "",
     "difficulty": 3,
     "estimatedTime": 20,
-    "source": "builtin"
+    "source": "builtin",
+    "examRelevance": "high",
+    "examTargets": [
+     "Java",
+     "IT Passport",
+     "SG",
+     "基本情報"
+    ],
+    "glossaryRefs": [
+     "if_statement"
+    ],
+    "meaning": {
+     "zh-CN": "if语句根据条件决定程序分支，是控制流的基础。",
+     "ja-JP": "if文は条件に基づいてプログラムの分岐を決定する、制御フローの基本です。",
+     "en-US": "The if statement controls program branching based on conditions, fundamental to control flow."
+    },
+    "memoryHook": {
+     "zh-CN": "条件分支 → if-else",
+     "ja-JP": "条件分岐 → if-else",
+     "en-US": "Think: 'if condition, then branch'"
+    },
+    "examPoint": {
+     "zh-CN": "if-else if-else结构、条件表达式、比较运算符。",
+     "ja-JP": "if-else if-else構造、条件式、比較演算子。",
+     "en-US": "if-else if-else structure, condition expressions, comparison operators."
+    },
+    "commonMistake": {
+     "zh-CN": "if条件中=和==混淆（Java中=不返回boolean会编译错误）。",
+     "ja-JP": "if条件での=と==の混同（Javaでは=はbooleanを返さずコンパイルエラー）。",
+     "en-US": "Confusing = with == in conditions (in Java, = returns non-boolean causing compile error)."
+    },
   },
   {
     "id": "java-for-001",
@@ -414,7 +765,37 @@ window.CODING_TYPING_DATA_JAVA = [
     "expectedOutput": "",
     "difficulty": 2,
     "estimatedTime": 18,
-    "source": "builtin"
+    "source": "builtin",
+    "examRelevance": "high",
+    "examTargets": [
+     "Java",
+     "IT Passport",
+     "SG",
+     "基本情報"
+    ],
+    "glossaryRefs": [
+     "for_loop"
+    ],
+    "meaning": {
+     "zh-CN": "for循环由初始化、条件、更新三部分组成，是Java中最常用的循环。",
+     "ja-JP": "forループは初期化、条件、更新の3部分から成り、Javaで最もよく使われるループです。",
+     "en-US": "A for loop consists of initialization, condition, and update; it is the most common loop in Java."
+    },
+    "memoryHook": {
+     "zh-CN": "初始化-条件-更新 = for三要素",
+     "ja-JP": "初期化-条件-更新 = forの三要素",
+     "en-US": "Think: 'init, condition, update = for loop skeleton'"
+    },
+    "examPoint": {
+     "zh-CN": "for三部分、增强for-each循环、嵌套循环。",
+     "ja-JP": "forの3部分、拡張for-eachループ、ネストループ。",
+     "en-US": "Three for parts, enhanced for-each loop, nested loops."
+    },
+    "commonMistake": {
+     "zh-CN": "分号位置错误、无限循环、循环变量作用域。",
+     "ja-JP": "セミコロンの位置誤り、無限ループ、ループ変数のスコープ。",
+     "en-US": "Incorrect semicolon positions, infinite loops, loop variable scope."
+    },
   },
   {
     "id": "java-for-002",
@@ -445,7 +826,37 @@ window.CODING_TYPING_DATA_JAVA = [
     "expectedOutput": "",
     "difficulty": 3,
     "estimatedTime": 15,
-    "source": "builtin"
+    "source": "builtin",
+    "examRelevance": "high",
+    "examTargets": [
+     "Java",
+     "IT Passport",
+     "SG",
+     "基本情報"
+    ],
+    "glossaryRefs": [
+     "for_loop"
+    ],
+    "meaning": {
+     "zh-CN": "for循环由初始化、条件、更新三部分组成，是Java中最常用的循环。",
+     "ja-JP": "forループは初期化、条件、更新の3部分から成り、Javaで最もよく使われるループです。",
+     "en-US": "A for loop consists of initialization, condition, and update; it is the most common loop in Java."
+    },
+    "memoryHook": {
+     "zh-CN": "初始化-条件-更新 = for三要素",
+     "ja-JP": "初期化-条件-更新 = forの三要素",
+     "en-US": "Think: 'init, condition, update = for loop skeleton'"
+    },
+    "examPoint": {
+     "zh-CN": "for三部分、增强for-each循环、嵌套循环。",
+     "ja-JP": "forの3部分、拡張for-eachループ、ネストループ。",
+     "en-US": "Three for parts, enhanced for-each loop, nested loops."
+    },
+    "commonMistake": {
+     "zh-CN": "分号位置错误、无限循环、循环变量作用域。",
+     "ja-JP": "セミコロンの位置誤り、無限ループ、ループ変数のスコープ。",
+     "en-US": "Incorrect semicolon positions, infinite loops, loop variable scope."
+    },
   },
   {
     "id": "java-for-003",
@@ -476,7 +887,37 @@ window.CODING_TYPING_DATA_JAVA = [
     "expectedOutput": "",
     "difficulty": 3,
     "estimatedTime": 25,
-    "source": "builtin"
+    "source": "builtin",
+    "examRelevance": "high",
+    "examTargets": [
+     "Java",
+     "IT Passport",
+     "SG",
+     "基本情報"
+    ],
+    "glossaryRefs": [
+     "for_loop"
+    ],
+    "meaning": {
+     "zh-CN": "for循环由初始化、条件、更新三部分组成，是Java中最常用的循环。",
+     "ja-JP": "forループは初期化、条件、更新の3部分から成り、Javaで最もよく使われるループです。",
+     "en-US": "A for loop consists of initialization, condition, and update; it is the most common loop in Java."
+    },
+    "memoryHook": {
+     "zh-CN": "初始化-条件-更新 = for三要素",
+     "ja-JP": "初期化-条件-更新 = forの三要素",
+     "en-US": "Think: 'init, condition, update = for loop skeleton'"
+    },
+    "examPoint": {
+     "zh-CN": "for三部分、增强for-each循环、嵌套循环。",
+     "ja-JP": "forの3部分、拡張for-eachループ、ネストループ。",
+     "en-US": "Three for parts, enhanced for-each loop, nested loops."
+    },
+    "commonMistake": {
+     "zh-CN": "分号位置错误、无限循环、循环变量作用域。",
+     "ja-JP": "セミコロンの位置誤り、無限ループ、ループ変数のスコープ。",
+     "en-US": "Incorrect semicolon positions, infinite loops, loop variable scope."
+    },
   },
   {
     "id": "java-while-001",
@@ -507,7 +948,37 @@ window.CODING_TYPING_DATA_JAVA = [
     "expectedOutput": "",
     "difficulty": 2,
     "estimatedTime": 15,
-    "source": "builtin"
+    "source": "builtin",
+    "examRelevance": "high",
+    "examTargets": [
+     "Java",
+     "IT Passport",
+     "SG",
+     "基本情報"
+    ],
+    "glossaryRefs": [
+     "while_loop"
+    ],
+    "meaning": {
+     "zh-CN": "while循环在条件为真时反复执行代码块，常用于不确定迭代次数的场景。",
+     "ja-JP": "whileループは条件が真の間コードブロックを繰り返し、反復回数が不明な場合に使われます。",
+     "en-US": "A while loop repeats a code block while the condition is true, often used when iterations are unknown."
+    },
+    "memoryHook": {
+     "zh-CN": "条件为真 → 继续循环",
+     "ja-JP": "条件が真 → ループ継続",
+     "en-US": "Think: 'while true, keep looping'"
+    },
+    "examPoint": {
+     "zh-CN": "while与do-while的区别、循环条件设计。",
+     "ja-JP": "whileとdo-whileの違い、ループ条件の設計。",
+     "en-US": "Difference between while and do-while, loop condition design."
+    },
+    "commonMistake": {
+     "zh-CN": "循环变量未更新导致无限循环。",
+     "ja-JP": "ループ変数未更新による無限ループ。",
+     "en-US": "Not updating loop variable causing infinite loop."
+    },
   },
   {
     "id": "java-while-002",
@@ -539,7 +1010,37 @@ window.CODING_TYPING_DATA_JAVA = [
     "expectedOutput": "",
     "difficulty": 3,
     "estimatedTime": 18,
-    "source": "builtin"
+    "source": "builtin",
+    "examRelevance": "high",
+    "examTargets": [
+     "Java",
+     "IT Passport",
+     "SG",
+     "基本情報"
+    ],
+    "glossaryRefs": [
+     "while_loop"
+    ],
+    "meaning": {
+     "zh-CN": "while循环在条件为真时反复执行代码块，常用于不确定迭代次数的场景。",
+     "ja-JP": "whileループは条件が真の間コードブロックを繰り返し、反復回数が不明な場合に使われます。",
+     "en-US": "A while loop repeats a code block while the condition is true, often used when iterations are unknown."
+    },
+    "memoryHook": {
+     "zh-CN": "条件为真 → 继续循环",
+     "ja-JP": "条件が真 → ループ継続",
+     "en-US": "Think: 'while true, keep looping'"
+    },
+    "examPoint": {
+     "zh-CN": "while与do-while的区别、循环条件设计。",
+     "ja-JP": "whileとdo-whileの違い、ループ条件の設計。",
+     "en-US": "Difference between while and do-while, loop condition design."
+    },
+    "commonMistake": {
+     "zh-CN": "循环变量未更新导致无限循环。",
+     "ja-JP": "ループ変数未更新による無限ループ。",
+     "en-US": "Not updating loop variable causing infinite loop."
+    },
   },
   {
     "id": "java-scanner-001",
@@ -571,7 +1072,35 @@ window.CODING_TYPING_DATA_JAVA = [
     "expectedOutput": "",
     "difficulty": 2,
     "estimatedTime": 18,
-    "source": "builtin"
+    "source": "builtin",
+    "examRelevance": "high",
+    "examTargets": [
+     "Java",
+     "基本情報"
+    ],
+    "glossaryRefs": [
+     "scanner_class"
+    ],
+    "meaning": {
+     "zh-CN": "Scanner是Java中读取用户输入的类，可解析基本类型和字符串。",
+     "ja-JP": "ScannerはJavaでユーザー入力を受け取るクラスで、基本型や文字列を解析できます。",
+     "en-US": "Scanner reads user input in Java, parsing primitive types and strings."
+    },
+    "memoryHook": {
+     "zh-CN": "读取输入 → Scanner",
+     "ja-JP": "入力読み取り → Scanner",
+     "en-US": "Think: 'Scanner scans user input'"
+    },
+    "examPoint": {
+     "zh-CN": "import java.util.Scanner、nextInt()/nextLine()的使用、hasNext。",
+     "ja-JP": "import java.util.Scanner、nextInt()/nextLine()の使用、hasNext。",
+     "en-US": "import java.util.Scanner, using nextInt()/nextLine(), hasNext."
+    },
+    "commonMistake": {
+     "zh-CN": "忘记import、nextInt()不消耗换行导致跳过后续输入。",
+     "ja-JP": "import忘れ、nextInt()が改行を消費せず後続の入力をスキップ。",
+     "en-US": "Forgetting import, nextInt() not consuming newline causing skip."
+    },
   },
   {
     "id": "java-comment-001",
@@ -603,7 +1132,34 @@ window.CODING_TYPING_DATA_JAVA = [
     "expectedOutput": "",
     "difficulty": 1,
     "estimatedTime": 8,
-    "source": "builtin"
+    "source": "builtin",
+    "examRelevance": "medium",
+    "examTargets": [
+     "Java"
+    ],
+    "glossaryRefs": [
+     "comment"
+    ],
+    "meaning": {
+     "zh-CN": "Java支持//单行注释、/* */多行注释和/** */文档注释。",
+     "ja-JP": "Javaは//単行コメント、/* */複数行コメント、/** */ドキュメントコメントをサポートします。",
+     "en-US": "Java supports // single-line, /* */ multi-line, and /** */ doc comments."
+    },
+    "memoryHook": {
+     "zh-CN": "// = 备注, /** = 文档",
+     "ja-JP": "// = メモ, /** = ドキュメント",
+     "en-US": "Think: '// = note, /** = documentation'"
+    },
+    "examPoint": {
+     "zh-CN": "文档注释的@param/@return标记。",
+     "ja-JP": "ドキュメントコメントの@param/@returnタグ。",
+     "en-US": "Doc comment tags @param and @return."
+    },
+    "commonMistake": {
+     "zh-CN": "注释格式不正确、忘记在修改代码后更新注释。",
+     "ja-JP": "コメント形式の誤り、コード変更後にコメントを更新し忘れ。",
+     "en-US": "Incorrect comment format, forgetting to update comments after code changes."
+    },
   },
   {
     "id": "java-string-001",
@@ -635,7 +1191,37 @@ window.CODING_TYPING_DATA_JAVA = [
     "expectedOutput": "",
     "difficulty": 2,
     "estimatedTime": 18,
-    "source": "builtin"
+    "source": "builtin",
+    "examRelevance": "high",
+    "examTargets": [
+     "Java",
+     "IT Passport",
+     "SG",
+     "基本情報"
+    ],
+    "glossaryRefs": [
+     "string_class"
+    ],
+    "meaning": {
+     "zh-CN": "String是Java中表示字符串的类，字符串是不可变的。",
+     "ja-JP": "StringはJavaで文字列を表すクラスで、文字列は不変です。",
+     "en-US": "String in Java represents character strings; strings are immutable."
+    },
+    "memoryHook": {
+     "zh-CN": "不可变字符串 → String",
+     "ja-JP": "不変の文字列 → String",
+     "en-US": "Think: 'immutable text = String'"
+    },
+    "examPoint": {
+     "zh-CN": "String的不可变性、equals()与==的区别、concat/length/substring。",
+     "ja-JP": "Stringの不変性、equals()と==の違い、concat/length/substring。",
+     "en-US": "String immutability, equals() vs ==, concat/length/substring methods."
+    },
+    "commonMistake": {
+     "zh-CN": "用==比较字符串内容（应用equals()）、以为String可修改。",
+     "ja-JP": "文字列比較に==を使用（equals()を使うべき）、Stringが変更可能と誤解。",
+     "en-US": "Using == to compare string content (use equals()), mistakenly thinking String is mutable."
+    },
   },
   {
     "id": "java-array-001",
@@ -666,7 +1252,37 @@ window.CODING_TYPING_DATA_JAVA = [
       "array",
       "{}"
     ],
-    "code": "int[] nums = {10,20,30,40,50};\nSystem.out.println(nums[0]);\nSystem.out.println(nums.length);"
+    "code": "int[] nums = {10,20,30,40,50};\nSystem.out.println(nums[0]);\nSystem.out.println(nums.length);",
+    "examRelevance": "high",
+    "examTargets": [
+     "Java",
+     "IT Passport",
+     "SG",
+     "基本情報"
+    ],
+    "glossaryRefs": [
+     "array_type"
+    ],
+    "meaning": {
+     "zh-CN": "数组是存储固定大小同类型元素的容器，长度在创建后不可变。",
+     "ja-JP": "配列は固定サイズの同じ型の要素を格納するコンテナで、作成後に長さは変更できません。",
+     "en-US": "An array is a container for a fixed number of elements of the same type; its length is immutable."
+    },
+    "memoryHook": {
+     "zh-CN": "固定长度 → 数组[]",
+     "ja-JP": "固定長 → 配列[]",
+     "en-US": "Think: 'fixed-size container = array'"
+    },
+    "examPoint": {
+     "zh-CN": "数组声明语法、索引从0开始、length属性、ArrayIndexOutOfBoundsException。",
+     "ja-JP": "配列宣言構文、0から始まるインデックス、lengthプロパティ、ArrayIndexOutOfBoundsException。",
+     "en-US": "Array declaration syntax, 0-based indexing, length property, ArrayIndexOutOfBoundsException."
+    },
+    "commonMistake": {
+     "zh-CN": "越界访问、混淆length和length()、数组未初始化。",
+     "ja-JP": "範囲外アクセス、lengthとlength()の混同、配列の未初期化。",
+     "en-US": "Index out of bounds, confusing length (field) with length() (method), uninitialized array."
+    },
   },
   {
     "id": "java-array-002",
@@ -697,7 +1313,37 @@ window.CODING_TYPING_DATA_JAVA = [
       "array",
       "length"
     ],
-    "code": "int[] sc = {85,90,78,92};\nint sum=0;\nfor(int i=0;i<sc.length;i++){sum+=sc[i];}\nSystem.out.println(\"Sum: \"+sum);"
+    "code": "int[] sc = {85,90,78,92};\nint sum=0;\nfor(int i=0;i<sc.length;i++){sum+=sc[i];}\nSystem.out.println(\"Sum: \"+sum);",
+    "examRelevance": "high",
+    "examTargets": [
+     "Java",
+     "IT Passport",
+     "SG",
+     "基本情報"
+    ],
+    "glossaryRefs": [
+     "array_type"
+    ],
+    "meaning": {
+     "zh-CN": "数组是存储固定大小同类型元素的容器，长度在创建后不可变。",
+     "ja-JP": "配列は固定サイズの同じ型の要素を格納するコンテナで、作成後に長さは変更できません。",
+     "en-US": "An array is a container for a fixed number of elements of the same type; its length is immutable."
+    },
+    "memoryHook": {
+     "zh-CN": "固定长度 → 数组[]",
+     "ja-JP": "固定長 → 配列[]",
+     "en-US": "Think: 'fixed-size container = array'"
+    },
+    "examPoint": {
+     "zh-CN": "数组声明语法、索引从0开始、length属性、ArrayIndexOutOfBoundsException。",
+     "ja-JP": "配列宣言構文、0から始まるインデックス、lengthプロパティ、ArrayIndexOutOfBoundsException。",
+     "en-US": "Array declaration syntax, 0-based indexing, length property, ArrayIndexOutOfBoundsException."
+    },
+    "commonMistake": {
+     "zh-CN": "越界访问、混淆length和length()、数组未初始化。",
+     "ja-JP": "範囲外アクセス、lengthとlength()の混同、配列の未初期化。",
+     "en-US": "Index out of bounds, confusing length (field) with length() (method), uninitialized array."
+    },
   },
   {
     "id": "java-array-003",
@@ -728,7 +1374,37 @@ window.CODING_TYPING_DATA_JAVA = [
       ":",
       "array"
     ],
-    "code": "int[] vals = {2,4,6,8,10};\nfor(int v : vals){\n    System.out.println(v*v);\n}"
+    "code": "int[] vals = {2,4,6,8,10};\nfor(int v : vals){\n    System.out.println(v*v);\n}",
+    "examRelevance": "high",
+    "examTargets": [
+     "Java",
+     "IT Passport",
+     "SG",
+     "基本情報"
+    ],
+    "glossaryRefs": [
+     "array_type"
+    ],
+    "meaning": {
+     "zh-CN": "数组是存储固定大小同类型元素的容器，长度在创建后不可变。",
+     "ja-JP": "配列は固定サイズの同じ型の要素を格納するコンテナで、作成後に長さは変更できません。",
+     "en-US": "An array is a container for a fixed number of elements of the same type; its length is immutable."
+    },
+    "memoryHook": {
+     "zh-CN": "固定长度 → 数组[]",
+     "ja-JP": "固定長 → 配列[]",
+     "en-US": "Think: 'fixed-size container = array'"
+    },
+    "examPoint": {
+     "zh-CN": "数组声明语法、索引从0开始、length属性、ArrayIndexOutOfBoundsException。",
+     "ja-JP": "配列宣言構文、0から始まるインデックス、lengthプロパティ、ArrayIndexOutOfBoundsException。",
+     "en-US": "Array declaration syntax, 0-based indexing, length property, ArrayIndexOutOfBoundsException."
+    },
+    "commonMistake": {
+     "zh-CN": "越界访问、混淆length和length()、数组未初始化。",
+     "ja-JP": "範囲外アクセス、lengthとlength()の混同、配列の未初期化。",
+     "en-US": "Index out of bounds, confusing length (field) with length() (method), uninitialized array."
+    },
   },
   {
     "id": "java-switch-001",
@@ -760,7 +1436,37 @@ window.CODING_TYPING_DATA_JAVA = [
       "break",
       "default"
     ],
-    "code": "int d=3; String name;\nswitch(d){\n    case 1: name=\"Mon\"; break;\n    case 2: name=\"Tue\"; break;\n    case 3: name=\"Wed\"; break;\n    default: name=\"?\";\n}\nSystem.out.println(name);"
+    "code": "int d=3; String name;\nswitch(d){\n    case 1: name=\"Mon\"; break;\n    case 2: name=\"Tue\"; break;\n    case 3: name=\"Wed\"; break;\n    default: name=\"?\";\n}\nSystem.out.println(name);",
+    "examRelevance": "high",
+    "examTargets": [
+     "Java",
+     "IT Passport",
+     "SG",
+     "基本情報"
+    ],
+    "glossaryRefs": [
+     "switch_statement"
+    ],
+    "meaning": {
+     "zh-CN": "switch语句根据表达式的值匹配多个case分支，适合多路选择。",
+     "ja-JP": "switch文は式の値に基づいて複数のcase分岐をマッチングし、多方向選択に適しています。",
+     "en-US": "The switch statement matches an expression against multiple case branches, suitable for multi-way selection."
+    },
+    "memoryHook": {
+     "zh-CN": "多路分支 → switch-case",
+     "ja-JP": "多方向分岐 → switch-case",
+     "en-US": "Think: 'switch = multi-way branch'"
+    },
+    "examPoint": {
+     "zh-CN": "break的重要性、default分支、switch支持的类型（String/enum）。",
+     "ja-JP": "breakの重要性、default分岐、switchでサポートされる型（String/enum）。",
+     "en-US": "Importance of break, default branch, supported types (String, enum)."
+    },
+    "commonMistake": {
+     "zh-CN": "忘记break导致fall-through、case值类型不匹配。",
+     "ja-JP": "break忘れによるフォールスルー、case値の型不一致。",
+     "en-US": "Missing break causing fall-through, case value type mismatch."
+    },
   },
   {
     "id": "java-switch-002",
@@ -791,7 +1497,37 @@ window.CODING_TYPING_DATA_JAVA = [
       "case",
       "break"
     ],
-    "code": "char g='B';\nswitch(g){\n    case 'A': case 'B':\n        System.out.println(\"Pass\"); break;\n    case 'F':\n        System.out.println(\"Fail\");\n}"
+    "code": "char g='B';\nswitch(g){\n    case 'A': case 'B':\n        System.out.println(\"Pass\"); break;\n    case 'F':\n        System.out.println(\"Fail\");\n}",
+    "examRelevance": "high",
+    "examTargets": [
+     "Java",
+     "IT Passport",
+     "SG",
+     "基本情報"
+    ],
+    "glossaryRefs": [
+     "switch_statement"
+    ],
+    "meaning": {
+     "zh-CN": "switch语句根据表达式的值匹配多个case分支，适合多路选择。",
+     "ja-JP": "switch文は式の値に基づいて複数のcase分岐をマッチングし、多方向選択に適しています。",
+     "en-US": "The switch statement matches an expression against multiple case branches, suitable for multi-way selection."
+    },
+    "memoryHook": {
+     "zh-CN": "多路分支 → switch-case",
+     "ja-JP": "多方向分岐 → switch-case",
+     "en-US": "Think: 'switch = multi-way branch'"
+    },
+    "examPoint": {
+     "zh-CN": "break的重要性、default分支、switch支持的类型（String/enum）。",
+     "ja-JP": "breakの重要性、default分岐、switchでサポートされる型（String/enum）。",
+     "en-US": "Importance of break, default branch, supported types (String, enum)."
+    },
+    "commonMistake": {
+     "zh-CN": "忘记break导致fall-through、case值类型不匹配。",
+     "ja-JP": "break忘れによるフォールスルー、case値の型不一致。",
+     "en-US": "Missing break causing fall-through, case value type mismatch."
+    },
   },
   {
     "id": "java-switch-003",
@@ -822,7 +1558,37 @@ window.CODING_TYPING_DATA_JAVA = [
       "String",
       "toLowerCase"
     ],
-    "code": "String cmd=\"start\";\nswitch(cmd.toLowerCase()){\n    case \"start\": System.out.println(\"Start\"); break;\n    case \"stop\": System.out.println(\"Stop\"); break;\n    default: System.out.println(\"?\");\n}"
+    "code": "String cmd=\"start\";\nswitch(cmd.toLowerCase()){\n    case \"start\": System.out.println(\"Start\"); break;\n    case \"stop\": System.out.println(\"Stop\"); break;\n    default: System.out.println(\"?\");\n}",
+    "examRelevance": "high",
+    "examTargets": [
+     "Java",
+     "IT Passport",
+     "SG",
+     "基本情報"
+    ],
+    "glossaryRefs": [
+     "switch_statement"
+    ],
+    "meaning": {
+     "zh-CN": "switch语句根据表达式的值匹配多个case分支，适合多路选择。",
+     "ja-JP": "switch文は式の値に基づいて複数のcase分岐をマッチングし、多方向選択に適しています。",
+     "en-US": "The switch statement matches an expression against multiple case branches, suitable for multi-way selection."
+    },
+    "memoryHook": {
+     "zh-CN": "多路分支 → switch-case",
+     "ja-JP": "多方向分岐 → switch-case",
+     "en-US": "Think: 'switch = multi-way branch'"
+    },
+    "examPoint": {
+     "zh-CN": "break的重要性、default分支、switch支持的类型（String/enum）。",
+     "ja-JP": "breakの重要性、default分岐、switchでサポートされる型（String/enum）。",
+     "en-US": "Importance of break, default branch, supported types (String, enum)."
+    },
+    "commonMistake": {
+     "zh-CN": "忘记break导致fall-through、case值类型不匹配。",
+     "ja-JP": "break忘れによるフォールスルー、case値の型不一致。",
+     "en-US": "Missing break causing fall-through, case value type mismatch."
+    },
   },
   {
     "id": "java-trycatch-001",
@@ -853,7 +1619,35 @@ window.CODING_TYPING_DATA_JAVA = [
       "catch",
       "Exception"
     ],
-    "code": "try{\n    int[] n={1,2,3};\n    System.out.println(n[5]);\n}catch(ArrayIndexOutOfBoundsException e){\n    System.out.println(\"Out!\");\n}"
+    "code": "try{\n    int[] n={1,2,3};\n    System.out.println(n[5]);\n}catch(ArrayIndexOutOfBoundsException e){\n    System.out.println(\"Out!\");\n}",
+    "examRelevance": "high",
+    "examTargets": [
+     "Java",
+     "基本情報"
+    ],
+    "glossaryRefs": [
+     "exception_handling"
+    ],
+    "meaning": {
+     "zh-CN": "try-catch用于捕获和处理Java异常，保证程序的健壮性。",
+     "ja-JP": "try-catchはJavaの例外をキャッチして処理し、プログラムの堅牢性を確保します。",
+     "en-US": "try-catch catches and handles Java exceptions to ensure program robustness."
+    },
+    "memoryHook": {
+     "zh-CN": "尝试 + 捕获 = try-catch",
+     "ja-JP": "試す + キャッチ = try-catch",
+     "en-US": "Think: 'try risky code, catch errors'"
+    },
+    "examPoint": {
+     "zh-CN": "try-catch-finally结构、checked vs unchecked异常。",
+     "ja-JP": "try-catch-finally構造、checked例外とunchecked例外。",
+     "en-US": "try-catch-finally structure, checked vs unchecked exceptions."
+    },
+    "commonMistake": {
+     "zh-CN": "捕获异常过宽、finally中return覆盖try中return。",
+     "ja-JP": "広すぎる例外キャッチ、finallyのreturnがtryのreturnを上書き。",
+     "en-US": "Catching exceptions too broadly, finally return overriding try return."
+    },
   },
   {
     "id": "java-trycatch-002",
@@ -884,7 +1678,35 @@ window.CODING_TYPING_DATA_JAVA = [
       "catch",
       "|"
     ],
-    "code": "try{\n    String s=null;\n    System.out.println(s.length());\n    int r=10/0;\n}catch(NullPointerException e){\n    System.out.println(\"Null!\");\n}catch(ArithmeticException e){\n    System.out.println(\"Math!\");\n}"
+    "code": "try{\n    String s=null;\n    System.out.println(s.length());\n    int r=10/0;\n}catch(NullPointerException e){\n    System.out.println(\"Null!\");\n}catch(ArithmeticException e){\n    System.out.println(\"Math!\");\n}",
+    "examRelevance": "high",
+    "examTargets": [
+     "Java",
+     "基本情報"
+    ],
+    "glossaryRefs": [
+     "exception_handling"
+    ],
+    "meaning": {
+     "zh-CN": "try-catch用于捕获和处理Java异常，保证程序的健壮性。",
+     "ja-JP": "try-catchはJavaの例外をキャッチして処理し、プログラムの堅牢性を確保します。",
+     "en-US": "try-catch catches and handles Java exceptions to ensure program robustness."
+    },
+    "memoryHook": {
+     "zh-CN": "尝试 + 捕获 = try-catch",
+     "ja-JP": "試す + キャッチ = try-catch",
+     "en-US": "Think: 'try risky code, catch errors'"
+    },
+    "examPoint": {
+     "zh-CN": "try-catch-finally结构、checked vs unchecked异常。",
+     "ja-JP": "try-catch-finally構造、checked例外とunchecked例外。",
+     "en-US": "try-catch-finally structure, checked vs unchecked exceptions."
+    },
+    "commonMistake": {
+     "zh-CN": "捕获异常过宽、finally中return覆盖try中return。",
+     "ja-JP": "広すぎる例外キャッチ、finallyのreturnがtryのreturnを上書き。",
+     "en-US": "Catching exceptions too broadly, finally return overriding try return."
+    },
   },
   {
     "id": "java-trycatch-003",
@@ -915,7 +1737,35 @@ window.CODING_TYPING_DATA_JAVA = [
       "Scanner",
       "File"
     ],
-    "code": "import java.util.*;\nimport java.io.*;\ntry(Scanner sc=new Scanner(new File(\"d.txt\"))){\n    while(sc.hasNextLine())\n        System.out.println(sc.nextLine());\n}catch(FileNotFoundException e){\n    System.out.println(\"No file\");\n}"
+    "code": "import java.util.*;\nimport java.io.*;\ntry(Scanner sc=new Scanner(new File(\"d.txt\"))){\n    while(sc.hasNextLine())\n        System.out.println(sc.nextLine());\n}catch(FileNotFoundException e){\n    System.out.println(\"No file\");\n}",
+    "examRelevance": "high",
+    "examTargets": [
+     "Java",
+     "基本情報"
+    ],
+    "glossaryRefs": [
+     "exception_handling"
+    ],
+    "meaning": {
+     "zh-CN": "try-catch用于捕获和处理Java异常，保证程序的健壮性。",
+     "ja-JP": "try-catchはJavaの例外をキャッチして処理し、プログラムの堅牢性を確保します。",
+     "en-US": "try-catch catches and handles Java exceptions to ensure program robustness."
+    },
+    "memoryHook": {
+     "zh-CN": "尝试 + 捕获 = try-catch",
+     "ja-JP": "試す + キャッチ = try-catch",
+     "en-US": "Think: 'try risky code, catch errors'"
+    },
+    "examPoint": {
+     "zh-CN": "try-catch-finally结构、checked vs unchecked异常。",
+     "ja-JP": "try-catch-finally構造、checked例外とunchecked例外。",
+     "en-US": "try-catch-finally structure, checked vs unchecked exceptions."
+    },
+    "commonMistake": {
+     "zh-CN": "捕获异常过宽、finally中return覆盖try中return。",
+     "ja-JP": "広すぎる例外キャッチ、finallyのreturnがtryのreturnを上書き。",
+     "en-US": "Catching exceptions too broadly, finally return overriding try return."
+    },
   },
   {
     "id": "java-arraylist-001",
@@ -946,7 +1796,35 @@ window.CODING_TYPING_DATA_JAVA = [
       "add",
       "get"
     ],
-    "code": "import java.util.ArrayList;\nArrayList<String> n=new ArrayList<>();\nn.add(\"Alice\"); n.add(\"Bob\");\nSystem.out.println(n.get(0));\nSystem.out.println(n.size());"
+    "code": "import java.util.ArrayList;\nArrayList<String> n=new ArrayList<>();\nn.add(\"Alice\"); n.add(\"Bob\");\nSystem.out.println(n.get(0));\nSystem.out.println(n.size());",
+    "examRelevance": "high",
+    "examTargets": [
+     "Java",
+     "基本情報"
+    ],
+    "glossaryRefs": [
+     "arraylist_class"
+    ],
+    "meaning": {
+     "zh-CN": "ArrayList是动态数组，可自动伸缩大小的List实现。",
+     "ja-JP": "ArrayListは動的配列で、自動的にサイズが変更されるList実装です。",
+     "en-US": "ArrayList is a dynamic array, a List implementation that automatically resizes."
+    },
+    "memoryHook": {
+     "zh-CN": "可变数组 → ArrayList",
+     "ja-JP": "可変長配列 → ArrayList",
+     "en-US": "Think: 'resizable array = ArrayList'"
+    },
+    "examPoint": {
+     "zh-CN": "泛型参数、add/get/size/remove方法、与数组的区别。",
+     "ja-JP": "ジェネリクスパラメータ、add/get/size/removeメソッド、配列との違い。",
+     "en-US": "Generic type parameter, add/get/size/remove methods, differences from arrays."
+    },
+    "commonMistake": {
+     "zh-CN": "忘记泛型类型参数、将int等基本类型直接传入（需用Integer）。",
+     "ja-JP": "ジェネリクスの型パラメータ忘れ、intなどの基本型を直接渡す（Integerが必要）。",
+     "en-US": "Missing generic type parameter, passing primitives like int directly (need Integer)."
+    },
   },
   {
     "id": "java-arraylist-002",
@@ -977,7 +1855,35 @@ window.CODING_TYPING_DATA_JAVA = [
       "for",
       ":"
     ],
-    "code": "import java.util.ArrayList;\nArrayList<Integer> s=new ArrayList<>();\ns.add(85); s.add(90); s.add(78);\nint sum=0;\nfor(int v:s){sum+=v;}\nSystem.out.println(\"Avg: \"+sum/s.size());"
+    "code": "import java.util.ArrayList;\nArrayList<Integer> s=new ArrayList<>();\ns.add(85); s.add(90); s.add(78);\nint sum=0;\nfor(int v:s){sum+=v;}\nSystem.out.println(\"Avg: \"+sum/s.size());",
+    "examRelevance": "high",
+    "examTargets": [
+     "Java",
+     "基本情報"
+    ],
+    "glossaryRefs": [
+     "arraylist_class"
+    ],
+    "meaning": {
+     "zh-CN": "ArrayList是动态数组，可自动伸缩大小的List实现。",
+     "ja-JP": "ArrayListは動的配列で、自動的にサイズが変更されるList実装です。",
+     "en-US": "ArrayList is a dynamic array, a List implementation that automatically resizes."
+    },
+    "memoryHook": {
+     "zh-CN": "可变数组 → ArrayList",
+     "ja-JP": "可変長配列 → ArrayList",
+     "en-US": "Think: 'resizable array = ArrayList'"
+    },
+    "examPoint": {
+     "zh-CN": "泛型参数、add/get/size/remove方法、与数组的区别。",
+     "ja-JP": "ジェネリクスパラメータ、add/get/size/removeメソッド、配列との違い。",
+     "en-US": "Generic type parameter, add/get/size/remove methods, differences from arrays."
+    },
+    "commonMistake": {
+     "zh-CN": "忘记泛型类型参数、将int等基本类型直接传入（需用Integer）。",
+     "ja-JP": "ジェネリクスの型パラメータ忘れ、intなどの基本型を直接渡す（Integerが必要）。",
+     "en-US": "Missing generic type parameter, passing primitives like int directly (need Integer)."
+    },
   },
   {
     "id": "java-arraylist-003",
@@ -1009,7 +1915,35 @@ window.CODING_TYPING_DATA_JAVA = [
       "contains",
       "isEmpty"
     ],
-    "code": "import java.util.ArrayList;\nArrayList<String> it=new ArrayList<>();\nit.add(\"A\"); it.add(\"B\"); it.add(\"C\");\nit.remove(\"B\");\nSystem.out.println(it.contains(\"A\"));\nSystem.out.println(it.isEmpty());\nSystem.out.println(it.size());"
+    "code": "import java.util.ArrayList;\nArrayList<String> it=new ArrayList<>();\nit.add(\"A\"); it.add(\"B\"); it.add(\"C\");\nit.remove(\"B\");\nSystem.out.println(it.contains(\"A\"));\nSystem.out.println(it.isEmpty());\nSystem.out.println(it.size());",
+    "examRelevance": "high",
+    "examTargets": [
+     "Java",
+     "基本情報"
+    ],
+    "glossaryRefs": [
+     "arraylist_class"
+    ],
+    "meaning": {
+     "zh-CN": "ArrayList是动态数组，可自动伸缩大小的List实现。",
+     "ja-JP": "ArrayListは動的配列で、自動的にサイズが変更されるList実装です。",
+     "en-US": "ArrayList is a dynamic array, a List implementation that automatically resizes."
+    },
+    "memoryHook": {
+     "zh-CN": "可变数组 → ArrayList",
+     "ja-JP": "可変長配列 → ArrayList",
+     "en-US": "Think: 'resizable array = ArrayList'"
+    },
+    "examPoint": {
+     "zh-CN": "泛型参数、add/get/size/remove方法、与数组的区别。",
+     "ja-JP": "ジェネリクスパラメータ、add/get/size/removeメソッド、配列との違い。",
+     "en-US": "Generic type parameter, add/get/size/remove methods, differences from arrays."
+    },
+    "commonMistake": {
+     "zh-CN": "忘记泛型类型参数、将int等基本类型直接传入（需用Integer）。",
+     "ja-JP": "ジェネリクスの型パラメータ忘れ、intなどの基本型を直接渡す（Integerが必要）。",
+     "en-US": "Missing generic type parameter, passing primitives like int directly (need Integer)."
+    },
   },
   {
     "id": "java-map-001",
@@ -1041,7 +1975,35 @@ window.CODING_TYPING_DATA_JAVA = [
       "get",
       "containsKey"
     ],
-    "code": "import java.util.HashMap;\nHashMap<String,Integer> a=new HashMap<>();\na.put(\"Alice\",25); a.put(\"Bob\",30);\nSystem.out.println(a.get(\"Alice\"));\nSystem.out.println(a.containsKey(\"Bob\"));"
+    "code": "import java.util.HashMap;\nHashMap<String,Integer> a=new HashMap<>();\na.put(\"Alice\",25); a.put(\"Bob\",30);\nSystem.out.println(a.get(\"Alice\"));\nSystem.out.println(a.containsKey(\"Bob\"));",
+    "examRelevance": "high",
+    "examTargets": [
+     "Java",
+     "基本情報"
+    ],
+    "glossaryRefs": [
+     "map_class"
+    ],
+    "meaning": {
+     "zh-CN": "Map存储键值对，每个键映射到一个值，键不能重复。",
+     "ja-JP": "Mapはキーと値のペアを格納し、各キーは一意で、値にマッピングされます。",
+     "en-US": "A Map stores key-value pairs, each key mapping to a value, with unique keys."
+    },
+    "memoryHook": {
+     "zh-CN": "键→值映射 = Map",
+     "ja-JP": "キー→値のマッピング = Map",
+     "en-US": "Think: 'key→value lookup = Map'"
+    },
+    "examPoint": {
+     "zh-CN": "HashMap vs TreeMap、put/get/containsKey、entrySet遍历。",
+     "ja-JP": "HashMap vs TreeMap、put/get/containsKey、entrySet走査。",
+     "en-US": "HashMap vs TreeMap, put/get/containsKey, entrySet iteration."
+    },
+    "commonMistake": {
+     "zh-CN": "泛型参数遗漏、直接修改key对象（需不可变对象做key）。",
+     "ja-JP": "ジェネリクスパラメータの欠落、キーオブジェクトの直接変更（不変オブジェクトをキーに）。",
+     "en-US": "Missing generic types, mutating key objects (use immutable objects as keys)."
+    },
   },
   {
     "id": "java-map-002",
@@ -1072,7 +2034,35 @@ window.CODING_TYPING_DATA_JAVA = [
       "keySet",
       "for"
     ],
-    "code": "import java.util.HashMap;\nHashMap<String,Integer> s=new HashMap<>();\ns.put(\"Alice\",85); s.put(\"Bob\",72); s.put(\"Aoi\",91);\nfor(String n:s.keySet()){\n    System.out.println(n+\": \"+s.get(n));\n}"
+    "code": "import java.util.HashMap;\nHashMap<String,Integer> s=new HashMap<>();\ns.put(\"Alice\",85); s.put(\"Bob\",72); s.put(\"Aoi\",91);\nfor(String n:s.keySet()){\n    System.out.println(n+\": \"+s.get(n));\n}",
+    "examRelevance": "high",
+    "examTargets": [
+     "Java",
+     "基本情報"
+    ],
+    "glossaryRefs": [
+     "map_class"
+    ],
+    "meaning": {
+     "zh-CN": "Map存储键值对，每个键映射到一个值，键不能重复。",
+     "ja-JP": "Mapはキーと値のペアを格納し、各キーは一意で、値にマッピングされます。",
+     "en-US": "A Map stores key-value pairs, each key mapping to a value, with unique keys."
+    },
+    "memoryHook": {
+     "zh-CN": "键→值映射 = Map",
+     "ja-JP": "キー→値のマッピング = Map",
+     "en-US": "Think: 'key→value lookup = Map'"
+    },
+    "examPoint": {
+     "zh-CN": "HashMap vs TreeMap、put/get/containsKey、entrySet遍历。",
+     "ja-JP": "HashMap vs TreeMap、put/get/containsKey、entrySet走査。",
+     "en-US": "HashMap vs TreeMap, put/get/containsKey, entrySet iteration."
+    },
+    "commonMistake": {
+     "zh-CN": "泛型参数遗漏、直接修改key对象（需不可变对象做key）。",
+     "ja-JP": "ジェネリクスパラメータの欠落、キーオブジェクトの直接変更（不変オブジェクトをキーに）。",
+     "en-US": "Missing generic types, mutating key objects (use immutable objects as keys)."
+    },
   },
   {
     "id": "java-map-003",
@@ -1103,6 +2093,34 @@ window.CODING_TYPING_DATA_JAVA = [
       "getOrDefault",
       "put"
     ],
-    "code": "import java.util.HashMap;\nString[] w={\"a\",\"b\",\"a\",\"c\",\"b\",\"a\"};\nHashMap<String,Integer> f=new HashMap<>();\nfor(String x:w){\n    f.put(x,f.getOrDefault(x,0)+1);\n}\nfor(String k:f.keySet()){\n    System.out.println(k+\": \"+f.get(k));\n}"
+    "code": "import java.util.HashMap;\nString[] w={\"a\",\"b\",\"a\",\"c\",\"b\",\"a\"};\nHashMap<String,Integer> f=new HashMap<>();\nfor(String x:w){\n    f.put(x,f.getOrDefault(x,0)+1);\n}\nfor(String k:f.keySet()){\n    System.out.println(k+\": \"+f.get(k));\n}",
+    "examRelevance": "high",
+    "examTargets": [
+     "Java",
+     "基本情報"
+    ],
+    "glossaryRefs": [
+     "map_class"
+    ],
+    "meaning": {
+     "zh-CN": "Map存储键值对，每个键映射到一个值，键不能重复。",
+     "ja-JP": "Mapはキーと値のペアを格納し、各キーは一意で、値にマッピングされます。",
+     "en-US": "A Map stores key-value pairs, each key mapping to a value, with unique keys."
+    },
+    "memoryHook": {
+     "zh-CN": "键→值映射 = Map",
+     "ja-JP": "キー→値のマッピング = Map",
+     "en-US": "Think: 'key→value lookup = Map'"
+    },
+    "examPoint": {
+     "zh-CN": "HashMap vs TreeMap、put/get/containsKey、entrySet遍历。",
+     "ja-JP": "HashMap vs TreeMap、put/get/containsKey、entrySet走査。",
+     "en-US": "HashMap vs TreeMap, put/get/containsKey, entrySet iteration."
+    },
+    "commonMistake": {
+     "zh-CN": "泛型参数遗漏、直接修改key对象（需不可变对象做key）。",
+     "ja-JP": "ジェネリクスパラメータの欠落、キーオブジェクトの直接変更（不変オブジェクトをキーに）。",
+     "en-US": "Missing generic types, mutating key objects (use immutable objects as keys)."
+    },
   }
 ];
