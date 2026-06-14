@@ -4191,6 +4191,64 @@
      }
    });
 
+  var AUTH_SYNC_ROUND_23_8 = {
+    "zh-CN": {
+      wrongBookPushed: "错题上传",
+      wrongBookPulled: "错题下载",
+      wrongBookMerged: "错题已合并",
+      wrongBookSkipped: "错题已跳过",
+      wrongBookFailed: "错题同步失败"
+    },
+    "ja-JP": {
+      wrongBookPushed: "間違いノートアップロード",
+      wrongBookPulled: "間違いノートダウンロード",
+      wrongBookMerged: "間違いノートをマージしました",
+      wrongBookSkipped: "間違いノートをスキップしました",
+      wrongBookFailed: "間違いノートの同期に失敗しました"
+    },
+    "en-US": {
+      wrongBookPushed: "Wrong book uploaded",
+      wrongBookPulled: "Wrong book downloaded",
+      wrongBookMerged: "Wrong book merged",
+      wrongBookSkipped: "Wrong book skipped",
+      wrongBookFailed: "Wrong book sync failed"
+    },
+    "vi-VN": {
+      wrongBookPushed: "Đã tải lên sổ sai",
+      wrongBookPulled: "Đã tải xuống sổ sai",
+      wrongBookMerged: "Đã gộp sổ sai",
+      wrongBookSkipped: "Đã bỏ qua sổ sai",
+      wrongBookFailed: "Đồng bộ sổ sai thất bại"
+    },
+    "fr-FR": {
+      wrongBookPushed: "Cahier d'erreurs téléversé",
+      wrongBookPulled: "Cahier d'erreurs téléchargé",
+      wrongBookMerged: "Cahier d'erreurs fusionné",
+      wrongBookSkipped: "Cahier d'erreurs ignoré",
+      wrongBookFailed: "Échec de la synchronisation du cahier d'erreurs"
+    },
+    "my-MM": {
+      wrongBookPushed: "မှားယွင်းမှုစာအုပ် စင့်ခ်လုပ်ခဲ့သည်",
+      wrongBookPulled: "မှားယွင်းမှုစာအုပ် ဒေါင်းလုဒ်လုပ်ခဲ့သည်",
+      wrongBookMerged: "မှားယွင်းမှုစာအုပ် ပေါင်းစည်းပြီး",
+      wrongBookSkipped: "မှားယွင်းမှုစာအုပ် ကျော်လွှားခဲ့သည်",
+      wrongBookFailed: "မှားယွင်းမှုစာအုပ် ထပ်တူပြုခြင်း မအောင်မြင်ပါ"
+    },
+    "ko-KR": {
+      wrongBookPushed: "오답노트 업로드됨",
+      wrongBookPulled: "오답노트 다운로드됨",
+      wrongBookMerged: "오답노트 병합됨",
+      wrongBookSkipped: "오답노트 건너뜀",
+      wrongBookFailed: "오답노트 동기화 실패"
+    }
+  };
+
+  Object.keys(AUTH_SYNC_ROUND_23_8).forEach(function (locale) {
+    if (window.I18nUiDict[locale] && window.I18nUiDict[locale].auth) {
+      Object.assign(window.I18nUiDict[locale].auth, AUTH_SYNC_ROUND_23_8[locale]);
+    }
+  });
+
   var USER_TRANSLATIONS_ROUND_20_2 = {
     "zh-CN": {
       userTranslationSave: "保存",

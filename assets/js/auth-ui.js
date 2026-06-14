@@ -299,6 +299,10 @@
     var bookmarksDeletedPulled = summaryDetails ? summaryDetails.bookmarks_deleted_pulled : 0;
     var bookmarksRestored = summaryDetails ? summaryDetails.bookmarks_restored : 0;
     var bookmarksConflictsResolved = summaryDetails ? summaryDetails.bookmarks_conflicts_resolved : 0;
+    var wrongbookPushed = summaryDetails ? summaryDetails.wrongbook_pushed : 0;
+    var wrongbookPulled = summaryDetails ? summaryDetails.wrongbook_pulled : 0;
+    var wrongbookMerged = summaryDetails ? summaryDetails.wrongbook_merged : 0;
+    var wrongbookSkipped = summaryDetails ? summaryDetails.wrongbook_skipped : 0;
     var conflictsResolved = summaryDetails ? summaryDetails.conflicts_resolved : 0;
     var warnings = summaryDetails && summaryDetails.warnings ? summaryDetails.warnings : [];
     var syncDuration = summaryDetails ? summaryDetails.duration_ms : 0;
@@ -329,6 +333,10 @@
       if (bookmarksDeletedPushed) detailsList += '<li><i class="fa-solid fa-trash-can"></i> ' + esc(t("auth.bookmarksDeletedSynced", "收藏删除已同步")) + ': ' + bookmarksDeletedPushed + '</li>';
       if (bookmarksRestored) detailsList += '<li><i class="fa-solid fa-arrow-rotate-left"></i> ' + esc(t("auth.bookmarksRestored", "收藏已恢复")) + ': ' + bookmarksRestored + '</li>';
       if (bookmarksConflictsResolved) detailsList += '<li><i class="fa-solid fa-code-merge"></i> ' + esc(t("auth.bookmarksConflictsResolved", "收藏冲突已处理")) + ': ' + bookmarksConflictsResolved + '</li>';
+      if (wrongbookPushed) detailsList += '<li><i class="fa-solid fa-book-circle-arrow-up"></i> ' + esc(t("auth.wrongBookPushed", "错题上传")) + ': ' + wrongbookPushed + '</li>';
+      if (wrongbookPulled) detailsList += '<li><i class="fa-solid fa-book-circle-arrow-down"></i> ' + esc(t("auth.wrongBookPulled", "错题下载")) + ': ' + wrongbookPulled + '</li>';
+      if (wrongbookMerged) detailsList += '<li><i class="fa-solid fa-code-merge"></i> ' + esc(t("auth.wrongBookMerged", "错题已合并")) + ': ' + wrongbookMerged + '</li>';
+      if (wrongbookSkipped) detailsList += '<li><i class="fa-solid fa-forward"></i> ' + esc(t("auth.wrongBookSkipped", "错题已跳过")) + ': ' + wrongbookSkipped + '</li>';
       if (conflictsResolved) detailsList += '<li><i class="fa-solid fa-code-merge"></i> ' + esc(t("auth.conflictsResolved", "已合并远端进度")) + ': ' + conflictsResolved + '</li>';
 
       summaryHtml =

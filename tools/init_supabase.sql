@@ -208,6 +208,51 @@ CREATE POLICY sl_isolation ON public.sync_log
   WITH CHECK (auth.uid() = user_id);
 
 
+-- ── 7b. wrong_book_items (Round 23.8) ─────────────────────
+CREATE TABLE IF NOT EXISTS public.wrong_book_items (
+  id                  UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id             UUID         NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
+  item_key            TEXT         NOT NULL,
+  module              TEXT         NOT NULL DEFAULT 'unknown',
+  source              JSONB        NOT NULL DEFAULT '{}',
+  question_text       TEXT         NOT NULL DEFAULT '',
+  choices             JSONB        NOT NULL DEFAULT '[]',
+  correct_answer      JSONB        NOT NULL DEFAULT '{}',
+  user_answer         JSONB        NOT NULL DEFAULT '{}',
+  explanation         TEXT         NOT NULL DEFAULT '',
+  tags                JSONB        NOT NULL DEFAULT '[]',
+  first_wrong_at      TIMESTAMPTZ,
+  last_wrong_at       TIMESTAMPTZ,
+  last_practiced_at   TIMESTAMPTZ,
+  wrong_count         INTEGER      NOT NULL DEFAULT 0,
+  correct_retry_count INTEGER      NOT NULL DEFAULT 0,
+  mastered            BOOLEAN      NOT NULL DEFAULT FALSE,
+  archived            BOOLEAN      NOT NULL DEFAULT FALSE,
+  archived_at         TIMESTAMPTZ,
+  schema_version      INTEGER      NOT NULL DEFAULT 2,
+  client_updated_at   TIMESTAMPTZ  NOT NULL DEFAULT NOW(),
+  created_at          TIMESTAMPTZ  NOT NULL DEFAULT NOW(),
+  updated_at          TIMESTAMPTZ  NOT NULL DEFAULT NOW(),
+
+  CONSTRAINT uq_wrong_book_items UNIQUE (user_id, item_key)
+);
+
+CREATE INDEX idx_wbi_user_id ON public.wrong_book_items(user_id);
+CREATE INDEX idx_wbi_user_archived ON public.wrong_book_items(user_id, archived);
+CREATE INDEX idx_wbi_user_module ON public.wrong_book_items(user_id, module);
+CREATE INDEX idx_wbi_user_client_updated ON public.wrong_book_items(user_id, client_updated_at);
+CREATE INDEX idx_wbi_user_item_key ON public.wrong_book_items(user_id, item_key);
+
+COMMENT ON TABLE public.wrong_book_items IS 'Per-user wrong book entries for cross-device sync (Round 23.8)';
+
+ALTER TABLE public.wrong_book_items ENABLE ROW LEVEL SECURITY;
+DROP POLICY IF EXISTS wbi_isolation ON public.wrong_book_items;
+CREATE POLICY wbi_isolation ON public.wrong_book_items
+  FOR ALL TO authenticated
+  USING (auth.uid() = user_id)
+  WITH CHECK (auth.uid() = user_id);
+
+
 -- ── 8. Migration tracking ─────────────────────────────────
 CREATE TABLE IF NOT EXISTS public.schema_migrations (
   version     INTEGER PRIMARY KEY,

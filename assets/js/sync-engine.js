@@ -964,7 +964,274 @@
      return syncError(friendly.code, friendly.message);
    }
  }
- 
+
+ /* ── Wrong Book Sync (Round 23.8) ──────────────────── */
+ var WRONG_BOOK_LS_KEY = "study-tools-exam-wrong-book-v1";
+ var WRONG_BOOK_SYNC_MIN_SCHEMA = 2;
+ var WRONG_BOOK_UPSERT_BATCH = 50;
+
+ function loadLocalWrongBook() {
+   try {
+     var raw = localStorage.getItem(WRONG_BOOK_LS_KEY);
+     if (!raw) return [];
+     var parsed = JSON.parse(raw);
+     return Array.isArray(parsed) ? parsed : [];
+   } catch (_) { return []; }
+ }
+
+ function saveLocalWrongBook(items) {
+   try {
+     localStorage.setItem(WRONG_BOOK_LS_KEY, JSON.stringify(Array.isArray(items) ? items : []));
+     return true;
+   } catch (_) { return false; }
+ }
+
+ function collectWrongBookForSync(userId) {
+   var items = loadLocalWrongBook();
+   var rows = [];
+   for (var i = 0; i < items.length; i++) {
+     var item = items[i];
+     if (!item || typeof item !== "object") continue;
+     if ((item.schemaVersion || 0) < WRONG_BOOK_SYNC_MIN_SCHEMA) continue;
+     rows.push({
+       user_id: userId,
+       item_key: String(item.key || ""),
+       module: String(item.module || "unknown"),
+       source: item.source && typeof item.source === "object" ? item.source : {},
+       question_text: String(item.questionText || ""),
+       choices: Array.isArray(item.choices) ? item.choices : [],
+       correct_answer: item.correctAnswer != null ? item.correctAnswer : {},
+       user_answer: item.userAnswer != null ? item.userAnswer : {},
+       explanation: String(item.explanation || ""),
+       tags: Array.isArray(item.tags) ? item.tags : [],
+       first_wrong_at: item.firstWrongAt || null,
+       last_wrong_at: item.lastWrongAt || null,
+       last_practiced_at: item.lastPracticedAt || null,
+       wrong_count: Number(item.wrongCount) || 0,
+       correct_retry_count: Number(item.correctRetryCount) || 0,
+       mastered: item.mastered === true,
+       archived: item.archived === true,
+       archived_at: item.archivedAt || null,
+       schema_version: Number(item.schemaVersion) || WRONG_BOOK_SYNC_MIN_SCHEMA,
+       client_updated_at: item.updatedAt || new Date().toISOString()
+     });
+   }
+   return rows;
+ }
+
+ async function pushWrongBook(context) {
+   var ctx = context;
+   if (!ctx || !ctx.client) {
+     var checked = await getRemoteContext();
+     if (!checked.ok) return checked;
+     ctx = checked.data;
+   }
+   var rows = collectWrongBookForSync(ctx.user.id);
+   if (!rows.length) return syncSuccess({ count: 0 });
+   try {
+     var pushed = 0;
+     for (var b = 0; b < rows.length; b += WRONG_BOOK_UPSERT_BATCH) {
+       var batch = rows.slice(b, b + WRONG_BOOK_UPSERT_BATCH);
+       var result = await ctx.client.from("wrong_book_items").upsert(batch, {
+         onConflict: "user_id,item_key"
+       });
+       if (result && result.error) return syncError("wrongbook_push_failed", result.error.message, result.error);
+       pushed += batch.length;
+     }
+     return syncSuccess({ count: pushed });
+   } catch (error) {
+     var friendly = friendlyRemoteError(error, "wrongbook_push_failed");
+     return syncError(friendly.code, friendly.message);
+   }
+ }
+
+ function mergeWrongBookRemoteToLocal(remoteRows) {
+   var localItems = loadLocalWrongBook();
+   var localMap = {};
+   for (var i = 0; i < localItems.length; i++) {
+     var li = localItems[i];
+     if (li && typeof li === "object" && li.key) {
+       localMap[li.key] = li;
+     }
+   }
+   var remoteKeys = {};
+   var merged = 0;
+   var pulled = 0;
+   var skipped = 0;
+
+   for (var r = 0; r < remoteRows.length; r++) {
+     var row = remoteRows[r];
+     if (!row || !row.item_key) { skipped++; continue; }
+     remoteKeys[row.item_key] = true;
+
+     var local = localMap[row.item_key];
+     if (!local) {
+       // Only remote — pull to local
+       localMap[row.item_key] = remoteRowToLocalItem(row);
+       pulled++;
+       continue;
+     }
+
+     // Both exist — conflict merge
+     var localTs = new Date(local.updatedAt || 0).getTime() || 0;
+     var remoteTs = new Date(row.client_updated_at || 0).getTime() || 0;
+     var useRemote = remoteTs > localTs;
+
+     // wrongCount / correctRetryCount: max
+     var wc = Math.max(Number(local.wrongCount) || 0, Number(row.wrong_count) || 0);
+     var crc = Math.max(Number(local.correctRetryCount) || 0, Number(row.correct_retry_count) || 0);
+
+     // lastWrongAt / lastPracticedAt: newer
+     var lwa = newerTimestamp(local.lastWrongAt, row.last_wrong_at);
+     var lpa = newerTimestamp(local.lastPracticedAt, row.last_practiced_at);
+
+     // userAnswer: from the side with newer lastWrongAt
+     var localLwa = new Date(local.lastWrongAt || 0).getTime() || 0;
+     var remoteLwa = new Date(row.last_wrong_at || 0).getTime() || 0;
+     var ua = remoteLwa > localLwa ? remoteAnswerToLocal(row.user_answer) : local.userAnswer;
+
+     // archived: complex rule
+     var archived = local.archived === true || row.archived === true;
+     var archivedAt = local.archivedAt || row.archived_at || null;
+     if (archived) {
+       // If one side archived, check if the other side has a newer wrong event
+       var archTs = new Date(archivedAt || 0).getTime() || 0;
+       if (localLwa > archTs || remoteLwa > archTs) {
+         archived = false;
+         archivedAt = null;
+       }
+     }
+
+     // mastered: if most recent event is wrong → false; otherwise by newer updatedAt
+     var mastered;
+     if (lwa && lwa > (lpa || "")) {
+       mastered = false;
+     } else {
+       mastered = useRemote ? (row.mastered === true) : (local.mastered === true);
+     }
+
+     var mergedItem = {
+       schemaVersion: WRONG_BOOK_SYNC_MIN_SCHEMA,
+       key: row.item_key,
+       module: useRemote ? (row.module || local.module) : (local.module || row.module),
+       source: useRemote && row.source ? row.source : (local.source || {}),
+       questionText: useRemote ? (row.question_text || local.questionText) : (local.questionText || row.question_text),
+       choices: useRemote && Array.isArray(row.choices) && row.choices.length ? row.choices : (local.choices || []),
+       correctAnswer: useRemote && row.correct_answer ? remoteAnswerToLocal(row.correct_answer) : (local.correctAnswer || {}),
+       userAnswer: ua,
+       explanation: useRemote ? (row.explanation || local.explanation) : (local.explanation || row.explanation),
+       tags: useRemote && Array.isArray(row.tags) && row.tags.length ? row.tags : (local.tags || []),
+       firstWrongAt: olderTimestamp(local.firstWrongAt, row.first_wrong_at) || local.firstWrongAt,
+       lastWrongAt: lwa,
+       lastPracticedAt: lpa || "",
+       wrongCount: wc,
+       correctRetryCount: crc,
+       mastered: mastered,
+       archived: archived,
+       archivedAt: archivedAt,
+       updatedAt: new Date(Math.max(localTs, remoteTs)).toISOString()
+     };
+
+     // Normalize through app.js normalizer if available
+     if (typeof normalizeWrongBookItem === "function") {
+       mergedItem = normalizeWrongBookItem(mergedItem);
+     }
+
+     localMap[row.item_key] = mergedItem;
+     merged++;
+   }
+
+   // Convert map back to array, push local-only items remain as-is
+   var result = [];
+   var allKeys = {};
+   for (var lk in localMap) { if (localMap.hasOwnProperty(lk)) allKeys[lk] = true; }
+   for (var ak in allKeys) {
+     if (allKeys.hasOwnProperty(ak)) {
+       result.push(localMap[ak]);
+     }
+   }
+
+   saveLocalWrongBook(result);
+   return { pulled: pulled, merged: merged, skipped: skipped, total: result.length };
+ }
+
+ function remoteRowToLocalItem(row) {
+   var item = {
+     schemaVersion: WRONG_BOOK_SYNC_MIN_SCHEMA,
+     key: String(row.item_key || ""),
+     module: String(row.module || "unknown"),
+     source: row.source && typeof row.source === "object" ? row.source : {},
+     questionText: String(row.question_text || ""),
+     choices: Array.isArray(row.choices) ? row.choices : [],
+     correctAnswer: remoteAnswerToLocal(row.correct_answer),
+     userAnswer: remoteAnswerToLocal(row.user_answer),
+     explanation: String(row.explanation || ""),
+     tags: Array.isArray(row.tags) ? row.tags : [],
+     firstWrongAt: row.first_wrong_at || "",
+     lastWrongAt: row.last_wrong_at || "",
+     lastPracticedAt: row.last_practiced_at || "",
+     wrongCount: Number(row.wrong_count) || 0,
+     correctRetryCount: Number(row.correct_retry_count) || 0,
+     mastered: row.mastered === true,
+     archived: row.archived === true,
+     archivedAt: row.archived_at || null,
+     updatedAt: row.client_updated_at || new Date().toISOString()
+   };
+   if (typeof normalizeWrongBookItem === "function") {
+     item = normalizeWrongBookItem(item);
+   }
+   return item;
+ }
+
+ function remoteAnswerToLocal(val) {
+   if (val == null) return {};
+   if (typeof val === "object") return val;
+   return { value: val };
+ }
+
+ function newerTimestamp(a, b) {
+   var ta = new Date(a || 0).getTime() || 0;
+   var tb = new Date(b || 0).getTime() || 0;
+   if (!ta && !tb) return "";
+   return ta >= tb ? (a || b || "") : (b || a || "");
+ }
+
+ function olderTimestamp(a, b) {
+   var ta = new Date(a || 0).getTime() || 0;
+   var tb = new Date(b || 0).getTime() || 0;
+   if (!ta && !tb) return "";
+   if (!ta) return b || "";
+   if (!tb) return a || "";
+   return ta <= tb ? (a || "") : (b || "");
+ }
+
+ async function pullWrongBook(context) {
+   var ctx = context;
+   if (!ctx || !ctx.client) {
+     var checked = await getRemoteContext();
+     if (!checked.ok) return checked;
+     ctx = checked.data;
+   }
+   try {
+     var result = await ctx.client.from("wrong_book_items")
+       .select("item_key,module,source,question_text,choices,correct_answer,user_answer,explanation,tags,first_wrong_at,last_wrong_at,last_practiced_at,wrong_count,correct_retry_count,mastered,archived,archived_at,schema_version,client_updated_at")
+       .eq("user_id", ctx.user.id);
+     if (result && result.error) return syncError("wrongbook_pull_failed", result.error.message, result.error);
+     var data = result && result.data ? result.data : [];
+     var mergeResult = mergeWrongBookRemoteToLocal(data);
+     return syncSuccess({
+       count: data.length,
+       pulled: mergeResult.pulled,
+       merged: mergeResult.merged,
+       skipped: mergeResult.skipped,
+       total: mergeResult.total
+     });
+   } catch (error) {
+     var friendly = friendlyRemoteError(error, "wrongbook_pull_failed");
+     return syncError(friendly.code, friendly.message);
+   }
+ }
+
  function getSyncSummary() {
     var status = getSyncStatus();
     var lastResult = safeGet(KEYS.LAST_SYNC_RESULT, null);
@@ -995,9 +1262,13 @@
          bookmarks_deleted_pulled: summary.bookmarks_deleted_pulled || 0,
          bookmarks_restored: summary.bookmarks_restored || 0,
          bookmarks_conflicts_resolved: summary.bookmarks_conflicts_resolved || 0,
+        wrongbook_pushed: summary.wrongbook_pushed || 0,
+        wrongbook_pulled: summary.wrongbook_pulled || 0,
+        wrongbook_merged: summary.wrongbook_merged || 0,
+        wrongbook_skipped: summary.wrongbook_skipped || 0,
         warnings: summary.warnings || [],
       } : null,
-      scope: ["user_settings", "learning_progress", "quiz_results", "bookmarks"],
+      scope: ["user_settings", "learning_progress", "quiz_results", "bookmarks", "wrong_book"],
       automatic_sync: false,
     };
   }
@@ -1026,11 +1297,13 @@
         ["device", registerDeviceRemote],
         ["settings_pull", pullUserSettings],
         ["progress_pull", pullLearningProgress],
+        ["wrongbook_pull", pullWrongBook],
         ["bookmarks_sync", mergeBookmarksWithTombstones],
         ["settings_push", pushUserSettings],
         ["progress_push", pushLearningProgress],
         ["quiz_push", pushQuizResults],
         ["bookmarks_push", pushBookmarks],
+        ["wrongbook_push", pushWrongBook],
       ];
 
       var lastError = null;
@@ -1074,6 +1347,10 @@
         bookmarks_conflicts_resolved: results.bookmarks_sync && results.bookmarks_sync.ok ? (results.bookmarks_sync.data && results.bookmarks_sync.data.conflicts_resolved) || 0 : 0,
         conflicts_detected: conflictsDetected,
         conflicts_resolved: conflictsResolved,
+        wrongbook_pushed: results.wrongbook_push && results.wrongbook_push.ok ? (results.wrongbook_push.data && results.wrongbook_push.data.count) || 0 : 0,
+        wrongbook_pulled: results.wrongbook_pull && results.wrongbook_pull.ok ? (results.wrongbook_pull.data && results.wrongbook_pull.data.pulled) || 0 : 0,
+        wrongbook_merged: results.wrongbook_pull && results.wrongbook_pull.ok ? (results.wrongbook_pull.data && results.wrongbook_pull.data.merged) || 0 : 0,
+        wrongbook_skipped: results.wrongbook_pull && results.wrongbook_pull.ok ? (results.wrongbook_pull.data && results.wrongbook_pull.data.skipped) || 0 : 0,
         warnings: warnings,
       };
 
@@ -1140,6 +1417,10 @@
     pullBookmarkTombstones: pullBookmarkTombstones,
     applyTypingBookmarkDeletes: applyTypingBookmarkDeletes,
     mergeBookmarksWithTombstones: mergeBookmarksWithTombstones,
+    pushWrongBook:          pushWrongBook,
+    pullWrongBook:          pullWrongBook,
+    collectWrongBookForSync: collectWrongBookForSync,
+    mergeWrongBookRemoteToLocal: mergeWrongBookRemoteToLocal,
     runManualSync:        runManualSync,
     getSyncSummary:       getSyncSummary,
     _keys:                KEYS,
