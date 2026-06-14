@@ -380,8 +380,8 @@
     translationCache.set(cacheKey(item), clean);
     persistCacheSoon();
   function safeRememberTranslation(item, translatedText) {
-    if (!isMojibakeFree(translatedText)) {
-      console.warn("[I18n] Skipping mojibake translation cache entry");
+    if (!isCleanTranslationText(translatedText)) {
+      console.warn("[I18n] Skipping corrupted translation cache entry (mojibake or tag leak)");
       return;
     }
     rememberTranslation(item, translatedText);
@@ -391,25 +391,127 @@
 
   loadPersistentCache();
   // [R22.11] Prevent mojibake in translation cache
-  var MOJIBAKE_RE = /[\u9B2B\u9B2E\u9B77\u9B6C\u9B54\u9B36\u9B30\u9B2C\u9B3B\u9B48\u9B41\u9B3E\u9B32\u9B44\u9B34\u9B6B]/;
+  var MOJIBAKE_RE = /[\uFFFD\u9AEB\u9AEF\u9B2F\u90B5\u9666\u8B41\u8373\u9B06\u90B1\u7E67\u87E2\u9A52\u87E0\u9A53\u9A54\u90E6\u8D8A\u8E0A\u9A57\u9A5A\u9A5B\u90E8\u8EAC\u9A58\u8B10\u8ADF\u8B21\u8B20\u90AA\u9A4D\u9A4E\u9A4F\u9A50\u8B3E\u8B3C\u8B3A\u8B3B\u8E9E\u8EA2\u9AAB\u9AAA\u9AA9\u9AA8]/;
   function isMojibakeFree(text) {
     return text && typeof text === "string" ? !MOJIBAKE_RE.test(text) : true;
+  function hasLeakedHtmlTagText(value) {
+    if (typeof value !== "string") return false;
+    return /\x3C\/(?:span|button|div|i|section|article|header|footer|main|pre|code|textarea|label|input|select|option|p|h[1-6]|a|ul|ol|li|br|hr|table|tr|td|th|form|nav|aside)>/i.test(value);
   }
   
-  function clearBadI18nCache() {
-    var cleaned = 0;
+  function isCleanTranslationText(value) {
+    return isMojibakeFree(value) && !hasLeakedHtmlTagText(value);
+  }
+
+  }
+  
+  function clearAllBadCaches() {
+    var totalCleaned = 0;
+    var reaped = 0;
+
+    // 1) Clean translation cache
     translationCache.forEach(function(value, key) {
-      if (!isMojibakeFree(value)) {
+      if (!isCleanTranslationText(value)) {
         translationCache.delete(key);
-        cleaned++;
+        totalCleaned++;
       }
     });
-    if (cleaned > 0) {
-      console.log("[I18n] Cleaned " + cleaned + " mojibake entries from cache");
-      persistCacheSoon();
+    if (totalCleaned > 0) persistCacheSoon();
+
+    // 2) Clean user translations
+    try {
+      var utRaw = localStorage.getItem(USER_TRANSLATIONS_KEY);
+      if (utRaw) {
+        var ut = JSON.parse(utRaw);
+        var dirty = false;
+        Object.keys(ut).forEach(function(k) {
+          var v = ut[k];
+          if (v && v.translatedText && !isCleanTranslationText(v.translatedText)) {
+            delete ut[k];
+            totalCleaned++;
+            dirty = true;
+          }
+        });
+        if (dirty) {
+          localStorage.setItem(USER_TRANSLATIONS_KEY, JSON.stringify(ut));
+        }
+      }
+    } catch (e) {}
+
+    // 3) Unregister broken Service Workers (optional, safe)
+    if (navigator.serviceWorker && navigator.serviceWorker.getRegistrations) {
+      navigator.serviceWorker.getRegistrations().then(function(regs) {
+        regs.forEach(function(reg) {
+          if (reg.active && reg.active.scriptURL) {
+            reg.unregister().then(function(ok) {
+              if (ok) { reaped++; console.log("[I18n] Unregistered old SW:", reg.active.scriptURL); }
+            });
+          }
+        });
+      });
+    }
+
+    // 4) Delete old caches
+    if (typeof caches !== "undefined") {
+      caches.keys().then(function(keys) {
+        keys.forEach(function(key) {
+          if (key.indexOf("study-tools-web-") === 0) {
+            caches.delete(key).then(function(ok) {
+              if (ok) console.log("[I18n] Deleted cache:", key);
+            });
+          }
+        });
+      });
+    }
+
+    if (totalCleaned > 0) {
+      console.log("[I18n] Cleaned " + totalCleaned + " corrupted cache entries total");
     }
   }
-  clearBadI18nCache();
+
+  function clearBadI18nCache() {
+    // Legacy - calls the full version
+    clearAllBadCaches();
+  // [R22.11-Hotfix2] Emergency cache cleaning via URL param
+  (function checkClearBadCacheParam() {
+    try {
+      var params = new URLSearchParams(window.location.search);
+      if (params.has("clearBadCache") && params.get("clearBadCache") === "1") {
+        clearAllBadCaches();
+        // Clean & reload
+        if (window.history && window.history.replaceState) {
+          var cleanUrl = window.location.origin + window.location.pathname;
+          window.history.replaceState({}, "", cleanUrl);
+        }
+        console.log("[I18n] clearBadCache=1: caches cleaned, redirecting...");
+        // Unregister SW and clear all caches
+        if (navigator.serviceWorker) {
+          navigator.serviceWorker.getRegistrations().then(function(regs) {
+            Promise.all(regs.map(function(reg) { return reg.unregister(); })).then(function() {
+              if (typeof caches !== "undefined") {
+                caches.keys().then(function(keys) {
+                  Promise.all(keys.filter(function(k) {
+                    return k.indexOf("study-tools-web-") === 0 || k.indexOf("study-tools-i18n-") === 0;
+                  }).map(function(k) { return caches.delete(k); })).then(function() {
+                    window.location.reload(true);
+                  });
+                });
+              } else {
+                window.location.reload(true);
+              }
+            });
+          });
+        } else {
+          window.location.reload(true);
+        }
+      }
+    } catch(e) {
+      console.warn("[I18n] clearBadCache param check failed:", e);
+    }
+  })();
+
+  }
+  clearAllBadCaches();
 
 
   function langInfo(code = currentLang) {
