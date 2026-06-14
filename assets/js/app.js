@@ -784,11 +784,13 @@ function showResetConfirm() {
 
   var escHandler = function (e) {
     if (e.key === 'Escape') {
+      e.stopPropagation();
+      e.preventDefault();
       closeConfirm();
       document.removeEventListener('keydown', escHandler);
     }
   };
-  document.addEventListener('keydown', escHandler);
+  document.addEventListener('keydown', escHandler, true);
 }
 
 function escapeHtml(str) {

@@ -196,6 +196,7 @@ body {
   transition: width 0.5s ease-out;
 }
 
+/* legacy/noop: old topbar reset trigger selector kept for backward compatibility (Round 22.10) */
 .reset-all-btn {
   background: transparent;
   border: 1px solid rgba(255, 255, 255, 0.15);
@@ -449,6 +450,21 @@ body {
   }
   .tools-trigger-btn {
     padding: 6px 8px;
+  }
+}
+
+/* Round 22.10: Ultra-small screen tool drawer optimization (<480px) */
+@media (max-width: 480px) {
+  .tools-drawer__panel {
+    width: 100vw;
+    max-width: 100vw;
+    right: 0;
+    border-radius: 0;
+    border-left: none;
+  }
+  .tools-confirm-box {
+    width: calc(100vw - 24px);
+    max-width: calc(100vw - 24px);
   }
 }
 
@@ -7169,9 +7185,9 @@ body.i18n-active .lang-tab {
 .db-group-tab,
 .schema-tab,
 .maximize-btn,
-.reset-all-btn,
+.reset-all-btn, /* legacy/noop: old topbar reset trigger (Round 22.10) */
 .header-challenge-btn-start,
- #glossary-open-btn,
+#glossary-open-btn, /* legacy/noop: hidden compatibility trigger for glossary.js fallback (Round 22.10) */
 .language-toggle-btn {
   line-height: 1.2 !important;
   white-space: nowrap !important;
@@ -7284,7 +7300,7 @@ body.i18n-active :where(
   .db-group-tab,
   .console-btn,
   .maximize-btn,
-  .reset-all-btn,
+  .reset-all-btn, /* legacy/noop: old topbar reset trigger (Round 22.10) */
   .header-challenge-btn-start,
   .language-toggle-btn,
   .language-option,
@@ -8135,6 +8151,7 @@ body.mobile-playground-open .mobile-backdrop {
   #mobile-playground-toggle {
     display: inline-flex;
   }
+  /* legacy/noop: old topbar reset/glossary trigger selectors kept for backward compatibility (Round 22.10) */
   .reset-all-btn span,
   #glossary-open-btn span {
     display: none; /* Hide labels, show only icons */
