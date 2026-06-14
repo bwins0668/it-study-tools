@@ -191,6 +191,65 @@
     warnings.push("Skipping category coverage -- no CODING_TYPING_ALL_CATEGORIES loaded");
   }
 
+  // --- 5. Exam metadata validation (SQL items) ---
+  var examFields = ['meaning','memoryHook','examPoint','commonMistake'];
+  var examLocs = ['zh-CN','ja-JP','en-US'];
+  var sqlItems = allItems.filter(function(i) { return i.language === 'sql'; });
+  var examCounts = { high:0, medium:0, low:0, withMeaning:0, withHook:0, withPoint:0, withMistake:0, withTargets:0, withRefs:0 };
+  sqlItems.forEach(function(item) {
+    var id = item.id || '?';
+    if (item.examRelevance) {
+      if (['high','medium','low'].indexOf(item.examRelevance) === -1)
+        errors.push(id + ': examRelevance "' + item.examRelevance + '" not high/medium/low');
+      else
+        examCounts[item.examRelevance]++;
+    }
+    if (item.examTargets) {
+      if (!Array.isArray(item.examTargets) || item.examTargets.length === 0)
+        warnings.push(id + ': examTargets should be non-empty array');
+      else
+        examCounts.withTargets++;
+      var validTags = ['SQL','IT Passport','SG','基本情報'];
+      item.examTargets.forEach(function(tag) {
+        if (validTags.indexOf(tag) === -1)
+          warnings.push(id + ': examTargets has unknown tag "' + tag + '"');
+      });
+    } else if (item.examRelevance !== 'low') {
+      warnings.push(id + ': missing examTargets');
+    }
+    if (item.glossaryRefs) {
+      if (!Array.isArray(item.glossaryRefs))
+        warnings.push(id + ': glossaryRefs should be array');
+      else
+        examCounts.withRefs++;
+    }
+    // Check exam text fields
+    examFields.forEach(function(f) {
+      if (item[f]) {
+        var allPresent = true;
+        examLocs.forEach(function(loc) {
+          if (!item[f][loc] || String(item[f][loc]).trim() === '') {
+            errors.push(id + ': ' + f + '.' + loc + ' empty');
+            allPresent = false;
+          }
+        });
+        if (f === 'meaning' && allPresent) examCounts.withMeaning++;
+        if (f === 'memoryHook' && allPresent) examCounts.withHook++;
+        if (f === 'examPoint' && allPresent) examCounts.withPoint++;
+        if (f === 'commonMistake' && allPresent) examCounts.withMistake++;
+      } else if (item.examRelevance === 'high') {
+        errors.push(id + ': high relevance but missing ' + f);
+      }
+    });
+  });
+  console.log('\nExam metadata (SQL ' + sqlItems.length + ' items):');
+  console.log('  high=' + examCounts.high + ' medium=' + examCounts.medium + ' low=' + examCounts.low);
+  console.log('  meaning=' + examCounts.withMeaning + '/' + sqlItems.length);
+  console.log('  memoryHook=' + examCounts.withHook + '/' + sqlItems.length);
+  console.log('  examPoint=' + examCounts.withPoint + '/' + sqlItems.length);
+  console.log('  commonMistake=' + examCounts.withMistake + '/' + sqlItems.length);
+  console.log('  examTargets=' + examCounts.withTargets + '/' + sqlItems.length);
+  console.log('  glossaryRefs=' + examCounts.withRefs + '/' + sqlItems.length);
   console.log("\nErrors: " + errors.length);
   errors.forEach(function(x) { console.log("  ERROR: " + x); });
   console.log("Warnings: " + warnings.length);
