@@ -328,12 +328,17 @@ function switchSubject(subject) {
   updateCbtYearOptions();
   
   if (subject === "typing") {
+    if (mainAppBody) mainAppBody.style.display = "none";
+    document.getElementById("header-challenge").style.display = "none";
     if (window.TypingHub) window.TypingHub.open();
     if (mainTitle) {
       mainTitle.setAttribute("data-i18n", "nav.typing");
       mainTitle.innerText = I18n.t("nav.typing");
     }
   } else if (subject === "coding-typing") {
+    if (mainAppBody) mainAppBody.style.display = "none";
+    document.getElementById("header-challenge").style.display = "none";
+    logoIcon.className = "fa-solid fa-laptop-code logo-icon";
     if (window.CodingTyping && typeof window.CodingTyping.open === 'function') {
       window.CodingTyping.open();
     }

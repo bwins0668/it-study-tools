@@ -15,7 +15,7 @@
   <link rel="stylesheet" href="assets/css/japanese-typing.css?v=20260606_v2">
   <link rel="stylesheet" href="assets/css/ai_learning.css?v=20260608_v2">
   <link rel="stylesheet" href="assets/css/glossary.css?v=20260611_v1">
-  <link rel="stylesheet" href="assets/css/coding-typing.css?v=v2026.6.14-r22.19">
+  <link rel="stylesheet" href="assets/css/coding-typing.css?v=v2026.6.14-r22.20">
 </head>
 <body>
 
@@ -1286,6 +1286,22 @@
     </aside>
 
     <main class="ct-panel ct-main-panel">
+      <section class="ct-practice-guide" aria-labelledby="ct-practice-guide-title">
+        <div class="ct-practice-guide__intro">
+          <h2 id="ct-practice-guide-title" data-i18n="codingTyping.practiceTitle">编程打字练习</h2>
+          <p data-i18n="codingTyping.practiceDescription">看目标代码，在输入区完整打出来。</p>
+        </div>
+        <ol class="ct-practice-steps">
+          <li data-i18n="codingTyping.stepChoose">选择语言和类别</li>
+          <li data-i18n="codingTyping.stepType">输入目标代码</li>
+          <li data-i18n="codingTyping.stepSandbox">发送到沙盒或运行检查</li>
+        </ol>
+        <div class="ct-sandbox-help">
+          <span><strong data-i18n="codingTyping.sendToSandbox">发送到沙盒</strong><small data-i18n="codingTyping.sendOnlyHelp">只发送到沙盒，不执行</small></span>
+          <span><strong data-i18n="codingTyping.runInSandbox">在沙盒中运行</strong><small data-i18n="codingTyping.runHelp">发送到沙盒并立即执行</small></span>
+        </div>
+      </section>
+
       <!-- Toolbar -->
       <div class="ct-toolbar">
         <button class="ct-primary-btn" onclick="CodingTyping.randomItem()">
@@ -1350,7 +1366,16 @@
           <div class="ct-stat"><span data-i18n="codingTyping.errors">错误</span><strong id="ct-stat-errors">0</strong></div>
         </div>
 
-        <!-- Complete message (JS generated) -->\r\n        <div class="ct-result" id="ct-result" style="display:none;"></div>\r\n\r\n        <!-- Error chars -->\r\n        <div class="ct-error-chars" id="ct-error-chars" style="display:none;"></div>\r\n\r\n        <!-- Shortcut help -->\r\n        <div class="ct-shortcut-help" id="ct-shortcut-help"></div>\r\n\r\n        <!-- Stats summary -->
+        <!-- Complete message (JS generated) -->
+        <div class="ct-result" id="ct-result" style="display:none;"></div>
+
+        <!-- Error chars -->
+        <div class="ct-error-chars" id="ct-error-chars" style="display:none;"></div>
+
+        <!-- Shortcut help -->
+        <div class="ct-shortcut-help" id="ct-shortcut-help"></div>
+
+        <!-- Stats summary -->
         <div class="ct-stats-summary" id="ct-stats-summary"></div>
 
         <!-- Common mistakes (cross-session) -->
@@ -1382,7 +1407,13 @@
           <button class="ct-clear-history-btn" onclick="CodingTyping.clearHistory()" data-i18n="codingTyping.clearHistory">清空历史</button>
         </div>
 
-        <!-- Recent history -->\r\n        <div class="ct-history-list" id="ct-history-list"></div>\r\n      </div>\r\n    </main>\r\n  </section>\r\n\r\n  <!-- Glossary Modal -->
+        <!-- Recent history -->
+        <div class="ct-history-list" id="ct-history-list"></div>
+      </div>
+    </main>
+  </section>
+
+  <!-- Glossary Modal -->
   <div id="glossary-modal" class="glossary-modal" hidden>
     <div class="glossary-backdrop" data-glossary-close></div>
     <section class="glossary-dialog" role="dialog" aria-modal="true" aria-labelledby="glossary-title">
@@ -1440,8 +1471,8 @@
   <script src="data/coding_typing/sql_basics.js?v=v2026.6.14-r22.19"></script>
   <script src="data/coding_typing/_index.js?v=v2026.6.14-r22.19"></script>
   <script src="assets/js/sandbox_bridge.js?v=v2026.6.14-r22.19"></script>
-  <script src="assets/js/coding_typing.js?v=v2026.6.14-r22.19"></script>
-  <script src="assets/js/i18n-ui-dict.js?v=v2026.6.14-r22.19"></script>
+  <script src="assets/js/coding_typing.js?v=v2026.6.14-r22.20"></script>
+  <script src="assets/js/i18n-ui-dict.js?v=v2026.6.14-r22.20"></script>
   <script src="assets/js/i18n.js?v=20260609_global_pair_v12"></script>
   <script src="assets/js/content-i18n.js"></script>
   <script src="data/i18n_content/sql_en.js"></script>
@@ -1471,7 +1502,7 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="assets/js/supabase-client.js?v=round17.5"></script>
   <script src="assets/js/auth-ui.js?v=round17.5"></script>
-  <script src="assets/js/app.js?v=20260609_i18n_sidebar_v1"></script>
+  <script src="assets/js/app.js?v=v2026.6.14-r22.20"></script>
   <script src="assets/js/ai_assistant.js?v=20260608_global_target"></script>
 </body>
 </html>
