@@ -3338,6 +3338,7 @@ const WRONG_BOOK_RETRY_LIMIT = 30;
 const WRONG_BOOK_RETRY_ALL_LIMIT = 100;
 const WRONG_BOOK_RETRY_SETTINGS_KEY = 'study-tools-wrong-book-retry-settings-v1';
 const WRONG_BOOK_RETRY_HISTORY_KEY = 'study-tools-wrong-book-retry-history-v1';
+const WRONG_BOOK_SCHEMA_VERSION = 2;
 
 function stableWrongBookHash(value) {
   var hash = 2166136261;
@@ -3396,8 +3397,9 @@ function normalizeWrongBookItem(item) {
     : [];
   var wrongCount = Number(item.wrongCount);
   var correctRetryCount = Number(item.correctRetryCount);
+  var updatedAt = item.updatedAt || item.lastPracticedAt || item.lastWrongAt || item.firstWrongAt || now;
   return {
-    schemaVersion: 1,
+    schemaVersion: WRONG_BOOK_SCHEMA_VERSION,
     key: String(item.key || makeWrongQuestionKey(item)),
     module: String(item.module || item.subject || 'unknown').toLowerCase(),
     source: {
@@ -3423,7 +3425,9 @@ function normalizeWrongBookItem(item) {
     lastPracticedAt: item.lastPracticedAt || '',
     correctRetryCount: Number.isFinite(correctRetryCount) && correctRetryCount > 0 ? Math.floor(correctRetryCount) : 0,
     mastered: item.mastered === true,
-    archived: item.archived === true
+    archived: item.archived === true,
+    archivedAt: item.archivedAt || null,
+    updatedAt: updatedAt
   };
 }
 
@@ -3433,7 +3437,15 @@ function loadWrongBook() {
     if (!raw) return [];
     var parsed = JSON.parse(raw);
     if (!Array.isArray(parsed)) return [];
-    return parsed.filter(function (item) { return item && typeof item === 'object'; }).map(normalizeWrongBookItem);
+    /* Round 23.7: auto-migrate old schema items — check raw data before normalization */
+    var needsMigration = parsed.some(function (item) {
+      return !item || !item.updatedAt || !item.archivedAt && item.archivedAt !== null || (item.schemaVersion || 0) < WRONG_BOOK_SCHEMA_VERSION;
+    });
+    var items = parsed.filter(function (item) { return item && typeof item === 'object'; }).map(normalizeWrongBookItem);
+    if (needsMigration) {
+      try { saveWrongBook(items); } catch (_) {}
+    }
+    return items;
   } catch (e) {
     console.warn('[WrongBook] Failed to read localStorage:', e);
     return [];
@@ -3466,10 +3478,13 @@ function recordWrongBookItem(rawItem) {
       existing.wrongCount = previousWrongCount + 1;
       existing.mastered = mastered;
       existing.archived = false;
+      existing.archivedAt = null;
+      existing.updatedAt = now;
     } else {
       item.firstWrongAt = item.firstWrongAt || now;
       item.lastWrongAt = now;
       item.wrongCount = 1;
+      item.updatedAt = now;
       items.push(item);
     }
     return saveWrongBook(items);
@@ -4188,6 +4203,7 @@ function submitWrongBookRetryAnswer() {
   if (stored) {
     var wasMastered = stored.mastered === true;
     stored.lastPracticedAt = now;
+    stored.updatedAt = now;
     if (correct) {
       stored.correctRetryCount = Math.max(0, Number(stored.correctRetryCount) || 0) + 1;
       stored.mastered = true;
@@ -4293,7 +4309,9 @@ function toggleWrongBookMastered(key) {
   var items = loadWrongBook();
   var item = items.find(function (entry) { return entry.key === key; });
   if (!item) return;
+  var now = new Date().toISOString();
   item.mastered = !item.mastered;
+  item.updatedAt = now;
   if (saveWrongBook(items)) renderWrongBook();
 }
 
@@ -4302,7 +4320,14 @@ function removeWrongBookItem(key) {
     return typeof I18n !== 'undefined' ? I18n.t(translationKey) : fallback;
   };
   if (!window.confirm(t('wrongBook.confirmRemove', '确定从错题本移除这道题吗？'))) return;
-  var items = loadWrongBook().filter(function (entry) { return entry.key !== key; });
+  /* Round 23.7: soft delete instead of hard delete */
+  var items = loadWrongBook();
+  var item = items.find(function (entry) { return entry.key === key; });
+  if (!item) return;
+  var now = new Date().toISOString();
+  item.archived = true;
+  item.archivedAt = now;
+  item.updatedAt = now;
   if (saveWrongBook(items)) renderWrongBook();
 }
 
