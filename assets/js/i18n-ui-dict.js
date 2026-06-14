@@ -271,6 +271,23 @@
         submitExamUnansweredConfirm: "未解答の問題が {count} 問あります。本当に今提出しますか？",
         submitCodingExamUnansweredConfirm: "未解答または判定未合格の問題が {count} 問あります。本当に今提出しますか？"
       },
+      tools: {
+        tools: "ツール",
+        openMenu: "ツールメニューを開く",
+        closeMenu: "ツールメニューを閉じる",
+        learningTools: "学習ツール",
+        glossary: "用語集",
+        glossaryDesc: "IT / SQL / プログラミング用語を検索",
+        settings: "設定",
+        settingsDesc: "学習ツールの設定を調整",
+        dangerous: "危険な操作",
+        resetProgress: "進捗をリセット",
+        resetProgressDesc: "現在の学習進捗を消去します。確認が必要です",
+        confirmResetTitle: "進捗をリセットしますか？",
+        confirmResetBody: "現在の学習進捗が消去されます。続行しますか？",
+        cancel: "キャンセル",
+        confirmReset: "リセットする"
+      },
       message: {
         inputSqlRequired: "SQLクエリを入力してください。"
       },
@@ -663,6 +680,23 @@
         submitExamUnansweredConfirm: "还有 {count} 道题未作答，确定现在交卷吗？",
         submitCodingExamUnansweredConfirm: "还有 {count} 道题未作答或未判定成功，确定现在交卷吗？"
       },
+      tools: {
+        tools: "工具",
+        openMenu: "打开工具菜单",
+        closeMenu: "关闭工具菜单",
+        learningTools: "学习工具",
+        glossary: "术语表",
+        glossaryDesc: "查询 IT / SQL / 编程术语",
+        settings: "设置",
+        settingsDesc: "调整学习工具偏好",
+        dangerous: "危险操作",
+        resetProgress: "重置进度",
+        resetProgressDesc: "清空当前学习进度，需要确认",
+        confirmResetTitle: "确认重置进度？",
+        confirmResetBody: "此操作会清空当前学习进度，是否继续？",
+        cancel: "取消",
+        confirmReset: "确认重置"
+      },
       message: {
         inputSqlRequired: "请输入 SQL 语句."
       },
@@ -1054,6 +1088,23 @@
         submitExamUnansweredConfirm: "There are still {count} unanswered questions. Are you sure you want to submit now?",
         submitCodingExamUnansweredConfirm: "There are still {count} unanswered or failed questions. Are you sure you want to submit now?"
       },
+      tools: {
+        tools: "Tools",
+        openMenu: "Open tools menu",
+        closeMenu: "Close tools menu",
+        learningTools: "Learning Tools",
+        glossary: "Glossary",
+        glossaryDesc: "Search IT / SQL / programming terms",
+        settings: "Settings",
+        settingsDesc: "Adjust learning tool preferences",
+        dangerous: "Dangerous Actions",
+        resetProgress: "Reset Progress",
+        resetProgressDesc: "Clear current learning progress. Confirmation required",
+        confirmResetTitle: "Reset progress?",
+        confirmResetBody: "This will clear your current learning progress. Continue?",
+        cancel: "Cancel",
+        confirmReset: "Confirm reset"
+      },
       message: {
         inputSqlRequired: "Please enter an SQL query."
       },
@@ -1415,6 +1466,23 @@
         submitExamConfirm: "အဖြေလွှာ တင်သွင်းရန် သေချာပါသလား။",
         submitExamUnansweredConfirm: "မဖြေရသေးသော မေးခွန်း {count} ခု ကျန်ရှိနေပါသေးသည်။ တင်သွင်းရန် သေချာပါသလား။",
         submitCodingExamUnansweredConfirm: "မဖြေရသေးသော သို့မဟုတ် မအောင်မြင်သော မေးခွန်း {count} ခု ကျန်ရှိနေပါသေးသည်။ တင်သွင်းရန် သေချာပါသလား။"
+      },
+      tools: {
+        tools: "Tools",
+        openMenu: "Open tools menu",
+        closeMenu: "Close tools menu",
+        learningTools: "Learning Tools",
+        glossary: "Glossary",
+        glossaryDesc: "Search IT / SQL / programming terms",
+        settings: "Settings",
+        settingsDesc: "Adjust learning tool preferences",
+        dangerous: "Dangerous Actions",
+        resetProgress: "Reset Progress",
+        resetProgressDesc: "Clear current learning progress. Confirmation required",
+        confirmResetTitle: "Reset progress?",
+        confirmResetBody: "This will clear your current learning progress. Continue?",
+        cancel: "Cancel",
+        confirmReset: "Confirm reset"
       },
       message: {
         inputSqlRequired: "SQL query ထည့်ပါ။"
@@ -1778,6 +1846,23 @@
         submitExamUnansweredConfirm: "Vẫn còn {count} câu hỏi chưa trả lời. Bạn có chắc chắn muốn nộp bài bây giờ không?",
         submitCodingExamUnansweredConfirm: "Vẫn còn {count} câu hỏi chưa trả lời hoặc chưa đạt. Bạn có chắc chắn muốn nộp bài bây giờ không?"
       },
+      tools: {
+        tools: "Công cụ",
+        openMenu: "Mở menu công cụ",
+        closeMenu: "Đóng menu công cụ",
+        learningTools: "Công cụ học tập",
+        glossary: "Thuật ngữ",
+        glossaryDesc: "Tra cứu thuật ngữ IT / SQL / lập trình",
+        settings: "Cài đặt",
+        settingsDesc: "Điều chỉnh tùy chọn công cụ học tập",
+        dangerous: "Thao tác nguy hiểm",
+        resetProgress: "Đặt lại tiến trình",
+        resetProgressDesc: "Xóa tiến trình học hiện tại. Cần xác nhận",
+        confirmResetTitle: "Đặt lại tiến trình?",
+        confirmResetBody: "Thao tác này sẽ xóa tiến trình học hiện tại. Tiếp tục?",
+        cancel: "Hủy",
+        confirmReset: "Xác nhận đặt lại"
+      },
       message: {
         inputSqlRequired: "Vui lòng nhập câu lệnh SQL."
       },
@@ -2140,6 +2225,23 @@
         submitExamUnansweredConfirm: "Il reste {count} questions sans réponse. Voulez-vous vraiment soumettre maintenant ?",
         submitCodingExamUnansweredConfirm: "Il reste {count} questions sans réponse ou échouées. Voulez-vous vraiment soumettre maintenant ?"
       },
+      tools: {
+        tools: "Outils",
+        openMenu: "Ouvrir le menu des outils",
+        closeMenu: "Fermer le menu des outils",
+        learningTools: "Outils d'apprentissage",
+        glossary: "Glossaire",
+        glossaryDesc: "Rechercher des termes IT / SQL / programmation",
+        settings: "Paramètres",
+        settingsDesc: "Ajuster les préférences des outils d'apprentissage",
+        dangerous: "Actions dangereuses",
+        resetProgress: "Réinitialiser la progression",
+        resetProgressDesc: "Effacer la progression actuelle. Confirmation requise",
+        confirmResetTitle: "Réinitialiser la progression ?",
+        confirmResetBody: "Cette action effacera votre progression actuelle. Continuer ?",
+        cancel: "Annuler",
+        confirmReset: "Confirmer la réinitialisation"
+      },
       message: {
         inputSqlRequired: "Vui lòng nhập câu lệnh SQL."
       },
@@ -2498,6 +2600,24 @@
         resetProgressConfirm: "모든 {subject} 학습 진행도를 초기화하시겠습니까?",
         submitExamConfirm: "시험을 종료하고 제출하시겠습니까?",
         submitExamUnansweredConfirm: "미답 문제가 {count}문 있습니다. 정말 지금 제출하시겠습니까?",
+
+      tools: {
+        tools: "도구",
+        openMenu: "도구 메뉴 열기",
+        closeMenu: "도구 메뉴 닫기",
+        learningTools: "학습 도구",
+        glossary: "용어집",
+        glossaryDesc: "IT / SQL / 프로그래밍 용어 검색",
+        settings: "설정",
+        settingsDesc: "학습 도구 환경 설정 조정",
+        dangerous: "위험 작업",
+        resetProgress: "진행도 초기화",
+        resetProgressDesc: "현재 학습 진행도를 지웁니다. 확인 필요",
+        confirmResetTitle: "진행도를 초기화하시겠습니까?",
+        confirmResetBody: "현재 학습 진행도가 지워집니다. 계속하시겠습니까?",
+        cancel: "취소",
+        confirmReset: "초기화 확인"
+      },
         submitCodingExamUnansweredConfirm: "미답 또는 판정 미통과 문제가 {count}문 있습니다. 정말 지금 제출하시겠습니까?"
       },
       message: {
@@ -2891,6 +3011,24 @@
       submitExamUnansweredConfirm: "还有 {count} 道题未作答，确定现在交卷吗？ / 未解答の問題が {count} 問あります。本当に今提出しますか？",
       submitCodingExamUnansweredConfirm: "还有 {count} 道题未作答或未判定成功，确定现在交卷吗？ / 未解答または判定未合格の問題が {count} 問あります。本当に今提出しますか？"
     },
+
+      tools: {
+        tools: "工具 / ツール",
+        openMenu: "打开工具菜单 / ツールメニューを開く",
+        closeMenu: "关闭工具菜单 / ツールメニューを閉じる",
+        learningTools: "学习工具 / 学習ツール",
+        glossary: "术语表 / 用語集",
+        glossaryDesc: "查询 IT / SQL / 编程术语 / IT / SQL / プログラミング用語を検索",
+        settings: "设置 / 設定",
+        settingsDesc: "调整学习工具偏好 / 学習ツールの設定を調整",
+        dangerous: "危险操作 / 危険な操作",
+        resetProgress: "重置进度 / 進捗をリセット",
+        resetProgressDesc: "清空当前学习进度，需要确认 / 現在の学習進捗を消去します。確認が必要です",
+        confirmResetTitle: "确认重置进度？ / 進捗をリセットしますか？",
+        confirmResetBody: "此操作会清空当前学习进度，是否继续？ / 現在の学習進捗が消去されます。続行しますか？",
+        cancel: "取消 / キャンセル",
+        confirmReset: "确认重置 / リセットする"
+      },
     message: {
       inputSqlRequired: "请输入 SQL 语句。 / SQLクエリを入力してください。"
     },
@@ -3198,6 +3336,24 @@
         submitExamConfirm: "시험을 종료하고 제출하시겠습니까?",
         submitExamUnansweredConfirm: "미답 문제가 {count}문 있습니다. 정말 지금 제출하시겠습니까?",
         submitCodingExamUnansweredConfirm: "미답 또는 판정 미통과 문제가 {count}문 있습니다. 정말 지금 제출하시겠습니까?"
+      },
+
+      tools: {
+        tools: "도구",
+        openMenu: "도구 메뉴 열기",
+        closeMenu: "도구 메뉴 닫기",
+        learningTools: "학습 도구",
+        glossary: "용어집",
+        glossaryDesc: "IT / SQL / 프로그래밍 용어 검색",
+        settings: "설정",
+        settingsDesc: "학습 도구 환경 설정 조정",
+        dangerous: "위험 작업",
+        resetProgress: "진행도 초기화",
+        resetProgressDesc: "현재 학습 진행도를 지웁니다. 확인 필요",
+        confirmResetTitle: "진행도를 초기화하시겠습니까?",
+        confirmResetBody: "현재 학습 진행도가 지워집니다. 계속하시겠습니까?",
+        cancel: "취소",
+        confirmReset: "초기화 확인"
       },
       message: {
         inputSqlRequired: "SQL 쿼리를 입력해 주세요."

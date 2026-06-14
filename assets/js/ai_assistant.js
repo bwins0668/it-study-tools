@@ -1123,7 +1123,7 @@ window.StudyAI = (() => {
 
   function createUiV2() {
     const header = document.querySelector('.app-header');
-    const reset = document.querySelector('.reset-all-btn');
+    const reset = document.querySelector('.reset-all-btn') || document.getElementById('tools-trigger-btn');
     const menu = document.createElement('div');
     menu.className = 'ai-header-menu';
     menu.innerHTML = `
@@ -1310,7 +1310,7 @@ window.StudyAI = (() => {
 
   function createUi() {
     const header = document.querySelector('.app-header');
-    const reset = document.querySelector('.reset-all-btn');
+    const reset = document.querySelector('.reset-all-btn') || document.getElementById('tools-trigger-btn');
     const buttons = [
       ['ai-dashboard-btn', 'fa-chart-line', '学习教练', openDashboard],
       ['ai-generator-btn', 'fa-wand-magic-sparkles', 'AI 出题', openGenerator],

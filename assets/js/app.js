@@ -129,6 +129,9 @@ document.addEventListener("DOMContentLoaded", () => {
   // Initialize module switch panel
   initModuleSwitch();
 
+  // Initialize tools drawer
+  initToolsDrawer();
+
   // Trigger initial subject setup (SQL) so that the sub-header and all widgets are correctly initialized on load
   currentSubject = "";
   switchSubject('sql');
@@ -650,6 +653,147 @@ function resetAllProgress() {
     }
     updateProgressUI();
   }
+}
+
+// Tools Drawer Controller
+function initToolsDrawer() {
+  var trigger = document.getElementById('tools-trigger-btn');
+  var drawer = document.getElementById('tools-drawer');
+  var backdrop = document.getElementById('tools-drawer-backdrop');
+  var closeBtn = document.getElementById('tools-drawer-close');
+  if (!trigger || !drawer) return;
+
+  function openDrawer() {
+    drawer.removeAttribute('hidden');
+    trigger.setAttribute('aria-expanded', 'true');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeDrawer() {
+    drawer.setAttribute('hidden', '');
+    trigger.setAttribute('aria-expanded', 'false');
+    document.body.style.overflow = '';
+  }
+  function isDrawerOpen() { return !drawer.hasAttribute('hidden'); }
+
+  trigger.addEventListener('click', function (e) {
+    e.stopPropagation();
+    if (isDrawerOpen()) { closeDrawer(); } else { openDrawer(); }
+  });
+
+  if (backdrop) backdrop.addEventListener('click', closeDrawer);
+  if (closeBtn) closeBtn.addEventListener('click', closeDrawer);
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && isDrawerOpen()) closeDrawer();
+  });
+
+  // Handle drawer item clicks
+  drawer.addEventListener('click', function (e) {
+    var item = e.target.closest('[data-action]');
+    if (!item) return;
+    var action = item.getAttribute('data-action');
+
+    if (action === 'open-glossary') {
+      closeDrawer();
+      var glossaryBtn = document.getElementById('glossary-open-btn');
+      if (glossaryBtn) {
+        glossaryBtn.click();
+      } else {
+        // Fallback: open glossary modal directly
+        var modal = document.getElementById('glossary-modal');
+        if (modal && window.IT_TERMS_GLOSSARY) {
+          modal.removeAttribute('hidden');
+          document.body.style.overflow = 'hidden';
+          var search = document.getElementById('glossary-search');
+          if (search) setTimeout(function () { search.focus(); }, 100);
+        }
+      }
+      return;
+    }
+
+    if (action === 'open-settings') {
+      closeDrawer();
+      if (window.StudyAI && window.StudyAI.openSettings) {
+        window.StudyAI.openSettings();
+      } else {
+        var settingsBtn = document.getElementById('ai-settings-btn') || document.getElementById('ai-launcher-settings');
+        if (settingsBtn) settingsBtn.click();
+      }
+      return;
+    }
+
+    if (action === 'reset-progress') {
+      showResetConfirm();
+      return;
+    }
+  });
+}
+
+// Reset Progress Confirmation Modal
+function showResetConfirm() {
+  var overlay = document.getElementById('tools-confirm-overlay');
+  if (!overlay) {
+    overlay = document.createElement('div');
+    overlay.id = 'tools-confirm-overlay';
+    overlay.className = 'tools-confirm-overlay';
+    overlay.setAttribute('hidden', '');
+    document.body.appendChild(overlay);
+  }
+
+  var title = '确认重置进度？';
+  var body = '此操作会清空当前学习进度，是否继续？';
+  var cancelText = '取消';
+  var confirmText = '确认重置';
+  if (window.I18n && typeof window.I18n.t === 'function') {
+    title = window.I18n.t('tools.confirmResetTitle') || title;
+    body = window.I18n.t('tools.confirmResetBody') || body;
+    cancelText = window.I18n.t('tools.cancel') || cancelText;
+    confirmText = window.I18n.t('tools.confirmReset') || confirmText;
+  }
+
+  overlay.innerHTML =
+    '<div class="tools-confirm-box">' +
+      '<h3>' + escapeHtml(title) + '</h3>' +
+      '<p>' + escapeHtml(body) + '</p>' +
+      '<div class="tools-confirm-actions">' +
+        '<button class="tools-confirm-cancel" id="tools-confirm-cancel">' + escapeHtml(cancelText) + '</button>' +
+        '<button class="tools-confirm-ok" id="tools-confirm-ok">' + escapeHtml(confirmText) + '</button>' +
+      '</div>' +
+    '</div>';
+
+  overlay.removeAttribute('hidden');
+
+  function closeConfirm() {
+    overlay.setAttribute('hidden', '');
+    overlay.innerHTML = '';
+  }
+
+  document.getElementById('tools-confirm-cancel').addEventListener('click', function () {
+    closeConfirm();
+  });
+
+  document.getElementById('tools-confirm-ok').addEventListener('click', function () {
+    closeConfirm();
+    resetAllProgress();
+  });
+
+  overlay.addEventListener('click', function (e) {
+    if (e.target === overlay) closeConfirm();
+  });
+
+  var escHandler = function (e) {
+    if (e.key === 'Escape') {
+      closeConfirm();
+      document.removeEventListener('keydown', escHandler);
+    }
+  };
+  document.addEventListener('keydown', escHandler);
+}
+
+function escapeHtml(str) {
+  var div = document.createElement('div');
+  div.appendChild(document.createTextNode(str));
+  return div.innerHTML;
 }
 
 // Progress UI Update

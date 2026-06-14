@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-Hans" data-study-tools-version="v2026.6.14-r22.25">
+<html lang="zh-Hans" data-study-tools-version="v2026.6.14-r22.26">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -66,15 +66,60 @@
         <i class="fa-solid fa-sun"></i>
       </button>
 
-      <button id="glossary-open-btn" class="header-action-btn" type="button" title="术语表 / 用語集" data-i18n-title="glossary.open">
-        <i class="fa-solid fa-book-open"></i>
-        <span data-i18n="glossary.open">术语表</span>
-      </button>
-
-      <button class="reset-all-btn" onclick="resetAllProgress()">
-        <i class="fa-solid fa-rotate-left"></i> <span data-i18n="common.resetProgress">重置进度</span>
+      <!-- Tools Drawer Trigger -->
+      <button class="tools-trigger-btn" id="tools-trigger-btn" type="button"
+        aria-expanded="false" aria-controls="tools-drawer"
+        data-i18n-aria-label="tools.openMenu" data-i18n-title="tools.openMenu">
+        <i class="fa-solid fa-screwdriver-wrench"></i>
+        <span class="tools-trigger-label" data-i18n="tools.tools">工具</span>
       </button>
     </header>
+
+    <!-- Tools Drawer -->
+    <aside class="tools-drawer" id="tools-drawer" hidden role="dialog" aria-modal="true" data-i18n-aria-label="tools.tools">
+      <div class="tools-drawer__backdrop" id="tools-drawer-backdrop"></div>
+      <div class="tools-drawer__panel">
+        <!-- Hidden glossary-open-btn for glossary.js event binding -->
+        <button id="glossary-open-btn" hidden aria-hidden="true" tabindex="-1"></button>
+        <div class="tools-drawer__header">
+          <strong data-i18n="tools.tools">工具</strong>
+          <button type="button" class="tools-drawer__close" id="tools-drawer-close" aria-label="Close" data-i18n-aria-label="tools.closeMenu">&times;</button>
+        </div>
+
+        <div class="tools-drawer__section">
+          <div class="tools-drawer__section-title" data-i18n="tools.learningTools">学习工具</div>
+          <button type="button" class="tools-drawer-item" data-action="open-glossary">
+            <span class="tools-drawer-item__icon">📖</span>
+            <span class="tools-drawer-item__text">
+              <strong data-i18n="tools.glossary">术语表</strong>
+              <small data-i18n="tools.glossaryDesc">查询 IT / SQL / 编程术语</small>
+            </span>
+          </button>
+        </div>
+
+        <div class="tools-drawer__section">
+          <div class="tools-drawer__section-title" data-i18n="tools.settings">设置</div>
+          <button type="button" class="tools-drawer-item" data-action="open-settings">
+            <span class="tools-drawer-item__icon">⚙️</span>
+            <span class="tools-drawer-item__text">
+              <strong data-i18n="tools.settings">设置</strong>
+              <small data-i18n="tools.settingsDesc">调整学习工具偏好</small>
+            </span>
+          </button>
+        </div>
+
+        <div class="tools-drawer__section tools-drawer__section--danger">
+          <div class="tools-drawer__section-title" data-i18n="tools.dangerous">危险操作</div>
+          <button type="button" class="tools-drawer-item tools-drawer-item--danger" data-action="reset-progress">
+            <span class="tools-drawer-item__icon">↩️</span>
+            <span class="tools-drawer-item__text">
+              <strong data-i18n="tools.resetProgress">重置进度</strong>
+              <small data-i18n="tools.resetProgressDesc">清空当前学习进度，需要确认</small>
+            </span>
+          </button>
+        </div>
+      </div>
+    </aside>
 
     <!-- Module Switch Panel -->
     <div class="module-switch-panel" id="module-switch-panel" hidden role="dialog" aria-modal="true" data-i18n-aria-label="moduleSwitch.title">
