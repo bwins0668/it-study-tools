@@ -13,7 +13,8 @@ window.CODING_TYPING_DATA_SQL = [
     "code": "SELECT * FROM users;",
     "explanation": {
       "zh-CN": "* 表示选择所有列。FROM 后面跟表名。",
-      "ja-JP": "* は全列を選択します。FROM の後にテーブル名を書きます。"
+      "ja-JP": "* は全列を選択します。FROM の後にテーブル名を書きます。",
+      "en-US": "* selects all columns. FROM specifies the table name.",
     },
     "focus": [
       "SELECT 关键字",
@@ -23,7 +24,8 @@ window.CODING_TYPING_DATA_SQL = [
     ],
     "hint": {
       "zh-CN": "关键字用大写。* 是通配符。",
-      "ja-JP": "キーワードは大文字。* は全列を表すワイルドカード。"
+      "ja-JP": "キーワードは大文字。* は全列を表すワイルドカード。",
+      "en-US": "SELECT * returns every column from the table.",
     },
     "sandboxRunnable": true,
     "expectedOutput": "",
@@ -44,7 +46,8 @@ window.CODING_TYPING_DATA_SQL = [
     "code": "SELECT name, age FROM employees;",
     "explanation": {
       "zh-CN": "SELECT 后列出列名，用逗号分隔。",
-      "ja-JP": "SELECT の後に列名をカンマ区切りで列挙します。"
+      "ja-JP": "SELECT の後に列名をカンマ区切りで列挙します。",
+      "en-US": "List column names after SELECT, separated by commas.",
     },
     "focus": [
       "列名列举",
@@ -53,7 +56,8 @@ window.CODING_TYPING_DATA_SQL = [
     ],
     "hint": {
       "zh-CN": "列名之间用逗号分隔，最后一个列名后不要逗号。",
-      "ja-JP": "列名はカンマで区切ります。最後の列名の後ろにはカンマを付けません。"
+      "ja-JP": "列名はカンマで区切ります。最後の列名の後ろにはカンマを付けません。",
+      "en-US": "Only the named columns will be returned.",
     },
     "sandboxRunnable": true,
     "expectedOutput": "",
@@ -74,7 +78,8 @@ window.CODING_TYPING_DATA_SQL = [
     "code": "SELECT DISTINCT city FROM customers;",
     "explanation": {
       "zh-CN": "DISTINCT 去除重复行。",
-      "ja-JP": "DISTINCT は重複を除去します。"
+      "ja-JP": "DISTINCT は重複を除去します。",
+      "en-US": "DISTINCT removes duplicate rows from the result.",
     },
     "focus": [
       "DISTINCT 位置",
@@ -82,7 +87,8 @@ window.CODING_TYPING_DATA_SQL = [
     ],
     "hint": {
       "zh-CN": "DISTINCT 紧跟在 SELECT 后面。",
-      "ja-JP": "DISTINCT は SELECT の直後に置きます。"
+      "ja-JP": "DISTINCT は SELECT の直後に置きます。",
+      "en-US": "DISTINCT applies to all selected columns.",
     },
     "sandboxRunnable": true,
     "expectedOutput": "",
@@ -103,7 +109,8 @@ window.CODING_TYPING_DATA_SQL = [
     "code": "SELECT name AS 名前, age AS 年齢 FROM users;",
     "explanation": {
       "zh-CN": "AS 给列取别名。",
-      "ja-JP": "AS で列に別名を付けます。"
+      "ja-JP": "AS で列に別名を付けます。",
+      "en-US": "AS gives a column or table an alias (temporary name).",
     },
     "focus": [
       "AS 关键字",
@@ -111,7 +118,8 @@ window.CODING_TYPING_DATA_SQL = [
     ],
     "hint": {
       "zh-CN": "AS 写在列名后面，后面跟别名。",
-      "ja-JP": "AS は列名の後に書き、その後に別名を書きます。"
+      "ja-JP": "AS は列名の後に書き、その後に別名を書きます。",
+      "en-US": "Aliases make output column names more readable.",
     },
     "sandboxRunnable": true,
     "expectedOutput": "",
@@ -132,7 +140,8 @@ window.CODING_TYPING_DATA_SQL = [
     "code": "SELECT * FROM products WHERE price > 100;",
     "explanation": {
       "zh-CN": "WHERE 用于过滤记录。",
-      "ja-JP": "WHERE はレコードをフィルタリングします。"
+      "ja-JP": "WHERE はレコードをフィルタリングします。",
+      "en-US": "WHERE filters records based on a condition.",
     },
     "focus": [
       "WHERE 位置（FROM 后）",
@@ -141,7 +150,8 @@ window.CODING_TYPING_DATA_SQL = [
     ],
     "hint": {
       "zh-CN": "WHERE 写在 FROM 之后。条件中列名在左。",
-      "ja-JP": "WHERE は FROM の後に書きます。条件では列名を左に。"
+      "ja-JP": "WHERE は FROM の後に書きます。条件では列名を左に。",
+      "en-US": "Only rows that satisfy the condition are returned.",
     },
     "sandboxRunnable": true,
     "expectedOutput": "",
@@ -162,7 +172,8 @@ window.CODING_TYPING_DATA_SQL = [
     "code": "SELECT * FROM users WHERE name = 'Alice';",
     "explanation": {
       "zh-CN": "SQL 字符串值用单引号。",
-      "ja-JP": "SQL では文字列値は一重引用符です。"
+      "ja-JP": "SQL では文字列値は一重引用符です。",
+      "en-US": "String values in SQL are enclosed in single quotes.",
     },
     "focus": [
       "单引号字符串",
@@ -170,7 +181,8 @@ window.CODING_TYPING_DATA_SQL = [
     ],
     "hint": {
       "zh-CN": "SQL 中字符串用单引号，不是双引号。",
-      "ja-JP": "SQL では文字列は一重引用符、二重引用符ではありません。"
+      "ja-JP": "SQL では文字列は一重引用符、二重引用符ではありません。",
+      "en-US": "SQL uses single quotes, not double quotes, for strings.",
     },
     "sandboxRunnable": true,
     "expectedOutput": "",
@@ -191,7 +203,8 @@ window.CODING_TYPING_DATA_SQL = [
     "code": "SELECT * FROM orders WHERE amount > 50 AND status = 'shipped';",
     "explanation": {
       "zh-CN": "AND 连接两个条件，都必须为真。",
-      "ja-JP": "AND は2つの条件を結合し、両方とも真である必要があります。"
+      "ja-JP": "AND は2つの条件を結合し、両方とも真である必要があります。",
+      "en-US": "AND combines two conditions—both must be true.",
     },
     "focus": [
       "AND 连接",
@@ -199,7 +212,8 @@ window.CODING_TYPING_DATA_SQL = [
     ],
     "hint": {
       "zh-CN": "两个条件用 AND 连接，字符串值用单引号。",
-      "ja-JP": "2つの条件を AND で接続します。文字列値は一重引用符。"
+      "ja-JP": "2つの条件を AND で接続します。文字列値は一重引用符。",
+      "en-US": "Use AND when you need all conditions to match.",
     },
     "sandboxRunnable": true,
     "expectedOutput": "",
@@ -220,7 +234,8 @@ window.CODING_TYPING_DATA_SQL = [
     "code": "SELECT * FROM students WHERE grade = 'A' OR grade = 'B';",
     "explanation": {
       "zh-CN": "OR 任意一个条件为真即返回。",
-      "ja-JP": "OR はどちらかの条件が真の場合に結果を返します。"
+      "ja-JP": "OR はどちらかの条件が真の場合に結果を返します。",
+      "en-US": "OR returns rows where at least one condition is true.",
     },
     "focus": [
       "OR 连接",
@@ -228,7 +243,8 @@ window.CODING_TYPING_DATA_SQL = [
     ],
     "hint": {
       "zh-CN": "每侧都要写完整条件，不要写成 grade='A' OR 'B'。",
-      "ja-JP": "各条件は完全に書きます。grade='A' OR 'B' とは書きません。"
+      "ja-JP": "各条件は完全に書きます。grade='A' OR 'B' とは書きません。",
+      "en-US": "Use OR when any single condition should match.",
     },
     "sandboxRunnable": true,
     "expectedOutput": "",
@@ -249,7 +265,8 @@ window.CODING_TYPING_DATA_SQL = [
     "code": "SELECT * FROM products ORDER BY price DESC;",
     "explanation": {
       "zh-CN": "ORDER BY 排序，ASC 升序（默认），DESC 降序。",
-      "ja-JP": "ORDER BY は結果を並び替えます。ASC 昇順、DESC 降順。"
+      "ja-JP": "ORDER BY は結果を並び替えます。ASC 昇順、DESC 降順。",
+      "en-US": "ORDER BY sorts results. ASC is ascending (default), DESC is descending.",
     },
     "focus": [
       "ORDER BY 位置",
@@ -258,7 +275,8 @@ window.CODING_TYPING_DATA_SQL = [
     ],
     "hint": {
       "zh-CN": "ORDER BY 写在 WHERE 之后。默认升序。",
-      "ja-JP": "ORDER BY は WHERE の後に書きます。デフォルトは昇順。"
+      "ja-JP": "ORDER BY は WHERE の後に書きます。デフォルトは昇順。",
+      "en-US": "Add DESC after the column name for descending order.",
     },
     "sandboxRunnable": true,
     "expectedOutput": "",
@@ -279,7 +297,8 @@ window.CODING_TYPING_DATA_SQL = [
     "code": "SELECT name, age FROM employees ORDER BY age DESC, name ASC;",
     "explanation": {
       "zh-CN": "ORDER BY 可以跟多个列，按优先级排序。",
-      "ja-JP": "ORDER BY の後に複数の列を優先順に指定できます。"
+      "ja-JP": "ORDER BY の後に複数の列を優先順に指定できます。",
+      "en-US": "ORDER BY can accept multiple columns for sorting priority.",
     },
     "focus": [
       "逗号分隔",
@@ -287,7 +306,8 @@ window.CODING_TYPING_DATA_SQL = [
     ],
     "hint": {
       "zh-CN": "每列后面可以单独指定 ASC 或 DESC。",
-      "ja-JP": "各列の後に ASC または DESC を個別に指定できます。"
+      "ja-JP": "各列の後に ASC または DESC を個別に指定できます。",
+      "en-US": "The first column takes the highest priority.",
     },
     "sandboxRunnable": true,
     "expectedOutput": "",
@@ -308,7 +328,8 @@ window.CODING_TYPING_DATA_SQL = [
     "code": "SELECT * FROM orders WHERE total > 50 ORDER BY created_at DESC;",
     "explanation": {
       "zh-CN": "WHERE 在前过滤行，ORDER BY 在后排序。",
-      "ja-JP": "WHERE が先にフィルター、ORDER BY が後に並び替え。"
+      "ja-JP": "WHERE が先にフィルター、ORDER BY が後に並び替え。",
+      "en-US": "WHERE filters rows first, then ORDER BY sorts the filtered result.",
     },
     "focus": [
       "WHERE 在前",
@@ -316,7 +337,8 @@ window.CODING_TYPING_DATA_SQL = [
     ],
     "hint": {
       "zh-CN": "SQL 子句顺序：SELECT FROM WHERE ORDER BY。",
-      "ja-JP": "SQL 句の順序：SELECT FROM WHERE ORDER BY。"
+      "ja-JP": "SQL 句の順序：SELECT FROM WHERE ORDER BY。",
+      "en-US": "WHERE always comes before ORDER BY in a query.",
     },
     "sandboxRunnable": true,
     "expectedOutput": "",
@@ -337,7 +359,8 @@ window.CODING_TYPING_DATA_SQL = [
     "code": "SELECT department, COUNT(*) FROM employees GROUP BY department;",
     "explanation": {
       "zh-CN": "GROUP BY 按某列分组，与聚合函数一起使用。",
-      "ja-JP": "GROUP BY は列でグループ化し、集約関数と一緒に使います。"
+      "ja-JP": "GROUP BY は列でグループ化し、集約関数と一緒に使います。",
+      "en-US": "GROUP BY groups rows that have the same value in a column. It is used with aggregate functions.",
     },
     "focus": [
       "GROUP BY 位置",
@@ -345,7 +368,8 @@ window.CODING_TYPING_DATA_SQL = [
     ],
     "hint": {
       "zh-CN": "GROUP BY 写在 WHERE 之后。",
-      "ja-JP": "GROUP BY は WHERE の後に書きます。"
+      "ja-JP": "GROUP BY は WHERE の後に書きます。",
+      "en-US": "COUNT(*) counts the number of rows in each group.",
     },
     "sandboxRunnable": true,
     "expectedOutput": "",
@@ -366,7 +390,8 @@ window.CODING_TYPING_DATA_SQL = [
     "code": "SELECT department, COUNT(*) AS emp_count, AVG(salary) AS avg_salary FROM employees GROUP BY department;",
     "explanation": {
       "zh-CN": "一个 GROUP BY 中可以包含多个聚合函数。",
-      "ja-JP": "1つの GROUP BY に複数の集約関数を含められます。"
+      "ja-JP": "1つの GROUP BY に複数の集約関数を含められます。",
+      "en-US": "A single GROUP BY can include multiple aggregate functions.",
     },
     "focus": [
       "多聚合函数",
@@ -374,7 +399,8 @@ window.CODING_TYPING_DATA_SQL = [
     ],
     "hint": {
       "zh-CN": "COUNT(*) 统计行数，AVG(salary) 计算平均值。",
-      "ja-JP": "COUNT(*) は行数、AVG(salary) は平均値を計算します。"
+      "ja-JP": "COUNT(*) は行数、AVG(salary) は平均値を計算します。",
+      "en-US": "AVG(), SUM(), COUNT(), MAX(), MIN() can all be used together.",
     },
     "sandboxRunnable": true,
     "expectedOutput": "",
@@ -395,7 +421,8 @@ window.CODING_TYPING_DATA_SQL = [
     "code": "SELECT city, status, COUNT(*) FROM orders GROUP BY city, status;",
     "explanation": {
       "zh-CN": "GROUP BY 后面可以跟多个列。",
-      "ja-JP": "GROUP BY の後に複数の列を指定できます。"
+      "ja-JP": "GROUP BY の後に複数の列を指定できます。",
+      "en-US": "GROUP BY can group by multiple columns to create sub-groups.",
     },
     "focus": [
       "多列分组",
@@ -403,7 +430,8 @@ window.CODING_TYPING_DATA_SQL = [
     ],
     "hint": {
       "zh-CN": "SELECT 中所有非聚合列必须在 GROUP BY 中。",
-      "ja-JP": "SELECT 内のすべての非集約列は GROUP BY に含める必要があります。"
+      "ja-JP": "SELECT 内のすべての非集約列は GROUP BY に含める必要があります。",
+      "en-US": "Each unique combination of the grouped columns forms a group.",
     },
     "sandboxRunnable": true,
     "expectedOutput": "",
@@ -424,7 +452,8 @@ window.CODING_TYPING_DATA_SQL = [
     "code": "SELECT department, COUNT(*) FROM employees GROUP BY department HAVING COUNT(*) > 5;",
     "explanation": {
       "zh-CN": "HAVING 过滤分组后的结果。",
-      "ja-JP": "HAVING はグループ化後の結果をフィルタリングします。"
+      "ja-JP": "HAVING はグループ化後の結果をフィルタリングします。",
+      "en-US": "HAVING filters grouped results (similar to WHERE for individual rows).",
     },
     "focus": [
       "HAVING 位置",
@@ -432,7 +461,8 @@ window.CODING_TYPING_DATA_SQL = [
     ],
     "hint": {
       "zh-CN": "HAVING 只能与 GROUP BY 一起使用。",
-      "ja-JP": "HAVING は GROUP BY と一緒にのみ使えます。"
+      "ja-JP": "HAVING は GROUP BY と一緒にのみ使えます。",
+      "en-US": "Use HAVING to filter after GROUP BY, WHERE to filter before it.",
     },
     "sandboxRunnable": true,
     "expectedOutput": "",
@@ -453,7 +483,8 @@ window.CODING_TYPING_DATA_SQL = [
     "code": "SELECT department, AVG(salary) FROM employees GROUP BY department HAVING AVG(salary) > 40000 AND COUNT(*) >= 3;",
     "explanation": {
       "zh-CN": "HAVING 支持 AND/OR 连接多个聚合条件。",
-      "ja-JP": "HAVING は AND/OR で複数の集約条件を接続できます。"
+      "ja-JP": "HAVING は AND/OR で複数の集約条件を接続できます。",
+      "en-US": "HAVING supports AND/OR to combine multiple aggregate conditions.",
     },
     "focus": [
       "多条件 HAVING",
@@ -461,7 +492,8 @@ window.CODING_TYPING_DATA_SQL = [
     ],
     "hint": {
       "zh-CN": "HAVING 中的条件只能引用聚合函数或 GROUP BY 中的列。",
-      "ja-JP": "HAVING 内の条件は集約関数か GROUP BY 内の列のみ参照できます。"
+      "ja-JP": "HAVING 内の条件は集約関数か GROUP BY 内の列のみ参照できます。",
+      "en-US": "You can use AND, OR, and NOT inside HAVING clauses.",
     },
     "sandboxRunnable": true,
     "expectedOutput": "",
@@ -482,7 +514,8 @@ window.CODING_TYPING_DATA_SQL = [
     "code": "SELECT * FROM orders INNER JOIN customers ON orders.customer_id = customers.id;",
     "explanation": {
       "zh-CN": "INNER JOIN 返回两个表中匹配的行。",
-      "ja-JP": "INNER JOIN は2つのテーブルで一致する行を返します。"
+      "ja-JP": "INNER JOIN は2つのテーブルで一致する行を返します。",
+      "en-US": "INNER JOIN returns only the rows that match in both tables.",
     },
     "focus": [
       "INNER JOIN 语法",
@@ -491,7 +524,8 @@ window.CODING_TYPING_DATA_SQL = [
     ],
     "hint": {
       "zh-CN": "JOIN 条件用 ON，不用 WHERE。",
-      "ja-JP": "JOIN の条件は ON を使い、WHERE は使いません。"
+      "ja-JP": "JOIN の条件は ON を使い、WHERE は使いません。",
+      "en-US": "Specify the join condition with ON, not WHERE.",
     },
     "sandboxRunnable": true,
     "expectedOutput": "",
@@ -512,7 +546,8 @@ window.CODING_TYPING_DATA_SQL = [
     "code": "SELECT * FROM customers LEFT JOIN orders ON customers.id = orders.customer_id;",
     "explanation": {
       "zh-CN": "LEFT JOIN 返回左表所有行，不匹配用 NULL。",
-      "ja-JP": "LEFT JOIN は左テーブルのすべての行を返します。一致しない場合は NULL。"
+      "ja-JP": "LEFT JOIN は左テーブルのすべての行を返します。一致しない場合は NULL。",
+      "en-US": "LEFT JOIN returns all rows from the left table and matching rows from the right. Non-matches become NULL.",
     },
     "focus": [
       "LEFT JOIN 关键字",
@@ -520,7 +555,8 @@ window.CODING_TYPING_DATA_SQL = [
     ],
     "hint": {
       "zh-CN": "LEFT JOIN 左边的表是主表，所有行都会保留。",
-      "ja-JP": "LEFT JOIN の左側のテーブルが主テーブルです。"
+      "ja-JP": "LEFT JOIN の左側のテーブルが主テーブルです。",
+      "en-US": "LEFT JOIN preserves all rows from the first (left) table.",
     },
     "sandboxRunnable": true,
     "expectedOutput": "",
@@ -541,7 +577,8 @@ window.CODING_TYPING_DATA_SQL = [
     "code": "SELECT e.name, d.name AS dept\nFROM employees e\nJOIN departments d ON e.dept_id = d.id\nJOIN projects p ON e.id = p.lead_id;",
     "explanation": {
       "zh-CN": "可以连续 JOIN 多个表，使用表别名。",
-      "ja-JP": "複数のテーブルを連続で JOIN できます。テーブル別名を使用。"
+      "ja-JP": "複数のテーブルを連続で JOIN できます。テーブル別名を使用。",
+      "en-US": "You can JOIN multiple tables in a single query using table aliases.",
     },
     "focus": [
       "多行 SQL 格式",
@@ -550,7 +587,8 @@ window.CODING_TYPING_DATA_SQL = [
     ],
     "hint": {
       "zh-CN": "每个 JOIN 都要有自己的 ON 条件。",
-      "ja-JP": "各 JOIN には独立した ON 条件が必要です。"
+      "ja-JP": "各 JOIN には独立した ON 条件が必要です。",
+      "en-US": "Use short aliases (e, d) to make JOIN queries more readable.",
     },
     "sandboxRunnable": true,
     "expectedOutput": "",
@@ -571,7 +609,8 @@ window.CODING_TYPING_DATA_SQL = [
     "code": "SELECT e1.name AS employee, e2.name AS manager\nFROM employees e1\nJOIN employees e2 ON e1.manager_id = e2.id;",
     "explanation": {
       "zh-CN": "SELF JOIN 是表与自身连接。使用不同别名。",
-      "ja-JP": "SELF JOIN はテーブル自身との結合です。異なる別名を使用。"
+      "ja-JP": "SELF JOIN はテーブル自身との結合です。異なる別名を使用。",
+      "en-US": "A SELF JOIN joins a table to itself using different aliases.",
     },
     "focus": [
       "同一表别名 x2",
@@ -579,7 +618,8 @@ window.CODING_TYPING_DATA_SQL = [
     ],
     "hint": {
       "zh-CN": "同一个表起两个不同的别名。",
-      "ja-JP": "同じテーブルに2つの別名を付けます。"
+      "ja-JP": "同じテーブルに2つの別名を付けます。",
+      "en-US": "Give the table two different aliases to distinguish the roles.",
     },
     "sandboxRunnable": true,
     "expectedOutput": "",
@@ -600,7 +640,8 @@ window.CODING_TYPING_DATA_SQL = [
     "code": "INSERT INTO users (name, email) VALUES ('Bob', 'bob@example.com');",
     "explanation": {
       "zh-CN": "INSERT 向表添加新行。字符串值用单引号。",
-      "ja-JP": "INSERT はテーブルに新しい行を追加します。文字列値は一重引用符。"
+      "ja-JP": "INSERT はテーブルに新しい行を追加します。文字列値は一重引用符。",
+      "en-US": "INSERT adds a new row to a table. String values use single quotes.",
     },
     "focus": [
       "INSERT INTO 语法",
@@ -609,7 +650,8 @@ window.CODING_TYPING_DATA_SQL = [
     ],
     "hint": {
       "zh-CN": "列名写在表名后的括号内，值在 VALUES 后。",
-      "ja-JP": "列名はテーブル名の後の括弧内に、値は VALUES の後。"
+      "ja-JP": "列名はテーブル名の後の括弧内に、値は VALUES の後。",
+      "en-US": "List the column names in parentheses, then the VALUES.",
     },
     "sandboxRunnable": true,
     "expectedOutput": "",
@@ -630,7 +672,8 @@ window.CODING_TYPING_DATA_SQL = [
     "code": "INSERT INTO users VALUES (1, 'Alice', 'alice@example.com');",
     "explanation": {
       "zh-CN": "不指定列名需要按顺序提供所有列的值。",
-      "ja-JP": "列名を指定しない場合、定義順にすべての列の値を提供します。"
+      "ja-JP": "列名を指定しない場合、定義順にすべての列の値を提供します。",
+      "en-US": "Without column names, you must provide values for all columns in table order.",
     },
     "focus": [
       "无列名简写",
@@ -638,7 +681,8 @@ window.CODING_TYPING_DATA_SQL = [
     ],
     "hint": {
       "zh-CN": "不写列名时，值顺序必须与表结构列顺序一致。",
-      "ja-JP": "列名省略時は値の順序をテーブル構造に合わせます。"
+      "ja-JP": "列名省略時は値の順序をテーブル構造に合わせます。",
+      "en-US": "The order and number of values must match the table definition exactly.",
     },
     "sandboxRunnable": true,
     "expectedOutput": "",
@@ -659,7 +703,8 @@ window.CODING_TYPING_DATA_SQL = [
     "code": "INSERT INTO archive_orders\nSELECT * FROM orders WHERE created_at < '2024-01-01';",
     "explanation": {
       "zh-CN": "INSERT SELECT 将查询结果插入目标表。",
-      "ja-JP": "INSERT SELECT は検索結果をターゲットテーブルに挿入します。"
+      "ja-JP": "INSERT SELECT は検索結果をターゲットテーブルに挿入します。",
+      "en-US": "INSERT INTO ... SELECT copies query results into a target table.",
     },
     "focus": [
       "SELECT 子查询",
@@ -667,7 +712,8 @@ window.CODING_TYPING_DATA_SQL = [
     ],
     "hint": {
       "zh-CN": "INSERT 和 SELECT 的列必须匹配。",
-      "ja-JP": "INSERT と SELECT の列を一致させる必要があります。"
+      "ja-JP": "INSERT と SELECT の列を一致させる必要があります。",
+      "en-US": "The source query column types must match the target table.",
     },
     "sandboxRunnable": true,
     "expectedOutput": "",
@@ -688,7 +734,8 @@ window.CODING_TYPING_DATA_SQL = [
     "code": "UPDATE users SET age = 26 WHERE name = 'Alice';",
     "explanation": {
       "zh-CN": "UPDATE 修改表中的数据。务必写 WHERE！",
-      "ja-JP": "UPDATE はテーブルのデータを変更します。必ず WHERE を書きましょう！"
+      "ja-JP": "UPDATE はテーブルのデータを変更します。必ず WHERE を書きましょう！",
+      "en-US": "UPDATE modifies existing data in a table. Always use WHERE!",
     },
     "focus": [
       "UPDATE 表名",
@@ -697,7 +744,8 @@ window.CODING_TYPING_DATA_SQL = [
     ],
     "hint": {
       "zh-CN": "务必写 WHERE 条件，否则会更新全表！",
-      "ja-JP": "必ず WHERE 条件を書きましょう！忘れると全テーブルが更新されます！"
+      "ja-JP": "必ず WHERE 条件を書きましょう！忘れると全テーブルが更新されます！",
+      "en-US": "Omitting WHERE updates ALL rows—always double-check.",
     },
     "sandboxRunnable": true,
     "expectedOutput": "",
@@ -718,7 +766,8 @@ window.CODING_TYPING_DATA_SQL = [
     "code": "UPDATE products SET price = 29.99, stock = 100 WHERE id = 5;",
     "explanation": {
       "zh-CN": "UPDATE 可以同时更新多个列。",
-      "ja-JP": "UPDATE は複数の列を同時に更新できます。"
+      "ja-JP": "UPDATE は複数の列を同時に更新できます。",
+      "en-US": "UPDATE can modify multiple columns in a single statement.",
     },
     "focus": [
       "SET 多列逗号分隔",
@@ -726,7 +775,8 @@ window.CODING_TYPING_DATA_SQL = [
     ],
     "hint": {
       "zh-CN": "SET 后面可以跟多个列=值对，用逗号分隔。",
-      "ja-JP": "SET の後に複数の「列=値」をカンマで区切ります。"
+      "ja-JP": "SET の後に複数の「列=値」をカンマで区切ります。",
+      "en-US": "Separate column assignments with commas.",
     },
     "sandboxRunnable": true,
     "expectedOutput": "",
@@ -747,7 +797,8 @@ window.CODING_TYPING_DATA_SQL = [
     "code": "DELETE FROM users WHERE id = 10;",
     "explanation": {
       "zh-CN": "DELETE 用于删除表中的行。务必写 WHERE！",
-      "ja-JP": "DELETE はテーブルの行を削除します。必ず WHERE を書きましょう！"
+      "ja-JP": "DELETE はテーブルの行を削除します。必ず WHERE を書きましょう！",
+      "en-US": "DELETE removes rows from a table. Always use WHERE!",
     },
     "focus": [
       "DELETE FROM 语法",
@@ -755,7 +806,8 @@ window.CODING_TYPING_DATA_SQL = [
     ],
     "hint": {
       "zh-CN": "务必写 WHERE！不写会删除全表！",
-      "ja-JP": "必ず WHERE を書きましょう！忘れると全データが削除されます！"
+      "ja-JP": "必ず WHERE を書きましょう！忘れると全データが削除されます！",
+      "en-US": "Without WHERE, DELETE removes every row in the table.",
     },
     "sandboxRunnable": true,
     "expectedOutput": "",
@@ -776,7 +828,8 @@ window.CODING_TYPING_DATA_SQL = [
     "code": "DELETE FROM orders WHERE status = 'cancelled' AND created_at < '2024-01-01';",
     "explanation": {
       "zh-CN": "DELETE 可以使用 AND/OR 组合条件。",
-      "ja-JP": "DELETE は AND/OR で複数の条件を組み合わせられます。"
+      "ja-JP": "DELETE は AND/OR で複数の条件を組み合わせられます。",
+      "en-US": "DELETE can combine multiple conditions with AND/OR.",
     },
     "focus": [
       "AND 多条件",
@@ -784,7 +837,8 @@ window.CODING_TYPING_DATA_SQL = [
     ],
     "hint": {
       "zh-CN": "多个条件用 AND 连接，确保只删除目标数据。",
-      "ja-JP": "複数の条件を AND で接続し、対象データのみ削除します。"
+      "ja-JP": "複数の条件を AND で接続し、対象データのみ削除します。",
+      "en-US": "Build complex conditions just like in a SELECT WHERE clause.",
     },
     "sandboxRunnable": true,
     "expectedOutput": "",
@@ -805,7 +859,8 @@ window.CODING_TYPING_DATA_SQL = [
     "code": "SELECT COUNT(*) FROM students;",
     "explanation": {
       "zh-CN": "COUNT 返回指定列的行数。",
-      "ja-JP": "COUNT は指定された列の行数を返します。"
+      "ja-JP": "COUNT は指定された列の行数を返します。",
+      "en-US": "COUNT returns the number of rows in a column or table.",
     },
     "focus": [
       "COUNT 语法",
@@ -814,7 +869,8 @@ window.CODING_TYPING_DATA_SQL = [
     ],
     "hint": {
       "zh-CN": "COUNT(*) 统计所有行。",
-      "ja-JP": "COUNT(*) ですべての行をカウントします。"
+      "ja-JP": "COUNT(*) ですべての行をカウントします。",
+      "en-US": "COUNT(*) counts all rows; COUNT(column) counts non-null values.",
     },
     "sandboxRunnable": true,
     "expectedOutput": "",
@@ -835,7 +891,8 @@ window.CODING_TYPING_DATA_SQL = [
     "code": "SELECT * FROM users WHERE name LIKE 'A%';",
     "explanation": {
       "zh-CN": "LIKE 用 % 表示任意字符，_ 表示单个字符。",
-      "ja-JP": "LIKE はパターンマッチングに使います。% は任意の文字。"
+      "ja-JP": "LIKE はパターンマッチングに使います。% は任意の文字。",
+      "en-US": "LIKE matches patterns: % matches any sequence, _ matches a single character.",
     },
     "focus": [
       "LIKE 关键字",
@@ -843,7 +900,8 @@ window.CODING_TYPING_DATA_SQL = [
     ],
     "hint": {
       "zh-CN": "'A%' = 以 A 开头，'%A' = 以 A 结尾。",
-      "ja-JP": "'A%' = A で始まる、'%A' = A で終わる。"
+      "ja-JP": "'A%' = A で始まる、'%A' = A で終わる。",
+      "en-US": "'A%' matches any string starting with A.",
     },
     "sandboxRunnable": true,
     "expectedOutput": "",
@@ -864,7 +922,8 @@ window.CODING_TYPING_DATA_SQL = [
     "code": "SELECT * FROM products ORDER BY price DESC LIMIT 10;",
     "explanation": {
       "zh-CN": "LIMIT 限制返回的行数。",
-      "ja-JP": "LIMIT は返される行数を制限します。"
+      "ja-JP": "LIMIT は返される行数を制限します。",
+      "en-US": "LIMIT restricts the number of rows returned.",
     },
     "focus": [
       "LIMIT 位置",
@@ -873,7 +932,8 @@ window.CODING_TYPING_DATA_SQL = [
     ],
     "hint": {
       "zh-CN": "LIMIT 写在所有子句的后面。",
-      "ja-JP": "LIMIT は他のすべての句の最後に書きます。"
+      "ja-JP": "LIMIT は他のすべての句の最後に書きます。",
+      "en-US": "LIMIT is written at the very end of the query.",
     },
     "sandboxRunnable": true,
     "expectedOutput": "",
