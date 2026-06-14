@@ -4472,5 +4472,85 @@
       window.I18nUiDict[locale].wrongBook = Object.assign({}, window.I18nUiDict["en-US"].wrongBook);
     }
   });
+
+  var WRONG_BOOK_ROUND_23_4_EN = {
+    moduleFilter: "Module",
+    allModules: "All modules",
+    uncategorized: "Uncategorized",
+    startRetry: "Start retry",
+    retryDisabled: "No retryable questions in the current filter",
+    retryTitle: "Wrong answer retry",
+    backToWrongBook: "Back to wrong book",
+    submitAnswer: "Submit answer",
+    nextQuestion: "Next question",
+    finishRetry: "Finish retry",
+    retryResult: "Retry result",
+    retryTotal: "Total questions",
+    retryCorrect: "Correct",
+    retryWrong: "Wrong",
+    retryAccuracy: "Accuracy",
+    newMastered: "Newly mastered",
+    retryAgain: "Retry again",
+    practiceResultCorrect: "Correct",
+    practiceResultWrong: "Incorrect"
+  };
+  var WRONG_BOOK_ROUND_23_4 = {
+    "zh-CN": {
+      moduleFilter: "模块", allModules: "全部模块", uncategorized: "未分类", startRetry: "开始重练",
+      retryDisabled: "当前筛选无可重练错题", retryTitle: "错题重练", backToWrongBook: "返回错题本",
+      submitAnswer: "提交答案", nextQuestion: "下一题", finishRetry: "结束重练", retryResult: "重练结果",
+      retryTotal: "本次重练题数", retryCorrect: "答对数", retryWrong: "答错数", retryAccuracy: "正确率",
+      newMastered: "本次新掌握数量", retryAgain: "再次重练", practiceResultCorrect: "回答正确",
+      practiceResultWrong: "回答错误"
+    },
+    "ja-JP": {
+      moduleFilter: "モジュール", allModules: "すべてのモジュール", uncategorized: "未分類", startRetry: "再練習を開始",
+      retryDisabled: "現在の絞り込みに再練習できる問題はありません", retryTitle: "間違い再練習",
+      backToWrongBook: "間違いノートへ戻る", submitAnswer: "回答を送信", nextQuestion: "次の問題",
+      finishRetry: "再練習を終了", retryResult: "再練習結果", retryTotal: "問題数", retryCorrect: "正解数",
+      retryWrong: "不正解数", retryAccuracy: "正答率", newMastered: "今回習得した問題",
+      retryAgain: "もう一度練習", practiceResultCorrect: "正解です", practiceResultWrong: "不正解です"
+    },
+    "en-US": WRONG_BOOK_ROUND_23_4_EN,
+    "ko-KR": {
+      moduleFilter: "모듈", allModules: "모든 모듈", uncategorized: "미분류", startRetry: "재연습 시작",
+      retryDisabled: "현재 필터에 재연습할 문제가 없습니다", retryTitle: "오답 재연습",
+      backToWrongBook: "오답 노트로 돌아가기", submitAnswer: "답안 제출", nextQuestion: "다음 문제",
+      finishRetry: "재연습 종료", retryResult: "재연습 결과", retryTotal: "문제 수", retryCorrect: "정답 수",
+      retryWrong: "오답 수", retryAccuracy: "정답률", newMastered: "새로 숙달", retryAgain: "다시 연습",
+      practiceResultCorrect: "정답입니다", practiceResultWrong: "오답입니다"
+    },
+    "vi-VN": WRONG_BOOK_ROUND_23_4_EN,
+    "my-MM": WRONG_BOOK_ROUND_23_4_EN,
+    "fr-FR": WRONG_BOOK_ROUND_23_4_EN,
+    "th-TH": WRONG_BOOK_ROUND_23_4_EN,
+    "id-ID": WRONG_BOOK_ROUND_23_4_EN,
+    "default-ja-zh": Object.assign({}, WRONG_BOOK_ROUND_23_4_EN, {
+      moduleFilter: "模块 / モジュール", allModules: "全部模块 / すべてのモジュール",
+      uncategorized: "未分类 / 未分類", startRetry: "开始重练 / 再練習を開始",
+      retryDisabled: "当前筛选无可重练错题 / 現在の絞り込みに再練習できる問題はありません",
+      retryTitle: "错题重练 / 間違い再練習", backToWrongBook: "返回错题本 / 間違いノートへ戻る",
+      submitAnswer: "提交答案 / 回答を送信", nextQuestion: "下一题 / 次の問題",
+      finishRetry: "结束重练 / 再練習を終了", retryResult: "重练结果 / 再練習結果",
+      retryTotal: "本次重练题数 / 問題数", retryCorrect: "答对数 / 正解数",
+      retryWrong: "答错数 / 不正解数", retryAccuracy: "正确率 / 正答率",
+      newMastered: "本次新掌握数量 / 今回習得した問題", retryAgain: "再次重练 / もう一度練習",
+      practiceResultCorrect: "回答正确 / 正解です", practiceResultWrong: "回答错误 / 不正解です"
+    })
+  };
+  var TOOLBAR_ROUND_23_4 = {
+    "zh-CN": { language: "语言", localMode: "本地模式", settings: "设置", randomChallenge: "综合随机挑战" },
+    "ja-JP": { language: "言語", localMode: "ローカルモード", settings: "設定", randomChallenge: "総合ランダムチャレンジ" },
+    "en-US": { language: "Language", localMode: "Local mode", settings: "Settings", randomChallenge: "Random challenge" },
+    "ko-KR": { language: "언어", localMode: "로컬 모드", settings: "설정", randomChallenge: "종합 랜덤 도전" },
+    "default-ja-zh": { language: "语言 / 言語", localMode: "本地模式 / ローカルモード", settings: "设置 / 設定", randomChallenge: "综合随机挑战 / 総合ランダムチャレンジ" }
+  };
+  Object.keys(WRONG_BOOK_ROUND_23_4).forEach(function (locale) {
+    if (!window.I18nUiDict[locale]) window.I18nUiDict[locale] = {};
+    if (!window.I18nUiDict[locale].wrongBook) window.I18nUiDict[locale].wrongBook = {};
+    Object.assign(window.I18nUiDict[locale].wrongBook, WRONG_BOOK_ROUND_23_4[locale]);
+    if (!window.I18nUiDict[locale].toolbar) window.I18nUiDict[locale].toolbar = {};
+    Object.assign(window.I18nUiDict[locale].toolbar, TOOLBAR_ROUND_23_4[locale] || TOOLBAR_ROUND_23_4["en-US"]);
+  });
 })();
 

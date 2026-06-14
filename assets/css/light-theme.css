@@ -814,6 +814,62 @@ body[data-theme="light"] .language-search-wrap {
   color: #222222 !important;
 }
 
+body[data-theme="light"] .secondary-action-row {
+  background: #f8fafc !important;
+  border-color: #d1d5db !important;
+}
+
+body[data-theme="light"] .top-settings-btn,
+body[data-theme="light"] .wrong-book-retry-start,
+body[data-theme="light"] .wrong-book-retry-primary,
+body[data-theme="light"] .wrong-book-retry-option {
+  background: #ffffff !important;
+  color: #111111 !important;
+  border-color: #374151 !important;
+}
+
+body[data-theme="light"] .top-settings-btn:hover,
+body[data-theme="light"] .wrong-book-retry-start:hover,
+body[data-theme="light"] .wrong-book-retry-primary:hover,
+body[data-theme="light"] .wrong-book-retry-option:hover,
+body[data-theme="light"] .wrong-book-retry-option.is-selected {
+  background: #eff6ff !important;
+  border-color: #1d4ed8 !important;
+}
+
+body[data-theme="light"] .wrong-book-module-filter,
+body[data-theme="light"] .wrong-book-retry-head span,
+body[data-theme="light"] .wrong-book-retry-feedback p,
+body[data-theme="light"] .wrong-book-retry-summary-grid > div {
+  color: #374151 !important;
+}
+
+body[data-theme="light"] .wrong-book-module-filter select,
+body[data-theme="light"] .wrong-book-retry-card,
+body[data-theme="light"] .wrong-book-retry-summary,
+body[data-theme="light"] .wrong-book-retry-summary-grid > div {
+  background: #ffffff !important;
+  color: #111111 !important;
+  border-color: #d1d5db !important;
+}
+
+body[data-theme="light"] .wrong-book-retry-question,
+body[data-theme="light"] .wrong-book-retry-summary-grid strong {
+  color: #111111 !important;
+}
+
+body[data-theme="light"] .wrong-book-retry-option.is-correct,
+body[data-theme="light"] .wrong-book-retry-feedback.is-correct {
+  background: #ecfdf5 !important;
+  border-color: #15803d !important;
+}
+
+body[data-theme="light"] .wrong-book-retry-option.is-wrong,
+body[data-theme="light"] .wrong-book-retry-feedback.is-wrong {
+  background: #fef2f2 !important;
+  border-color: #dc2626 !important;
+}
+
 /* ---- Typing highlights ---- */
 body[data-theme="light"] .typing-char-correct {
   color: #059669 !important;

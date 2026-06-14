@@ -131,6 +131,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Initialize tools drawer
   initToolsDrawer();
+  initRound234Toolbar();
 
   // Initialize exam history modal (Round 23.2)
   initExamHistoryModal();
@@ -737,6 +738,52 @@ function initToolsDrawer() {
       return;
     }
   });
+}
+
+function initRound234Toolbar() {
+  window.setTimeout(function () {
+    try {
+      var cluster = document.getElementById('top-utility-cluster');
+      var actionRow = document.getElementById('secondary-action-row');
+      if (!cluster || !actionRow) return;
+      var settingsButton = document.getElementById('top-settings-btn');
+      if (!settingsButton) {
+        settingsButton = document.createElement('button');
+        settingsButton.id = 'top-settings-btn';
+        settingsButton.type = 'button';
+        settingsButton.className = 'top-settings-btn top-utility-icon-btn';
+        settingsButton.innerHTML = '<i class="fa-solid fa-gear"></i>';
+        settingsButton.addEventListener('click', function () {
+          if (window.StudyAI && typeof window.StudyAI.openSettings === 'function') {
+            window.StudyAI.openSettings();
+            return;
+          }
+          var fallback = document.getElementById('ai-settings-btn') || document.getElementById('ai-launcher-settings');
+          if (fallback) fallback.click();
+        });
+      }
+      function updateSettingsLabel() {
+        var label = typeof I18n !== 'undefined' ? I18n.t('toolbar.settings') : 'Settings';
+        settingsButton.setAttribute('title', label || 'Settings');
+        settingsButton.setAttribute('aria-label', label || 'Settings');
+      }
+      updateSettingsLabel();
+      document.addEventListener('i18n:languageChanged', updateSettingsLabel);
+      [
+        document.getElementById('language-switcher'),
+        document.getElementById('auth-user-btn'),
+        document.getElementById('theme-toggle-btn'),
+        settingsButton,
+        document.getElementById('tools-trigger-btn')
+      ].forEach(function (element) {
+        if (element) cluster.appendChild(element);
+      });
+      var challenge = document.getElementById('header-challenge');
+      if (challenge) actionRow.appendChild(challenge);
+    } catch (error) {
+      console.warn('[Toolbar] Round 23.4 layout setup failed:', error);
+    }
+  }, 0);
 }
 
 // Reset Progress Confirmation Modal
@@ -3267,6 +3314,7 @@ function buildExamHistoryRecord(exam, reviews, scoreData) {
 
 // ── Local Wrong Book Persistence (Round 23.3) ─────────────────────
 const WRONG_BOOK_STORAGE_KEY = 'study-tools-exam-wrong-book-v1';
+const WRONG_BOOK_RETRY_LIMIT = 30;
 
 function stableWrongBookHash(value) {
   var hash = 2166136261;
@@ -3324,6 +3372,7 @@ function normalizeWrongBookItem(item) {
     ? item.tags.filter(function (tag) { return tag !== undefined && tag !== null && String(tag).trim(); }).map(String)
     : [];
   var wrongCount = Number(item.wrongCount);
+  var correctRetryCount = Number(item.correctRetryCount);
   return {
     schemaVersion: 1,
     key: String(item.key || makeWrongQuestionKey(item)),
@@ -3348,6 +3397,8 @@ function normalizeWrongBookItem(item) {
     firstWrongAt: item.firstWrongAt || now,
     lastWrongAt: item.lastWrongAt || now,
     wrongCount: Number.isFinite(wrongCount) && wrongCount > 0 ? Math.floor(wrongCount) : 1,
+    lastPracticedAt: item.lastPracticedAt || '',
+    correctRetryCount: Number.isFinite(correctRetryCount) && correctRetryCount > 0 ? Math.floor(correctRetryCount) : 0,
     mastered: item.mastered === true,
     archived: item.archived === true
   };
@@ -3535,6 +3586,8 @@ function recordCodingExamWrongQuestions(exam) {
 var _examHistoryCurrentFilter = 'all';
 var _examHistoryActiveTab = 'history';
 var _wrongBookCurrentFilter = 'all';
+var _wrongBookCurrentModule = 'all';
+var _wrongBookRetryState = null;
 var _examHistoryEscHandler = null;
 
 function stripHtmlToText(html) {
@@ -3566,6 +3619,8 @@ function openExamHistoryModal() {
   document.body.style.overflow = 'hidden';
   _examHistoryCurrentFilter = 'all';
   _wrongBookCurrentFilter = 'all';
+  _wrongBookCurrentModule = 'all';
+  _wrongBookRetryState = null;
   var btns = modal.querySelectorAll('.exam-history-filter-btn');
   btns.forEach(function (b) { b.classList.toggle('active', b.getAttribute('data-filter') === 'all'); });
   setExamHistoryTab('history');
@@ -3589,6 +3644,7 @@ function closeExamHistoryModal() {
   if (!modal) return;
   modal.setAttribute('hidden', '');
   document.body.style.overflow = '';
+  _wrongBookRetryState = null;
 }
 
 function setExamHistoryFilter(filter) {
@@ -3629,6 +3685,11 @@ function setWrongBookFilter(filter) {
   renderWrongBook();
 }
 
+function setWrongBookModuleFilter(moduleName) {
+  _wrongBookCurrentModule = moduleName || 'all';
+  renderWrongBook();
+}
+
 function escapeWrongBookHtml(value) {
   return String(value == null ? '' : value).replace(/[&<>"']/g, function (char) {
     return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[char];
@@ -3637,7 +3698,11 @@ function escapeWrongBookHtml(value) {
 
 function getWrongBookModuleLabel(moduleName) {
   var labels = { itpass: 'IT Passport', sg: 'SG', sql: 'SQL', java: 'Java', python: 'Python' };
-  return labels[moduleName] || String(moduleName || 'Unknown').toUpperCase();
+  var normalized = String(moduleName || '').trim().toLowerCase();
+  if (!normalized || normalized === 'unknown') {
+    return typeof I18n !== 'undefined' ? I18n.t('wrongBook.uncategorized') : 'Uncategorized';
+  }
+  return labels[normalized] || String(moduleName).toUpperCase();
 }
 
 function buildWrongBookSourceLabel(item) {
@@ -3684,16 +3749,87 @@ function buildWrongBookDetailHtml(item) {
   return html;
 }
 
-function renderWrongBook() {
-  var container = document.getElementById('wrong-book-list');
-  if (!container) return;
-  var t = function (key, fallback) { return typeof I18n !== 'undefined' ? I18n.t(key) : fallback; };
+function getFilteredWrongBookItems() {
   var items = loadWrongBook().filter(function (item) { return !item.archived; });
   items.sort(function (a, b) { return (b.lastWrongAt || '').localeCompare(a.lastWrongAt || ''); });
   if (_wrongBookCurrentFilter === 'mastered') {
     items = items.filter(function (item) { return item.mastered; });
   } else if (_wrongBookCurrentFilter === 'unmastered') {
     items = items.filter(function (item) { return !item.mastered; });
+  }
+  if (_wrongBookCurrentModule !== 'all') {
+    items = items.filter(function (item) {
+      var moduleName = String(item.module || '').trim().toLowerCase();
+      if (_wrongBookCurrentModule === '__uncategorized__') return !moduleName || moduleName === 'unknown';
+      return moduleName === _wrongBookCurrentModule;
+    });
+  }
+  return items;
+}
+
+function getWrongBookRetryCorrectIndex(item) {
+  if (!item || !Array.isArray(item.choices) || !item.choices.length) return -1;
+  var answer = normalizeWrongBookAnswer(item.correctAnswer);
+  if (Number.isInteger(answer.index) && answer.index >= 0 && answer.index < item.choices.length) return answer.index;
+  var labelIndex = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.indexOf(String(answer.label || '').trim().toUpperCase());
+  if (labelIndex >= 0 && labelIndex < item.choices.length) return labelIndex;
+  var text = String(answer.text || '').trim();
+  return item.choices.findIndex(function (choice) { return String(choice).trim() === text; });
+}
+
+function getWrongBookRetryCandidates() {
+  return getFilteredWrongBookItems().filter(function (item) {
+    if (_wrongBookCurrentFilter !== 'mastered' && item.mastered) return false;
+    return getWrongBookRetryCorrectIndex(item) >= 0;
+  }).slice(0, WRONG_BOOK_RETRY_LIMIT);
+}
+
+function renderWrongBookModuleFilter(allItems) {
+  var select = document.getElementById('wrong-book-module-select');
+  if (!select) return;
+  var t = function (key, fallback) { return typeof I18n !== 'undefined' ? I18n.t(key) : fallback; };
+  var modules = [];
+  var hasUncategorized = false;
+  allItems.forEach(function (item) {
+    var moduleName = String(item.module || '').trim().toLowerCase();
+    if (!moduleName || moduleName === 'unknown') {
+      hasUncategorized = true;
+    } else if (!modules.includes(moduleName)) {
+      modules.push(moduleName);
+    }
+  });
+  modules.sort(function (a, b) { return getWrongBookModuleLabel(a).localeCompare(getWrongBookModuleLabel(b)); });
+  var options = [{ value: 'all', label: t('wrongBook.allModules', 'All modules') }];
+  modules.forEach(function (moduleName) {
+    options.push({ value: moduleName, label: getWrongBookModuleLabel(moduleName) });
+  });
+  if (hasUncategorized) options.push({ value: '__uncategorized__', label: t('wrongBook.uncategorized', 'Uncategorized') });
+  if (!options.some(function (option) { return option.value === _wrongBookCurrentModule; })) {
+    _wrongBookCurrentModule = 'all';
+  }
+  select.innerHTML = options.map(function (option) {
+    return '<option value="' + escapeWrongBookHtml(option.value) + '"' +
+      (option.value === _wrongBookCurrentModule ? ' selected' : '') + '>' +
+      escapeWrongBookHtml(option.label) + '</option>';
+  }).join('');
+}
+
+function renderWrongBook() {
+  var container = document.getElementById('wrong-book-list');
+  if (!container) return;
+  var browser = document.getElementById('wrong-book-browser');
+  var retryView = document.getElementById('wrong-book-retry-view');
+  if (browser) browser.removeAttribute('hidden');
+  if (retryView) retryView.setAttribute('hidden', '');
+  var t = function (key, fallback) { return typeof I18n !== 'undefined' ? I18n.t(key) : fallback; };
+  var allItems = loadWrongBook().filter(function (item) { return !item.archived; });
+  renderWrongBookModuleFilter(allItems);
+  var items = getFilteredWrongBookItems();
+  var retryButton = document.getElementById('wrong-book-retry-start');
+  if (retryButton) {
+    var retryItems = getWrongBookRetryCandidates();
+    retryButton.disabled = retryItems.length === 0;
+    retryButton.title = retryItems.length ? t('wrongBook.startRetry', 'Start retry') : t('wrongBook.retryDisabled', 'No retryable questions in the current filter');
   }
   if (!items.length) {
     container.innerHTML = '<div class="exam-history-empty">' +
@@ -3756,6 +3892,163 @@ function renderWrongBook() {
     card.querySelector('.wrong-book-card__question').addEventListener('click', toggleDetail);
     container.appendChild(card);
   });
+}
+
+function startWrongBookRetry() {
+  var items = getWrongBookRetryCandidates();
+  if (!items.length) return;
+  _wrongBookRetryState = {
+    items: items,
+    index: 0,
+    answers: [],
+    selectedIndex: null,
+    submitted: false,
+    newMastered: 0
+  };
+  renderWrongBookRetryQuestion();
+}
+
+function renderWrongBookRetryQuestion() {
+  var state = _wrongBookRetryState;
+  var browser = document.getElementById('wrong-book-browser');
+  var view = document.getElementById('wrong-book-retry-view');
+  if (!state || !view || !state.items[state.index]) {
+    finishWrongBookRetry();
+    return;
+  }
+  if (browser) browser.setAttribute('hidden', '');
+  view.removeAttribute('hidden');
+  var item = state.items[state.index];
+  var result = state.answers[state.index];
+  var t = function (key, fallback) { return typeof I18n !== 'undefined' ? I18n.t(key) : fallback; };
+  var html = '<div class="wrong-book-retry-head">' +
+    '<div><h3>' + escapeWrongBookHtml(t('wrongBook.retryTitle', 'Wrong answer retry')) + '</h3>' +
+    '<span>' + (state.index + 1) + ' / ' + state.items.length + '</span></div>' +
+    '<button type="button" class="wrong-book-action" data-retry-action="finish">' +
+      escapeWrongBookHtml(t('wrongBook.finishRetry', 'Finish retry')) + '</button>' +
+    '</div>' +
+    '<div class="wrong-book-retry-card">' +
+      '<span class="exam-history-card__subject">' + escapeWrongBookHtml(getWrongBookModuleLabel(item.module)) + '</span>' +
+      '<p class="wrong-book-retry-question">' + escapeWrongBookHtml(item.questionText || '-') + '</p>' +
+      '<div class="wrong-book-retry-options">';
+  item.choices.forEach(function (choice, index) {
+    var classes = ['wrong-book-retry-option'];
+    if (state.selectedIndex === index) classes.push('is-selected');
+    if (state.submitted && index === getWrongBookRetryCorrectIndex(item)) classes.push('is-correct');
+    if (state.submitted && state.selectedIndex === index && result && !result.correct) classes.push('is-wrong');
+    html += '<button type="button" class="' + classes.join(' ') + '" data-retry-choice="' + index + '"' +
+      (state.submitted ? ' disabled' : '') + '><strong>' + String.fromCharCode(65 + index) + '</strong><span>' +
+      escapeWrongBookHtml(choice) + '</span></button>';
+  });
+  html += '</div>';
+  if (state.submitted && result) {
+    html += '<div class="wrong-book-retry-feedback ' + (result.correct ? 'is-correct' : 'is-wrong') + '">' +
+      '<strong>' + escapeWrongBookHtml(result.correct
+        ? t('wrongBook.practiceResultCorrect', 'Correct')
+        : t('wrongBook.practiceResultWrong', 'Incorrect')) + '</strong>' +
+      '<p>' + escapeWrongBookHtml(item.explanation || '-') + '</p></div>';
+  }
+  html += '<div class="wrong-book-retry-actions">';
+  if (!state.submitted) {
+    html += '<button type="button" class="wrong-book-retry-primary" data-retry-action="submit"' +
+      (state.selectedIndex === null ? ' disabled' : '') + '>' +
+      escapeWrongBookHtml(t('wrongBook.submitAnswer', 'Submit answer')) + '</button>';
+  } else if (state.index < state.items.length - 1) {
+    html += '<button type="button" class="wrong-book-retry-primary" data-retry-action="next">' +
+      escapeWrongBookHtml(t('wrongBook.nextQuestion', 'Next question')) + '</button>';
+  } else {
+    html += '<button type="button" class="wrong-book-retry-primary" data-retry-action="finish">' +
+      escapeWrongBookHtml(t('wrongBook.finishRetry', 'Finish retry')) + '</button>';
+  }
+  html += '</div></div>';
+  view.innerHTML = html;
+}
+
+function selectWrongBookRetryAnswer(index) {
+  if (!_wrongBookRetryState || _wrongBookRetryState.submitted) return;
+  var item = _wrongBookRetryState.items[_wrongBookRetryState.index];
+  if (!item || !Number.isInteger(index) || index < 0 || index >= item.choices.length) return;
+  _wrongBookRetryState.selectedIndex = index;
+  renderWrongBookRetryQuestion();
+}
+
+function submitWrongBookRetryAnswer() {
+  var state = _wrongBookRetryState;
+  if (!state || state.submitted || state.selectedIndex === null) return;
+  var item = state.items[state.index];
+  var correctIndex = getWrongBookRetryCorrectIndex(item);
+  if (correctIndex < 0) return;
+  var correct = state.selectedIndex === correctIndex;
+  var storedItems = loadWrongBook();
+  var stored = storedItems.find(function (entry) { return entry.key === item.key; });
+  var now = new Date().toISOString();
+  if (stored) {
+    var wasMastered = stored.mastered === true;
+    stored.lastPracticedAt = now;
+    if (correct) {
+      stored.correctRetryCount = Math.max(0, Number(stored.correctRetryCount) || 0) + 1;
+      stored.mastered = true;
+      if (!wasMastered) state.newMastered += 1;
+    } else {
+      stored.wrongCount = Math.max(1, Number(stored.wrongCount) || 1) + 1;
+      stored.lastWrongAt = now;
+      stored.userAnswer = makeWrongBookAnswer(state.selectedIndex, stored.choices);
+      stored.mastered = false;
+      stored.correctRetryCount = 0;
+    }
+    saveWrongBook(storedItems);
+  }
+  state.answers[state.index] = { correct: correct };
+  state.submitted = true;
+  renderWrongBookRetryQuestion();
+}
+
+function nextWrongBookRetryQuestion() {
+  var state = _wrongBookRetryState;
+  if (!state || !state.submitted) return;
+  if (state.index >= state.items.length - 1) {
+    finishWrongBookRetry();
+    return;
+  }
+  state.index += 1;
+  state.selectedIndex = null;
+  state.submitted = false;
+  renderWrongBookRetryQuestion();
+}
+
+function finishWrongBookRetry() {
+  var state = _wrongBookRetryState;
+  var view = document.getElementById('wrong-book-retry-view');
+  if (!view) return;
+  if (!state) {
+    backToWrongBook();
+    return;
+  }
+  var t = function (key, fallback) { return typeof I18n !== 'undefined' ? I18n.t(key) : fallback; };
+  var total = state.answers.length;
+  var correct = state.answers.filter(function (answer) { return answer && answer.correct; }).length;
+  var wrong = total - correct;
+  var accuracy = total ? Math.round((correct / total) * 100) : 0;
+  view.innerHTML = '<div class="wrong-book-retry-summary">' +
+    '<h3>' + escapeWrongBookHtml(t('wrongBook.retryResult', 'Retry result')) + '</h3>' +
+    '<div class="wrong-book-retry-summary-grid">' +
+      '<div><span>' + escapeWrongBookHtml(t('wrongBook.retryTotal', 'Total')) + '</span><strong>' + total + '</strong></div>' +
+      '<div><span>' + escapeWrongBookHtml(t('wrongBook.retryCorrect', 'Correct')) + '</span><strong>' + correct + '</strong></div>' +
+      '<div><span>' + escapeWrongBookHtml(t('wrongBook.retryWrong', 'Wrong')) + '</span><strong>' + wrong + '</strong></div>' +
+      '<div><span>' + escapeWrongBookHtml(t('wrongBook.retryAccuracy', 'Accuracy')) + '</span><strong>' + accuracy + '%</strong></div>' +
+      '<div><span>' + escapeWrongBookHtml(t('wrongBook.newMastered', 'Newly mastered')) + '</span><strong>' + state.newMastered + '</strong></div>' +
+    '</div>' +
+    '<div class="wrong-book-retry-actions">' +
+      '<button type="button" class="wrong-book-action" data-retry-action="back">' +
+        escapeWrongBookHtml(t('wrongBook.backToWrongBook', 'Back to wrong book')) + '</button>' +
+      '<button type="button" class="wrong-book-retry-primary" data-retry-action="again">' +
+        escapeWrongBookHtml(t('wrongBook.retryAgain', 'Retry again')) + '</button>' +
+    '</div></div>';
+}
+
+function backToWrongBook() {
+  _wrongBookRetryState = null;
+  renderWrongBook();
 }
 
 function toggleWrongBookMastered(key) {
@@ -3970,6 +4263,32 @@ function initExamHistoryModal() {
     wrongBookFilters.addEventListener('click', function (e) {
       var button = e.target.closest('.exam-history-filter-btn');
       if (button) setWrongBookFilter(button.getAttribute('data-filter'));
+    });
+  }
+  var moduleSelect = document.getElementById('wrong-book-module-select');
+  if (moduleSelect) {
+    moduleSelect.addEventListener('change', function () {
+      setWrongBookModuleFilter(moduleSelect.value);
+    });
+  }
+  var retryStart = document.getElementById('wrong-book-retry-start');
+  if (retryStart) retryStart.addEventListener('click', startWrongBookRetry);
+  var retryView = document.getElementById('wrong-book-retry-view');
+  if (retryView) {
+    retryView.addEventListener('click', function (event) {
+      var choice = event.target.closest('[data-retry-choice]');
+      if (choice) {
+        selectWrongBookRetryAnswer(Number(choice.getAttribute('data-retry-choice')));
+        return;
+      }
+      var action = event.target.closest('[data-retry-action]');
+      if (!action) return;
+      var name = action.getAttribute('data-retry-action');
+      if (name === 'submit') submitWrongBookRetryAnswer();
+      else if (name === 'next') nextWrongBookRetryQuestion();
+      else if (name === 'finish') finishWrongBookRetry();
+      else if (name === 'back') backToWrongBook();
+      else if (name === 'again') startWrongBookRetry();
     });
   }
 }
