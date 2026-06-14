@@ -769,6 +769,26 @@ function initRound234Toolbar() {
       }
       updateSettingsLabel();
       document.addEventListener('i18n:languageChanged', updateSettingsLabel);
+      /* Round 23.5 — move AI magic wand into compact utility cluster, left of language */
+      var aiMenu = document.querySelector('.ai-header-menu');
+      if (aiMenu) {
+        var langRef = document.getElementById('language-switcher');
+        if (langRef && langRef.parentNode === cluster) {
+          cluster.insertBefore(aiMenu, langRef);
+        } else {
+          cluster.insertBefore(aiMenu, cluster.firstChild);
+        }
+        var aiBtn = document.getElementById('ai-assistant-btn');
+        if (aiBtn) {
+          function updateAiLabel() {
+            var label = typeof I18n !== 'undefined' ? I18n.t('toolbar.aiLearning') : 'AI Learning';
+            aiBtn.setAttribute('title', label || 'AI Learning');
+            aiBtn.setAttribute('aria-label', label || 'AI Learning');
+          }
+          updateAiLabel();
+          document.addEventListener('i18n:languageChanged', updateAiLabel);
+        }
+      }
       [
         document.getElementById('language-switcher'),
         document.getElementById('auth-user-btn'),

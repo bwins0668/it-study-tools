@@ -4539,11 +4539,11 @@
     })
   };
   var TOOLBAR_ROUND_23_4 = {
-    "zh-CN": { language: "语言", localMode: "本地模式", settings: "设置", randomChallenge: "综合随机挑战" },
-    "ja-JP": { language: "言語", localMode: "ローカルモード", settings: "設定", randomChallenge: "総合ランダムチャレンジ" },
-    "en-US": { language: "Language", localMode: "Local mode", settings: "Settings", randomChallenge: "Random challenge" },
-    "ko-KR": { language: "언어", localMode: "로컬 모드", settings: "설정", randomChallenge: "종합 랜덤 도전" },
-    "default-ja-zh": { language: "语言 / 言語", localMode: "本地模式 / ローカルモード", settings: "设置 / 設定", randomChallenge: "综合随机挑战 / 総合ランダムチャレンジ" }
+    "zh-CN": { language: "语言", localMode: "本地模式", settings: "设置", randomChallenge: "综合随机挑战", aiLearning: "AI 学习" },
+    "ja-JP": { language: "言語", localMode: "ローカルモード", settings: "設定", randomChallenge: "総合ランダムチャレンジ", aiLearning: "AIアシスタント" },
+    "en-US": { language: "Language", localMode: "Local mode", settings: "Settings", randomChallenge: "Random challenge", aiLearning: "AI Learning" },
+    "ko-KR": { language: "언어", localMode: "로컬 모드", settings: "설정", randomChallenge: "종합 랜덤 도전", aiLearning: "AI 학습" },
+    "default-ja-zh": { language: "语言 / 言語", localMode: "本地模式 / ローカルモード", settings: "设置 / 設定", randomChallenge: "综合随机挑战 / 総合ランダムチャレンジ", aiLearning: "AI 学习 / AIアシスタント" }
   };
   Object.keys(WRONG_BOOK_ROUND_23_4).forEach(function (locale) {
     if (!window.I18nUiDict[locale]) window.I18nUiDict[locale] = {};

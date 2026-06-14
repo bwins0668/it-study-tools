@@ -837,6 +837,11 @@ body[data-theme="light"] .wrong-book-retry-option.is-selected {
   border-color: #1d4ed8 !important;
 }
 
+/* Round 23.5: AI magic wand separator in light theme */
+body[data-theme="light"] .top-utility-cluster .ai-header-menu {
+  border-right-color: rgba(0, 0, 0, 0.08);
+}
+
 body[data-theme="light"] .wrong-book-module-filter,
 body[data-theme="light"] .wrong-book-retry-head span,
 body[data-theme="light"] .wrong-book-retry-feedback p,

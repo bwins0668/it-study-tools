@@ -8407,6 +8407,23 @@ body.mobile-playground-open .mobile-backdrop {
   min-width: 54px;
 }
 
+/* Round 23.5: AI magic wand button compact inside utility cluster */
+.top-utility-cluster .ai-header-menu {
+  margin: 0;
+  padding-right: 6px;
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+}
+.top-utility-cluster .ai-header-btn {
+  min-height: 30px;
+  height: 30px;
+  padding: 5px 8px;
+  margin: 0;
+  font-size: 12px;
+}
+.top-utility-cluster .ai-header-label {
+  display: none;
+}
+
 .top-settings-btn {
   display: inline-flex;
   align-items: center;
