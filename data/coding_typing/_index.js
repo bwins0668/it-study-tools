@@ -2,10 +2,10 @@
 // Merges all four datasets
 
 window.CODING_TYPING_CATEGORIES = [
-  { id: "python", label: "Python", icon: "fab fa-python", count: 30 },
-  { id: "java", label: "Java", icon: "fab fa-java", count: 20 },
-  { id: "sql", label: "SQL", icon: "fa-solid fa-database", count: 30 },
-  { id: "symbol", label: "Symbols", icon: "fa-solid fa-code", count: 20 }
+  { id: "python", label: "Python", icon: "fab fa-python", count: 45 },
+  { id: "java", label: "Java", icon: "fab fa-java", count: 35 },
+  { id: "sql", label: "SQL", icon: "fa-solid fa-database", count: 45 },
+  { id: "symbol", label: "Symbols", icon: "fa-solid fa-code", count: 25 }
 ];
 
 (function() {

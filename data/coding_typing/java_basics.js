@@ -1,4 +1,4 @@
-// Coding Typing Practice - Java Basics (20 items)
+// Coding Typing Practice - undefined
 window.CODING_TYPING_DATA_JAVA = [
   {
     "id": "java-class-001",
@@ -636,5 +636,473 @@ window.CODING_TYPING_DATA_JAVA = [
     "difficulty": 2,
     "estimatedTime": 18,
     "source": "builtin"
+  },
+  {
+    "id": "java-array-001",
+    "language": "java",
+    "category": "array",
+    "level": 2,
+    "difficulty": 2,
+    "estimatedTime": 90,
+    "source": "builtin",
+    "sandboxRunnable": true,
+    "title": {
+      "zh-CN": "数组声明初始化",
+      "ja-JP": "配列宣言初期化",
+      "en-US": "Array init"
+    },
+    "explanation": {
+      "zh-CN": "声明和初始化一维数组",
+      "ja-JP": "一次元配列の宣言と初期化",
+      "en-US": "Declare and init 1D array"
+    },
+    "hint": {
+      "zh-CN": "int[] nums = {1,2,3};",
+      "ja-JP": "int[] nums = {1,2,3};",
+      "en-US": "int[] nums = {1,2,3};"
+    },
+    "focus": [
+      "int[]",
+      "array",
+      "{}"
+    ],
+    "code": "int[] nums = {10,20,30,40,50};\nSystem.out.println(nums[0]);\nSystem.out.println(nums.length);"
+  },
+  {
+    "id": "java-array-002",
+    "language": "java",
+    "category": "array",
+    "level": 2,
+    "difficulty": 2,
+    "estimatedTime": 90,
+    "source": "builtin",
+    "sandboxRunnable": true,
+    "title": {
+      "zh-CN": "数组遍历",
+      "ja-JP": "配列走査",
+      "en-US": "Array loop"
+    },
+    "explanation": {
+      "zh-CN": "for循环遍历数组",
+      "ja-JP": "forループで配列走査",
+      "en-US": "Traverse array with for"
+    },
+    "hint": {
+      "zh-CN": "for(int i=0; i<arr.length; i++)",
+      "ja-JP": "for(int i=0; i<arr.length; i++)",
+      "en-US": "for(int i=0; i<arr.length; i++)"
+    },
+    "focus": [
+      "for",
+      "array",
+      "length"
+    ],
+    "code": "int[] sc = {85,90,78,92};\nint sum=0;\nfor(int i=0;i<sc.length;i++){sum+=sc[i];}\nSystem.out.println(\"Sum: \"+sum);"
+  },
+  {
+    "id": "java-array-003",
+    "language": "java",
+    "category": "array",
+    "level": 3,
+    "difficulty": 3,
+    "estimatedTime": 120,
+    "source": "builtin",
+    "sandboxRunnable": true,
+    "title": {
+      "zh-CN": "增强 for 循环",
+      "ja-JP": "拡張forループ",
+      "en-US": "Enhanced for"
+    },
+    "explanation": {
+      "zh-CN": "增强for循环遍历数组",
+      "ja-JP": "拡張forループで配列走査",
+      "en-US": "Enhanced for-each loop"
+    },
+    "hint": {
+      "zh-CN": "for(int n : numbers)",
+      "ja-JP": "for(int n : numbers)",
+      "en-US": "for(int n : numbers)"
+    },
+    "focus": [
+      "for",
+      ":",
+      "array"
+    ],
+    "code": "int[] vals = {2,4,6,8,10};\nfor(int v : vals){\n    System.out.println(v*v);\n}"
+  },
+  {
+    "id": "java-switch-001",
+    "language": "java",
+    "category": "switch",
+    "level": 2,
+    "difficulty": 2,
+    "estimatedTime": 90,
+    "source": "builtin",
+    "sandboxRunnable": true,
+    "title": {
+      "zh-CN": "switch 分支",
+      "ja-JP": "switch 分岐",
+      "en-US": "Switch branch"
+    },
+    "explanation": {
+      "zh-CN": "switch根据值分支",
+      "ja-JP": "switchで値に応じた分岐",
+      "en-US": "Branch by value with switch"
+    },
+    "hint": {
+      "zh-CN": "switch(day){case 1:...break;}",
+      "ja-JP": "switch(day){case 1:...break;}",
+      "en-US": "switch(day){case 1:...break;}"
+    },
+    "focus": [
+      "switch",
+      "case",
+      "break",
+      "default"
+    ],
+    "code": "int d=3; String name;\nswitch(d){\n    case 1: name=\"Mon\"; break;\n    case 2: name=\"Tue\"; break;\n    case 3: name=\"Wed\"; break;\n    default: name=\"?\";\n}\nSystem.out.println(name);"
+  },
+  {
+    "id": "java-switch-002",
+    "language": "java",
+    "category": "switch",
+    "level": 2,
+    "difficulty": 2,
+    "estimatedTime": 90,
+    "source": "builtin",
+    "sandboxRunnable": true,
+    "title": {
+      "zh-CN": "switch 多值",
+      "ja-JP": "switch 複数値",
+      "en-US": "Multi-case switch"
+    },
+    "explanation": {
+      "zh-CN": "多个case共享逻辑",
+      "ja-JP": "複数caseで同じ処理",
+      "en-US": "Multiple cases share logic"
+    },
+    "hint": {
+      "zh-CN": "case 'A': case 'B':",
+      "ja-JP": "case 'A': case 'B':",
+      "en-US": "case 'A': case 'B':"
+    },
+    "focus": [
+      "switch",
+      "case",
+      "break"
+    ],
+    "code": "char g='B';\nswitch(g){\n    case 'A': case 'B':\n        System.out.println(\"Pass\"); break;\n    case 'F':\n        System.out.println(\"Fail\");\n}"
+  },
+  {
+    "id": "java-switch-003",
+    "language": "java",
+    "category": "switch",
+    "level": 3,
+    "difficulty": 3,
+    "estimatedTime": 120,
+    "source": "builtin",
+    "sandboxRunnable": false,
+    "title": {
+      "zh-CN": "switch 字符串",
+      "ja-JP": "switch 文字列",
+      "en-US": "Switch string"
+    },
+    "explanation": {
+      "zh-CN": "switch匹配字符串",
+      "ja-JP": "switchで文字列一致",
+      "en-US": "Switch with string matching"
+    },
+    "hint": {
+      "zh-CN": "switch(cmd.toLowerCase())",
+      "ja-JP": "switch(cmd.toLowerCase())",
+      "en-US": "switch(cmd.toLowerCase())"
+    },
+    "focus": [
+      "switch",
+      "String",
+      "toLowerCase"
+    ],
+    "code": "String cmd=\"start\";\nswitch(cmd.toLowerCase()){\n    case \"start\": System.out.println(\"Start\"); break;\n    case \"stop\": System.out.println(\"Stop\"); break;\n    default: System.out.println(\"?\");\n}"
+  },
+  {
+    "id": "java-trycatch-001",
+    "language": "java",
+    "category": "try_catch",
+    "level": 3,
+    "difficulty": 3,
+    "estimatedTime": 120,
+    "source": "builtin",
+    "sandboxRunnable": true,
+    "title": {
+      "zh-CN": "try-catch",
+      "ja-JP": "try-catch",
+      "en-US": "Try-catch"
+    },
+    "explanation": {
+      "zh-CN": "try-catch捕获数组越界",
+      "ja-JP": "try-catchで配列範囲外をキャッチ",
+      "en-US": "Catch array index exception"
+    },
+    "hint": {
+      "zh-CN": "try{...}catch(ArrayIndexOutOfBoundsException e){...}",
+      "ja-JP": "try{...}catch(ArrayIndexOutOfBoundsException e){...}",
+      "en-US": "try{...}catch(ArrayIndexOutOfBoundsException e){...}"
+    },
+    "focus": [
+      "try",
+      "catch",
+      "Exception"
+    ],
+    "code": "try{\n    int[] n={1,2,3};\n    System.out.println(n[5]);\n}catch(ArrayIndexOutOfBoundsException e){\n    System.out.println(\"Out!\");\n}"
+  },
+  {
+    "id": "java-trycatch-002",
+    "language": "java",
+    "category": "try_catch",
+    "level": 3,
+    "difficulty": 3,
+    "estimatedTime": 120,
+    "source": "builtin",
+    "sandboxRunnable": false,
+    "title": {
+      "zh-CN": "多异常捕获",
+      "ja-JP": "複数例外キャッチ",
+      "en-US": "Multi-catch"
+    },
+    "explanation": {
+      "zh-CN": "捕获不同类型的异常",
+      "ja-JP": "異なる例外タイプをキャッチ",
+      "en-US": "Catch different exception types"
+    },
+    "hint": {
+      "zh-CN": "catch(NullPointerException|ArithmeticException e)",
+      "ja-JP": "catch(NullPointerException|ArithmeticException e)",
+      "en-US": "catch(NullPointerException|ArithmeticException e)"
+    },
+    "focus": [
+      "try",
+      "catch",
+      "|"
+    ],
+    "code": "try{\n    String s=null;\n    System.out.println(s.length());\n    int r=10/0;\n}catch(NullPointerException e){\n    System.out.println(\"Null!\");\n}catch(ArithmeticException e){\n    System.out.println(\"Math!\");\n}"
+  },
+  {
+    "id": "java-trycatch-003",
+    "language": "java",
+    "category": "try_catch",
+    "level": 4,
+    "difficulty": 4,
+    "estimatedTime": 150,
+    "source": "builtin",
+    "sandboxRunnable": false,
+    "title": {
+      "zh-CN": "try-with-resources",
+      "ja-JP": "try-with-resources",
+      "en-US": "Try with resources"
+    },
+    "explanation": {
+      "zh-CN": "try-with-resources自动关闭",
+      "ja-JP": "リソース自動クローズ",
+      "en-US": "Auto-close resources"
+    },
+    "hint": {
+      "zh-CN": "try(Scanner sc=new Scanner(file))",
+      "ja-JP": "try(Scanner sc=new Scanner(file))",
+      "en-US": "try(Scanner sc=new Scanner(file))"
+    },
+    "focus": [
+      "try",
+      "Scanner",
+      "File"
+    ],
+    "code": "import java.util.*;\nimport java.io.*;\ntry(Scanner sc=new Scanner(new File(\"d.txt\"))){\n    while(sc.hasNextLine())\n        System.out.println(sc.nextLine());\n}catch(FileNotFoundException e){\n    System.out.println(\"No file\");\n}"
+  },
+  {
+    "id": "java-arraylist-001",
+    "language": "java",
+    "category": "arraylist",
+    "level": 2,
+    "difficulty": 2,
+    "estimatedTime": 90,
+    "source": "builtin",
+    "sandboxRunnable": true,
+    "title": {
+      "zh-CN": "ArrayList",
+      "ja-JP": "ArrayList",
+      "en-US": "ArrayList"
+    },
+    "explanation": {
+      "zh-CN": "创建ArrayList添加元素",
+      "ja-JP": "ArrayList作成と要素追加",
+      "en-US": "Create ArrayList and add"
+    },
+    "hint": {
+      "zh-CN": "ArrayList<String> list=new ArrayList<>(); list.add(\"hi\");",
+      "ja-JP": "ArrayList<String> list=new ArrayList<>(); list.add(\"hi\");",
+      "en-US": "ArrayList<String> list=new ArrayList<>(); list.add(\"hi\");"
+    },
+    "focus": [
+      "ArrayList",
+      "add",
+      "get"
+    ],
+    "code": "import java.util.ArrayList;\nArrayList<String> n=new ArrayList<>();\nn.add(\"Alice\"); n.add(\"Bob\");\nSystem.out.println(n.get(0));\nSystem.out.println(n.size());"
+  },
+  {
+    "id": "java-arraylist-002",
+    "language": "java",
+    "category": "arraylist",
+    "level": 2,
+    "difficulty": 2,
+    "estimatedTime": 90,
+    "source": "builtin",
+    "sandboxRunnable": true,
+    "title": {
+      "zh-CN": "ArrayList 遍历",
+      "ja-JP": "ArrayList 走査",
+      "en-US": "ArrayList loop"
+    },
+    "explanation": {
+      "zh-CN": "增强for遍历ArrayList",
+      "ja-JP": "拡張forでArrayListを走査",
+      "en-US": "Traverse ArrayList with for"
+    },
+    "hint": {
+      "zh-CN": "for(int s : scores)",
+      "ja-JP": "for(int s : scores)",
+      "en-US": "for(int s : scores)"
+    },
+    "focus": [
+      "ArrayList",
+      "for",
+      ":"
+    ],
+    "code": "import java.util.ArrayList;\nArrayList<Integer> s=new ArrayList<>();\ns.add(85); s.add(90); s.add(78);\nint sum=0;\nfor(int v:s){sum+=v;}\nSystem.out.println(\"Avg: \"+sum/s.size());"
+  },
+  {
+    "id": "java-arraylist-003",
+    "language": "java",
+    "category": "arraylist",
+    "level": 3,
+    "difficulty": 3,
+    "estimatedTime": 120,
+    "source": "builtin",
+    "sandboxRunnable": false,
+    "title": {
+      "zh-CN": "ArrayList 方法",
+      "ja-JP": "ArrayList メソッド",
+      "en-US": "ArrayList methods"
+    },
+    "explanation": {
+      "zh-CN": "ArrayList的remove/contains等方法",
+      "ja-JP": "ArrayListのremove/containsなどのメソッド",
+      "en-US": "ArrayList remove and contains"
+    },
+    "hint": {
+      "zh-CN": "list.remove(0); list.contains(\"k\");",
+      "ja-JP": "list.remove(0); list.contains(\"k\");",
+      "en-US": "list.remove(0); list.contains(\"k\");"
+    },
+    "focus": [
+      "ArrayList",
+      "remove",
+      "contains",
+      "isEmpty"
+    ],
+    "code": "import java.util.ArrayList;\nArrayList<String> it=new ArrayList<>();\nit.add(\"A\"); it.add(\"B\"); it.add(\"C\");\nit.remove(\"B\");\nSystem.out.println(it.contains(\"A\"));\nSystem.out.println(it.isEmpty());\nSystem.out.println(it.size());"
+  },
+  {
+    "id": "java-map-001",
+    "language": "java",
+    "category": "map",
+    "level": 3,
+    "difficulty": 3,
+    "estimatedTime": 120,
+    "source": "builtin",
+    "sandboxRunnable": true,
+    "title": {
+      "zh-CN": "HashMap 基础",
+      "ja-JP": "HashMap 基礎",
+      "en-US": "HashMap basics"
+    },
+    "explanation": {
+      "zh-CN": "创建HashMap存储键值对",
+      "ja-JP": "HashMap作成とキー値保存",
+      "en-US": "Create HashMap and store K-V"
+    },
+    "hint": {
+      "zh-CN": "HashMap<String,Integer> m=new HashMap<>(); m.put(\"k\",1);",
+      "ja-JP": "HashMap<String,Integer> m=new HashMap<>(); m.put(\"k\",1);",
+      "en-US": "HashMap<String,Integer> m=new HashMap<>(); m.put(\"k\",1);"
+    },
+    "focus": [
+      "HashMap",
+      "put",
+      "get",
+      "containsKey"
+    ],
+    "code": "import java.util.HashMap;\nHashMap<String,Integer> a=new HashMap<>();\na.put(\"Alice\",25); a.put(\"Bob\",30);\nSystem.out.println(a.get(\"Alice\"));\nSystem.out.println(a.containsKey(\"Bob\"));"
+  },
+  {
+    "id": "java-map-002",
+    "language": "java",
+    "category": "map",
+    "level": 3,
+    "difficulty": 3,
+    "estimatedTime": 120,
+    "source": "builtin",
+    "sandboxRunnable": false,
+    "title": {
+      "zh-CN": "HashMap 遍历",
+      "ja-JP": "HashMap 走査",
+      "en-US": "HashMap iteration"
+    },
+    "explanation": {
+      "zh-CN": "用keySet遍历HashMap",
+      "ja-JP": "keySetでHashMapを走査",
+      "en-US": "Iterate HashMap with keySet"
+    },
+    "hint": {
+      "zh-CN": "for(String k:map.keySet())",
+      "ja-JP": "for(String k:map.keySet())",
+      "en-US": "for(String k:map.keySet())"
+    },
+    "focus": [
+      "HashMap",
+      "keySet",
+      "for"
+    ],
+    "code": "import java.util.HashMap;\nHashMap<String,Integer> s=new HashMap<>();\ns.put(\"Alice\",85); s.put(\"Bob\",72); s.put(\"Aoi\",91);\nfor(String n:s.keySet()){\n    System.out.println(n+\": \"+s.get(n));\n}"
+  },
+  {
+    "id": "java-map-003",
+    "language": "java",
+    "category": "map",
+    "level": 4,
+    "difficulty": 4,
+    "estimatedTime": 150,
+    "source": "builtin",
+    "sandboxRunnable": false,
+    "title": {
+      "zh-CN": "HashMap 统计",
+      "ja-JP": "HashMap 集計",
+      "en-US": "HashMap counting"
+    },
+    "explanation": {
+      "zh-CN": "用HashMap统计频率",
+      "ja-JP": "HashMapで頻度集計",
+      "en-US": "Count frequency with HashMap"
+    },
+    "hint": {
+      "zh-CN": "map.put(k,map.getOrDefault(k,0)+1)",
+      "ja-JP": "map.put(k,map.getOrDefault(k,0)+1)",
+      "en-US": "map.put(k,map.getOrDefault(k,0)+1)"
+    },
+    "focus": [
+      "HashMap",
+      "getOrDefault",
+      "put"
+    ],
+    "code": "import java.util.HashMap;\nString[] w={\"a\",\"b\",\"a\",\"c\",\"b\",\"a\"};\nHashMap<String,Integer> f=new HashMap<>();\nfor(String x:w){\n    f.put(x,f.getOrDefault(x,0)+1);\n}\nfor(String k:f.keySet()){\n    System.out.println(k+\": \"+f.get(k));\n}"
   }
 ];

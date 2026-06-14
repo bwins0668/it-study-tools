@@ -1,4 +1,4 @@
-// Coding Typing Practice - Python Basics (30 items)
+// Coding Typing Practice - undefined
 window.CODING_TYPING_DATA_PYTHON = [
   {
     "id": "py-print-001",
@@ -950,5 +950,473 @@ window.CODING_TYPING_DATA_PYTHON = [
     "difficulty": 1,
     "estimatedTime": 8,
     "source": "builtin"
+  },
+  {
+    "id": "py-listcomp-001",
+    "language": "python",
+    "category": "list_comprehension",
+    "level": 2,
+    "difficulty": 2,
+    "estimatedTime": 60,
+    "source": "builtin",
+    "sandboxRunnable": true,
+    "title": {
+      "zh-CN": "列表推导式基础",
+      "ja-JP": "リスト内包表記基礎",
+      "en-US": "Basic list comprehension"
+    },
+    "explanation": {
+      "zh-CN": "用列表推导式生成平方数",
+      "ja-JP": "リスト内包表記で平方数生成",
+      "en-US": "Generate squares with list comprehension"
+    },
+    "hint": {
+      "zh-CN": "[x**2 for x in range(5)]",
+      "ja-JP": "[x**2 for x in range(5)]",
+      "en-US": "[x**2 for x in range(5)]"
+    },
+    "focus": [
+      "list",
+      "comprehension",
+      "for"
+    ],
+    "code": "squares = [x**2 for x in range(5)]\nprint(squares)"
+  },
+  {
+    "id": "py-listcomp-002",
+    "language": "python",
+    "category": "list_comprehension",
+    "level": 2,
+    "difficulty": 2,
+    "estimatedTime": 60,
+    "source": "builtin",
+    "sandboxRunnable": true,
+    "title": {
+      "zh-CN": "条件列表推导式",
+      "ja-JP": "条件付き内包表記",
+      "en-US": "Conditional comprehension"
+    },
+    "explanation": {
+      "zh-CN": "带if条件的列表推导式",
+      "ja-JP": "if条件付きリスト内包表記",
+      "en-US": "List comprehension with if filter"
+    },
+    "hint": {
+      "zh-CN": "[x for x in nums if x>0]",
+      "ja-JP": "[x for x in nums if x>0]",
+      "en-US": "[x for x in nums if x>0]"
+    },
+    "focus": [
+      "list",
+      "comprehension",
+      "if"
+    ],
+    "code": "nums = [-1,2,-3,4,0,5]\npos = [x for x in nums if x>0]\nprint(pos)"
+  },
+  {
+    "id": "py-listcomp-003",
+    "language": "python",
+    "category": "list_comprehension",
+    "level": 3,
+    "difficulty": 3,
+    "estimatedTime": 90,
+    "source": "builtin",
+    "sandboxRunnable": true,
+    "title": {
+      "zh-CN": "双层列表推导式",
+      "ja-JP": "二重内包表記",
+      "en-US": "Nested comprehension"
+    },
+    "explanation": {
+      "zh-CN": "双层for的列表推导式生成坐标",
+      "ja-JP": "二重forで座標生成",
+      "en-US": "Nested for to generate coordinates"
+    },
+    "hint": {
+      "zh-CN": "[(x,y) for x in range(3) for y in range(2)]",
+      "ja-JP": "[(x,y) for x in range(3) for y in range(2)]",
+      "en-US": "[(x,y) for x in range(3) for y in range(2)]"
+    },
+    "focus": [
+      "list",
+      "comprehension",
+      "nested"
+    ],
+    "code": "coords = [(x,y) for x in range(3) for y in range(2)]\nprint(coords)"
+  },
+  {
+    "id": "py-lambda-001",
+    "language": "python",
+    "category": "lambda",
+    "level": 3,
+    "difficulty": 3,
+    "estimatedTime": 60,
+    "source": "builtin",
+    "sandboxRunnable": true,
+    "title": {
+      "zh-CN": "lambda 函数",
+      "ja-JP": "lambda 関数",
+      "en-US": "Lambda function"
+    },
+    "explanation": {
+      "zh-CN": "lambda定义匿名函数",
+      "ja-JP": "lambdaで無名関数定義",
+      "en-US": "Define anonymous function with lambda"
+    },
+    "hint": {
+      "zh-CN": "lambda x: x*2",
+      "ja-JP": "lambda x: x*2",
+      "en-US": "lambda x: x*2"
+    },
+    "focus": [
+      "lambda",
+      "function"
+    ],
+    "code": "double = lambda x: x*2\nprint(double(5))\nprint(double(7))"
+  },
+  {
+    "id": "py-lambda-002",
+    "language": "python",
+    "category": "lambda",
+    "level": 3,
+    "difficulty": 3,
+    "estimatedTime": 90,
+    "source": "builtin",
+    "sandboxRunnable": false,
+    "title": {
+      "zh-CN": "lambda 与 map",
+      "ja-JP": "lambda と map",
+      "en-US": "Lambda with map"
+    },
+    "explanation": {
+      "zh-CN": "将lambda传给map处理序列",
+      "ja-JP": "lambdaをmapに渡す",
+      "en-US": "Pass lambda to map"
+    },
+    "hint": {
+      "zh-CN": "map(lambda x: x.upper(), words)",
+      "ja-JP": "map(lambda x: x.upper(), words)",
+      "en-US": "map(lambda x: x.upper(), words)"
+    },
+    "focus": [
+      "lambda",
+      "map",
+      "list"
+    ],
+    "code": "words = [\"hello\",\"world\",\"python\"]\nup = list(map(lambda w: w.upper(), words))\nprint(up)"
+  },
+  {
+    "id": "py-sorted-001",
+    "language": "python",
+    "category": "sorted",
+    "level": 3,
+    "difficulty": 3,
+    "estimatedTime": 90,
+    "source": "builtin",
+    "sandboxRunnable": false,
+    "title": {
+      "zh-CN": "sorted 自定义排序",
+      "ja-JP": "sorted カスタムソート",
+      "en-US": "Custom sort sorted"
+    },
+    "explanation": {
+      "zh-CN": "sorted + key函数自定义排序",
+      "ja-JP": "sorted+key関数でカスタムソート",
+      "en-US": "Custom sort with sorted and key"
+    },
+    "hint": {
+      "zh-CN": "sorted(items, key=lambda x: x[1])",
+      "ja-JP": "sorted(items, key=lambda x: x[1])",
+      "en-US": "sorted(items, key=lambda x: x[1])"
+    },
+    "focus": [
+      "sorted",
+      "key",
+      "lambda"
+    ],
+    "code": "students = [(\"Alice\",85),(\"Bob\",72),(\"Aoi\",91)]\nsorted_by = sorted(students, key=lambda s: s[1], reverse=True)\nprint(sorted_by)"
+  },
+  {
+    "id": "py-try-001",
+    "language": "python",
+    "category": "try_except",
+    "level": 3,
+    "difficulty": 3,
+    "estimatedTime": 90,
+    "source": "builtin",
+    "sandboxRunnable": true,
+    "title": {
+      "zh-CN": "try-except 异常",
+      "ja-JP": "try-except 例外",
+      "en-US": "Try-except exception"
+    },
+    "explanation": {
+      "zh-CN": "try-except捕获异常",
+      "ja-JP": "try-exceptで例外キャッチ",
+      "en-US": "Catch exceptions with try-except"
+    },
+    "hint": {
+      "zh-CN": "try:... except ValueError:...",
+      "ja-JP": "try:... except ValueError:...",
+      "en-US": "try:... except ValueError:..."
+    },
+    "focus": [
+      "try",
+      "except",
+      "exception"
+    ],
+    "code": "try:\n    num = int(input(\"Enter: \"))\n    print(10/num)\nexcept ValueError:\n    print(\"Invalid!\")\nexcept ZeroDivisionError:\n    print(\"No zero!\")"
+  },
+  {
+    "id": "py-try-002",
+    "language": "python",
+    "category": "try_except",
+    "level": 4,
+    "difficulty": 4,
+    "estimatedTime": 120,
+    "source": "builtin",
+    "sandboxRunnable": true,
+    "title": {
+      "zh-CN": "try-except-else-finally",
+      "ja-JP": "try-except-else-finally",
+      "en-US": "Try-except-else-finally"
+    },
+    "explanation": {
+      "zh-CN": "完整异常处理含else和finally",
+      "ja-JP": "elseとfinallyを含む完全な例外処理",
+      "en-US": "Complete exception handling with else and finally"
+    },
+    "hint": {
+      "zh-CN": "try:... except:... else:... finally:...",
+      "ja-JP": "try:... except:... else:... finally:...",
+      "en-US": "try:... except:... else:... finally:..."
+    },
+    "focus": [
+      "try",
+      "except",
+      "else",
+      "finally"
+    ],
+    "code": "try:\n    f=open(\"data.txt\",\"r\")\n    content=f.read()\nexcept FileNotFoundError:\n    print(\"Not found\")\nelse:\n    print(\"OK\")\nfinally:\n    print(\"Done\")"
+  },
+  {
+    "id": "py-try-003",
+    "language": "python",
+    "category": "try_except",
+    "level": 3,
+    "difficulty": 3,
+    "estimatedTime": 90,
+    "source": "builtin",
+    "sandboxRunnable": true,
+    "title": {
+      "zh-CN": "异常类型捕获",
+      "ja-JP": "例外タイプ別処理",
+      "en-US": "Exception type handling"
+    },
+    "explanation": {
+      "zh-CN": "捕获特定异常类型",
+      "ja-JP": "特定の例外タイプをキャッチ",
+      "en-US": "Catch specific exception types"
+    },
+    "hint": {
+      "zh-CN": "except (TypeError,ValueError) as e:",
+      "ja-JP": "except (TypeError,ValueError) as e:",
+      "en-US": "except (TypeError,ValueError) as e:"
+    },
+    "focus": [
+      "except",
+      "as",
+      "exception"
+    ],
+    "code": "vals = [\"10\",\"abc\",\"20\"]\nfor v in vals:\n    try:\n        print(int(v)**2)\n    except ValueError as e:\n        print(f\"Error: {e}\")"
+  },
+  {
+    "id": "py-class-001",
+    "language": "python",
+    "category": "class",
+    "level": 3,
+    "difficulty": 3,
+    "estimatedTime": 120,
+    "source": "builtin",
+    "sandboxRunnable": false,
+    "title": {
+      "zh-CN": "定义类",
+      "ja-JP": "クラス定義",
+      "en-US": "Define a class"
+    },
+    "explanation": {
+      "zh-CN": "class定义类和方法",
+      "ja-JP": "classでクラスとメソッド定義",
+      "en-US": "Define a class with methods"
+    },
+    "hint": {
+      "zh-CN": "class Dog:\n    def __init__(self,name):",
+      "ja-JP": "class Dog:\n    def __init__(self,name):",
+      "en-US": "class Dog:\n    def __init__(self,name):"
+    },
+    "focus": [
+      "class",
+      "def",
+      "__init__",
+      "self"
+    ],
+    "code": "class Dog:\n    def __init__(self,name):\n        self.name=name\n    def bark(self):\n        return f\"{self.name} says woof!\"\nd=Dog(\"Rex\")\nprint(d.bark())"
+  },
+  {
+    "id": "py-class-002",
+    "language": "python",
+    "category": "class",
+    "level": 3,
+    "difficulty": 3,
+    "estimatedTime": 120,
+    "source": "builtin",
+    "sandboxRunnable": false,
+    "title": {
+      "zh-CN": "类方法",
+      "ja-JP": "クラスメソッド",
+      "en-US": "Class methods"
+    },
+    "explanation": {
+      "zh-CN": "具有多个方法的类",
+      "ja-JP": "複数メソッドを持つクラス",
+      "en-US": "Class with multiple methods"
+    },
+    "hint": {
+      "zh-CN": "def __str__(self): return ...",
+      "ja-JP": "def __str__(self): return ...",
+      "en-US": "def __str__(self): return ..."
+    },
+    "focus": [
+      "class",
+      "def",
+      "__str__",
+      "return"
+    ],
+    "code": "class Rect:\n    def __init__(self,w,h):\n        self.w=w;self.h=h\n    def area(self):\n        return self.w*self.h\n    def __str__(self):\n        return f\"{self.w}x{self.h} rect\"\nr=Rect(3,4)\nprint(r)\nprint(r.area())"
+  },
+  {
+    "id": "py-class-003",
+    "language": "python",
+    "category": "class",
+    "level": 4,
+    "difficulty": 4,
+    "estimatedTime": 150,
+    "source": "builtin",
+    "sandboxRunnable": false,
+    "title": {
+      "zh-CN": "类继承",
+      "ja-JP": "クラス継承",
+      "en-US": "Class inheritance"
+    },
+    "explanation": {
+      "zh-CN": "继承创建子类",
+      "ja-JP": "継承で子クラス作成",
+      "en-US": "Create subclass with inheritance"
+    },
+    "hint": {
+      "zh-CN": "class Student(Person):\n    super().__init__(name)",
+      "ja-JP": "class Student(Person):\n    super().__init__(name)",
+      "en-US": "class Student(Person):\n    super().__init__(name)"
+    },
+    "focus": [
+      "class",
+      "inheritance",
+      "super",
+      "__init__"
+    ],
+    "code": "class Person:\n    def __init__(self,name):\n        self.name=name\nclass Student(Person):\n    def __init__(self,name,grade):\n        super().__init__(name)\n        self.grade=grade\n    def info(self):\n        return f\"{self.name}: {self.grade}\"\ns=Student(\"Alice\",\"A\")\nprint(s.info())"
+  },
+  {
+    "id": "py-tuple-001",
+    "language": "python",
+    "category": "tuple",
+    "level": 1,
+    "difficulty": 1,
+    "estimatedTime": 30,
+    "source": "builtin",
+    "sandboxRunnable": true,
+    "title": {
+      "zh-CN": "元组",
+      "ja-JP": "タプル",
+      "en-US": "Tuple"
+    },
+    "explanation": {
+      "zh-CN": "创建和访问元组",
+      "ja-JP": "タプルの作成とアクセス",
+      "en-US": "Create and access tuples"
+    },
+    "hint": {
+      "zh-CN": "t=(1,2,3); print(t[0])",
+      "ja-JP": "t=(1,2,3); print(t[0])",
+      "en-US": "t=(1,2,3); print(t[0])"
+    },
+    "focus": [
+      "tuple",
+      "()",
+      "index"
+    ],
+    "code": "pt=(3,4)\nprint(pt[0])\nprint(pt[1])"
+  },
+  {
+    "id": "py-tuple-002",
+    "language": "python",
+    "category": "tuple",
+    "level": 2,
+    "difficulty": 2,
+    "estimatedTime": 60,
+    "source": "builtin",
+    "sandboxRunnable": true,
+    "title": {
+      "zh-CN": "元组解包",
+      "ja-JP": "タプルアンパック",
+      "en-US": "Tuple unpacking"
+    },
+    "explanation": {
+      "zh-CN": "元组值解包到多个变量",
+      "ja-JP": "タプルを複数変数にアンパック",
+      "en-US": "Unpack tuple into multiple variables"
+    },
+    "hint": {
+      "zh-CN": "x,y=(10,20)",
+      "ja-JP": "x,y=(10,20)",
+      "en-US": "x,y=(10,20)"
+    },
+    "focus": [
+      "tuple",
+      "unpack",
+      "="
+    ],
+    "code": "name,age,score=(\"Alice\",20,85)\nprint(f\"{name} is {age} years old\")\nprint(f\"Score: {score}\")"
+  },
+  {
+    "id": "py-set-001",
+    "language": "python",
+    "category": "set",
+    "level": 2,
+    "difficulty": 2,
+    "estimatedTime": 60,
+    "source": "builtin",
+    "sandboxRunnable": true,
+    "title": {
+      "zh-CN": "集合",
+      "ja-JP": "セット",
+      "en-US": "Set"
+    },
+    "explanation": {
+      "zh-CN": "创建集合和基本操作",
+      "ja-JP": "セット作成と基本操作",
+      "en-US": "Create set and basic operations"
+    },
+    "hint": {
+      "zh-CN": "s={1,2,3}; print(1 in s)",
+      "ja-JP": "s={1,2,3}; print(1 in s)",
+      "en-US": "s={1,2,3}; print(1 in s)"
+    },
+    "focus": [
+      "set",
+      "{}",
+      "in"
+    ],
+    "code": "fruits={\"apple\",\"banana\",\"cherry\"}\nfruits.add(\"date\")\nprint(sorted(fruits))"
   }
 ];
