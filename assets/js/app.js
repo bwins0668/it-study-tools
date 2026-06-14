@@ -600,7 +600,7 @@ function switchSgSubMode(mode) {
 }
 
 // Reset all progress for the active subject
-function resetAllProgress() {
+function resetAllProgress(skipConfirm) {
   const subjectNames = {
     sql: "SQL",
     itpass: "IT Passport",
@@ -608,7 +608,8 @@ function resetAllProgress() {
     sg: "SG",
     python: "Python"
   };
-  if (confirmKey("dialog.resetProgressConfirm", { subject: subjectNames[currentSubject] || currentSubject })) {
+  const doReset = skipConfirm || confirmKey("dialog.resetProgressConfirm", { subject: subjectNames[currentSubject] || currentSubject });
+  if (doReset) {
     if (currentSubject === "sql") {
       completedLessons = [];
       localStorage.removeItem("sql_hub_completed");
@@ -774,7 +775,7 @@ function showResetConfirm() {
 
   document.getElementById('tools-confirm-ok').addEventListener('click', function () {
     closeConfirm();
-    resetAllProgress();
+    resetAllProgress(true);
   });
 
   overlay.addEventListener('click', function (e) {
