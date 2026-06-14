@@ -2,6 +2,12 @@
 (function () {
   "use strict";
 
+  // [R22.11-Hotfix3]
+var DISABLE_TRANSLATION_OVERLAY = true;
+
+
+  "use strict";
+
   const DEFAULT_LANG = "default-ja-zh";
   const STORAGE_KEY = "study-tools-language";
   const CACHE_STORAGE_KEY = "study-tools-i18n-cache-v4";
@@ -370,6 +376,7 @@
   function getCachedTranslation(item) {
     const fixed = staticTranslation(item.text, item.targetLang || currentLang);
     if (fixed) return fixed;
+    if (DISABLE_TRANSLATION_OVERLAY) return "";
     const key = cacheKey(item);
     return translationCache.get(key) || "";
   }
@@ -377,6 +384,7 @@
   function rememberTranslation(item, translatedText) {
     const clean = String(translatedText || "").trim();
     if (!clean) return;
+        if (DISABLE_TRANSLATION_OVERLAY) return;
     translationCache.set(cacheKey(item), clean);
     persistCacheSoon();
   function safeRememberTranslation(item, translatedText) {
@@ -472,6 +480,37 @@
   function clearBadI18nCache() {
     // Legacy - calls the full version
     clearAllBadCaches();
+
+  // [R22.11-Hotfix3] Force re-render [data-i18n] from official dictionary
+  function applyOnlyOfficialI18n() {
+    document.querySelectorAll("[data-i18n]").forEach(function(el) {
+      var key = el.getAttribute("data-i18n");
+      if (!key) return;
+      if (typeof staticTranslation === "function") {
+        var official = staticTranslation(key);
+        if (official) { el.textContent = official; return; }
+      }
+      if (el.textContent && typeof isLikelyMojibakeText === "function" && isLikelyMojibakeText(el.textContent)) {
+        el.textContent = key;
+      }
+    });
+    document.querySelectorAll("[data-i18n-title]").forEach(function(el) {
+      var key = el.getAttribute("data-i18n-title");
+      if (!key) return;
+      if (typeof staticTranslation === "function") {
+        var official = staticTranslation(key);
+        if (official) el.setAttribute("title", official);
+      }
+    });
+    document.querySelectorAll("[data-i18n-placeholder]").forEach(function(el) {
+      var key = el.getAttribute("data-i18n-placeholder");
+      if (!key) return;
+      if (typeof staticTranslation === "function") {
+        var official = staticTranslation(key);
+        if (official) el.setAttribute("placeholder", official);
+      }
+    });
+  }
   // [R22.11-Hotfix2] Emergency cache cleaning via URL param
   (function checkClearBadCacheParam() {
     try {
@@ -493,7 +532,8 @@
                   Promise.all(keys.filter(function(k) {
                     return k.indexOf("study-tools-web-") === 0 || k.indexOf("study-tools-i18n-") === 0;
                   }).map(function(k) { return caches.delete(k); })).then(function() {
-                    window.location.reload(true);
+DISABLE_TRANSLATION_OVERLAY = true;
+                            window.location.reload(true);
                   });
                 });
               } else {
@@ -616,6 +656,7 @@
 
     const config = getAiConfig();
     for (const chunk of splitChunks(missing, 80)) {
+if (DISABLE_TRANSLATION_OVERLAY) { missing = []; applyTranslations = function() {}; applyJapaneseTranslations = function() {}; return; }
       const response = await fetch("/api/i18n/translate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -1080,20 +1121,7 @@
 
       const applyTextJob = (job, translatedText, japaneseText = "") => {
         if (!job.node.isConnected) return;
-        /* Check user translation first — highest display priority */
-        var guardEl = job.node.parentElement;
-        var guardOrig = textOriginals.get(job.node) || "";
-        if (guardOrig && guardEl && job.item) {
-          var guardCtx = (job.item && job.item.context) || "general";
-          var guardSaved = getUserTranslationItem(guardOrig, currentLang, currentLang, guardCtx);
-          if (guardSaved && guardSaved.translatedText && !guardSaved.deletedAt) {
-            job.node.nodeValue = guardSaved.translatedText;
-            textApplied.set(job.node, guardSaved.translatedText);
-            textAppliedLang.set(job.node, targetLang);
-            attachUserTranslationControl(guardEl, guardOrig, guardSaved.translatedText, guardCtx);
-            return;
-          }
-        }
+        /* User translation DISABLED by DISABLE_TRANSLATION_OVERLAY */
         const nextValue = translatedText
           ? renderTargetText(
               textOriginals.get(job.node),
@@ -1788,3 +1816,39 @@ function openUtEditor(el, origText, transText, ctx) {
     init();
   }
 })();
+  // [R22.11-Hotfix3] Emergency factory reset for i18n caches
+  (function checkFactoryResetParam() {
+    try {
+      var params = new URLSearchParams(window.location.search);
+      if (params.has("factoryResetI18n") && params.get("factoryResetI18n") === "1") {
+        console.log("[I18n] factoryResetI18n=1: Cleaning ALL translation caches...");
+        var keysToRemove = [];
+        for (var i = 0; i < localStorage.length; i++) {
+          var k = localStorage.key(i);
+          if (!k) continue;
+          var lk = k.toLowerCase();
+          if (lk.indexOf("i18n") >= 0 || lk.indexOf("translat") >= 0 || lk.indexOf("ai-cache") >= 0 || lk.indexOf("ai_cache") >= 0 || lk.indexOf("cache-v") >= 0) {
+            keysToRemove.push(k);
+          }
+        }
+        keysToRemove.forEach(function(k) { localStorage.removeItem(k); console.log("  removed", k); });
+        if (window.history && window.history.replaceState) {
+          window.history.replaceState({}, "", window.location.origin + window.location.pathname);
+        }
+        if (navigator.serviceWorker) {
+          navigator.serviceWorker.getRegistrations().then(function(regs) {
+            Promise.all(regs.map(function(r) { return r.unregister(); })).then(function() {
+              if (typeof caches !== "undefined") {
+                caches.keys().then(function(keys) {
+                  Promise.all(keys.filter(function(k) { return k.indexOf("study-tools") >= 0; }).map(function(k) { return caches.delete(k); })).then(function() {
+                    window.location.reload(true);
+                  });
+                });
+              } else { window.location.reload(true); }
+            });
+          });
+        } else { window.location.reload(true); }
+      }
+    } catch(e) { console.warn("[I18n] factoryResetI18n error:", e); }
+  })();
+
