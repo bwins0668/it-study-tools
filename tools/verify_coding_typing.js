@@ -1,5 +1,202 @@
 #!/usr/bin/env node
 /**
- * verify_coding_typing.js — Coding Typing Practice Data Validator
+ * verify_coding_typing.js -- Coding Typing Practice Data Validator (v2, stricter)
+ * Checks: counts, id uniqueness, trilingual fields, SQL fixtures, expectedResultNote key format, sub-category coverage.
  */
-(function(){"use strict";var p=require("path"),v=require("vm"),R=p.resolve(__dirname,".."),D=p.join(R,"data","coding_typing"),F={"python_basics.js":"CODING_TYPING_DATA_PYTHON","java_basics.js":"CODING_TYPING_DATA_JAVA","sql_basics.js":"CODING_TYPING_DATA_SQL","coding_symbols.js":"CODING_TYPING_DATA_SYMBOLS"},a=[],e=[],w=[];Object.keys(F).forEach(function(n){var vn=F[n],fp=p.join(D,n),src;try{src=require("fs").readFileSync(fp,"utf-8")}catch(ex){e.push("CANNOT_READ: "+n+" — "+ex.message);return}var s={window:{}};try{v.createContext(s);v.runInContext(src,s)}catch(ex){e.push("PARSE_FAIL: "+n+" — "+ex.message);return}var d=s.window[vn];if(!d||!Array.isArray(d)){e.push("NOT_ARRAY: "+n);return}d.forEach(function(i){a.push(i)})});console.log("=== verify_coding_typing.js Report ===\n");var t=a.length;console.log("Total items: "+t);var ex={python:45,java:35,sql:45,symbol:25},cnt={};a.forEach(function(i){var l=i.language||"?";cnt[l]=(cnt[l]||0)+1});Object.keys(ex).forEach(function(l){var g=cnt[l]||0;if(g!==ex[l])e.push("COUNT_"+l+": expected "+ex[l]+" got "+g);else console.log("  "+l+": "+g+" OK")});console.log("");var idm={};a.forEach(function(i){if(idm[i.id])e.push("DUP_ID: "+i.id);idm[i.id]=true});console.log("IDs unique: "+(Object.keys(idm).length===t?"PASS":"FAIL"));var vl={python:true,java:true,sql:true,symbol:true},tl=["zh-CN","ja-JP","en-US"],tf=["title","explanation","hint"];a.forEach(function(i){var id=i.id||"?";if(!vl[i.language])e.push(id+": bad lang "+i.language);if(typeof i.level!=="number"||i.level<1||i.level>5)e.push(id+": level "+i.level+" not 1-5");if(typeof i.difficulty!=="number"||i.difficulty<1||i.difficulty>5)e.push(id+": difficulty "+i.difficulty+" not 1-5");if(!i.code||String(i.code).trim()==="")e.push(id+": code empty");if(!i.focus||!Array.isArray(i.focus)||i.focus.length===0)w.push(id+": focus empty");if(!i.source)w.push(id+": source empty");tf.forEach(function(fn){tl.forEach(function(ln){var v=i[fn]&&i[fn][ln];if(!v||String(v).trim()==="")e.push(id+": "+fn+"."+ln+" empty")})});if(typeof i.code==="string"){if(/DROP\s+TABLE/i.test(i.code))e.push(id+": code has DROP TABLE");if(/CREATE\s+TABLE/i.test(i.code))e.push(id+": code has CREATE TABLE")}if(i.language==="sql"){if(i.sandboxRunnable&&(!i.sqlSchema||!i.sqlSeed))w.push(id+": sandboxRunnable but no sqlSchema/sqlSeed");if(i.sqlSchema){if(!/DROP\s+TABLE\s+IF\s+EXISTS/i.test(i.sqlSchema))w.push(id+": sqlSchema missing DROP IF EXISTS");if(!/CREATE\s+TABLE/i.test(i.sqlSchema))e.push(id+": sqlSchema missing CREATE TABLE")}if(i.sqlSeed&&!/INSERT\s+INTO/i.test(i.sqlSeed))w.push(id+": sqlSeed missing INSERT");if(i.expectedResultNote){tl.forEach(function(ln){if(!i.expectedResultNote[ln])w.push(id+": expectedResultNote."+ln+" empty")})}}if(i.language==="symbol"&&i.sandboxRunnable)w.push(id+": symbol should not be sandboxRunnable")});console.log("\nErrors: "+e.length);e.forEach(function(x){console.log("  ERROR: "+x)});console.log("Warnings: "+w.length);w.forEach(function(x){console.log("  WARN: "+x)});var exC=e.length>0?1:0;console.log("\nResult: "+(exC===0?"PASS":"FAIL"));process.exit(exC)})();
+(function() {
+  'use strict';
+  var p = require("path");
+  var vm = require("vm");
+  var fs = require("fs");
+  var ROOT = p.resolve(__dirname, "..");
+  var DATADIR = p.join(ROOT, "data", "coding_typing");
+
+  var FILES = {
+    "python_basics.js": "CODING_TYPING_DATA_PYTHON",
+    "java_basics.js":  "CODING_TYPING_DATA_JAVA",
+    "sql_basics.js":   "CODING_TYPING_DATA_SQL",
+    "coding_symbols.js":"CODING_TYPING_DATA_SYMBOLS"
+  };
+
+  var errors = [];
+  var warnings = [];
+  var allItems = [];
+
+  function loadGlobalVar(src, varName) {
+    var sandbox = { window: {} };
+    vm.createContext(sandbox);
+    vm.runInContext(src, sandbox);
+    return sandbox.window[varName];
+  }
+
+  Object.keys(FILES).forEach(function(fileName) {
+    var varName = FILES[fileName];
+    var fp = p.join(DATADIR, fileName);
+    var src;
+    try {
+      src = fs.readFileSync(fp, "utf-8");
+    } catch (ex) {
+      errors.push("CANNOT_READ: " + fileName + " -- " + ex.message);
+      return;
+    }
+    try {
+      var data = loadGlobalVar(src, varName);
+      if (!data || !Array.isArray(data)) {
+        errors.push("NOT_ARRAY: " + fileName);
+        return;
+      }
+      data.forEach(function(item) { allItems.push(item); });
+    } catch (ex) {
+      errors.push("PARSE_FAIL: " + fileName + " -- " + ex.message);
+    }
+  });
+
+  // Load CODING_TYPING_ALL_CATEGORIES from _index.js
+  var categoryIndex = {};
+  try {
+    var idxSrc = fs.readFileSync(p.join(DATADIR, "_index.js"), "utf-8");
+    var idxData = loadGlobalVar(idxSrc, "CODING_TYPING_ALL_CATEGORIES");
+    if (idxData && typeof idxData === "object") {
+      categoryIndex = idxData;
+    } else {
+      warnings.push("CODING_TYPING_ALL_CATEGORIES not found or invalid in _index.js");
+    }
+  } catch (ex) {
+    warnings.push("Cannot read _index.js for category index: " + ex.message);
+  }
+
+  console.log("=== verify_coding_typing.js Report ===\n");
+
+  // --- 1. Counts ---
+  var total = allItems.length;
+  console.log("Total items: " + total);
+  var expected = { python: 45, java: 35, sql: 45, symbol: 25 };
+  var langCounts = {};
+  allItems.forEach(function(item) {
+    var lang = item.language || "?";
+    langCounts[lang] = (langCounts[lang] || 0) + 1;
+  });
+  Object.keys(expected).forEach(function(lang) {
+    var got = langCounts[lang] || 0;
+    if (got !== expected[lang]) {
+      errors.push("COUNT_" + lang + ": expected " + expected[lang] + " got " + got);
+    } else {
+      console.log("  " + lang + ": " + got + " OK");
+    }
+  });
+  console.log("");
+
+  // --- 2. ID uniqueness ---
+  var idMap = {};
+  allItems.forEach(function(item) {
+    if (idMap[item.id]) errors.push("DUP_ID: " + item.id);
+    idMap[item.id] = true;
+  });
+  console.log("IDs unique: " + (Object.keys(idMap).length === total ? "PASS" : "FAIL"));
+
+  var validLangs = { python: true, java: true, sql: true, symbol: true };
+  var trilingualLocales = ["zh-CN", "ja-JP", "en-US"];
+  var textFields = ["title", "explanation", "hint"];
+  var seenCats = {};
+
+  // --- 3. Per-item validation ---
+  allItems.forEach(function(item) {
+    var id = item.id || "?";
+    if (!validLangs[item.language]) errors.push(id + ": bad language " + item.language);
+    if (typeof item.level !== "number" || item.level < 1 || item.level > 5)
+      errors.push(id + ": level " + item.level + " not in 1-5");
+    if (typeof item.difficulty !== "number" || item.difficulty < 1 || item.difficulty > 5)
+      errors.push(id + ": difficulty " + item.difficulty + " not in 1-5");
+    if (!item.code || String(item.code).trim() === "")
+      errors.push(id + ": code empty");
+    if (!item.focus || !Array.isArray(item.focus) || item.focus.length === 0)
+      warnings.push(id + ": focus empty");
+    if (!item.source)
+      warnings.push(id + ": source empty");
+
+    // Check trilingual text fields
+    textFields.forEach(function(field) {
+      trilingualLocales.forEach(function(locale) {
+        var val = item[field] && item[field][locale];
+        if (!val || String(val).trim() === "")
+          errors.push(id + ": " + field + "." + locale + " empty");
+      });
+    });
+
+    // Code must not contain fixture SQL
+    if (typeof item.code === "string") {
+      if (/\bdrop\s+table\b/i.test(item.code)) errors.push(id + ": code has DROP TABLE");
+      if (/\bcreate\s+table\b/i.test(item.code)) errors.push(id + ": code has CREATE TABLE");
+    }
+
+    if (item.language === "sql") {
+      if (item.sandboxRunnable && (!item.sqlSchema || !item.sqlSeed))
+        warnings.push(id + ": sandboxRunnable but missing sqlSchema/sqlSeed");
+      if (item.sqlSchema) {
+        if (!/\bdrop\s+table\s+if\s+exists\b/i.test(item.sqlSchema))
+          warnings.push(id + ": sqlSchema missing DROP TABLE IF EXISTS");
+        if (!/\bcreate\s+table\b/i.test(item.sqlSchema))
+          errors.push(id + ": sqlSchema missing CREATE TABLE");
+      }
+      if (item.sqlSeed && !/\binsert\s+into\b/i.test(item.sqlSeed))
+        warnings.push(id + ": sqlSeed missing INSERT INTO");
+      if (item.expectedResultNote) {
+        // OLD short key names must not be used
+        if (item.expectedResultNote.zh || item.expectedResultNote.ja || item.expectedResultNote.en) {
+          errors.push(id + ": expectedResultNote uses OLD key names (zh/ja/en)");
+        }
+        // All three full locale keys must be present and non-empty
+        trilingualLocales.forEach(function(locale) {
+          if (!item.expectedResultNote[locale] || String(item.expectedResultNote[locale]).trim() === "")
+            errors.push(id + ": expectedResultNote." + locale + " empty");
+        });
+      }
+    }
+
+    if (item.language === "symbol" && item.sandboxRunnable)
+      warnings.push(id + ": symbol should not be sandboxRunnable");
+
+    // Track category for coverage check
+    if (item.language && item.category) {
+      var catKey = item.language + "|" + item.category;
+      seenCats[catKey] = (seenCats[catKey] || 0) + 1;
+    }
+  });
+
+  // --- 4. Category coverage check ---
+  if (Object.keys(categoryIndex).length > 0) {
+    Object.keys(seenCats).forEach(function(catKey) {
+      var parts = catKey.split("|");
+      var lang = parts[0];
+      var cat = parts[1];
+      var ref = categoryIndex[lang];
+      if (!ref) {
+        warnings.push("Category language " + lang + " not in CODING_TYPING_ALL_CATEGORIES");
+        return;
+      }
+      if (ref.indexOf(cat) === -1) {
+        warnings.push("Category " + cat + " in " + lang + " not listed in CODING_TYPING_ALL_CATEGORIES");
+      }
+    });
+    // Check for unreferenced index entries
+    Object.keys(categoryIndex).forEach(function(lang) {
+      categoryIndex[lang].forEach(function(cat) {
+        var ck = lang + "|" + cat;
+        if (!seenCats[ck]) {
+          warnings.push("CODING_TYPING_ALL_CATEGORIES [" + lang + "] has " + cat + " but no items");
+        }
+      });
+    });
+  } else {
+    warnings.push("Skipping category coverage -- no CODING_TYPING_ALL_CATEGORIES loaded");
+  }
+
+  console.log("\nErrors: " + errors.length);
+  errors.forEach(function(x) { console.log("  ERROR: " + x); });
+  console.log("Warnings: " + warnings.length);
+  warnings.forEach(function(x) { console.log("  WARN: " + x); });
+
+  var exitCode = errors.length > 0 ? 1 : 0;
+  console.log("\nResult: " + (exitCode === 0 ? "PASS" : "FAIL"));
+  process.exit(exitCode);
+})();

@@ -1,4 +1,4 @@
-// Coding Typing Practice - Data Index
+﻿// Coding Typing Practice - Data Index
 // Merges all four datasets
 
 window.CODING_TYPING_CATEGORIES = [
@@ -7,6 +7,17 @@ window.CODING_TYPING_CATEGORIES = [
   { id: "sql", label: "SQL", icon: "fa-solid fa-database", count: 45 },
   { id: "symbol", label: "Symbols", icon: "fa-solid fa-code", count: 25 }
 ];
+
+// Sub-category index for documentation and validation.
+// UI auto-derives sub-categories from item.category fields; this map
+// serves as a canonical reference for verify_coding_typing.js.
+window.CODING_TYPING_ALL_CATEGORIES = {
+  "python": ["print","variable","input","if","for","while","def","import","list","dict","f-string","comment","list_comprehension","lambda","sorted","try_except","class","tuple","set"],
+  "java": ["class","main","println","variable","if","for","while","scanner","comment","string","array","switch","try_catch","arraylist","map"],
+  "sql": ["select","where","order","group","having","join","insert","update","delete","count","like","limit","case_when","subquery","filter","left_join","aggregate","union","cte"],
+  "symbol": ["parentheses","braces","brackets","semicolon","quotes","equals","logical","indent","comment","dot","arrow","regex","json","template"]
+};
+
 
 (function() {
   var all = [];
@@ -31,3 +42,4 @@ window.CODING_TYPING_CATEGORIES = [
     window.CODING_TYPING_BY_LANG_CAT[key].push(item);
   });
 })();
+
