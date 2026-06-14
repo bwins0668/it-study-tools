@@ -1172,24 +1172,10 @@
           <!-- Question Review and Analysis List -->
           <div class="cbt-results-details-wrapper">
             <h3 data-i18n="exam.reviewTitle"><i class="fa-solid fa-circle-question"></i> 真题回顾与错题分析</h3>
-            <p class="results-table-tip" data-i18n="exam.reviewTip"><i class="fa-solid fa-lightbulb"></i> 点击下方表格中的任意行，可直接展开查看题干详情及中日文双语要点解析。</p>
-            
-            <div class="results-table-container">
-              <table class="results-table">
-                <thead>
-                  <tr>
-                    <th data-i18n="exam.tableQNo">题号</th>
-                    <th data-i18n="exam.tableField">领域</th>
-                    <th data-i18n="exam.tableTitle">考核知识点</th>
-                    <th data-i18n="exam.tableYourAnswer">您的答案</th>
-                    <th data-i18n="exam.tableCorrectAnswer">正确答案</th>
-                    <th data-i18n="exam.tableResult">测试结果</th>
-                  </tr>
-                </thead>
-                <tbody id="cbt-results-table-body">
-                  <!-- Tr rows dynamically inserted -->
-                </tbody>
-              </table>
+            <p class="results-table-tip" data-i18n="exam.reviewTip"><i class="fa-solid fa-lightbulb"></i> 点击任意条目展开查看详情。</p>
+
+            <div class="exam-review-list" id="cbt-results-table-body">
+              <!-- Review cards dynamically inserted -->
             </div>
           </div>
         </div>

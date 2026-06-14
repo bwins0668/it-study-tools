@@ -2549,7 +2549,278 @@ body[data-theme="light"] .guidance-btn:hover {
   font-size: 6px;
 }
 
-/* CBT Results Sheet */
+/* ==========================================================================
+   Round 22.4: Exam Results Review — Card-based layout
+   ========================================================================== */
+
+.exam-review-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.exam-review-card {
+  background: rgba(0, 0, 0, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 8px;
+  overflow: hidden;
+  transition: border-color 0.15s;
+}
+.exam-review-card:hover {
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+.exam-review-row {
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr) 72px 72px 82px 88px;
+  gap: 10px;
+  align-items: center;
+  padding: 10px 14px;
+  cursor: pointer;
+  min-height: 48px;
+}
+
+.exam-review-qno {
+  font-weight: 700;
+  font-size: 13px;
+  color: #c084fc;
+  text-align: center;
+}
+
+.exam-review-question {
+  font-size: 12.5px;
+  line-height: 1.4;
+  color: var(--text-main);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+}
+
+.exam-review-answer,
+.exam-review-correct {
+  font-size: 13px;
+  font-weight: 600;
+  text-align: center;
+  font-family: 'Fira Code', monospace;
+  color: var(--text-main);
+}
+
+.exam-review-status {
+  font-size: 11.5px;
+  font-weight: 600;
+  text-align: center;
+  white-space: nowrap;
+}
+.exam-review-status.correct {
+  color: var(--success-color);
+}
+.exam-review-status.incorrect {
+  color: #f87171;
+}
+
+.exam-review-action {
+  text-align: center;
+}
+
+.exam-review-detail-btn {
+  background: rgba(168, 85, 247, 0.06);
+  border: 1px solid rgba(168, 85, 247, 0.15);
+  color: #c084fc;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 11px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+.exam-review-detail-btn:hover {
+  background: rgba(168, 85, 247, 0.12);
+  border-color: rgba(168, 85, 247, 0.3);
+}
+.exam-review-detail-btn[aria-expanded="true"] {
+  background: rgba(168, 85, 247, 0.12);
+}
+
+/* Detail expansion area */
+.exam-review-detail {
+  border-top: 1px solid rgba(255, 255, 255, 0.04);
+  background: rgba(0, 0, 0, 0.15);
+}
+
+.exam-review-detail-inner {
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Weakened meta info at bottom */
+.exam-review-meta-info {
+  font-size: 11px;
+  color: var(--text-muted);
+  opacity: 0.6;
+  border-top: 1px solid rgba(255, 255, 255, 0.04);
+  padding-top: 8px;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+}
+
+/* Reuse styles from old results-review-card-expansion */
+.exam-review-detail-inner .review-q-text {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--text-main);
+}
+.exam-review-detail-inner .review-q-choices-panel {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 6px;
+}
+.exam-review-detail-inner .review-choice-item-box {
+  background: rgba(0,0,0,0.15);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 6px 10px;
+  font-size: 12px;
+  display: flex;
+  gap: 6px;
+}
+.exam-review-detail-inner .review-choice-item-box.correct {
+  border-color: rgba(52, 211, 153, 0.35);
+  background: rgba(52, 211, 153, 0.03);
+  color: #a7f3d0;
+}
+.exam-review-detail-inner .review-choice-item-box.incorrect {
+  border-color: rgba(239, 68, 68, 0.35);
+  background: rgba(239, 68, 68, 0.03);
+  color: #fca5a5;
+}
+.exam-review-detail-inner .review-choice-badge {
+  font-weight: 700;
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+.exam-review-detail-inner .review-choice-item-box.correct .review-choice-badge {
+  color: var(--success-color);
+}
+.exam-review-detail-inner .review-choice-item-box.incorrect .review-choice-badge {
+  color: #f87171;
+}
+.exam-review-detail-inner .review-kaisetsu-box {
+  background: rgba(168, 85, 247, 0.02);
+  border: 1px solid rgba(168, 85, 247, 0.2);
+  border-radius: 8px;
+  padding: 12px;
+}
+.exam-review-detail-inner .review-kaisetsu-box h4 {
+  font-size: 12px;
+  font-weight: 700;
+  color: #c084fc;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.exam-review-detail-inner .review-kaisetsu-text {
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--text-main);
+}
+.exam-review-detail-inner .review-kaisetsu-text p {
+  margin-bottom: 6px;
+}
+
+/* Mobile responsive for review list */
+@media (max-width: 720px) {
+  .exam-review-row {
+    grid-template-columns: 36px 1fr;
+    grid-template-rows: auto auto;
+    gap: 6px 10px;
+    padding: 10px;
+  }
+
+  .exam-review-qno {
+    grid-row: 1;
+    grid-column: 1;
+    align-self: start;
+  }
+
+  .exam-review-question {
+    grid-row: 1;
+    grid-column: 2;
+    -webkit-line-clamp: 2;
+  }
+
+  .exam-review-answer {
+    grid-row: 2;
+    grid-column: 1;
+    font-size: 11px;
+    text-align: left;
+    color: var(--text-muted);
+  }
+  .exam-review-answer::before {
+    content: "A: ";
+    font-weight: 400;
+  }
+
+  .exam-review-correct {
+    grid-row: 2;
+    grid-column: 2;
+    font-size: 11px;
+    text-align: left;
+    color: var(--text-muted);
+  }
+  .exam-review-correct::before {
+    content: "C: ";
+    font-weight: 400;
+  }
+
+  .exam-review-status {
+    grid-row: 2;
+    grid-column: 1;
+    text-align: left;
+    font-size: 11px;
+  }
+
+  .exam-review-action {
+    grid-row: 2;
+    grid-column: 2;
+    text-align: right;
+  }
+
+  /* Detail: full width on mobile */
+  .exam-review-detail-inner .review-q-choices-panel {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 520px) {
+  .exam-review-row {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto auto;
+  }
+  .exam-review-qno { grid-row: 1; grid-column: 1; }
+  .exam-review-question { grid-row: 2; grid-column: 1; }
+  .exam-review-answer { grid-row: 3; grid-column: 1; }
+  .exam-review-answer::before { content: "您的答案: "; }
+  .exam-review-correct { grid-row: 3; grid-column: 1; text-align: right; }
+  .exam-review-correct::before { content: "正确答案: "; }
+  .exam-review-status { grid-row: 4; grid-column: 1; }
+  .exam-review-action { grid-row: 4; grid-column: 1; text-align: right; }
+}
+
+/* Keep old .results-table styles for backward compat, but hide them */
+.results-table-container { display: none; }
+
+/* ==========================================================================
+   CBT Results Sheet (kept for score summary area)
+   ========================================================================== */
 .cbt-results-screen {
   flex: 1;
   overflow-y: auto;

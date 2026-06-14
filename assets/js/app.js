@@ -3446,31 +3446,56 @@ function submitCbtExam(auto = false) {
     }
   }
   
-  // Render review records
-  const tbody = document.getElementById("cbt-results-table-body");
-  tbody.innerHTML = "";
-  
+  // Render review records — card-based layout
+  const reviewList = document.getElementById("cbt-results-table-body");
+  reviewList.innerHTML = "";
+
   const alphabet = ["ア", "イ", "ウ", "エ", "オ", "カ", "キ", "ク", "ケ", "コ"];
   reviews.forEach(r => {
-    const tr = document.createElement("tr");
-    tr.id = `review-row-${r.num}`;
-    
+    const card = document.createElement("div");
+    card.className = "exam-review-card";
+    card.id = `review-card-${r.num}`;
+
     const userAnsText = r.isAnswered ? alphabet[r.userOriginalIdx] : "未答";
-    const statusIcon = r.isCorrect 
-      ? `<i class="fa-solid fa-circle-check correct"></i> 正解` 
-      : `<i class="fa-solid fa-circle-xmark incorrect"></i> 不正解`;
-      
-    tr.innerHTML = `
-      <td><strong>${r.num}</strong></td>
-      <td>${r.category.replace("系", "")}</td>
-      <td>${r.topic}</td>
-      <td>${userAnsText}</td>
-      <td><strong>${alphabet[r.correctIdx]}</strong></td>
-      <td>${statusIcon}</td>
+    const statusIcon = r.isCorrect ? "correct" : "incorrect";
+    const statusLabel = r.isCorrect ? I18n.t("exam.resultCorrect") : I18n.t("exam.resultIncorrect");
+
+    // Build summary: strip HTML tags for a clean 2-line summary
+    const questionText = r.question.replace(/<[^>]*>/g, "").trim();
+
+    card.innerHTML = `
+      <div class="exam-review-row">
+        <div class="exam-review-qno">${r.num}</div>
+        <div class="exam-review-question">${questionText}</div>
+        <div class="exam-review-answer">${userAnsText}</div>
+        <div class="exam-review-correct">${alphabet[r.correctIdx]}</div>
+        <div class="exam-review-status ${statusIcon}">${statusIcon === "correct" ? "✓" : "✗"} ${statusLabel}</div>
+        <div class="exam-review-action">
+          <button class="exam-review-detail-btn" type="button" data-review-num="${r.num}">
+            <span data-i18n="exam.tableActionDetail">${I18n.t("exam.tableActionDetail")}</span>
+            <i class="fa-solid fa-chevron-down"></i>
+          </button>
+        </div>
+      </div>
+      <div class="exam-review-detail" id="review-detail-${r.num}" hidden>
+        <div class="exam-review-detail-inner"></div>
+      </div>
     `;
-    
-    tr.addEventListener("click", () => toggleReviewRowExpansion(r));
-    tbody.appendChild(tr);
+
+    // Click on row (not button) toggles expansion
+    card.addEventListener("click", (e) => {
+      if (e.target.closest(".exam-review-detail-btn")) return;
+      toggleReviewRowExpansion(r);
+    });
+
+    // Detail button click
+    const detailBtn = card.querySelector(".exam-review-detail-btn");
+    detailBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      toggleReviewRowExpansion(r);
+    });
+
+    reviewList.appendChild(card);
   });
   
   activeCbtExam = null;
@@ -3611,16 +3636,34 @@ document.addEventListener("keydown", (event) => {
 });
 
 function toggleReviewRowExpansion(r) {
-  const targetRow = document.getElementById(`review-row-${r.num}`);
-  const nextRow = targetRow.nextElementSibling;
-  
-  if (nextRow && nextRow.classList.contains("results-review-expansion-row")) {
-    nextRow.remove();
+  const targetCard = document.getElementById(`review-card-${r.num}`);
+  const detailDiv = document.getElementById(`review-detail-${r.num}`);
+  const detailInner = detailDiv ? detailDiv.querySelector(".exam-review-detail-inner") : null;
+  const detailBtn = targetCard ? targetCard.querySelector(".exam-review-detail-btn") : null;
+
+  if (!detailDiv || !detailInner) return;
+
+  // If already expanded, collapse
+  if (!detailDiv.hidden) {
+    detailDiv.hidden = true;
+    if (detailBtn) {
+      detailBtn.innerHTML = `<span>${I18n.t("exam.tableActionDetail")}</span> <i class="fa-solid fa-chevron-down"></i>`;
+      detailBtn.setAttribute("aria-expanded", "false");
+    }
     return;
   }
-  
-  document.querySelectorAll(".results-review-expansion-row").forEach(el => el.remove());
-  
+
+  // Collapse any other open details first
+  document.querySelectorAll(".exam-review-detail:not([hidden])").forEach(el => {
+    el.hidden = true;
+    const btn = el.closest(".exam-review-card")?.querySelector(".exam-review-detail-btn");
+    if (btn) {
+      btn.innerHTML = `<span>${I18n.t("exam.tableActionDetail")}</span> <i class="fa-solid fa-chevron-down"></i>`;
+      btn.setAttribute("aria-expanded", "false");
+    }
+  });
+
+  // Build expansion content
   const alphabet = ["ア", "イ", "ウ", "エ", "オ", "カ", "キ", "ク", "ケ", "コ"];
   let choicesHtml = "";
   r.options.forEach((opt, oIdx) => {
@@ -3630,7 +3673,7 @@ function toggleReviewRowExpansion(r) {
     } else if (opt.originalIdx === r.userOriginalIdx) {
       statusClass = "incorrect";
     }
-    
+
     choicesHtml += `
       <div class="review-choice-item-box ${statusClass}">
         <span class="review-choice-badge">${alphabet[oIdx]}.</span>
@@ -3638,31 +3681,40 @@ function toggleReviewRowExpansion(r) {
       </div>
     `;
   });
-  
-  const drawerTr = document.createElement("tr");
-  drawerTr.className = "results-review-expansion-row";
-  drawerTr.innerHTML = `
-    <td colspan="6">
-      <div class="results-review-card-expansion">
-        <div class="review-q-title">第 ${r.num} 题 / 真题番号：問 ${r.qNum} （${r.subcategory}）</div>
-        <div class="review-q-text">${r.question}</div>
-        
-        <div class="review-q-choices-panel">
-          ${choicesHtml}
-        </div>
-        
-        <div class="review-kaisetsu-box">
-          <h4><i class="fa-solid fa-clipboard-question"></i> 真题双语解析 (解説)</h4>
-          <div class="review-kaisetsu-text">
-            ${formatMarkdown(r.explanation)}
-          </div>
-        </div>
+
+  // Build meta info (weakened, at bottom)
+  const metaParts = [];
+  if (r.category) metaParts.push(r.category);
+  if (r.subcategory) metaParts.push(r.subcategory);
+  if (r.topic) metaParts.push(r.topic);
+  if (r.qNum) metaParts.push("問" + r.qNum);
+  const metaText = metaParts.length ? I18n.t("exam.metaSource") + " " + metaParts.join(" / ") : "";
+
+  detailInner.innerHTML = `
+    <div class="review-q-text">${r.question}</div>
+
+    <div class="review-q-choices-panel">
+      ${choicesHtml}
+    </div>
+
+    <div class="review-kaisetsu-box">
+      <h4><i class="fa-solid fa-clipboard-question"></i> ${I18n.t("exam.reviewExplanation")}</h4>
+      <div class="review-kaisetsu-text">
+        ${formatMarkdown(r.explanation)}
       </div>
-    </td>
+    </div>
+
+    ${metaText ? `<div class="exam-review-meta-info">${metaText}</div>` : ""}
   `;
-  
-  targetRow.after(drawerTr);
-  drawerTr.scrollIntoView({ block: "nearest", behavior: "smooth" });
+
+  // Open
+  detailDiv.hidden = false;
+  if (detailBtn) {
+    detailBtn.innerHTML = `<span>${I18n.t("exam.reviewCollapse")}</span> <i class="fa-solid fa-chevron-up"></i>`;
+    detailBtn.setAttribute("aria-expanded", "true");
+  }
+
+  detailDiv.scrollIntoView({ block: "nearest", behavior: "smooth" });
 }
 
 function closeCbtResults() {
