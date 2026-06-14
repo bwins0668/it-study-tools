@@ -2,8 +2,16 @@
 (function () {
   "use strict";
 
-  // [R22.11-Hotfix3]
-var DISABLE_TRANSLATION_OVERLAY = true;
+  // [R22.11-Hotfix4] officialOnly mode — disables ALL translation overlay
+  var OFFICIAL_ONLY = (function () {
+    try {
+      var p = new URLSearchParams(window.location.search);
+      if (p.get('officialOnly') === '1') { sessionStorage.setItem('study-tools-official-only', '1'); return true; }
+      if (p.get('officialOnly') === '0') { sessionStorage.removeItem('study-tools-official-only'); return false; }
+      return sessionStorage.getItem('study-tools-official-only') === '1';
+    } catch (e) { return false; }
+  })();
+  var DISABLE_TRANSLATION_OVERLAY = OFFICIAL_ONLY;
 
 
   "use strict";
@@ -382,11 +390,13 @@ var DISABLE_TRANSLATION_OVERLAY = true;
   }
 
   function rememberTranslation(item, translatedText) {
+    if (DISABLE_TRANSLATION_OVERLAY) return;
     const clean = String(translatedText || "").trim();
     if (!clean) return;
-        if (DISABLE_TRANSLATION_OVERLAY) return;
     translationCache.set(cacheKey(item), clean);
     persistCacheSoon();
+  }
+
   function safeRememberTranslation(item, translatedText) {
     if (!isCleanTranslationText(translatedText)) {
       console.warn("[I18n] Skipping corrupted translation cache entry (mojibake or tag leak)");
@@ -395,22 +405,22 @@ var DISABLE_TRANSLATION_OVERLAY = true;
     rememberTranslation(item, translatedText);
   }
 
-  }
-
   loadPersistentCache();
+
   // [R22.11] Prevent mojibake in translation cache
   var MOJIBAKE_RE = /[\uFFFD\u9AEB\u9AEF\u9B2F\u90B5\u9666\u8B41\u8373\u9B06\u90B1\u7E67\u87E2\u9A52\u87E0\u9A53\u9A54\u90E6\u8D8A\u8E0A\u9A57\u9A5A\u9A5B\u90E8\u8EAC\u9A58\u8B10\u8ADF\u8B21\u8B20\u90AA\u9A4D\u9A4E\u9A4F\u9A50\u8B3E\u8B3C\u8B3A\u8B3B\u8E9E\u8EA2\u9AAB\u9AAA\u9AA9\u9AA8]/;
+
   function isMojibakeFree(text) {
     return text && typeof text === "string" ? !MOJIBAKE_RE.test(text) : true;
+  }
+
   function hasLeakedHtmlTagText(value) {
     if (typeof value !== "string") return false;
     return /\x3C\/(?:span|button|div|i|section|article|header|footer|main|pre|code|textarea|label|input|select|option|p|h[1-6]|a|ul|ol|li|br|hr|table|tr|td|th|form|nav|aside)>/i.test(value);
   }
-  
+
   function isCleanTranslationText(value) {
     return isMojibakeFree(value) && !hasLeakedHtmlTagText(value);
-  }
-
   }
   
   function clearAllBadCaches() {
@@ -480,36 +490,6 @@ var DISABLE_TRANSLATION_OVERLAY = true;
   function clearBadI18nCache() {
     // Legacy - calls the full version
     clearAllBadCaches();
-
-  // [R22.11-Hotfix3] Force re-render [data-i18n] from official dictionary
-  function applyOnlyOfficialI18n() {
-    document.querySelectorAll("[data-i18n]").forEach(function(el) {
-      var key = el.getAttribute("data-i18n");
-      if (!key) return;
-      if (typeof staticTranslation === "function") {
-        var official = staticTranslation(key);
-        if (official) { el.textContent = official; return; }
-      }
-      if (el.textContent && typeof isLikelyMojibakeText === "function" && isLikelyMojibakeText(el.textContent)) {
-        el.textContent = key;
-      }
-    });
-    document.querySelectorAll("[data-i18n-title]").forEach(function(el) {
-      var key = el.getAttribute("data-i18n-title");
-      if (!key) return;
-      if (typeof staticTranslation === "function") {
-        var official = staticTranslation(key);
-        if (official) el.setAttribute("title", official);
-      }
-    });
-    document.querySelectorAll("[data-i18n-placeholder]").forEach(function(el) {
-      var key = el.getAttribute("data-i18n-placeholder");
-      if (!key) return;
-      if (typeof staticTranslation === "function") {
-        var official = staticTranslation(key);
-        if (official) el.setAttribute("placeholder", official);
-      }
-    });
   }
   // [R22.11-Hotfix2] Emergency cache cleaning via URL param
   (function checkClearBadCacheParam() {
@@ -550,7 +530,6 @@ DISABLE_TRANSLATION_OVERLAY = true;
     }
   })();
 
-  }
   clearAllBadCaches();
 
 
