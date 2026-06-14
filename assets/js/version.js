@@ -3,9 +3,9 @@
   "use strict";
 
   window.STUDY_TOOLS_VERSION = {
-    webVersion: "v2026.6.14-r22.12",
+    webVersion: "v2026.6.14-r22.15",
     desktopVersion: "v2026.6.14-r22.12",
-    releaseUrl: "https://github.com/bwins0668/it-study-tools/releases/tag/v2026.6.14-r22.12",
+    releaseUrl: "https://github.com/bwins0668/it-study-tools/releases/tag/v2026.6.14-r22.15",
     webUrl: "https://study-tools-web-pages.pages.dev",
     stage: "stable",
     assetVersion: "v2026.6.14-r22.12"
