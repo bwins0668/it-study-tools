@@ -247,6 +247,7 @@
   let translating = false;
   let dirty = false;
   let translationRunId = 0;
+  let translationOverlayUnavailable = false;
   let toastCooldown = 0;
 
   function normalizeText(text) {
@@ -1050,7 +1051,7 @@ if (DISABLE_TRANSLATION_OVERLAY) { missing = []; applyTranslations = function() 
   }
 
   async function translateVisible(root) {
-    if (!isActive() || translating || !document.body) return;
+    if (!isActive() || translating || translationOverlayUnavailable || !document.body) return;
     const targetLang = currentLang;
     const runId = ++translationRunId;
     translating = true;
@@ -1197,6 +1198,13 @@ if (DISABLE_TRANSLATION_OVERLAY) { missing = []; applyTranslations = function() 
       applyTranslations(translated);
     } catch (error) {
       showI18nError(error);
+      translationOverlayUnavailable = true;
+      dirty = false;
+      restoreGenericTranslations();
+      updateDocumentState();
+      updateButton();
+      updateCourseLabels();
+      applyStaticUI(document.body);
     } finally {
       if (runId !== translationRunId) return;
       translating = false;
@@ -1205,7 +1213,7 @@ if (DISABLE_TRANSLATION_OVERLAY) { missing = []; applyTranslations = function() 
   }
 
   function scheduleTranslate(root) {
-    if (!isActive() || !document.body) return;
+    if (!isActive() || translationOverlayUnavailable || !document.body) return;
     if (translating) {
       dirty = true;
       return;
