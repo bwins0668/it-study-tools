@@ -296,6 +296,7 @@
         exportData: "学習データをエクスポート",
         exportDataDesc: "ローカル学習データのバックアップをダウンロード (JSON)",
         exportSuccess: "エクスポート成功",
+        exportPartialSuccess: "一部の破損データをスキップしてエクスポートしました",
         exportFailed: "エクスポート失敗",
         exportScope: "パスワードやキーを含みません — 学習データのみ"
       },
@@ -855,6 +856,7 @@
         exportData: "导出学习数据",
         exportDataDesc: "下载本地学习数据备份 (JSON)",
         exportSuccess: "导出成功",
+        exportPartialSuccess: "已导出，已跳过部分损坏的数据",
         exportFailed: "导出失败",
         exportScope: "不含密码和密钥 — 仅学习数据"
       },
@@ -1413,6 +1415,7 @@
         exportData: "Export Learning Data",
         exportDataDesc: "Download local learning data backup (JSON)",
         exportSuccess: "Export successful",
+        exportPartialSuccess: "Exported with some damaged data skipped",
         exportFailed: "Export failed",
         exportScope: "No passwords or keys — learning data only"
       },
@@ -3323,6 +3326,7 @@
         exportData: "학습 데이터 내보내기",
         exportDataDesc: "로컬 학습 데이터 백업 다운로드 (JSON)",
         exportSuccess: "내보내기 성공",
+        exportPartialSuccess: "일부 손상된 데이터를 건너뛰고 내보냈습니다",
         exportFailed: "내보내기 실패",
         exportScope: "비밀번호나 키 미포함 — 학습 데이터만"
       },
@@ -5611,4 +5615,3 @@
     Object.assign(window.I18nUiDict[locale].auth, AUTH_ROUND_23_23[locale]);
   });
 })();
-

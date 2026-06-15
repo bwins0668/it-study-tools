@@ -745,6 +745,14 @@ function initToolsDrawer() {
       openExamHistoryModal();
       return;
     }
+
+    if (action === 'export-data') {
+      closeDrawer();
+      if (window.StudyExport && typeof window.StudyExport.exportData === 'function') {
+        window.StudyExport.exportData();
+      }
+      return;
+    }
   });
 }
 

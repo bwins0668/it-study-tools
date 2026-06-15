@@ -89,6 +89,13 @@
 
         <div class="tools-drawer__section">
           <div class="tools-drawer__section-title" data-i18n="tools.learningTools">学习工具</div>
+          <button type="button" class="tools-drawer-item" data-action="export-data">
+            <span class="tools-drawer-item__icon">💾</span>
+            <span class="tools-drawer-item__text">
+              <strong data-i18n="tools.exportData">导出学习数据</strong>
+              <small data-i18n="tools.exportDataDesc">下载本地学习数据备份 (JSON)</small>
+            </span>
+          </button>
           <button type="button" class="tools-drawer-item" data-action="open-glossary">
             <span class="tools-drawer-item__icon">📖</span>
             <span class="tools-drawer-item__text">
@@ -1635,6 +1642,7 @@
   <script src="data/i18n_content/python_fr.js"></script>
   <script src="data/glossary/it_terms.js"></script>
   <script src="assets/js/glossary.js"></script>
+  <script src="assets/js/export-data.js?v=v2026.6.15-r33.0"></script>
   <script src="assets/js/sync-engine.js"></script>
   <script src="assets/js/supabase-config.local.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
