@@ -3846,7 +3846,11 @@
       wrongBookRetrySettingsPushed: "错题重练设置已上传 / 間違いノート再練習設定アップロード",
       wrongBookRetrySettingsPulled: "错题重练设置已下载 / 間違いノート再練習設定ダウンロード",
       wrongBookRetrySettingsMerged: "错题重练设置已合并 / 間違いノート再練習設定マージ済み",
-      wrongBookRetrySettingsFailed: "错题重练设置同步失败 / 間違いノート再練習設定同期失敗"
+      wrongBookRetrySettingsFailed: "错题重练设置同步失败 / 間違いノート再練習設定同期失敗",
+      typingSessionsPushed: "打字练习上传 / タイピング練習アップロード",
+      typingSessionsPulled: "打字练习下载 / タイピング練習ダウンロード",
+      examSessionsPushed: "考试记录上传 / 試験記録アップロード",
+      examSessionsPulled: "考试记录下载 / 試験記録ダウンロード"
     }
   };
   var AUTH_ROUND_17_5 = {
@@ -4591,6 +4595,40 @@
   Object.keys(AUTH_SYNC_ROUND_23_12).forEach(function (locale) {
     if (window.I18nUiDict[locale] && window.I18nUiDict[locale].auth) {
       Object.assign(window.I18nUiDict[locale].auth, AUTH_SYNC_ROUND_23_12[locale]);
+    }
+  });
+
+  // Round 25.0 typing & exam sync labels (zh-CN, ja-JP, en-US, ko-KR)
+  var AUTH_SYNC_ROUND_25_0 = {
+    "zh-CN": {
+      typingSessionsPushed: "打字练习上传",
+      typingSessionsPulled: "打字练习下载",
+      examSessionsPushed: "考试记录上传",
+      examSessionsPulled: "考试记录下载"
+    },
+    "ja-JP": {
+      typingSessionsPushed: "タイピング練習アップロード",
+      typingSessionsPulled: "タイピング練習ダウンロード",
+      examSessionsPushed: "試験記録アップロード",
+      examSessionsPulled: "試験記録ダウンロード"
+    },
+    "en-US": {
+      typingSessionsPushed: "Typing sessions uploaded",
+      typingSessionsPulled: "Typing sessions downloaded",
+      examSessionsPushed: "Exam records uploaded",
+      examSessionsPulled: "Exam records downloaded"
+    },
+    "ko-KR": {
+      typingSessionsPushed: "타이핑 연습 업로드",
+      typingSessionsPulled: "타이핑 연습 다운로드",
+      examSessionsPushed: "시험 기록 업로드",
+      examSessionsPulled: "시험 기록 다운로드"
+    }
+  };
+
+  Object.keys(AUTH_SYNC_ROUND_25_0).forEach(function (locale) {
+    if (window.I18nUiDict[locale] && window.I18nUiDict[locale].auth) {
+      Object.assign(window.I18nUiDict[locale].auth, AUTH_SYNC_ROUND_25_0[locale]);
     }
   });
 

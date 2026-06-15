@@ -1,5 +1,5 @@
 /**
- * Study Tools Sync Engine - Round 17.6.
+ * Study Tools Sync Engine - Round 25.0.
  *
  * Local-first sync foundation:
  *  - device ID generation & persistence
@@ -264,7 +264,7 @@
       user_agent:    typeof navigator !== "undefined" ? navigator.userAgent : null,
       metadata: {
         app:   "Study Tools",
-        round: "17.1",
+        round: "25.0",
         type:  typeof window !== "undefined" && window.STUDY_TOOLS_WEB_PUBLIC ? "web" : "windows",
       },
     };
@@ -643,6 +643,271 @@
       return syncSuccess({ count: quizRows.length });
     } catch (error) {
       var friendly = friendlyRemoteError(error, "quiz_push_failed");
+      return syncError(friendly.code, friendly.message);
+    }
+  }
+
+  /* ── Typing Sessions Sync (Round 25.0) ─────────────── */
+  var TYPING_LS_KEYS = {
+    japanese: "study-tools-japanese-typing-v1",
+    coding:   "study-tools-coding-typing-history-v1",
+  };
+
+  function loadTypingHistory(type) {
+    var key = TYPING_LS_KEYS[type];
+    if (!key) return [];
+    try {
+      var raw = localStorage.getItem(key);
+      if (!raw) return [];
+      var parsed = JSON.parse(raw);
+      if (type === "japanese") {
+        return Array.isArray(parsed.history) ? parsed.history : [];
+      }
+      return Array.isArray(parsed) ? parsed : [];
+    } catch (_) { return []; }
+  }
+
+  function mergeTypingHistoryLocal(type, remoteRows) {
+    var local = loadTypingHistory(type);
+    var localKeys = {};
+    for (var i = 0; i < local.length; i++) {
+      var r = local[i];
+      var k = (r.completedAt || "") + "|" + (r.title || "");
+      localKeys[k] = true;
+    }
+    var added = 0;
+    for (var j = 0; j < remoteRows.length; j++) {
+      var rw = remoteRows[j];
+      if (!rw || rw.deleted_at) continue;
+      var rk = (rw.completed_at || "") + "|" + (rw.title || "");
+      if (localKeys[rk]) continue;
+      local.push({
+        title: rw.title || "",
+        kpm: rw.stats && rw.stats.kpm != null ? rw.stats.kpm : (rw.stats && rw.stats.cpm != null ? rw.stats.cpm : 0),
+        accuracy: rw.stats && rw.stats.accuracy != null ? rw.stats.accuracy : 0,
+        errors: rw.stats && rw.stats.errors != null ? rw.stats.errors : 0,
+        durationSec: rw.stats && rw.stats.durationSec != null ? rw.stats.durationSec : 0,
+        completedAt: rw.completed_at || "",
+      });
+      added++;
+    }
+    if (added > 0) {
+      // Save back to localStorage
+      if (type === "japanese") {
+        try {
+          var saved = JSON.parse(localStorage.getItem(TYPING_LS_KEYS.japanese) || "{}");
+          saved.history = local.slice(-50);
+          localStorage.setItem(TYPING_LS_KEYS.japanese, JSON.stringify(saved));
+        } catch (_) {}
+      } else {
+        try {
+          localStorage.setItem(TYPING_LS_KEYS.coding, JSON.stringify(local.slice(-50)));
+        } catch (_) {}
+      }
+    }
+    return { added: added, total: remoteRows.length };
+  }
+
+  function collectTypingSessions(userId) {
+    var rows = [];
+    ["japanese", "coding"].forEach(function (type) {
+      var history = loadTypingHistory(type);
+      history.forEach(function (entry, idx) {
+        if (!entry || !entry.completedAt) return;
+        var sessionKey = type + ":" + idx + ":" + (entry.completedAt || Date.now());
+        rows.push({
+          user_id: userId,
+          session_type: type,
+          session_key: sessionKey,
+          title: entry.title || "",
+          stats: {
+            kpm: entry.kpm || 0,
+            cpm: entry.cpm || 0,
+            accuracy: entry.accuracy || 0,
+            errors: entry.errors || 0,
+            durationSec: entry.durationSec || 0,
+            level: entry.level != null ? entry.level : 0,
+          },
+          completed_at: entry.completedAt || nowISO(),
+          device_id: getRemoteDeviceId(),
+          deleted_at: null,
+        });
+      });
+    });
+    return rows;
+  }
+
+  async function pushTypingSessions(context) {
+    var ctx = context;
+    if (!ctx || !ctx.client) {
+      var checked = await getRemoteContext();
+      if (!checked.ok) return checked;
+      ctx = checked.data;
+    }
+    var rows = collectTypingSessions(ctx.user.id);
+    if (!rows.length) return syncSuccess({ count: 0 });
+    try {
+      var result = await ctx.client.from("typing_sessions").upsert(rows, {
+        onConflict: "user_id,session_type,session_key",
+      });
+      if (result && result.error) return syncError("typing_push_failed", result.error.message, result.error);
+      return syncSuccess({ count: rows.length });
+    } catch (error) {
+      var friendly = friendlyRemoteError(error, "typing_push_failed");
+      return syncError(friendly.code, friendly.message);
+    }
+  }
+
+  async function pullTypingSessions(context) {
+    var ctx = context;
+    if (!ctx || !ctx.client) {
+      var checked = await getRemoteContext();
+      if (!checked.ok) return checked;
+      ctx = checked.data;
+    }
+    try {
+      var japaneseResult = await ctx.client.from("typing_sessions")
+        .select("session_type,title,stats,completed_at,deleted_at")
+        .eq("user_id", ctx.user.id)
+        .eq("session_type", "japanese")
+        .is("deleted_at", null);
+      var codingResult = await ctx.client.from("typing_sessions")
+        .select("session_type,title,stats,completed_at,deleted_at")
+        .eq("user_id", ctx.user.id)
+        .eq("session_type", "coding")
+        .is("deleted_at", null);
+
+      var japaneseRows = (japaneseResult && japaneseResult.data) ? japaneseResult.data : [];
+      var codingRows = (codingResult && codingResult.data) ? codingResult.data : [];
+      var jpMerge = mergeTypingHistoryLocal("japanese", japaneseRows);
+      var ctMerge = mergeTypingHistoryLocal("coding", codingRows);
+
+      return syncSuccess({
+        count: japaneseRows.length + codingRows.length,
+        japanese_added: jpMerge.added,
+        coding_added: ctMerge.added,
+      });
+    } catch (error) {
+      var friendly = friendlyRemoteError(error, "typing_pull_failed");
+      return syncError(friendly.code, friendly.message);
+    }
+  }
+
+  /* ── Exam Sessions Sync (Round 25.0) ───────────────── */
+  var EXAM_HISTORY_KEY = "study-tools-exam-history-v1";
+
+  function loadExamHistory() {
+    try {
+      var raw = localStorage.getItem(EXAM_HISTORY_KEY);
+      return raw ? JSON.parse(raw) : [];
+    } catch (_) { return []; }
+  }
+
+  function mergeExamHistoryLocal(remoteRows) {
+    var local = loadExamHistory();
+    var localIds = {};
+    for (var i = 0; i < local.length; i++) {
+      if (local[i] && local[i].sessionId) localIds[local[i].sessionId] = true;
+    }
+    var added = 0;
+    for (var j = 0; j < remoteRows.length; j++) {
+      var rw = remoteRows[j];
+      if (!rw || !rw.session_id || rw.deleted_at) continue;
+      if (localIds[rw.session_id]) continue;
+      var record = {
+        schemaVersion: 1,
+        sessionId: rw.session_id,
+        subject: rw.subject || "itpass",
+        submittedAt: rw.submitted_at || "",
+        startedAt: rw.submitted_at || "",
+        elapsedSeconds: rw.elapsed_seconds || 0,
+        totalQuestions: rw.total_questions || 0,
+        correctCount: rw.correct_count || 0,
+        wrongCount: rw.wrong_count || 0,
+        unansweredCount: (rw.total_questions || 0) - (rw.correct_count || 0) - (rw.wrong_count || 0),
+        accuracy: rw.accuracy || 0,
+        scoreTotal: rw.score_total || 0,
+        isPassed: rw.is_passed === true,
+        fieldScores: (rw.details && rw.details.fieldScores) || { strat: 0, man: 0, tech: 0, subB: 0 },
+        examConfig: (rw.details && rw.details.examConfig) || { subject: rw.subject, version: 1 },
+        questionResults: (rw.details && rw.details.questionResults) || [],
+      };
+      local.push(record);
+      added++;
+    }
+    if (added > 0) {
+      var clamped = local.length > 50 ? local.slice(local.length - 50) : local;
+      try { localStorage.setItem(EXAM_HISTORY_KEY, JSON.stringify(clamped)); } catch (_) {}
+    }
+    return { added: added, total: remoteRows.length };
+  }
+
+  function collectExamSessions(userId) {
+    var history = loadExamHistory();
+    return history.map(function (entry) {
+      if (!entry || !entry.sessionId) return null;
+      return {
+        user_id: userId,
+        session_id: entry.sessionId,
+        subject: entry.subject || "itpass",
+        score_total: entry.scoreTotal || 0,
+        total_questions: entry.totalQuestions || 0,
+        correct_count: entry.correctCount || 0,
+        wrong_count: entry.wrongCount || 0,
+        accuracy: entry.accuracy || 0,
+        is_passed: entry.isPassed === true,
+        elapsed_seconds: entry.elapsedSeconds || 0,
+        details: {
+          fieldScores: entry.fieldScores || {},
+          examConfig: entry.examConfig || {},
+          questionResults: entry.questionResults || [],
+        },
+        submitted_at: entry.submittedAt || nowISO(),
+        device_id: getRemoteDeviceId(),
+        deleted_at: null,
+      };
+    }).filter(function (r) { return r !== null; });
+  }
+
+  async function pushExamSessions(context) {
+    var ctx = context;
+    if (!ctx || !ctx.client) {
+      var checked = await getRemoteContext();
+      if (!checked.ok) return checked;
+      ctx = checked.data;
+    }
+    var rows = collectExamSessions(ctx.user.id);
+    if (!rows.length) return syncSuccess({ count: 0 });
+    try {
+      var result = await ctx.client.from("exam_sessions").upsert(rows, {
+        onConflict: "user_id,session_id",
+      });
+      if (result && result.error) return syncError("exam_push_failed", result.error.message, result.error);
+      return syncSuccess({ count: rows.length });
+    } catch (error) {
+      var friendly = friendlyRemoteError(error, "exam_push_failed");
+      return syncError(friendly.code, friendly.message);
+    }
+  }
+
+  async function pullExamSessions(context) {
+    var ctx = context;
+    if (!ctx || !ctx.client) {
+      var checked = await getRemoteContext();
+      if (!checked.ok) return checked;
+      ctx = checked.data;
+    }
+    try {
+      var result = await ctx.client.from("exam_sessions")
+        .select("session_id,subject,score_total,total_questions,correct_count,wrong_count,accuracy,is_passed,elapsed_seconds,details,submitted_at,deleted_at")
+        .eq("user_id", ctx.user.id)
+        .is("deleted_at", null);
+      if (result && result.error) return syncError("exam_pull_failed", result.error.message, result.error);
+      var data = result && result.data ? result.data : [];
+      var mergeResult = mergeExamHistoryLocal(data);
+      return syncSuccess({ count: data.length, added: mergeResult.added });
+    } catch (error) {
+      var friendly = friendlyRemoteError(error, "exam_pull_failed");
       return syncError(friendly.code, friendly.message);
     }
   }
@@ -1386,9 +1651,13 @@
         wrongbook_retry_settings_pulled: summary.wrongbook_retry_settings_pulled || 0,
         wrongbook_retry_settings_merged: summary.wrongbook_retry_settings_merged || 0,
         wrongbook_retry_settings_failed: summary.wrongbook_retry_settings_failed || false,
+        typing_sessions_pushed: summary.typing_sessions_pushed || 0,
+        typing_sessions_pulled: summary.typing_sessions_pulled || 0,
+        exam_sessions_pushed: summary.exam_sessions_pushed || 0,
+        exam_sessions_pulled: summary.exam_sessions_pulled || 0,
         warnings: summary.warnings || [],
       } : null,
-      scope: ["user_settings", "wrong_book_retry_settings", "learning_progress", "quiz_results", "bookmarks", "wrong_book"],
+      scope: ["user_settings", "wrong_book_retry_settings", "learning_progress", "quiz_results", "bookmarks", "wrong_book", "typing_sessions", "exam_sessions"],
       automatic_sync: false,
     };
   }
@@ -1419,11 +1688,15 @@
         ["progress_pull", pullLearningProgress],
         ["wrongbook_pull", pullWrongBook],
         ["bookmarks_sync", mergeBookmarksWithTombstones],
+        ["typing_sessions_pull", pullTypingSessions],
+        ["exam_sessions_pull", pullExamSessions],
         ["wrongbook_retry_settings", syncWrongBookRetrySettings],
         ["settings_push", pushUserSettings],
         ["progress_push", pushLearningProgress],
         ["quiz_push", pushQuizResults],
         ["bookmarks_push", pushBookmarks],
+        ["typing_sessions_push", pushTypingSessions],
+        ["exam_sessions_push", pushExamSessions],
         ["wrongbook_push", pushWrongBook],
       ];
 
@@ -1468,6 +1741,10 @@
         bookmarks_conflicts_resolved: results.bookmarks_sync && results.bookmarks_sync.ok ? (results.bookmarks_sync.data && results.bookmarks_sync.data.conflicts_resolved) || 0 : 0,
         conflicts_detected: conflictsDetected,
         conflicts_resolved: conflictsResolved,
+        typing_sessions_pushed: results.typing_sessions_push && results.typing_sessions_push.ok ? (results.typing_sessions_push.data && results.typing_sessions_push.data.count) || 0 : 0,
+        typing_sessions_pulled: results.typing_sessions_pull && results.typing_sessions_pull.ok ? (results.typing_sessions_pull.data && results.typing_sessions_pull.data.count) || 0 : 0,
+        exam_sessions_pushed: results.exam_sessions_push && results.exam_sessions_push.ok ? (results.exam_sessions_push.data && results.exam_sessions_push.data.count) || 0 : 0,
+        exam_sessions_pulled: results.exam_sessions_pull && results.exam_sessions_pull.ok ? (results.exam_sessions_pull.data && results.exam_sessions_pull.data.count) || 0 : 0,
         wrongbook_pushed: results.wrongbook_push && results.wrongbook_push.ok ? (results.wrongbook_push.data && results.wrongbook_push.data.count) || 0 : 0,
         wrongbook_pulled: results.wrongbook_pull && results.wrongbook_pull.ok ? (results.wrongbook_pull.data && results.wrongbook_pull.data.pulled) || 0 : 0,
         wrongbook_merged: results.wrongbook_pull && results.wrongbook_pull.ok ? (results.wrongbook_pull.data && results.wrongbook_pull.data.merged) || 0 : 0,
@@ -1547,6 +1824,10 @@
     collectWrongBookForSync: collectWrongBookForSync,
     mergeWrongBookRemoteToLocal: mergeWrongBookRemoteToLocal,
     syncWrongBookRetrySettings: syncWrongBookRetrySettings,
+    pushTypingSessions:   pushTypingSessions,
+    pullTypingSessions:   pullTypingSessions,
+    pushExamSessions:     pushExamSessions,
+    pullExamSessions:     pullExamSessions,
     runManualSync:        runManualSync,
     getSyncSummary:       getSyncSummary,
     _keys:                KEYS,

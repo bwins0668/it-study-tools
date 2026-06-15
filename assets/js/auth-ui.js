@@ -413,6 +413,10 @@
     var retrySettingsPulled = summaryDetails ? summaryDetails.wrongbook_retry_settings_pulled : 0;
     var retrySettingsMerged = summaryDetails ? summaryDetails.wrongbook_retry_settings_merged : 0;
     var retrySettingsFailed = summaryDetails ? summaryDetails.wrongbook_retry_settings_failed : false;
+    var typingPushed = summaryDetails ? summaryDetails.typing_sessions_pushed : 0;
+    var typingPulled = summaryDetails ? summaryDetails.typing_sessions_pulled : 0;
+    var examPushed = summaryDetails ? summaryDetails.exam_sessions_pushed : 0;
+    var examPulled = summaryDetails ? summaryDetails.exam_sessions_pulled : 0;
     var conflictsResolved = summaryDetails ? summaryDetails.conflicts_resolved : 0;
     var warnings = summaryDetails && summaryDetails.warnings ? summaryDetails.warnings : [];
     var syncDuration = summaryDetails ? summaryDetails.duration_ms : 0;
@@ -455,6 +459,10 @@
       if (retrySettingsPulled) detailsList += '<li><i class="fa-solid fa-sliders"></i> ' + esc(t("auth.wrongBookRetrySettingsPulled", "错题重练设置已下载")) + '</li>';
       if (retrySettingsMerged) detailsList += '<li><i class="fa-solid fa-sliders"></i> ' + esc(t("auth.wrongBookRetrySettingsMerged", "错题重练设置已合并")) + '</li>';
       if (retrySettingsFailed) detailsList += '<li><i class="fa-solid fa-triangle-exclamation"></i> ' + esc(t("auth.wrongBookRetrySettingsFailed", "错题重练设置同步失败")) + '</li>';
+      if (typingPushed) detailsList += '<li><i class="fa-solid fa-keyboard"></i> ' + esc(t("auth.typingSessionsPushed", "打字练习上传")) + ': ' + typingPushed + '</li>';
+      if (typingPulled) detailsList += '<li><i class="fa-solid fa-keyboard"></i> ' + esc(t("auth.typingSessionsPulled", "打字练习下载")) + ': ' + typingPulled + '</li>';
+      if (examPushed) detailsList += '<li><i class="fa-solid fa-file-circle-check"></i> ' + esc(t("auth.examSessionsPushed", "考试记录上传")) + ': ' + examPushed + '</li>';
+      if (examPulled) detailsList += '<li><i class="fa-solid fa-file-circle-check"></i> ' + esc(t("auth.examSessionsPulled", "考试记录下载")) + ': ' + examPulled + '</li>';
       if (conflictsResolved) detailsList += '<li><i class="fa-solid fa-code-merge"></i> ' + esc(t("auth.conflictsResolved", "已合并远端进度")) + ': ' + conflictsResolved + '</li>';
 
       summaryHtml =
@@ -480,6 +488,10 @@
       if (wrongbookPushed) detailsList += '<li><i class="fa-solid fa-book-circle-arrow-up"></i> ' + esc(t("auth.wrongBookPushed", "错题上传")) + ': ' + wrongbookPushed + '</li>';
       if (wrongbookPulled) detailsList += '<li><i class="fa-solid fa-book-circle-arrow-down"></i> ' + esc(t("auth.wrongBookPulled", "错题下载")) + ': ' + wrongbookPulled + '</li>';
       if (wrongbookMerged) detailsList += '<li><i class="fa-solid fa-code-merge"></i> ' + esc(t("auth.wrongBookMerged", "错题已合并")) + ': ' + wrongbookMerged + '</li>';
+      if (typingPushed) detailsList += '<li><i class="fa-solid fa-keyboard"></i> ' + esc(t("auth.typingSessionsPushed", "打字练习上传")) + ': ' + typingPushed + '</li>';
+      if (typingPulled) detailsList += '<li><i class="fa-solid fa-keyboard"></i> ' + esc(t("auth.typingSessionsPulled", "打字练习下载")) + ': ' + typingPulled + '</li>';
+      if (examPushed) detailsList += '<li><i class="fa-solid fa-file-circle-check"></i> ' + esc(t("auth.examSessionsPushed", "考试记录上传")) + ': ' + examPushed + '</li>';
+      if (examPulled) detailsList += '<li><i class="fa-solid fa-file-circle-check"></i> ' + esc(t("auth.examSessionsPulled", "考试记录下载")) + ': ' + examPulled + '</li>';
       if (conflictsResolved) detailsList += '<li><i class="fa-solid fa-code-merge"></i> ' + esc(t("auth.conflictsResolved", "已合并远端进度")) + ': ' + conflictsResolved + '</li>';
       syncDetailsHtml =
         '<details class="auth-summary-details">' +

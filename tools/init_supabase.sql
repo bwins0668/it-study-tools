@@ -267,6 +267,70 @@ CREATE TABLE IF NOT EXISTS public.schema_migrations (
 COMMENT ON TABLE public.schema_migrations IS 'Track applied schema versions for rollback/upgrade';
 
 
+-- ── 8. typing_sessions (Round 25.0) ─────────────────────
+CREATE TABLE IF NOT EXISTS public.typing_sessions (
+  id            UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id       UUID         NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
+  session_type  VARCHAR(20)  NOT NULL,          -- 'japanese' | 'coding'
+  session_key   TEXT         NOT NULL,          -- unique key per session
+  title         TEXT         NOT NULL DEFAULT '',
+  stats         JSONB        NOT NULL DEFAULT '{}',  -- kpm/cpm, accuracy, errors, duration, level
+  completed_at  TIMESTAMPTZ  NOT NULL DEFAULT NOW(),
+  device_id     UUID,
+  created_at    TIMESTAMPTZ  NOT NULL DEFAULT NOW(),
+  deleted_at    TIMESTAMPTZ,
+
+  CONSTRAINT uq_typing_sessions UNIQUE (user_id, session_type, session_key)
+);
+
+CREATE INDEX idx_ts_user_type ON public.typing_sessions(user_id, session_type);
+CREATE INDEX idx_ts_user_completed ON public.typing_sessions(user_id, completed_at);
+
+COMMENT ON TABLE public.typing_sessions IS 'Japanese & coding typing practice session records (Round 25.0)';
+
+ALTER TABLE public.typing_sessions ENABLE ROW LEVEL SECURITY;
+DROP POLICY IF EXISTS ts_isolation ON public.typing_sessions;
+CREATE POLICY ts_isolation ON public.typing_sessions
+  FOR ALL TO authenticated
+  USING (auth.uid() = user_id)
+  WITH CHECK (auth.uid() = user_id);
+
+
+-- ── 9. exam_sessions (Round 25.0) ───────────────────────
+CREATE TABLE IF NOT EXISTS public.exam_sessions (
+  id            UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id       UUID         NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
+  session_id    TEXT         NOT NULL,          -- client-generated session UUID
+  subject       VARCHAR(20)  NOT NULL DEFAULT 'itpass',
+  score_total   INTEGER      NOT NULL DEFAULT 0,
+  total_questions INTEGER    NOT NULL DEFAULT 0,
+  correct_count INTEGER      NOT NULL DEFAULT 0,
+  wrong_count   INTEGER      NOT NULL DEFAULT 0,
+  accuracy      REAL         NOT NULL DEFAULT 0,
+  is_passed     BOOLEAN      NOT NULL DEFAULT FALSE,
+  elapsed_seconds INTEGER    NOT NULL DEFAULT 0,
+  details       JSONB        NOT NULL DEFAULT '{}',  -- full record minus summary fields
+  submitted_at  TIMESTAMPTZ  NOT NULL DEFAULT NOW(),
+  device_id     UUID,
+  created_at    TIMESTAMPTZ  NOT NULL DEFAULT NOW(),
+  deleted_at    TIMESTAMPTZ,
+
+  CONSTRAINT uq_exam_sessions UNIQUE (user_id, session_id)
+);
+
+CREATE INDEX idx_es_user_subject ON public.exam_sessions(user_id, subject);
+CREATE INDEX idx_es_user_submitted ON public.exam_sessions(user_id, submitted_at);
+
+COMMENT ON TABLE public.exam_sessions IS 'Mock exam attempt records for cross-device sync (Round 25.0)';
+
+ALTER TABLE public.exam_sessions ENABLE ROW LEVEL SECURITY;
+DROP POLICY IF EXISTS es_isolation ON public.exam_sessions;
+CREATE POLICY es_isolation ON public.exam_sessions
+  FOR ALL TO authenticated
+  USING (auth.uid() = user_id)
+  WITH CHECK (auth.uid() = user_id);
+
+
 -- ============================================================
 -- Additional indexes for sync performance
 -- ============================================================
