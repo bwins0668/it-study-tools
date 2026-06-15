@@ -716,6 +716,14 @@ function initToolsDrawer() {
       return;
     }
 
+    if (action === 'open-dashboard') {
+      closeDrawer();
+      if (window.StudyDashboard && window.StudyDashboard.open) {
+        window.StudyDashboard.open();
+      }
+      return;
+    }
+
     if (action === 'open-settings') {
       closeDrawer();
       if (window.StudyAI && window.StudyAI.openSettings) {
