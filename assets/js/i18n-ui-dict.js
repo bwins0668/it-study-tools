@@ -96,7 +96,8 @@
         commonMistake: "間違えやすい点",
         high: "高",
         medium: "中",
-        low: "低"
+        low: "低",
+        backToList: "練習リストへ戻る"
       },
       subnav: {
         lessons: "テキスト・演習",
@@ -586,7 +587,8 @@
         commonMistake: "易错点",
         high: "高",
         medium: "中",
-        low: "低"
+        low: "低",
+        backToList: "返回练习列表"
       },
       subnav: {
         lessons: "教科书与演练沙盒",
@@ -1076,7 +1078,8 @@
         commonMistake: "Common Mistake",
         high: "High",
         medium: "Medium",
-        low: "Low"
+        low: "Low",
+        backToList: "Back to Practice List"
       },
       subnav: {
         lessons: "Textbook & Practice Sandbox",
@@ -1535,7 +1538,8 @@
         python: "Python", java: "Java", sql: "SQL", symbols: "သင်္ကေတ",
         normalizeFullWidth: "အပြည့်→တစ်ဝက်", lenientIndent: "အင်တင်အာလျော့",
         sendToSandbox: "Send to Sandbox",        runInSandbox: "Run in Sandbox",        sandboxUnavailable: "Sandbox unavailable",        sentToSandbox: "Sent to sandbox",        openSandbox: "Open sandbox",        shortcutHelp: "Alt+N နောက် / Alt+R ပြန်စ / Alt+S ကျပန်း",
-        summaryLine: "CPM: {cpm} | တိကျမှု: {acc}% | အမှား: {err} | အချိန်: {time}"
+        summaryLine: "CPM: {cpm} | တိကျမှု: {acc}% | အမှား: {err} | အချိန်: {time}",
+        backToList: "Back to Practice List"
       },
       subnav: {
         lessons: "စာအုပ်နှင့် လေ့ကျင့်ခန်း",
@@ -1995,7 +1999,8 @@
         python: "Python", java: "Java", sql: "SQL", symbols: "Ký hiệu",
         normalizeFullWidth: "Toàn→Bán sừng", lenientIndent: "Thụt lề linh hoạt",
         sendToSandbox: "Send to Sandbox",        runInSandbox: "Run in Sandbox",        sandboxUnavailable: "Sandbox unavailable",        sentToSandbox: "Sent to sandbox",        openSandbox: "Open sandbox",        shortcutHelp: "Phím tắt: Alt+N Tiếp / Alt+R Làm lại / Alt+S Ngẫu nhiên",
-        summaryLine: "CPM: {cpm} | Độ chính xác: {acc}% | Lỗi: {err} | TG: {time}"
+        summaryLine: "CPM: {cpm} | Độ chính xác: {acc}% | Lỗi: {err} | TG: {time}",
+        backToList: "Quay lại danh sách"
       },
       subnav: {
         lessons: "Sách giáo khoa & luyện tập",
@@ -2455,7 +2460,8 @@
         python: "Python", java: "Java", sql: "SQL", symbols: "Symboles",
         normalizeFullWidth: "Pleine→Demi-chasse", lenientIndent: "Indentation souple",
         sendToSandbox: "Send to Sandbox",        runInSandbox: "Run in Sandbox",        sandboxUnavailable: "Sandbox unavailable",        sentToSandbox: "Sent to sandbox",        openSandbox: "Open sandbox",        shortcutHelp: "Raccourcis: Alt+N Suivant / Alt+R Reco. / Alt+S Aléatoire",
-        summaryLine: "CPM: {cpm} | Précision: {acc}% | Err: {err} | Temps: {time}"
+        summaryLine: "CPM: {cpm} | Précision: {acc}% | Err: {err} | Temps: {time}",
+        backToList: "Retour à la liste"
       },
       subnav: {
         lessons: "Manuel & exercices",
@@ -2915,7 +2921,8 @@
         python: "Python", java: "Java", sql: "SQL", symbols: "기호",
         normalizeFullWidth: "전각→반각", lenientIndent: "들여쓰기 허용",
         sendToSandbox: "Send to Sandbox",        runInSandbox: "Run in Sandbox",        sandboxUnavailable: "Sandbox unavailable",        sentToSandbox: "Sent to sandbox",        openSandbox: "Open sandbox",        shortcutHelp: "단축키: Alt+N 다음 / Alt+R 다시 / Alt+S 랜덤",
-        summaryLine: "CPM: {cpm} | 정확도: {acc}% | 오류: {err} | 시간: {time}"
+        summaryLine: "CPM: {cpm} | 정확도: {acc}% | 오류: {err} | 시간: {time}",
+        backToList: "연습 목록으로 돌아가기"
       },
       subnav: {
         lessons: "교재 및 실습 샌드박스",
@@ -3402,7 +3409,8 @@
       commonMistake: "易错点 / 間違えやすい点",
       high: "高 / 高",
       medium: "中 / 中",
-      low: "低 / 低"
+      low: "低 / 低",
+      backToList: "返回练习列表 / 練習リストへ戻る"
     },
     subnav: {
       lessons: "教科书与演练沙盒 / テキスト・演習",

@@ -1,4 +1,4 @@
-﻿/* Coding Typing Hub Styles */
+/* Coding Typing Hub Styles */
 .ct-hub { display: none; }
 .ct-hub.is-active { display: block; }
 
@@ -260,6 +260,10 @@ body.mode-coding-typing .coding-typing-hub {
   align-items: center;
   gap: 8px;
   flex-wrap: wrap;
+}
+
+.ct-back-btn {
+  margin-right: 4px;
 }
 
 .ct-primary-btn {
