@@ -182,6 +182,20 @@
       sections.userSettings.wrongBookRetrySettings = retrySettings;
     }
 
+    // Round 45.0: add manifest with counts
+    var manifest = {
+      counts: {
+        completedLessons: sections.completedLessons ? Object.keys(sections.completedLessons).length : 0,
+        quizResults: sections.quizResults ? Object.keys(sections.quizResults).length : 0,
+        wrongBook: sections.wrongBook ? sections.wrongBook.length : 0,
+        bookmarks: sections.bookmarks ? sections.bookmarks.length : 0,
+        typingHistory: sections.typingHistory ? sections.typingHistory.length : 0,
+        examHistory: sections.examHistory ? sections.examHistory.length : 0,
+        dashboardGoals: sections.dashboardGoals ? sections.dashboardGoals.length : 0,
+      },
+      checksum: null // TODO: add SHA-1 hash in future round
+    };
+
     return {
       schemaVersion: SCHEMA_VERSION,
       exportedAt: new Date().toISOString(),
@@ -190,6 +204,7 @@
         window.STUDY_TOOLS_VERSION.webVersion
       ) || APP_VERSION,
       source: SOURCE,
+      manifest: manifest,
       warnings: warnings,
       sections: sections
     };
