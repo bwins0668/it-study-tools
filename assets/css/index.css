@@ -93,6 +93,7 @@ body {
   backdrop-filter: var(--glass-blur);
   border-bottom: 1px solid var(--border-color);
   z-index: 100;
+  flex-shrink: 0;
 }
 
 .header-logo {
@@ -572,6 +573,7 @@ body {
 /* Center: Lesson Content Panel */
 .lesson-content {
   flex: 1.1;
+  min-height: 0;
   padding: 20px;
   overflow-y: auto;
   display: flex;
@@ -919,6 +921,7 @@ body {
 /* Right: Playground Panel Layout */
 .playground-section {
   flex: 0.9;
+  min-height: 0;
   padding: 20px 20px 20px 0;
   display: flex;
   flex-direction: column;
@@ -1856,11 +1859,16 @@ body {
   padding: 8px 24px;
   z-index: 10;
   animation: fadeIn 0.3s ease;
+  flex-shrink: 0;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .sub-header-tabs {
   display: flex;
   gap: 12px;
+  min-width: min-content;
+  white-space: nowrap;
 }
 
 .sub-header-tab {
@@ -1875,6 +1883,7 @@ body {
   display: flex;
   align-items: center;
   gap: 8px;
+  flex-shrink: 0;
   transition: var(--transition-smooth);
 }
 
@@ -8555,6 +8564,9 @@ body.mobile-playground-open .mobile-backdrop {
   padding: 0 24px;
   background: #0b0f19;
   border-bottom: 1px solid var(--border-color);
+  flex-shrink: 0;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .secondary-action-row .header-challenge {
