@@ -6793,5 +6793,65 @@ function initTheme() {
 }
 
 
+// ========== Service Worker Registration & PWA Update Prompt ==========
+(function initServiceWorker() {
+  if (!('serviceWorker' in navigator)) return;
+
+  let refreshing = false;
+
+  function showUpdatePrompt(reg) {
+    if (document.querySelector('.pwa-update-prompt')) return;
+
+    const t = window.t || function(k) { return k; };
+    const messages = {
+      'zh-CN': { text: '发现新版本，点击刷新', btn: '立即刷新' },
+      'ja-JP': { text: '新しいバージョンがあります。更新してください', btn: '更新する' },
+      'en-US': { text: 'A new version is available. Refresh to update.', btn: 'Refresh Now' },
+      'ko-KR': { text: '새 버전이 있습니다. 새로고침하세요.', btn: '새로고침' }
+    };
+    const lang = (window.I18n && window.I18n.getLanguage && window.I18n.getLanguage()) || 'zh-CN';
+    const m = messages[lang] || messages['en-US'];
+
+    const prompt = document.createElement('div');
+    prompt.className = 'pwa-update-prompt';
+    prompt.innerHTML = '<span class="pwa-update-text">' + m.text + '</span><button class="pwa-update-btn">' + m.btn + '</button>';
+    prompt.querySelector('.pwa-update-btn').addEventListener('click', function() {
+      if (reg.waiting) {
+        reg.waiting.postMessage({ type: 'SKIP_WAITING' });
+      }
+      prompt.remove();
+    });
+    document.body.appendChild(prompt);
+  }
+
+  navigator.serviceWorker.register('/service-worker.js').then(function(reg) {
+    console.log('[SW] Registered, scope:', reg.scope);
+
+    reg.addEventListener('updatefound', function() {
+      const newWorker = reg.installing;
+      newWorker.addEventListener('statechange', function() {
+        if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+          console.log('[SW] New version waiting');
+          showUpdatePrompt(reg);
+        }
+      });
+    });
+
+    navigator.serviceWorker.addEventListener('controllerchange', function() {
+      if (!refreshing) {
+        refreshing = true;
+        window.location.reload();
+      }
+    });
+
+    if (reg.waiting) {
+      console.log('[SW] Waiting worker found');
+      showUpdatePrompt(reg);
+    }
+  }).catch(function(err) {
+    console.warn('[SW] Registration failed:', err);
+  });
+})();
+
 // Expose StudySync debug entry (no-op if sync-engine.js not loaded)
 window.StudySync = window.StudySync || null;
