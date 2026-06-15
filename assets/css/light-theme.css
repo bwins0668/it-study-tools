@@ -1596,3 +1596,50 @@ body[data-theme="light"] .db-sync-hint-msg--ok {
 body[data-theme="light"] .db-sync-hint-msg--err {
   color: #dc2626;
 }
+
+/* ── Round 31.0: Microinteractions (light theme) ──────── */
+
+/* Concept column language-accent borders */
+body[data-theme="light"] .concept-col.zh-col:hover {
+  border-left-color: rgba(37, 99, 235, 0.25);
+  box-shadow: 4px 0 12px rgba(37, 99, 235, 0.04);
+}
+body[data-theme="light"] .concept-col.ja-col:hover {
+  border-left-color: rgba(14, 165, 233, 0.25);
+  box-shadow: 4px 0 12px rgba(14, 165, 233, 0.04);
+}
+
+/* Analogy card hover */
+body[data-theme="light"] .analogy-card:hover {
+  border-color: rgba(252, 185, 0, 0.25);
+  box-shadow: 0 4px 16px rgba(252, 185, 0, 0.04);
+}
+
+/* Example card hover */
+body[data-theme="light"] .example-card:hover {
+  border-color: rgba(0, 0, 0, 0.12);
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.06);
+}
+
+/* Concept body hover */
+body[data-theme="light"] .concept-body:hover {
+  border-color: rgba(0, 0, 0, 0.08);
+  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.02);
+}
+
+/* Copy done feedback in light */
+body[data-theme="light"] .copy-example-btn.copy-done {
+  border-color: #059669 !important;
+  color: #059669 !important;
+}
+
+/* Focus-visible: use darker outline on light bg */
+body[data-theme="light"] .lesson-content a:focus-visible,
+body[data-theme="light"] .lesson-content button:focus-visible,
+body[data-theme="light"] .copy-example-btn:focus-visible,
+body[data-theme="light"] .lang-tab:focus-visible,
+body[data-theme="light"] .quiz-option:focus-visible,
+body[data-theme="light"] .schema-tab:focus-visible,
+body[data-theme="light"] .db-group-tab:focus-visible {
+  outline-color: #1a56db;
+}

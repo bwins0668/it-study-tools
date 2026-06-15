@@ -11032,6 +11032,155 @@ body.mobile-playground-open .mobile-backdrop {
   }
 }
 
+/* ══════════════════════════════════════════════════════════════
+   Round 31.0 — Lesson Page Microinteraction Polish
+   Subtle hover/focus/feedback effects on bilingual cards,
+   code blocks, copy button, analogy cards. No JS changes.
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── 1. Bilingual concept columns: language-accent borders ── */
+.concept-col {
+  border-radius: 10px;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.2s ease;
+}
+.concept-col.zh-col {
+  border-left: 2px solid transparent;
+}
+.concept-col.ja-col {
+  border-left: 2px solid transparent;
+}
+.concept-col.zh-col:hover {
+  border-left-color: rgba(37, 99, 235, 0.35);
+  box-shadow: 4px 0 12px rgba(37, 99, 235, 0.06);
+}
+.concept-col.ja-col:hover {
+  border-left-color: rgba(0, 240, 255, 0.35);
+  box-shadow: 4px 0 12px rgba(0, 240, 255, 0.06);
+}
+
+/* Column header badges — language-colored dots */
+.concept-col h4::before {
+  content: '';
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.concept-col.zh-col h4::before {
+  background: var(--neon-blue);
+  box-shadow: 0 0 6px rgba(37, 99, 235, 0.4);
+}
+.concept-col.ja-col h4::before {
+  background: var(--neon-cyan);
+  box-shadow: 0 0 6px rgba(0, 240, 255, 0.4);
+}
+
+/* ── 2. Copy button: click feedback pulse ── */
+.copy-example-btn {
+  position: relative;
+  overflow: hidden;
+}
+.copy-example-btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--neon-cyan);
+  opacity: 0;
+  transition: opacity 0.15s ease;
+  pointer-events: none;
+}
+.copy-example-btn:active::after {
+  opacity: 0.12;
+}
+/* Copied feedback — brief flash via class toggle */
+.copy-example-btn.copy-done {
+  border-color: var(--success-color) !important;
+  color: var(--success-color) !important;
+  transition: border-color 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
+  box-shadow: 0 0 10px var(--success-glow);
+}
+
+/* ── 3. Analogy card: subtle hover lift ── */
+.analogy-card {
+  transition: transform 0.2s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+.analogy-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(252, 185, 0, 0.3);
+  box-shadow: 0 4px 16px rgba(252, 185, 0, 0.06);
+}
+
+/* ── 4. Example/code card: subtle depth on hover ── */
+.example-card {
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+.example-card:hover {
+  border-color: rgba(255, 255, 255, 0.12);
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* ── 5. Concept body: refined inner highlight ── */
+.concept-body {
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+.concept-body:hover {
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.015);
+}
+
+/* ── 6. Quiz options: enhanced interactive feedback ── */
+.quiz-option {
+  transition: border-color 0.2s ease, background 0.2s ease, transform 0.15s ease;
+}
+.quiz-option:hover {
+  transform: translateX(2px);
+}
+.quiz-option:active {
+  transform: translateX(2px) scale(0.99);
+}
+.quiz-option.selected {
+  transform: translateX(0);
+}
+
+/* ── 7. Focus-visible: keyboard accessibility for lesson content ── */
+.lesson-content a:focus-visible,
+.lesson-content button:focus-visible,
+.copy-example-btn:focus-visible,
+.lang-tab:focus-visible,
+.quiz-option:focus-visible,
+.schema-tab:focus-visible,
+.db-group-tab:focus-visible {
+  outline: 2px solid var(--neon-cyan);
+  outline-offset: 2px;
+}
+
+/* ── 8. Current step indicator: subtle pulse on active lesson ── */
+@keyframes activeLessonPulse {
+  0%, 100% { box-shadow: inset 2px 0 4px rgba(0, 242, 254, 0.06); }
+  50%      { box-shadow: inset 2px 0 8px rgba(0, 242, 254, 0.12); }
+}
+.lesson-nav-item.active {
+  animation: activeLessonPulse 3s ease-in-out infinite;
+}
+
+/* ── 9. Lang tabs: smoother active transition ── */
+.lang-tab {
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.lang-tab:hover:not(.active) {
+  background: rgba(255, 255, 255, 0.03);
+  transform: translateY(-1px);
+}
+
+/* ── 10. Schema tabs: micro-interaction ── */
+.schema-tab {
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.schema-tab:hover:not(.active) {
+  transform: translateY(-1px);
+}
+
 /* ── Playground off-canvas: full-width at 430px ── */
 @media (max-width: 430px) {
   .playground-section {
