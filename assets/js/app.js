@@ -753,6 +753,14 @@ function initToolsDrawer() {
       }
       return;
     }
+
+    if (action === 'import-preview') {
+      closeDrawer();
+      if (window.ImportPreview && typeof window.ImportPreview.openPreview === 'function') {
+        window.ImportPreview.openPreview();
+      }
+      return;
+    }
   });
 }
 
