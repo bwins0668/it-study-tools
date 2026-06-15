@@ -161,6 +161,25 @@
     }
   }
 
+  async function signUpWithEmail(email, password, options) {
+    var activeClient = client || initClient();
+    if (!activeClient || !activeClient.auth || typeof activeClient.auth.signUp !== "function") {
+      return {
+        data: { user: null, session: null },
+        error: unavailableError()
+      };
+    }
+    try {
+      var params = { email: email, password: password };
+      if (options && options.data) params.options = { data: options.data };
+      var result = await activeClient.auth.signUp(params);
+      if (result && result.error) result.error = friendlyError(result.error, "sign_up_failed");
+      return result;
+    } catch (error) {
+      return { data: { user: null, session: null }, error: friendlyError(error, "sign_up_failed") };
+    }
+  }
+
   async function signOut() {
     var activeClient = client || initClient();
     if (!activeClient || !activeClient.auth || typeof activeClient.auth.signOut !== "function") {
@@ -208,6 +227,7 @@
     getCurrentUser: getCurrentUser,
     signInWithEmail: signInWithEmail,
     signInWithMagicLink: signInWithMagicLink,
+    signUpWithEmail: signUpWithEmail,
     signOut: signOut,
     onAuthStateChange: onAuthStateChange
   };
