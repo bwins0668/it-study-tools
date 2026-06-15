@@ -442,169 +442,146 @@
       summaryHtml = '<div class="auth-notice sync-error"><i class="fa-solid fa-exclamation-circle"></i> ' + esc(t("auth.syncFailedDetail", "部分同步失败，请重试")) + '</div>';
     }
 
+    // Sync summary details (collapsed)
+    var syncDetailsHtml = "";
+    if (hasSyncSummary && syncSummary.status === "success") {
+      var detailsList = "";
+      if (progressPushed) detailsList += '<li><i class="fa-solid fa-upload"></i> ' + esc(t("auth.progressPushed", "进度上传")) + ': ' + progressPushed + '</li>';
+      if (progressPulled) detailsList += '<li><i class="fa-solid fa-download"></i> ' + esc(t("auth.progressPulled", "进度下载")) + ': ' + progressPulled + '</li>';
+      if (quizPushed) detailsList += '<li><i class="fa-solid fa-clipboard-question"></i> ' + esc(t("auth.quizPushed", "测验结果")) + ': ' + quizPushed + '</li>';
+      if (bookmarksPushed) detailsList += '<li><i class="fa-solid fa-star-of-life"></i> ' + esc(t("auth.bookmarksPushed", "收藏上传")) + ': ' + bookmarksPushed + '</li>';
+      if (bookmarksPulled) detailsList += '<li><i class="fa-solid fa-star-half-stroke"></i> ' + esc(t("auth.bookmarksPulled", "收藏下载")) + ': ' + bookmarksPulled + '</li>';
+      if (bookmarksMerged) detailsList += '<li><i class="fa-solid fa-star"></i> ' + esc(t("auth.bookmarksMerged", "收藏已合并")) + ': ' + bookmarksMerged + '</li>';
+      if (wrongbookPushed) detailsList += '<li><i class="fa-solid fa-book-circle-arrow-up"></i> ' + esc(t("auth.wrongBookPushed", "错题上传")) + ': ' + wrongbookPushed + '</li>';
+      if (wrongbookPulled) detailsList += '<li><i class="fa-solid fa-book-circle-arrow-down"></i> ' + esc(t("auth.wrongBookPulled", "错题下载")) + ': ' + wrongbookPulled + '</li>';
+      if (wrongbookMerged) detailsList += '<li><i class="fa-solid fa-code-merge"></i> ' + esc(t("auth.wrongBookMerged", "错题已合并")) + ': ' + wrongbookMerged + '</li>';
+      if (conflictsResolved) detailsList += '<li><i class="fa-solid fa-code-merge"></i> ' + esc(t("auth.conflictsResolved", "已合并远端进度")) + ': ' + conflictsResolved + '</li>';
+      syncDetailsHtml =
+        '<details class="auth-summary-details">' +
+          '<summary><i class="fa-solid fa-circle-info"></i> ' + esc(t("auth.syncSummaryTitle", "同步摘要")) +
+          (syncDuration ? ' (' + (syncDuration / 1000).toFixed(1) + 's)' : '') + '</summary>' +
+          '<ul>' + detailsList + '</ul>' +
+        '</details>';
+    } else if (syncSummary && syncSummary.status === "error") {
+      syncDetailsHtml = '<div class="auth-notice sync-error"><i class="fa-solid fa-exclamation-circle"></i> ' + esc(t("auth.syncFailedDetail", "部分同步失败，请重试")) + '</div>';
+    }
+
+    // Device info (collapsed)
+    var deviceInfoHtml =
+      '<details class="auth-device-details">' +
+        '<summary class="auth-details-summary">' +
+          '<i class="fa-solid fa-gears"></i> ' + esc(t("auth.deviceAndSyncDetails", "设备与同步详情")) +
+        '</summary>' +
+        '<div class="auth-info-grid">' +
+          '<div class="auth-info-row">' +
+            '<span class="auth-label">' + esc(t("auth.pendingSync", "待同步")) + ':</span>' +
+            '<span class="auth-value">' + qSize + '</span>' +
+          '</div>' +
+          '<div class="auth-info-row">' +
+            '<span class="auth-label">' + esc(t("auth.lastSync", "上次同步")) + ':</span>' +
+            '<span class="auth-value">' + (lastSync ? esc(lastSync) : "—") + '</span>' +
+          '</div>' +
+          '<div class="auth-info-row">' +
+            '<span class="auth-label">' + esc(t("auth.deviceId", "设备 ID")) + ':</span>' +
+            '<span class="auth-value auth-device-id" title="' + esc(deviceId) + '">' + esc(deviceId ? deviceId.slice(0, 12) + "..." : "—") + '</span>' +
+          '</div>' +
+        '</div>' +
+      '</details>';
+
+    // Sync status collapsed section
+    var syncSectionHtml =
+      '<details class="auth-sync-collapsed">' +
+        '<summary class="auth-sync-summary">' +
+          '<i class="fa-solid fa-cloud"></i> ' + esc(t("auth.sync", "同步")) + ' — ' +
+          esc(isAnonymous ? t("auth.localMode", "本地模式") : t("auth.signedIn", "已登录")) +
+        '</summary>' +
+        '<div class="auth-sync-body">' +
+          (isSupabaseUser && canManualSync
+            ? '<div class="auth-btn-row">' +
+                '<button class="auth-btn auth-btn-primary" data-auth-action="manual-sync">' +
+                  '<i class="fa-solid fa-rotate' + (syncInProgress ? " fa-spin" : "") + '"></i> ' +
+                  esc(syncInProgress ? t("auth.syncingNow", "正在同步") : t("auth.syncNow", "立即同步")) +
+                '</button>' +
+              '</div>'
+            : '') +
+          (syncMessage ? '<div class="auth-notice sync-message-notice"><i class="fa-solid fa-circle-info"></i> ' + esc(syncMessage) + '</div>' : '') +
+          deviceInfoHtml +
+          syncDetailsHtml +
+        '</div>' +
+      '</details>';
+
     content.innerHTML =
       '<div class="auth-panel-header">' +
         '<h3 id="auth-panel-title">' + esc(t("auth.account", "账号")) + '</h3>' +
         '<button class="auth-panel-close-btn" data-auth-action="close" title="' + esc(t("auth.close", "关闭")) + '"><i class="fa-solid fa-xmark"></i></button>' +
       '</div>' +
       '<div class="auth-panel-body">' +
-        // A. Status Section
-        '<div class="auth-panel-section auth-status-section">' +
-          '<div class="auth-status-row">' +
-            '<span class="auth-label"><i class="fa-solid fa-user"></i> ' + esc(t("auth.currentUser", "当前用户")) + ':</span>' +
-            '<span class="auth-value auth-user-email">' +
-              esc(isSupabaseUser ? accountLabel : t("auth.notLoggedIn", "未登录")) +
-            '</span>' +
-          '</div>' +
-          (isSupabaseUser
-            ? '<div class="auth-status-row">' +
-                '<span class="auth-label"><i class="fa-solid fa-id-badge"></i> ' + esc(t("auth.accountType", "账号类型")) + ':</span>' +
-                '<span class="auth-value auth-account-type">' + esc(accountTypeLabel) + '</span>' +
-              '</div>'
-            : '') +
-          '<div class="auth-status-row">' +
-            '<span class="auth-label"><i class="fa-solid fa-cloud"></i> Supabase:</span>' +
-            '<span class="auth-value" data-i18n-skip="true">' + esc(getSupabaseStatusLabel()) + '</span>' +
-          '</div>' +
-          '<div class="auth-status-row">' +
-            '<span class="auth-label"><i class="fa-solid fa-circle-question"></i> ' + esc(t("auth.sync", "同步")) + ':</span>' +
-            '<span class="auth-value auth-badge-' + (isAnonymous ? "local" : "synced") + '">' +
-              esc(isAnonymous ? t("auth.localMode", "本地模式") : t("auth.signedIn", "已登录")) +
-            '</span>' +
-          '</div>' +
-        '</div>' +
-
-        // B. Sync Section
-        '<div class="auth-panel-section auth-sync-section">' +
-          '<div class="auth-btn-row">' +
-            '<button class="auth-btn auth-btn-primary" data-auth-action="manual-sync"' + (canManualSync ? "" : " disabled") + '>' +
-              '<i class="fa-solid fa-rotate' + (syncInProgress ? " fa-spin" : "") + '"></i> ' +
-              esc(syncInProgress ? t("auth.syncingNow", "正在同步") : t("auth.syncNow", "立即同步")) +
-            '</button>' +
-          '</div>' +
-          (!isSupabaseUser
-            ? '<div class="auth-notice"><i class="fa-solid fa-lock"></i> ' + esc(t("auth.signInFirst", "请先登录")) + '</div>'
-            : (!supabaseReady
-              ? '<div class="auth-notice"><i class="fa-solid fa-triangle-exclamation"></i> ' + esc(t("auth.supabaseNotConfigured", "Supabase 未配置")) + '</div>'
-              : '')) +
-          (syncMessage ? '<div class="auth-notice sync-message-notice"><i class="fa-solid fa-circle-info"></i> ' + esc(syncMessage) + '</div>' : '') +
-          '<details class="auth-device-details">' +
-            '<summary class="auth-details-summary">' +
-              '<i class="fa-solid fa-gears"></i> ' + esc(t("auth.deviceAndSyncDetails", "设备与同步详情")) +
-            '</summary>' +
-            '<div class="auth-info-grid">' +
-              '<div class="auth-info-row">' +
-                '<span class="auth-label">' + esc(t("auth.pendingSync", "待同步")) + ':</span>' +
-                '<span class="auth-value">' + qSize + '</span>' +
-              '</div>' +
-              '<div class="auth-info-row">' +
-                '<span class="auth-label">' + esc(t("auth.lastSync", "上次同步")) + ':</span>' +
-                '<span class="auth-value">' + (lastSync ? esc(lastSync) : "—") + '</span>' +
-              '</div>' +
-              '<div class="auth-info-row">' +
-                '<span class="auth-label">' + esc(t("auth.deviceId", "设备 ID")) + ':</span>' +
-                '<span class="auth-value auth-device-id" title="' + esc(deviceId) + '">' + esc(deviceId ? deviceId.slice(0, 12) + "..." : "—") + '</span>' +
-              '</div>' +
-            '</div>' +
-          '</details>' +
-          summaryHtml +
-        '</div>' +
-
-        // C. Login / Register Section
-        '<div class="auth-panel-section auth-login-section">' +
-          (!isSupabaseUser ?
-            '<div class="auth-tabs" role="tablist">' +
-              '<button class="auth-tab active" role="tab" data-auth-tab="login" aria-selected="true">' +
-                '<i class="fa-solid fa-right-to-bracket"></i> ' + esc(t("auth.loginTitle", "登录")) +
-              '</button>' +
-              '<button class="auth-tab" role="tab" data-auth-tab="register" aria-selected="false">' +
-                '<i class="fa-solid fa-user-plus"></i> ' + esc(t("auth.registerTitle", "注册")) +
-              '</button>' +
-            '</div>' +
-
-            // Login tab panel
-            '<div class="auth-tab-panel" data-auth-panel="login">' +
-              '<div class="auth-login-form">' +
-                '<input class="auth-input" data-auth-input="login-username" type="text" autocomplete="username" autocapitalize="none" spellcheck="false" maxlength="24" placeholder="' + esc(t("auth.username", "用户名")) + '">' +
-                '<input class="auth-input" data-auth-input="login-password" type="password" autocomplete="current-password" placeholder="' + esc(t("auth.password", "密码")) + '">' +
-                '<div class="auth-btn-row">' +
-                  '<button class="auth-btn auth-btn-primary" data-auth-action="password-sign-in"' + (supabaseReady ? "" : " disabled") + '>' +
-                    '<i class="fa-solid fa-right-to-bracket"></i> ' + esc(t("auth.loginButton", "登录")) +
-                  '</button>' +
-                '</div>' +
-                '<div class="auth-field-hint"><i class="fa-solid fa-shield-halved"></i> ' +
-                  esc(t("auth.noEmailRequiredDesc", "登录只需用户名和密码。")) +
-                '</div>' +
-              '</div>' +
-            '</div>' +
-
-            // Register tab panel
-            '<div class="auth-tab-panel" data-auth-panel="register" style="display:none">' +
-              '<div class="auth-login-form">' +
-                '<input class="auth-input" data-auth-input="reg-username" type="text" autocomplete="username" autocapitalize="none" spellcheck="false" maxlength="24" placeholder="' + esc(t("auth.username", "用户名")) + '">' +
-                '<div class="auth-field-hint">' + esc(t("auth.usernamePlaceholder", "3-24 位字母、数字、下划线或连字符")) + '</div>' +
-                '<input class="auth-input" data-auth-input="reg-display-name" type="text" autocomplete="nickname" placeholder="' + esc(t("auth.displayNameOptional", "昵称（可选）")) + '">' +
-                '<input class="auth-input" data-auth-input="reg-password" type="password" autocomplete="new-password" placeholder="' + esc(t("auth.password", "密码")) + '">' +
-                '<input class="auth-input" data-auth-input="reg-confirm-password" type="password" autocomplete="new-password" placeholder="' + esc(t("auth.confirmPassword", "确认密码")) + '">' +
-                '<div class="auth-btn-row">' +
-                  '<button class="auth-btn auth-btn-primary" data-auth-action="register"' + (supabaseReady ? "" : " disabled") + '>' +
-                    '<i class="fa-solid fa-user-plus"></i> ' + esc(t("auth.createAccountButton", "创建账号")) +
-                  '</button>' +
-                '</div>' +
-                '<div class="auth-field-hint"><i class="fa-solid fa-envelope-circle-check"></i> ' +
-                  esc(t("auth.noEmailRequired", "无需邮箱")) +
-                '</div>' +
-              '</div>' +
-            '</div>'
-            :
-            '<div class="auth-logged-in-info">' +
+        (isSupabaseUser
+          ? // Logged in state
+            '<div class="auth-panel-section auth-logged-in-section">' +
               '<div class="auth-user-display">' +
                 '<i class="fa-solid fa-user-check"></i> ' +
-                '<span>' + esc(accountLabel) + '</span>' +
+                '<span class="auth-user-name">' + esc(accountLabel) + '</span>' +
                 '<span class="auth-account-type">' + esc(accountTypeLabel) + '</span>' +
               '</div>' +
               '<div class="auth-btn-row" style="margin-top:12px">' +
+                '<button class="auth-btn auth-btn-primary" data-auth-action="manual-sync"' + (canManualSync ? "" : " disabled") + '>' +
+                  '<i class="fa-solid fa-rotate' + (syncInProgress ? " fa-spin" : "") + '"></i> ' +
+                  esc(syncInProgress ? t("auth.syncingNow", "正在同步") : t("auth.syncNow", "立即同步")) +
+                '</button>' +
                 '<button class="auth-btn auth-btn-danger" data-auth-action="supabase-sign-out">' +
                   '<i class="fa-solid fa-sign-out-alt"></i> ' + esc(t("auth.signOut", "登出")) +
                 '</button>' +
               '</div>' +
+            '</div>' +
+            syncSectionHtml
+          : // Not logged in state
+            '<div class="auth-panel-section auth-login-section">' +
+              '<div class="auth-panel-subtitle">' + esc(t("auth.syncIntro", "多设备同步进度及设置")) + '</div>' +
+              '<div class="auth-tabs" role="tablist">' +
+                '<button class="auth-tab active" role="tab" data-auth-tab="login" aria-selected="true">' +
+                  '<i class="fa-solid fa-right-to-bracket"></i> ' + esc(t("auth.loginTitle", "登录")) +
+                '</button>' +
+                '<button class="auth-tab" role="tab" data-auth-tab="register" aria-selected="false">' +
+                  '<i class="fa-solid fa-user-plus"></i> ' + esc(t("auth.registerTitle", "注册")) +
+                '</button>' +
+              '</div>' +
+
+              '<div class="auth-tab-panel" data-auth-panel="login">' +
+                '<div class="auth-login-form">' +
+                  '<input class="auth-input" data-auth-input="login-username" type="text" autocomplete="username" autocapitalize="none" spellcheck="false" maxlength="24" placeholder="' + esc(t("auth.username", "用户名")) + '">' +
+                  '<input class="auth-input" data-auth-input="login-password" type="password" autocomplete="current-password" placeholder="' + esc(t("auth.password", "密码")) + '">' +
+                  '<div class="auth-btn-row">' +
+                    '<button class="auth-btn auth-btn-primary" data-auth-action="password-sign-in"' + (supabaseReady ? "" : " disabled") + '>' +
+                      '<i class="fa-solid fa-right-to-bracket"></i> ' + esc(t("auth.loginButton", "登录")) +
+                    '</button>' +
+                  '</div>' +
+                  '<div class="auth-field-hint"><i class="fa-solid fa-shield-halved"></i> ' +
+                    esc(t("auth.noEmailRequiredDesc", "登录只需用户名和密码。")) +
+                  '</div>' +
+                '</div>' +
+              '</div>' +
+
+              '<div class="auth-tab-panel" data-auth-panel="register" style="display:none">' +
+                '<div class="auth-login-form">' +
+                  '<input class="auth-input" data-auth-input="reg-username" type="text" autocomplete="username" autocapitalize="none" spellcheck="false" maxlength="24" placeholder="' + esc(t("auth.username", "用户名")) + '">' +
+                  '<div class="auth-field-hint">' + esc(t("auth.usernamePlaceholder", "3-24 位字母、数字、下划线或连字符")) + '</div>' +
+                  '<input class="auth-input" data-auth-input="reg-display-name" type="text" autocomplete="nickname" placeholder="' + esc(t("auth.displayNameOptional", "昵称（可选）")) + '">' +
+                  '<input class="auth-input" data-auth-input="reg-password" type="password" autocomplete="new-password" placeholder="' + esc(t("auth.password", "密码")) + '">' +
+                  '<input class="auth-input" data-auth-input="reg-confirm-password" type="password" autocomplete="new-password" placeholder="' + esc(t("auth.confirmPassword", "确认密码")) + '">' +
+                  '<div class="auth-btn-row">' +
+                    '<button class="auth-btn auth-btn-primary" data-auth-action="register"' + (supabaseReady ? "" : " disabled") + '>' +
+                      '<i class="fa-solid fa-user-plus"></i> ' + esc(t("auth.createAccountButton", "创建账号")) +
+                    '</button>' +
+                  '</div>' +
+                  '<div class="auth-field-hint"><i class="fa-solid fa-envelope-circle-check"></i> ' +
+                    esc(t("auth.noEmailRequired", "无需邮箱")) +
+                  '</div>' +
+                '</div>' +
+              '</div>' +
             '</div>'
           ) +
           (authMessage ? '<div class="auth-notice auth-message-notice"><i class="fa-solid fa-circle-info"></i> ' + esc(authMessage) + '</div>' : '') +
-        '</div>' +
-
-        // D. Privacy Section
-        '<div class="auth-panel-section auth-privacy-section">' +
-          '<div class="auth-privacy-title">' +
-            '<i class="fa-solid fa-shield-halved"></i> ' + esc(t("auth.syncIntro", "多设备同步进度及设置")) +
-          '</div>' +
-          '<ul class="auth-privacy-list">' +
-            '<li><i class="fa-solid fa-check"></i> ' + esc(t("auth.syncScope", "只同步学习进度和设置")) + '</li>' +
-            '<li><i class="fa-solid fa-star"></i> ' + esc(t("auth.onlySyncTypingBookmarks", "当前仅同步日语打字收藏")) + '</li>' +
-            '<li><i class="fa-solid fa-key"></i> ' + esc(t("auth.noAiKeyUpload", "不会上传 AI Key")) + '</li>' +
-            '<li><i class="fa-solid fa-triangle-exclamation"></i> ' + esc(t("auth.noAiCacheUpload", "不会上传 AI 翻译缓存")) + '</li>' +
-            '<li><i class="fa-solid fa-ban"></i> ' + esc(t("auth.noAutoSync", "当前不会自动同步")) + '</li>' +
-          '</ul>' +
-        '</div>' +
-
-        // E. Bottom Actions Section (Secondary)
-        '<div class="auth-panel-section auth-bottom-actions-section">' +
-          '<div class="auth-actions-row">' +
-            (isMock ?
-              '<button class="auth-btn auth-btn-secondary auth-btn-sm" data-auth-action="sign-out">' +
-                '<i class="fa-solid fa-sign-out-alt"></i> ' + esc(t("auth.mockSignOut", "退出模拟")) +
-              '</button>' :
-              '<button class="auth-btn auth-btn-secondary auth-btn-sm" data-auth-action="sign-in">' +
-                '<i class="fa-solid fa-user-secret"></i> ' + esc(t("auth.mockSignIn", "模拟登录")) +
-              '</button>'
-            ) +
-            '<button class="auth-btn auth-btn-secondary auth-btn-sm" data-auth-action="export" title="' + esc(t("auth.exportSnapshot", "导出快照")) + '">' +
-              '<i class="fa-solid fa-download"></i> ' + esc(t("auth.exportSnapshot", "导出快照")) +
-            '</button>' +
-            '<button class="auth-btn auth-btn-secondary auth-btn-sm" data-auth-action="local">' +
-              esc(t("auth.continueLocal", "本地模式")) +
-            '</button>' +
-          '</div>' +
         '</div>' +
       '</div>';
 
