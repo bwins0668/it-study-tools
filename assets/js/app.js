@@ -779,6 +779,18 @@ function initToolsDrawer() {
       }
       return;
     }
+
+    if (action === 'continue-learning') {
+      closeDrawer();
+      // Simple: reload the page (keeps current progress)
+      // Better: find next lesson and navigate
+      var nextLesson = 1;
+      if (completedLessons && completedLessons.length > 0) {
+        nextLesson = Math.max.apply(null, completedLessons) + 1;
+      }
+      loadLesson(nextLesson);
+      return;
+    }
   });
 }
 
