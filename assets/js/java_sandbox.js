@@ -323,8 +323,8 @@ window.JavaSandbox = (() => {
     
     if (!hasCompileError && !hasRuntimeError) {
       const code = getEditor().value;
-      loadTraceSteps('java', code);
-      switchJavaOutputTab('console');
+      loadTraceSteps('java', code);
+      switchJavaOutputTab('console');
     }
 
     // Mark lesson as completed if success (update progress)
@@ -333,7 +333,22 @@ window.JavaSandbox = (() => {
     }
   }
 
-  // ─── Output Display ──────────────────────────────────────────────────────
+  // ─── Output Tab Switching ─────────────────────────────────────────
+  function switchJavaOutputTab(tabName) {
+    const outputCard = document.getElementById('java-output-card');
+    if (outputCard) outputCard.style.display = '';
+
+    ['console', 'stepper', 'ai-debugger'].forEach(tab => {
+      const tabEl = document.getElementById('java-tab-' + tab);
+      const panelEl = document.getElementById('java-panel-' + tab);
+      if (tabEl) tabEl.classList.toggle('active', tab === tabName);
+      if (panelEl) panelEl.style.display = tab === tabName ? '' : 'none';
+    });
+  }
+
+  window.switchJavaOutputTab = switchJavaOutputTab;
+
+  // ─── Output Display ──────────────────────────────────────────────────────
   function displayOutput(text, type) {
     const out = getOutput();
     if (!out) return;

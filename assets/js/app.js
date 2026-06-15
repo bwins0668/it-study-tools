@@ -346,9 +346,11 @@ function switchSubject(subject) {
   });
   
   // Update header content  // Clear body mode classes
-  document.body.classList.remove('mode-java');
-  document.body.classList.remove('mode-sg');
-  document.body.classList.remove('mode-python');
+  if (document.body) {
+    document.body.classList.remove('mode-java');
+    document.body.classList.remove('mode-sg');
+    document.body.classList.remove('mode-python');
+  }
   
   // Hide all sub-headers by default
   const subHeaders = ["sql-sub-header", "python-sub-header", "java-sub-header", "itpass-sub-header", "sg-sub-header"];
@@ -415,7 +417,7 @@ function switchSubject(subject) {
     logoIcon.className = "fa-brands fa-java logo-icon";
     mainTitle.setAttribute("data-i18n", "nav.java");
     mainTitle.innerText = I18n.t("nav.java");
-    document.body.classList.add('mode-java');
+    if (document.body) document.body.classList.add('mode-java');
     
     document.getElementById("java-sub-header").style.display = "flex";
     document.getElementById("cbt-exam-container").style.display = "none";
@@ -445,7 +447,7 @@ function switchSubject(subject) {
     logoIcon.className = "fa-brands fa-python logo-icon";
     mainTitle.setAttribute("data-i18n", "nav.python");
     mainTitle.innerText = I18n.t("nav.python");
-    document.body.classList.add('mode-python');
+    if (document.body) document.body.classList.add('mode-python');
     
     document.getElementById("python-sub-header").style.display = "flex";
     document.getElementById("cbt-exam-container").style.display = "none";
@@ -475,7 +477,7 @@ function switchSubject(subject) {
     logoIcon.className = "fa-solid fa-shield-halved logo-icon";
     mainTitle.setAttribute("data-i18n", "nav.sg");
     mainTitle.innerText = I18n.t("nav.sg");
-    document.body.classList.add('mode-sg');
+    if (document.body) document.body.classList.add('mode-sg');
     
     document.getElementById("sg-sub-header").style.display = "flex";
     document.getElementById("header-challenge").style.display = "none";
