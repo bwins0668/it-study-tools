@@ -10229,3 +10229,300 @@ body.mobile-playground-open .mobile-backdrop {
     align-items: flex-start;
   }
 }
+
+/* ───────────────────────────────────────────────
+   Round 27.0: Weekly Trend Bar Chart
+   ═══════════════════════════════════════════════ */
+.db-bar-chart {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 4px;
+  height: 120px;
+  padding: 8px 4px 4px;
+  background: rgba(255,255,255,0.015);
+  border-radius: 10px;
+}
+.db-bar-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  min-width: 0;
+}
+.db-bar-value {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--text-muted, #888);
+  line-height: 1;
+  min-height: 12px;
+}
+.db-bar-track {
+  flex: 1;
+  width: 100%;
+  max-width: 36px;
+  background: rgba(255,255,255,0.04);
+  border-radius: 4px 4px 0 0;
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+}
+.db-bar-fill {
+  width: 100%;
+  border-radius: 4px 4px 0 0;
+  min-height: 2px;
+  transition: height 0.5s ease;
+}
+.db-bar--active {
+  background: linear-gradient(to top, var(--color-accent, #6ca3f7), rgba(108,163,247,0.5));
+  box-shadow: 0 -2px 8px rgba(108,163,247,0.25);
+}
+.db-bar--zero {
+  height: 0 !important;
+}
+.db-bar-label {
+  font-size: 9px;
+  color: var(--text-muted, #888);
+  text-align: center;
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+}
+.db-bar-legend {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+.db-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 10px;
+  color: var(--text-muted, #888);
+}
+.db-legend-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+}
+.db-legend-dot--exam { background: var(--color-accent, #6ca3f7); }
+.db-legend-dot--jp   { background: #f7a06c; }
+.db-legend-dot--ct   { background: #6cf7a0; }
+.db-legend-dot--wb   { background: #f76c6c; }
+
+/* ───────────────────────────────────────────────
+   Round 27.0: Empty State
+   ═══════════════════════════════════════════════ */
+.db-empty-state {
+  text-align: center;
+  padding: 28px 16px;
+  color: var(--text-muted, #888);
+  font-size: 13px;
+  background: rgba(255,255,255,0.015);
+  border-radius: 10px;
+}
+
+/* ───────────────────────────────────────────────
+   Round 27.0: Learning Goals
+   ═══════════════════════════════════════════════ */
+.db-goals-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.db-goal-row {
+  background: rgba(255,255,255,0.025);
+  border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 10px;
+  padding: 12px 14px;
+}
+.db-goal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+.db-goal-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-main, #e0e0e0);
+}
+.db-goal-stats {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 13px;
+}
+.db-goal-current {
+  font-weight: 700;
+  color: var(--color-accent, #6ca3f7);
+  min-width: 20px;
+  text-align: right;
+}
+.db-goal-sep {
+  color: var(--text-muted, #888);
+}
+.db-goal-input {
+  width: 48px;
+  padding: 3px 6px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 6px;
+  color: var(--text-main, #e0e0e0);
+  font-size: 13px;
+  font-weight: 600;
+  text-align: center;
+  -moz-appearance: textfield;
+}
+.db-goal-input::-webkit-outer-spin-button,
+.db-goal-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.db-goal-input:focus {
+  outline: none;
+  border-color: var(--color-accent, #6ca3f7);
+  box-shadow: 0 0 0 2px rgba(108,163,247,0.15);
+}
+.db-goal-bar-wrap {
+  height: 5px;
+  background: rgba(255,255,255,0.05);
+  border-radius: 3px;
+  overflow: hidden;
+  margin-bottom: 3px;
+}
+.db-goal-bar {
+  height: 100%;
+  border-radius: 3px;
+  min-width: 2px;
+  transition: width 0.5s ease;
+}
+.db-goal-bar--high { background: linear-gradient(90deg, #6cf7a0, #3dd68c); }
+.db-goal-bar--mid  { background: linear-gradient(90deg, #f7a06c, #f7d46c); }
+.db-goal-bar--low  { background: linear-gradient(90deg, #f76c6c, #f7a06c); }
+.db-goal-pct {
+  font-size: 10px;
+  color: var(--text-muted, #888);
+  text-align: right;
+  display: block;
+}
+.db-goal-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 4px;
+}
+.db-goal-save-btn {
+  padding: 6px 16px;
+  background: var(--color-accent, #6ca3f7);
+  color: #fff;
+  border: none;
+  border-radius: 7px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, opacity 0.2s;
+}
+.db-goal-save-btn:hover {
+  background: rgba(108,163,247,0.85);
+}
+.db-goal-reset-btn {
+  padding: 6px 14px;
+  background: rgba(255,255,255,0.05);
+  color: var(--text-muted, #888);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 7px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+.db-goal-reset-btn:hover {
+  background: rgba(255,255,255,0.08);
+  color: var(--text-main, #e0e0e0);
+}
+.db-goal-msg {
+  font-size: 11px;
+  margin-left: 4px;
+}
+.db-goal-msg--ok {
+  color: #3dd68c;
+}
+.db-goal-msg--err {
+  color: #f76c6c;
+}
+
+/* ── Responsive: 768px and below ────────────── */
+@media (max-width: 768px) {
+  .db-bar-chart {
+    height: 100px;
+  }
+  .db-bar-track {
+    max-width: 28px;
+  }
+  .db-bar-label {
+    font-size: 8px;
+  }
+  .db-bar-legend {
+    gap: 10px;
+  }
+  .db-goal-input {
+    width: 42px;
+    font-size: 12px;
+  }
+  .db-goal-actions {
+    flex-wrap: wrap;
+  }
+}
+
+/* ── Responsive: 390px ──────────────────────── */
+@media (max-width: 430px) {
+  .db-bar-chart {
+    height: 80px;
+    gap: 2px;
+    padding: 6px 2px 2px;
+  }
+  .db-bar-value {
+    font-size: 8px;
+  }
+  .db-bar-track {
+    max-width: 22px;
+  }
+  .db-bar-label {
+    font-size: 7px;
+  }
+  .db-bar-legend {
+    gap: 8px;
+  }
+  .db-legend-item {
+    font-size: 9px;
+  }
+  .db-legend-dot {
+    width: 6px;
+    height: 6px;
+  }
+  .db-goal-row {
+    padding: 10px;
+  }
+  .db-goal-label {
+    font-size: 11px;
+  }
+  .db-goal-input {
+    width: 38px;
+    font-size: 11px;
+    padding: 2px 4px;
+  }
+  .db-goal-current {
+    font-size: 11px;
+  }
+  .db-goal-save-btn,
+  .db-goal-reset-btn {
+    font-size: 11px;
+    padding: 5px 12px;
+  }
+}

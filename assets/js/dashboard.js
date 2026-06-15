@@ -1,8 +1,10 @@
 /**
- * Study Tools Dashboard - Round 26.0 MVP
+ * Study Tools Dashboard - Round 27.0
  *
  * Read-only learning statistics from localStorage & sync status.
- * Zero writes. All reads try/catch-protected.
+ * Weekly learning trend + local learning goals (MVP).
+ * Zero writes (except goals – local-only, no sync).
+ * All reads try/catch-protected.
  */
 (function () {
   "use strict";
@@ -44,6 +46,34 @@
     } catch (_) { return null; }
   }
 
+  /** Get a date-only ISO string (YYYY-MM-DD) from a datetime ISO */
+  function dateOnly(iso) {
+    if (!iso) return null;
+    try {
+      var d = new Date(iso);
+      if (isNaN(d.getTime())) return null;
+      return d.getFullYear() + "-" +
+        String(d.getMonth() + 1).padStart(2, "0") + "-" +
+        String(d.getDate()).padStart(2, "0");
+    } catch (_) { return null; }
+  }
+
+  /** Build array of last 7 days as {label, date} */
+  function last7Days() {
+    var days = [];
+    var now = new Date();
+    for (var i = 6; i >= 0; i--) {
+      var d = new Date(now);
+      d.setDate(d.getDate() - i);
+      var iso = d.getFullYear() + "-" +
+        String(d.getMonth() + 1).padStart(2, "0") + "-" +
+        String(d.getDate()).padStart(2, "0");
+      var label = d.toLocaleDateString(void 0, { weekday: "short", month: "numeric", day: "numeric" });
+      days.push({ label: label, date: iso, exams: 0, jpTyping: 0, codingTyping: 0, wrongBook: 0, total: 0 });
+    }
+    return days;
+  }
+
   /* ── Data collectors ─────────────────────────────── */
 
   /** Count completed lessons per subject */
@@ -69,13 +99,11 @@
 
   /** Count quiz completions across all subjects */
   function getQuizStats() {
-    var subjects = ["sql", "itpass", "sg", "java", "python"];
     var totalQuizCompletions = 0;
     try {
       for (var i = 0; i < localStorage.length; i++) {
         var key = localStorage.key(i);
         if (!key) continue;
-        // Match pattern: {subject}_quiz_completed_{id}
         var match = key.match(/^(sql|itpass|sg|java|python)_quiz_completed_(\d+)$/);
         if (match) {
           var indices = safeArr(key);
@@ -90,7 +118,6 @@
   function getWrongBookStats() {
     var items = safeArr("study-tools-exam-wrong-book-v1");
     var count = Array.isArray(items) ? items.length : 0;
-    // Find latest item
     var latest = null;
     if (count > 0) {
       try {
@@ -107,7 +134,6 @@
 
   /** Bookmarks / favorites stats */
   function getBookmarkStats() {
-    // Typing bookmarks (sync)
     var typingBm = safeObj("study-tools-typing-bookmarks-sync-v1");
     var typingBmCount = 0;
     if (typingBm && typingBm.items) {
@@ -115,7 +141,6 @@
         typingBmCount = typingBm.items.filter(function (x) { return x && !x.deleted_at; }).length;
       } catch (_) {}
     }
-    // Japanese typing favorites
     var jpTyping = safeObj("study-tools-japanese-typing-v1");
     var jpFavCount = 0;
     if (jpTyping && Array.isArray(jpTyping.favorites)) {
@@ -152,7 +177,6 @@
 
   /** Typing practice stats */
   function getTypingStats() {
-    // Japanese typing
     var jp = safeObj("study-tools-japanese-typing-v1");
     var jpHistory = (jp && Array.isArray(jp.history)) ? jp.history : [];
     var jpLatest = null;
@@ -167,7 +191,6 @@
       } catch (_) {}
     }
 
-    // Coding typing
     var ctHistory = safeArr("study-tools-coding-typing-history-v1");
     var ctCount = Array.isArray(ctHistory) ? ctHistory.length : 0;
     var ctLatest = null;
@@ -197,13 +220,143 @@
     };
   }
 
+  /** ── NEW: Weekly learning trend ─────────────────── */
+  function collectWeeklyTrend() {
+    var days = last7Days();
+    var maxTotal = 0;
+
+    try {
+      // Exam history
+      var exams = safeArr("study-tools-exam-history-v1");
+      if (Array.isArray(exams)) {
+        for (var i = 0; i < exams.length; i++) {
+          var ex = exams[i];
+          if (!ex) continue;
+          var d = dateOnly(ex.startedAt || ex.completedAt);
+          if (!d) continue;
+          for (var j = 0; j < days.length; j++) {
+            if (days[j].date === d) { days[j].exams++; days[j].total++; if (days[j].total > maxTotal) maxTotal = days[j].total; break; }
+          }
+        }
+      }
+    } catch (_) {}
+
+    try {
+      // Japanese typing history
+      var jp = safeObj("study-tools-japanese-typing-v1");
+      var jpHist = (jp && Array.isArray(jp.history)) ? jp.history : [];
+      for (var k = 0; k < jpHist.length; k++) {
+        var jh = jpHist[k];
+        if (!jh) continue;
+        var jd = dateOnly(jh.completedAt || jh.date);
+        if (!jd) continue;
+        for (var m = 0; m < days.length; m++) {
+          if (days[m].date === jd) { days[m].jpTyping++; days[m].total++; if (days[m].total > maxTotal) maxTotal = days[m].total; break; }
+        }
+      }
+    } catch (_) {}
+
+    try {
+      // Coding typing history
+      var ct = safeArr("study-tools-coding-typing-history-v1");
+      if (Array.isArray(ct)) {
+        for (var n = 0; n < ct.length; n++) {
+          var c = ct[n];
+          if (!c) continue;
+          var cd = dateOnly(c.completedAt);
+          if (!cd) continue;
+          for (var p = 0; p < days.length; p++) {
+            if (days[p].date === cd) { days[p].codingTyping++; days[p].total++; if (days[p].total > maxTotal) maxTotal = days[p].total; break; }
+          }
+        }
+      }
+    } catch (_) {}
+
+    try {
+      // Wrong book additions
+      var wb = safeArr("study-tools-exam-wrong-book-v1");
+      if (Array.isArray(wb)) {
+        for (var q = 0; q < wb.length; q++) {
+          var w = wb[q];
+          if (!w) continue;
+          var wd = dateOnly(w.addedAt || w.updatedAt);
+          if (!wd) continue;
+          for (var r = 0; r < days.length; r++) {
+            if (days[r].date === wd) { days[r].wrongBook++; days[r].total++; if (days[r].total > maxTotal) maxTotal = days[r].total; break; }
+          }
+        }
+      }
+    } catch (_) {}
+
+    // Calculate this-week totals for goals
+    var weekExams = 0, weekTyping = 0, weekTotal = 0;
+    for (var s = 0; s < days.length; s++) {
+      weekExams += days[s].exams;
+      weekTyping += days[s].jpTyping + days[s].codingTyping;
+      weekTotal += days[s].total;
+    }
+
+    return {
+      days: days,
+      maxValue: maxTotal > 0 ? maxTotal : 1,
+      weekExams: weekExams,
+      weekTyping: weekTyping,
+      weekTotal: weekTotal
+    };
+  }
+
+  /** ── NEW: Learning goals ─────────────────────────── */
+  var GOALS_KEY = "study-tools-dashboard-goals-v1";
+  var DEFAULT_GOALS = { weeklyActivities: 7, weeklyTyping: 3, weeklyExams: 1 };
+
+  function collectGoals() {
+    var goals = safeRead(GOALS_KEY, null);
+    var parsed = null;
+    if (goals && typeof goals === "object" && !Array.isArray(goals)) {
+      parsed = {};
+      parsed.weeklyActivities = clampGoal(goals.weeklyActivities, DEFAULT_GOALS.weeklyActivities);
+      parsed.weeklyTyping = clampGoal(goals.weeklyTyping, DEFAULT_GOALS.weeklyTyping);
+      parsed.weeklyExams = clampGoal(goals.weeklyExams, DEFAULT_GOALS.weeklyExams);
+    } else {
+      parsed = {
+        weeklyActivities: DEFAULT_GOALS.weeklyActivities,
+        weeklyTyping: DEFAULT_GOALS.weeklyTyping,
+        weeklyExams: DEFAULT_GOALS.weeklyExams
+      };
+    }
+    return parsed;
+  }
+
+  function clampGoal(val, def) {
+    if (typeof val !== "number" || isNaN(val) || !isFinite(val)) return def;
+    var n = Math.round(val);
+    if (n < 0) return 0;
+    if (n > 999) return 999;
+    return n;
+  }
+
+  function saveGoals(goalsObj) {
+    try {
+      var clean = {
+        weeklyActivities: clampGoal(goalsObj.weeklyActivities, DEFAULT_GOALS.weeklyActivities),
+        weeklyTyping: clampGoal(goalsObj.weeklyTyping, DEFAULT_GOALS.weeklyTyping),
+        weeklyExams: clampGoal(goalsObj.weeklyExams, DEFAULT_GOALS.weeklyExams)
+      };
+      localStorage.setItem(GOALS_KEY, JSON.stringify(clean));
+      return true;
+    } catch (_) { return false; }
+  }
+
+  function resetGoals() {
+    try { localStorage.removeItem(GOALS_KEY); return true; } catch (_) { return false; }
+  }
+
   /** Sync status */
   function getSyncStatus() {
     var lastAt = safeRead("study_tools_last_sync_at", null);
     var result = safeRead("study_tools_last_sync_result", null);
     var enabled = safeRead("study_tools_sync_enabled", false);
 
-    // Login check
     var loggedIn = false;
     try {
       if (window.StudySupabase && typeof window.StudySupabase.getCurrentUser === "function") {
@@ -212,7 +365,6 @@
       }
     } catch (_) {}
 
-    // Parse last sync result summary
     var summary = null;
     if (result && result.ok !== undefined) {
       summary = { success: result.ok, message: "" };
@@ -247,6 +399,13 @@
     var exams = getExamStats();
     var typing = getTypingStats();
     var sync = getSyncStatus();
+    var trend = collectWeeklyTrend();
+    var goals = collectGoals();
+
+    // Merge current week counts into goals
+    goals._currentActivities = trend.weekTotal;
+    goals._currentTyping = trend.weekTyping;
+    goals._currentExams = trend.weekExams;
 
     return {
       collectedAt: nowISO(),
@@ -256,7 +415,9 @@
       bookmarks: bookmarks,
       exams: exams,
       typing: typing,
-      sync: sync
+      sync: sync,
+      trend: trend,
+      goals: goals
     };
   }
 
@@ -278,7 +439,7 @@
 
   function esc(s) { return String(s || "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;"); }
 
-  /* ── Render ──────────────────────────────────────── */
+  /* ── Render helpers ──────────────────────────────── */
   function renderStatCard(label, value, sub) {
     sub = sub || "";
     return '<div class="db-stat-card">' +
@@ -296,10 +457,81 @@
       '</div>';
   }
 
+  /** ── NEW: Weekly trend bar chart ────────────────── */
+  function renderBarValue(v) { return v > 0 ? v : ""; }
+
+  function renderTrendBars(days, maxVal) {
+    var html = "";
+    for (var i = 0; i < days.length; i++) {
+      var d = days[i];
+      var heightPct = maxVal > 0 ? Math.round((d.total / maxVal) * 100) : 0;
+      var barClass = d.total > 0 ? "db-bar--active" : "db-bar--zero";
+      // Color code to show which activities contributed
+      var tooltipParts = [];
+      if (d.exams > 0) tooltipParts.push(DT("examsShort", "Exams") + ":" + d.exams);
+      if (d.jpTyping > 0) tooltipParts.push(DT("jpTypingShort", "JP") + ":" + d.jpTyping);
+      if (d.codingTyping > 0) tooltipParts.push(DT("ctTypingShort", "CT") + ":" + d.codingTyping);
+      if (d.wrongBook > 0) tooltipParts.push(DT("wbShort", "WB") + ":" + d.wrongBook);
+      var tooltip = tooltipParts.length > 0 ? tooltipParts.join(" ") : DT("noActivity", "\u7121\u6D3B\u52D5");
+
+      html += '<div class="db-bar-col">' +
+        '<span class="db-bar-value">' + renderBarValue(d.total) + '</span>' +
+        '<div class="db-bar-track">' +
+        '<div class="db-bar-fill ' + barClass + '" style="height:' + heightPct + '%" title="' + esc(tooltip) + '"></div>' +
+        '</div>' +
+        '<span class="db-bar-label">' + esc(d.label) + '</span>' +
+        '</div>';
+    }
+    return html;
+  }
+
+  /** ── NEW: Learning goals section ────────────────── */
+  function renderGoalRow(data, labelKey, current, goal, fieldName) {
+    var pct = goal > 0 ? Math.min(Math.round((current / goal) * 100), 100) : 0;
+    var colorClass = pct >= 80 ? "db-goal-bar--high" : (pct >= 40 ? "db-goal-bar--mid" : "db-goal-bar--low");
+    return '<div class="db-goal-row">' +
+      '<div class="db-goal-header">' +
+      '<span class="db-goal-label">' + DT(labelKey, labelKey) + '</span>' +
+      '<span class="db-goal-stats">' +
+      '<span class="db-goal-current">' + current + '</span>' +
+      '<span class="db-goal-sep">/</span>' +
+      '<input type="number" class="db-goal-input" value="' + goal + '" min="0" max="999" data-goal-field="' + fieldName + '" aria-label="' + DT(labelKey, labelKey) + '" />' +
+      '</span>' +
+      '</div>' +
+      '<div class="db-goal-bar-wrap">' +
+      '<div class="db-goal-bar ' + colorClass + '" style="width:' + pct + '%"></div>' +
+      '</div>' +
+      '<span class="db-goal-pct">' + pct + '%</span>' +
+      '</div>';
+  }
+
+  function renderGoals(goals) {
+    var html = "";
+    html += renderGoalRow(
+      "goalActivities", "weeklyActivities",
+      goals._currentActivities || 0, goals.weeklyActivities, "weeklyActivities"
+    );
+    html += renderGoalRow(
+      "goalTyping", "weeklyTyping",
+      goals._currentTyping || 0, goals.weeklyTyping, "weeklyTyping"
+    );
+    html += renderGoalRow(
+      "goalExams", "weeklyExams",
+      goals._currentExams || 0, goals.weeklyExams, "weeklyExams"
+    );
+
+    html += '<div class="db-goal-actions">' +
+      '<button class="db-goal-save-btn" id="db-goal-save">' + DT("saveGoals", "\u4FDD\u5B58\u76EE\u6807") + '</button>' +
+      '<button class="db-goal-reset-btn" id="db-goal-reset">' + DT("resetGoals", "\u30EA\u30BB\u30C3\u30C8") + '</button>' +
+      '<span class="db-goal-msg" id="db-goal-msg" style="display:none"></span>' +
+      '</div>';
+
+    return html;
+  }
+
+  /* ── Main render ─────────────────────────────────── */
   function renderDashboard(data) {
     var d = data;
-
-    // Pick descriptions based on language
     var lang = (document.documentElement.lang || "zh-Hans");
     var nbsp = "\u00A0";
 
@@ -332,7 +564,39 @@
     html += '</div>';
     html += '</div>';
 
-    /* ── Section 3: Wrong Book & Bookmarks ────────── */
+    /* ── Section 3: Weekly Learning Trend ─────────── */
+    html += '<div class="db-section">';
+    html += '<h3 class="db-section-title">' + DT("weeklyTrend", "\u5468\u5B66\u4E60\u8D8B\u52BF") + '</h3>';
+    if (d.trend && d.trend.days && d.trend.maxValue > 0) {
+      var hasAnyActivity = false;
+      for (var ti = 0; ti < d.trend.days.length; ti++) {
+        if (d.trend.days[ti].total > 0) { hasAnyActivity = true; break; }
+      }
+      // Even if maxValue is 1 (no actual activity), show bars with zero
+      html += '<div class="db-bar-chart">';
+      html += renderTrendBars(d.trend.days, d.trend.maxValue);
+      html += '</div>';
+      // Legend
+      html += '<div class="db-bar-legend">';
+      html += '<span class="db-legend-item"><span class="db-legend-dot db-legend-dot--exam"></span>' + DT("examsShort", "Exams") + '</span>';
+      html += '<span class="db-legend-item"><span class="db-legend-dot db-legend-dot--jp"></span>' + DT("jpTypingShort", "JP") + '</span>';
+      html += '<span class="db-legend-item"><span class="db-legend-dot db-legend-dot--ct"></span>' + DT("ctTypingShort", "CT") + '</span>';
+      html += '<span class="db-legend-item"><span class="db-legend-dot db-legend-dot--wb"></span>' + DT("wbShort", "WB") + '</span>';
+      html += '</div>';
+    } else {
+      html += '<div class="db-empty-state">' + DT("noTrendData", "\u6682\u65E0\u8D8B\u52BF\u6570\u636E") + '</div>';
+    }
+    html += '</div>';
+
+    /* ── Section 4: Learning Goals ────────────────── */
+    html += '<div class="db-section">';
+    html += '<h3 class="db-section-title">' + DT("learningGoals", "\u5B66\u4E60\u76EE\u6807") + '</h3>';
+    html += '<div class="db-goals-wrap">';
+    html += renderGoals(d.goals);
+    html += '</div>';
+    html += '</div>';
+
+    /* ── Section 5: Wrong Book & Bookmarks ────────── */
     html += '<div class="db-section">';
     html += '<h3 class="db-section-title">' + DT("wrongBookAndBookmarks", "\u9519\u9898\u4E0E\u6536\u85CF") + '</h3>';
     html += '<div class="db-stat-grid db-stat-grid--2">';
@@ -347,7 +611,7 @@
     html += '</div>';
     html += '</div>';
 
-    /* ── Section 4: Quiz & Exam ───────────────────── */
+    /* ── Section 6: Quiz & Exam ───────────────────── */
     html += '<div class="db-section">';
     html += '<h3 class="db-section-title">' + DT("quizAndExam", "\u6D4B\u9A8C\u4E0E\u8003\u8BD5") + '</h3>';
     html += '<div class="db-stat-grid db-stat-grid--3">';
@@ -361,7 +625,7 @@
     html += '</div>';
     html += '</div>';
 
-    /* ── Section 5: Typing Practice ───────────────── */
+    /* ── Section 7: Typing Practice ───────────────── */
     html += '<div class="db-section">';
     html += '<h3 class="db-section-title">' + DT("typingPractice", "\u6253\u5B57\u7EC3\u4E60") + '</h3>';
     html += '<div class="db-stat-grid db-stat-grid--2">';
@@ -383,22 +647,19 @@
     }
     html += '</div>';
 
-    /* ── Section 6: Sync Status ───────────────────── */
+    /* ── Section 8: Sync Status ───────────────────── */
     html += '<div class="db-section">';
     html += '<h3 class="db-section-title">' + DT("syncStatus", "\u540C\u6B65\u72B6\u6001") + '</h3>';
     html += '<div class="db-sync-status">';
 
-    // Login status
     var loginClass = d.sync.loggedIn ? "db-status-ok" : "db-status-off";
     var loginText = d.sync.loggedIn ? DT("loggedIn", "\u5DF2\u767B\u5F55") : DT("notLoggedIn", "\u672A\u767B\u5F55");
     html += '<div class="db-sync-row"><span>' + DT("loginStatus", "\u767B\u5F55\u72B6\u6001") + '</span><span class="' + loginClass + '">' + loginText + '</span></div>';
 
-    // Last sync
     var syncAgo = d.sync.lastSyncAt ? fmtAgo(d.sync.lastSyncAt) : null;
     var syncDate = d.sync.lastSyncAt ? fmtDate(d.sync.lastSyncAt) : null;
     html += '<div class="db-sync-row"><span>' + DT("lastSync", "\u4E0A\u6B21\u540C\u6B65") + '</span><span>' + (syncAgo || syncDate || noData()) + '</span></div>';
 
-    // Sync result
     if (d.sync.lastSyncResult) {
       var srClass = d.sync.lastSyncResult.success ? "db-status-ok" : "db-status-err";
       var srText = d.sync.lastSyncResult.success ? DT("syncSuccess", "\u540C\u6B65\u6210\u529F") : DT("syncFailed", "\u540C\u6B65\u5931\u8D25");
@@ -418,9 +679,52 @@
     return html;
   }
 
+  /* ── Goal event delegation ───────────────────────── */
+  function bindGoalEvents() {
+    var saveBtn = document.getElementById("db-goal-save");
+    var resetBtn = document.getElementById("db-goal-reset");
+    var msgEl = document.getElementById("db-goal-msg");
+
+    function showMsg(text, ok) {
+      if (!msgEl) return;
+      msgEl.textContent = text;
+      msgEl.className = "db-goal-msg" + (ok ? " db-goal-msg--ok" : " db-goal-msg--err");
+      msgEl.style.display = "";
+      setTimeout(function () { if (msgEl) msgEl.style.display = "none"; }, 2500);
+    }
+
+    if (saveBtn) {
+      saveBtn.onclick = function () {
+        var inputs = document.querySelectorAll(".db-goal-input");
+        var goals = {};
+        var ok = true;
+        for (var i = 0; i < inputs.length; i++) {
+          var inp = inputs[i];
+          var field = inp.getAttribute("data-goal-field");
+          var val = parseInt(inp.value, 10);
+          if (isNaN(val) || val < 0) { val = 0; ok = false; }
+          if (val > 999) val = 999;
+          goals[field] = val;
+          inp.value = val;
+        }
+        saveGoals(goals);
+        showMsg(DT("goalsSaved", "\u76EE\u6807\u5DF2\u4FDD\u5B58"), true);
+        // Re-render to update progress bars
+        window.StudyDashboard.refresh();
+      };
+    }
+
+    if (resetBtn) {
+      resetBtn.onclick = function () {
+        resetGoals();
+        showMsg(DT("goalsReset", "\u76EE\u6807\u5DF2\u91CD\u7F6E"), true);
+        window.StudyDashboard.refresh();
+      };
+    }
+  }
+
   /* ── Open / Close / Refresh ──────────────────────── */
   function openPanel() {
-    // Build or get panel
     var panel = document.getElementById("dashboard-panel");
     if (!panel) {
       panel = document.createElement("div");
@@ -430,17 +734,14 @@
       panel.setAttribute("aria-modal", "true");
       panel.setAttribute("hidden", "");
 
-      // Backdrop
       var backdrop = document.createElement("div");
       backdrop.className = "dashboard-panel__backdrop";
       backdrop.addEventListener("click", closePanel);
       panel.appendChild(backdrop);
 
-      // Content wrapper
       var content = document.createElement("div");
       content.className = "dashboard-panel__content";
 
-      // Header
       var header = document.createElement("div");
       header.className = "dashboard-panel__header";
       var title = document.createElement("strong");
@@ -455,7 +756,6 @@
       header.appendChild(closeBtn);
       content.appendChild(header);
 
-      // Body
       var body = document.createElement("div");
       body.className = "dashboard-panel__body";
       body.id = "dashboard-body";
@@ -465,7 +765,6 @@
       document.body.appendChild(panel);
     }
 
-    // Render fresh data
     refresh();
     panel.removeAttribute("hidden");
     document.body.style.overflow = "hidden";
@@ -483,7 +782,7 @@
     try {
       var data = buildDashboardData();
       body.innerHTML = renderDashboard(data);
-      // Update title for i18n
+      bindGoalEvents();
       var title = document.getElementById("dashboard-title");
       if (title) title.textContent = DT("dashboard", "\u5B66\u4E60\u7EDF\u8BA1");
     } catch (e) {
@@ -498,6 +797,9 @@
     close: closePanel,
     refresh: refresh,
     getData: buildDashboardData,
+    saveGoals: saveGoals,
+    resetGoals: resetGoals,
+    collectGoals: collectGoals,
   };
 
 })();
