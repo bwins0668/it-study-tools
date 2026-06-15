@@ -1511,3 +1511,67 @@ body[data-theme="light"] .wrong-book-choices li.is-correct {
   color: #065f46;
   background: #d1fae5;
 }
+
+/* ── Round 28.0: Light theme overrides for premium enhancements ── */
+
+/* Noise overlay: lighter on light bg */
+body[data-theme="light"] .app-container::before {
+  opacity: 0.015;
+}
+
+/* Cards: softer depth in light mode */
+body[data-theme="light"] .content-card,
+body[data-theme="light"] .playground-card {
+  border-color: rgba(0, 0, 0, 0.08);
+  box-shadow:
+    0 4px 16px rgba(0, 0, 0, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+}
+
+body[data-theme="light"] .content-card:hover,
+body[data-theme="light"] .playground-card:hover {
+  border-color: rgba(0, 0, 0, 0.12);
+  box-shadow:
+    0 8px 24px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.7);
+}
+
+/* Sidebar edge: darker gradient for light mode */
+body[data-theme="light"] .app-sidebar::after {
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.08) 0%,
+    rgba(0, 0, 0, 0.02) 40%,
+    rgba(0, 0, 0, 0.01) 60%,
+    rgba(0, 0, 0, 0.04) 100%
+  );
+}
+
+/* Console card: lighter terminal feel */
+body[data-theme="light"] .console-card {
+  background: rgba(248, 248, 250, 0.9);
+  border-color: rgba(0, 0, 0, 0.07);
+}
+
+/* Header shadow: softer in light mode */
+body[data-theme="light"] .app-header {
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.06);
+}
+
+/* Lesson content spacing: same in light */
+body[data-theme="light"] .lesson-content p,
+body[data-theme="light"] .lesson-content li {
+  line-height: 1.75;
+}
+
+body[data-theme="light"] .lesson-content .content-card {
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+  body[data-theme="light"] .lesson-content .content-card {
+    max-width: none;
+    margin: 0;
+  }
+}
