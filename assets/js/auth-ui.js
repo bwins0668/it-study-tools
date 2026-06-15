@@ -23,7 +23,9 @@
     mode:         "local_anonymous",  // "local_anonymous" | "mock_signed_in"
     user_id:      null,
     email:        null,
+    username:     null,
     display_name: null,
+    auth_mode:    null,
     provider:     null,               // null | "mock"
     sync_enabled: false,
     last_sync_at: null,
@@ -99,33 +101,36 @@
       "auth.syncStatus.offline": "离线",
       "auth.syncStatus.error": "同步错误",
       "auth.loginTitle": "登录",
-      "auth.registerTitle": "注册",
-      "auth.displayName": "昵称",
-      "auth.email": "邮箱",
+      "auth.registerTitle": "创建账号",
+      "auth.username": "用户名",
+      "auth.usernamePlaceholder": "3-24 位字母、数字、下划线或连字符",
+      "auth.displayNameOptional": "昵称（可选）",
       "auth.password": "密码",
       "auth.confirmPassword": "确认密码",
       "auth.loginButton": "登录",
-      "auth.registerButton": "注册账号",
-      "auth.magicLinkOption": "使用邮件登录链接",
-      "auth.usernameDisplayOnly": "仅用于显示，登录使用邮箱",
-      "auth.emailRequired": "请输入邮箱",
-      "auth.invalidEmail": "请输入有效的邮箱地址",
-      "auth.credentialsRequired": "请输入邮箱和密码",
+      "auth.createAccountButton": "创建账号",
+      "auth.usernameRequired": "请输入用户名",
+      "auth.usernameTooShort": "用户名至少 3 位",
+      "auth.usernameTooLong": "用户名最多 24 位",
+      "auth.usernameInvalid": "用户名只能包含字母、数字、下划线和连字符",
       "auth.passwordRequired": "请输入密码",
       "auth.passwordTooShort": "密码至少 6 位",
       "auth.passwordMismatch": "两次密码不一致",
-      "auth.usernameRequired": "请输入昵称",
       "auth.loginSuccess": "登录成功",
       "auth.loginFailed": "登录失败",
       "auth.registerSuccess": "注册成功",
       "auth.registerFailed": "注册失败",
-      "auth.confirmEmailNotice": "注册成功！请前往邮箱确认注册，然后登录。",
-      "auth.invalidCredentials": "邮箱或密码不正确",
-      "auth.emailNotConfirmed": "邮箱尚未确认，请检查邮箱",
-      "auth.userAlreadyExists": "该邮箱已注册",
+      "auth.usernameOrPasswordWrong": "用户名或密码不正确",
+      "auth.usernameTaken": "该用户名已被使用",
+      "auth.usernameRegistrationUnavailable": "当前无法创建用户名账号，请检查 Supabase 的注册与邮箱确认设置。",
+      "auth.usernameAccount": "用户名账号",
+      "auth.legacyEmailAccount": "旧邮箱账号",
+      "auth.accountType": "账号类型",
+      "auth.emailConfirmationUsernameWarning": "账号已创建，但项目启用了邮箱确认。用户名账号无法接收确认邮件，请管理员关闭邮箱确认，或使用现有测试账号。",
+      "auth.noEmailRequired": "无需邮箱",
+      "auth.noEmailRequiredDesc": "登录只需用户名和密码。",
       "auth.tooManyRequests": "请求过于频繁，请稍后再试",
       "auth.signOut": "登出",
-      "auth.sendMagicLink": "发送登录链接",
     };
     return dict[key] || fallback || key;
   }
@@ -201,13 +206,20 @@
 
   function setSupabaseSignedInUser(user, displayName) {
     if (!user) return;
+    var metadata = user.user_metadata || {};
     var emailPrefix = user.email ? user.email.split("@")[0] : "";
-    var resolvedName = displayName || (user.user_metadata && user.user_metadata.display_name) || emailPrefix || user.email || t("auth.account", "账号");
+    var username = metadata.username || (metadata.auth_mode === "username" ? emailPrefix : "");
+    var authMode = metadata.auth_mode === "username" || /@study-tools\.local$/i.test(user.email || "")
+      ? "username"
+      : "legacy_email";
+    var resolvedName = displayName || metadata.display_name || username || emailPrefix || t("auth.account", "账号");
     setLocalAuthState({
       mode: "signed_in",
       user_id: user.id || null,
       email: user.email || null,
+      username: username || null,
       display_name: resolvedName,
+      auth_mode: authMode,
       provider: "supabase",
       sync_enabled: true,
       last_sync_at: null,
@@ -344,6 +356,10 @@
     var isAnonymous = state.mode === "local_anonymous";
     var isMock = state.mode === "mock_signed_in";
     var isSupabaseUser = state.mode === "signed_in" && state.provider === "supabase";
+    var accountLabel = state.display_name || state.username || t("auth.account", "账号");
+    var accountTypeLabel = state.auth_mode === "username"
+      ? t("auth.usernameAccount", "用户名账号")
+      : t("auth.legacyEmailAccount", "旧邮箱账号");
     var supabaseReady = window.StudySupabase && window.StudySupabase.getStatus().ready;
     var canManualSync = isSupabaseUser && supabaseReady && !syncInProgress;
     var syncStateLabel = syncInProgress
@@ -397,10 +413,16 @@
         '<div class="auth-panel-section auth-status-section">' +
           '<div class="auth-status-row">' +
             '<span class="auth-label"><i class="fa-solid fa-user"></i> ' + esc(t("auth.currentUser", "当前用户")) + ':</span>' +
-            '<span class="auth-value auth-user-email" title="' + esc(isSupabaseUser ? state.email : "") + '">' +
-              esc(isSupabaseUser ? state.email : t("auth.notLoggedIn", "未登录")) +
+            '<span class="auth-value auth-user-email">' +
+              esc(isSupabaseUser ? accountLabel : t("auth.notLoggedIn", "未登录")) +
             '</span>' +
           '</div>' +
+          (isSupabaseUser
+            ? '<div class="auth-status-row">' +
+                '<span class="auth-label"><i class="fa-solid fa-id-badge"></i> ' + esc(t("auth.accountType", "账号类型")) + ':</span>' +
+                '<span class="auth-value auth-account-type">' + esc(accountTypeLabel) + '</span>' +
+              '</div>'
+            : '') +
           '<div class="auth-status-row">' +
             '<span class="auth-label"><i class="fa-solid fa-cloud"></i> Supabase:</span>' +
             '<span class="auth-value" data-i18n-skip="true">' + esc(getSupabaseStatusLabel()) + '</span>' +
@@ -464,25 +486,15 @@
             // Login tab panel
             '<div class="auth-tab-panel" data-auth-panel="login">' +
               '<div class="auth-login-form">' +
-                '<input class="auth-input" data-auth-input="login-email" type="email" autocomplete="email" placeholder="' + esc(t("auth.email", "邮箱")) + '">' +
+                '<input class="auth-input" data-auth-input="login-username" type="text" autocomplete="username" autocapitalize="none" spellcheck="false" maxlength="24" placeholder="' + esc(t("auth.username", "用户名")) + '">' +
                 '<input class="auth-input" data-auth-input="login-password" type="password" autocomplete="current-password" placeholder="' + esc(t("auth.password", "密码")) + '">' +
                 '<div class="auth-btn-row">' +
                   '<button class="auth-btn auth-btn-primary" data-auth-action="password-sign-in"' + (supabaseReady ? "" : " disabled") + '>' +
                     '<i class="fa-solid fa-right-to-bracket"></i> ' + esc(t("auth.loginButton", "登录")) +
                   '</button>' +
                 '</div>' +
-                '<div class="auth-secondary-link">' +
-                  '<button class="auth-btn-link" data-auth-action="magic-link-toggle">' +
-                    '<i class="fa-solid fa-envelope"></i> ' + esc(t("auth.magicLinkOption", "使用邮件登录链接")) +
-                  '</button>' +
-                '</div>' +
-                '<div class="auth-magic-link-inline" style="display:none">' +
-                  '<input class="auth-input" data-auth-input="magic-email" type="email" autocomplete="email" placeholder="' + esc(t("auth.email", "邮箱")) + '">' +
-                  '<div class="auth-btn-row">' +
-                    '<button class="auth-btn auth-btn-secondary" data-auth-action="magic-link"' + (supabaseReady ? "" : " disabled") + '>' +
-                      '<i class="fa-solid fa-paper-plane"></i> ' + esc(t("auth.sendMagicLink", "发送登录链接")) +
-                    '</button>' +
-                  '</div>' +
+                '<div class="auth-field-hint"><i class="fa-solid fa-shield-halved"></i> ' +
+                  esc(t("auth.noEmailRequiredDesc", "登录只需用户名和密码。")) +
                 '</div>' +
               '</div>' +
             '</div>' +
@@ -490,15 +502,18 @@
             // Register tab panel
             '<div class="auth-tab-panel" data-auth-panel="register" style="display:none">' +
               '<div class="auth-login-form">' +
-                '<input class="auth-input" data-auth-input="reg-display-name" type="text" autocomplete="nickname" placeholder="' + esc(t("auth.displayName", "昵称")) + '">' +
-                '<div class="auth-field-hint">' + esc(t("auth.usernameDisplayOnly", "仅用于显示，登录使用邮箱")) + '</div>' +
-                '<input class="auth-input" data-auth-input="reg-email" type="email" autocomplete="email" placeholder="' + esc(t("auth.email", "邮箱")) + '">' +
+                '<input class="auth-input" data-auth-input="reg-username" type="text" autocomplete="username" autocapitalize="none" spellcheck="false" maxlength="24" placeholder="' + esc(t("auth.username", "用户名")) + '">' +
+                '<div class="auth-field-hint">' + esc(t("auth.usernamePlaceholder", "3-24 位字母、数字、下划线或连字符")) + '</div>' +
+                '<input class="auth-input" data-auth-input="reg-display-name" type="text" autocomplete="nickname" placeholder="' + esc(t("auth.displayNameOptional", "昵称（可选）")) + '">' +
                 '<input class="auth-input" data-auth-input="reg-password" type="password" autocomplete="new-password" placeholder="' + esc(t("auth.password", "密码")) + '">' +
                 '<input class="auth-input" data-auth-input="reg-confirm-password" type="password" autocomplete="new-password" placeholder="' + esc(t("auth.confirmPassword", "确认密码")) + '">' +
                 '<div class="auth-btn-row">' +
                   '<button class="auth-btn auth-btn-primary" data-auth-action="register"' + (supabaseReady ? "" : " disabled") + '>' +
-                    '<i class="fa-solid fa-user-plus"></i> ' + esc(t("auth.registerButton", "注册账号")) +
+                    '<i class="fa-solid fa-user-plus"></i> ' + esc(t("auth.createAccountButton", "创建账号")) +
                   '</button>' +
+                '</div>' +
+                '<div class="auth-field-hint"><i class="fa-solid fa-envelope-circle-check"></i> ' +
+                  esc(t("auth.noEmailRequired", "无需邮箱")) +
                 '</div>' +
               '</div>' +
             '</div>'
@@ -506,7 +521,8 @@
             '<div class="auth-logged-in-info">' +
               '<div class="auth-user-display">' +
                 '<i class="fa-solid fa-user-check"></i> ' +
-                '<span>' + esc(state.display_name || state.email) + '</span>' +
+                '<span>' + esc(accountLabel) + '</span>' +
+                '<span class="auth-account-type">' + esc(accountTypeLabel) + '</span>' +
               '</div>' +
               '<div class="auth-btn-row" style="margin-top:12px">' +
                 '<button class="auth-btn auth-btn-danger" data-auth-action="supabase-sign-out">' +
@@ -562,8 +578,6 @@
     var signOutButton = qs('[data-auth-action="sign-out"]', content);
     var exportButton = qs('[data-auth-action="export"]', content);
     var localButton = qs('[data-auth-action="local"]', content);
-    var magicLinkButton = qs('[data-auth-action="magic-link"]', content);
-    var magicLinkToggle = qs('[data-auth-action="magic-link-toggle"]', content);
     var passwordButton = qs('[data-auth-action="password-sign-in"]', content);
     var registerButton = qs('[data-auth-action="register"]', content);
     var supabaseSignOutButton = qs('[data-auth-action="supabase-sign-out"]', content);
@@ -578,8 +592,6 @@
     if (signOutButton) signOutButton.addEventListener("click", setAnonymousMode);
     if (exportButton) exportButton.addEventListener("click", exportSnapshotAction);
     if (localButton) localButton.addEventListener("click", setAnonymousMode);
-    if (magicLinkToggle) magicLinkToggle.addEventListener("click", handleMagicLinkToggle);
-    if (magicLinkButton) magicLinkButton.addEventListener("click", handleMagicLink);
     if (passwordButton) passwordButton.addEventListener("click", handlePasswordSignIn);
     if (registerButton) registerButton.addEventListener("click", handleRegister);
     if (supabaseSignOutButton) supabaseSignOutButton.addEventListener("click", handleSupabaseSignOut);
@@ -617,60 +629,65 @@
     if (panelVisible) populateAuthPanel(el("auth-panel"), "auth-message");
   }
 
-  function handleMagicLinkToggle() {
-    var inline = qs(".auth-magic-link-inline", el("auth-panel-content"));
-    if (inline) inline.style.display = inline.style.display === "none" ? "block" : "none";
+  function normalizeUsername(username) {
+    if (window.StudySupabase && typeof window.StudySupabase.normalizeUsername === "function") {
+      return window.StudySupabase.normalizeUsername(username);
+    }
+    return String(username || "").trim().toLowerCase();
   }
 
-  async function handleMagicLink() {
-    var email = getAuthInput("magic-email");
-    if (!email) return refreshAuthPanel(t("auth.emailRequired", "请输入邮箱"));
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return refreshAuthPanel(t("auth.invalidEmail", "请输入有效的邮箱地址"));
-    var result = await window.StudySupabase.signInWithMagicLink(email);
-    refreshAuthPanel(result && result.error ? t("auth.signInFailed", "登录失败") + ": " + result.error.message : t("auth.checkEmail", "请检查邮箱"));
+  function validateUsername(username) {
+    var normalized = normalizeUsername(username);
+    if (!normalized) return t("auth.usernameRequired", "请输入用户名");
+    if (normalized.length < 3) return t("auth.usernameTooShort", "用户名至少 3 位");
+    if (normalized.length > 24) return t("auth.usernameTooLong", "用户名最多 24 位");
+    if (!/^[a-z0-9_-]+$/.test(normalized)) {
+      return t("auth.usernameInvalid", "用户名只能包含字母、数字、下划线和连字符");
+    }
+    return "";
   }
 
   async function handlePasswordSignIn() {
-    var email = getAuthInput("login-email");
+    var username = getAuthInput("login-username");
     var passwordInput = qs('[data-auth-input="login-password"]', el("auth-panel-content"));
     var password = passwordInput ? passwordInput.value : "";
-    if (!email || !password) return refreshAuthPanel(t("auth.credentialsRequired", "请输入邮箱和密码"));
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return refreshAuthPanel(t("auth.invalidEmail", "请输入有效的邮箱地址"));
-    var result = await window.StudySupabase.signInWithEmail(email, password);
+    var usernameError = validateUsername(username);
+    if (usernameError) return refreshAuthPanel(usernameError);
+    if (!password) return refreshAuthPanel(t("auth.passwordRequired", "请输入密码"));
+    var result = await window.StudySupabase.signInWithUsername(username, password);
     password = "";
     if (passwordInput) passwordInput.value = "";
     if (result && result.data && result.data.user) setSupabaseSignedInUser(result.data.user);
     if (result && result.error) {
-      var errMsg = friendlyAuthError(result.error);
-      refreshAuthPanel(t("auth.loginFailed", "登录失败") + ": " + errMsg);
+      refreshAuthPanel(friendlyAuthError(result.error, "login"));
     } else {
       refreshAuthPanel(t("auth.loginSuccess", "登录成功"));
     }
   }
 
   async function handleRegister() {
+    var username = getAuthInput("reg-username");
     var displayName = getAuthInput("reg-display-name");
-    var email = getAuthInput("reg-email");
     var pwInput = qs('[data-auth-input="reg-password"]', el("auth-panel-content"));
     var cpInput = qs('[data-auth-input="reg-confirm-password"]', el("auth-panel-content"));
     var password = pwInput ? pwInput.value : "";
     var confirmPassword = cpInput ? cpInput.value : "";
 
-    if (!displayName) return refreshAuthPanel(t("auth.usernameRequired", "请输入昵称"));
-    if (!email) return refreshAuthPanel(t("auth.emailRequired", "请输入邮箱"));
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return refreshAuthPanel(t("auth.invalidEmail", "请输入有效的邮箱地址"));
+    var usernameError = validateUsername(username);
+    if (usernameError) return refreshAuthPanel(usernameError);
     if (!password) return refreshAuthPanel(t("auth.passwordRequired", "请输入密码"));
     if (password.length < 6) return refreshAuthPanel(t("auth.passwordTooShort", "密码至少 6 位"));
     if (password !== confirmPassword) return refreshAuthPanel(t("auth.passwordMismatch", "两次密码不一致"));
 
-    var result = await window.StudySupabase.signUpWithEmail(email, password, { data: { display_name: displayName } });
+    username = normalizeUsername(username);
+    displayName = displayName || username;
+    var result = await window.StudySupabase.signUpWithUsername(username, password, displayName);
     password = ""; confirmPassword = "";
     if (pwInput) pwInput.value = "";
     if (cpInput) cpInput.value = "";
 
     if (result && result.error) {
-      var errMsg = friendlyAuthError(result.error);
-      return refreshAuthPanel(t("auth.registerFailed", "注册失败") + ": " + errMsg);
+      return refreshAuthPanel(friendlyAuthError(result.error, "register"));
     }
     if (result && result.data && result.data.user) {
       var session = result.data.session;
@@ -678,20 +695,31 @@
         setSupabaseSignedInUser(result.data.user, displayName);
         refreshAuthPanel(t("auth.registerSuccess", "注册成功"));
       } else {
-        refreshAuthPanel(t("auth.confirmEmailNotice", "注册成功！请前往邮箱确认注册，然后登录。"));
+        refreshAuthPanel(t("auth.emailConfirmationUsernameWarning", "账号已创建，但项目启用了邮箱确认。用户名账号无法接收确认邮件，请管理员关闭邮箱确认，或使用现有测试账号。"));
       }
     }
   }
 
-  function friendlyAuthError(error) {
-    if (!error) return "Unknown error";
+  function friendlyAuthError(error, action) {
+    if (!error) return action === "login"
+      ? t("auth.usernameOrPasswordWrong", "用户名或密码不正确")
+      : t("auth.registerFailed", "注册失败");
     var msg = error.message || "";
-    if (/invalid login credentials/i.test(msg)) return t("auth.invalidCredentials", "邮箱或密码不正确");
-    if (/email not confirmed/i.test(msg)) return t("auth.emailNotConfirmed", "邮箱尚未确认，请检查邮箱");
-    if (/user already registered/i.test(msg) || /already registered/i.test(msg)) return t("auth.userAlreadyExists", "该邮箱已注册");
+    var code = error.code || "";
+    if (/invalid login credentials/i.test(msg)) return t("auth.usernameOrPasswordWrong", "用户名或密码不正确");
+    if (/email not confirmed/i.test(msg)) return t("auth.emailConfirmationUsernameWarning", "项目启用了邮箱确认，用户名账号当前无法完成确认。");
+    if (/user already registered/i.test(msg) || /already registered/i.test(msg)) return t("auth.usernameTaken", "该用户名已被使用");
     if (/password.*short/i.test(msg)) return t("auth.passwordTooShort", "密码至少 6 位");
     if (/too many requests/i.test(msg)) return t("auth.tooManyRequests", "请求过于频繁，请稍后再试");
-    return msg;
+    if (action === "register" && (
+      /signup_disabled|email_address_invalid|email_provider_disabled|email_send/i.test(code) ||
+      /signups?.*disabled|email address.*invalid|confirmation email/i.test(msg)
+    )) {
+      return t("auth.usernameRegistrationUnavailable", "当前无法创建用户名账号，请检查 Supabase 的注册与邮箱确认设置。");
+    }
+    return action === "login"
+      ? t("auth.usernameOrPasswordWrong", "用户名或密码不正确")
+      : t("auth.usernameRegistrationUnavailable", "当前无法创建用户名账号，请检查 Supabase 的注册与邮箱确认设置。");
   }
 
   async function handleSupabaseSignOut() {

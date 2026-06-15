@@ -9,12 +9,12 @@
 | Item | Current value |
 |---|---|
 | Windows repository | `E:\项目\sql-learning-hub` |
-| Windows branch / Round 23.12.2 baseline | `main` / `9b556b1` |
+| Windows branch / pre-Round 23.13 handoff | `main` / `9f0879c` |
 | Web repository | `E:\项目\sql-learning-hub-web-public` |
-| Web branch / Round 23.12.2 baseline | `master` / `269458d` |
+| Web branch / pre-Round 23.13 handoff | `master` / `9f5500a` |
 | Handoff update commit | Use the latest `git log -1 --oneline` entry |
-| Web version | `v2026.6.14-r23.12` |
-| Web cache | `study-tools-web-v2026-6-14-r23-12` |
+| Web version | `v2026.6.14-r23.13` |
+| Web cache | `study-tools-web-v2026-6-14-r23-13` |
 | Public URL | `https://study-tools-web-pages.pages.dev` |
 | Working tree | Both repositories clean and synchronized with origin |
 
@@ -32,6 +32,18 @@
 | 23.12 | Retry-settings sync with `updatedAt` LWW | `7f4136e` | `3908a02` |
 | 23.12.1 | Real Supabase Push/Pull/LWW E2E | Validation only, no commit | Validation only, no commit |
 | 23.12.2 | Local artifact cleanup and Git recovery | `9b556b1` | `269458d` |
+| 23.13 | Username-only auth UX; see latest `git log -1` | This commit | This commit |
+
+### Username-only authentication
+
+- Ordinary sign-in and account creation UI now uses username and password only; email fields and Magic Link are absent.
+- Usernames are normalized with trim plus lowercase and must match `[a-z0-9_-]` with length 3-24.
+- Supabase Auth remains the underlying provider through the internal mapping `username@study-tools.local`.
+- New username accounts store `username`, `display_name`, and `auth_mode: "username"` in user metadata.
+- Passwords are never stored, logged, synchronized, or shown in reports.
+- Existing signed-in email accounts remain usable and are labeled as legacy email accounts without exposing the email in the account panel.
+- Real browser validation confirmed the legacy session remained signed in and manual sync stayed enabled.
+- A real test username registration request was attempted, but Supabase rejected account creation. No username session was created and this is not recorded as a PASS.
 
 ### Wrong-book synchronization
 
@@ -66,6 +78,8 @@ Round 23.12.1 used a real signed-in Supabase account:
 - Glossary: 1500 terms per repository with matching SHA256.
 - Coding typing: 150 items, unique IDs, PASS.
 - Required JavaScript syntax checks and `git diff --check` pass in both repositories.
+- Username adapter normalization/internal-email probe: PASS.
+- Auth browser smoke: no email or Magic Link controls, validation messages PASS, dark/light PASS, 360px horizontal overflow PASS.
 
 ### Local artifact policy
 
@@ -80,7 +94,7 @@ Round 23.12.1 used a real signed-in Supabase account:
 - Do not sync retry history or introduce automatic sync.
 - Do not touch question banks, Sandbox, remote execution, exam history, glossary, or Supabase configuration unless explicitly included.
 - Never report real E2E success without a signed-in session and observable remote evidence.
-- Round 23.13 may begin from the clean current workspace after status checks and the verification baseline.
+- Before expanding username auth, diagnose the Supabase-side registration rejection without exposing credentials or weakening the username validation rules.
 
 ## 1. 项目定位
 - Windows PC 完整版 IT 学习工具，面向在日学习的多国留学生。

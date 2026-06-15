@@ -98,6 +98,14 @@
     };
   }
 
+  function normalizeUsername(username) {
+    return String(username || "").trim().toLowerCase();
+  }
+
+  function usernameToInternalEmail(username) {
+    return normalizeUsername(username) + "@study-tools.local";
+  }
+
   async function getCurrentSession() {
     var activeClient = client || initClient();
     if (!activeClient || !activeClient.auth || typeof activeClient.auth.getSession !== "function") {
@@ -180,6 +188,23 @@
     }
   }
 
+  async function signInWithUsername(username, password) {
+    return signInWithEmail(usernameToInternalEmail(username), password);
+  }
+
+  async function signUpWithUsername(username, password, displayName) {
+    var normalized = normalizeUsername(username);
+    var resolvedDisplayName = String(displayName || "").trim() || normalized;
+    return signUpWithEmail(usernameToInternalEmail(normalized), password, {
+      data: {
+        username: normalized,
+        display_name: resolvedDisplayName,
+        nickname: resolvedDisplayName,
+        auth_mode: "username"
+      }
+    });
+  }
+
   async function signOut() {
     var activeClient = client || initClient();
     if (!activeClient || !activeClient.auth || typeof activeClient.auth.signOut !== "function") {
@@ -225,9 +250,13 @@
     getClient: getClient,
     getCurrentSession: getCurrentSession,
     getCurrentUser: getCurrentUser,
+    normalizeUsername: normalizeUsername,
+    usernameToInternalEmail: usernameToInternalEmail,
     signInWithEmail: signInWithEmail,
     signInWithMagicLink: signInWithMagicLink,
     signUpWithEmail: signUpWithEmail,
+    signInWithUsername: signInWithUsername,
+    signUpWithUsername: signUpWithUsername,
     signOut: signOut,
     onAuthStateChange: onAuthStateChange
   };

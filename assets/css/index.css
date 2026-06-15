@@ -7743,6 +7743,7 @@ body.i18n-active :where(
 .auth-user-display {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 8px;
   font-size: 14px;
   color: var(--text-main);
@@ -7750,6 +7751,19 @@ body.i18n-active :where(
 }
 .auth-user-display i {
   color: var(--success-color);
+}
+.auth-account-type {
+  display: inline-flex;
+  align-items: center;
+  max-width: 100%;
+  padding: 2px 8px;
+  border: 1px solid rgba(0, 240, 255, 0.18);
+  border-radius: 999px;
+  color: var(--neon-cyan);
+  background: rgba(0, 240, 255, 0.06);
+  font-size: 11px;
+  line-height: 1.4;
+  white-space: nowrap;
 }
 
 .auth-password-row {

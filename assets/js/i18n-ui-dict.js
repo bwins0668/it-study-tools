@@ -4914,5 +4914,156 @@
     if (!window.I18nUiDict[locale].wrongBook) window.I18nUiDict[locale].wrongBook = {};
     Object.assign(window.I18nUiDict[locale].wrongBook, WRONG_BOOK_ROUND_23_5[locale]);
   });
+
+  /* ── Round 23.13: username-only authentication UX ──────────── */
+  var AUTH_ROUND_23_13_EN = {
+    registerTitle: "Create Account",
+    username: "Username",
+    usernamePlaceholder: "3-24 letters, numbers, underscores, or hyphens",
+    displayNameOptional: "Display name (optional)",
+    createAccountButton: "Create Account",
+    usernameRequired: "Please enter a username",
+    usernameTooShort: "Username must be at least 3 characters",
+    usernameTooLong: "Username must be no more than 24 characters",
+    usernameInvalid: "Use only letters, numbers, underscores, and hyphens",
+    usernameTaken: "This username is already in use",
+    usernameRegistrationUnavailable: "Username account creation is unavailable. Check the Supabase sign-up and email confirmation settings.",
+    usernameOrPasswordWrong: "Username or password is incorrect",
+    usernameAccount: "Username account",
+    legacyEmailAccount: "Legacy email account",
+    accountType: "Account type",
+    emailConfirmationUsernameWarning: "The account was created, but email confirmation is enabled. Username accounts cannot receive confirmation mail. Disable email confirmation for this project or use an existing test account.",
+    noEmailRequired: "No email required",
+    noEmailRequiredDesc: "Sign in with only your username and password."
+  };
+  var AUTH_ROUND_23_13 = {
+    "zh-CN": {
+      registerTitle: "创建账号",
+      username: "用户名",
+      usernamePlaceholder: "3-24 位字母、数字、下划线或连字符",
+      displayNameOptional: "昵称（可选）",
+      createAccountButton: "创建账号",
+      usernameRequired: "请输入用户名",
+      usernameTooShort: "用户名至少 3 位",
+      usernameTooLong: "用户名最多 24 位",
+      usernameInvalid: "用户名只能包含字母、数字、下划线和连字符",
+      usernameTaken: "该用户名已被使用",
+      usernameRegistrationUnavailable: "当前无法创建用户名账号，请检查 Supabase 的注册与邮箱确认设置。",
+      usernameOrPasswordWrong: "用户名或密码不正确",
+      usernameAccount: "用户名账号",
+      legacyEmailAccount: "旧邮箱账号",
+      accountType: "账号类型",
+      emailConfirmationUsernameWarning: "账号已创建，但项目启用了邮箱确认。用户名账号无法接收确认邮件，请管理员关闭邮箱确认，或使用现有测试账号。",
+      noEmailRequired: "无需邮箱",
+      noEmailRequiredDesc: "登录只需用户名和密码。"
+    },
+    "ja-JP": {
+      registerTitle: "アカウント作成",
+      username: "ユーザー名",
+      usernamePlaceholder: "3～24文字の英数字、_、-",
+      displayNameOptional: "表示名（任意）",
+      createAccountButton: "アカウント作成",
+      usernameRequired: "ユーザー名を入力してください",
+      usernameTooShort: "ユーザー名は3文字以上です",
+      usernameTooLong: "ユーザー名は24文字以内です",
+      usernameInvalid: "英数字、アンダースコア、ハイフンのみ使用できます",
+      usernameTaken: "このユーザー名は既に使用されています",
+      usernameRegistrationUnavailable: "ユーザー名アカウントを作成できません。Supabase の登録とメール確認設定を確認してください。",
+      usernameOrPasswordWrong: "ユーザー名またはパスワードが正しくありません",
+      usernameAccount: "ユーザー名アカウント",
+      legacyEmailAccount: "旧メールアカウント",
+      accountType: "アカウント種別",
+      emailConfirmationUsernameWarning: "アカウントは作成されましたが、メール確認が有効です。ユーザー名アカウントは確認メールを受信できません。プロジェクトのメール確認を無効にするか、既存のテストアカウントを使用してください。",
+      noEmailRequired: "メール不要",
+      noEmailRequiredDesc: "ユーザー名とパスワードだけでログインできます。"
+    },
+    "en-US": AUTH_ROUND_23_13_EN,
+    "ko-KR": {
+      registerTitle: "계정 만들기",
+      username: "사용자 이름",
+      usernamePlaceholder: "3-24자의 영문, 숫자, 밑줄 또는 하이픈",
+      displayNameOptional: "표시 이름(선택)",
+      createAccountButton: "계정 만들기",
+      usernameRequired: "사용자 이름을 입력해 주세요",
+      usernameTooShort: "사용자 이름은 3자 이상이어야 합니다",
+      usernameTooLong: "사용자 이름은 24자 이하여야 합니다",
+      usernameInvalid: "영문, 숫자, 밑줄, 하이픈만 사용할 수 있습니다",
+      usernameTaken: "이미 사용 중인 사용자 이름입니다",
+      usernameRegistrationUnavailable: "사용자 이름 계정을 만들 수 없습니다. Supabase 가입 및 이메일 확인 설정을 확인하세요.",
+      usernameOrPasswordWrong: "사용자 이름 또는 비밀번호가 올바르지 않습니다",
+      usernameAccount: "사용자 이름 계정",
+      legacyEmailAccount: "기존 이메일 계정",
+      accountType: "계정 유형",
+      emailConfirmationUsernameWarning: "계정은 생성되었지만 이메일 확인이 활성화되어 있습니다. 사용자 이름 계정은 확인 메일을 받을 수 없습니다. 프로젝트의 이메일 확인을 끄거나 기존 테스트 계정을 사용하세요.",
+      noEmailRequired: "이메일 불필요",
+      noEmailRequiredDesc: "사용자 이름과 비밀번호만으로 로그인합니다."
+    },
+    "vi-VN": {
+      registerTitle: "Tạo tài khoản",
+      username: "Tên người dùng",
+      usernamePlaceholder: "3-24 chữ cái, số, dấu gạch dưới hoặc gạch nối",
+      displayNameOptional: "Tên hiển thị (không bắt buộc)",
+      createAccountButton: "Tạo tài khoản",
+      usernameRequired: "Vui lòng nhập tên người dùng",
+      usernameTooShort: "Tên người dùng phải có ít nhất 3 ký tự",
+      usernameTooLong: "Tên người dùng không được quá 24 ký tự",
+      usernameInvalid: "Chỉ dùng chữ cái, số, dấu gạch dưới và gạch nối",
+      usernameTaken: "Tên người dùng này đã được sử dụng",
+      usernameRegistrationUnavailable: "Không thể tạo tài khoản tên người dùng. Hãy kiểm tra cài đặt đăng ký và xác nhận email của Supabase.",
+      usernameOrPasswordWrong: "Tên người dùng hoặc mật khẩu không đúng",
+      usernameAccount: "Tài khoản tên người dùng",
+      legacyEmailAccount: "Tài khoản email cũ",
+      accountType: "Loại tài khoản",
+      emailConfirmationUsernameWarning: AUTH_ROUND_23_13_EN.emailConfirmationUsernameWarning,
+      noEmailRequired: "Không cần email",
+      noEmailRequiredDesc: "Chỉ cần tên người dùng và mật khẩu để đăng nhập."
+    },
+    "fr-FR": {
+      registerTitle: "Créer un compte",
+      username: "Nom d'utilisateur",
+      usernamePlaceholder: "3 à 24 lettres, chiffres, tirets bas ou traits d'union",
+      displayNameOptional: "Nom affiché (facultatif)",
+      createAccountButton: "Créer un compte",
+      usernameRequired: "Saisissez un nom d'utilisateur",
+      usernameTooShort: "Le nom d'utilisateur doit contenir au moins 3 caractères",
+      usernameTooLong: "Le nom d'utilisateur ne doit pas dépasser 24 caractères",
+      usernameInvalid: "Utilisez uniquement lettres, chiffres, tirets bas et traits d'union",
+      usernameTaken: "Ce nom d'utilisateur est déjà utilisé",
+      usernameRegistrationUnavailable: "Impossible de créer le compte. Vérifiez les paramètres d'inscription et de confirmation d'e-mail Supabase.",
+      usernameOrPasswordWrong: "Nom d'utilisateur ou mot de passe incorrect",
+      usernameAccount: "Compte avec nom d'utilisateur",
+      legacyEmailAccount: "Ancien compte e-mail",
+      accountType: "Type de compte",
+      emailConfirmationUsernameWarning: AUTH_ROUND_23_13_EN.emailConfirmationUsernameWarning,
+      noEmailRequired: "Aucun e-mail requis",
+      noEmailRequiredDesc: "Connectez-vous avec votre nom d'utilisateur et votre mot de passe."
+    },
+    "my-MM": Object.assign({}, AUTH_ROUND_23_13_EN),
+    "default-ja-zh": {
+      registerTitle: "创建账号 / アカウント作成",
+      username: "用户名 / ユーザー名",
+      usernamePlaceholder: "3-24 位字母、数字、下划线或连字符 / 3～24文字の英数字、_、-",
+      displayNameOptional: "昵称（可选） / 表示名（任意）",
+      createAccountButton: "创建账号 / アカウント作成",
+      usernameRequired: "请输入用户名 / ユーザー名を入力してください",
+      usernameTooShort: "用户名至少 3 位 / ユーザー名は3文字以上です",
+      usernameTooLong: "用户名最多 24 位 / ユーザー名は24文字以内です",
+      usernameInvalid: "用户名格式不正确 / ユーザー名の形式が正しくありません",
+      usernameTaken: "该用户名已被使用 / このユーザー名は既に使用されています",
+      usernameRegistrationUnavailable: "请检查 Supabase 注册设置 / Supabase の登録設定を確認してください",
+      usernameOrPasswordWrong: "用户名或密码不正确 / ユーザー名またはパスワードが正しくありません",
+      usernameAccount: "用户名账号 / ユーザー名アカウント",
+      legacyEmailAccount: "旧邮箱账号 / 旧メールアカウント",
+      accountType: "账号类型 / アカウント種別",
+      emailConfirmationUsernameWarning: "项目启用了邮箱确认，用户名账号无法接收确认邮件。 / メール確認が有効なため、ユーザー名アカウントは確認メールを受信できません。",
+      noEmailRequired: "无需邮箱 / メール不要",
+      noEmailRequiredDesc: "只需用户名和密码 / ユーザー名とパスワードだけでログイン"
+    }
+  };
+  Object.keys(AUTH_ROUND_23_13).forEach(function (locale) {
+    if (!window.I18nUiDict[locale]) window.I18nUiDict[locale] = {};
+    if (!window.I18nUiDict[locale].auth) window.I18nUiDict[locale].auth = {};
+    Object.assign(window.I18nUiDict[locale].auth, AUTH_ROUND_23_13[locale]);
+  });
 })();
 
