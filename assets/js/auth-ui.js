@@ -579,7 +579,8 @@
                   '</div>' +
                 '</div>' +
               '</div>' +
-            '</div>'
+            '</div>' +
+            syncSectionHtml
           ) +
           (authMessage ? '<div class="auth-notice auth-message-notice"><i class="fa-solid fa-circle-info"></i> ' + esc(authMessage) + '</div>' : '') +
         '</div>' +
