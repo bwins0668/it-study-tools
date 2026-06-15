@@ -967,6 +967,7 @@
 
  /* ── Wrong Book Sync (Round 23.8) ──────────────────── */
  var WRONG_BOOK_LS_KEY = "study-tools-exam-wrong-book-v1";
+ var WRONG_BOOK_RETRY_SETTINGS_KEY = "study-tools-wrong-book-retry-settings-v1";
  var WRONG_BOOK_SYNC_MIN_SCHEMA = 2;
  var WRONG_BOOK_UPSERT_BATCH = 50;
 
@@ -1232,10 +1233,125 @@
    }
  }
 
+ function normalizeWrongBookRetrySettings(settings, fallbackUpdatedAt) {
+   if (!settings || typeof settings !== "object") return null;
+   var validLimits = [10, 20, 30, -1];
+   var updatedAt = typeof settings.updatedAt === "string" && settings.updatedAt
+     ? settings.updatedAt
+     : (fallbackUpdatedAt || "");
+   return {
+     limit: validLimits.indexOf(settings.limit) >= 0 ? settings.limit : 20,
+     shuffle: settings.shuffle === true,
+     updatedAt: updatedAt,
+     schemaVersion: 1,
+   };
+ }
+
+ function loadLocalWrongBookRetrySettings() {
+   try {
+     var raw = localStorage.getItem(WRONG_BOOK_RETRY_SETTINGS_KEY);
+     if (!raw) return null;
+     var parsed = JSON.parse(raw);
+     var hadUpdatedAt = typeof parsed.updatedAt === "string" && parsed.updatedAt;
+     var normalized = normalizeWrongBookRetrySettings(parsed, nowISO());
+     if (!hadUpdatedAt || JSON.stringify(parsed) !== JSON.stringify(normalized)) {
+       localStorage.setItem(WRONG_BOOK_RETRY_SETTINGS_KEY, JSON.stringify(normalized));
+     }
+     return normalized;
+   } catch (_) {
+     return null;
+   }
+ }
+
+ function saveLocalWrongBookRetrySettings(settings) {
+   var normalized = normalizeWrongBookRetrySettings(settings, nowISO());
+   if (!normalized) return false;
+   try {
+     localStorage.setItem(WRONG_BOOK_RETRY_SETTINGS_KEY, JSON.stringify(normalized));
+     return true;
+   } catch (_) {
+     return false;
+   }
+ }
+
+ function retrySettingsTimestamp(settings) {
+   if (!settings || !settings.updatedAt) return 0;
+   var timestamp = new Date(settings.updatedAt).getTime();
+   return Number.isFinite(timestamp) ? timestamp : 0;
+ }
+
+ async function syncWrongBookRetrySettings(context) {
+   var ctx = context;
+   if (!ctx || !ctx.client) {
+     var checked = await getRemoteContext();
+     if (!checked.ok) return checked;
+     ctx = checked.data;
+   }
+
+   try {
+     var local = loadLocalWrongBookRetrySettings();
+     var result = await ctx.client.from("user_settings")
+       .select("wrong_book_retry_settings")
+       .eq("user_id", ctx.user.id)
+       .maybeSingle();
+     if (result && result.error) {
+       return syncError("wrongbook_retry_settings_failed", result.error.message, result.error);
+     }
+
+     var remoteRaw = result && result.data ? result.data.wrong_book_retry_settings : null;
+     var remote = normalizeWrongBookRetrySettings(remoteRaw, "");
+     if (!local && !remote) {
+       return syncSuccess({ count: 0, action: "none", pushed: 0, pulled: 0, merged: 0 });
+     }
+
+     var action = "merged";
+     var finalSettings = local;
+     if (!local && remote) {
+       action = "pulled";
+       finalSettings = remote;
+     } else if (local && !remote) {
+       action = "pushed";
+     } else if (retrySettingsTimestamp(remote) > retrySettingsTimestamp(local)) {
+       finalSettings = remote;
+     }
+
+     if (!finalSettings.updatedAt) finalSettings.updatedAt = nowISO();
+     finalSettings.schemaVersion = 1;
+     if (!saveLocalWrongBookRetrySettings(finalSettings)) {
+       return syncError("wrongbook_retry_settings_failed", "Unable to save retry settings locally.");
+     }
+
+     var upsert = await ctx.client.from("user_settings").upsert({
+       user_id: ctx.user.id,
+       wrong_book_retry_settings: finalSettings,
+       sync_version: SCHEMA_VERSION,
+     }, { onConflict: "user_id" });
+     if (upsert && upsert.error) {
+       return syncError("wrongbook_retry_settings_failed", upsert.error.message, upsert.error);
+     }
+
+     return syncSuccess({
+       count: 1,
+       action: action,
+       pushed: action === "pushed" ? 1 : 0,
+       pulled: action === "pulled" ? 1 : 0,
+       merged: action === "merged" ? 1 : 0,
+       updated_at: finalSettings.updatedAt,
+     });
+   } catch (error) {
+     var friendly = friendlyRemoteError(error, "wrongbook_retry_settings_failed");
+     return syncError(friendly.code, friendly.message);
+   }
+ }
+
  function getSyncSummary() {
     var status = getSyncStatus();
     var lastResult = safeGet(KEYS.LAST_SYNC_RESULT, null);
-    var summary = lastResult && lastResult.ok ? lastResult.data : null;
+    var summary = lastResult && lastResult.ok
+      ? lastResult.data
+      : (lastResult && lastResult.error && lastResult.error.details
+        ? lastResult.error.details.summary
+        : null);
     return {
       status: runtimeStatus,
       running: manualSyncRunning,
@@ -1266,9 +1382,13 @@
         wrongbook_pulled: summary.wrongbook_pulled || 0,
         wrongbook_merged: summary.wrongbook_merged || 0,
         wrongbook_skipped: summary.wrongbook_skipped || 0,
+        wrongbook_retry_settings_pushed: summary.wrongbook_retry_settings_pushed || 0,
+        wrongbook_retry_settings_pulled: summary.wrongbook_retry_settings_pulled || 0,
+        wrongbook_retry_settings_merged: summary.wrongbook_retry_settings_merged || 0,
+        wrongbook_retry_settings_failed: summary.wrongbook_retry_settings_failed || false,
         warnings: summary.warnings || [],
       } : null,
-      scope: ["user_settings", "learning_progress", "quiz_results", "bookmarks", "wrong_book"],
+      scope: ["user_settings", "wrong_book_retry_settings", "learning_progress", "quiz_results", "bookmarks", "wrong_book"],
       automatic_sync: false,
     };
   }
@@ -1299,6 +1419,7 @@
         ["progress_pull", pullLearningProgress],
         ["wrongbook_pull", pullWrongBook],
         ["bookmarks_sync", mergeBookmarksWithTombstones],
+        ["wrongbook_retry_settings", syncWrongBookRetrySettings],
         ["settings_push", pushUserSettings],
         ["progress_push", pushLearningProgress],
         ["quiz_push", pushQuizResults],
@@ -1351,6 +1472,10 @@
         wrongbook_pulled: results.wrongbook_pull && results.wrongbook_pull.ok ? (results.wrongbook_pull.data && results.wrongbook_pull.data.pulled) || 0 : 0,
         wrongbook_merged: results.wrongbook_pull && results.wrongbook_pull.ok ? (results.wrongbook_pull.data && results.wrongbook_pull.data.merged) || 0 : 0,
         wrongbook_skipped: results.wrongbook_pull && results.wrongbook_pull.ok ? (results.wrongbook_pull.data && results.wrongbook_pull.data.skipped) || 0 : 0,
+        wrongbook_retry_settings_pushed: results.wrongbook_retry_settings && results.wrongbook_retry_settings.ok ? (results.wrongbook_retry_settings.data && results.wrongbook_retry_settings.data.pushed) || 0 : 0,
+        wrongbook_retry_settings_pulled: results.wrongbook_retry_settings && results.wrongbook_retry_settings.ok ? (results.wrongbook_retry_settings.data && results.wrongbook_retry_settings.data.pulled) || 0 : 0,
+        wrongbook_retry_settings_merged: results.wrongbook_retry_settings && results.wrongbook_retry_settings.ok ? (results.wrongbook_retry_settings.data && results.wrongbook_retry_settings.data.merged) || 0 : 0,
+        wrongbook_retry_settings_failed: Boolean(results.wrongbook_retry_settings && !results.wrongbook_retry_settings.ok),
         warnings: warnings,
       };
 
@@ -1421,6 +1546,7 @@
     pullWrongBook:          pullWrongBook,
     collectWrongBookForSync: collectWrongBookForSync,
     mergeWrongBookRemoteToLocal: mergeWrongBookRemoteToLocal,
+    syncWrongBookRetrySettings: syncWrongBookRetrySettings,
     runManualSync:        runManualSync,
     getSyncSummary:       getSyncSummary,
     _keys:                KEYS,

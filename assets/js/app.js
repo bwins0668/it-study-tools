@@ -3816,22 +3816,42 @@ function getWrongBookRetryCorrectIndex(item) {
 }
 
 /* ── Round 23.5: retry settings & history helpers ─────────────── */
+function normalizeWrongBookRetrySettings(settings, updatedAt) {
+  var validLimits = [10, 20, 30, -1];
+  var limit = validLimits.includes(settings && settings.limit) ? settings.limit : 20;
+  var timestamp = settings && typeof settings.updatedAt === 'string' && settings.updatedAt
+    ? settings.updatedAt
+    : (updatedAt || new Date().toISOString());
+  return {
+    limit: limit,
+    shuffle: settings && settings.shuffle === true,
+    updatedAt: timestamp,
+    schemaVersion: 1
+  };
+}
+
 function loadWrongBookRetrySettings() {
   try {
     var raw = localStorage.getItem(WRONG_BOOK_RETRY_SETTINGS_KEY);
-    if (!raw) return { limit: 20, shuffle: false };
-    var parsed = JSON.parse(raw);
-    return {
-      limit: typeof parsed.limit === 'number' && parsed.limit > 0 ? parsed.limit : 20,
-      shuffle: parsed.shuffle === true
-    };
+    var parsed = raw ? JSON.parse(raw) : null;
+    var normalized = normalizeWrongBookRetrySettings(parsed);
+    if (!raw || JSON.stringify(parsed) !== JSON.stringify(normalized)) {
+      localStorage.setItem(WRONG_BOOK_RETRY_SETTINGS_KEY, JSON.stringify(normalized));
+    }
+    return normalized;
   } catch (_) {
-    return { limit: 20, shuffle: false };
+    var fallback = normalizeWrongBookRetrySettings(null);
+    try { localStorage.setItem(WRONG_BOOK_RETRY_SETTINGS_KEY, JSON.stringify(fallback)); } catch (_) {}
+    return fallback;
   }
 }
 
 function saveWrongBookRetrySettings(settings) {
-  try { localStorage.setItem(WRONG_BOOK_RETRY_SETTINGS_KEY, JSON.stringify(settings)); } catch (_) {}
+  try {
+    var normalized = normalizeWrongBookRetrySettings(settings, new Date().toISOString());
+    normalized.updatedAt = new Date().toISOString();
+    localStorage.setItem(WRONG_BOOK_RETRY_SETTINGS_KEY, JSON.stringify(normalized));
+  } catch (_) {}
 }
 
 function loadWrongBookRetryHistory() {

@@ -45,10 +45,14 @@ CREATE TABLE IF NOT EXISTS public.user_settings (
   user_id     UUID PRIMARY KEY REFERENCES auth.users(id) ON DELETE CASCADE,
   language    VARCHAR(20) NOT NULL DEFAULT 'default-ja-zh',
   theme       VARCHAR(10) NOT NULL DEFAULT 'dark',
+  wrong_book_retry_settings JSONB,
   created_at  TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   updated_at  TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   sync_version INTEGER   NOT NULL DEFAULT 1
 );
+
+ALTER TABLE public.user_settings
+  ADD COLUMN IF NOT EXISTS wrong_book_retry_settings JSONB;
 
 COMMENT ON TABLE public.user_settings IS 'Per-user UI preferences, synced across devices';
 

@@ -4445,6 +4445,57 @@
     }
   });
 
+  var AUTH_SYNC_ROUND_23_12 = {
+    "zh-CN": {
+      wrongBookRetrySettingsPushed: "错题重练设置已上传",
+      wrongBookRetrySettingsPulled: "错题重练设置已下载",
+      wrongBookRetrySettingsMerged: "错题重练设置已合并",
+      wrongBookRetrySettingsFailed: "错题重练设置同步失败"
+    },
+    "ja-JP": {
+      wrongBookRetrySettingsPushed: "間違いノート再練習設定をアップロードしました",
+      wrongBookRetrySettingsPulled: "間違いノート再練習設定をダウンロードしました",
+      wrongBookRetrySettingsMerged: "間違いノート再練習設定をマージしました",
+      wrongBookRetrySettingsFailed: "間違いノート再練習設定の同期に失敗しました"
+    },
+    "en-US": {
+      wrongBookRetrySettingsPushed: "Wrong-book retry settings uploaded",
+      wrongBookRetrySettingsPulled: "Wrong-book retry settings downloaded",
+      wrongBookRetrySettingsMerged: "Wrong-book retry settings merged",
+      wrongBookRetrySettingsFailed: "Wrong-book retry settings sync failed"
+    },
+    "vi-VN": {
+      wrongBookRetrySettingsPushed: "Đã tải lên cài đặt luyện lại câu sai",
+      wrongBookRetrySettingsPulled: "Đã tải xuống cài đặt luyện lại câu sai",
+      wrongBookRetrySettingsMerged: "Đã hợp nhất cài đặt luyện lại câu sai",
+      wrongBookRetrySettingsFailed: "Đồng bộ cài đặt luyện lại câu sai thất bại"
+    },
+    "fr-FR": {
+      wrongBookRetrySettingsPushed: "Paramètres de révision des erreurs téléversés",
+      wrongBookRetrySettingsPulled: "Paramètres de révision des erreurs téléchargés",
+      wrongBookRetrySettingsMerged: "Paramètres de révision des erreurs fusionnés",
+      wrongBookRetrySettingsFailed: "Échec de la synchronisation des paramètres de révision"
+    },
+    "my-MM": {
+      wrongBookRetrySettingsPushed: "အမှားစာအုပ် ပြန်လေ့ကျင့်မှု ဆက်တင်များ အပ်လုဒ်ပြီး",
+      wrongBookRetrySettingsPulled: "အမှားစာအုပ် ပြန်လေ့ကျင့်မှု ဆက်တင်များ ဒေါင်းလုဒ်ပြီး",
+      wrongBookRetrySettingsMerged: "အမှားစာအုပ် ပြန်လေ့ကျင့်မှု ဆက်တင်များ ပေါင်းစည်းပြီး",
+      wrongBookRetrySettingsFailed: "အမှားစာအုပ် ပြန်လေ့ကျင့်မှု ဆက်တင်များ စင့်ခ်မအောင်မြင်ပါ"
+    },
+    "ko-KR": {
+      wrongBookRetrySettingsPushed: "오답 재연습 설정 업로드 완료",
+      wrongBookRetrySettingsPulled: "오답 재연습 설정 다운로드 완료",
+      wrongBookRetrySettingsMerged: "오답 재연습 설정 병합 완료",
+      wrongBookRetrySettingsFailed: "오답 재연습 설정 동기화 실패"
+    }
+  };
+
+  Object.keys(AUTH_SYNC_ROUND_23_12).forEach(function (locale) {
+    if (window.I18nUiDict[locale] && window.I18nUiDict[locale].auth) {
+      Object.assign(window.I18nUiDict[locale].auth, AUTH_SYNC_ROUND_23_12[locale]);
+    }
+  });
+
   var USER_TRANSLATIONS_ROUND_20_2 = {
     "zh-CN": {
       userTranslationSave: "保存",

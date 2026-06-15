@@ -333,6 +333,10 @@
     var wrongbookPulled = summaryDetails ? summaryDetails.wrongbook_pulled : 0;
     var wrongbookMerged = summaryDetails ? summaryDetails.wrongbook_merged : 0;
     var wrongbookSkipped = summaryDetails ? summaryDetails.wrongbook_skipped : 0;
+    var retrySettingsPushed = summaryDetails ? summaryDetails.wrongbook_retry_settings_pushed : 0;
+    var retrySettingsPulled = summaryDetails ? summaryDetails.wrongbook_retry_settings_pulled : 0;
+    var retrySettingsMerged = summaryDetails ? summaryDetails.wrongbook_retry_settings_merged : 0;
+    var retrySettingsFailed = summaryDetails ? summaryDetails.wrongbook_retry_settings_failed : false;
     var conflictsResolved = summaryDetails ? summaryDetails.conflicts_resolved : 0;
     var warnings = summaryDetails && summaryDetails.warnings ? summaryDetails.warnings : [];
     var syncDuration = summaryDetails ? summaryDetails.duration_ms : 0;
@@ -367,6 +371,10 @@
       if (wrongbookPulled) detailsList += '<li><i class="fa-solid fa-book-circle-arrow-down"></i> ' + esc(t("auth.wrongBookPulled", "错题下载")) + ': ' + wrongbookPulled + '</li>';
       if (wrongbookMerged) detailsList += '<li><i class="fa-solid fa-code-merge"></i> ' + esc(t("auth.wrongBookMerged", "错题已合并")) + ': ' + wrongbookMerged + '</li>';
       if (wrongbookSkipped) detailsList += '<li><i class="fa-solid fa-forward"></i> ' + esc(t("auth.wrongBookSkipped", "错题已跳过")) + ': ' + wrongbookSkipped + '</li>';
+      if (retrySettingsPushed) detailsList += '<li><i class="fa-solid fa-sliders"></i> ' + esc(t("auth.wrongBookRetrySettingsPushed", "错题重练设置已上传")) + '</li>';
+      if (retrySettingsPulled) detailsList += '<li><i class="fa-solid fa-sliders"></i> ' + esc(t("auth.wrongBookRetrySettingsPulled", "错题重练设置已下载")) + '</li>';
+      if (retrySettingsMerged) detailsList += '<li><i class="fa-solid fa-sliders"></i> ' + esc(t("auth.wrongBookRetrySettingsMerged", "错题重练设置已合并")) + '</li>';
+      if (retrySettingsFailed) detailsList += '<li><i class="fa-solid fa-triangle-exclamation"></i> ' + esc(t("auth.wrongBookRetrySettingsFailed", "错题重练设置同步失败")) + '</li>';
       if (conflictsResolved) detailsList += '<li><i class="fa-solid fa-code-merge"></i> ' + esc(t("auth.conflictsResolved", "已合并远端进度")) + ': ' + conflictsResolved + '</li>';
 
       summaryHtml =

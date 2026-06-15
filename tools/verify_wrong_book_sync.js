@@ -7,7 +7,7 @@
  *  - sync-engine.js: wrongBook push/pull/merge steps, no hardcoded keys
  *  - auth-ui.js: wrongBook summary rendering
  *  - i18n: all 7 locales have wrongBook keys
- *  - Exclusion: retry-history and retry-settings NOT in sync
+ *  - Round 23.12: retry settings are synced; retry history remains local
  *  - Dual-repo binary consistency for shared files
  *
  * Usage:
@@ -36,6 +36,7 @@ const SHARED_FILES = [
   "assets/js/sync-engine.js",
   "assets/js/auth-ui.js",
   "assets/js/i18n-ui-dict.js",
+  "assets/js/app.js",
 ];
 
 // ─── Helpers ──────────────────────────────────────────────────────────────
@@ -100,6 +101,8 @@ if (sqlContent) {
   // Indexes
   const idxCount = (sqlContent.match(/CREATE\s+INDEX.*wrong_book/gi) || []).length;
   check("At least 3 indexes on wrong_book_items", idxCount >= 3, "found " + idxCount);
+  check("user_settings has retry settings JSONB", /wrong_book_retry_settings\s+JSONB/i.test(sqlContent));
+  check("Existing user_settings gets retry settings column", /ADD\s+COLUMN\s+IF\s+NOT\s+EXISTS\s+wrong_book_retry_settings\s+JSONB/i.test(sqlContent));
 }
 
 // ─── 2. sync-engine.js Checks ────────────────────────────────────────────
@@ -159,9 +162,14 @@ if (syncContent) {
   check("newerTimestamp helper used for lastWrongAt", /newerTimestamp\(.*lastWrongAt/.test(syncContent));
   check("Archived restore logic (archivedAt vs lastWrongAt)", /localLwa\s*>\s*archTs.*remoteLwa\s*>\s*archTs/.test(syncContent));
 
-  // retry-history NOT in sync
+  // retry settings synced; retry history remains local
   check("retry-history-v1 NOT referenced in sync", !/study-tools-wrong-book-retry-history-v1/.test(syncContent));
-  check("retry-settings-v1 NOT referenced in sync", !/study-tools-wrong-book-retry-settings-v1/.test(syncContent));
+  check("retry-settings-v1 referenced in sync", /study-tools-wrong-book-retry-settings-v1/.test(syncContent));
+  check("syncWrongBookRetrySettings function", /async\s+function\s+syncWrongBookRetrySettings/.test(syncContent));
+  check("retry settings step in runManualSync", /\["wrongbook_retry_settings",\s*syncWrongBookRetrySettings\]/.test(syncContent));
+  check("retry settings uses updatedAt LWW", /retrySettingsTimestamp\(remote\)\s*>\s*retrySettingsTimestamp\(local\)/.test(syncContent));
+  check("retry settings schemaVersion", /finalSettings\.schemaVersion\s*=\s*1/.test(syncContent));
+  check("retry settings remote column", /wrong_book_retry_settings:\s*finalSettings/.test(syncContent));
 
   // Uses normalizeWrongBookItem if available
   check("Calls normalizeWrongBookItem if available", /typeof\s+normalizeWrongBookItem\s*===\s*["']function["']/.test(syncContent));
@@ -183,6 +191,10 @@ if (authContent) {
   check("wrongBookPushed rendered in detailsList", /wrongbookPushed.*wrongBookPushed/.test(authContent));
   check("wrongBookPulled rendered in detailsList", /wrongbookPulled.*wrongBookPulled/.test(authContent));
   check("wrongBookMerged rendered in detailsList", /wrongbookMerged.*wrongBookMerged/.test(authContent));
+  check("retry settings pushed rendered", /retrySettingsPushed.*wrongBookRetrySettingsPushed/.test(authContent));
+  check("retry settings pulled rendered", /retrySettingsPulled.*wrongBookRetrySettingsPulled/.test(authContent));
+  check("retry settings merged rendered", /retrySettingsMerged.*wrongBookRetrySettingsMerged/.test(authContent));
+  check("retry settings failed rendered", /retrySettingsFailed.*wrongBookRetrySettingsFailed/.test(authContent));
 }
 
 // ─── 4. i18n Checks ─────────────────────────────────────────────────────
@@ -211,7 +223,27 @@ if (i18nContent) {
     var count = (i18nContent.match(new RegExp(key + ":", "g")) || []).length;
     check("Key '" + key + "' appears in " + count + "/7 locales", count >= 7, "found " + count);
   });
+
+  const RETRY_SETTINGS_KEYS = [
+    "wrongBookRetrySettingsPushed",
+    "wrongBookRetrySettingsPulled",
+    "wrongBookRetrySettingsMerged",
+    "wrongBookRetrySettingsFailed",
+  ];
+  check("AUTH_SYNC_ROUND_23_12 block exists", /AUTH_SYNC_ROUND_23_12/.test(i18nContent));
+  RETRY_SETTINGS_KEYS.forEach(function (key) {
+    var count = (i18nContent.match(new RegExp(key + ":", "g")) || []).length;
+    check("Key '" + key + "' appears in " + count + "/7 locales", count >= 7, "found " + count);
+  });
 }
+
+const appPath = path.join(PROJECT_ROOT, "assets", "js", "app.js");
+const appContent = readFile(appPath);
+check("app.js retry settings has updatedAt", appContent && /updatedAt:\s*timestamp/.test(appContent));
+check("app.js retry settings has schemaVersion", appContent && /schemaVersion:\s*1/.test(appContent));
+check("app.js validates retry limits", appContent && /validLimits\s*=\s*\[10,\s*20,\s*30,\s*-1\]/.test(appContent));
+check("No password written to localStorage", !/localStorage\.setItem\([^)]*password/i.test((syncContent || "") + (authContent || "") + (appContent || "")));
+check("No Supabase Management API token code", !/SUPABASE_ACCESS_TOKEN|management\.supabase\.com/i.test((syncContent || "") + (authContent || "") + (appContent || "")));
 
 // ─── 5. Dual-repo Consistency ─────────────────────────────────────────────
 
