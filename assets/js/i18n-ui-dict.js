@@ -292,7 +292,12 @@
         examHistory: "試験履歴",
         examHistoryDesc: "最近の模擬試験記録を確認",
         dashboard: "学習統計",
-        dashboardDesc: "学習の進捗とデータ概要を確認"
+        dashboardDesc: "学習の進捗とデータ概要を確認",
+        exportData: "学習データをエクスポート",
+        exportDataDesc: "ローカル学習データのバックアップをダウンロード (JSON)",
+        exportSuccess: "エクスポート成功",
+        exportFailed: "エクスポート失敗",
+        exportScope: "パスワードやキーを含みません — 学習データのみ"
       },
       dashboard: {
         dashboard: "学習統計",
@@ -846,7 +851,12 @@
         examHistory: "考试历史",
         examHistoryDesc: "查看最近的模拟考试记录",
         dashboard: "学习统计",
-        dashboardDesc: "查看学习进度与数据概览"
+        dashboardDesc: "查看学习进度与数据概览",
+        exportData: "导出学习数据",
+        exportDataDesc: "下载本地学习数据备份 (JSON)",
+        exportSuccess: "导出成功",
+        exportFailed: "导出失败",
+        exportScope: "不含密码和密钥 — 仅学习数据"
       },
       dashboard: {
         dashboard: "学习统计",
@@ -1399,7 +1409,12 @@
         examHistory: "Exam History",
         examHistoryDesc: "View recent mock exam records",
         dashboard: "Learning Stats",
-        dashboardDesc: "View learning progress and data overview"
+        dashboardDesc: "View learning progress and data overview",
+        exportData: "Export Learning Data",
+        exportDataDesc: "Download local learning data backup (JSON)",
+        exportSuccess: "Export successful",
+        exportFailed: "Export failed",
+        exportScope: "No passwords or keys — learning data only"
       },
       dashboard: {
         dashboard: "Learning Stats",
@@ -3304,7 +3319,12 @@
         examHistory: "시험 기록",
         examHistoryDesc: "최근 모의고사 기록 보기",
         dashboard: "학습 통계",
-        dashboardDesc: "학습 진행 상황 및 데이터 개요 보기"
+        dashboardDesc: "학습 진행 상황 및 데이터 개요 보기",
+        exportData: "학습 데이터 내보내기",
+        exportDataDesc: "로컬 학습 데이터 백업 다운로드 (JSON)",
+        exportSuccess: "내보내기 성공",
+        exportFailed: "내보내기 실패",
+        exportScope: "비밀번호나 키 미포함 — 학습 데이터만"
       },
       dashboard: {
         dashboard: "학습 통계",
