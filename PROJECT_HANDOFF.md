@@ -1,5 +1,87 @@
 # PROJECT_HANDOFF.md
 
+## 当前权威交接快照（2026-06-15）
+
+> 本节是当前状态的权威来源。下方历史章节保留用于追溯，其中部分 Round 22 状态已经过期。
+
+### Repository and release state
+
+| Item | Current value |
+|---|---|
+| Windows repository | `E:\项目\sql-learning-hub` |
+| Windows branch / Round 23.12.2 baseline | `main` / `9b556b1` |
+| Web repository | `E:\项目\sql-learning-hub-web-public` |
+| Web branch / Round 23.12.2 baseline | `master` / `269458d` |
+| Handoff update commit | Use the latest `git log -1 --oneline` entry |
+| Web version | `v2026.6.14-r23.12` |
+| Web cache | `study-tools-web-v2026-6-14-r23-12` |
+| Public URL | `https://study-tools-web-pages.pages.dev` |
+| Working tree | Both repositories clean and synchronized with origin |
+
+### Round 23 completed work
+
+| Round | Result | Windows | Web |
+|---|---|---|---|
+| 23.3 | Local wrong-book MVP | `f8652a5` | `acadfab` |
+| 23.4 | Wrong-book retry mode and toolbar cleanup | `643e1a1` | `5bbacc1` |
+| 23.4.1 | AI launcher moved into toolbar | `7aeac7a` | `4f218ab` |
+| 23.5 | Retry settings and local retry history | `2436785` | `d6e7b23` |
+| 23.7 | Wrong-book schema v2 and Supabase DDL | `2525428` | `96c54a8` |
+| 23.8 | `wrong_book_items` manual sync MVP | `6050d56` | `bbafca4` |
+| 23.10 | Simplified email/password auth UX | `df54f12` | `c9d37ec` |
+| 23.12 | Retry-settings sync with `updatedAt` LWW | `7f4136e` | `3908a02` |
+| 23.12.1 | Real Supabase Push/Pull/LWW E2E | Validation only, no commit | Validation only, no commit |
+| 23.12.2 | Local artifact cleanup and Git recovery | `9b556b1` | `269458d` |
+
+### Wrong-book synchronization
+
+- Wrong-book records sync through `public.wrong_book_items`.
+- Item schema version is 2, with `updatedAt`, `archivedAt`, soft delete, batched upsert, and `(user_id, item_key)` conflict handling.
+- Retry settings reuse `public.user_settings.wrong_book_retry_settings` as JSONB.
+- Local settings key: `study-tools-wrong-book-retry-settings-v1`.
+- Settings schema: `limit`, `shuffle`, `updatedAt`, `schemaVersion: 1`.
+- Conflict resolution is last-write-wins using `updatedAt`.
+- Retry history key `study-tools-wrong-book-retry-history-v1` is local-only and must not be synchronized.
+- Synchronization remains manual only; do not add background or automatic sync.
+
+### Real E2E evidence
+
+Round 23.12.1 used a real signed-in Supabase account:
+
+1. Verified `wrong_book_retry_settings` exists in `public.user_settings` with type `jsonb`.
+2. Push wrote `limit=10`, `shuffle=true`, `updatedAt`, and `schemaVersion=1`.
+3. Pull restored newer remote `limit=30`, `shuffle=false`.
+4. LWW passed with local newer and remote newer in both directions.
+5. Final local and remote values matched.
+6. Retry history remained excluded from the database and sync engine.
+7. Manual sync completed without `wrong_book_items` errors.
+
+### UI and verification baseline
+
+- AI launcher is immediately left of the language control in `#top-utility-cluster`.
+- Comprehensive random challenge remains on the second row at the right.
+- No isolated top-center button remains.
+- `tools/verify_wrong_book_schema.js`: 41 passed.
+- `tools/verify_wrong_book_sync.js`: 101 passed, 0 failed, 0 warnings.
+- Glossary: 1500 terms per repository with matching SHA256.
+- Coding typing: 150 items, unique IDs, PASS.
+- Required JavaScript syntax checks and `git diff --check` pass in both repositories.
+
+### Local artifact policy
+
+- `.chrome-release-check-profile/` was removed from Git and is ignored.
+- `.claude/` contains useful local skills; retain locally and never commit it.
+- Temporary CDP/session/token probes were deleted and are ignored by pattern.
+- Local Supabase configuration, API keys, tokens, passwords, browser profiles, and session stores must never be committed.
+- Never use `git add .` or `git add -A`; stage exact intended files.
+
+### Protected boundaries and next round
+
+- Do not sync retry history or introduce automatic sync.
+- Do not touch question banks, Sandbox, remote execution, exam history, glossary, or Supabase configuration unless explicitly included.
+- Never report real E2E success without a signed-in session and observable remote evidence.
+- Round 23.13 may begin from the clean current workspace after status checks and the verification baseline.
+
 ## 1. 项目定位
 - Windows PC 完整版 IT 学习工具，面向在日学习的多国留学生。
 - 项目路径：`E:\项目\sql-learning-hub`
