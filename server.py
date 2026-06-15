@@ -53,13 +53,29 @@ LEARNING_STORE = LearningStore(os.path.join(APP_ROOT, "data", "study_ai.db"))
 
 # Known JDK bin paths to search
 KNOWN_JDK_PATHS = [
+    # Eclipse Adoptium (most common)
     r"C:\Program Files\Eclipse Adoptium\jdk-26.0.1.8-hotspot\bin",
     r"C:\Program Files\Eclipse Adoptium\jdk-21.0.5.11-hotspot\bin",
+    r"C:\Program Files\Eclipse Adoptium\jdk-17.0.9-hotspot\bin",
+    # Microsoft Build of OpenJDK
     r"C:\Program Files\Microsoft\jdk-21.0.5.11\bin",
+    r"C:\Program Files\Microsoft\jdk-17.0.8.1\bin",
+    # Oracle JDK
     r"C:\Program Files\Java\jdk-21\bin",
     r"C:\Program Files\Java\jdk-17\bin",
+    r"C:\Program Files\Java\jdk-11\bin",
+    # Amazon Corretto
     r"C:\Program Files\Amazon Corretto\jdk21\bin",
     r"C:\Program Files\Amazon Corretto\jdk17\bin",
+    r"C:\Program Files\Amazon Corretto\jdk11\bin",
+    # BellSoft Liberica JDK
+    r"C:\Program Files\BellSoft\LibericaJDK-21\bin",
+    r"C:\Program Files\BellSoft\LibericaJDK-17\bin",
+    # Azul Zulu
+    r"C:\Program Files\Azul\Zulu\zulu-21\bin",
+    r"C:\Program Files\Azul\Zulu\zulu-17\bin",
+    # User custom paths (add your JDK path here if not detected)
+    # r"C:\Custom\JDK\bin",
 ]
 
 def java_home_from_bin_dir(bin_dir):
@@ -194,7 +210,18 @@ def run_java_code(code, stdin_data=""):
     javac = find_java_bin("javac.exe")
     java_exe = find_java_bin("java.exe")
     
-    not_found_msg = "❌ javac not found. Please install JDK.\nSearched:\n" + "\n".join(KNOWN_JDK_PATHS)
+    not_found_msg = """❌ JDK 未找到。Java 沙盒需要 JDK 才能编译和运行代码。
+
+━━━━━━━━━━━━━━━━━━━━━━
+📥 如何安装 JDK（推荐 Eclipse Adoptium Temurin）：
+  1. 访问 https://adoptium.net/releases/
+  2. 下载 Windows x64 版本（.msi 安装包）
+  3. 安装时勾选 "Set JAVA_HOME variable"
+
+━━━━━━━━━━━━━━━━━━━━━━
+🔍 已搜索以下路径：
+""" + "\n".join([f"  • {p}" for p in KNOWN_JDK_PATHS])
+
     if not javac:
         return {"compileError": not_found_msg, "runtimeError": "", "output": "", "executionTimeMs": None}
     if not java_exe:
