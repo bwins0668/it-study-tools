@@ -21,6 +21,8 @@
     QUEUE_VERSION:  "study_tools_queue_version",
     SETTINGS_UPDATED_AT: "study_tools_settings_updated_at",
     LAST_SYNC_RESULT: "study_tools_last_sync_result",
+    TYPING_SYNCED:  "study_tools_typing_synced_keys",  // Round 25.1
+    EXAM_SYNCED:    "study_tools_exam_synced_keys",    // Round 25.1
   };
 
   var SCHEMA_VERSION = 1;
@@ -329,6 +331,27 @@
       return syncError("client_unavailable", "Supabase client is unavailable.");
     }
     return syncSuccess({ api: api, client: client, user: user });
+  }
+
+  /* ── Synced-key tracking (Round 25.1) ───────── */
+  function getSyncedKeys(storageKey) {
+    try {
+      var arr = JSON.parse(localStorage.getItem(storageKey) || "[]");
+      return Array.isArray(arr) ? arr : [];
+    } catch (_) { return []; }
+  }
+
+  function markKeysSynced(storageKey, keys) {
+    try {
+      var existing = getSyncedKeys(storageKey);
+      var existingSet = {};
+      for (var e = 0; e < existing.length; e++) { existingSet[existing[e]] = true; }
+      var added = 0;
+      for (var k = 0; k < keys.length; k++) {
+        if (!existingSet[keys[k]]) { existing.push(keys[k]); existingSet[keys[k]] = true; added++; }
+      }
+      if (added > 0) localStorage.setItem(storageKey, JSON.stringify(existing.slice(-1000)));
+    } catch (_) {}
   }
 
   function getRemoteDeviceId() {
@@ -709,12 +732,17 @@
   }
 
   function collectTypingSessions(userId) {
+    var syncedKeys = getSyncedKeys(KEYS.TYPING_SYNCED);
+    var syncedSet = {};
+    for (var s = 0; s < syncedKeys.length; s++) { syncedSet[syncedKeys[s]] = true; }
     var rows = [];
     ["japanese", "coding"].forEach(function (type) {
       var history = loadTypingHistory(type);
-      history.forEach(function (entry, idx) {
+      history.forEach(function (entry) {
         if (!entry || !entry.completedAt) return;
-        var sessionKey = type + ":" + idx + ":" + (entry.completedAt || Date.now());
+        var stableKey = type + ":" + (entry.completedAt || "") + ":" + (entry.title || "");
+        if (syncedSet[stableKey]) return; // Round 25.1: skip already synced
+        var sessionKey = stableKey; // Use stable key for upsert conflict resolution
         rows.push({
           user_id: userId,
           session_type: type,
@@ -751,6 +779,8 @@
         onConflict: "user_id,session_type,session_key",
       });
       if (result && result.error) return syncError("typing_push_failed", result.error.message, result.error);
+      // Round 25.1: mark pushed sessions as synced to avoid re-pushing
+      markKeysSynced(KEYS.TYPING_SYNCED, rows.map(function(r) { return r.session_key; }));
       return syncSuccess({ count: rows.length });
     } catch (error) {
       var friendly = friendlyRemoteError(error, "typing_push_failed");
@@ -843,9 +873,13 @@
   }
 
   function collectExamSessions(userId) {
+    var syncedKeys = getSyncedKeys(KEYS.EXAM_SYNCED);
+    var syncedSet = {};
+    for (var s = 0; s < syncedKeys.length; s++) { syncedSet[syncedKeys[s]] = true; }
     var history = loadExamHistory();
     return history.map(function (entry) {
       if (!entry || !entry.sessionId) return null;
+      if (syncedSet[entry.sessionId]) return null; // Round 25.1: skip already synced
       return {
         user_id: userId,
         session_id: entry.sessionId,
@@ -883,6 +917,8 @@
         onConflict: "user_id,session_id",
       });
       if (result && result.error) return syncError("exam_push_failed", result.error.message, result.error);
+      // Round 25.1: mark pushed sessions as synced to avoid re-pushing
+      markKeysSynced(KEYS.EXAM_SYNCED, rows.map(function(r) { return r.session_id; }));
       return syncSuccess({ count: rows.length });
     } catch (error) {
       var friendly = friendlyRemoteError(error, "exam_push_failed");
