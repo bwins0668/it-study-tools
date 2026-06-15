@@ -868,9 +868,22 @@
       var result = await window.StudySupabase.updatePassword(newPassword);
       newPassword = "";
       confirmPassword = "";
-      authMessage = result && result.error
-        ? t("auth.passwordUpdateFailed", "Password update failed")
-        : t("auth.passwordUpdated", "Password updated. Keep it safe.");
+      if (result && result.error) {
+        authMessage = t("auth.passwordUpdateFailed", "Password update failed");
+      } else {
+        authMessage = t("auth.passwordUpdated", "Password updated. Keep it safe.");
+        try {
+          var currentUser = await window.StudySupabase.getCurrentUser();
+          if (currentUser && currentUser.id) {
+            setSupabaseSignedInUser(currentUser);
+          } else {
+            authMessage = t("auth.passwordUpdatedPleaseSignIn", "Password updated. Please sign in again.");
+            setAnonymousMode();
+          }
+        } catch (_) {
+          // session check failed — keep original success message
+        }
+      }
     } catch (_) {
       newPassword = "";
       confirmPassword = "";
