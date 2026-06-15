@@ -4,7 +4,8 @@ output/
 node_modules/
 .playwright-cli/
 .study-tools-browser-profile/
-chrome-release-check-profile/
+/.chrome-release-check-profile/
+/.claude/
 __pycache__/
 *.pyc
 *.log
@@ -17,3 +18,9 @@ assets/js/supabase-config.local.js
 .env
 .env.local
 *.secret
+
+# Temporary browser/CDP diagnostics
+tools/_cdp_*.js
+tools/_check_*.js
+tools/_get_supa_token*.js
+tools/_supa_login.js
