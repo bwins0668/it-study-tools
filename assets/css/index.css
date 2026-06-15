@@ -10783,3 +10783,376 @@ body.mobile-playground-open .mobile-backdrop {
     padding: 2px 8px;
   }
 }
+
+/* ══════════════════════════════════════════════════════════════
+   Round 30.0 — Mobile UI Secondary Density Improvements
+   390px / 430px priority: header compact, drawer tighter,
+   concept columns stack, playground full-width, quiz compact.
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── Header: tighter at 430px ────────────────── */
+@media (max-width: 430px) {
+  .app-header {
+    padding: 8px 10px;
+    gap: 6px;
+    min-height: 48px;
+  }
+  .logo-icon {
+    font-size: 22px;
+  }
+  .logo-text h1 {
+    font-size: 14px;
+    max-width: 80px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .logo-text span {
+    display: none; /* already at 520px, reinforce */
+  }
+  .brand-caret {
+    font-size: 9px;
+  }
+  .module-switch-trigger {
+    padding: 2px 6px 2px 2px;
+    gap: 4px;
+  }
+  .mobile-toggle-btn {
+    width: 30px;
+    height: 30px;
+    font-size: 14px;
+    border-radius: 6px;
+  }
+  .theme-toggle-btn {
+    width: 30px;
+    height: 30px;
+    min-width: 30px;
+    padding: 4px !important;
+    font-size: 13px;
+  }
+  .tools-trigger-btn {
+    height: 28px;
+    padding: 4px 7px;
+    font-size: 11px;
+    border-radius: 5px;
+  }
+  .auth-user-btn {
+    height: 28px;
+    padding: 4px 7px !important;
+    font-size: 11px;
+    border-radius: 5px;
+  }
+  .header-challenge-btn-start {
+    height: 28px;
+    padding: 4px 8px !important;
+    font-size: 11px;
+    border-radius: 5px;
+  }
+}
+
+/* ── Header: ultra-compact at 390px ──────────── */
+@media (max-width: 390px) {
+  .app-header {
+    padding: 6px 8px;
+    gap: 4px;
+    min-height: 44px;
+  }
+  .logo-icon {
+    font-size: 18px;
+  }
+  .logo-text h1 {
+    font-size: 13px;
+    max-width: 64px;
+  }
+  .brand-caret {
+    display: none;
+  }
+  .module-switch-trigger {
+    padding: 2px 4px 2px 2px;
+    border-radius: 6px;
+  }
+  .mobile-toggle-btn {
+    width: 28px;
+    height: 28px;
+    font-size: 13px;
+    border-radius: 5px;
+  }
+  .theme-toggle-btn {
+    width: 28px;
+    height: 28px;
+    min-width: 28px;
+    padding: 3px !important;
+    font-size: 12px;
+  }
+  .tools-trigger-btn {
+    height: 26px;
+    padding: 3px 6px;
+    font-size: 10px;
+  }
+  .auth-user-btn {
+    height: 26px;
+    padding: 3px 6px !important;
+    font-size: 10px;
+  }
+  .header-challenge-btn-start {
+    height: 26px;
+    padding: 3px 6px !important;
+    font-size: 10px;
+  }
+  .header-actions-right {
+    gap: 4px;
+  }
+  .top-utility-cluster {
+    gap: 3px;
+  }
+}
+
+/* ── Module switch panel: compact at 430px ───── */
+@media (max-width: 430px) {
+  .module-switch-panel {
+    top: 52px;
+    left: 8px;
+    width: calc(100vw - 16px);
+    max-width: calc(100vw - 16px);
+    max-height: calc(100vh - 68px);
+    border-radius: 10px;
+  }
+  .module-switch-panel__header {
+    padding: 10px 12px;
+  }
+  .module-switch-panel__header strong {
+    font-size: 13px;
+  }
+  .module-switch-panel__body {
+    padding: 4px;
+    gap: 2px;
+  }
+  .module-switch-option {
+    padding: 10px 8px;
+    gap: 8px;
+  }
+  .module-switch-option__icon {
+    width: 28px;
+    height: 28px;
+    font-size: 14px;
+  }
+  .module-switch-option__text strong {
+    font-size: 13px;
+  }
+  .module-switch-option__text span {
+    font-size: 10.5px;
+  }
+}
+
+/* ── Concept bilingual columns: stack at 520px ─ */
+@media (max-width: 520px) {
+  .concept-container {
+    flex-direction: column;
+    gap: 14px;
+  }
+  .concept-col {
+    flex: 1 1 auto;
+  }
+  .concept-col.zh-col h4,
+  .concept-col.ja-col h4 {
+    font-size: 12px;
+  }
+  .concept-body {
+    font-size: 13px;
+    padding: 12px;
+  }
+}
+
+/* ── Code copy button: icon-only at 430px ────── */
+@media (max-width: 430px) {
+  .copy-example-btn {
+    padding: 5px 8px;
+    font-size: 13px;
+  }
+  .copy-example-btn .copy-btn-text {
+    display: none;
+  }
+}
+
+/* ── Quiz section: compact at 430px ──────────── */
+@media (max-width: 430px) {
+  .quiz-section {
+    padding-top: 14px;
+    gap: 8px;
+  }
+  .quiz-question {
+    padding: 10px;
+    font-size: 12.5px;
+  }
+  .quiz-option {
+    padding: 10px 12px;
+    font-size: 12px;
+    gap: 8px;
+  }
+  .quiz-option .option-marker {
+    width: 18px;
+    height: 18px;
+    font-size: 10px;
+  }
+  .quiz-footer {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+  .quiz-submit-btn {
+    width: 100%;
+    justify-content: center;
+    padding: 10px;
+    font-size: 13px;
+  }
+  .quiz-feedback {
+    text-align: center;
+  }
+}
+
+/* ── Playground footer: compact at 520px ─────── */
+@media (max-width: 520px) {
+  .console-footer {
+    padding: 8px 12px;
+    gap: 8px;
+  }
+  .run-area {
+    gap: 6px;
+  }
+  .shortcut-hint {
+    display: none;
+  }
+  .run-query-btn {
+    padding: 7px 14px;
+    font-size: 11.5px;
+  }
+  .console-btn {
+    padding: 3px 6px;
+    font-size: 10px;
+  }
+}
+
+/* ── Playground off-canvas: full-width at 430px ── */
+@media (max-width: 430px) {
+  .playground-section {
+    width: 100vw;
+    max-width: 100vw;
+    padding: 10px;
+    gap: 10px;
+  }
+  .console-header,
+  .schema-header {
+    padding: 8px 12px;
+    font-size: 12px;
+  }
+  .playground-task-desc {
+    padding: 6px 12px;
+    font-size: 11px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+  .task-desc-actions {
+    width: 100%;
+    justify-content: flex-end;
+  }
+  .editor-container {
+    min-height: 120px;
+  }
+  .sql-editor {
+    font-size: 13px;
+    padding: 8px;
+  }
+  .line-numbers {
+    font-size: 12px;
+  }
+  .db-group-tab {
+    padding: 3px 7px;
+    font-size: 10px;
+  }
+  .output-header {
+    padding: 7px 12px;
+    font-size: 11px;
+  }
+  .output-body {
+    padding: 8px;
+  }
+  .schema-table-details {
+    max-height: 140px;
+  }
+}
+
+/* ── Auth panel: full-screen-ish at 390px ────── */
+@media (max-width: 390px) {
+  .auth-panel {
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100vw;
+    max-width: 100vw;
+    transform: none;
+    border-radius: 0;
+  }
+  .auth-panel-content {
+    max-height: 100vh;
+    border-radius: 0;
+    border: none;
+  }
+  .auth-panel-body {
+    padding: 12px;
+  }
+  .auth-panel-header {
+    padding: 12px 14px;
+  }
+  .auth-management-block .auth-input {
+    min-height: 38px;
+    font-size: 13px;
+  }
+  .auth-management-block .auth-btn {
+    min-height: 38px;
+    font-size: 13px;
+  }
+}
+
+/* ── Global small-screen content padding ─────── */
+@media (max-width: 430px) {
+  .playground-card {
+    border-radius: 10px;
+  }
+  .lesson-header h2 {
+    font-size: 17px;
+  }
+  .lesson-header h3 {
+    font-size: 12px;
+  }
+  .lang-tab {
+    padding: 5px 10px;
+    font-size: 11px;
+  }
+  .analogy-card {
+    padding: 10px 12px;
+    gap: 8px;
+  }
+  .analogy-card .card-content h5 {
+    font-size: 12px;
+  }
+  .analogy-card .card-content p {
+    font-size: 12px;
+  }
+  .example-header {
+    padding: 6px 10px;
+    font-size: 11px;
+  }
+  .example-card pre {
+    padding: 10px;
+    font-size: 12px;
+  }
+  .example-card code {
+    font-size: 12px;
+  }
+  .sidebar-progress {
+    padding: 10px 14px;
+    gap: 6px;
+  }
+}
