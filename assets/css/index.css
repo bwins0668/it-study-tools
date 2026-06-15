@@ -8215,6 +8215,89 @@ body.mobile-playground-open .mobile-backdrop {
 .auth-password-details .auth-password-row {
   margin-top: 8px;
 }
+.auth-account-management {
+  margin-top: 8px;
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.auth-account-management-summary {
+  cursor: pointer;
+  color: var(--neon-cyan);
+  font-size: 12px;
+  font-weight: 600;
+  outline: none;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 10px 12px;
+  user-select: none;
+}
+.auth-account-management-summary::-webkit-details-marker {
+  display: none;
+}
+.auth-account-management-body {
+  padding: 0 12px 12px;
+}
+.auth-account-management-hint {
+  margin: 0 0 10px;
+}
+.auth-profile-grid {
+  display: grid;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+.auth-profile-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+  padding: 7px 9px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.025);
+}
+.auth-profile-value {
+  min-width: 0;
+  color: var(--text-main);
+  font-size: 12px;
+  overflow-wrap: anywhere;
+  text-align: right;
+}
+.auth-management-block {
+  padding: 11px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+.auth-management-label {
+  display: block;
+  margin-bottom: 7px;
+  color: var(--text-main);
+  font-size: 12px;
+  font-weight: 600;
+}
+.auth-management-block .auth-btn {
+  width: 100%;
+  min-height: 38px;
+}
+.auth-username-readonly-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 9px 10px;
+  border: 1px solid rgba(0, 240, 255, 0.12);
+  border-radius: 6px;
+  background: rgba(0, 240, 255, 0.04);
+  color: var(--text-muted);
+  font-size: 11px;
+  line-height: 1.45;
+}
+.auth-username-readonly-note i {
+  flex: 0 0 auto;
+  margin-top: 2px;
+  color: var(--neon-cyan);
+}
 .auth-bottom-actions-section {
   background: rgba(255, 255, 255, 0.01);
   padding: 12px 20px !important;
@@ -8358,7 +8441,27 @@ body.mobile-playground-open .mobile-backdrop {
   }
   .auth-panel {
     width: calc(100vw - 24px);
-    margin: 12px;
+    max-width: calc(100vw - 24px);
+  }
+  .auth-panel-body {
+    padding: 16px;
+  }
+  .auth-account-management-summary {
+    min-height: 44px;
+  }
+  .auth-management-block .auth-input {
+    min-height: 42px;
+  }
+  .auth-management-block .auth-btn {
+    min-height: 42px;
+  }
+  .auth-profile-row {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 3px;
+  }
+  .auth-profile-value {
+    text-align: left;
   }
 }
 

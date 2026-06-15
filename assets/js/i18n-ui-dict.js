@@ -5163,5 +5163,138 @@
     if (!window.I18nUiDict[locale].auth) window.I18nUiDict[locale].auth = {};
     Object.assign(window.I18nUiDict[locale].auth, AUTH_ROUND_23_13[locale]);
   });
+
+  /* Round 23.23: account management MVP */
+  var AUTH_ROUND_23_23_EN = {
+    accountManagement: "Account management",
+    accountManagementHint: "Update your display name or password.",
+    usernameReadonly: "Username cannot be changed yet.",
+    usernameChangeComingSoon: "Username changes will be available in a future version.",
+    displayName: "Display name",
+    newDisplayName: "New display name",
+    saveDisplayName: "Save display name",
+    displayNameRequired: "Please enter a display name",
+    displayNameTooLong: "Display name must be no more than 32 characters",
+    displayNameUpdated: "Display name updated",
+    displayNameUpdateFailed: "Display name update failed",
+    changePassword: "Change password",
+    newPassword: "New password",
+    confirmNewPassword: "Confirm new password",
+    updatePassword: "Update password",
+    passwordUpdated: "Password updated. Keep it safe.",
+    passwordUpdateFailed: "Password update failed",
+    passwordKeepSafe: "Use a unique password and keep it safe.",
+    accountSecurity: "Account security",
+    currentUsername: "Current username",
+    currentDisplayName: "Current display name",
+    saving: "Saving"
+  };
+  var AUTH_ROUND_23_23 = {
+    "zh-CN": {
+      accountManagement: "账号管理",
+      accountManagementHint: "修改昵称或密码。",
+      usernameReadonly: "用户名暂不支持直接修改。",
+      usernameChangeComingSoon: "用户名修改将在后续版本开放。",
+      displayName: "昵称 / 显示名",
+      newDisplayName: "新昵称",
+      saveDisplayName: "保存昵称",
+      displayNameRequired: "请输入昵称",
+      displayNameTooLong: "昵称最多 32 个字符",
+      displayNameUpdated: "昵称已更新",
+      displayNameUpdateFailed: "昵称更新失败",
+      changePassword: "修改密码",
+      newPassword: "新密码",
+      confirmNewPassword: "确认新密码",
+      updatePassword: "更新密码",
+      passwordUpdated: "密码已更新，请妥善保存",
+      passwordUpdateFailed: "密码更新失败",
+      passwordKeepSafe: "请使用独立密码并妥善保管。",
+      accountSecurity: "账号安全",
+      currentUsername: "当前用户名",
+      currentDisplayName: "当前昵称",
+      saving: "保存中"
+    },
+    "ja-JP": {
+      accountManagement: "アカウント管理",
+      accountManagementHint: "表示名またはパスワードを変更します。",
+      usernameReadonly: "ユーザー名の直接変更は現在未対応です。",
+      usernameChangeComingSoon: "ユーザー名変更は今後のバージョンで対応予定です。",
+      displayName: "ニックネーム / 表示名",
+      newDisplayName: "新しい表示名",
+      saveDisplayName: "ニックネームを保存",
+      displayNameRequired: "表示名を入力してください",
+      displayNameTooLong: "表示名は32文字以内で入力してください",
+      displayNameUpdated: "表示名を更新しました",
+      displayNameUpdateFailed: "表示名の更新に失敗しました",
+      changePassword: "パスワード変更",
+      newPassword: "新しいパスワード",
+      confirmNewPassword: "新しいパスワードを確認",
+      updatePassword: "パスワードを更新",
+      passwordUpdated: "パスワードを更新しました。安全に保管してください。",
+      passwordUpdateFailed: "パスワードの更新に失敗しました",
+      passwordKeepSafe: "他と異なるパスワードを使用し、安全に保管してください。",
+      accountSecurity: "アカウントセキュリティ",
+      currentUsername: "現在のユーザー名",
+      currentDisplayName: "現在の表示名",
+      saving: "保存中"
+    },
+    "en-US": AUTH_ROUND_23_23_EN,
+    "ko-KR": {
+      accountManagement: "계정 관리",
+      accountManagementHint: "표시 이름 또는 비밀번호를 변경합니다.",
+      usernameReadonly: "사용자 이름은 아직 직접 변경할 수 없습니다.",
+      usernameChangeComingSoon: "사용자 이름 변경은 향후 버전에서 제공됩니다.",
+      displayName: "닉네임 / 표시 이름",
+      newDisplayName: "새 표시 이름",
+      saveDisplayName: "닉네임 저장",
+      displayNameRequired: "표시 이름을 입력해 주세요",
+      displayNameTooLong: "표시 이름은 32자 이하여야 합니다",
+      displayNameUpdated: "표시 이름이 업데이트되었습니다",
+      displayNameUpdateFailed: "표시 이름 업데이트에 실패했습니다",
+      changePassword: "비밀번호 변경",
+      newPassword: "새 비밀번호",
+      confirmNewPassword: "새 비밀번호 확인",
+      updatePassword: "비밀번호 업데이트",
+      passwordUpdated: "비밀번호가 업데이트되었습니다. 안전하게 보관해 주세요.",
+      passwordUpdateFailed: "비밀번호 업데이트에 실패했습니다",
+      passwordKeepSafe: "고유한 비밀번호를 사용하고 안전하게 보관해 주세요.",
+      accountSecurity: "계정 보안",
+      currentUsername: "현재 사용자 이름",
+      currentDisplayName: "현재 표시 이름",
+      saving: "저장 중"
+    },
+    "my-MM": Object.assign({}, AUTH_ROUND_23_23_EN),
+    "vi-VN": Object.assign({}, AUTH_ROUND_23_23_EN),
+    "fr-FR": Object.assign({}, AUTH_ROUND_23_23_EN),
+    "default-ja-zh": {
+      accountManagement: "账号管理 / アカウント管理",
+      accountManagementHint: "修改昵称或密码 / 表示名またはパスワードを変更",
+      usernameReadonly: "用户名暂不支持直接修改 / ユーザー名の直接変更は現在未対応です",
+      usernameChangeComingSoon: "用户名修改将在后续版本开放 / 今後のバージョンで対応予定です",
+      displayName: "昵称 / 表示名",
+      newDisplayName: "新昵称 / 新しい表示名",
+      saveDisplayName: "保存昵称 / ニックネームを保存",
+      displayNameRequired: "请输入昵称 / 表示名を入力してください",
+      displayNameTooLong: "昵称最多 32 个字符 / 表示名は32文字以内です",
+      displayNameUpdated: "昵称已更新 / 表示名を更新しました",
+      displayNameUpdateFailed: "昵称更新失败 / 表示名の更新に失敗しました",
+      changePassword: "修改密码 / パスワード変更",
+      newPassword: "新密码 / 新しいパスワード",
+      confirmNewPassword: "确认新密码 / 新しいパスワードを確認",
+      updatePassword: "更新密码 / パスワードを更新",
+      passwordUpdated: "密码已更新，请妥善保存 / パスワードを更新しました",
+      passwordUpdateFailed: "密码更新失败 / パスワードの更新に失敗しました",
+      passwordKeepSafe: "请妥善保存密码 / パスワードを安全に保管してください",
+      accountSecurity: "账号安全 / アカウントセキュリティ",
+      currentUsername: "当前用户名 / 現在のユーザー名",
+      currentDisplayName: "当前昵称 / 現在の表示名",
+      saving: "保存中 / 保存中"
+    }
+  };
+  Object.keys(AUTH_ROUND_23_23).forEach(function (locale) {
+    if (!window.I18nUiDict[locale]) window.I18nUiDict[locale] = {};
+    if (!window.I18nUiDict[locale].auth) window.I18nUiDict[locale].auth = {};
+    Object.assign(window.I18nUiDict[locale].auth, AUTH_ROUND_23_23[locale]);
+  });
 })();
 

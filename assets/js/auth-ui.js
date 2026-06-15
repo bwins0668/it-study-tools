@@ -38,6 +38,9 @@
   var authSubscription = null;
   var syncMessage = "";
   var syncInProgress = false;
+  var accountManagementOpen = false;
+  var profileUpdateInProgress = false;
+  var passwordUpdateInProgress = false;
 
   function ensureSupabaseAdapter() {
     if (window.StudySupabase) return Promise.resolve(window.StudySupabase);
@@ -170,6 +173,28 @@
       "auth.conflictsResolved": "Merged remote progress",
       "auth.syncSummaryTitle": "Sync summary",
       "auth.syncFailedDetail": "Some sync operations failed. Please retry.",
+      "auth.accountManagement": "Account management",
+      "auth.accountManagementHint": "Update your display name or password.",
+      "auth.usernameReadonly": "Username cannot be changed yet.",
+      "auth.usernameChangeComingSoon": "Username changes will be available in a future version.",
+      "auth.displayName": "Display name",
+      "auth.newDisplayName": "New display name",
+      "auth.saveDisplayName": "Save display name",
+      "auth.displayNameRequired": "Please enter a display name",
+      "auth.displayNameTooLong": "Display name must be no more than 32 characters",
+      "auth.displayNameUpdated": "Display name updated",
+      "auth.displayNameUpdateFailed": "Display name update failed",
+      "auth.changePassword": "Change password",
+      "auth.newPassword": "New password",
+      "auth.confirmNewPassword": "Confirm new password",
+      "auth.updatePassword": "Update password",
+      "auth.passwordUpdated": "Password updated. Keep it safe.",
+      "auth.passwordUpdateFailed": "Password update failed",
+      "auth.passwordKeepSafe": "Use a unique password and keep it safe.",
+      "auth.accountSecurity": "Account security",
+      "auth.currentUsername": "Current username",
+      "auth.currentDisplayName": "Current display name",
+      "auth.saving": "Saving",
     };
     return dict[key] || fallback || key;
   }
@@ -251,7 +276,7 @@
     var authMode = metadata.auth_mode === "username" || /@study-tools\.local$/i.test(user.email || "")
       ? "username"
       : "legacy_email";
-    var resolvedName = displayName || metadata.display_name || username || emailPrefix || t("auth.account", "账号");
+    var resolvedName = displayName || metadata.display_name || metadata.nickname || username || emailPrefix || t("auth.account", "账号");
     setLocalAuthState({
       mode: "signed_in",
       user_id: user.id || null,
@@ -510,6 +535,53 @@
         '</div>' +
       '</details>';
 
+    var accountManagementHtml =
+      '<details class="auth-account-management"' + (accountManagementOpen ? " open" : "") + '>' +
+        '<summary class="auth-account-management-summary">' +
+          '<i class="fa-solid fa-user-gear"></i> ' + esc(t("auth.accountManagement", "Account management")) +
+        '</summary>' +
+        '<div class="auth-account-management-body">' +
+          '<div class="auth-field-hint auth-account-management-hint">' +
+            esc(t("auth.accountManagementHint", "Update your display name or password.")) +
+          '</div>' +
+          '<div class="auth-profile-grid">' +
+            '<div class="auth-profile-row">' +
+              '<span class="auth-label">' + esc(t("auth.currentUsername", "Current username")) + '</span>' +
+              '<strong class="auth-profile-value">' + esc(state.username || "—") + '</strong>' +
+            '</div>' +
+            '<div class="auth-profile-row">' +
+              '<span class="auth-label">' + esc(t("auth.currentDisplayName", "Current display name")) + '</span>' +
+              '<strong class="auth-profile-value">' + esc(accountLabel) + '</strong>' +
+            '</div>' +
+          '</div>' +
+          '<div class="auth-management-block">' +
+            '<label class="auth-management-label" for="auth-profile-display-name">' +
+              esc(t("auth.displayName", "Display name")) +
+            '</label>' +
+            '<input id="auth-profile-display-name" class="auth-input" data-auth-input="profile-display-name" type="text" autocomplete="nickname" maxlength="32" value="' + esc(accountLabel) + '" placeholder="' + esc(t("auth.newDisplayName", "New display name")) + '">' +
+            '<button class="auth-btn auth-btn-secondary" data-auth-action="save-display-name"' + (profileUpdateInProgress ? " disabled" : "") + '>' +
+              '<i class="fa-solid fa-' + (profileUpdateInProgress ? "spinner fa-spin" : "floppy-disk") + '"></i> ' +
+              esc(profileUpdateInProgress ? t("auth.saving", "Saving") : t("auth.saveDisplayName", "Save display name")) +
+            '</button>' +
+          '</div>' +
+          '<div class="auth-management-block">' +
+            '<div class="auth-management-label">' + esc(t("auth.changePassword", "Change password")) + '</div>' +
+            '<input class="auth-input" data-auth-input="new-password" type="password" autocomplete="new-password" placeholder="' + esc(t("auth.newPassword", "New password")) + '">' +
+            '<input class="auth-input" data-auth-input="confirm-new-password" type="password" autocomplete="new-password" placeholder="' + esc(t("auth.confirmNewPassword", "Confirm new password")) + '">' +
+            '<div class="auth-field-hint">' + esc(t("auth.passwordKeepSafe", "Use a unique password and keep it safe.")) + '</div>' +
+            '<button class="auth-btn auth-btn-secondary" data-auth-action="update-password"' + (passwordUpdateInProgress ? " disabled" : "") + '>' +
+              '<i class="fa-solid fa-' + (passwordUpdateInProgress ? "spinner fa-spin" : "key") + '"></i> ' +
+              esc(passwordUpdateInProgress ? t("auth.saving", "Saving") : t("auth.updatePassword", "Update password")) +
+            '</button>' +
+          '</div>' +
+          '<div class="auth-username-readonly-note">' +
+            '<i class="fa-solid fa-circle-info"></i>' +
+            '<span>' + esc(t("auth.usernameReadonly", "Username cannot be changed yet.")) + ' ' +
+              esc(t("auth.usernameChangeComingSoon", "Username changes will be available in a future version.")) + '</span>' +
+          '</div>' +
+        '</div>' +
+      '</details>';
+
     content.innerHTML =
       '<div class="auth-panel-header">' +
         '<h3 id="auth-panel-title">' + esc(t("auth.account", "账号")) + '</h3>' +
@@ -534,6 +606,7 @@
                 '</button>' +
               '</div>' +
             '</div>' +
+            accountManagementHtml +
             syncSectionHtml
           : // Not logged in state
             '<div class="auth-panel-section auth-login-section">' +
@@ -600,6 +673,9 @@
     var registerButton = qs('[data-auth-action="register"]', content);
     var supabaseSignOutButton = qs('[data-auth-action="supabase-sign-out"]', content);
     var manualSyncButton = qs('[data-auth-action="manual-sync"]', content);
+    var saveDisplayNameButton = qs('[data-auth-action="save-display-name"]', content);
+    var updatePasswordButton = qs('[data-auth-action="update-password"]', content);
+    var accountManagementDetails = qs(".auth-account-management", content);
 
     if (closeButton) closeButton.addEventListener("click", closeAuthPanel);
     if (signInButton) {
@@ -614,6 +690,13 @@
     if (registerButton) registerButton.addEventListener("click", handleRegister);
     if (supabaseSignOutButton) supabaseSignOutButton.addEventListener("click", handleSupabaseSignOut);
     if (manualSyncButton) manualSyncButton.addEventListener("click", handleManualSync);
+    if (saveDisplayNameButton) saveDisplayNameButton.addEventListener("click", handleDisplayNameUpdate);
+    if (updatePasswordButton) updatePasswordButton.addEventListener("click", handlePasswordUpdate);
+    if (accountManagementDetails) {
+      accountManagementDetails.addEventListener("toggle", function () {
+        accountManagementOpen = accountManagementDetails.open;
+      });
+    }
 
     // Tab switching
     var tabs = content.querySelectorAll("[data-auth-tab]");
@@ -740,6 +823,64 @@
       : t("auth.usernameRegistrationUnavailable", "当前无法创建用户名账号，请检查 Supabase 的注册与邮箱确认设置。");
   }
 
+  async function handleDisplayNameUpdate() {
+    if (profileUpdateInProgress || !window.StudySupabase) return;
+    accountManagementOpen = true;
+    var displayName = getAuthInput("profile-display-name");
+    if (!displayName) return refreshAuthPanel(t("auth.displayNameRequired", "Please enter a display name"));
+    if (displayName.length > 32) return refreshAuthPanel(t("auth.displayNameTooLong", "Display name must be no more than 32 characters"));
+    profileUpdateInProgress = true;
+    populateAuthPanel(el("auth-panel"), "profile-update-start");
+    try {
+      var result = await window.StudySupabase.updateProfileMetadata({
+        display_name: displayName,
+        nickname: displayName
+      });
+      if (result && result.error) {
+        authMessage = t("auth.displayNameUpdateFailed", "Display name update failed");
+      } else if (result && result.data && result.data.user) {
+        setSupabaseSignedInUser(result.data.user, displayName);
+        authMessage = t("auth.displayNameUpdated", "Display name updated");
+      }
+    } catch (_) {
+      authMessage = t("auth.displayNameUpdateFailed", "Display name update failed");
+    } finally {
+      profileUpdateInProgress = false;
+      if (panelVisible) populateAuthPanel(el("auth-panel"), "profile-update-finished");
+    }
+  }
+
+  async function handlePasswordUpdate() {
+    if (passwordUpdateInProgress || !window.StudySupabase) return;
+    accountManagementOpen = true;
+    var passwordInput = qs('[data-auth-input="new-password"]', el("auth-panel-content"));
+    var confirmInput = qs('[data-auth-input="confirm-new-password"]', el("auth-panel-content"));
+    var newPassword = passwordInput ? passwordInput.value : "";
+    var confirmPassword = confirmInput ? confirmInput.value : "";
+    if (!newPassword) return refreshAuthPanel(t("auth.passwordRequired", "Please enter a password"));
+    if (newPassword.length < 6) return refreshAuthPanel(t("auth.passwordTooShort", "Password must be at least 6 characters"));
+    if (newPassword !== confirmPassword) return refreshAuthPanel(t("auth.passwordMismatch", "Passwords do not match"));
+    passwordUpdateInProgress = true;
+    if (passwordInput) passwordInput.value = "";
+    if (confirmInput) confirmInput.value = "";
+    populateAuthPanel(el("auth-panel"), "password-update-start");
+    try {
+      var result = await window.StudySupabase.updatePassword(newPassword);
+      newPassword = "";
+      confirmPassword = "";
+      authMessage = result && result.error
+        ? t("auth.passwordUpdateFailed", "Password update failed")
+        : t("auth.passwordUpdated", "Password updated. Keep it safe.");
+    } catch (_) {
+      newPassword = "";
+      confirmPassword = "";
+      authMessage = t("auth.passwordUpdateFailed", "Password update failed");
+    } finally {
+      passwordUpdateInProgress = false;
+      if (panelVisible) populateAuthPanel(el("auth-panel"), "password-update-finished");
+    }
+  }
+
   async function handleSupabaseSignOut() {
     var result = await window.StudySupabase.signOut();
     if (result && result.error) return refreshAuthPanel(result.error.message);
@@ -805,7 +946,7 @@
 
     userBtn.innerHTML =
       '<span class="auth-user-icon"><i class="fa-solid fa-' + (isAnonymous ? "user" : "user-check") + '"></i></span>' +
-      '<span class="auth-user-label">' + esc(isAnonymous ? t("auth.localMode", "本地模式") : t("auth.syncStatus.synced", "已登录")) + '</span>';
+      '<span class="auth-user-label">' + esc(isAnonymous ? t("auth.localMode", "本地模式") : getDisplayUserLabel()) + '</span>';
 
     // Insert before theme-toggle
     var themeBtn = el("theme-toggle-btn");

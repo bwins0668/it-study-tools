@@ -205,6 +205,58 @@
     });
   }
 
+  async function updatePassword(newPassword) {
+    var activeClient = client || initClient();
+    if (!activeClient || !activeClient.auth || typeof activeClient.auth.updateUser !== "function") {
+      return { data: { user: null }, error: unavailableError() };
+    }
+    if (typeof newPassword !== "string" || !newPassword) {
+      return { data: { user: null }, error: localError("password_required", "Password is required.") };
+    }
+    try {
+      var currentUser = await getCurrentUser();
+      if (!currentUser) {
+        return { data: { user: null }, error: localError("not_authenticated", "Please sign in first.") };
+      }
+      var result = await activeClient.auth.updateUser({ password: newPassword });
+      if (result && result.error) result.error = friendlyError(result.error, "password_update_failed");
+      return result;
+    } catch (error) {
+      return { data: { user: null }, error: friendlyError(error, "password_update_failed") };
+    }
+  }
+
+  async function updateProfileMetadata(profile) {
+    var activeClient = client || initClient();
+    if (!activeClient || !activeClient.auth || typeof activeClient.auth.updateUser !== "function") {
+      return { data: { user: null }, error: unavailableError() };
+    }
+    var displayName = profile && typeof profile.display_name === "string"
+      ? profile.display_name.trim()
+      : "";
+    var nickname = profile && typeof profile.nickname === "string"
+      ? profile.nickname.trim()
+      : displayName;
+    if (!displayName || !nickname) {
+      return { data: { user: null }, error: localError("display_name_required", "Display name is required.") };
+    }
+    try {
+      var currentUser = await getCurrentUser();
+      if (!currentUser) {
+        return { data: { user: null }, error: localError("not_authenticated", "Please sign in first.") };
+      }
+      var metadata = Object.assign({}, currentUser.user_metadata || {}, {
+        display_name: displayName,
+        nickname: nickname
+      });
+      var result = await activeClient.auth.updateUser({ data: metadata });
+      if (result && result.error) result.error = friendlyError(result.error, "profile_update_failed");
+      return result;
+    } catch (error) {
+      return { data: { user: null }, error: friendlyError(error, "profile_update_failed") };
+    }
+  }
+
   async function signOut() {
     var activeClient = client || initClient();
     if (!activeClient || !activeClient.auth || typeof activeClient.auth.signOut !== "function") {
@@ -257,6 +309,8 @@
     signUpWithEmail: signUpWithEmail,
     signInWithUsername: signInWithUsername,
     signUpWithUsername: signUpWithUsername,
+    updatePassword: updatePassword,
+    updateProfileMetadata: updateProfileMetadata,
     signOut: signOut,
     onAuthStateChange: onAuthStateChange
   };
