@@ -18,7 +18,7 @@ var NW=function(x){var r='';for(var i=0;i<x.length;i++){var c=x.charCodeAt(i);if
 var CT={
 open:function(){var h=$('coding-typing-hub');if(!h)return;CT._syncLayoutTop();h.classList.add('is-active');document.body.classList.add('mode-coding-typing');document.body.classList.remove('mobile-playground-open');requestAnimationFrame(CT._syncLayoutTop);s.active=true;if(s.item){CT._renderItem();CT._resetTimer();CT._startTimer()}CT._loadHistory();CT._renderHistory();CT._renderStats();CT._renderCommonMistakes()},
 close:function(){var h=$('coding-typing-hub');if(h)h.classList.remove('is-active');document.body.classList.remove('mode-coding-typing');s.active=false;CT._stopTimer()},
-goBack:function(){if(window.switchSubject){window.switchSubject('coding-typing')}else{CT.close()}},
+goBack:function(){CT.close();document.body.classList.remove('mode-coding-typing');var h=$('coding-typing-hub');if(h)h.classList.remove('is-active');},
 init:function(){if(!window.CODING_TYPING_DATA)return;try{var d=JSON.parse(localStorage.getItem(LS));if(Array.isArray(d))s.history=d.slice(0,50)}catch(e){}CT._setupInput();CT._populateCats();CT._filter();CT._setupKeyboard();CT._setupHistoryFilters();CT._renderStats();CT._renderCommonMistakes();window.addEventListener('resize',CT._syncLayoutTop)},
 _syncLayoutTop:function(){var h=$('coding-typing-hub');var header=document.querySelector('.app-header');if(h&&header)h.style.top=Math.ceil(header.getBoundingClientRect().bottom)+'px'},
 filterLang:function(l){s.lang=l;s.cat='all';s.diff='all';qq('#ct-lang-tabs .ct-lang-tab').forEach(function(t){t.classList.toggle('active',t.getAttribute('data-lang')===l)});CT._populateCats();CT._filter()},
