@@ -140,6 +140,24 @@ document.addEventListener("DOMContentLoaded", () => {
   currentSubject = "";
   switchSubject('sql');
   initTheme();
+
+  // Round 40.0: Global ESC key handler for accessibility
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' || e.keyCode === 27) {
+      // Close all drawers
+      if (window.closeMobileDrawers) window.closeMobileDrawers();
+      // Close tools drawer
+      var toolsDrawer = document.getElementById('tools-drawer');
+      if (toolsDrawer && toolsDrawer.classList.contains('open')) {
+        toolsDrawer.classList.remove('open');
+      }
+      // Close module switch panel
+      var modulePanel = document.getElementById('module-switch-panel');
+      if (modulePanel && modulePanel.classList.contains('open')) {
+        modulePanel.classList.remove('open');
+      }
+    }
+  });
 });
 
 // Heartbeat function
