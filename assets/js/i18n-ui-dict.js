@@ -347,7 +347,13 @@
         ctTypingShort: "コーディング",
         wbShort: "間違い",
         thisWeek: "今週",
-        today: "今日"
+        today: "今日",
+        dataIncompleteHint: "データが完全でない可能性があります。先に同期することをおすすめします。",
+        syncAndRefresh: "同期して更新",
+        syncing: "同期中…",
+        syncComplete: "同期完了",
+        syncFailedHint: "同期に失敗しました",
+        loginToSyncHint: "ログインすると複数デバイス間でデータを同期できます"
       },
       examHistory: {
         title: "最近の試験履歴",
@@ -895,7 +901,13 @@
         ctTypingShort: "编程",
         wbShort: "错题",
         thisWeek: "本周",
-        today: "今日"
+        today: "今日",
+        dataIncompleteHint: "数据可能不完整，建议先同步。",
+        syncAndRefresh: "同步并刷新",
+        syncing: "正在同步…",
+        syncComplete: "同步完成",
+        syncFailedHint: "同步失败",
+        loginToSyncHint: "登录后可同步多设备数据"
       },
       examHistory: {
         title: "最近考试历史",
@@ -1442,7 +1454,13 @@
         ctTypingShort: "Code",
         wbShort: "Wrong",
         thisWeek: "This week",
-        today: "Today"
+        today: "Today",
+        dataIncompleteHint: "Your data may be incomplete. Sync first to update this device.",
+        syncAndRefresh: "Sync & Refresh",
+        syncing: "Syncing\u2026",
+        syncComplete: "Sync complete",
+        syncFailedHint: "Sync failed",
+        loginToSyncHint: "Login to sync data across devices"
       },
       examHistory: {
         title: "Recent Exam History",
@@ -3341,7 +3359,13 @@
         ctTypingShort: "코딩",
         wbShort: "오답",
         thisWeek: "이번 주",
-        today: "오늘"
+        today: "오늘",
+        dataIncompleteHint: "데이터가 완전하지 않을 수 있습니다. 먼저 동기화하는 것을 권장합니다.",
+        syncAndRefresh: "동기화 및 새로고침",
+        syncing: "동기화 중…",
+        syncComplete: "동기화 완료",
+        syncFailedHint: "동기화 실패",
+        loginToSyncHint: "로그인하여 여러 기기에서 데이터를 동기화하세요"
       },
       examHistory: {
         title: "최근 시험 기록",

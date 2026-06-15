@@ -1575,3 +1575,24 @@ body[data-theme="light"] .lesson-content .content-card {
     margin: 0;
   }
 }
+
+/* ── Round 29.1: Sync freshness hint (light) ──────── */
+body[data-theme="light"] .db-sync-hint--warn {
+  background: rgba(245, 158, 11, 0.08);
+  border-color: rgba(245, 158, 11, 0.25);
+  color: #b45309;
+}
+body[data-theme="light"] .db-sync-hint--info {
+  background: rgba(59, 130, 246, 0.06);
+  border-color: rgba(59, 130, 246, 0.2);
+  color: #1d4ed8;
+}
+body[data-theme="light"] .db-sync-hint-btn:hover {
+  background: rgba(0, 0, 0, 0.06);
+}
+body[data-theme="light"] .db-sync-hint-msg--ok {
+  color: #16a34a;
+}
+body[data-theme="light"] .db-sync-hint-msg--err {
+  color: #dc2626;
+}

@@ -10092,6 +10092,66 @@ body.mobile-playground-open .mobile-backdrop {
 .db-status-err {
   color: #f87171 !important;
 }
+
+/* ── Round 29.1: Sync freshness hint ──────────────── */
+.db-sync-hint {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  margin-bottom: 12px;
+  font-size: 13px;
+  line-height: 1.5;
+  flex-wrap: wrap;
+}
+.db-sync-hint--warn {
+  background: rgba(251, 191, 36, 0.1);
+  border: 1px solid rgba(251, 191, 36, 0.3);
+  color: #fbbf24;
+}
+.db-sync-hint--info {
+  background: rgba(96, 165, 250, 0.08);
+  border: 1px solid rgba(96, 165, 250, 0.2);
+  color: #93c5fd;
+}
+.db-sync-hint-icon {
+  font-size: 16px;
+  flex-shrink: 0;
+  line-height: 1;
+}
+.db-sync-hint-btn {
+  margin-left: auto;
+  padding: 6px 14px;
+  border-radius: 8px;
+  border: 1px solid currentColor;
+  background: transparent;
+  color: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.db-sync-hint-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+.db-sync-hint-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+.db-sync-hint-msg {
+  font-size: 12px;
+  flex-basis: 100%;
+  margin-top: 4px;
+}
+.db-sync-hint-msg--ok {
+  color: #4ade80;
+}
+.db-sync-hint-msg--err {
+  color: #f87171;
+}
 .db-no-data {
   color: var(--text-muted, #888);
   font-style: italic;

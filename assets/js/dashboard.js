@@ -132,21 +132,16 @@
     return { count: count, latestAt: latest || null };
   }
 
-  /** Bookmarks / favorites stats */
+  /** Bookmarks / favorites stats — Round 29.1: use favorites as source-of-truth */
   function getBookmarkStats() {
-    var typingBm = safeObj("study-tools-typing-bookmarks-sync-v1");
-    var typingBmCount = 0;
-    if (typingBm && typingBm.items) {
-      try {
-        typingBmCount = typingBm.items.filter(function (x) { return x && !x.deleted_at; }).length;
-      } catch (_) {}
-    }
     var jpTyping = safeObj("study-tools-japanese-typing-v1");
     var jpFavCount = 0;
     if (jpTyping && Array.isArray(jpTyping.favorites)) {
       jpFavCount = jpTyping.favorites.length;
     }
-    return { typingBookmarks: typingBmCount, japaneseFavorites: jpFavCount, total: typingBmCount + jpFavCount };
+    // typingBookmarks = same underlying data (typing_article bookmarks === favorites)
+    // Round 29.1: removed dependency on sync-state `.items` (never backfilled)
+    return { typingBookmarks: jpFavCount, japaneseFavorites: jpFavCount, total: jpFavCount };
   }
 
   /** Exam history stats */
@@ -650,6 +645,10 @@
     /* ── Section 8: Sync Status ───────────────────── */
     html += '<div class="db-section">';
     html += '<h3 class="db-section-title">' + DT("syncStatus", "\u540C\u6B65\u72B6\u6001") + '</h3>';
+
+    // Round 29.1: sync freshness hint
+    html += renderSyncFreshnessHint(d.sync);
+
     html += '<div class="db-sync-status">';
 
     var loginClass = d.sync.loggedIn ? "db-status-ok" : "db-status-off";
@@ -723,6 +722,110 @@
     }
   }
 
+  /* ── Round 29.1: Sync freshness hint ─────────────── */
+  /** Returns hint HTML if sync data may be incomplete, otherwise empty string */
+  function renderSyncFreshnessHint(sync) {
+    var loggedIn = sync.loggedIn;
+    var lastSyncAt = sync.lastSyncAt;
+
+    // Not logged in: show login prompt (non-intrusive)
+    if (!loggedIn) {
+      return '<div class="db-sync-hint db-sync-hint--info">' +
+        '<span class="db-sync-hint-icon">&#9432;</span>' +
+        '<span>' + DT("loginToSyncHint", "Login to sync data across devices") + '</span>' +
+        '</div>';
+    }
+
+    // Logged in, never synced → P1 warning
+    if (!lastSyncAt) {
+      return '<div class="db-sync-hint db-sync-hint--warn">' +
+        '<span class="db-sync-hint-icon">&#9888;</span>' +
+        '<span>' + DT("dataIncompleteHint", "Data may be incomplete. Sync first to update this device.") + '</span>' +
+        '<button class="db-sync-hint-btn" id="db-sync-refresh-btn">' +
+        DT("syncAndRefresh", "Sync & Refresh") +
+        '</button>' +
+        '<span class="db-sync-hint-msg" id="db-sync-hint-msg" style="display:none"></span>' +
+        '</div>';
+    }
+
+    // Logged in, last sync > 24h ago → weak suggestion
+    try {
+      var diffH = (Date.now() - new Date(lastSyncAt).getTime()) / 3600000;
+      if (diffH > 24 && diffH > 0) {
+        return '<div class="db-sync-hint db-sync-hint--info">' +
+          '<span class="db-sync-hint-icon">&#9432;</span>' +
+          '<span>' + DT("dataIncompleteHint", "Your data may be stale. Consider syncing.") + '</span>' +
+          '<button class="db-sync-hint-btn" id="db-sync-refresh-btn">' +
+          DT("syncAndRefresh", "Sync & Refresh") +
+          '</button>' +
+          '<span class="db-sync-hint-msg" id="db-sync-hint-msg" style="display:none"></span>' +
+          '</div>';
+      }
+    } catch (_) {}
+
+    return "";
+  }
+
+  /** Handle sync + refresh button click */
+  function handleSyncAndRefresh() {
+    var btn = document.getElementById("db-sync-refresh-btn");
+    var msgEl = document.getElementById("db-sync-hint-msg");
+    if (!btn) return;
+
+    if (!window.StudySync || typeof window.StudySync.runManualSync !== "function") {
+      if (msgEl) {
+        msgEl.textContent = DT("syncFailedHint", "Sync unavailable");
+        msgEl.className = "db-sync-hint-msg db-sync-hint-msg--err";
+        msgEl.style.display = "";
+      }
+      return;
+    }
+
+    btn.disabled = true;
+    btn.textContent = DT("syncing", "Syncing…");
+    if (msgEl) { msgEl.textContent = ""; msgEl.style.display = "none"; }
+
+    window.StudySync.runManualSync().then(function (result) {
+      btn.disabled = false;
+      if (result && result.ok) {
+        btn.textContent = DT("syncComplete", "Sync complete");
+        if (msgEl) {
+          msgEl.textContent = DT("syncComplete", "Sync complete");
+          msgEl.className = "db-sync-hint-msg db-sync-hint-msg--ok";
+          msgEl.style.display = "";
+        }
+      } else {
+        btn.textContent = DT("syncAndRefresh", "Sync & Refresh");
+        var errMsg = (result && result.error && result.error.message) || DT("syncFailedHint", "Sync failed");
+        if (msgEl) {
+          msgEl.textContent = errMsg;
+          msgEl.className = "db-sync-hint-msg db-sync-hint-msg--err";
+          msgEl.style.display = "";
+        }
+      }
+      // Always refresh Dashboard after sync attempt
+      if (window.StudyDashboard && window.StudyDashboard.refresh) {
+        window.StudyDashboard.refresh();
+      }
+    }).catch(function (err) {
+      btn.disabled = false;
+      btn.textContent = DT("syncAndRefresh", "Sync & Refresh");
+      if (msgEl) {
+        msgEl.textContent = DT("syncFailedHint", "Sync failed") + ": " + (err.message || "");
+        msgEl.className = "db-sync-hint-msg db-sync-hint-msg--err";
+        msgEl.style.display = "";
+      }
+    });
+  }
+
+  /** Bind sync hint events (call after render) */
+  function bindSyncHintEvents() {
+    var btn = document.getElementById("db-sync-refresh-btn");
+    if (btn) {
+      btn.onclick = handleSyncAndRefresh;
+    }
+  }
+
   /* ── Open / Close / Refresh ──────────────────────── */
   function openPanel() {
     var panel = document.getElementById("dashboard-panel");
@@ -783,6 +886,7 @@
       var data = buildDashboardData();
       body.innerHTML = renderDashboard(data);
       bindGoalEvents();
+      bindSyncHintEvents();
       var title = document.getElementById("dashboard-title");
       if (title) title.textContent = DT("dashboard", "\u5B66\u4E60\u7EDF\u8BA1");
     } catch (e) {
