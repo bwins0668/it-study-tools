@@ -1,5 +1,5 @@
 /**
- * Study Tools Sync Engine - Round 25.0.
+ * Study Tools Sync Engine - Round 25.2.
  *
  * Local-first sync foundation:
  *  - device ID generation & persistence
@@ -727,6 +727,17 @@
           localStorage.setItem(TYPING_LS_KEYS.coding, JSON.stringify(local.slice(-50)));
         } catch (_) {}
       }
+      // Round 25.2: Mark merged entries as synced to prevent re-push
+      // When pull runs before push, merged remote entries must be excluded
+      var mergedKeys = [];
+      for (var m = 0; m < remoteRows.length; m++) {
+        var rm = remoteRows[m];
+        if (!rm || rm.deleted_at) continue;
+        var rmk = (rm.completed_at || "") + "|" + (rm.title || "");
+        if (localKeys[rmk]) continue; // already existed locally
+        mergedKeys.push(type + ":" + (rm.completed_at || "") + ":" + (rm.title || ""));
+      }
+      if (mergedKeys.length > 0) markKeysSynced(KEYS.TYPING_SYNCED, mergedKeys);
     }
     return { added: added, total: remoteRows.length };
   }
