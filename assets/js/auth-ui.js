@@ -608,6 +608,7 @@
         '</div>' +
       '</div>';
 
+    content.setAttribute("data-i18n-managed", "static");
     bindAuthPanelActions(content);
   }
 
