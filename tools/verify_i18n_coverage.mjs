@@ -23,11 +23,14 @@ check(i18n.length > 100, 'i18n-ui-dict.js exists');
 
 if (i18n.length < 100) { process.exit(1); }
 
-// Extract top-level sections (zh-CN, ja-JP, en-US, ko-KR)
-const langPattern = /(zh-CN|ja-JP|en-US|ko-KR)\s*:\s*\{/g;
+// Extract top-level sections (zh-CN, ja-JP, en-US, ko-KR).
+// Object keys in this file are quoted because they contain hyphens.
+const langPattern = /["']?(zh-CN|ja-JP|en-US|ko-KR)["']?\s*:\s*\{/g;
 let match;
 const langs = [];
-while ((match = langPattern.exec(i18n)) !== null) { langs.push(match[1]); }
+while ((match = langPattern.exec(i18n)) !== null) {
+  if (!langs.includes(match[1])) langs.push(match[1]);
+}
 check(langs.length === 4, `i18n has 4 languages (found: ${langs.join(', ')})`);
 
 // Check each section has same keys as zh-CN (reference)
