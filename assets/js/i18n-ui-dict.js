@@ -540,6 +540,40 @@
         maximize: "最大化",
         minimize: "最小化"
       },
+      keyboardShortcuts: {
+        title: "キーボードショートカット",
+        hintPress: "押す: ",
+        hintSuffix: " でこのダイアログを表示",
+        closeButton: "了解",
+        cat: {
+          general: "一般",
+          pythonSandbox: "Python サンドボックス",
+          javaSandbox: "Java サンドボックス",
+          navigation: "ナビゲーション",
+          study: "学習"
+        },
+        desc: {
+          toggleTools: "ツールドロワーを開閉",
+          closeDialogs: "ダイアログを閉じる/キャンセル",
+          saveProgress: "進捗を保存（エクスポート）",
+          runPython: "Pythonコードを実行",
+          clearPython: "Pythonエディタをクリア",
+          copyPython: "Pythonコードをコピー",
+          togglePythonTmpl: "Pythonテンプレートを切り替え",
+          runJava: "Javaコードを実行",
+          clearJava: "Javaエディタをクリア",
+          copyJava: "Javaコードをコピー",
+          toggleJavaTmpl: "Javaテンプレートを切り替え",
+          switchSql: "SQLモードに切り替え",
+          switchItTerm: "IT用語モードに切り替え",
+          switchPython: "Pythonモードに切り替え",
+          switchJava: "Javaモードに切り替え",
+          switchTyping: "タイピングモードに切り替え",
+          nextLesson: "次のレッスン",
+          prevLesson: "前のレッスン",
+          startQuiz: "クイズを開始"
+        }
+      },
       auth: {
         localMode: "ローカルモード",
         notLoggedIn: "未ログイン",

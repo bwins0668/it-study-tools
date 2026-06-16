@@ -1,103 +1,135 @@
-/**
+﻿/**
  * Keyboard Shortcuts Help Dialog
  * Round 108.0 - Keyboard shortcuts reference and help system
  * Round 136.0 - Ported from archive, innerHTML replaced with safe DOM API
+ * Round 136.1 - Centralized UI strings via SHORTCUT_LABELS + i18n fallback
  */
 
 (function() {
-  'use strict';
+  "use strict";
 
-  const KeyboardShortcuts = {
+  var SHORTCUT_LABELS = {
+    title: "Keyboard Shortcuts",
+    hintPress: "Press ",
+    hintSuffix: " anytime to show this dialog",
+    closeButton: "Got it!"
+  };
+
+  function getShortcutLabel(key) {
+    if (window.I18n && typeof window.I18n.t === "function") {
+      var val = window.I18n.t("keyboardShortcuts." + key);
+      if (val && val !== ("keyboardShortcuts." + key)) return val;
+    }
+    return SHORTCUT_LABELS[key] || key;
+  }
+
+  var KeyboardShortcuts = {
     shortcuts: [
-      { category: 'General', key: 'Ctrl + /', description: 'Toggle tools drawer' },
-      { category: 'General', key: 'Esc', description: 'Close dialogs / Cancel' },
-      { category: 'General', key: 'Ctrl + S', description: 'Save progress (export data)' },
-      { category: 'Python Sandbox', key: 'Ctrl + Enter', description: 'Run Python code' },
-      { category: 'Python Sandbox', key: 'Ctrl + L', description: 'Clear Python editor' },
-      { category: 'Python Sandbox', key: 'Ctrl + C', description: 'Copy Python code' },
-      { category: 'Python Sandbox', key: 'Ctrl + T', description: 'Toggle Python template' },
-      { category: 'Java Sandbox', key: 'Ctrl + Enter', description: 'Run Java code' },
-      { category: 'Java Sandbox', key: 'Ctrl + L', description: 'Clear Java editor' },
-      { category: 'Java Sandbox', key: 'Ctrl + C', description: 'Copy Java code' },
-      { category: 'Java Sandbox', key: 'Ctrl + T', description: 'Toggle Java template' },
-      { category: 'Navigation', key: 'Ctrl + 1', description: 'Switch to SQL mode' },
-      { category: 'Navigation', key: 'Ctrl + 2', description: 'Switch to IT Terminology mode' },
-      { category: 'Navigation', key: 'Ctrl + 3', description: 'Switch to Python mode' },
-      { category: 'Navigation', key: 'Ctrl + 4', description: 'Switch to Java mode' },
-      { category: 'Navigation', key: 'Ctrl + 5', description: 'Switch to Typing mode' },
-      { category: 'Study', key: 'Ctrl + Shift + N', description: 'Next lesson' },
-      { category: 'Study', key: 'Ctrl + Shift + P', description: 'Previous lesson' },
-      { category: 'Study', key: 'Ctrl + Shift + Q', description: 'Start quiz' }
+      { category: "General", key: "Ctrl + /", descriptionKey: "toggleTools" },
+      { category: "General", key: "Esc", descriptionKey: "closeDialogs" },
+      { category: "General", key: "Ctrl + S", descriptionKey: "saveProgress" },
+      { category: "Python Sandbox", key: "Ctrl + Enter", descriptionKey: "runPython" },
+      { category: "Python Sandbox", key: "Ctrl + L", descriptionKey: "clearPython" },
+      { category: "Python Sandbox", key: "Ctrl + C", descriptionKey: "copyPython" },
+      { category: "Python Sandbox", key: "Ctrl + T", descriptionKey: "togglePythonTmpl" },
+      { category: "Java Sandbox", key: "Ctrl + Enter", descriptionKey: "runJava" },
+      { category: "Java Sandbox", key: "Ctrl + L", descriptionKey: "clearJava" },
+      { category: "Java Sandbox", key: "Ctrl + C", descriptionKey: "copyJava" },
+      { category: "Java Sandbox", key: "Ctrl + T", descriptionKey: "toggleJavaTmpl" },
+      { category: "Navigation", key: "Ctrl + 1", descriptionKey: "switchSql" },
+      { category: "Navigation", key: "Ctrl + 2", descriptionKey: "switchItTerm" },
+      { category: "Navigation", key: "Ctrl + 3", descriptionKey: "switchPython" },
+      { category: "Navigation", key: "Ctrl + 4", descriptionKey: "switchJava" },
+      { category: "Navigation", key: "Ctrl + 5", descriptionKey: "switchTyping" },
+      { category: "Study", key: "Ctrl + Shift + N", descriptionKey: "nextLesson" },
+      { category: "Study", key: "Ctrl + Shift + P", descriptionKey: "prevLesson" },
+      { category: "Study", key: "Ctrl + Shift + Q", descriptionKey: "startQuiz" }
     ],
 
-    init() {
-      document.addEventListener('keydown', (e) => {
-        if (e.ctrlKey && e.shiftKey && e.key === '/') {
+    init: function() {
+      document.addEventListener("keydown", function(e) {
+        if (e.ctrlKey && e.shiftKey && e.key === "/") {
           e.preventDefault();
-          this.showHelpDialog();
+          KeyboardShortcuts.showHelpDialog();
         }
       });
 
-      console.log('[KeyboardShortcuts] Initialized. Press Ctrl+Shift+/ to show help.');
+      console.log("[KeyboardShortcuts] Initialized.");
     },
 
-    /**
-     * Show help dialog — uses createElement / textContent only (no innerHTML).
-     */
-    showHelpDialog() {
-      const overlay = document.createElement('div');
-      overlay.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);z-index:9999;display:flex;align-items:center;justify-content:center;';
+    getCategoryLabel: function(cat) {
+      var catKey = cat.toLowerCase().replace(/\s+/g, "");
+      var i18nKey = "keyboardShortcuts.cat." + catKey;
+      if (window.I18n && typeof window.I18n.t === "function") {
+        var val = window.I18n.t(i18nKey);
+        if (val && val !== i18nKey) return val;
+      }
+      return cat;
+    },
 
-      const dialog = document.createElement('div');
-      dialog.style.cssText = 'background:#1e1e1e;color:#d4d4d4;padding:20px;border-radius:8px;max-width:600px;max-height:80vh;overflow:auto;font-family:monospace;';
+    getDescription: function(s) {
+      var i18nKey = "keyboardShortcuts.desc." + s.descriptionKey;
+      if (window.I18n && typeof window.I18n.t === "function") {
+        var val = window.I18n.t(i18nKey);
+        if (val && val !== i18nKey) return val;
+      }
+      return s.descriptionKey
+        .replace(/([A-Z])/g, " $1")
+        .replace(/^./, function(m) { return m.toUpperCase(); })
+        .trim();
+    },
 
-      // Title
-      const title = document.createElement('h3');
-      title.style.cssText = 'margin-top:0;color:#569cd6;';
-      title.textContent = 'Keyboard Shortcuts';
+    showHelpDialog: function() {
+      var overlay = document.createElement("div");
+      overlay.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);z-index:9999;display:flex;align-items:center;justify-content:center;";
+
+      var dialog = document.createElement("div");
+      dialog.style.cssText = "background:#1e1e1e;color:#d4d4d4;padding:20px;border-radius:8px;max-width:600px;max-height:80vh;overflow:auto;font-family:monospace;";
+
+      var title = document.createElement("h3");
+      title.style.cssText = "margin-top:0;color:#569cd6;";
+      title.textContent = getShortcutLabel("title");
       dialog.appendChild(title);
 
-      // Hint
-      const hint = document.createElement('p');
-      hint.style.cssText = 'color:#858585;margin-bottom:15px;';
-      hint.textContent = 'Press ';
-      const hintKbd = document.createElement('kbd');
-      hintKbd.style.cssText = 'background:#3c3c3c;padding:2px 6px;border-radius:3px;';
-      hintKbd.textContent = 'Ctrl+Shift+/';
+      var hint = document.createElement("p");
+      hint.style.cssText = "color:#858585;margin-bottom:15px;";
+      hint.appendChild(document.createTextNode(getShortcutLabel("hintPress")));
+      var hintKbd = document.createElement("kbd");
+      hintKbd.style.cssText = "background:#3c3c3c;padding:2px 6px;border-radius:3px;";
+      hintKbd.textContent = "Ctrl+Shift+/";
       hint.appendChild(hintKbd);
-      hint.appendChild(document.createTextNode(' anytime to show this dialog'));
+      hint.appendChild(document.createTextNode(getShortcutLabel("hintSuffix")));
       dialog.appendChild(hint);
 
-      // Group by category
-      const categories = {};
-      this.shortcuts.forEach(s => {
+      var categories = {};
+      this.shortcuts.forEach(function(s) {
         if (!categories[s.category]) categories[s.category] = [];
         categories[s.category].push(s);
       });
 
-      Object.keys(categories).forEach(cat => {
-        const catTitle = document.createElement('h4');
-        catTitle.style.cssText = 'color:#4ec9b0;margin:15px 0 10px 0;';
-        catTitle.textContent = cat;
+      Object.keys(categories).forEach(function(cat) {
+        var catTitle = document.createElement("h4");
+        catTitle.style.cssText = "color:#4ec9b0;margin:15px 0 10px 0;";
+        catTitle.textContent = KeyboardShortcuts.getCategoryLabel(cat);
         dialog.appendChild(catTitle);
 
-        const wrap = document.createElement('div');
-        wrap.style.marginLeft = '10px';
+        var wrap = document.createElement("div");
+        wrap.style.marginLeft = "10px";
 
-        categories[cat].forEach(s => {
-          const row = document.createElement('div');
-          row.style.cssText = 'display:flex;justify-content:space-between;margin-bottom:8px;padding:5px;border-bottom:1px solid #3c3c3c;';
+        categories[cat].forEach(function(s) {
+          var row = document.createElement("div");
+          row.style.cssText = "display:flex;justify-content:space-between;margin-bottom:8px;padding:5px;border-bottom:1px solid #3c3c3c;";
 
-          const keySpan = document.createElement('span');
-          keySpan.style.cssText = 'color:#9cdcfe;font-size:12px;';
-          const kbd = document.createElement('kbd');
-          kbd.style.cssText = 'background:#3c3c3c;padding:2px 6px;border-radius:3px;';
+          var keySpan = document.createElement("span");
+          keySpan.style.cssText = "color:#9cdcfe;font-size:12px;";
+          var kbd = document.createElement("kbd");
+          kbd.style.cssText = "background:#3c3c3c;padding:2px 6px;border-radius:3px;";
           kbd.textContent = s.key;
           keySpan.appendChild(kbd);
 
-          const descSpan = document.createElement('span');
-          descSpan.style.cssText = 'color:#d4d4d4;font-size:12px;flex:1;margin-left:15px;';
-          descSpan.textContent = s.description;
+          var descSpan = document.createElement("span");
+          descSpan.style.cssText = "color:#d4d4d4;font-size:12px;flex:1;margin-left:15px;";
+          descSpan.textContent = KeyboardShortcuts.getDescription(s);
 
           row.appendChild(keySpan);
           row.appendChild(descSpan);
@@ -107,13 +139,12 @@
         dialog.appendChild(wrap);
       });
 
-      // Close button
-      const btnWrap = document.createElement('div');
-      btnWrap.style.cssText = 'margin-top:20px;display:flex;gap:10px;justify-content:flex-end;';
-      const closeBtn = document.createElement('button');
-      closeBtn.style.cssText = 'padding:8px 16px;background:#0e639c;color:white;border:none;border-radius:4px;cursor:pointer;';
-      closeBtn.textContent = 'Got it!';
-      closeBtn.addEventListener('click', () => {
+      var btnWrap = document.createElement("div");
+      btnWrap.style.cssText = "margin-top:20px;display:flex;gap:10px;justify-content:flex-end;";
+      var closeBtn = document.createElement("button");
+      closeBtn.style.cssText = "padding:8px 16px;background:#0e639c;color:white;border:none;border-radius:4px;cursor:pointer;";
+      closeBtn.textContent = getShortcutLabel("closeButton");
+      closeBtn.addEventListener("click", function() {
         if (overlay.parentNode) overlay.parentNode.removeChild(overlay);
       });
       btnWrap.appendChild(closeBtn);
@@ -121,37 +152,35 @@
 
       overlay.appendChild(dialog);
 
-      // Click overlay to close
-      overlay.addEventListener('click', (e) => {
+      overlay.addEventListener("click", function(e) {
         if (e.target === overlay && overlay.parentNode) {
           overlay.parentNode.removeChild(overlay);
         }
       });
 
-      // Esc to close
-      const escHandler = (e) => {
-        if (e.key === 'Escape' && overlay.parentNode) {
+      var escHandler = function(e) {
+        if (e.key === "Escape" && overlay.parentNode) {
           overlay.parentNode.removeChild(overlay);
-          document.removeEventListener('keydown', escHandler);
+          document.removeEventListener("keydown", escHandler);
         }
       };
-      document.addEventListener('keydown', escHandler);
+      document.addEventListener("keydown", escHandler);
 
       document.body.appendChild(overlay);
     },
 
-    register(shortcut) {
+    register: function(shortcut) {
       this.shortcuts.push(shortcut);
     }
   };
 
   window.KeyboardShortcuts = KeyboardShortcuts;
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => {
-      try { KeyboardShortcuts.init(); } catch(e) { console.warn('[KeyboardShortcuts]', e); }
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", function() {
+      try { KeyboardShortcuts.init(); } catch(e) { console.warn("[KeyboardShortcuts]", e); }
     });
   } else {
-    try { KeyboardShortcuts.init(); } catch(e) { console.warn('[KeyboardShortcuts]', e); }
+    try { KeyboardShortcuts.init(); } catch(e) { console.warn("[KeyboardShortcuts]", e); }
   }
 })();

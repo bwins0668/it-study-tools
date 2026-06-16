@@ -55,11 +55,12 @@
 
       const code = editor.value;
       const highlighted = this.highlight(code, language);
-      highlight.innerHTML = highlighted;
+      highlight.replaceChildren();
+      highlight.insertAdjacentHTML('beforeend', highlighted);
     },
 
     /**
-     * Highlight code â€” escapes HTML first, then wraps tokens in spans.
+     * Highlight code â€?escapes HTML first, then wraps tokens in spans.
      * Safe: user code is always HTML-escaped before any span insertion.
      */
     highlight(code, language) {
