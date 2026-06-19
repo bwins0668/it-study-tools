@@ -106,8 +106,8 @@
   window.CONTENT_I18N["sql:10"] = {
     ko: {
       title: "10-SELECT문⑧ LIKE 패턴 검색",
-      concept: "부분 일치를 검색하려면 **LIKE** 연산자와 와일드카드를 사용합니다.\n\n- **%**: 0자 이상의 임의의 문자열\n- **_**: 임의의 1글자\n\n예를 들어 `'ヤマ%'`는 \"ヤマ\"로 시작하는 모든 이름(전방 일치)에 매칭됩니다.",
-      playgroundTask: "students_mst에서 이름 가나(student_name_kana)가 'ヤマ'(Yama)로 시작하는 학생 데이터를 조회하세요.",
+      concept: "부분 일치를 검색하려면 **LIKE** 연산자와 와일드카드를 사용합니다.\n\n- **%**: 0자 이상의 임의의 문자열\n- **_**: 임의의 1글자\n\n예를 들어 `'Kim%'`은 \"Kim\"으로 시작하는 모든 이름(전방 일치)에 매칭됩니다.",
+      playgroundTask: "students_mst에서 이름 가나(student_name_kana)가 'Kim'으로 시작하는 학생 데이터를 조회하세요.",
       practicalExamTitle: "SQL 실전 모의시험",
       practicalExamDescription: "일본 IT 전문학교의 SQL 실기 시험 형식을 연습하는 모드입니다. 제한 시간 안에 제시된 일본어 과제를 읽고 오른쪽 SQL 샌드박스에서 해당 데이터를 조회한 뒤, 판정 버튼으로 제출합니다.",
       source: "manual-sql-ko-v1"

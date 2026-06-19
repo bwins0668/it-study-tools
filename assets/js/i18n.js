@@ -2,7 +2,8 @@
 (function () {
   "use strict";
 
-  // [R22.11-Hotfix4] officialOnly mode — disables ALL translation overlay
+  // Remote translation overlay is intentionally disabled for core content.
+  // Lesson/course/glossary/exam rendering must use built-in local data only.
   var OFFICIAL_ONLY = (function () {
     try {
       var p = new URLSearchParams(window.location.search);
@@ -538,6 +539,12 @@ DISABLE_TRANSLATION_OVERLAY = true;
     return languageByCode.get(code) || languageByCode.get(DEFAULT_LANG);
   }
 
+  function getNativeName(code) {
+    if (!code) return "";
+    var info = languageByCode.get(code);
+    return info ? info.native : "";
+  }
+
   function isActive() {
     return currentLang !== DEFAULT_LANG;
   }
@@ -618,57 +625,7 @@ DISABLE_TRANSLATION_OVERLAY = true;
   }
 
   async function translateBatch(items, onProgress) {
-    if (!isActive() || !items || !items.length) return {};
-    const requestTargetLang = items[0]?.targetLang || currentLang;
-    const requestTargetInfo = langInfo(requestTargetLang);
-    const requestTargetLabel = requestTargetLang === "ja" ? "Japanese" : requestTargetInfo.label;
-    const output = {};
-    const missing = [];
-    items.forEach((item) => {
-      const cached = getCachedTranslation(item);
-      if (cached) {
-        output[item.id] = cached;
-      } else {
-        missing.push(item);
-      }
-    });
-    if (!missing.length) return output;
-
-    const config = getAiConfig();
-    for (const chunk of splitChunks(missing, 80)) {
-if (DISABLE_TRANSLATION_OVERLAY) { missing = []; applyTranslations = function() {}; applyJapaneseTranslations = function() {}; return; }
-      const response = await fetch("/api/i18n/translate", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          targetLang: requestTargetLang,
-          targetLabel: requestTargetLabel,
-          items: chunk,
-          ...config,
-        }),
-      });
-      const payload = await response.json().catch(() => ({}));
-      if (!response.ok || !payload.success) {
-        const err = payload.error && (payload.error.message || payload.error.code);
-        const failure = new Error(err || `HTTP ${response.status}`);
-        failure.code = payload.error && payload.error.code;
-        throw failure;
-      }
-      (payload.data.items || []).forEach((item) => {
-        const source = chunk.find((candidate) => candidate.id === item.id);
-        if (!source) return;
-        rememberTranslation(source, item.text);
-        output[item.id] = item.text;
-      });
-      if (typeof onProgress === "function") {
-        const partial = {};
-        (payload.data.items || []).forEach((item) => {
-          partial[item.id] = item.text;
-        });
-        onProgress(partial);
-      }
-    }
-    return output;
+    return {};
   }
 
   function renderPendingText(original, contextEl) {
@@ -684,7 +641,7 @@ if (DISABLE_TRANSLATION_OVERLAY) { missing = []; applyTranslations = function() 
       return `${leading}${compactVisibleText(cleanOriginal)}${trailing}`;
     }
     if (/[\u3400-\u9fff]/.test(cleanOriginal)) {
-      return `${leading}${isCompactPairContext(contextEl) ? "…" : "翻訳中…"}${trailing}`;
+      return source;
     }
     return source;
   }
@@ -696,7 +653,7 @@ if (DISABLE_TRANSLATION_OVERLAY) { missing = []; applyTranslations = function() 
     if (jaText && jaText !== cleanOriginal) return jaText;
     if (/[\u3040-\u30ff\u31f0-\u31ff]/.test(cleanOriginal)) return source;
     if (/[\u3400-\u9fff]/.test(cleanOriginal)) {
-      return attr === "placeholder" ? "入力…" : "翻訳中…";
+      return source;
     }
     return source;
   }
@@ -748,6 +705,7 @@ if (DISABLE_TRANSLATION_OVERLAY) { missing = []; applyTranslations = function() 
 
   function markManaged() {
     [
+      "lesson-section-badge",
       "lesson-title-ja",
       "lesson-title-zh",
       "concept-container",
@@ -823,8 +781,34 @@ if (DISABLE_TRANSLATION_OVERLAY) { missing = []; applyTranslations = function() 
     if (both) both.innerHTML = `<i class="fa-solid fa-columns"></i> ${info.native} / 日本語`;
     if (ja) ja.textContent = "日本語のみ";
     if (target) target.textContent = info.native;
+
+    // Column headers with fallback awareness
     if (jaHead) jaHead.innerHTML = '<i class="fa-solid fa-graduation-cap"></i> 解説 (日本語)';
-    if (targetHead) targetHead.innerHTML = `<i class="fa-solid fa-language"></i> Explanation (${info.native})`;
+
+    // Check if target content is actually a fallback
+    var short = normalizeLangShort(currentLang);
+    var isFallback = false;
+    var actualLang = short;
+    var conceptContainer = document.querySelector(".concept-container");
+    if (conceptContainer) {
+      var fb = conceptContainer.getAttribute("data-is-fallback");
+      if (fb === "true") {
+        isFallback = true;
+        actualLang = conceptContainer.getAttribute("data-actual-lang") || short;
+      }
+    }
+
+    if (short === "default-ja-zh" || short === "zh") {
+      if (targetHead) targetHead.innerHTML = '<i class="fa-solid fa-language"></i> 讲解 (中文)';
+    } else if (short === "ja") {
+      if (targetHead) targetHead.innerHTML = '<i class="fa-solid fa-language"></i> 解説 (日本語)';
+    } else if (isFallback) {
+      // Honest fallback label: show the actual language being shown
+      var fbName = getNativeName(actualLang);
+      if (targetHead) targetHead.innerHTML = `<i class="fa-solid fa-language"></i> ${fbName} <span style="opacity:0.55;font-size:0.85em">(fallback)</span>`;
+    } else {
+      if (targetHead) targetHead.innerHTML = `<i class="fa-solid fa-language"></i> ${info.native}`;
+    }
   }
 
   function getActiveSubject() {
@@ -842,6 +826,55 @@ if (DISABLE_TRANSLATION_OVERLAY) { missing = []; applyTranslations = function() 
     return null;
   }
 
+  function setLessonFallbackState(actualLang, isFallback) {
+    var conceptContainer = document.querySelector(".concept-container");
+    if (!conceptContainer) return;
+    conceptContainer.setAttribute("data-actual-lang", actualLang || "");
+    conceptContainer.setAttribute("data-is-fallback", isFallback ? "true" : "false");
+  }
+
+  function pickLessonLocaleValue(lesson, field, lang) {
+    if (!lesson || !lesson.locales || lesson.locales[field] == null) return null;
+    return pickLocalizedValue(lesson.locales[field], lang || currentLang);
+  }
+
+  function textFromLessonLocale(lesson, field, lang, fallbackText) {
+    var picked = pickLessonLocaleValue(lesson, field, lang);
+    if (picked && !picked.missing && picked.text) return picked.text;
+    return fallbackText || "";
+  }
+
+  function updateLessonBadge(lesson, lang) {
+    var badge = document.getElementById("lesson-section-badge");
+    if (!badge) return;
+    var picked = pickLessonLocaleValue(lesson, "subtitle", lang || currentLang);
+    if (picked && !picked.missing && picked.text) {
+      badge.textContent = picked.text;
+    }
+  }
+
+  function getVisibleContentPack(subject, lesson, lang) {
+    if (!subject || !lesson || !window.ContentI18n || typeof window.ContentI18n.get !== "function") return null;
+    return window.ContentI18n.get(subject, lesson.id, lang || currentLang);
+  }
+
+  function updateLessonVisibleExtras(lesson, lang) {
+    var subject = getActiveSubject();
+    var pack = getVisibleContentPack(subject, lesson, lang);
+    var analogyEl = document.getElementById("lesson-analogy");
+    if (analogyEl) {
+      analogyEl.textContent = pack && pack.analogy ? pack.analogy : (lesson.analogy || "");
+    }
+    if (
+      typeof initFlashcards === "function" &&
+      (subject === "sql" || subject === "itpass" || subject === "sg") &&
+      lesson &&
+      lesson.id != null
+    ) {
+      initFlashcards(lesson.id);
+    }
+  }
+
   async function applyLessonTranslation(lesson) {
     if (!lesson) return;
     markManaged();
@@ -853,81 +886,163 @@ if (DISABLE_TRANSLATION_OVERLAY) { missing = []; applyTranslations = function() 
     const conceptTargetEl = document.getElementById("concept-zh-body");
     if (!titleJaEl || !titleTargetEl || !conceptJaEl || !conceptTargetEl) return;
 
-    const normLang = normalizeLanguageCode(currentLang);
+    var short = normalizeLangShort(currentLang);
 
-    // 1. If baseline language (ja, zh, default-ja-zh), directly render and return
-    if (normLang === "ja-JP" || normLang === "zh-CN" || normLang === "default-ja-zh") {
-      applyLessonTargetLayout(normLang !== "default-ja-zh");
-      if (normLang === "ja-JP") {
-        titleTargetEl.textContent = lesson.titleJa || "";
-        conceptTargetEl.innerHTML = renderOriginalConcept(lesson.conceptJa || "");
-      } else {
-        titleTargetEl.textContent = lesson.titleZh || "";
-        conceptTargetEl.innerHTML = renderOriginalConcept(lesson.conceptZh || "");
-      }
-      titleJaEl.textContent = lesson.titleJa || "";
-      conceptJaEl.innerHTML = renderOriginalConcept(lesson.conceptJa || "");
+    // 1. Determine what display mode to use
+    // default-ja-zh: show bilingual (ja + zh columns)
+    // zh: show zh-only (single column)
+    // ja: show ja-only (single column)
+    // Other: try target language, fallback with label
+
+    if (short === "default-ja-zh") {
+      // Bilingual: full display
+      applyLessonTargetLayout(false); // false = two-column
+      updateLessonBadge(lesson, "zh");
+      titleJaEl.textContent = textFromLessonLocale(lesson, "title", "ja", lesson.titleJa || "");
+      conceptJaEl.innerHTML = renderOriginalConcept(textFromLessonLocale(lesson, "concept", "ja", lesson.conceptJa || ""));
+      titleTargetEl.textContent = textFromLessonLocale(lesson, "title", "zh", lesson.titleZh || "");
+      conceptTargetEl.innerHTML = renderOriginalConcept(textFromLessonLocale(lesson, "concept", "zh", lesson.conceptZh || ""));
+      setLessonFallbackState("zh", false);
+      updateCourseLabels();
+      updateLessonVisibleExtras(lesson, "default-ja-zh");
       if (typeof wrapAllTablesWithScrollWrapper === "function") wrapAllTablesWithScrollWrapper();
       return;
     }
 
-    // 2. Prefer static ContentI18n package content if available
-    const subject = getActiveSubject();
-    let titleText = "";
-    let conceptHtml = "";
-    let found = false;
+    if (short === "ja") {
+      applyLessonTargetLayout(true); // true = single column (hide target, show ja)
+      updateLessonBadge(lesson, "ja");
+      var jaTitle = textFromLessonLocale(lesson, "title", "ja", lesson.titleJa || "");
+      var jaConcept = textFromLessonLocale(lesson, "concept", "ja", lesson.conceptJa || "");
+      titleTargetEl.textContent = jaTitle;
+      conceptTargetEl.innerHTML = renderOriginalConcept(jaConcept);
+      titleJaEl.textContent = jaTitle;
+      conceptJaEl.innerHTML = renderOriginalConcept(jaConcept);
+      setLessonFallbackState("ja", false);
+      updateCourseLabels();
+      updateLessonVisibleExtras(lesson, "ja");
+      if (typeof wrapAllTablesWithScrollWrapper === "function") wrapAllTablesWithScrollWrapper();
+      return;
+    }
 
-    if (subject && window.ContentI18n && typeof window.ContentI18n.get === "function") {
-      const hasLoadPack = typeof window.ContentI18n.isPackLoaded === "function";
+    if (short === "zh") {
+      applyLessonTargetLayout(true);
+      updateLessonBadge(lesson, "zh");
+      titleTargetEl.textContent = textFromLessonLocale(lesson, "title", "zh", lesson.titleZh || "");
+      conceptTargetEl.innerHTML = renderOriginalConcept(textFromLessonLocale(lesson, "concept", "zh", lesson.conceptZh || ""));
+      titleJaEl.textContent = textFromLessonLocale(lesson, "title", "ja", lesson.titleJa || "");
+      conceptJaEl.innerHTML = renderOriginalConcept(textFromLessonLocale(lesson, "concept", "ja", lesson.conceptJa || ""));
+      setLessonFallbackState("zh", false);
+      updateCourseLabels();
+      updateLessonVisibleExtras(lesson, "zh");
+      if (typeof wrapAllTablesWithScrollWrapper === "function") wrapAllTablesWithScrollWrapper();
+      return;
+    }
 
-      // A. Try target language pack
-      const isLoaded = !hasLoadPack || window.ContentI18n.isPackLoaded(subject, currentLang);
-      if (isLoaded) {
-        const localized = window.ContentI18n.get(subject, lesson.id, currentLang);
-        if (localized && (localized.title || localized.concept)) {
-          titleText = localized.title || "";
-          conceptHtml = renderOriginalConcept(localized.concept || "");
-          found = true;
-        }
+    // 3. Secondary languages: try local fields, then static ContentI18n packs.
+    var subject = getActiveSubject();
+    var titleText = "";
+    var conceptHtml = "";
+    var actualLang = short;
+    var isFallback = false;
+
+    updateLessonBadge(lesson, short);
+
+    // Prefer local structured lesson fields when present.
+    var localTitle = pickLessonLocaleValue(lesson, "title", short);
+    var localConcept = pickLessonLocaleValue(lesson, "concept", short);
+    var fallbackTitleText = "";
+    var fallbackConceptHtml = "";
+    var fallbackActualLang = "";
+    var fallbackIsFallback = false;
+    if (localTitle && !localTitle.missing && localTitle.text) {
+      if (localTitle.isFallback) {
+        fallbackTitleText = localTitle.text;
+        fallbackActualLang = localTitle.actualLang || short;
+        fallbackIsFallback = true;
       } else {
-        // Pack is not loaded yet (Web dynamic load fallback). Show loading and return
-        applyLessonTargetLayout(true);
-        const loadingText = (window.I18n && typeof window.I18n.t === "function" ? window.I18n.t("common.loading") : "") || "Loading...";
-        titleTargetEl.textContent = loadingText;
-        conceptTargetEl.innerHTML = `<div style="opacity: 0.6; padding: 20px; text-align: center;">${loadingText}</div>`;
-        titleJaEl.textContent = lesson.titleJa || "";
-        conceptJaEl.innerHTML = renderOriginalConcept(lesson.conceptJa || "");
-        return;
+        titleText = localTitle.text;
+        actualLang = localTitle.actualLang || short;
+        isFallback = false;
       }
+    }
+    if (localConcept && !localConcept.missing && localConcept.text) {
+      if (localConcept.isFallback) {
+        fallbackConceptHtml = renderOriginalConcept(localConcept.text);
+        fallbackActualLang = localConcept.actualLang || fallbackActualLang || short;
+        fallbackIsFallback = true;
+      } else {
+        conceptHtml = renderOriginalConcept(localConcept.text);
+        actualLang = localConcept.actualLang || actualLang;
+        isFallback = false;
+      }
+    }
 
-      // B. If not found in target language, fallback to "en" pack (only if loaded/exists)
-      if (!found && normLang !== "en-US") {
-        const enLoaded = !hasLoadPack || window.ContentI18n.isPackLoaded(subject, "en");
-        if (enLoaded) {
-          const enLocalized = window.ContentI18n.get(subject, lesson.id, "en");
-          if (enLocalized && (enLocalized.title || enLocalized.concept)) {
-            titleText = enLocalized.title || "";
-            conceptHtml = renderOriginalConcept(enLocalized.concept || "");
-            found = true;
+    // Try ContentI18n (local static packs for en, vi, my, fr etc.)
+    if ((!titleText || !conceptHtml) && subject && window.ContentI18n && typeof window.ContentI18n.get === "function") {
+      var fbOrder = getFallbackOrder(short);
+      for (var f = 0; f < fbOrder.length; f++) {
+        var tryLang = fbOrder[f];
+        if (tryLang === "default-ja-zh") continue; // skip compound key
+
+        var localized = window.ContentI18n.get(subject, lesson.id, tryLang);
+        if (localized && (localized.title || localized.concept)) {
+          if (!titleText && localized.title) {
+            titleText = localized.title;
+            actualLang = tryLang;
+            isFallback = (tryLang !== short);
           }
+          if (!conceptHtml && localized.concept) {
+            conceptHtml = renderOriginalConcept(localized.concept);
+            actualLang = tryLang;
+            isFallback = (tryLang !== short);
+          }
+          break;
         }
       }
     }
 
-    if (found) {
-      applyLessonTargetLayout(true); // Single language layout
-      titleTargetEl.textContent = titleText || lesson.titleZh || lesson.titleJa || "";
-      conceptTargetEl.innerHTML = conceptHtml || renderOriginalConcept(lesson.conceptZh || lesson.conceptJa || "");
-      titleJaEl.textContent = lesson.titleJa || "";
-      conceptJaEl.innerHTML = renderOriginalConcept(lesson.conceptJa || "");
-    } else {
-      // C. Fallback immediately to default-ja-zh (bilingual layout)
-      applyLessonTargetLayout(false);
-      titleTargetEl.textContent = lesson.titleZh || "";
-      conceptTargetEl.innerHTML = renderOriginalConcept(lesson.conceptZh || "");
-      titleJaEl.textContent = lesson.titleJa || "";
-      conceptJaEl.innerHTML = renderOriginalConcept(lesson.conceptJa || "");
+    if (!titleText && fallbackTitleText) {
+      titleText = fallbackTitleText;
+      actualLang = fallbackActualLang || actualLang;
+      isFallback = fallbackIsFallback;
     }
+    if (!conceptHtml && fallbackConceptHtml) {
+      conceptHtml = fallbackConceptHtml;
+      actualLang = fallbackActualLang || actualLang;
+      isFallback = fallbackIsFallback;
+    }
+
+    // Fallback to structured lesson data (zh/ja fields)
+    if (!titleText && !conceptHtml) {
+      var fbOrder = getFallbackOrder(short);
+      for (var f = 0; f < fbOrder.length; f++) {
+        var tryLang = fbOrder[f];
+        if (tryLang === "default-ja-zh") {
+          if (lesson.titleZh) { titleText = lesson.titleZh; actualLang = "zh"; isFallback = (short !== "zh"); break; }
+          if (lesson.titleJa) { titleText = lesson.titleJa; actualLang = "ja"; isFallback = (short !== "ja"); break; }
+          continue;
+        }
+        if (tryLang === "en" && lesson.titleEn) { titleText = lesson.titleEn; actualLang = "en"; isFallback = (short !== "en"); break; }
+      }
+      if (!titleText) {
+        titleText = lesson.titleZh || lesson.titleJa || "";
+        actualLang = lesson.titleZh ? "zh" : "ja";
+        isFallback = true;
+      }
+      conceptHtml = renderOriginalConcept(lesson.conceptZh || lesson.conceptJa || "");
+    }
+
+    // Render with fallback status
+    applyLessonTargetLayout(true);
+    titleTargetEl.textContent = titleText || "";
+    conceptTargetEl.innerHTML = conceptHtml || "";
+    titleJaEl.textContent = lesson.titleJa || "";
+    conceptJaEl.innerHTML = renderOriginalConcept(lesson.conceptJa || "") || "";
+
+    setLessonFallbackState(actualLang, isFallback);
+    updateCourseLabels();
+    updateLessonVisibleExtras(lesson, short);
 
     if (typeof wrapAllTablesWithScrollWrapper === "function") wrapAllTablesWithScrollWrapper();
   }
@@ -1057,7 +1172,7 @@ if (DISABLE_TRANSLATION_OVERLAY) { missing = []; applyTranslations = function() 
   }
 
   async function translateVisible(root) {
-    if (!isActive() || translating || translationOverlayUnavailable || !document.body) return;
+    if (DISABLE_TRANSLATION_OVERLAY || !isActive() || translating || translationOverlayUnavailable || !document.body) return;
     const targetLang = currentLang;
     const runId = ++translationRunId;
     translating = true;
@@ -1219,7 +1334,7 @@ if (DISABLE_TRANSLATION_OVERLAY) { missing = []; applyTranslations = function() 
   }
 
   function scheduleTranslate(root) {
-    if (!isActive() || translationOverlayUnavailable || !document.body) return;
+    if (DISABLE_TRANSLATION_OVERLAY || !isActive() || translationOverlayUnavailable || !document.body) return;
     if (translating) {
       dirty = true;
       return;
@@ -1358,14 +1473,100 @@ if (DISABLE_TRANSLATION_OVERLAY) { missing = []; applyTranslations = function() 
     if (clean === "vi" || clean === "vi-vn" || clean.startsWith("vi-")) return "vi-VN";
     if (clean === "my" || clean === "my-mm" || clean.startsWith("my-")) return "my-MM";
     if (clean === "ko" || clean === "ko-kr" || clean.startsWith("ko-")) return "ko-KR";
+    if (clean === "th" || clean === "th-th" || clean.startsWith("th-")) return "th-TH";
+    if (clean === "id" || clean === "id-id" || clean.startsWith("id-")) return "id-ID";
     if (clean === "fr" || clean === "fr-fr" || clean.startsWith("fr-")) return "fr-FR";
     return "en-US";
+  }
+
+  /**
+   * Unified language code normalizer — returns short codes.
+   * Used by content-i18n, lesson rendering, and compare labels.
+   */
+  function normalizeLangShort(code) {
+    if (!code) return "zh";
+    const c = String(code).trim().toLowerCase();
+    if (c === "default-ja-zh" || c === "ja-zh") return "default-ja-zh";
+    if (["zh","zh-cn","zh_cn","cn","chinese","chinese-simplified","中文","中文简体"].includes(c)) return "zh";
+    if (["ja","ja-jp","ja_jp","jp","japanese","日本語"].includes(c)) return "ja";
+    if (["en","en-us","en_us","english"].includes(c)) return "en";
+    if (["ko","ko-kr","ko_kr","korean","한국어"].includes(c)) return "ko";
+    if (["my","my-mm","burmese","myanmar","မြန်မာ"].includes(c)) return "my";
+    if (["th","th-th","thai","ไทย"].includes(c)) return "th";
+    if (["vi","vi-vn","vietnamese","tiếng việt","tiengviet"].includes(c)) return "vi";
+    if (["id","id-id","indonesian","bahasa indonesia","bahasa"].includes(c)) return "id";
+    if (["fr","fr-fr","french","français","francais"].includes(c)) return "fr";
+    return c;
+  }
+
+  /**
+   * Per-language fallback order for lesson content.
+   * The first item is the requested language itself.
+   */
+  function getFallbackOrder(lang) {
+    var short = normalizeLangShort(lang);
+    switch (short) {
+      case "default-ja-zh": return ["default-ja-zh", "ja", "zh", "en"];
+      case "zh": return ["zh", "ja", "en"];
+      case "ja": return ["ja", "zh", "en"];
+      case "en": return ["en", "ja", "zh"];
+      case "ko": return ["ko", "ja", "zh", "en"];
+      case "my": return ["my", "ja", "zh", "en"];
+      case "th": return ["th", "ja", "zh", "en"];
+      case "vi": return ["vi", "ja", "zh", "en"];
+      case "id": return ["id", "ja", "zh", "en"];
+      case "fr": return ["fr", "en", "ja", "zh"];
+      default: return [short, "ja", "zh", "en"];
+    }
+  }
+
+  /**
+   * Pick a localized value from a lesson object with fallback chain.
+   * Returns { text, actualLang, requestedLang, isFallback, missing }
+   */
+  function pickLocalizedValue(value, lang, options) {
+    options = options || {};
+    var normalized = normalizeLangShort(lang || currentLang);
+    var fallbackOrder = options.fallbackOrder || getFallbackOrder(normalized);
+
+    if (value == null) {
+      return { text: "", actualLang: null, requestedLang: normalized, isFallback: false, missing: true };
+    }
+
+    if (typeof value === "string") {
+      return { text: value, actualLang: "legacy", requestedLang: normalized, isFallback: normalized !== "legacy", missing: false };
+    }
+
+    if (typeof value === "object") {
+      // First try exact match in fallback order
+      for (var i = 0; i < fallbackOrder.length; i++) {
+        var key = fallbackOrder[i];
+        if (key === "default-ja-zh") {
+          if (value["zh"]) return { text: value["zh"], actualLang: "zh", requestedLang: normalized, isFallback: normalized !== "zh", missing: false };
+          if (value["ja"]) return { text: value["ja"], actualLang: "ja", requestedLang: normalized, isFallback: normalized !== "ja", missing: false };
+          continue;
+        }
+        if (value[key]) {
+          return { text: value[key], actualLang: key, requestedLang: normalized, isFallback: normalized !== key, missing: false };
+        }
+      }
+
+      // Try zh and ja as final fallbacks
+      if (value["zh"]) return { text: value["zh"], actualLang: "zh", requestedLang: normalized, isFallback: true, missing: false };
+      if (value["ja"]) return { text: value["ja"], actualLang: "ja", requestedLang: normalized, isFallback: true, missing: false };
+    }
+
+    return { text: "", actualLang: null, requestedLang: normalized, isFallback: false, missing: true };
   }
 
   function translateStatic(key, params) {
     if (!key) return "";
     const lang = normalizeLanguageCode(currentLang);
-    const fallbackChain = [lang, "ja-JP", "zh-CN", "en-US"];
+    // For Thai/Indonesian, prefer English as the first fallback (these users are
+    // more likely to read English than Japanese/Chinese when their own dict key is missing).
+    const fallbackChain = (lang === "th-TH" || lang === "id-ID")
+      ? [lang, "en-US", "ja-JP", "zh-CN"]
+      : [lang, "ja-JP", "zh-CN", "en-US"];
     let translated = null;
 
     function getNestedValue(obj, path) {
@@ -1539,6 +1740,7 @@ if (DISABLE_TRANSLATION_OVERLAY) { missing = []; applyTranslations = function() 
   }
 
   function startObserver() {
+    if (DISABLE_TRANSLATION_OVERLAY) return;
     if (observer || !document.body) return;
     observer = new MutationObserver((mutations) => {
       if (!isActive()) return;
@@ -1578,6 +1780,7 @@ if (DISABLE_TRANSLATION_OVERLAY) { missing = []; applyTranslations = function() 
     applyLessonTranslation,
     scheduleTranslate,
     applyStaticUI,
+    isTranslationOverlayDisabled: () => DISABLE_TRANSLATION_OVERLAY,
     t: translateStatic,
     tAsync: async (key, options = {}) => {
       const text = options.ja || options.source || "";
@@ -1599,6 +1802,10 @@ if (DISABLE_TRANSLATION_OVERLAY) { missing = []; applyTranslations = function() 
       const translated = await window.I18n.tAsync(key, options);
       return renderTargetText(source, translated);
     },
+    // New unified API
+    normalizeLang: normalizeLangShort,
+    getFallbackOrder: getFallbackOrder,
+    pickLocalizedValue: pickLocalizedValue,
   };
  
    /* User translation local storage (Round 20.1 prototype) */
@@ -1844,4 +2051,3 @@ function openUtEditor(el, origText, transText, ctx) {
       }
     } catch(e) { console.warn("[I18n] factoryResetI18n error:", e); }
   })();
-

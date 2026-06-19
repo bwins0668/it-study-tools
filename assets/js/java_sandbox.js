@@ -39,6 +39,16 @@ window.JavaSandbox = (() => {
 
   const getLessonLbl = () => document.getElementById('java-sandbox-lesson-title');
 
+  function getVisiblePack(lesson) {
+    if (!lesson || !window.ContentI18n || typeof window.ContentI18n.get !== 'function') return null;
+    const lang = window.I18n && typeof window.I18n.getLanguage === 'function' ? window.I18n.getLanguage() : 'default-ja-zh';
+    return window.ContentI18n.get('java', lesson.id, lang);
+  }
+
+  function visibleText(pack, key, fallback) {
+    return pack && pack[key] ? pack[key] : (fallback || '');
+  }
+
 
 
   // ─── Load Lesson into Sandbox ────────────────────────────────────────────
@@ -50,6 +60,7 @@ window.JavaSandbox = (() => {
     vocabIndex = 0;
 
     isFlipped = false;
+    const pack = getVisiblePack(lesson);
 
 
 
@@ -57,7 +68,7 @@ window.JavaSandbox = (() => {
 
     const lbl = getLessonLbl();
 
-    if (lbl) lbl.textContent = lesson.titleZh || lesson.titleJa;
+    if (lbl) lbl.textContent = visibleText(pack, 'title', lesson.titleZh || lesson.titleJa);
 
 
 
@@ -74,6 +85,7 @@ window.JavaSandbox = (() => {
     if (stdinEl) {
 
       stdinEl.value = lesson.stdinExample || "";
+      stdinEl.setAttribute('placeholder', visibleText(pack, 'stdinPlaceholder', 'Input data for the program...'));
 
     }
 
@@ -85,13 +97,13 @@ window.JavaSandbox = (() => {
 
     if (out) {
 
-      out.textContent = `// ${lesson.titleJa}\n// ${lesson.titleZh}\n\n// 上のコードを編集して「実行」ボタンを押してください\n// 编辑上方代码，然后点击「实行」按钮运行`;
+      out.textContent = `${visibleText(pack, 'sandboxComment', '// Edit the code above and run it.')}\n${visibleText(pack, 'resultExplanation', '// Compare the output with the expected result.')}`;
 
       out.className = 'java-output-content';
 
     }
 
-    setStatus('ready', '準備完了 / Ready');
+    setStatus('ready', visibleText(pack, 'readyStatus', 'Ready'));
 
 
 

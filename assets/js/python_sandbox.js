@@ -19,29 +19,42 @@ window.PythonSandbox = (() => {
   const getRunBtn    = () => document.getElementById('python-run-btn');
   const getLessonLbl = () => document.getElementById('python-sandbox-lesson-title');
 
+  function getVisiblePack(lesson) {
+    if (!lesson || !window.ContentI18n || typeof window.ContentI18n.get !== 'function') return null;
+    const lang = window.I18n && typeof window.I18n.getLanguage === 'function' ? window.I18n.getLanguage() : 'default-ja-zh';
+    return window.ContentI18n.get('python', lesson.id, lang);
+  }
+
+  function visibleText(pack, key, fallback) {
+    return pack && pack[key] ? pack[key] : (fallback || '');
+  }
+
   // ─── Load Lesson into Sandbox ────────────────────────────────────────────
   function loadLesson(lesson) {
     currentLesson = lesson;
     vocabIndex = 0;
     isFlipped = false;
+    const pack = getVisiblePack(lesson);
 
     // Update sandbox header label
     const lbl = getLessonLbl();
-    if (lbl) lbl.textContent = lesson.titleZh || lesson.titleJa;
+    if (lbl) lbl.textContent = visibleText(pack, 'title', lesson.titleZh || lesson.titleJa);
 
     const editor = getEditor();
     const runBtn = getRunBtn();
 
     if (!lesson.example) {
       if (editor) {
-        editor.value = "# 本节为纯概念理论课，无需编写或运行代码。\n# 请阅读左侧的教材讲解，并完成随堂练习！";
+        editor.value = visibleText(pack, 'sandboxComment', "# Concept lesson: read the explanation and complete the practice.");
         editor.readOnly = true;
         editor.style.opacity = "0.7";
         editor.style.cursor = "not-allowed";
         const lnContainer = document.getElementById('python-line-numbers');
-        if (lnContainer) { lnContainer.replaceChildren(); var _s1=document.createElement("span"); _s1.textContent="1"; lnContainer.appendChild(_s1); var _s2=document.createElement("span"); _s2.textContent="2"; lnContainer.appendChild(_s2); }
+        if (lnContainer) { lnContainer.replaceChildren(); var _s1=document.createElement("span"); _s1.textContent="1"; lnContainer.appendChild(_s1); }
         const overlay = document.getElementById('python-highlight-overlay');
-        if (overlay) { overlay.replaceChildren(); overlay.insertAdjacentHTML("beforeend", "<span class=\"hl-comment\"># 本节为纯概念理论课，无需编写或运行代码。</span>\n<span class=\"hl-comment\"># 请阅读左侧的教材讲解，并完成随堂练习！</span>\n"); }
+        if (overlay) {
+          updateHighlight();
+        }
       }
       if (runBtn) {
         runBtn.disabled = true;
@@ -49,7 +62,7 @@ window.PythonSandbox = (() => {
         runBtn.style.cursor = "not-allowed";
         runBtn.style.animation = "none";
       }
-      setStatus('ready', '理论课免执行 / Concept Lesson');
+      setStatus('ready', visibleText(pack, 'conceptLessonStatus', 'Concept Lesson'));
     } else {
       if (editor) {
         editor.readOnly = false;
@@ -63,22 +76,23 @@ window.PythonSandbox = (() => {
         runBtn.style.animation = "pulse-glow 3s infinite ease-in-out";
       }
       setTemplate(getDefaultTemplate());
-      setStatus('ready', '準備完了 / Ready');
+      setStatus('ready', visibleText(pack, 'readyStatus', 'Ready'));
     }
 
     // Load the stdin example into the input textarea (if any)
     const stdinEl = document.getElementById('python-input-content');
     if (stdinEl) {
       stdinEl.value = lesson.stdinExample || "";
+      stdinEl.setAttribute('placeholder', visibleText(pack, 'stdinPlaceholder', 'Input data for the program...'));
     }
 
     // Reset output
     const out = getOutput();
     if (out) {
       if (!lesson.example) {
-        out.textContent = `# ${lesson.titleJa}\n# ${lesson.titleZh}\n\n# 本节为纯概念理论课，无需运行代码。`;
+        out.textContent = `${visibleText(pack, 'sandboxComment', '# Concept lesson')}\n${visibleText(pack, 'resultExplanation', '# Read the explanation before running code.')}`;
       } else {
-        out.textContent = `# ${lesson.titleJa}\n# ${lesson.titleZh}\n\n# 上のコードを編集して「実行」ボタンを押してください\n# 编辑上方代码，然后点击「实行」按钮运行`;
+        out.textContent = `${visibleText(pack, 'sandboxComment', '# Edit the code above and run it.')}\n${visibleText(pack, 'resultExplanation', '# Compare the output with the expected result.')}`;
       }
       out.className = 'python-output-content';
     }

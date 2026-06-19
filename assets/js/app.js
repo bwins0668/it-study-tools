@@ -1343,7 +1343,7 @@ function loadJavaLesson(id) {
   document.getElementById("concept-zh-body").innerHTML = lesson.conceptZh;
 
   // Analogy
-  document.getElementById("lesson-analogy").innerText = lesson.analogy || "";
+  document.getElementById("lesson-analogy").innerText = pickLessonAnalogy("java", lesson);
 
   // Code Example
   const preBlock = document.getElementById("example-pre-block");
@@ -1363,7 +1363,7 @@ function loadJavaLesson(id) {
   codeEl.textContent = lesson.example || "";
   codeEl.className = "language-java";
   copyBtn.style.display = "inline-flex";
-  exampleTitle.innerHTML = `<i class="fa-brands fa-java"></i> Java コード例 (示例代码)`;
+  exampleTitle.innerHTML = `<i class="fa-brands fa-java"></i> ${escapeHtml(pickLessonCodeExampleLabel("java", lesson, "Java コード例"))}`;
 
   // Vocab flashcards
   document.getElementById("java-vocab-section").style.display =
@@ -1563,18 +1563,12 @@ function getCurrentContentLanguage() {
 }
 
 function pickLocalText(value, fallback) {
-  if (value && typeof value === "object") {
-    const lang = getCurrentContentLanguage();
-    const shortLang = lang && lang.indexOf("-") !== -1 ? lang.split("-")[0] : lang;
-    const candidates = [lang, shortLang, "zh", "ja", "en"];
-    for (const key of candidates) {
-      if (key && value[key]) return value[key];
-    }
-    return fallback || "";
-  }
   if (window.I18n && typeof window.I18n.pickLocalizedValue === "function") {
     const picked = window.I18n.pickLocalizedValue(value, getCurrentContentLanguage());
     if (picked && !picked.missing && picked.text) return picked.text;
+  }
+  if (value && typeof value === "object") {
+    return value.zh || value.ja || value.en || fallback || "";
   }
   return value || fallback || "";
 }
@@ -1586,13 +1580,56 @@ function pickLessonLocalText(lesson, field, fallback) {
   return localized && localized[field] ? localized[field] : (fallback || "");
 }
 
+function pickLessonVisibleField(subject, lesson, field, fallback) {
+  const localized = getLessonLocalizedText(subject, lesson);
+  if (localized && localized[field]) return localized[field];
+  const lessonText = pickLocalText(lesson && lesson.locales ? lesson.locales[field] : null, "");
+  return lessonText || fallback || "";
+}
+
+function pickLessonAnalogy(subject, lesson) {
+  return pickLessonVisibleField(subject, lesson, "analogy", lesson && lesson.analogy ? lesson.analogy : "");
+}
+
+function pickLessonCodeExampleLabel(subject, lesson, fallback) {
+  return pickLessonVisibleField(subject, lesson, "codeExampleLabel", fallback);
+}
+
+function getLessonVisiblePack(subject, lesson) {
+  return getLessonLocalizedText(subject, lesson) || {};
+}
+
+function applySandboxVisibleStatus(subject, lesson, statusKey, fallback) {
+  const pack = getLessonVisiblePack(subject, lesson);
+  return pack[statusKey] || fallback || "";
+}
+
+function getCurrentVisibleLesson(subject) {
+  if (subject === "java" && typeof JAVA_LESSONS !== "undefined") {
+    return JAVA_LESSONS.find(l => l.id === currentJavaLessonId) || null;
+  }
+  if (subject === "python" && typeof PYTHON_LESSONS !== "undefined") {
+    return PYTHON_LESSONS.find(l => l.id === currentPythonLessonId) || null;
+  }
+  if (subject === "sql" && typeof SQL_LESSONS !== "undefined") {
+    return SQL_LESSONS.find(l => l.id === currentLessonId) || null;
+  }
+  return null;
+}
+
+function pickVisibleRuntimeText(subject, field, fallback) {
+  return applySandboxVisibleStatus(subject, getCurrentVisibleLesson(subject), field, fallback);
+}
+
+function buildExpectedOutputNotice(subject, expectedOutput, commentPrefix) {
+  const label = pickVisibleRuntimeText(subject, "incorrectOutputLabel", "Expected Output");
+  const prefix = commentPrefix || "";
+  return "\n\n" + prefix + "[! " + label + "]\n" + prefix + String(expectedOutput || "");
+}
+
 function pickExerciseTaskText(exercise) {
   if (!exercise) return "";
-  const task = pickLocalText(exercise.taskI18n || exercise.task, exercise.task || "");
-  if (getCurrentContentLanguage() === "ko" && !/[\uac00-\ud7af]/.test(task)) {
-    return `랜덤 연습: 아래 조건을 만족하는 SQL을 작성하세요. 원문 과제: ${task}`;
-  }
-  return task;
+  return pickLocalText(exercise.taskI18n || exercise.task, exercise.task || "");
 }
 
 // Load Lesson Details into Content Panel
@@ -1619,7 +1656,7 @@ function loadLesson(id) {
   document.getElementById("concept-zh-body").innerHTML = formatMarkdown(lesson.conceptZh);
   
   // Analogy & Example
-  document.getElementById("lesson-analogy").innerText = lesson.analogy;
+  document.getElementById("lesson-analogy").innerText = pickLessonAnalogy("sql", lesson);
   document.getElementById("lesson-example").innerText = lesson.example;
   
   // Collapse example card by default on SQL lesson load
@@ -1635,7 +1672,11 @@ function loadLesson(id) {
   updateMissionUI();
 
   // Reset editor text
-  document.getElementById("sql-editor").value = "";
+  const sqlEditor = document.getElementById("sql-editor");
+  sqlEditor.value = "";
+  if (window.I18n && typeof window.I18n.t === "function") {
+    sqlEditor.setAttribute("placeholder", window.I18n.t("sandbox.sqlPlaceholder", "Please enter an SQL query here..."));
+  }
   updateLineNumbers();
   
   // Reset Console output and status
@@ -1692,7 +1733,7 @@ function loadItPassLesson(id) {
     document.getElementById("concept-ja-body").innerHTML = formatMarkdown(lesson.conceptJa);
   }
   document.getElementById("concept-zh-body").innerHTML = formatMarkdown(lesson.conceptZh);
-  document.getElementById("lesson-analogy").innerText = lesson.analogy;
+  document.getElementById("lesson-analogy").innerText = pickLessonAnalogy("itpass", lesson);
   
   // Glossary card details
   const glossaryBlock = document.getElementById("lesson-glossary");
@@ -1780,7 +1821,7 @@ function loadSgLesson(id) {
     document.getElementById("concept-ja-body").innerHTML = formatMarkdown(lesson.conceptJa);
   }
   document.getElementById("concept-zh-body").innerHTML = formatMarkdown(lesson.conceptZh);
-  document.getElementById("lesson-analogy").innerText = lesson.analogy;
+  document.getElementById("lesson-analogy").innerText = pickLessonAnalogy("sg", lesson);
   
   // Glossary card details
   const glossaryBlock = document.getElementById("lesson-glossary");
@@ -2492,17 +2533,27 @@ function resetOutputPlaceholder() {
   const outputBody = document.getElementById("output-body");
   const countBadge = document.getElementById("output-row-count");
   countBadge.style.display = "none";
+  countBadge.textContent = "0";
+  const emptyMain = window.I18n && typeof window.I18n.t === "function"
+    ? window.I18n.t("console.emptyResult", "The query result table will be displayed here.")
+    : "The query result table will be displayed here.";
+  const emptySub = window.I18n && typeof window.I18n.t === "function"
+    ? window.I18n.t("console.emptyResultSub", "(Execute SQL to see results)")
+    : "(Execute SQL to see results)";
   outputBody.innerHTML = `
     <div class="output-placeholder">
       <i class="fa-solid fa-arrow-up-long"></i>
-      <p>クエリを実行すると、ここに結果テーブルが表示されます。</p>
-      <span>(执行 SQL 后，查询结果表格将在此处显示)</span>
+      <p>${escapeHtml(emptyMain)}</p>
+      <span>${escapeHtml(emptySub)}</span>
     </div>
   `;
   
   // Status text resetting
   const statusDiv = document.getElementById("playground-status");
-  statusDiv.innerHTML = `<span class="status-ready"><i class="fa-solid fa-circle-play"></i> 已就绪 (Ready)</span>`;
+  const readyText = window.I18n && typeof window.I18n.t === "function"
+    ? window.I18n.t("sandbox.readyStatus", "Ready")
+    : "Ready";
+  statusDiv.innerHTML = `<span class="status-ready"><i class="fa-solid fa-circle-play"></i> ${escapeHtml(readyText)}</span>`;
 }
 
 // Reset Database Mock State
@@ -2569,7 +2620,8 @@ function runPlaygroundQuery() {
   
   if (res.success) {
     // Show success status
-    statusDiv.innerHTML = `<span class="status-success"><i class="fa-solid fa-circle-check"></i> 执行成功</span>`;
+    const successStatus = pickVisibleRuntimeText("sql", "successStatus", "Success");
+    statusDiv.innerHTML = `<span class="status-success"><i class="fa-solid fa-circle-check"></i> ${escapeHtml(successStatus)}</span>`;
     
     // Render result table
     let tableHtml = "";
@@ -2579,7 +2631,7 @@ function runPlaygroundQuery() {
     }
     
     if (res.columns && res.columns.length > 0) {
-      countBadge.innerText = `${res.rows.length}行`;
+      countBadge.innerText = String(res.rows.length);
       countBadge.style.display = "inline";
       
       tableHtml += `<div class="table-scroll-wrapper"><table class="result-table"><thead><tr>`;
@@ -2598,6 +2650,7 @@ function runPlaygroundQuery() {
       tableHtml += `</tbody></table></div>`;
     } else {
       countBadge.style.display = "none";
+      countBadge.textContent = "0";
     }
     
     outputBody.innerHTML = tableHtml;
@@ -2619,13 +2672,16 @@ function runPlaygroundQuery() {
     
   } else {
     // Show failed status
-    statusDiv.innerHTML = `<span class="status-error"><i class="fa-solid fa-circle-exclamation"></i> 语法错误</span>`;
+    const syntaxErrorStatus = pickVisibleRuntimeText("sql", "syntaxErrorStatus", "Syntax Error");
+    statusDiv.innerHTML = `<span class="status-error"><i class="fa-solid fa-circle-exclamation"></i> ${escapeHtml(syntaxErrorStatus)}</span>`;
     countBadge.style.display = "none";
+    countBadge.textContent = "0";
     
     // Render error message
+    const errorLabel = pickVisibleRuntimeText("sql", "errorStatus", "SQL Error");
     outputBody.innerHTML = `
       <div class="output-error-box">
-        <i class="fa-solid fa-triangle-exclamation"></i> SQLエラー:<br><br>${res.error}
+        <i class="fa-solid fa-triangle-exclamation"></i> SQL ${escapeHtml(errorLabel)}:<br><br>${escapeHtml(res.error)}
       </div>
     `;
     if (window.StudyAI) {
@@ -3009,7 +3065,7 @@ function renderCrossChallenge() {
   const label = document.getElementById('mission-label-text');
   const taskText = document.getElementById('playground-task-text');
   if (label) label.innerText = '🔥 综合挑战';
-  if (taskText) taskText.innerText = ex.task;
+  if (taskText) taskText.innerText = pickExerciseTaskText(ex);
 }
 
 function stopCrossChallenge() {
@@ -3073,23 +3129,64 @@ function renderChecklist(lesson) {
   `).join("");
 }
 
+function getLocalizedFlashcards(subject, lesson, baseCards) {
+  const pack = getLessonVisiblePack(subject, lesson);
+  if (pack.wordCards && Array.isArray(pack.wordCards) && pack.wordCards.length) return pack.wordCards;
+  if (pack.flashcards && Array.isArray(pack.flashcards) && pack.flashcards.length) return pack.flashcards;
+  return baseCards || [];
+}
+
+function normalizeFlashcard(card) {
+  if (!card) return { ja: "", target: "", desc: "" };
+  return {
+    ja: card.ja || card.termJa || card.term || "",
+    target: card.target || card.ko || card.my || card.vi || card.th || card.zh || card.term || card.ja || "",
+    desc: card.desc || card.description || card.explanation || ""
+  };
+}
+
+function getEmptyFlashcardText(field) {
+  const text = {
+    ja: "単語カードなし",
+    zh: "暂无词卡",
+    en: "No cards",
+    ko: "단어 카드 없음",
+    my: "Word card မရှိသေးပါ",
+    vi: "Chưa có thẻ từ",
+    th: "ยังไม่มีบัตรคำ"
+  };
+  const desc = {
+    ja: "この章には単語カードがありません。",
+    zh: "当前章节没有词卡。",
+    en: "This lesson has no word cards.",
+    ko: "현재 단원에는 단어 카드가 없습니다.",
+    my: "ဤသင်ခန်းစာတွင် word card မရှိသေးပါ။",
+    vi: "Bài này chưa có thẻ từ.",
+    th: "บทนี้ยังไม่มีบัตรคำ"
+  };
+  return field === "desc" ? pickLocalText(desc, desc.en) : pickLocalText(text, text.en);
+}
+
 // Dynamic Flashcards Loader & Controller
 function initFlashcards(lessonId) {
   let cards = [];
+  let lesson = null;
   if (currentSubject === 'itpass') {
-    const lesson = IT_PASSPORT_LESSONS.find(l => l.id === lessonId);
+    lesson = IT_PASSPORT_LESSONS.find(l => l.id === lessonId);
     cards = (lesson && lesson.vocabList) ? lesson.vocabList : [];
   } else if (currentSubject === 'sg') {
-    const lesson = (typeof SG_LESSONS !== 'undefined') ? SG_LESSONS.find(l => l.id === lessonId) : null;
+    lesson = (typeof SG_LESSONS !== 'undefined') ? SG_LESSONS.find(l => l.id === lessonId) : null;
     cards = (lesson && lesson.vocabList) ? lesson.vocabList : [];
   } else if (currentSubject === 'sql') {
-    const lesson = (typeof SQL_LESSONS !== 'undefined') ? SQL_LESSONS.find(l => l.id === lessonId) : null;
+    lesson = (typeof SQL_LESSONS !== 'undefined') ? SQL_LESSONS.find(l => l.id === lessonId) : null;
     cards = (lesson && lesson.vocabList) ? lesson.vocabList : [];
   }
+
+  cards = getLocalizedFlashcards(currentSubject, lesson, cards);
   
   if (cards.length === 0) {
     const defaultTerm = currentSubject === 'sql' ? "SQL" : (currentSubject === 'sg' ? "情報セキュリティ" : "ITパスポート");
-    cards = [{ ja: defaultTerm, zh: defaultTerm, desc: "核心术语概念学习卡片。" }];
+    cards = [{ ja: defaultTerm, target: defaultTerm, desc: getEmptyFlashcardText("desc") }];
   }
 
   currentFlashcardIdx = 0;
@@ -3110,17 +3207,17 @@ function renderFlashcard(cards) {
   isFlashcardFlipped = false;
   
   if (!cards || cards.length === 0) {
-    document.getElementById("fc-ja-term").innerText = "暂无词卡";
-    document.getElementById("fc-zh-term").innerText = "No cards";
-    document.getElementById("fc-desc").innerText = "当前章节没有词卡。";
+    document.getElementById("fc-ja-term").innerText = getEmptyFlashcardText("title");
+    document.getElementById("fc-zh-term").innerText = getEmptyFlashcardText("title");
+    document.getElementById("fc-desc").innerText = getEmptyFlashcardText("desc");
     document.getElementById("fc-counter").innerText = "0 / 0";
     return;
   }
   
-  const currentCard = cards[currentFlashcardIdx];
+  const currentCard = normalizeFlashcard(cards[currentFlashcardIdx]);
   
   document.getElementById("fc-ja-term").innerText = currentCard.ja;
-  document.getElementById("fc-zh-term").innerText = currentCard.zh;
+  document.getElementById("fc-zh-term").innerText = currentCard.target;
   document.getElementById("fc-desc").innerText = currentCard.desc;
   
   document.getElementById("fc-counter").innerText = `${currentFlashcardIdx + 1} / ${cards.length}`;
@@ -3134,16 +3231,18 @@ function flipFlashcard() {
 
 function prevFlashcard() {
   let cards = [];
+  let lesson = null;
   if (currentSubject === 'itpass') {
-    const lesson = IT_PASSPORT_LESSONS.find(l => l.id === currentItPassLessonId);
+    lesson = IT_PASSPORT_LESSONS.find(l => l.id === currentItPassLessonId);
     cards = (lesson && lesson.vocabList) ? lesson.vocabList : [];
   } else if (currentSubject === 'sg') {
-    const lesson = (typeof SG_LESSONS !== 'undefined') ? SG_LESSONS.find(l => l.id === currentSgLessonId) : null;
+    lesson = (typeof SG_LESSONS !== 'undefined') ? SG_LESSONS.find(l => l.id === currentSgLessonId) : null;
     cards = (lesson && lesson.vocabList) ? lesson.vocabList : [];
   } else if (currentSubject === 'sql') {
-    const lesson = (typeof SQL_LESSONS !== 'undefined') ? SQL_LESSONS.find(l => l.id === currentLessonId) : null;
+    lesson = (typeof SQL_LESSONS !== 'undefined') ? SQL_LESSONS.find(l => l.id === currentLessonId) : null;
     cards = (lesson && lesson.vocabList) ? lesson.vocabList : [];
   }
+  cards = getLocalizedFlashcards(currentSubject, lesson, cards);
   if (cards.length === 0) return;
   
   currentFlashcardIdx = (currentFlashcardIdx - 1 + cards.length) % cards.length;
@@ -3152,16 +3251,18 @@ function prevFlashcard() {
 
 function nextFlashcard() {
   let cards = [];
+  let lesson = null;
   if (currentSubject === 'itpass') {
-    const lesson = IT_PASSPORT_LESSONS.find(l => l.id === currentItPassLessonId);
+    lesson = IT_PASSPORT_LESSONS.find(l => l.id === currentItPassLessonId);
     cards = (lesson && lesson.vocabList) ? lesson.vocabList : [];
   } else if (currentSubject === 'sg') {
-    const lesson = (typeof SG_LESSONS !== 'undefined') ? SG_LESSONS.find(l => l.id === currentSgLessonId) : null;
+    lesson = (typeof SG_LESSONS !== 'undefined') ? SG_LESSONS.find(l => l.id === currentSgLessonId) : null;
     cards = (lesson && lesson.vocabList) ? lesson.vocabList : [];
   } else if (currentSubject === 'sql') {
-    const lesson = (typeof SQL_LESSONS !== 'undefined') ? SQL_LESSONS.find(l => l.id === currentLessonId) : null;
+    lesson = (typeof SQL_LESSONS !== 'undefined') ? SQL_LESSONS.find(l => l.id === currentLessonId) : null;
     cards = (lesson && lesson.vocabList) ? lesson.vocabList : [];
   }
+  cards = getLocalizedFlashcards(currentSubject, lesson, cards);
   if (cards.length === 0) return;
   
   currentFlashcardIdx = (currentFlashcardIdx + 1) % cards.length;
@@ -5528,7 +5629,7 @@ function loadPythonLesson(id) {
   document.getElementById("concept-zh-body").innerHTML = lesson.conceptZh;
 
   // Analogy
-  document.getElementById("lesson-analogy").innerText = lesson.analogy || "";
+  document.getElementById("lesson-analogy").innerText = pickLessonAnalogy("python", lesson);
 
   // Code Example
   const preBlock = document.getElementById("example-pre-block");
@@ -5548,7 +5649,7 @@ function loadPythonLesson(id) {
   codeEl.textContent = lesson.example || "";
   codeEl.className = "language-python";
   copyBtn.style.display = "inline-flex";
-  exampleTitle.innerHTML = `<i class="fa-brands fa-python"></i> Python コード例 (示例代码)`;
+  exampleTitle.innerHTML = `<i class="fa-brands fa-python"></i> ${escapeHtml(pickLessonCodeExampleLabel("python", lesson, "Python コード例"))}`;
 
   // Theory lesson locker
   const pythonEditor = document.getElementById("python-editor");
@@ -5556,7 +5657,12 @@ function loadPythonLesson(id) {
   if (!lesson.example) {
     exCard.style.display = "none";
     if (pythonEditor) {
-      pythonEditor.value = "# 本节为纯概念理论课，无需编写或运行代码。\n# 请阅读左侧的教材讲解，并完成随堂练习！";
+      pythonEditor.value = pickLessonVisibleField(
+        "python",
+        lesson,
+        "sandboxComment",
+        "# Concept lesson: read the explanation and complete the practice."
+      );
       pythonEditor.readOnly = true;
       pythonEditor.style.opacity = "0.7";
       pythonEditor.style.cursor = "not-allowed";
@@ -5569,7 +5675,7 @@ function loadPythonLesson(id) {
     }
     const statusLbl = document.getElementById("python-sandbox-status");
     if (statusLbl) {
-      statusLbl.textContent = "理论课免执行 / Concept Lesson";
+      statusLbl.textContent = applySandboxVisibleStatus("python", lesson, "conceptLessonStatus", "理论课免执行 / Concept Lesson");
     }
   } else {
     exCard.style.display = "block";
@@ -5586,7 +5692,7 @@ function loadPythonLesson(id) {
     }
     const statusLbl = document.getElementById("python-sandbox-status");
     if (statusLbl) {
-      statusLbl.textContent = "準備完了 / Ready";
+      statusLbl.textContent = applySandboxVisibleStatus("python", lesson, "readyStatus", "準備完了 / Ready");
     }
   }
 
@@ -5848,18 +5954,8 @@ function initCodingExamSubLayout() {
   
   if (currentSubject === "sql") {
     const lesson = typeof SQL_LESSONS !== "undefined" ? SQL_LESSONS.find(l => l.id === currentLessonId) : null;
-    configTitle.innerText = pickLessonLocalText(lesson, "practicalExamTitle", pickLocalText({
-      zh: "SQL 实操模拟考试 (実技模試)",
-      ja: "SQL 実技模擬試験",
-      en: "SQL Practical Mock Exam",
-      ko: "SQL 실전 모의시험"
-    }, "SQL 实操模拟考试 (実技模試)"));
-    configDesc.innerText = pickLessonLocalText(lesson, "practicalExamDescription", pickLocalText({
-      zh: "本考试模拟日本 IT 专门学校的 SQL 实操考试模式。在限定时间内，根据给定的日文文字任务在右侧 SQL 沙盒中查询对应的数据，点击“判定”按钮提交测试。",
-      ja: "日本のIT専門学校で行われるSQL実技試験を想定した練習です。制限時間内に、提示された日本語タスクに沿って右側のSQLサンドボックスでデータを検索し、「判定」ボタンで提出します。",
-      en: "This mode simulates an SQL practical exam at a Japanese IT vocational school. Read the task, query the matching data in the SQL sandbox, and submit it with the Judge button within the time limit.",
-      ko: "일본 IT 전문학교의 SQL 실기 시험 형식을 연습하는 모드입니다. 제한 시간 안에 제시된 일본어 과제를 읽고 오른쪽 SQL 샌드박스에서 해당 데이터를 조회한 뒤, 판정 버튼으로 제출합니다."
-    }, "本考试模拟日本 IT 专门学校的 SQL 实操考试模式。在限定时间内，根据给定的日文文字任务在右侧 SQL 沙盒中查询对应的数据，点击“判定”按钮提交测试。"));
+    configTitle.innerText = pickLessonLocalText(lesson, "practicalExamTitle", "SQL 实操模拟考试 (実技模試)");
+    configDesc.innerText = pickLessonLocalText(lesson, "practicalExamDescription", "本考试模拟日本 IT 专门学校的 SQL 实操考试模式。在限定时间内，根据给定的日文文字任务在右侧 SQL 沙盒中查询对应的数据，点击“判定”按钮提交测试。");
   } else if (currentSubject === "java") {
     configTitle.innerText = pickLocalText({ zh: "Java 实操模拟考试 (実技模試)", ja: "Java 実技模擬試験", en: "Java Practical Mock Exam", ko: "Java 실전 모의시험" }, "Java 实操模拟考试 (実技模試)");
     configDesc.innerText = pickLocalText({
@@ -6248,9 +6344,12 @@ async function verifyCurrentCodingQuestion() {
     const resUser = sqlEngine.execute(code);
     
     if (!resUser.success) {
-      statusDiv.innerHTML = `<span class="status-error"><i class="fa-solid fa-circle-exclamation"></i> 语法错误</span>`;
+      const syntaxErrorStatus = pickVisibleRuntimeText("sql", "syntaxErrorStatus", "Syntax Error");
+      statusDiv.innerHTML = `<span class="status-error"><i class="fa-solid fa-circle-exclamation"></i> ${escapeHtml(syntaxErrorStatus)}</span>`;
       countBadge.style.display = "none";
-      outputBody.innerHTML = `<div class="output-error-box"><i class="fa-solid fa-triangle-exclamation"></i> SQLエラー:<br><br>${resUser.error}</div>`;
+      countBadge.textContent = "0";
+      const errorLabel = pickVisibleRuntimeText("sql", "errorStatus", "SQL Error");
+      outputBody.innerHTML = `<div class="output-error-box"><i class="fa-solid fa-triangle-exclamation"></i> SQL ${escapeHtml(errorLabel)}:<br><br>${escapeHtml(resUser.error)}</div>`;
       
       activeCodingExam.userStatuses[q.id] = 'failed';
       renderCodingQuestion();
@@ -6262,7 +6361,7 @@ async function verifyCurrentCodingQuestion() {
     // 2. Render execution output
     let tableHtml = "";
     if (resUser.columns && resUser.columns.length > 0) {
-      countBadge.innerText = `${resUser.rows.length}行`;
+      countBadge.innerText = String(resUser.rows.length);
       countBadge.style.display = "inline";
       
       tableHtml += `<table class="result-table"><thead><tr>`;
@@ -6280,9 +6379,11 @@ async function verifyCurrentCodingQuestion() {
       tableHtml += `</tbody></table>`;
     } else {
       countBadge.style.display = "none";
+      countBadge.textContent = "0";
     }
     outputBody.innerHTML = tableHtml;
-    statusDiv.innerHTML = `<span class="status-success"><i class="fa-solid fa-circle-check"></i> 実行成功 (执行成功)</span>`;
+    const successStatus = pickVisibleRuntimeText("sql", "successStatus", "Success");
+    statusDiv.innerHTML = `<span class="status-success"><i class="fa-solid fa-circle-check"></i> ${escapeHtml(successStatus)}</span>`;
     
     // 3. Run Reference Query
     const resSol = sqlEngine.execute(q.solutionQuery);
@@ -6316,11 +6417,11 @@ async function verifyCurrentCodingQuestion() {
     }
     
     if (sandboxStatus) {
-      sandboxStatus.innerText = "実行中... / Running...";
+      sandboxStatus.innerText = pickVisibleRuntimeText("java", "runningStatus", "実行中... / Running...");
       sandboxStatus.className = "java-sandbox-status java-status-running";
     }
     if (outputContent) {
-      outputContent.textContent = "// コンパイル中 / Compiling...\n// 判定を行っています / Grading...";
+      outputContent.textContent = "// " + pickVisibleRuntimeText("java", "gradingStatus", "判定を行っています / Grading...");
     }
     
     try {
@@ -6337,19 +6438,19 @@ async function verifyCurrentCodingQuestion() {
       // Update output display
       let textToShow = "";
       if (res.compileError) {
-        textToShow = "❌ コンパイルエラー / Compile Error:\n\n" + res.compileError;
+        textToShow = "❌ " + pickVisibleRuntimeText("java", "compileErrorStatus", "コンパイルエラー / Compile Error") + ":\n\n" + res.compileError;
         outputContent.className = "java-output-content java-output-error";
         if (sandboxStatus) {
-          sandboxStatus.innerText = "コンパイルエラー";
+          sandboxStatus.innerText = pickVisibleRuntimeText("java", "compileErrorStatus", "コンパイルエラー");
           sandboxStatus.className = "java-sandbox-status java-status-error";
         }
         activeCodingExam.userStatuses[q.id] = 'failed';
         showToastKey("toast.compileError", "error");
       } else if (res.runtimeError) {
-        textToShow = (res.output ? '// 出力 / Output:\n' + res.output + '\n\n' : '') + "⚠️ 実行エラー / Runtime Error:\n" + res.runtimeError;
+        textToShow = (res.output ? '// ' + pickVisibleRuntimeText("java", "outputLabel", "出力 / Output") + ':\n' + res.output + '\n\n' : '') + "⚠️ " + pickVisibleRuntimeText("java", "runtimeErrorStatus", "実行エラー / Runtime Error") + ":\n" + res.runtimeError;
         outputContent.className = "java-output-content java-output-error";
         if (sandboxStatus) {
-          sandboxStatus.innerText = "実行エラー";
+          sandboxStatus.innerText = pickVisibleRuntimeText("java", "runtimeErrorStatus", "実行エラー");
           sandboxStatus.className = "java-sandbox-status java-status-error";
         }
         activeCodingExam.userStatuses[q.id] = 'failed';
@@ -6363,15 +6464,15 @@ async function verifyCurrentCodingQuestion() {
         if (isMatch) {
           activeCodingExam.userStatuses[q.id] = 'passed';
           if (sandboxStatus) {
-            sandboxStatus.innerText = "成功 / Success ✓";
+            sandboxStatus.innerText = pickVisibleRuntimeText("java", "successStatus", "成功 / Success") + " ✓";
             sandboxStatus.className = "java-sandbox-status java-status-success";
           }
         showToastKey("toast.verifySuccess", "success");
         } else {
           activeCodingExam.userStatuses[q.id] = 'failed';
-          textToShow += `\n\n[⚠️ 判定失敗 / Incorrect Output]\n-- 期望输出结果 (Expected):\n${q.expectedOutput}`;
+          textToShow += buildExpectedOutputNotice("java", q.expectedOutput, "// ");
           if (sandboxStatus) {
-            sandboxStatus.innerText = "不適合 / Failed ✗";
+            sandboxStatus.innerText = pickVisibleRuntimeText("java", "failedStatus", "不適合 / Failed") + " ✗";
             sandboxStatus.className = "java-sandbox-status java-status-error";
           }
           showToastKey("toast.outputMismatch", "error");
@@ -6384,11 +6485,11 @@ async function verifyCurrentCodingQuestion() {
       
     } catch (e) {
       if (sandboxStatus) {
-        sandboxStatus.innerText = "エラー / Error";
+        sandboxStatus.innerText = pickVisibleRuntimeText("java", "errorStatus", "エラー / Error");
         sandboxStatus.className = "java-sandbox-status java-status-error";
       }
       if (outputContent) {
-        outputContent.textContent = `// 判定エラー / Exception during grading:\n${e.message}`;
+        outputContent.textContent = "// " + pickVisibleRuntimeText("java", "errorStatus", "判定エラー / Exception during grading") + ":\n" + e.message;
       }
       activeCodingExam.userStatuses[q.id] = 'failed';
       renderCodingQuestion();
@@ -6409,11 +6510,11 @@ async function verifyCurrentCodingQuestion() {
     }
     
     if (sandboxStatus) {
-      sandboxStatus.innerText = "実行中... / Running...";
+      sandboxStatus.innerText = pickVisibleRuntimeText("python", "runningStatus", "実行中... / Running...");
       sandboxStatus.className = "python-sandbox-status python-status-running";
     }
     if (outputContent) {
-      outputContent.textContent = "# 判定中... / Running checks...";
+      outputContent.textContent = "# " + pickVisibleRuntimeText("python", "gradingStatus", "判定中... / Running checks...");
     }
     
     try {
@@ -6430,19 +6531,19 @@ async function verifyCurrentCodingQuestion() {
       // Update output display
       let textToShow = "";
       if (res.compileError) {
-        textToShow = "❌ 構文エラー / Syntax Error:\n\n" + res.compileError;
+        textToShow = "❌ " + pickVisibleRuntimeText("python", "syntaxErrorStatus", "構文エラー / Syntax Error") + ":\n\n" + res.compileError;
         outputContent.className = "python-output-content python-output-error";
         if (sandboxStatus) {
-          sandboxStatus.innerText = "構文エラー";
+          sandboxStatus.innerText = pickVisibleRuntimeText("python", "syntaxErrorStatus", "構文エラー");
           sandboxStatus.className = "python-sandbox-status python-status-error";
         }
         activeCodingExam.userStatuses[q.id] = 'failed';
         showToastKey("toast.sqlSyntaxError", "error");
       } else if (res.runtimeError) {
-        textToShow = (res.output ? '# 出力 / Output:\n' + res.output + '\n\n' : '') + "⚠️ 実行エラー / Runtime Error:\n" + res.runtimeError;
+        textToShow = (res.output ? '# ' + pickVisibleRuntimeText("python", "outputLabel", "出力 / Output") + ':\n' + res.output + '\n\n' : '') + "⚠️ " + pickVisibleRuntimeText("python", "runtimeErrorStatus", "実行エラー / Runtime Error") + ":\n" + res.runtimeError;
         outputContent.className = "python-output-content python-output-error";
         if (sandboxStatus) {
-          sandboxStatus.innerText = "実行エラー";
+          sandboxStatus.innerText = pickVisibleRuntimeText("python", "runtimeErrorStatus", "実行エラー");
           sandboxStatus.className = "python-sandbox-status python-status-error";
         }
         activeCodingExam.userStatuses[q.id] = 'failed';
@@ -6456,15 +6557,15 @@ async function verifyCurrentCodingQuestion() {
         if (isMatch) {
           activeCodingExam.userStatuses[q.id] = 'passed';
           if (sandboxStatus) {
-            sandboxStatus.innerText = "成功 / Success ✓";
+            sandboxStatus.innerText = pickVisibleRuntimeText("python", "successStatus", "成功 / Success") + " ✓";
             sandboxStatus.className = "python-sandbox-status python-status-success";
           }
         showToastKey("toast.verifySuccess", "success");
         } else {
           activeCodingExam.userStatuses[q.id] = 'failed';
-          textToShow += `\n\n# [⚠️ 判定失敗 / Incorrect Output]\n# -- 期望输出结果 (Expected):\n# ${q.expectedOutput}`;
+          textToShow += buildExpectedOutputNotice("python", q.expectedOutput, "# ");
           if (sandboxStatus) {
-            sandboxStatus.innerText = "不適合 / Failed ✗";
+            sandboxStatus.innerText = pickVisibleRuntimeText("python", "failedStatus", "不適合 / Failed") + " ✗";
             sandboxStatus.className = "python-sandbox-status python-status-error";
           }
           showToastKey("toast.outputMismatch", "error");
@@ -6477,11 +6578,11 @@ async function verifyCurrentCodingQuestion() {
       
     } catch (e) {
       if (sandboxStatus) {
-        sandboxStatus.innerText = "エラー / Error";
+        sandboxStatus.innerText = pickVisibleRuntimeText("python", "errorStatus", "エラー / Error");
         sandboxStatus.className = "python-sandbox-status python-status-error";
       }
       if (outputContent) {
-        outputContent.textContent = `# 判定エラー / Exception during grading:\n${e.message}`;
+        outputContent.textContent = "# " + pickVisibleRuntimeText("python", "errorStatus", "判定エラー / Exception during grading") + ":\n" + e.message;
       }
       activeCodingExam.userStatuses[q.id] = 'failed';
       renderCodingQuestion();

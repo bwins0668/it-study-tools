@@ -127,3 +127,34 @@ If interrupted, run Q6 regression.
 #### Next Steps:
 - PC sync all Vietnamese content + quality gate
 - Browser regression (needs dev server)
+
+---
+
+## Round: Dual-I18n-Visible-Gold-Gate-KO-MY-Repair-And-Standard
+
+### Status: WEB + PC completed, Portable release skipped
+
+#### Web Completed:
+- Added `tools/verify_i18n_visible_content_gold_gate.js` to check visible fields, allowed Japanese areas, raw keys, offline translation, and ko/my/vi/th language residue.
+- Added `tools/verify_visible_i18n_dom_smoke.js` for Playwright DOM smoke when a dev server is available.
+- Extended `assets/js/content-i18n.js` so local packs expose visible fields beyond title/concept: analogy, sandbox instruction, sandbox comment, stdin placeholder, expected output, execution result, word cards, and runtime status labels.
+- Updated `assets/js/app.js` and `assets/js/i18n.js` so language switching refreshes visible extras instead of leaving Chinese/Japanese hardcoded fields.
+- Localized SQL playground placeholder, row-count badge, success/error statuses, and SQL error labels so DOM smoke no longer exposes raw keys or hardcoded Chinese/Japanese in ko/my.
+- Fixed ko SQL LIKE visible example from Japanese `ヤマ` to `Kim`.
+- Fixed my SQL / IT Passport Thai-character residue in visible lesson bodies.
+- Added `docs/i18n_gold_gate_standard.md` and `docs/i18n_future_language_pack_roadmap.md`.
+
+#### Gold Gate Results:
+- ko-KR: FULL for SQL, Java, Python, IT Passport, SG; 0 fail / 0 warn.
+- my-MM: USABLE for SQL, Java, Python, IT Passport, SG; 0 fail / 0 warn.
+- DOM smoke: ko-KR/my-MM across SQL, Java, and Python all PASS (6/6).
+- Offline translation API requests: 0 suspicious patterns.
+
+#### PC Sync Results:
+- Synced visible i18n runtime, ko/my visible residue repairs, Gold Gate tools, and standard docs to PC.
+- Updated PC version metadata and cache-busters to `v2026.6.20-r-pc-i18n-visible-gold-gate-ko-my`.
+- PC DOM smoke: ko-KR/my-MM across SQL, Java, and Python all PASS (6/6) on `http://127.0.0.1:5180`.
+
+#### Known Out of Scope:
+- Thai Java original quality gate remains NEEDS_REVIEW / failing due existing Vietnamese residue and missing Thai entries. This round records it but does not repair Thai Java.
+- Portable release skipped because Phase 0-13 are not all PASS while the known Thai Java gate remains failing.

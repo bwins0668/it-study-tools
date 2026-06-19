@@ -80,12 +80,212 @@
     return false;
   }
 
+  var VISIBLE_DEFAULTS = {
+    ko: {
+      subjects: { sql: "SQL", java: "Java", python: "Python", itpass: "IT Passport", sg: "SG 정보 보안" },
+      subtitle: "핵심 개념과 실습 정리",
+      analogy: function (title, subjectName) {
+        return "일상 비유: " + title + "은(는) " + subjectName + " 학습 노트처럼, 입력과 처리 순서를 한 단계씩 확인하면 전체 흐름을 더 쉽게 이해할 수 있습니다.";
+      },
+      sandboxInstruction: function (title, subjectName) {
+        return subjectName + " 샌드박스에서 " + title + " 관련 예제를 조금씩 바꾸어 실행 결과를 비교하세요.";
+      },
+      sandboxComment: function (title, subjectName) {
+        return subjectName + " 샌드박스: " + title + "의 입력, 처리, 출력 흐름을 확인하세요.";
+      },
+      stdinPlaceholder: "프로그램에 전달할 입력 데이터...",
+      expectedOutput: "예상 출력 결과",
+      executionResult: "실행 결과",
+      resultExplanation: "출력과 예상 결과를 비교하여 코드 흐름을 점검하세요.",
+      emptyState: "아직 표시할 결과가 없습니다.",
+      wordCardDesc: function (title) {
+        return title + "의 핵심 용어와 사용 장면을 정리하는 단어 카드입니다.";
+      },
+      codeExampleLabel: function (subjectName) { return subjectName + " 코드 예"; },
+      conceptLessonStatus: "이론 수업: 실행이 필요하지 않습니다.",
+      readyStatus: "준비 완료",
+      runningStatus: "실행 중...",
+      gradingStatus: "판정 중...",
+      compileErrorStatus: "컴파일 오류",
+      runtimeErrorStatus: "실행 오류",
+      syntaxErrorStatus: "구문 오류",
+      successStatus: "성공",
+      failedStatus: "실패",
+      errorStatus: "오류",
+      outputLabel: "출력",
+      incorrectOutputLabel: "판정 실패 - 예상 출력 결과"
+    },
+    my: {
+      subjects: { sql: "SQL", java: "Java", python: "Python", itpass: "IT Passport", sg: "SG လုံခြုံရေး" },
+      subtitle: "အဓိကအယူအဆနှင့် လက်တွေ့လေ့ကျင့်ခန်း",
+      analogy: function (title, subjectName) {
+        return "နေ့စဉ်ဥပမာ: " + title + " ကို " + subjectName + " မှတ်စုတစ်ခုလို သဘောထားပြီး input၊ လုပ်ဆောင်မှုနှင့် output ကို အဆင့်လိုက်ကြည့်ပါ။";
+      },
+      sandboxInstruction: function (title, subjectName) {
+        return subjectName + " sandbox တွင် " + title + " နှင့်ဆိုင်သော code ကို အနည်းငယ်ပြောင်းပြီး ရလဒ်ကို နှိုင်းယှဉ်ပါ။";
+      },
+      sandboxComment: function (title, subjectName) {
+        return subjectName + " sandbox: " + title + " ၏ input၊ လုပ်ဆောင်မှုနှင့် output ကို စစ်ဆေးပါ။";
+      },
+      stdinPlaceholder: "ပရိုဂရမ်အတွက် လိုအပ်သော input ဒေတာ...",
+      expectedOutput: "မျှော်မှန်းရလဒ်",
+      executionResult: "လုပ်ဆောင်မှုရလဒ်",
+      resultExplanation: "Output နှင့် မျှော်မှန်းရလဒ်ကို နှိုင်းယှဉ်ပြီး code လုပ်ဆောင်မှုအစဉ်ကို စစ်ဆေးပါ။",
+      emptyState: "ပြသရန် ရလဒ် မရှိသေးပါ။",
+      wordCardDesc: function (title) {
+        return title + " နှင့်ဆိုင်သော အဓိကဝေါဟာရနှင့် အသုံးပြုမှုကို စုစည်းထားသော word card ဖြစ်သည်။";
+      },
+      codeExampleLabel: function (subjectName) { return subjectName + " code ဥပမာ"; },
+      conceptLessonStatus: "သီအိုရီသင်ခန်းစာ: runရန် မလိုအပ်ပါ။",
+      readyStatus: "အဆင်သင့်ဖြစ်ပါပြီ",
+      runningStatus: "လုပ်ဆောင်နေသည်...",
+      gradingStatus: "စစ်ဆေးနေသည်...",
+      compileErrorStatus: "Compile အမှား",
+      runtimeErrorStatus: "Runtime အမှား",
+      syntaxErrorStatus: "Syntax အမှား",
+      successStatus: "အောင်မြင်သည်",
+      failedStatus: "မအောင်မြင်ပါ",
+      errorStatus: "အမှား",
+      outputLabel: "Output",
+      incorrectOutputLabel: "စစ်ဆေးမှုမအောင်မြင် - မျှော်မှန်းရလဒ်"
+    },
+    vi: {
+      subjects: { sql: "SQL", java: "Java", python: "Python", itpass: "IT Passport", sg: "SG bảo mật thông tin" },
+      subtitle: "Tóm tắt khái niệm và thực hành",
+      analogy: function (title, subjectName) {
+        return "Ví dụ thực tế: hãy xem " + title + " như một ghi chú học " + subjectName + ", rồi kiểm tra từng bước từ đầu vào, xử lý đến đầu ra.";
+      },
+      sandboxInstruction: function (title, subjectName) {
+        return "Trong sandbox " + subjectName + ", hãy thay đổi nhẹ ví dụ liên quan đến " + title + " và so sánh kết quả chạy.";
+      },
+      sandboxComment: function (title, subjectName) {
+        return "Sandbox " + subjectName + ": kiểm tra luồng đầu vào, xử lý và đầu ra của " + title + ".";
+      },
+      stdinPlaceholder: "Dữ liệu đầu vào cho chương trình...",
+      expectedOutput: "Kết quả mong đợi",
+      executionResult: "Kết quả thực thi",
+      resultExplanation: "So sánh đầu ra với kết quả mong đợi để kiểm tra luồng mã.",
+      emptyState: "Chưa có kết quả để hiển thị.",
+      wordCardDesc: function (title) {
+        return "Thẻ từ vựng tóm tắt thuật ngữ và ngữ cảnh sử dụng của " + title + ".";
+      },
+      codeExampleLabel: function (subjectName) { return "Ví dụ mã " + subjectName; },
+      conceptLessonStatus: "Bài lý thuyết: không cần chạy mã.",
+      readyStatus: "Sẵn sàng",
+      runningStatus: "Đang chạy...",
+      gradingStatus: "Đang kiểm tra...",
+      compileErrorStatus: "Lỗi biên dịch",
+      runtimeErrorStatus: "Lỗi thực thi",
+      syntaxErrorStatus: "Lỗi cú pháp",
+      successStatus: "Thành công",
+      failedStatus: "Không đạt",
+      errorStatus: "Lỗi",
+      outputLabel: "Đầu ra",
+      incorrectOutputLabel: "Không đạt - kết quả mong đợi"
+    },
+    th: {
+      subjects: { sql: "SQL", java: "Java", python: "Python", itpass: "IT Passport", sg: "SG ความมั่นคงสารสนเทศ" },
+      subtitle: "สรุปแนวคิดและแบบฝึก",
+      analogy: function (title, subjectName) {
+        return "ตัวอย่างใกล้ตัว: ให้มอง " + title + " เป็นบันทึกการเรียน " + subjectName + " แล้วตรวจลำดับ input การประมวลผล และ output ทีละขั้น";
+      },
+      sandboxInstruction: function (title, subjectName) {
+        return "ใน sandbox " + subjectName + " ให้ลองแก้ตัวอย่างของ " + title + " เล็กน้อย แล้วเปรียบเทียบผลลัพธ์";
+      },
+      sandboxComment: function (title, subjectName) {
+        return "Sandbox " + subjectName + ": ตรวจลำดับ input การประมวลผล และ output ของ " + title;
+      },
+      stdinPlaceholder: "ข้อมูล input สำหรับโปรแกรม...",
+      expectedOutput: "ผลลัพธ์ที่คาดหวัง",
+      executionResult: "ผลการรัน",
+      resultExplanation: "เปรียบเทียบ output กับผลลัพธ์ที่คาดหวังเพื่อตรวจลำดับของโค้ด",
+      emptyState: "ยังไม่มีผลลัพธ์ให้แสดง",
+      wordCardDesc: function (title) {
+        return "บัตรคำสำหรับทบทวนคำสำคัญและบริบทการใช้งานของ " + title;
+      },
+      codeExampleLabel: function (subjectName) { return "ตัวอย่างโค้ด " + subjectName; },
+      conceptLessonStatus: "บทเรียนทฤษฎี: ไม่จำเป็นต้องรันโค้ด",
+      readyStatus: "พร้อมแล้ว",
+      runningStatus: "กำลังรัน...",
+      gradingStatus: "กำลังตรวจ...",
+      compileErrorStatus: "Compile error",
+      runtimeErrorStatus: "Runtime error",
+      syntaxErrorStatus: "Syntax error",
+      successStatus: "สำเร็จ",
+      failedStatus: "ไม่ผ่าน",
+      errorStatus: "ข้อผิดพลาด",
+      outputLabel: "Output",
+      incorrectOutputLabel: "ไม่ผ่าน - ผลลัพธ์ที่คาดหวัง"
+    }
+  };
+
+  function cleanVisibleTitle(text, fallback) {
+    var value = String(text || fallback || "").replace(/<[^>]+>/g, " ");
+    value = value.replace(/[*_`#>\[\]()]+/g, " ").replace(/\s+/g, " ").trim();
+    return value || String(fallback || "lesson");
+  }
+
+  function commentPrefixFor(subject) {
+    if (subject === "python") return "# ";
+    if (subject === "sql") return "-- ";
+    return "// ";
+  }
+
+  function buildVisibleDefaults(subject, id, lang, localized) {
+    var template = VISIBLE_DEFAULTS[lang];
+    if (!template) return {};
+    var subjectName = (template.subjects && template.subjects[subject]) || subject || "lesson";
+    var title = cleanVisibleTitle(localized && localized.title, subjectName + " " + id);
+    var sandboxComment = commentPrefixFor(subject) + template.sandboxComment(title, subjectName);
+    return {
+      subtitle: template.subtitle,
+      analogy: template.analogy(title, subjectName),
+      dailyAnalogy: template.analogy(title, subjectName),
+      practiceIntro: localized && localized.practiceIntro ? localized.practiceIntro : template.sandboxInstruction(title, subjectName),
+      sandboxInstruction: localized && localized.sandboxInstruction ? localized.sandboxInstruction : template.sandboxInstruction(title, subjectName),
+      sandboxComment: sandboxComment,
+      stdinPlaceholder: template.stdinPlaceholder,
+      expectedOutput: template.expectedOutput,
+      executionResult: template.executionResult,
+      resultExplanation: template.resultExplanation,
+      emptyState: template.emptyState,
+      wordCards: [
+        {
+          ja: title,
+          target: title,
+          desc: template.wordCardDesc(title)
+        }
+      ],
+      flashcards: [
+        {
+          ja: title,
+          target: title,
+          desc: template.wordCardDesc(title)
+        }
+      ],
+      codeExampleLabel: template.codeExampleLabel(subjectName),
+      conceptLessonStatus: template.conceptLessonStatus,
+      readyStatus: template.readyStatus,
+      runningStatus: template.runningStatus,
+      gradingStatus: template.gradingStatus,
+      compileErrorStatus: template.compileErrorStatus,
+      runtimeErrorStatus: template.runtimeErrorStatus,
+      syntaxErrorStatus: template.syntaxErrorStatus,
+      successStatus: template.successStatus,
+      failedStatus: template.failedStatus,
+      errorStatus: template.errorStatus,
+      outputLabel: template.outputLabel,
+      incorrectOutputLabel: template.incorrectOutputLabel,
+      visibleDefaultsApplied: true
+    };
+  }
+
   /**
    * Get localized content for a lesson.
    * @param {string} subject — e.g. "sql", "itpass"
    * @param {string|number} id — lesson.id
    * @param {string} [lang] — language code, defaults to current UI language
-   * @returns {object|null} — { title, concept, needsReview } or null
+   * @returns {object|null} — complete localized visible content or null
    */
   function get(subject, id, lang) {
     var entry = getEntry(subject, id);
@@ -104,11 +304,13 @@
     var localized = entry[normalized];
     if (!localized) return null;
 
-    return {
-      title: localized.title || null,
-      concept: localized.concept || null,
-      needsReview: !!localized.needsReview
-    };
+    var visibleDefaults = buildVisibleDefaults(subject, id, normalized, localized);
+    var result = Object.assign({}, visibleDefaults, localized);
+    result.title = result.title || null;
+    result.concept = result.concept || null;
+    result.needsReview = !!localized.needsReview;
+    result.actualLang = normalized;
+    return result;
   }
 
   /**
