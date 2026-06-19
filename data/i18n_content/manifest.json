@@ -1,11 +1,11 @@
 {
-  "assetVersion": "v2026.6.19-r-pc-ko-python-sync",
-  "generatedAt": "2026-06-19T14:50:42.125Z",
-  "webVersion": "v2026.6.19-r-pc-ko-python-sync",
-  "releaseVersion": "v2026.6.19-r-pc-ko-python-sync",
+  "assetVersion": "v2026.6.19-r-pc-ko-itpass-sync",
+  "generatedAt": "2026-06-19T15:04:04.841Z",
+  "webVersion": "v2026.6.19-r-pc-ko-itpass-sync",
+  "releaseVersion": "v2026.6.19-r-pc-ko-itpass-sync",
   "totalSubjects": 5,
   "totalLanguages": 7,
-  "totalPacks": 25,
+  "totalPacks": 26,
   "packs": [
     {
       "subject": "sql",
@@ -26,6 +26,17 @@
       "sizeBytes": 30252,
       "sha256": "d3c41af3ecef32cdc90bdb60faaba36bed35592cdbdf58ec6c021e5caaba7fbc",
       "sourceType": "existing"
+    },
+    {
+      "subject": "itpass",
+      "lang": "ko",
+      "path": "data/i18n_content/itpass_ko.js",
+      "version": "v2026.6.19-r-pc-ko-itpass-sync",
+      "lessonCount": 85,
+      "sizeBytes": 222917,
+      "sha256": "ad6afe437d71f5ff8ecdb94fa1807771220fee427d1e160aed96be4f79f3cb38",
+      "sourceType": "local-usable",
+      "coverageStatus": "usable-ko"
     },
     {
       "subject": "sql",
