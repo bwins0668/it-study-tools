@@ -1,9 +1,9 @@
 # I18n Autodrive Progress
 
-更新时间：2026-06-20 00:25 JST
+更新时间：2026-06-20 00:16 JST
 
 当前小轮次：
-- Subround 7：SG 韩语内容包扩展 + PC 同步
+- Subround 8：双端韩语覆盖率回归验收
 
 已完成：
 - Subround 0：双端只读基线审计完成，Web/PC 均已 `git pull --ff-only` 且远端同步。
@@ -57,6 +57,13 @@
   - 覆盖信息安全基础、风险管理、访问控制、认证、授权、加密、哈希、网络安全、日志、备份、事故响应与考试练习说明。
   - `coverageStatus` 标为 `usable-ko`，不再依赖日语 fallback
   - 新增 `tools/verify_ko_sg_pack.js`。
+- Subround 8：双端韩语覆盖率回归验收完成：
+  - Web / PC 全量 JS 语法检查 PASS。
+  - Web / PC 覆盖矩阵均为 40 PASS / 0 FAIL / 33 WARN。
+  - SQL / Java / Python / IT Passport / SG 韩语专项验证均 PASS。
+  - Coding Typing ko UI 维持 FULL，91/91 keys。
+  - 双端离线 i18n 翻译 API 请求均为 0。
+  - Web mobile layout 12 PASS / 0 FAIL。
 
 已验证：
 - 双端自定义韩语 SQL 内容审计：36 lessons / 36 ko rows / 0 issues。
@@ -102,6 +109,29 @@
 - PC Subround 7 `node tools/verify_ko_sg_pack.js`：9 PASS / 0 FAIL。
 - PC Subround 7 `node tools/verify_i18n_coverage_matrix.js`：SG ko = USABLE，44/44 local，0/44 fallback，40 PASS / 0 FAIL / 33 WARN。
 - PC Subround 7 `node tools/verify_i18n_minor_pack_patch.js`：15 PASS / 0 FAIL / 0 WARN。
+- Web Subround 8 `git status --short --branch`：`## master...origin/master`。
+- Web Subround 8 `git diff --check`：PASS。
+- Web Subround 8 全量 `node --check`：`assets/js`、`data/i18n_content`、`tools` PASS。
+- Web Subround 8 覆盖矩阵：40 PASS / 0 FAIL / 33 WARN。
+- Web Subround 8 minor pack：30 PASS / 0 FAIL / 2 WARN。
+- Web Subround 8 SQL ko：16 PASS / 0 FAIL / 0 WARN。
+- Web Subround 8 browser i18n：70 PASS / 0 FAIL / 0 WARN。
+- Web Subround 8 offline i18n：翻译 API 请求 0，所有目标语言 local content PASS。
+- Web Subround 8 mobile layout：12 PASS / 0 FAIL。
+- Web Subround 8 coding typing：PASS。
+- Web Subround 8 sandbox globals：PASS，保留既有 inline handler / script order WARN。
+- Web Subround 8 Java/Python/IT Passport/SG 韩语专项：8/8、8/8、9/9、9/9 PASS。
+- PC Subround 8 `git status --short --branch`：`## main...origin/main`。
+- PC Subround 8 `git diff --check`：PASS。
+- PC Subround 8 全量 `node --check`：`assets/js`、`data`、`tools` PASS。
+- PC Subround 8 覆盖矩阵：40 PASS / 0 FAIL / 33 WARN。
+- PC Subround 8 SQL ko：5 PASS / 0 FAIL。
+- PC Subround 8 minor pack：15 PASS / 0 FAIL / 0 WARN。
+- PC Subround 8 browser i18n：70 PASS / 0 FAIL / 0 WARN。
+- PC Subround 8 offline i18n：翻译 API 请求 0，所有目标语言 local content PASS。
+- PC Subround 8 coding typing：PASS。
+- PC Subround 8 sandbox globals：PASS，保留既有 inline handler / script order / cache WARN。
+- PC Subround 8 Java/Python/IT Passport/SG 韩语专项：8/8、8/8、9/9、9/9 PASS。
 - PC offline i18n：翻译 API 请求 0，所有目标语言 local content PASS。
 - PC browser i18n：`verify_all_language_content_switch.js` 70 PASS / 0 FAIL / 0 WARN。
 - Web `node --check`：67 个 JS 文件 PASS。
@@ -135,18 +165,19 @@
 - PC Coding Typing UI 提交：`ca996f0 fix(pc): sync Korean coding typing UI`
 - Web IT Passport 提交：`ec28184 feat(web): expand Korean IT Passport content pack`
 - PC IT Passport 提交：`98170a2 feat(pc): sync Korean IT Passport baseline`
-- Subround 7 SG 提交：待本文件提交后记录。
-- 进度文档：随本文件提交记录。
+- Web SG 提交：`fbebda8 feat(web): expand Korean SG content pack`
+- PC SG 提交：`3c6f28f feat(pc): sync Korean SG baseline`
+- Subround 8 进度文档提交：待本文件提交后记录。
 
 已 push：
 - 本轮提交后推送到远端；恢复时以 `git status --short --branch` 无 ahead 为准。
 
 下一小轮次：
-- Subround 8：双端韩语覆盖率回归验收。
+- 可选 Subround 9：Glossary 韩语核心术语深化，或转入 vi / th / id 语言包。
 
 未完成原因：
-- Subround 8 全量回归尚未执行。
-- 可选 Subround 9 Glossary 深化尚未执行。
+- Subround 3～8 已完成。
+- 可选 Subround 9 Glossary 深化未执行。
 
 恢复命令：
 ```powershell
