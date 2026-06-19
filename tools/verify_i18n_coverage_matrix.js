@@ -5,6 +5,7 @@
  *
  * The report is intentionally honest:
  *   complete = local target-language content exists and is not marked review-only
+ *   usable   = local target-language content exists and is locally usable, but still wants human polish
  *   starter  = local target-language content exists but is marked needsReview/starter
  *   partial  = some local target-language content exists
  *   fallback = no local content, but another local language can be shown honestly
@@ -45,12 +46,14 @@ const koreanFocusRows = [];
 
 const STATUS_LABELS = {
   complete: "FULL",
+  usable: "USABLE",
   starter: "STARTER",
   partial: "STARTER",
   fallback: "FALLBACK",
   missing: "MISSING",
   broken: "BROKEN",
   FULL: "FULL",
+  USABLE: "USABLE",
   STARTER: "STARTER",
   FALLBACK: "FALLBACK",
   MISSING: "MISSING",
@@ -240,6 +243,7 @@ function evaluateSubject(subject) {
 
   for (const lang of TARGET_LANGS) {
     let local = 0;
+    let usable = 0;
     let starter = 0;
     let badSignal = 0;
     let badText = 0;
@@ -257,6 +261,7 @@ function evaluateSubject(subject) {
         const combined = `${localTitle}\n${localConcept}`;
         if (!langSignal(actualLang, combined)) badSignal += 1;
         if (hasForbidden(combined)) badText += 1;
+        if (meta && /usable/i.test(String(meta.coverageStatus || meta.qualityStatus || meta.sourceType || ""))) usable += 1;
         if (meta && (meta.needsReview || /starter|seed|draft/i.test(String(meta.coverageStatus || meta.source || "")))) starter += 1;
       } else {
         const fb = hasAnyFallback(lesson, packs, subject.id, lang);
@@ -270,8 +275,13 @@ function evaluateSubject(subject) {
     let kind = "missing";
     let mark = "FAIL";
     if (local === total && badText === 0 && badSignal === 0 && starter === 0) {
-      kind = "complete";
-      mark = "PASS";
+      if (usable > 0) {
+        kind = "usable";
+        mark = "WARN";
+      } else {
+        kind = "complete";
+        mark = "PASS";
+      }
     } else if (local === total && badText === 0 && badSignal === 0 && starter > 0) {
       kind = "starter";
       mark = "WARN";
@@ -285,6 +295,7 @@ function evaluateSubject(subject) {
 
     const detail = `${local}/${total} local, ${fallback}/${total} fallback` +
       (fallbackLangs.size ? ` via ${Array.from(fallbackLangs).join("/")}` : "") +
+      (usable ? `, ${usable} usable` : "") +
       (starter ? `, ${starter} needsReview/starter` : "") +
       (badSignal ? `, ${badSignal} weak language signal` : "") +
       (badText ? `, ${badText} forbidden text` : "");
