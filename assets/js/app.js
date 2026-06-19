@@ -1580,7 +1580,10 @@ function pickLocalText(value, fallback) {
 }
 
 function pickLessonLocalText(lesson, field, fallback) {
-  return pickLocalText(lesson && lesson.locales ? lesson.locales[field] : null, fallback);
+  const lessonText = pickLocalText(lesson && lesson.locales ? lesson.locales[field] : null, "");
+  if (lessonText) return lessonText;
+  const localized = lesson ? getLessonLocalizedText(currentSubject || "sql", lesson) : null;
+  return localized && localized[field] ? localized[field] : (fallback || "");
 }
 
 function pickExerciseTaskText(exercise) {
