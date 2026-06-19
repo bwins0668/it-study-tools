@@ -1,8 +1,8 @@
 {
-  "assetVersion": "v2026.6.19-r-my-full-pack",
-  "generatedAt": "2026-06-20T03:30:00.000Z",
-  "webVersion": "v2026.6.19-r-my-full-pack",
-  "releaseVersion": "v2026.6.19-r-my-full-pack",
+  "assetVersion": "v2026.6.19-r-vi-full-pack",
+  "generatedAt": "2026-06-20T04:00:00.000Z",
+  "webVersion": "v2026.6.19-r-vi-full-pack",
+  "releaseVersion": "v2026.6.19-r-vi-full-pack",
   "totalSubjects": 5,
   "totalLanguages": 7,
   "totalPacks": 27,
@@ -57,7 +57,8 @@
       "lessonCount": 85,
       "sizeBytes": 116077,
       "sha256": "c114a6bdb8b9438046fb111141ecd42a0a4dc8f83bc0bf8d82d017cc49720757",
-      "sourceType": "ai-assisted"
+      "sourceType": "ai-assisted",
+      "coverageStatus": "usable-vi"
     },
     {
       "subject": "java",
@@ -109,7 +110,8 @@
       "lessonCount": 115,
       "sizeBytes": 73155,
       "sha256": "1e877af392c1367b7d44ed34e2eb43c56af10c192fda3b4ffbea29f7430272dd",
-      "sourceType": "ai-assisted"
+      "sourceType": "ai-assisted",
+      "coverageStatus": "usable-vi"
     },
     {
       "subject": "python",
@@ -161,7 +163,8 @@
       "lessonCount": 255,
       "sizeBytes": 152395,
       "sha256": "284ace8009cde44bf44de8c2349aec087adbc65fead8b5a91427bd78b5b6fc4e",
-      "sourceType": "ai-assisted"
+      "sourceType": "ai-assisted",
+      "coverageStatus": "usable-vi"
     },
     {
       "subject": "sg",
@@ -213,7 +216,8 @@
       "lessonCount": 44,
       "sizeBytes": 45274,
       "sha256": "b36f09da46b5f29ea01b16fd0ddf9d7e1b667f1a0dc067720ae635562fc1c57b",
-      "sourceType": "ai-assisted"
+      "sourceType": "ai-assisted",
+      "coverageStatus": "usable-vi"
     },
     {
       "subject": "sql",
@@ -284,7 +288,8 @@
       "lessonCount": 36,
       "sizeBytes": 30252,
       "sha256": "d3c41af3ecef32cdc90bdb60faaba36bed35592cdbdf58ec6c021e5caaba7fbc",
-      "sourceType": "ai-assisted"
+      "sourceType": "ai-assisted",
+      "coverageStatus": "usable-vi"
     }
   ]
 }

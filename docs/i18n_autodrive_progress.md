@@ -99,3 +99,31 @@ If interrupted, run Q6 regression.
 #### Next Steps:
 - PC sync all Burmese content + quality gate
 - Browser regression (needs dev server)
+
+---
+
+## Round: Dual-I18n-Vietnamese-Pack-Autodrive
+
+### Status: WEB completed, PC-pending
+
+#### Web Completed:
+- Created tools/verify_vi_quality_gate.js — Vietnamese quality gate (39 PASS / 0 FAIL / 0 WARN)
+- Removed `needsReview: true` from all 5 vi content packs (SQL 36, Java 115, Python 255, IT Passport 85, SG 44)
+- Added `coverageStatus: "usable-vi"` to all 5 vi entries in manifest.json
+- Vietnamese detection improved to handle both diacritics and ASCII-only Vietnamese words
+- Updated version to v2026.6.19-r-vi-full-pack
+- My quality gate maintained: 31 PASS / 0 FAIL / 0 WARN
+- Korean quality gate maintained: 26 PASS / 0 FAIL / 0 WARN
+
+#### Vietnamese Quality Gate Results:
+- SQL: USABLE 36/36 ✅ Vietnamese
+- Java: USABLE 115/115 ✅ Vietnamese
+- Python: USABLE 255/255 ✅ Vietnamese
+- IT Passport: USABLE 85/85 ✅ Vietnamese
+- SG: USABLE 44/44 ✅ Vietnamese
+- UI dict: 20 vi-VN blocks ✅
+- Offline i18n: 0 translation API requests ✅
+
+#### Next Steps:
+- PC sync all Vietnamese content + quality gate
+- Browser regression (needs dev server)
