@@ -41,6 +41,21 @@ let pass = 0;
 let fail = 0;
 let warn = 0;
 const rows = [];
+const koreanFocusRows = [];
+
+const STATUS_LABELS = {
+  complete: "FULL",
+  starter: "STARTER",
+  partial: "STARTER",
+  fallback: "FALLBACK",
+  missing: "MISSING",
+  broken: "BROKEN",
+  FULL: "FULL",
+  STARTER: "STARTER",
+  FALLBACK: "FALLBACK",
+  MISSING: "MISSING",
+  BROKEN: "BROKEN",
+};
 
 function rel(...parts) {
   return path.join(ROOT, ...parts);
@@ -55,6 +70,14 @@ function status(kind, label, detail) {
   else if (kind === "FAIL") fail += 1;
   else warn += 1;
   console.log(`[${kind}] ${label}${detail ? " - " + detail : ""}`);
+}
+
+function toCoverageLabel(kind) {
+  return STATUS_LABELS[kind] || String(kind || "MISSING").toUpperCase();
+}
+
+function recordKoreanFocus(module, kind, detail) {
+  koreanFocusRows.push({ module, kind: toCoverageLabel(kind), detail });
 }
 
 function stripHtml(text) {
@@ -144,6 +167,15 @@ function evaluateGlossary(file) {
   vm.createContext(sandbox);
   vm.runInContext(readText(file), sandbox, { filename: file });
   return sandbox.window.IT_TERMS_GLOSSARY || [];
+}
+
+function evaluateUiDictFile() {
+  const file = rel("assets", "js", "i18n-ui-dict.js");
+  if (!fs.existsSync(file)) return {};
+  const sandbox = { console, window: {} };
+  vm.createContext(sandbox);
+  vm.runInContext(readText(file), sandbox, { filename: file });
+  return sandbox.window.I18nUiDict || {};
 }
 
 function lessonLocalValue(lesson, field, lang) {
@@ -258,6 +290,7 @@ function evaluateSubject(subject) {
       (badText ? `, ${badText} forbidden text` : "");
     rows.push({ module: subject.label, lang, kind, local, total, fallback, detail });
     status(mark, `[${subject.label}] ${lang}: ${kind}`, detail);
+    if (lang === "ko") recordKoreanFocus(subject.label, kind, detail);
   }
 }
 
@@ -279,7 +312,71 @@ function auditGlossary() {
     }
     const kind = local === terms.length && starter === 0 ? "complete" : local > 0 ? "partial" : "missing";
     status(kind === "complete" ? "PASS" : "WARN", `[Glossary] ${lang}: ${kind}`, `${local}/${terms.length} local${starter ? `, ${starter} needsReview` : ""}`);
+    if (lang === "ko") recordKoreanFocus("Glossary", kind, `${local}/${terms.length} local${starter ? `, ${starter} needsReview` : ""}`);
   }
+}
+
+function flattenStringEntries(obj, prefix = "", out = []) {
+  if (!obj || typeof obj !== "object") return out;
+  for (const [key, value] of Object.entries(obj)) {
+    const next = prefix ? `${prefix}.${key}` : key;
+    if (typeof value === "string") out.push({ path: next, value });
+    else if (value && typeof value === "object") flattenStringEntries(value, next, out);
+  }
+  return out;
+}
+
+function isTechOnlyText(text) {
+  const clean = stripHtml(text);
+  if (!clean) return true;
+  if (clean.length <= 2) return true;
+  if (/^(SQL|Java|Python|CBT|SG|IT|DB|ID|CPM|stdin|stdout|Alt\+[A-Z])$/i.test(clean)) return true;
+  return clean.split(/\s+/).length <= 2 && /^[A-Za-z0-9 +/#().:_|%\-]+$/.test(clean);
+}
+
+function pathMatchesAny(pathName, matchers) {
+  return matchers.some((matcher) => {
+    if (matcher instanceof RegExp) return matcher.test(pathName);
+    return typeof matcher === "function" ? matcher(pathName) : false;
+  });
+}
+
+function auditKoreanUiCategory(label, dict, matchers) {
+  const reference = flattenStringEntries(dict["en-US"] || {});
+  const koEntries = flattenStringEntries(dict["ko-KR"] || {});
+  const koByPath = new Map(koEntries.map((entry) => [entry.path, entry.value]));
+  const refPaths = reference
+    .filter((entry) => pathMatchesAny(entry.path, matchers))
+    .map((entry) => entry.path);
+  const uniqueRefPaths = [...new Set(refPaths)];
+  const present = uniqueRefPaths.filter((entryPath) => koByPath.has(entryPath));
+  const missing = uniqueRefPaths.filter((entryPath) => !koByPath.has(entryPath));
+  const koTexts = present.map((entryPath) => ({ path: entryPath, value: koByPath.get(entryPath) }));
+  const badText = koTexts.filter((entry) => hasForbidden(entry.value));
+  const nonHangul = koTexts.filter((entry) => !isTechOnlyText(entry.value) && !hasHangul(entry.value));
+
+  let kind = "FULL";
+  let mark = "PASS";
+  if (badText.length) {
+    kind = "BROKEN";
+    mark = "FAIL";
+  } else if (!present.length && uniqueRefPaths.length) {
+    kind = "MISSING";
+    mark = "WARN";
+  } else if (missing.length) {
+    kind = "STARTER";
+    mark = "WARN";
+  } else if (nonHangul.length) {
+    kind = "STARTER";
+    mark = "WARN";
+  }
+
+  const detail = `${present.length}/${uniqueRefPaths.length} keys` +
+    (missing.length ? `, ${missing.length} missing` : "") +
+    (nonHangul.length ? `, ${nonHangul.length} non-Hangul review` : "") +
+    (badText.length ? `, ${badText.length} forbidden text` : "");
+  status(mark, `[Korean UI] ${label}: ${kind}`, detail);
+  recordKoreanFocus(label, kind, detail);
 }
 
 function auditUiDict() {
@@ -300,18 +397,32 @@ function auditUiDict() {
   if (reviewMarker) status("WARN", "[UI dictionary] review marker", String(reviewMarker));
   if (/sandbox\.playground/.test(raw)) status("FAIL", "[UI dictionary] raw key", "sandbox.playground literal found");
   else status("PASS", "[UI dictionary] raw key", "sandbox.playground not visible as literal");
+
+  const dict = evaluateUiDictFile();
+  auditKoreanUiCategory("Coding typing", dict, [/^codingTyping\./, /^nav\.codingTyping$/, /^moduleDesc\.codingTyping$/, /^dashboard\.codingTyping$/]);
+  auditKoreanUiCategory("Japanese typing", dict, [/^typing\./, /^nav\.typing$/, /^moduleDesc\.typing$/, /^dashboard\.japaneseTyping$/]);
+  auditKoreanUiCategory("Tools Dashboard", dict, [/^dashboard\./, /^tools\.dashboard/, /^tools\.learningTools$/, /^tools\.examTools$/]);
+  auditKoreanUiCategory("Account / Settings / Tools", dict, [/^auth\./, /^settings\./, /^tools\./, /^common\.themeToggle$/]);
+  auditKoreanUiCategory("Toast / aria / title", dict, [
+    /^toast\./,
+    (entryPath) => /(^|\.)(aria|title|placeholder|label|desc|triggerLabel)$/i.test(entryPath),
+    (entryPath) => /(Title|Placeholder|Label|Desc)$/.test(entryPath.split(".").pop() || ""),
+  ]);
 }
 
 function auditTypingData() {
-  const files = [
+  const japaneseFiles = [
     "data/japanese_typing_library.js",
     "data/japanese_typing_expansion.js",
+  ];
+  const codingFiles = [
     "data/coding_typing/_index.js",
     "data/coding_typing/coding_symbols.js",
     "data/coding_typing/java_basics.js",
     "data/coding_typing/python_basics.js",
     "data/coding_typing/sql_basics.js",
   ];
+  const files = japaneseFiles.concat(codingFiles);
   let found = 0;
   let forbidden = 0;
   for (const f of files) {
@@ -321,6 +432,11 @@ function auditTypingData() {
   }
   status(found === files.length ? "PASS" : "WARN", "[Typing] data files", `${found}/${files.length} present`);
   status(forbidden ? "WARN" : "PASS", "[Typing] forbidden markers", `${forbidden} file(s) with suspicious text`);
+
+  const japaneseFound = japaneseFiles.filter((f) => readText(rel(...f.split("/")))).length;
+  const codingFound = codingFiles.filter((f) => readText(rel(...f.split("/")))).length;
+  recordKoreanFocus("Japanese typing data", japaneseFound === japaneseFiles.length ? "FULL" : "MISSING", `${japaneseFound}/${japaneseFiles.length} files present`);
+  recordKoreanFocus("Coding typing data", codingFound === codingFiles.length ? "FULL" : "MISSING", `${codingFound}/${codingFiles.length} files present`);
 }
 
 function auditManifest() {
@@ -395,6 +511,13 @@ function printCompactMatrix() {
   }
 }
 
+function printKoreanFocusMatrix() {
+  console.log("\nKorean Coverage Detail (Subround 1 focus)");
+  for (const row of koreanFocusRows) {
+    console.log(`- ${row.module}: ${row.kind} — ${row.detail}`);
+  }
+}
+
 function main() {
   console.log("=== i18n Coverage Matrix Audit ===");
   for (const subject of SUBJECTS) evaluateSubject(subject);
@@ -404,6 +527,7 @@ function main() {
   auditManifest();
   auditOfflineBoundary();
   printCompactMatrix();
+  printKoreanFocusMatrix();
 
   console.log(`\n=== Results: ${pass} PASS / ${fail} FAIL / ${warn} WARN ===`);
   process.exit(fail > 0 ? 1 : 0);
