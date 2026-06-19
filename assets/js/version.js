@@ -3,17 +3,18 @@
   "use strict";
 
   window.STUDY_TOOLS_VERSION = {
-    webVersion: "v2026.6.15-r35.0",
-    desktopVersion: "v2026.6.15-r35.0",
-    releaseUrl: "https://github.com/bwins0668/it-study-tools/releases/tag/v2026.6.15-r35.0",
+    webVersion: "v2026.6.19-r-offline-i18n-pc-sync-1",
+    desktopVersion: "v2026.6.19-r-offline-i18n-pc-sync-1",
+    releaseUrl: "https://github.com/bwins0668/it-study-tools/releases/tag/v2026.6.19-r-offline-i18n-pc-sync-1",
     webUrl: "https://study-tools-web-pages.pages.dev",
     stage: "stable",
-    assetVersion: "v2026.6.15-r35.0"
+    assetVersion: "v2026.6.19-r-offline-i18n-pc-sync-1"
   };
 
   function applyVersionInfo() {
     var versionEls = document.querySelectorAll("[data-study-tools-version]");
     versionEls.forEach(function (el) {
+      if (el === document.documentElement) return;
       el.textContent = window.STUDY_TOOLS_VERSION.webVersion;
     });
 

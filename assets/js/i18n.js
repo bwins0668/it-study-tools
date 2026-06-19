@@ -11,7 +11,7 @@
       return sessionStorage.getItem('study-tools-official-only') === '1';
     } catch (e) { return false; }
   })();
-  var DISABLE_TRANSLATION_OVERLAY = OFFICIAL_ONLY;
+  var DISABLE_TRANSLATION_OVERLAY = true;
 
 
   "use strict";
@@ -833,6 +833,12 @@ if (DISABLE_TRANSLATION_OVERLAY) { missing = []; applyTranslations = function() 
     if (document.getElementById("subject-tab-java")?.classList.contains("active")) return "java";
     if (document.getElementById("subject-tab-sg")?.classList.contains("active")) return "sg";
     if (document.getElementById("subject-tab-python")?.classList.contains("active")) return "python";
+    var activeModule = document.querySelector(".module-switch-option.active[data-module]");
+    var moduleName = activeModule ? activeModule.getAttribute("data-module") : "";
+    if (["sql", "itpass", "java", "sg", "python"].indexOf(moduleName) !== -1) return moduleName;
+    if (typeof currentSubject !== "undefined" && ["sql", "itpass", "java", "sg", "python"].indexOf(currentSubject) !== -1) {
+      return currentSubject;
+    }
     return null;
   }
 
