@@ -179,15 +179,38 @@
 - Subround 3～8 已完成。
 - 可选 Subround 9 Glossary 深化未执行。
 
-恢复命令：
+## Round: Dual-I18n-Korean-Term-Fix-And-PC-Quality-Sync
+
+### Status: COMPLETE
+
+#### PC Sync Completed:
+- tools/verify_ko_quality_gate.js — copied from Web (word-boundary term matching + ACCEPTABLE_TECH_TERMS)
+- docs/i18n_next_language_plan.md — copied from Web
+- docs/i18n_autodrive_progress.md — updated
+- data/i18n_content/itpass_ko.js — 3 concept entries (itpass:4,7,8) → "IT 패스포트(IT Passport)"
+- PC version: v2026.6.19-r-pc-ko-quality-milestone
+- index.html cache-busters updated
+
+#### Verification Results:
+- verify_ko_quality_gate: 26 PASS / 0 FAIL / 0 WARN
+- All 4 subjects: FULL (Java/Python/IT Passport/SG)
+- JS syntax: PASS
+- coverage matrix: PASS
+- Individual pack verifications: PASS
+- Offline i18n: 0 translation API requests
+- No raw key, undefined/null, Chinese residue, needsReview exposure
+
+#### Committed:
+- PC commit: "chore(pc): sync Korean terminology quality gate fixes"
+- Push: complete
+
+## 恢复命令：
 ```powershell
 Set-Location "G:\项目\sql-learning-hub-web-public"
 git status --short --branch
-node tools/verify_i18n_coverage_matrix.js
-node tools/verify_ko_sg_pack.js
+node tools/verify_ko_quality_gate.js
 
 Set-Location "G:\项目\sql-learning-hub"
 git status --short --branch
-node tools/verify_i18n_coverage_matrix.js
-node tools/verify_ko_sg_pack.js
+node tools/verify_ko_quality_gate.js
 ```
