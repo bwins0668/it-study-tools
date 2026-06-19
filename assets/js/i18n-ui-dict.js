@@ -5756,4 +5756,23 @@
     if (!window.I18nUiDict[locale].auth) window.I18nUiDict[locale].auth = {};
     Object.assign(window.I18nUiDict[locale].auth, AUTH_ROUND_23_23[locale]);
   });
+
+  var CODING_TYPING_KO_UI_SUBROUND_5 = {
+    examInsight: "시험 관점",
+    examRelevance: "시험 관련성",
+    examTargets: "시험 목표",
+    relatedTerms: "관련 용어",
+    meaning: "의미",
+    memoryHook: "기억 포인트",
+    examPoint: "시험 포인트",
+    commonMistake: "자주 하는 실수",
+    high: "높음",
+    medium: "중간",
+    low: "낮음",
+    sendToSandbox: "샌드박스로 보내기",
+    runInSandbox: "샌드박스에서 실행"
+  };
+  if (!window.I18nUiDict["ko-KR"]) window.I18nUiDict["ko-KR"] = {};
+  if (!window.I18nUiDict["ko-KR"].codingTyping) window.I18nUiDict["ko-KR"].codingTyping = {};
+  Object.assign(window.I18nUiDict["ko-KR"].codingTyping, CODING_TYPING_KO_UI_SUBROUND_5);
 })();

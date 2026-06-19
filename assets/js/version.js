@@ -3,12 +3,12 @@
   "use strict";
 
   window.STUDY_TOOLS_VERSION = {
-    webVersion: "v2026.6.19-r-pc-ko-python-sync",
-    desktopVersion: "v2026.6.19-r-pc-ko-python-sync",
-    releaseUrl: "https://github.com/bwins0668/it-study-tools/releases/tag/v2026.6.19-r-pc-ko-python-sync",
+    webVersion: "v2026.6.19-r-pc-ko-coding-typing-ui",
+    desktopVersion: "v2026.6.19-r-pc-ko-coding-typing-ui",
+    releaseUrl: "https://github.com/bwins0668/it-study-tools/releases/tag/v2026.6.19-r-pc-ko-coding-typing-ui",
     webUrl: "https://study-tools-web-pages.pages.dev",
     stage: "stable",
-    assetVersion: "v2026.6.19-r-pc-ko-python-sync"
+    assetVersion: "v2026.6.19-r-pc-ko-coding-typing-ui"
   };
 
   function applyVersionInfo() {
