@@ -1,9 +1,9 @@
 # I18n Autodrive Progress
 
-更新时间：2026-06-19 23:47 JST
+更新时间：2026-06-19 23:51 JST
 
 当前小轮次：
-- Subround 3：Web 韩语 Java 内容包终审 + PC 同步
+- Subround 4：Web 韩语 Python 内容包终审 + PC 同步
 
 已完成：
 - Subround 0：双端只读基线审计完成，Web/PC 均已 `git pull --ff-only` 且远端同步。
@@ -29,6 +29,13 @@
   - `coverageStatus` 标为 `usable-ko`，不再依赖日语 fallback
   - 覆盖矩阵新增 `USABLE` 状态，避免把可用但未人工终审的内容误标为 FULL。
   - 新增 `tools/verify_ko_java_pack.js`。
+- Subround 4：同步 Web 稳定 Python 韩语内容包到 PC：
+  - 255 课本地韩语 `title` / `subtitle` / `concept`
+  - 255 课 `practiceIntro` / `sandboxInstruction` / `examIntro` / `challengeIntro`
+  - 每课至少 3 条 `keyPoints`
+  - PC 新增 `data/i18n_content/python_ko.js` 并在 `index.html` 加载
+  - `coverageStatus` 标为 `usable-ko`，不再依赖日语 fallback
+  - 新增 `tools/verify_ko_python_pack.js`。
 
 已验证：
 - 双端自定义韩语 SQL 内容审计：36 lessons / 36 ko rows / 0 issues。
@@ -37,6 +44,14 @@
 - PC `node tools/verify_sql_ko_content_complete.js`：5 PASS / 0 FAIL。
 - PC `node tools/verify_i18n_coverage_matrix.js`：39 PASS / 0 FAIL / 34 WARN。
 - PC `node tools/verify_i18n_minor_pack_patch.js`：15 PASS / 0 FAIL / 0 WARN。
+- PC `node tools/verify_coding_typing.js`：PASS。
+- PC `node tools/verify_sandbox_globals.mjs`：PASS，保留既有 inline handler / script order / cache WARN。
+- PC Subround 4 `node --check`：`data/i18n_content/python_ko.js`、`tools/verify_ko_python_pack.js`、`tools/verify_i18n_coverage_matrix.js`、`assets/js/version.js` PASS。
+- PC Subround 4 `git diff --check`：PASS。
+- PC `node tools/verify_ko_python_pack.js`：8 PASS / 0 FAIL。
+- PC `node tools/verify_i18n_coverage_matrix.js`：Python ko = USABLE，255/255 local，0/255 fallback。
+- PC `node tools/verify_all_language_content_switch.js`：70 PASS / 0 FAIL / 0 WARN。
+- PC `node tools/verify_offline_i18n_switch.js`：翻译 API 请求 0。
 - PC `node tools/verify_coding_typing.js`：PASS。
 - PC `node tools/verify_sandbox_globals.mjs`：PASS，保留既有 inline handler / script order / cache WARN。
 - PC offline i18n：翻译 API 请求 0，所有目标语言 local content PASS。
@@ -64,18 +79,20 @@
 - PC 覆盖矩阵提交：`27329d8 test(pc): strengthen i18n coverage matrix`
 - Web 韩语 SQL 终审提交：`8380e5f chore(web): polish Korean SQL lesson pack`
 - PC 韩语 SQL 同步提交：`66393f8 chore(pc): sync Korean SQL lesson polish`
-- Subround 3 Java 提交：待本文件提交后记录。
+- Web Java 提交：`c68e464 feat(web): complete Korean Java lesson pack`
+- PC Java 提交：`2d12a38 feat(pc): sync Korean Java lesson pack`
+- Subround 4 Python 提交：待本文件提交后记录。
 - 进度文档：随本文件提交记录。
 
 已 push：
 - 本轮提交后推送到远端；恢复时以 `git status --short --branch` 无 ahead 为准。
 
 下一小轮次：
-- Subround 4：Web 韩语 Python 内容包终审，稳定后同步 PC。
+- Subround 5：Coding Typing 韩语 UI 11 个缺口修复 + PC 同步。
 
 未完成原因：
-- Web 韩语 Python / IT Passport / SG 仍为 STARTER。
-- PC 韩语 Python / IT Passport / SG 仍为 FALLBACK。
+- Web 韩语 IT Passport / SG 仍为 STARTER。
+- PC 韩语 IT Passport / SG 仍为 FALLBACK。
 - Korean Coding typing UI 仍为 STARTER：80/91 keys，11 missing。
 
 恢复命令：
