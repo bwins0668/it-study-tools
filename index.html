@@ -334,8 +334,7 @@
         </div>
       </aside>
 
-      <!-- Center: Lesson Content -->
-      <main class="lesson-content">
+      <main class="lesson-content" data-i18n-policy="source-ja">
 
         <div class="content-card">
           <!-- Lesson Header -->
@@ -365,7 +364,7 @@
           </div>
 
           <!-- Concept Text Body -->
-          <div class="concept-container" id="concept-container">
+          <div class="concept-container" id="concept-container" data-i18n-policy="source-ja">
             <div class="concept-col ja-col">
               <h4><i class="fa-solid fa-graduation-cap"></i> <span data-i18n="lesson.explanationJa">解説 (日本語)</span></h4>
               <div class="concept-body" id="concept-ja-body">
@@ -380,8 +379,7 @@
             </div>
           </div>
 
-          <!-- Analogy Card -->
-          <div class="analogy-card">
+          <div class="analogy-card" data-i18n-policy="source-ja">
             <div class="card-icon"><i class="fa-solid fa-lightbulb"></i></div>
             <div class="card-content">
               <h5 id="analogy-title-text" data-i18n="lesson.analogy">身近な例え (形象比喻)</h5>
@@ -390,7 +388,7 @@
           </div>
 
           <!-- Code Example Card / Glossary Card -->
-          <div class="example-card collapsed" id="example-card">
+          <div class="example-card collapsed" id="example-card" data-i18n-policy="source-ja">
             <div class="example-header" onclick="toggleExampleCard()" style="cursor: pointer; user-select: none;">
               <span id="example-header-title"><i class="fa-solid fa-code"></i> <span data-i18n="lesson.sqlExample">SQL構文例 (SQL示例)</span></span>
               <div style="display:flex; align-items:center; gap:12px;">
@@ -407,7 +405,7 @@
           </div>
 
           <!-- Java Vocab Flashcard Section (Java mode only) -->
-          <div class="java-vocab-section" id="java-vocab-section" style="display: none;">
+          <div class="java-vocab-section" id="java-vocab-section" style="display: none;" data-i18n-policy="source-ja">
             <div class="java-vocab-header">
               <i class="fa-solid fa-cards"></i>
               <span data-i18n="flashcard.title">単語カード / 词汇闪卡</span>
@@ -431,7 +429,7 @@
           </div>
 
           <!-- Python Vocab Flashcard Section (Python mode only) -->
-          <div class="python-vocab-section" id="python-vocab-section" style="display: none;">
+          <div class="python-vocab-section" id="python-vocab-section" style="display: none;" data-i18n-policy="source-ja">
             <div class="python-vocab-header">
               <i class="fa-solid fa-cards"></i>
               <span data-i18n="flashcard.title">単語カード / 词汇闪卡</span>
@@ -455,11 +453,11 @@
           </div>
 
           <!-- Quiz Section -->
-          <div class="quiz-section">
+          <div class="quiz-section" data-i18n-policy="source-ja">
             <h4><i class="fa-solid fa-circle-question"></i> <span data-i18n="quiz.title">理解度テスト (章节小测)</span></h4>
             
             <!-- Quiz Navigator (IT Passport Mode Only) -->
-            <div class="quiz-nav-header" id="itpass-quiz-nav" style="display: none;">
+            <div class="quiz-nav-header" id="itpass-quiz-nav" style="display: none;" data-i18n-policy="source-ja">
               <span class="quiz-nav-text" id="itpass-quiz-progress-text">问题 1 / 共 2 题</span>
               <div class="quiz-nav-buttons">
                 <button class="quiz-nav-btn" onclick="quizPrev()"><i class="fa-solid fa-chevron-left"></i> <span data-i18n="quiz.previous">上一题</span></button>
@@ -471,7 +469,7 @@
             <div class="quiz-options" id="quiz-options">
               <!-- Loaded dynamically -->
             </div>
-            <div class="quiz-footer">
+            <div class="quiz-footer" data-i18n-policy="source-ja">
               <button class="quiz-submit-btn" id="quiz-submit-btn" onclick="checkQuizAnswer()">
                 <i class="fa-solid fa-circle-check"></i> <span data-i18n="quiz.submitAnswer">回答する (提交回答)</span>
               </button>
@@ -546,7 +544,7 @@
             </div>
 
             <!-- Task text details -->
-            <div class="eq-body-area" style="background: rgba(0,0,0,0.2); border: 1px solid var(--border-color); border-radius: 10px; padding: 18px; display: flex; flex-direction: column; gap: 14px;">
+            <div class="eq-body-area" style="background: rgba(0,0,0,0.2); border: 1px solid var(--border-color); border-radius: 10px; padding: 18px; display: flex; flex-direction: column; gap: 14px;" data-i18n-policy="source-ja">
               <div class="eq-text-ja" style="font-size: 14.5px; line-height: 1.6; font-weight: 500; color: var(--text-main);">
                 <h5 style="color: var(--neon-cyan); margin-bottom: 6px; font-size: 13px; font-weight: 600;"><i class="fa-solid fa-graduation-cap"></i> <span data-i18n="sandbox.currentMission">ミッション (当前任务)</span></h5>
                 <p id="eq-task-ja">学生マスタからすべてのデータを取得しなさい。</p>
@@ -746,7 +744,7 @@
           </div>
 
           <div class="console-card-body" id="console-card-body" style="display: flex; flex-direction: column; flex: 1; overflow: hidden;">
-            <div class="playground-task-desc">
+            <div class="playground-task-desc" data-i18n-policy="source-ja">
               <div class="task-desc-main">
                 <strong><i class="fa-solid fa-circle-dot"></i> <span id="mission-label-text" data-i18n="sandbox.currentMission">ミッション (当前任务)</span>:</strong>
                 <span id="playground-task-text">学生テーブル (students) からすべてのデータを取得してみましょう。</span>
@@ -817,14 +815,14 @@
         </div>
 
         <!-- Flashcards Card -->
-        <div class="playground-card console-card itpass-widget" id="itpass-flashcards-card" style="display: none;">
+        <div class="playground-card console-card itpass-widget" id="itpass-flashcards-card" style="display: none;" data-i18n-policy="source-ja">
           <div class="console-header" onclick="toggleItPassCard('flashcards')">
             <span><i class="fa-solid fa-clone"></i> <span data-i18n="flashcard.title">核心专业词卡 (用語カード)</span></span>
             <i class="fa-solid fa-chevron-down toggle-icon" id="flashcards-toggle-icon"></i>
           </div>
           <div class="console-card-body" id="flashcards-body" style="display: flex; flex-direction: column; flex: 1; overflow: hidden;">
             <div class="flashcard-desc-box">
-              <span>点击闪卡即可翻转查看中日对照翻译及释义：</span>
+              <span data-i18n="flashcard.clickToFlip">点击闪卡即可翻转查看中日对照翻译及释义：</span>
             </div>
             
             <div class="flashcard-outer">
@@ -841,7 +839,7 @@
               </div>
             </div>
 
-            <div class="flashcard-footer">
+            <div class="flashcard-footer" data-i18n-policy="source-ja">
               <button class="console-btn" onclick="prevFlashcard()">
                 <i class="fa-solid fa-chevron-left"></i> <span data-i18n="exam.previous">上一个</span>
               </button>
@@ -1027,7 +1025,7 @@
                 ></textarea>
                 <div class="python-input-sidebar">
                   <div class="python-run-info-mini">
-                    <span>Python 3.12 · 10s · 离线沙盒</span>
+                    <span data-i18n="sandbox.pythonSandboxDesc">Python 3.12 · 10s · 离线沙盒</span>
                   </div>
                   <button class="python-run-btn" id="python-run-btn" onclick="PythonSandbox.runCode()">
                     <span class="sandbox-btn-icon">▶</span> <span data-i18n="sandbox.runCode">実行</span> <kbd>Ctrl+Enter</kbd>
@@ -1296,7 +1294,7 @@
       <div class="typing-field">
         <label><span data-i18n="typing.articleList">文章列表</span> <span id="typing-library-count"></span></label>
       </div>
-      <div class="typing-article-list" id="typing-article-list"></div>
+      <div class="typing-article-list" id="typing-article-list" data-i18n-policy="source-ja"></div>
     </aside>
 
     <main class="typing-panel typing-main-panel">
@@ -1321,7 +1319,7 @@
         </button>
       </div>
 
-      <div class="typing-workspace">
+      <div class="typing-workspace" data-i18n-policy="source-ja">
         <div class="typing-article-heading">
           <div>
             <h2 id="typing-current-title">文章准备中</h2>
@@ -1410,7 +1408,7 @@
       </div>
       <!-- Item list -->
       <div class="ct-field">
-        <label><span data-i18n="codingTyping.exerciseList">练习列表</span> <span id="ct-item-count"></span></label>
+        <label><span class="ct-list-title" data-i18n="codingTyping.exerciseList">练习列表</span> <span id="ct-item-count"></span></label>
       </div>
       <div class="ct-item-list" id="ct-item-list"></div>
     </aside>

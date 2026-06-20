@@ -6,6 +6,33 @@ const TypingHub = (() => {
     news: "新闻", literature: "文学随笔", culture: "趣味文化", special: "专项"
   };
 
+  const getCategoryLabel = (key) => {
+    const i18nKeys = {
+      all: "japaneseTyping.categoryAll",
+      daily: "japaneseTyping.categoryDaily",
+      social: "japaneseTyping.categorySocial",
+      workplace: "japaneseTyping.categoryWorkplace",
+      business_mail: "japaneseTyping.categoryBusinessMail",
+      it: "japaneseTyping.categoryIt",
+      public: "japaneseTyping.categoryPublic",
+      news: "japaneseTyping.categoryNews",
+      literature: "japaneseTyping.categoryLiterature",
+      culture: "japaneseTyping.categoryCulture",
+      special: "japaneseTyping.categorySpecial",
+      favorites: "japaneseTyping.categoryFavorites",
+      review: "japaneseTyping.categoryReview"
+    };
+    const fallbacks = {
+      all: "全部", daily: "生活", social: "社交", workplace: "职场",
+      business_mail: "商务邮件", it: "IT开发", public: "公共手续",
+      news: "新闻", literature: "文学随笔", culture: "趣味文化", special: "专项",
+      favorites: "收藏", review: "错句复练"
+    };
+    return (window.I18n && typeof I18n.t === "function")
+      ? I18n.t(i18nKeys[key] || "", fallbacks[key] || key)
+      : fallbacks[key] || key;
+  };
+
   let state = {
     category: "all", query: "", currentId: null, startedAt: null,
     timer: null, elapsed: 0, corrections: 0, lastLength: 0,
@@ -62,8 +89,11 @@ const TypingHub = (() => {
     $("header-challenge") && ($("header-challenge").style.display = "none");
     const title = $("main-title-text");
     const icon = $("main-logo-icon");
-    if (title) title.innerText = "日本語タイピング";
+    if (title) title.innerText = window.I18n ? I18n.t("japaneseTyping.title", "日本語タイピング") : "日本語タイピング";
     if (icon) icon.className = "fa-solid fa-keyboard logo-icon";
+    renderCategories();
+    renderLibrary();
+    renderHistory();
     setTimeout(() => $("typing-ime-input")?.focus(), 50);
   }
 
@@ -86,10 +116,11 @@ const TypingHub = (() => {
   function renderCategories() {
     const root = $("typing-category-list");
     if (!root) return;
-    const entries = [...Object.entries(categoryLabels), ["favorites", "收藏"], ["review", "错句复练"]];
-    root.innerHTML = entries.map(([key, label]) =>
-      `<button class="typing-category-btn ${state.category === key ? "active" : ""}" data-category="${key}">${label}</button>`
-    ).join("");
+    const keys = [...Object.keys(categoryLabels), "favorites", "review"];
+    root.innerHTML = keys.map(key => {
+      const label = getCategoryLabel(key);
+      return `<button class="typing-category-btn ${state.category === key ? "active" : ""}" data-category="${key}">${label}</button>`;
+    }).join("");
     root.querySelectorAll("button").forEach(btn => btn.addEventListener("click", () => {
       state.category = btn.dataset.category;
       renderCategories();
@@ -104,10 +135,10 @@ const TypingHub = (() => {
     root.innerHTML = items.length ? items.map(item => `
       <button class="typing-article-item ${item.id === state.currentId ? "active" : ""}" data-id="${item.id}">
         <strong>${escapeHtml(item.title)}</strong>
-        <span class="typing-article-meta">${escapeHtml(categoryLabels[item.category])} · ${item.text.length}字 · ${escapeHtml(item.tags.join(" / "))}</span>
-      </button>`).join("") : `<p class="typing-empty">没有符合条件的文章。</p>`;
+        <span class="typing-article-meta">${escapeHtml(getCategoryLabel(item.category))} · ${item.text.length}字 · ${escapeHtml(item.tags.join(" / "))}</span>
+      </button>`).join("") : `<p class="typing-empty">${escapeHtml(window.I18n ? I18n.t("japaneseTyping.emptyFiltered", "没有符合条件的文章。") : "没有符合条件的文章。")}</p>`;
     root.querySelectorAll("button").forEach(btn => btn.addEventListener("click", () => chooseArticle(btn.dataset.id)));
-    $("typing-library-count").textContent = `${items.length} 篇`;
+    $("typing-library-count").textContent = window.I18n ? I18n.t("japaneseTyping.articleCount", { count: items.length }, `${items.length} 篇`) : `${items.length} 篇`;
   }
 
   function chooseArticle(id) {
@@ -215,8 +246,12 @@ const TypingHub = (() => {
     saveStored();
     renderHistory();
     $("typing-ime-input").disabled = true;
-    $("typing-result-title").textContent = record.completed ? "练习完成" : "限时结束";
-    $("typing-result-summary").textContent = `${kpm} KPM · 正确率 ${accuracy}% · ${formatTime(seconds)} · 修改 ${state.corrections} 次`;
+    $("typing-result-title").textContent = record.completed
+      ? (window.I18n ? I18n.t("japaneseTyping.finishCompleted", "练习完成") : "练习完成")
+      : (window.I18n ? I18n.t("japaneseTyping.finishTimeout", "限时结束") : "限时结束");
+    $("typing-result-summary").textContent = window.I18n
+      ? I18n.t("japaneseTyping.finishSummary", { kpm: kpm, accuracy: accuracy, time: formatTime(seconds), corrections: state.corrections }, `${kpm} KPM · 正确率 ${accuracy}% · ${formatTime(seconds)} · 修改 ${state.corrections} 次`)
+      : `${kpm} KPM · 正确率 ${accuracy}% · ${formatTime(seconds)} · 修改 ${state.corrections} 次`;
     $("typing-result").classList.add("show");
     updateStats(typed);
   }
@@ -252,8 +287,10 @@ const TypingHub = (() => {
     if (!root) return;
     root.innerHTML = state.history.length ? state.history.slice(0, 6).map(row => `
       <div class="typing-history-row"><span>${escapeHtml(row.title)}</span><strong>${row.kpm} KPM / ${row.accuracy}%</strong></div>
-    `).join("") : `<p class="typing-empty">完成一次练习后，这里会显示最近成绩。</p>`;
-    $("typing-review-count").textContent = `${state.reviewIds.length} 篇待复练`;
+    `).join("") : `<p class="typing-empty">${escapeHtml(window.I18n ? I18n.t("japaneseTyping.emptyHistory", "完成一次练习后，这里会显示最近成绩。") : "完成一次练习后，这里会显示最近成绩。")}</p>`;
+    $("typing-review-count").textContent = window.I18n
+      ? I18n.t("japaneseTyping.reviewCount", { count: state.reviewIds.length }, `${state.reviewIds.length} 篇待复练`)
+      : `${state.reviewIds.length} 篇待复练`;
   }
 
   function commonPrefix(a, b) {
@@ -285,6 +322,19 @@ const TypingHub = (() => {
   }
 
   document.addEventListener("DOMContentLoaded", init);
+  document.addEventListener("i18n:languageChanged", () => {
+    const hub = $("typing-hub");
+    if (hub && hub.classList.contains("is-active")) {
+      const title = $("main-title-text");
+      if (title) title.innerText = window.I18n ? I18n.t("japaneseTyping.title", "日本語タイピング") : "日本語タイピング";
+      renderCategories();
+      renderLibrary();
+      renderHistory();
+      if (state.currentId) {
+        chooseArticle(state.currentId);
+      }
+    }
+  });
   return { open, close, restart, randomArticle, toggleFavorite, search };
 })();
 

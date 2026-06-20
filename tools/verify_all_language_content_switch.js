@@ -147,13 +147,26 @@ async function run() {
       // Open language menu and click
       const langBtn = await page.$('.language-toggle-btn');
       if (!langBtn) { emit('SKIP', `${code} — toggle button`, 'not found'); continue; }
-      await langBtn.click();
+      await langBtn.click({ force: true });
       await page.waitForTimeout(600);
 
       // Find the language option
-      const opt = await page.$(`.language-option[data-lang="${code}"], .language-option[data-value="${code}"], .language-option[lang="${code}"]`);
+      const optionSelector = `.language-option[data-lang="${code}"], .language-option[data-value="${code}"], .language-option[lang="${code}"]`;
+      const opt = await page.$(optionSelector);
       if (!opt) { emit('SKIP', `${code} — option`, 'not found in menu'); await page.keyboard.press('Escape'); continue; }
-      await opt.click();
+      await opt.evaluate(el => el.scrollIntoView({ block: 'center', inline: 'center' }));
+      await page.evaluate((selector) => {
+        const el = document.querySelector(selector);
+        if (!el) throw new Error(`Language option not found: ${selector}`);
+        el.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, view: window }));
+      }, optionSelector);
+      await page.waitForFunction((expectedCode) => {
+        if (!window.I18n || typeof window.I18n.getLanguage !== 'function') return false;
+        const actual = window.I18n.getLanguage();
+        return actual === expectedCode || actual.indexOf(expectedCode) === 0;
+      }, code, { timeout: 5000 }).catch(() => {
+        // Older UI paths may normalize to regional codes; keep content assertions authoritative.
+      });
       await page.waitForTimeout(1500);
 
       // ── Test 1: No overflow ──

@@ -128,6 +128,7 @@
         bookstoreDb: "書店DB",
         javaSandboxTitle: "Java プログラミング沙盒 / Java编程沙盒",
         pythonSandboxTitle: "Python プログラミング沙盒 / Python编程沙盒",
+        pythonSandboxDesc: "Python 3.12 · 10s · オフラインサンドボックス",
         sqlPlayground: "SQL プレイグラウンド",
         chooseLessonLoadCode: "— レッスンを選択してコードをロード —",
         toolbarTemplate: "テンプレ",
@@ -145,6 +146,8 @@
         outputPlaceholder: "（実行ボタンを押すと、ここに結果が表示されます）"
       },
       exam: {
+        allExamTitle: "総合ランダム模擬試験",
+        yearExamTitle: "{year} 公開問題 模擬試験",
         verify: "判定して保存",
         submit: "試験終了",
         previous: "前へ",
@@ -472,7 +475,8 @@
         title: "単語カード",
         flip: "フリップ",
         clickToFlip: "カードをクリックして裏表を切り替えます：",
-        clickToFlipHint: "クリックして裏を見る"
+        clickToFlipHint: "クリックして裏を見る",
+        localizedDesc: "{title} の重要用語を確認するカードです。"
       },
       glossary: {
         title: "IT用語集",
@@ -503,7 +507,10 @@
         questionCount: "問題 {current} / 全 {total} 問",
         previous: "前へ",
         next: "次へ",
-        submitAnswer: "回答する"
+        submitAnswer: "回答する",
+        empty: "この章にはまだ小テストがありません。",
+        unavailable: "{title} の小テストはまだこの表示言語に対応していません。",
+        thisLesson: "この章"
       },
       typing: {
         library: "タイピング文庫",
@@ -747,13 +754,14 @@
         maximize: "最大化",
         output: "执行结果",
         sqlPlaceholder: "请在此处输入 SQL 语句...",
-        currentMission: "ミッション (当前任务)",
+        currentMission: "当前任务",
         randomPractice: "随机指令练习",
-        databaseStructure: "データベース構造 (DB 表结构参考)",
+        databaseStructure: "数据库表结构参考",
         schoolDb: "学校DB",
         bookstoreDb: "书店DB",
-        javaSandboxTitle: "Java プログラミング沙盒 / Java编程沙盒",
-        pythonSandboxTitle: "Python プログラミング沙盒 / Python编程沙盒",
+        javaSandboxTitle: "Java 编程沙盒",
+        pythonSandboxTitle: "Python 编程沙盒",
+        pythonSandboxDesc: "Python 3.12 · 10s · 离线沙盒",
         sqlPlayground: "SQL 演练沙盒",
         chooseLessonLoadCode: "— 选择课程后载入示例代码 —",
         toolbarTemplate: "模板",
@@ -762,8 +770,8 @@
         toolbarCopyTitle: "复制代码",
         toolbarClear: "重置",
         toolbarClearTitle: "清空并重置",
-        javaEditorPlaceholder: "Java 代码を这里に入力してください...",
-        pythonEditorPlaceholder: "Python 代码を这里に入力してください...",
+        javaEditorPlaceholder: "请在此处输入 Java 代码...",
+        pythonEditorPlaceholder: "请在此处输入 Python 代码...",
         stdinHeader: "标准输入 / Standard Input (stdin)",
         stdinPlaceholder: "程序接收 of 输入内容写在这里...",
         runCode: "运行",
@@ -771,6 +779,8 @@
         outputPlaceholder: "（点击运行按钮，结果将显示在这里）"
       },
       exam: {
+        allExamTitle: "综合随机模拟考试",
+        yearExamTitle: "{year} 公开问题 模拟考试",
         verify: "验证并保存答案",
         submit: "提交试卷并交卷",
         previous: "上一题",
@@ -1082,7 +1092,7 @@
         compareMode: "左右对照 (日/中)",
         japaneseOnly: "日本語のみ",
         chineseOnly: "中文简体",
-        analogy: "身近な例え (形象比喻)",
+        analogy: "形象比喻",
         sqlExample: "SQL构文例 (SQL示例)",
         javaExample: "Java 代码例 (示例代码)",
         pythonExample: "Python 代码例 (示例代码)",
@@ -1095,10 +1105,11 @@
         calculatorSelect: "选择工具:"
       },
       flashcard: {
-        title: "単語カード / 词汇闪卡",
-        flip: "翻转 / Flip",
+        title: "词汇闪卡",
+        flip: "翻转",
         clickToFlip: "点击闪卡即可翻转查看中日对照翻译及释义：",
-        clickToFlipHint: "点击此处翻转 / Click to flip"
+        clickToFlipHint: "点击此处翻转",
+        localizedDesc: "{title} 的核心术语卡片。"
       },
       glossary: {
         title: "术语表 / 用語集",
@@ -1125,14 +1136,17 @@
         resultCount: "共 {count} 个术语 / {count} 件の用語"
       },
       quiz: {
-        title: "理解度テスト (章节小测)",
+        title: "理解度测试 (章节小测)",
         questionCount: "问题 {current} / 共 {total} 题",
         previous: "上一题",
         next: "下一题",
-        submitAnswer: "回答する (提交回答)"
+        submitAnswer: "提交回答",
+        empty: "本章暂无课后练习小测。",
+        unavailable: "{title} 的小测暂未完成当前显示语言本地化。",
+        thisLesson: "本章"
       },
       typing: {
-        library: "打字文库 / タイピング文庫",
+        library: "打字文库",
         libraryDesc: "从 N3 到 N1 实战日本語输入，支持生活、职场、长文练习，自由调整节奏。",
         search: "文库搜索",
         searchPlaceholder: "标题、内容或标签",
@@ -1346,6 +1360,7 @@
         bookstoreDb: "Bookstore DB",
         javaSandboxTitle: "Java Programming Sandbox",
         pythonSandboxTitle: "Python Programming Sandbox",
+        pythonSandboxDesc: "Python 3.12 · 10s · Offline Sandbox",
         sqlPlayground: "SQL Playground",
         chooseLessonLoadCode: "— Select a lesson to load sample code —",
         toolbarTemplate: "Template",
@@ -1363,6 +1378,8 @@
         outputPlaceholder: "(Execution output will appear here)"
       },
       exam: {
+        allExamTitle: "Comprehensive Random Mock Exam",
+        yearExamTitle: "{year} Published Questions Mock Exam",
         verify: "Check and Save",
         submit: "Submit Exam",
         previous: "Previous",
@@ -1689,7 +1706,8 @@
         title: "Vocabulary Flashcard",
         flip: "Flip Card",
         clickToFlip: "Click the card to view translation and definitions:",
-        clickToFlipHint: "Click to flip"
+        clickToFlipHint: "Click to flip",
+        localizedDesc: "Localized term card for {title}."
       },
       glossary: {
         title: "IT Glossary",
@@ -1720,7 +1738,10 @@
         questionCount: "Question {current} / {total}",
         previous: "Previous",
         next: "Next",
-        submitAnswer: "Submit Answer"
+        submitAnswer: "Submit Answer",
+        empty: "No quiz is available for this lesson.",
+        unavailable: "The quiz for {title} is not localized for this display language yet.",
+        thisLesson: "this lesson"
       },
       typing: {
         library: "Typing Library",
@@ -1906,6 +1927,7 @@
         bookstoreDb: "စာအုပ်ဆိုင် DB",
         javaSandboxTitle: "Java Programming Sandbox",
         pythonSandboxTitle: "Python Programming Sandbox",
+        pythonSandboxDesc: "Python 3.12 · 10s · Offline Sandbox",
         sqlPlayground: "SQL Playground",
         chooseLessonLoadCode: "— ကုဒ်နမူနာကို ယူရန် သင်ခန်းစာတစ်ခု ရွေးချယ်ပါ —",
         toolbarTemplate: "ပုံစံ",
@@ -2189,7 +2211,8 @@
         title: "ဝေါဟာရကတ်များ",
         flip: "လှန်မည်",
         clickToFlip: "ဂျပန်-တရုတ် ဘာသာပြန်နှင့် အဓိပ္ပာယ်ကို ကြည့်ရန် ကတ်ကို နှိပ်ပါ -",
-        clickToFlipHint: "အနောက်ဘက်ကို ကြည့်ရန် နှိပ်ပါ"
+        clickToFlipHint: "အနောက်ဘက်ကို ကြည့်ရန် နှိပ်ပါ",
+        localizedDesc: "{title} အတွက် အဓိကဝေါဟာရကတ်။"
       },
       glossary: {
         title: "IT ဝေါဟာရစာရင်း",
@@ -2220,7 +2243,10 @@
         questionCount: "မေးခွန်း {current} / စုစုပေါင်း {total}",
         previous: "ယခင်မေးခွန်း",
         next: "နောက်မေးခွန်း",
-        submitAnswer: "အဖြေတင်မည်"
+        submitAnswer: "အဖြေတင်မည်",
+        empty: "ဤသင်ခန်းစာတွင် quiz မရှိသေးပါ။",
+        unavailable: "{title} အတွက် quiz သည် ဤဘာသာစကားတွင် မပြင်ဆင်ရသေးပါ။",
+        thisLesson: "ဤသင်ခန်းစာ"
       },
       typing: {
         library: "Typing စာကြည့်တိုက်",
@@ -2407,6 +2433,7 @@
         bookstoreDb: "Nhà sách DB",
         javaSandboxTitle: "Java Programming Sandbox",
         pythonSandboxTitle: "Python Programming Sandbox",
+        pythonSandboxDesc: "Python 3.12 · 10s · Offline Sandbox",
         sqlPlayground: "SQL Playground",
         chooseLessonLoadCode: "— Chọn một bài học để tải mã mẫu —",
         toolbarTemplate: "Mẫu",
@@ -2661,7 +2688,8 @@
         title: "Thẻ từ vựng",
         flip: "Lật thẻ",
         clickToFlip: "Nhấp vào thẻ để lật xem nghĩa và cách đọc Nhật-Trung:",
-        clickToFlipHint: "Nhấp để lật xem mặt sau"
+        clickToFlipHint: "Nhấp để lật xem mặt sau",
+        localizedDesc: "Thẻ thuật ngữ chính cho {title}."
       },
       glossary: {
         title: "Bảng thuật ngữ IT",
@@ -2692,7 +2720,10 @@
         questionCount: "Câu hỏi {current} / Tổng số {total}",
         previous: "Câu trước",
         next: "Câu tiếp",
-        submitAnswer: "Nộp câu trả lời"
+        submitAnswer: "Nộp câu trả lời",
+        empty: "Bài này chưa có câu hỏi kiểm tra.",
+        unavailable: "Bài kiểm tra của {title} chưa được bản địa hóa cho ngôn ngữ hiển thị này.",
+        thisLesson: "bài này"
       },
       typing: {
         library: "Kho tài liệu gõ chữ",
@@ -2879,6 +2910,7 @@
         bookstoreDb: "DB Librairie",
         javaSandboxTitle: "Sandbox de programmation Java",
         pythonSandboxTitle: "Sandbox de programmation Python",
+        pythonSandboxDesc: "Python 3.12 · 10s · Sandbox hors ligne",
         sqlPlayground: "Playground SQL",
         chooseLessonLoadCode: "— Sélectionnez une leçon pour charger le code —",
         toolbarTemplate: "Modèle",
@@ -3133,7 +3165,8 @@
         title: "Cartes mémoire",
         flip: "Retourner",
         clickToFlip: "Cliquez sur la carte pour la retourner et voir la traduction et définition :",
-        clickToFlipHint: "Cliquez pour retourner"
+        clickToFlipHint: "Cliquez pour retourner",
+        localizedDesc: "Carte des termes clés pour {title}."
       },
       glossary: {
         title: "Glossaire IT",
@@ -3164,7 +3197,10 @@
         questionCount: "Question {current} / {total}",
         previous: "Précédent",
         next: "Suivant",
-        submitAnswer: "Soumettre la réponse"
+        submitAnswer: "Soumettre la réponse",
+        empty: "Aucun quiz n'est disponible pour cette leçon.",
+        unavailable: "Le quiz de {title} n'est pas encore localisé pour cette langue d'affichage.",
+        thisLesson: "cette leçon"
       },
       typing: {
         library: "Bibliothèque de dactylographie",
@@ -3351,6 +3387,7 @@
         bookstoreDb: "서점 DB",
         javaSandboxTitle: "Java 프로그래밍 샌드박스",
         pythonSandboxTitle: "Python 프로그래밍 샌드박스",
+        pythonSandboxDesc: "Python 3.12 · 10s · 오프라인 샌드박스",
         sqlPlayground: "SQL 플레이그라운드",
         chooseLessonLoadCode: "— 과목을 선택하여 코드 불러오기 —",
         toolbarTemplate: "템플릿",
@@ -3400,6 +3437,8 @@
         metaCategory: "분류",
         metaSubcategory: "하위 분류",
         metaTopic: "주제",
+        ruleTitleCoding: "실전 프로그래밍 모의시험",
+        ruleDescCoding: "IT 전문학교의 프로그래밍 시험 환경을 재현합니다. 제한 시간 안에 코드를 작성합니다.",
         launchBtnCoding: "시험 시작",
         cbtSimulatorCoding: "실전 모의시험",
         expectedOutput: "예상 출력 결과",
@@ -3693,7 +3732,8 @@
         title: "단어 카드",
         flip: "뒤집기",
         clickToFlip: "카드를 클릭하여 앞뒷면을 전환합니다:",
-        clickToFlipHint: "클릭하여 뒷면 보기"
+        clickToFlipHint: "클릭하여 뒷면 보기",
+        localizedDesc: "{title}의 핵심 용어 카드입니다."
       },
       glossary: {
         title: "IT 용어집",
@@ -3724,7 +3764,10 @@
         questionCount: "문제 {current} / 전체 {total}문",
         previous: "이전",
         next: "다음",
-        submitAnswer: "답변 제출"
+        submitAnswer: "답변 제출",
+        empty: "이 단원에는 아직 퀴즈가 없습니다.",
+        unavailable: "{title}의 퀴즈는 아직 이 표시 언어로 현지화되지 않았습니다.",
+        thisLesson: "이 단원"
       },
       typing: {
         library: "타이핑 라이브러리",
@@ -3893,8 +3936,14 @@
         allCategories: "ทั้งหมด", category: "หมวดหมู่", noResults: "ไม่พบศัพท์ที่เกี่ยวข้อง"
       },
       quiz: {
-        title: "แบบทดสอบความเข้าใจ", previous: "ข้อก่อนหน้า", next: "ข้อถัดไป",
-        submitAnswer: "ส่งคำตอบ"
+        title: "แบบทดสอบความเข้าใจ",
+        questionCount: "ข้อ {current} / {total}",
+        previous: "ข้อก่อนหน้า",
+        next: "ข้อถัดไป",
+        submitAnswer: "ส่งคำตอบ",
+        empty: "บทนี้ยังไม่มีแบบทดสอบ",
+        unavailable: "แบบทดสอบของ {title} ยังไม่ได้แปลสำหรับภาษาที่เลือก",
+        thisLesson: "บทนี้"
       },
       aiLearning: "AI เรียนรู้", language: "ภาษา",
       account: "บัญชี", login: "เข้าสู่ระบบ", logout: "ออกจากระบบ",
@@ -4135,6 +4184,7 @@
       bookstoreDb: "书店DB / 书店DB",
       javaSandboxTitle: "Java 编程沙盒 / Javaプログラミング沙盒",
       pythonSandboxTitle: "Python 编程沙盒 / Pythonプログラミング沙盒",
+      pythonSandboxDesc: "Python 3.12 · 10s · 离线沙盒 / オフラインサンドボックス",
       sqlPlayground: "SQL 演练沙盒 / SQL プレイグラウンド",
       chooseLessonLoadCode: "— 选择课程后载入示例代码 — / — レッスンを選択してコードをロード —",
       toolbarTemplate: "模板 / テンプレ",
@@ -4384,7 +4434,8 @@
       title: "単語カード / 词汇闪卡 / 用語カード",
       flip: "翻转 / Flip / フリップ",
       clickToFlip: "点击闪卡即可翻转查看中日对照翻译及释义： / カードをクリックして裏表を切り替えます：",
-      clickToFlipHint: "点击此处翻转 / クリックして裏を見る"
+      clickToFlipHint: "点击此处翻转 / クリックして裏を見る",
+      localizedDesc: "{title} 的核心术语卡片 / {title} の重要用語カード。"
     },
     glossary: {
       title: "IT术语表 / IT用語集",
@@ -4415,7 +4466,10 @@
       questionCount: "问题 {current} / 共 {total} 题 / 問題 {current} / 全 {total} 問",
       previous: "上一题 / 前へ",
       next: "下一题 / 次へ",
-      submitAnswer: "提交回答 / 回答する"
+      submitAnswer: "提交回答 / 回答する",
+      empty: "本章暂无课后练习小测 / この章にはまだ小テストがありません。",
+      unavailable: "{title} 的小测暂未完成当前显示语言本地化 / {title} の小テストはまだこの表示言語に対応していません。",
+      thisLesson: "本章 / この章"
     },
     typing: {
       library: "打字文库 / タイピング文庫",
@@ -6061,4 +6115,327 @@
   if (!window.I18nUiDict["ko-KR"]) window.I18nUiDict["ko-KR"] = {};
   if (!window.I18nUiDict["ko-KR"].codingTyping) window.I18nUiDict["ko-KR"].codingTyping = {};
   Object.assign(window.I18nUiDict["ko-KR"].codingTyping, CODING_TYPING_KO_UI_SUBROUND_5);
+
+  (function () {
+    var HOTFIX2_DICT_PATCH = {
+      "ko-KR": {
+        common: { confirm: "확인", cancel: "취소", warning: "경고", success: "성공", error: "오류", back: "돌아가기" },
+        tools: {
+          confirmResetTitle: "학습 진행 상황을 초기화하시겠습니까?",
+          confirmResetBody: "이 작업은 취소할 수 없으며 모든 학습 및 시험 기록이 삭제됩니다. 초기화하시겠습니까?",
+          confirmReset: "초기화 진행",
+          cancel: "취소",
+          importPreview: "백업 가져오기 미리보기",
+          importPreviewDesc: "읽기 전용 미리보기로, 현재 데이터는 변경되지 않습니다."
+        },
+        exam: {
+          allExamTitle: "종합 랜덤 모의고사",
+          yearExamTitle: "{year} 공개 기출문제 모의고사",
+          cbtSimulator: "CBT 시뮬레이터",
+          remainingTime: "남은 시간: ",
+          exitCbt: "중단 및 퇴실",
+          submitCbt: "답안 제출",
+          exit: "중단 및 퇴실",
+          submit: "답안 제출"
+        },
+        mockExam: {
+          navStatus: "제 {current} 번, 총 {total} 문제 (답변 완료 {answered} 문제)",
+          questionNumber: "제 {num} 번 (문제 {number})",
+          flagged: "검토 표시됨",
+          flag: "이 문제 검토 표시",
+          scoreFormat: "{score} / 1000 점",
+          scorePass: "합격 (>=300)",
+          scoreFail: "기준점 미달 (<300)",
+          unanswered: "미답"
+        },
+        examHistory: { passed: "합격", failed: "불합격" },
+        aiProvider: {
+          title: "AI Provider 설정",
+          description: "API 키는 현재 브라우저 세션에만 임시 저장되며 로컬 데이터베이스에는 기록되지 않습니다.",
+          close: "닫기",
+          provider: "제공자 (Provider)",
+          model: "모델",
+          modelHint: "기본값을 사용하려면 비워 두십시오",
+          apiKey: "API Key",
+          apiKeySessionOnly: "sessionStorage에만 저장됨",
+          apiKeyPlaceholder: "환경 변수가 구성된 경우 비워 둘 수 있습니다",
+          ollamaEndpoint: "Ollama 주소",
+          ollamaEndpointHint: "Ollama 사용 시만 적용",
+          ollamaPlaceholder: "http://127.0.0.1:11434",
+          cancel: "취소",
+          save: "설정 저장",
+          statusReady: "준비 완료",
+          statusNeedConfig: "설정 필요",
+          statusOllamaConfigured: "{count}개의 로컬 모델",
+          statusOllamaNotRunning: "로컬 서비스가 실행되지 않음",
+          statusEnvDetected: "환경 변수 감지됨",
+          statusSessionKeyAllowed: "세션 키 사용 가능",
+          errorApiKeyMissing: "현재 Provider에 API 키가 없습니다. AI 설정을 열어 구성해 주세요.",
+          errorAuthFailed: "API 키가 유효하지 않거나 모델 권한이 없습니다. 확인 후 다시 시도해 주세요.",
+          errorServiceUnavailable: "AI 서비스에 일시적으로 연결할 수 없습니다. Ollama를 사용하는 경우 로컬 서비스가 시작되었는지 확인하세요."
+        },
+        sandbox: {
+          clearCodeConfirm: "코드를 클리어하시겠습니까? / Clear code?",
+          copied: "복사 완료!",
+          error: "오류",
+          pleaseEnterCode: "코드를 입력해 주세요.",
+          compiling: "컴파일 중...",
+          running: "실행 중...",
+          warning: "경고",
+          serviceUnavailable: "온라인 실행 서비스는 현재 사용할 수 없습니다. 잠시 후 다시 시도하거나 Windows 데스크톱 버전을 사용하세요.",
+          timeout: "시간 초과",
+          timeoutError: "시간 초과 오류: 코드 실행 시간이 25초를 초과했습니다. 무한 루프가 있는지 확인하세요.",
+          serverOff: "로컬 서버 실행 안 됨",
+          pythonNotFound: "Python을 찾을 수 없음",
+          run: "실행",
+          compileError: "컴파일 오류",
+          runtimeError: "런타임 오류",
+          success: "성공",
+          done: "완료",
+          noOutput: "프로그램이 정상적으로 종료되었습니다 (출력 없음)",
+          executionTime: "실행 시간",
+          aiHelp: "AI 분석"
+        },
+        japaneseTyping: {
+          title: "일본어 타이핑",
+          categoryAll: "전체",
+          categoryDaily: "일상생활",
+          categorySocial: "사교",
+          categoryWorkplace: "직장",
+          categoryBusinessMail: "비즈니스 메일",
+          categoryIt: "IT 개발",
+          categoryPublic: "공공 절차",
+          categoryNews: "뉴스",
+          categoryLiterature: "문학 수필",
+          categoryCulture: "문화 취미",
+          categorySpecial: "스페셜",
+          categoryFavorites: "즐겨찾기",
+          categoryReview: "틀린 문장 연습",
+          emptyFiltered: "조건에 맞는 기사가 없습니다.",
+          articleCount: "{count}개",
+          finishCompleted: "연습 완료",
+          finishTimeout: "시간 종료",
+          finishSummary: "{kpm} KPM · 정확도 {accuracy}% · {time} · 수정 {corrections}회",
+          emptyHistory: "연습을 완료하면 여기에 최근 기록이 표시됩니다.",
+          reviewCount: "{count}개 재연습 대기"
+        },
+        codingTyping: {
+          title: "프로그래밍 타이핑 연습",
+          subtitle: "타이핑 연습을 통해 프로그래밍 구문을 마스터하세요. 언어와 카테고리를 선택해 연습을 시작합니다.",
+          language: "언어 선택",
+          category: "카테고리 필터",
+          difficultyFilter: "난이도 필터",
+          allDifficulties: "전체",
+          exerciseList: "연습 목록",
+          practiceTitle: "프로그래밍 타이핑 연습",
+          practiceDescription: "대상 코드를 보고 입력 영역에 정확하게 타이핑하세요.",
+          stepChoose: "1. 언어 및 카테고리 선택",
+          stepType: "2. 대상 코드 입력",
+          stepSandbox: "3. 샌드박스로 전송 또는 실행 확인",
+          sendToSandbox: "샌드박스로 보내기",
+          sendOnlyHelp: "샌드박스로 보내기만 하고 실행은 하지 않음",
+          runInSandbox: "샌드박스에서 실행",
+          runHelp: "샌드박스로 보내고 즉시 실행",
+          backToList: "연습 목록으로 돌아가기",
+          random: "랜덤 연습",
+          next: "다음 문제",
+          restart: "다시 하기",
+          normalizeFullWidth: "전각→반각",
+          lenientIndent: "들여쓰기 허용",
+          code: "대상 코드",
+          examInsight: "시험 이해",
+          meaning: "의미",
+          memoryHook: "암기법",
+          examPoint: "시험 포인트",
+          commonMistake: "자주 하는 실수",
+          input: "입력 영역",
+          inputPlaceholder: "여기에 대상 코드를 입력하세요...",
+          speed: "CPM",
+          accuracy: "정확도",
+          progress: "진행 상황",
+          time: "시간",
+          errors: "오류",
+          historyFilter: "기록 필터",
+          allLanguages: "모든 언어",
+          allCategories: "모든 카테고리",
+          clearHistory: "기록 삭제"
+        }
+      },
+      "my-MM": {
+        common: { confirm: "Confirm", cancel: "Cancel", warning: "Warning", success: "Success", error: "Error", back: "Back" },
+        tools: {
+          confirmResetTitle: "Confirm Reset Progress?",
+          confirmResetBody: "This will delete all progress and cannot be undone.",
+          confirmReset: "Reset Progress",
+          cancel: "Cancel",
+          importPreview: "Preview Import",
+          importPreviewDesc: "Read-only preview, will not change current data"
+        },
+        exam: {
+          allExamTitle: "Comprehensive Random Mock Exam",
+          yearExamTitle: "{year} Published Questions Mock Exam",
+          cbtSimulator: "CBT Simulator",
+          remainingTime: "Remaining Time: ",
+          exitCbt: "Exit",
+          submitCbt: "Submit",
+          exit: "Exit",
+          submit: "Submit"
+        },
+        mockExam: {
+          navStatus: "Q {current} of {total} ({answered} answered)",
+          questionNumber: "Q {num} (Q{number})",
+          flagged: "Flagged",
+          flag: "Flag for Review",
+          scoreFormat: "{score} / 1000 pts",
+          scorePass: "Pass (>=300)",
+          scoreFail: "Fail (<300)",
+          unanswered: "Unanswered"
+        },
+        examHistory: { passed: "Pass", failed: "Fail" },
+        aiProvider: {
+          title: "AI Provider Settings",
+          description: "API keys are stored in sessionStorage only and not in database.",
+          close: "Close",
+          provider: "Provider",
+          model: "Model",
+          modelHint: "Leave empty for default",
+          apiKey: "API Key",
+          apiKeySessionOnly: "sessionStorage only",
+          apiKeyPlaceholder: "Optional if env variable is set",
+          ollamaEndpoint: "Ollama Endpoint",
+          ollamaEndpointHint: "Ollama only",
+          ollamaPlaceholder: "http://127.0.0.1:11434",
+          cancel: "Cancel",
+          save: "Save Settings",
+          statusReady: "Ready",
+          statusNeedConfig: "Need Config",
+          statusOllamaConfigured: "{count} local models",
+          statusOllamaNotRunning: "Local service not running",
+          statusEnvDetected: "Env variable detected",
+          statusSessionKeyAllowed: "Session key allowed",
+          errorApiKeyMissing: "API key is missing for the current provider.",
+          errorAuthFailed: "Invalid API key or model permissions.",
+          errorServiceUnavailable: "AI service unavailable. Make sure local service is running if using Ollama."
+        },
+        sandbox: {
+          clearCodeConfirm: "Clear code?",
+          copied: "Copied!",
+          error: "Error",
+          pleaseEnterCode: "Please enter code first.",
+          compiling: "Compiling...",
+          running: "Running...",
+          warning: "Warning",
+          serviceUnavailable: "Online service unavailable.",
+          timeout: "Timeout",
+          timeoutError: "Execution timed out.",
+          serverOff: "Server not running",
+          pythonNotFound: "Python not found",
+          run: "Run",
+          compileError: "Compile Error",
+          runtimeError: "Runtime Error",
+          success: "Success",
+          done: "Done",
+          noOutput: "Finished successfully with no output",
+          executionTime: "Execution Time",
+          aiHelp: "AI Help"
+        },
+        japaneseTyping: {
+          title: "Japanese Typing",
+          categoryAll: "All",
+          categoryDaily: "Daily",
+          categorySocial: "Social",
+          categoryWorkplace: "Workplace",
+          categoryBusinessMail: "Business Mail",
+          categoryIt: "IT Dev",
+          categoryPublic: "Public Procedures",
+          categoryNews: "News",
+          categoryLiterature: "Literature",
+          categoryCulture: "Culture",
+          categorySpecial: "Special",
+          categoryFavorites: "Favorites",
+          categoryReview: "Review Mistakes",
+          emptyFiltered: "No articles found.",
+          articleCount: "{count} articles",
+          finishCompleted: "Finished",
+          finishTimeout: "Time Out",
+          finishSummary: "{kpm} KPM · Accuracy {accuracy}% · {time} · {corrections} corrections",
+          emptyHistory: "Recent stats will show here after practice.",
+          reviewCount: "{count} to review"
+        },
+        codingTyping: {
+          title: "Programming Typing Practice",
+          subtitle: "Master programming syntax. Select language and category to begin.",
+          language: "Language",
+          category: "Category",
+          difficultyFilter: "Difficulty",
+          allDifficulties: "All",
+          exerciseList: "Exercise List",
+          practiceTitle: "Programming Typing",
+          practiceDescription: "Type the target code exactly.",
+          stepChoose: "1. Choose Language & Category",
+          stepType: "2. Input target code",
+          stepSandbox: "3. Send to Sandbox & Run",
+          sendToSandbox: "Send to Sandbox",
+          sendOnlyHelp: "Send code only, do not run",
+          runInSandbox: "Run in Sandbox",
+          runHelp: "Send code and run immediately",
+          backToList: "Back to List",
+          random: "Random Exercise",
+          next: "Next Exercise",
+          restart: "Restart",
+          normalizeFullWidth: "Full-width -> Half-width",
+          lenientIndent: "Lenient Indent",
+          code: "Target Code",
+          examInsight: "Exam Insight",
+          meaning: "Meaning",
+          memoryHook: "Memory Hook",
+          examPoint: "Exam Point",
+          commonMistake: "Common Mistake",
+          input: "Input Area",
+          inputPlaceholder: "Type code here...",
+          speed: "CPM",
+          accuracy: "Accuracy",
+          progress: "Progress",
+          time: "Time",
+          errors: "Errors",
+          historyFilter: "Filter History",
+          allLanguages: "All Languages",
+          allCategories: "All Categories",
+          clearHistory: "Clear History"
+        }
+      }
+    };
+
+    // Duplicate English translations for other non-CJK locales to ensure they never leak Chinese/Japanese
+    ["vi-VN", "th-TH", "fr-FR", "id-ID", "en-US"].forEach(function (loc) {
+      HOTFIX2_DICT_PATCH[loc] = JSON.parse(JSON.stringify(HOTFIX2_DICT_PATCH["my-MM"]));
+    });
+
+    Object.assign(HOTFIX2_DICT_PATCH["fr-FR"].common, {
+      confirm: "Confirmer",
+      cancel: "Annuler",
+      warning: "Avertissement",
+      success: "Succès",
+      error: "Erreur",
+      back: "Retour"
+    });
+    Object.assign(HOTFIX2_DICT_PATCH["fr-FR"].codingTyping, {
+      title: "Exercice de frappe de code",
+      subtitle: "Maîtrisez la syntaxe en tapant du code. Choisissez une langue et une catégorie.",
+      language: "Langue",
+      category: "Catégorie",
+      difficultyFilter: "Difficulté",
+      allDifficulties: "Tous",
+      exerciseList: "Liste des exercices",
+      inputPlaceholder: "Tapez le code ici..."
+    });
+
+    Object.keys(HOTFIX2_DICT_PATCH).forEach(function (locale) {
+      if (!window.I18nUiDict[locale]) window.I18nUiDict[locale] = {};
+      Object.keys(HOTFIX2_DICT_PATCH[locale]).forEach(function (module) {
+        if (!window.I18nUiDict[locale][module]) window.I18nUiDict[locale][module] = {};
+        Object.assign(window.I18nUiDict[locale][module], HOTFIX2_DICT_PATCH[locale][module]);
+      });
+    });
+  })();
 })();

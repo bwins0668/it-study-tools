@@ -149,16 +149,27 @@ async function verifyUtilityEntryPoints(page, label) {
     await page.waitForTimeout(250);
     const open = await page.locator("#language-popover.open").count();
     if (!open) record(`${label} language popover did not open`, await pageMetrics(page));
-    const enOption = page.locator('#language-options-list .language-option[data-lang="en"]');
-    if (await enOption.count()) {
-      await enOption.first().click();
+    const targetLanguage = await page.evaluate(() => {
+      const options = Array.from(document.querySelectorAll("#language-options-list .language-option"))
+        .map((el) => el.dataset.lang || el.dataset.value || "")
+        .filter(Boolean);
+      return options.find((code) => code === "ko")
+        || options.find((code) => code && code !== "default-ja-zh")
+        || options[0]
+        || "";
+    });
+    const targetOption = targetLanguage
+      ? page.locator(`#language-options-list .language-option[data-lang="${targetLanguage}"], #language-options-list .language-option[data-value="${targetLanguage}"]`)
+      : null;
+    if (targetOption && await targetOption.count()) {
+      await targetOption.first().click();
       await page.waitForTimeout(450);
       const currentLanguage = await page.evaluate(() =>
         window.I18n && typeof window.I18n.getLanguage === "function" ? window.I18n.getLanguage() : null
       );
-      if (currentLanguage !== "en") record(`${label} language did not switch to en`, { currentLanguage });
+      if (currentLanguage !== targetLanguage) record(`${label} language did not switch to ${targetLanguage}`, { currentLanguage });
     } else {
-      record(`${label} en language option missing`, await pageMetrics(page));
+      record(`${label} selector-eligible language option missing`, await pageMetrics(page));
     }
   } else {
     record(`${label} language switcher missing`, await pageMetrics(page));

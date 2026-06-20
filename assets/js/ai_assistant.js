@@ -32,19 +32,35 @@ window.StudyAI = (() => {
     return str;
   }
 
-  const ERROR_HINTS = {
-    API_KEY_MISSING: '当前 Provider 缺少 API Key，请打开 AI 设置完成配置。',
-    AUTH_FAILED: 'API Key 无效或没有模型权限，请检查后重试。',
-    SERVICE_UNAVAILABLE: 'AI 服务暂时无法连接。使用 Ollama 时请确认本机服务已启动。',
-    MODEL_NOT_FOUND: '所选模型不存在，请在 AI 设置中更换模型。',
-    AI_TIMEOUT: 'AI 响应超时，请稍后重试或选择速度更快的模型。',
-    RATE_LIMITED: '请求过于频繁或额度不足，请稍后重试。',
-    INVALID_PROVIDER_RESPONSE: 'Provider 返回了无法识别的数据。',
-    GENERATION_VALIDATION_FAILED: '题目未通过结构或执行校验，请换个知识点重试。'
-  };
-
   function friendlyError(error) {
-    return ERROR_HINTS[error && error.code] || (error && error.message) || '请求失败，请稍后重试。';
+    const code = error && error.code;
+    const msg = error && error.message;
+    if (code === 'API_KEY_MISSING') {
+      return window.I18n ? I18n.t('aiProvider.errorApiKeyMissing', '当前 Provider 缺少 API Key，请打开 AI 设置完成配置。') : '当前 Provider 缺少 API Key，请打开 AI 设置完成配置。';
+    }
+    if (code === 'AUTH_FAILED') {
+      return window.I18n ? I18n.t('aiProvider.errorAuthFailed', 'API Key 无效或没有模型权限，请检查后重试。') : 'API Key 无效或没有模型权限，请检查后重试。';
+    }
+    if (code === 'SERVICE_UNAVAILABLE') {
+      return window.I18n ? I18n.t('aiProvider.errorServiceUnavailable', 'AI 服务暂时无法连接。使用 Ollama 时请确认本机服务已启动。') : 'AI 服务暂时无法连接。使用 Ollama 时请确认本机服务已启动。';
+    }
+    if (code === 'MODEL_NOT_FOUND') {
+      return window.I18n ? I18n.t('aiProvider.errorModelNotFound', '所选模型不存在，请在 AI 设置中更换模型。') : '所选模型不存在，请在 AI 设置中更换模型。';
+    }
+    if (code === 'AI_TIMEOUT') {
+      return window.I18n ? I18n.t('aiProvider.errorAiTimeout', 'AI 响应超时，请稍后重试或选择速度更快的模型。') : 'AI 响应超时，请稍后重试或选择速度更快的模型。';
+    }
+    if (code === 'RATE_LIMITED') {
+      return window.I18n ? I18n.t('aiProvider.errorRateLimited', '请求过于频繁或额度不足，请稍后重试。') : '请求过于频繁或额度不足，请稍后重试。';
+    }
+    if (code === 'INVALID_PROVIDER_RESPONSE') {
+      return window.I18n ? I18n.t('aiProvider.errorInvalidProviderResponse', 'Provider 返回了无法识别的数据。') : 'Provider 返回了无法识别的数据。';
+    }
+    if (code === 'GENERATION_VALIDATION_FAILED') {
+      return window.I18n ? I18n.t('aiProvider.errorGenerationValidationFailed', '题目未通过结构或执行校验，请换个知识点重试。') : '题目未通过结构或执行校验，请换个知识点重试。';
+    }
+    const defaultFail = window.I18n ? I18n.t('aiProvider.errorDefaultFail', '请求失败，请稍后重试。') : '请求失败，请稍后重试。';
+    return msg || defaultFail;
   }
 
   function toast(message, type = 'info') {
@@ -196,9 +212,11 @@ window.StudyAI = (() => {
     if (launcherDot) launcherDot.classList.toggle('ready', ready);
     const launcherState = $('ai-launcher-state');
     if (launcherState) {
+      const readyText = window.I18n ? I18n.t('aiProvider.statusReady', '已就绪') : '已就绪';
+      const needConfigText = window.I18n ? I18n.t('aiProvider.statusNeedConfig', '需要配置') : '需要配置';
       launcherState.textContent = ready
-        ? `${config.provider.toUpperCase()} 已就绪`
-        : `${config.provider.toUpperCase()} 需要配置`;
+        ? `${config.provider.toUpperCase()} ${readyText}`
+        : `${config.provider.toUpperCase()} ${needConfigText}`;
     }
     const chip = $('ai-current-provider');
     if (chip) {
@@ -521,9 +539,22 @@ window.StudyAI = (() => {
       dot.className = `ai-status-dot${provider.configured ? ' ready' : ''}`;
       title.append(dot, document.createTextNode(provider.id));
       const detail = document.createElement('small');
-      detail.textContent = provider.id === 'ollama'
-        ? (provider.configured ? `${provider.models.length} 个本地模型` : '本机服务未启动')
-        : (provider.configured ? '已检测环境变量' : '可使用会话密钥');
+      let detailText = '';
+      if (provider.id === 'ollama') {
+        if (provider.configured) {
+          const format = window.I18n ? I18n.t('aiProvider.statusOllamaConfigured', '{count} 个本地模型') : '{count} 个本地模型';
+          detailText = format.replace('{count}', provider.models.length);
+        } else {
+          detailText = window.I18n ? I18n.t('aiProvider.statusOllamaNotRunning', '本机服务未启动') : '本机服务未启动';
+        }
+      } else {
+        if (provider.configured) {
+          detailText = window.I18n ? I18n.t('aiProvider.statusEnvDetected', '已检测环境变量') : '已检测环境变量';
+        } else {
+          detailText = window.I18n ? I18n.t('aiProvider.statusSessionKeyAllowed', '可使用会话密钥') : '可使用会话密钥';
+        }
+      }
+      detail.textContent = detailText;
       item.append(title, detail);
       node.appendChild(item);
     });
@@ -1130,7 +1161,7 @@ window.StudyAI = (() => {
       <button type="button" class="ai-header-btn" id="ai-assistant-btn" aria-expanded="false" aria-controls="ai-launcher-popover" title="打开 AI 学习中心">
         <span class="ai-launcher-status" id="ai-launcher-status"></span>
         <i class="fa-solid fa-wand-magic-sparkles"></i>
-        <span class="ai-header-label">AI 学习</span>
+        <span class="ai-header-label" data-i18n="toolbar.aiLearning">AI 学习</span>
       </button>
       <div class="ai-launcher-popover" id="ai-launcher-popover" role="menu">
         <div class="ai-launcher-head">
@@ -1209,19 +1240,19 @@ window.StudyAI = (() => {
       <div class="ai-modal-backdrop" id="ai-settings-modal" role="dialog" aria-modal="true" aria-labelledby="ai-settings-title">
         <div class="ai-modal small">
           <div class="ai-modal-head">
-            <div><h2 class="ai-modal-title" id="ai-settings-title">AI Provider 设置</h2><div class="ai-modal-subtitle">密钥只保留在当前浏览器会话，不写入本地数据库</div></div>
-            <button type="button" class="ai-icon-btn" data-close="ai-settings-modal" aria-label="关闭"><i class="fa-solid fa-xmark"></i></button>
+            <div><h2 class="ai-modal-title" id="ai-settings-title" data-i18n="aiProvider.title">AI Provider 设置</h2><div class="ai-modal-subtitle" data-i18n="aiProvider.description">密钥只保留在当前浏览器会话，不写入本地数据库</div></div>
+            <button type="button" class="ai-icon-btn" data-close="ai-settings-modal" aria-label="关闭" data-i18n-aria-label="aiProvider.close"><i class="fa-solid fa-xmark"></i></button>
           </div>
           <div class="ai-modal-body">
             <form id="ai-settings-form">
             <div class="ai-field-row">
-              <div class="ai-field"><label>Provider</label><select id="ai-setting-provider"><option value="gemini">Gemini</option><option value="openai">OpenAI</option><option value="ollama">Ollama</option></select></div>
-              <div class="ai-field"><label>模型 <small>留空使用默认值</small></label><input id="ai-setting-model" autocomplete="off"></div>
+              <div class="ai-field"><label data-i18n="aiProvider.provider">Provider</label><select id="ai-setting-provider"><option value="gemini">Gemini</option><option value="openai">OpenAI</option><option value="ollama">Ollama</option></select></div>
+              <div class="ai-field"><label><span data-i18n="aiProvider.model">模型</span> <small data-i18n="aiProvider.modelHint">留空使用默认值</small></label><input id="ai-setting-model" autocomplete="off"></div>
             </div>
-            <div class="ai-field"><label>API Key <small>仅存 sessionStorage</small></label><input id="ai-setting-key" type="password" autocomplete="off" placeholder="环境变量已配置时可留空"></div>
-            <div class="ai-field"><label>Ollama 地址 <small>仅 Ollama 使用</small></label><input id="ai-setting-ollama" placeholder="http://127.0.0.1:11434"></div>
+            <div class="ai-field"><label><span data-i18n="aiProvider.apiKey">API Key</span> <small data-i18n="aiProvider.apiKeySessionOnly">仅存 sessionStorage</small></label><input id="ai-setting-key" type="password" autocomplete="off" placeholder="环境变量已配置时可留空" data-i18n-placeholder="aiProvider.apiKeyPlaceholder"></div>
+            <div class="ai-field"><label><span data-i18n="aiProvider.ollamaEndpoint">Ollama 地址</span> <small data-i18n="aiProvider.ollamaEndpointHint">仅 Ollama 使用</small></label><input id="ai-setting-ollama" placeholder="http://127.0.0.1:11434" data-i18n-placeholder="aiProvider.ollamaPlaceholder"></div>
             <div id="ai-provider-status"></div>
-            <div class="ai-form-actions"><button type="button" class="ai-secondary-btn" data-close="ai-settings-modal">取消</button><button type="button" class="ai-primary-btn" id="ai-settings-save">保存设置</button></div>
+            <div class="ai-form-actions"><button type="button" class="ai-secondary-btn" data-close="ai-settings-modal" data-i18n="aiProvider.cancel">取消</button><button type="button" class="ai-primary-btn" id="ai-settings-save" data-i18n="aiProvider.save">保存设置</button></div>
             </form>
           </div>
         </div>
@@ -1358,14 +1389,14 @@ window.StudyAI = (() => {
 
       <div class="ai-modal-backdrop" id="ai-settings-modal">
         <div class="ai-modal small">
-          <div class="ai-modal-head"><h2 class="ai-modal-title">AI 设置</h2><button class="ai-icon-btn" data-close="ai-settings-modal"><i class="fa-solid fa-xmark"></i></button></div>
+          <div class="ai-modal-head"><h2 class="ai-modal-title" data-i18n="aiProvider.title">AI 设置</h2><button class="ai-icon-btn" data-close="ai-settings-modal" data-i18n-aria-label="aiProvider.close"><i class="fa-solid fa-xmark"></i></button></div>
           <div class="ai-modal-body">
-            <div class="ai-field"><label>Provider</label><select id="ai-setting-provider"><option value="gemini">Gemini</option><option value="openai">OpenAI</option><option value="ollama">Ollama</option></select></div>
-            <div class="ai-field"><label>模型名称（留空使用默认值）</label><input id="ai-setting-model" placeholder="gemini-2.5-flash / gpt-5-mini / local model"></div>
-            <div class="ai-field"><label>API Key（仅保存在当前会话）</label><input id="ai-setting-key" type="password" autocomplete="off"></div>
-            <div class="ai-field"><label>Ollama 地址</label><input id="ai-setting-ollama"></div>
+            <div class="ai-field"><label data-i18n="aiProvider.provider">Provider</label><select id="ai-setting-provider"><option value="gemini">Gemini</option><option value="openai">OpenAI</option><option value="ollama">Ollama</option></select></div>
+            <div class="ai-field"><label data-i18n="aiProvider.model">模型名称（留空使用默认值）</label><input id="ai-setting-model" placeholder="gemini-2.5-flash / gpt-5-mini / local model" data-i18n-placeholder="aiProvider.modelPlaceholder"></div>
+            <div class="ai-field"><label data-i18n="aiProvider.apiKey">API Key（仅保存在当前会话）</label><input id="ai-setting-key" type="password" autocomplete="off" data-i18n-placeholder="aiProvider.apiKeyPlaceholder"></div>
+            <div class="ai-field"><label data-i18n="aiProvider.ollamaEndpoint">Ollama 地址</label><input id="ai-setting-ollama" data-i18n-placeholder="aiProvider.ollamaPlaceholder"></div>
             <div class="ai-provider-status" id="ai-provider-status"></div>
-            <div class="ai-form-actions"><button class="ai-secondary-btn" data-close="ai-settings-modal">取消</button><button class="ai-primary-btn" id="ai-settings-save">保存</button></div>
+            <div class="ai-form-actions"><button class="ai-secondary-btn" data-close="ai-settings-modal" data-i18n="aiProvider.cancel">取消</button><button class="ai-primary-btn" id="ai-settings-save" data-i18n="aiProvider.save">保存</button></div>
           </div>
         </div>
       </div>

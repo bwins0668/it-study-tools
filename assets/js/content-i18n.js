@@ -78,9 +78,7 @@
       }
     }
     return false;
-  }
-
-  var VISIBLE_DEFAULTS = {
+  }  var VISIBLE_DEFAULTS = {
     ko: {
       subjects: { sql: "SQL", java: "Java", python: "Python", itpass: "IT Passport", sg: "SG 정보 보안" },
       subtitle: "핵심 개념과 실습 정리",
@@ -112,6 +110,7 @@
       successStatus: "성공",
       failedStatus: "실패",
       errorStatus: "오류",
+      hint: "힌트",
       outputLabel: "출력",
       incorrectOutputLabel: "판정 실패 - 예상 출력 결과"
     },
@@ -146,6 +145,7 @@
       successStatus: "အောင်မြင်သည်",
       failedStatus: "မအောင်မြင်ပါ",
       errorStatus: "အမှား",
+      hint: "အကြံပြုချက်",
       outputLabel: "Output",
       incorrectOutputLabel: "စစ်ဆေးမှုမအောင်မြင် - မျှော်မှန်းရလဒ်"
     },
@@ -180,6 +180,7 @@
       successStatus: "Thành công",
       failedStatus: "Không đạt",
       errorStatus: "Lỗi",
+      hint: "Gợi ý",
       outputLabel: "Đầu ra",
       incorrectOutputLabel: "Không đạt - kết quả mong đợi"
     },
@@ -214,6 +215,7 @@
       successStatus: "Réussi",
       failedStatus: "Échec",
       errorStatus: "Erreur",
+      hint: "Indice",
       outputLabel: "Sortie",
       incorrectOutputLabel: "Échec - résultat attendu"
     },
@@ -248,6 +250,7 @@
       successStatus: "สำเร็จ",
       failedStatus: "ไม่ผ่าน",
       errorStatus: "ข้อผิดพลาด",
+      hint: "คำแนะนำ",
       outputLabel: "Output",
       incorrectOutputLabel: "ไม่ผ่าน - ผลลัพธ์ที่คาดหวัง"
     }
@@ -277,6 +280,8 @@
       dailyAnalogy: template.analogy(title, subjectName),
       practiceIntro: localized && localized.practiceIntro ? localized.practiceIntro : template.sandboxInstruction(title, subjectName),
       sandboxInstruction: localized && localized.sandboxInstruction ? localized.sandboxInstruction : template.sandboxInstruction(title, subjectName),
+      playgroundTask: (localized && (localized.playgroundTask || localized.sandboxInstruction || localized.practiceIntro)) || template.sandboxInstruction(title, subjectName),
+      hint: (localized && localized.hint) || template.hint || "Hint",
       sandboxComment: sandboxComment,
       stdinPlaceholder: template.stdinPlaceholder,
       expectedOutput: template.expectedOutput,
@@ -312,7 +317,7 @@
       incorrectOutputLabel: template.incorrectOutputLabel,
       visibleDefaultsApplied: true
     };
-  }
+}
 
   /**
    * Get localized content for a lesson.
