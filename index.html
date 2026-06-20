@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-Hans" data-study-tools-version="v2026.6.20-r-pc-responsive-fr-full-pack">
+<html lang="zh-Hans" data-study-tools-version="v2026.6.20-r-responsive-fr-full-pack">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,11 +10,11 @@
   <!-- Google Fonts & FontAwesome Localized -->
   <link rel="stylesheet" href="assets/lib/google-fonts/css/google-fonts.css">
   <link rel="stylesheet" href="assets/lib/font-awesome/css/all.min.css">
-  <link rel="stylesheet" href="assets/css/index.css?v=r22.25">
-  <link rel="stylesheet" href="assets/css/light-theme.css?v=20260608_i18n_fix">
+  <link rel="stylesheet" href="assets/css/index.css?v=v2026.6.20-r-responsive-fr-full-pack">
+  <link rel="stylesheet" href="assets/css/light-theme.css?v=v2026.6.15-r90.0">
   <link rel="stylesheet" href="assets/css/japanese-typing.css?v=20260606_v2">
   <link rel="stylesheet" href="assets/css/ai_learning.css?v=20260608_v2">
-  <link rel="stylesheet" href="assets/css/scoring.css">
+
   <link rel="stylesheet" href="assets/css/glossary.css?v=20260611_v1">
   <link rel="stylesheet" href="assets/css/coding-typing.css?v=v2026.6.14-r22.25">
 </head>
@@ -88,12 +88,41 @@
         </div>
 
         <div class="tools-drawer__section">
+          <div class="tools-drawer__section-title" data-i18n="tools.quickStart">快速开始</div>
+          <div class="tools-drawer__quick-start">
+            <strong data-i18n="tools.quickStartTitle">学习流程</strong>
+            <span data-i18n="tools.quickStartDesc">选择科目 → 学习课程 → 做练习题 → 查看统计</span>
+          </div>
+        </div>
+
+        <div class="tools-drawer__section">
           <div class="tools-drawer__section-title" data-i18n="tools.learningTools">学习工具</div>
+          <button type="button" class="tools-drawer-item" data-action="open-dashboard">
+            <span class="tools-drawer-item__icon">📊</span>
+            <span class="tools-drawer-item__text">
+              <strong data-i18n="tools.dashboard">学习统计</strong>
+              <small data-i18n="tools.dashboardDesc">查看学习进度与数据概览</small>
+            </span>
+          </button>
+          <button type="button" class="tools-drawer-item" data-action="continue-learning">
+            <span class="tools-drawer-item__icon">▶️</span>
+            <span class="tools-drawer-item__text">
+              <strong data-i18n="tools.continueLearning">继续学习</strong>
+              <small data-i18n="tools.continueLearningDesc">从上次进度继续</small>
+            </span>
+          </button>
           <button type="button" class="tools-drawer-item" data-action="export-data">
             <span class="tools-drawer-item__icon">💾</span>
             <span class="tools-drawer-item__text">
               <strong data-i18n="tools.exportData">导出学习数据</strong>
               <small data-i18n="tools.exportDataDesc">下载本地学习数据备份 (JSON)</small>
+            </span>
+          </button>
+          <button type="button" class="tools-drawer-item" data-action="import-preview">
+            <span class="tools-drawer-item__icon">📥</span>
+            <span class="tools-drawer-item__text">
+              <strong data-i18n="tools.importPreview">预览导入备份</strong>
+              <small data-i18n="tools.importPreviewDesc">只读预览，不会修改当前数据</small>
             </span>
           </button>
           <button type="button" class="tools-drawer-item" data-action="open-glossary">
@@ -920,8 +949,10 @@
         <!-- Java Output Card (replacing Java Info Card) -->
         <div class="playground-card output-card java-widget" id="java-output-card" style="display: none;">
           <div class="output-header java-output-header" onclick="toggleJavaOutputDetails()">
-            <span><i class="fa-solid fa-terminal"></i> <span data-i18n="console.output">実行結果 (执行结果)</span></span>
+                                    <span><i class="fa-solid fa-terminal"></i> <span data-i18n="console.output">実行結果 (执行结果)</span></span>
             <div style="display:flex; align-items:center; gap:8px;">
+              <span id="python-execution-status" class="sandbox-status-indicator" style="font-size:11px; padding:2px 6px; border-radius:4px; background:rgba(255,255,255,0.1);"></span>
+              <span id="java-execution-status" class="sandbox-status-indicator" style="font-size:11px; padding:2px 6px; border-radius:4px; background:rgba(255,255,255,0.1);"></span>
               <div class="output-actions" onclick="event.stopPropagation()">
                 <span class="java-sandbox-status" id="java-sandbox-status">準備完了 / Ready</span>
                 <button class="console-btn maximize-btn" id="java-output-maximize-btn" onclick="toggleMaximizeJavaOutput()">
@@ -1615,15 +1646,17 @@
 
   <!-- Lesson Data & JS Scripts -->
   <script src="data/db.js?v=20260604"></script>
-  <script src="data/lessons.js?v=v2026.6.20-r-pc-responsive-fr-full-pack"></script>
+  <script src="data/lessons.js?v=v2026.6.20-r-responsive-fr-full-pack"></script>
   <script src="data/it_passport_lessons.js?v=20260604"></script>
   <script src="data/it_passport_past_exams.js?v=20260604"></script>
   <script src="data/sg_lessons.js?v=20260604"></script>
   <script src="data/sg_past_exams.js?v=20260604"></script>
   <script src="data/java_lessons.js?v=20260604"></script>
-  <script src="assets/js/java_sandbox.js?v=v2026.6.20-r-pc-responsive-fr-full-pack"></script>
+  <script src="assets/js/config.web.js?v=v2026.6.15-r134.2"></script>
+  <script src="assets/js/code-runner-api.js?v=v2026.6.15-r134.2"></script>
+  <script src="assets/js/java_sandbox.js?v=v2026.6.20-r-responsive-fr-full-pack"></script>
   <script src="data/python_lessons.js?v=20260606_v6"></script>
-  <script src="assets/js/python_sandbox.js?v=v2026.6.20-r-pc-responsive-fr-full-pack"></script>
+  <script src="assets/js/python_sandbox.js?v=v2026.6.20-r-responsive-fr-full-pack"></script>
   <script src="data/sql_exam_questions.js?v=20260604"></script>
   <script src="data/java_exam_questions.js?v=20260604"></script>
   <script src="data/python_exam_questions.js?v=20260604"></script>
@@ -1636,51 +1669,59 @@
   <script src="data/coding_typing/sql_basics.js?v=v2026.6.14-r22.25"></script>
   <script src="data/coding_typing/_index.js?v=v2026.6.14-r22.25"></script>
   <script src="assets/js/sandbox_bridge.js?v=v2026.6.14-r22.25"></script>
-  <script src="assets/js/coding_typing.js?v=v2026.6.14-r22.25"></script>
-  <script src="assets/js/i18n-ui-dict.js?v=v2026.6.20-r-pc-responsive-fr-full-pack"></script>
-  <script src="assets/js/i18n.js?v=v2026.6.20-r-pc-responsive-fr-full-pack"></script>
-  <script src="assets/js/content-i18n.js?v=v2026.6.20-r-pc-responsive-fr-full-pack"></script>
-  <script src="data/i18n_content/sql_en.js?v=v2026.6.20-r-pc-responsive-fr-full-pack"></script>
-  <script src="data/i18n_content/sql_vi.js?v=v2026.6.20-r-pc-responsive-fr-full-pack"></script>
-  <script src="data/i18n_content/sql_my.js?v=v2026.6.20-r-pc-responsive-fr-full-pack"></script>
-  <script src="data/i18n_content/sql_fr.js?v=v2026.6.20-r-pc-responsive-fr-full-pack"></script>
-  <script src="data/i18n_content/sql_ko.js?v=v2026.6.20-r-pc-responsive-fr-full-pack"></script>
-  <script src="data/i18n_content/sql_th.js?v=v2026.6.20-r-pc-responsive-fr-full-pack"></script>
-  <script src="data/i18n_content/sql_id.js?v=v2026.6.20-r-pc-responsive-fr-full-pack"></script>
-  <script src="data/i18n_content/itpass_en.js?v=v2026.6.20-r-pc-responsive-fr-full-pack"></script>
-  <script src="data/i18n_content/itpass_vi.js?v=v2026.6.20-r-pc-responsive-fr-full-pack"></script>
-  <script src="data/i18n_content/itpass_my.js?v=v2026.6.20-r-pc-responsive-fr-full-pack"></script>
-  <script src="data/i18n_content/itpass_fr.js?v=v2026.6.20-r-pc-responsive-fr-full-pack"></script>
-  <script src="data/i18n_content/itpass_ko.js?v=v2026.6.20-r-pc-responsive-fr-full-pack"></script>
-  <script src="data/i18n_content/sg_en.js?v=v2026.6.20-r-pc-responsive-fr-full-pack"></script>
-  <script src="data/i18n_content/sg_vi.js?v=v2026.6.20-r-pc-responsive-fr-full-pack"></script>
-  <script src="data/i18n_content/sg_my.js?v=v2026.6.20-r-pc-responsive-fr-full-pack"></script>
-  <script src="data/i18n_content/sg_fr.js?v=v2026.6.20-r-pc-responsive-fr-full-pack"></script>
-  <script src="data/i18n_content/sg_ko.js?v=v2026.6.20-r-pc-responsive-fr-full-pack"></script>
-  <script src="data/i18n_content/java_en.js?v=v2026.6.20-r-pc-responsive-fr-full-pack"></script>
-  <script src="data/i18n_content/java_vi.js?v=v2026.6.20-r-pc-responsive-fr-full-pack"></script>
-  <script src="data/i18n_content/java_my.js?v=v2026.6.20-r-pc-responsive-fr-full-pack"></script>
-  <script src="data/i18n_content/java_fr.js?v=v2026.6.20-r-pc-responsive-fr-full-pack"></script>
-  <script src="data/i18n_content/java_ko.js?v=v2026.6.20-r-pc-responsive-fr-full-pack"></script>
-  <script src="data/i18n_content/python_en.js?v=v2026.6.20-r-pc-responsive-fr-full-pack"></script>
-  <script src="data/i18n_content/python_vi.js?v=v2026.6.20-r-pc-responsive-fr-full-pack"></script>
-  <script src="data/i18n_content/python_my.js?v=v2026.6.20-r-pc-responsive-fr-full-pack"></script>
-  <script src="data/i18n_content/python_fr.js?v=v2026.6.20-r-pc-responsive-fr-full-pack"></script>
-  <script src="data/i18n_content/python_ko.js?v=v2026.6.20-r-pc-responsive-fr-full-pack"></script>
+  <script src="assets/js/coding_typing.js?v=v2026.6.15-r134.2"></script>
+  <script src="assets/js/i18n-ui-dict.js?v=v2026.6.20-r-locale-nav-compare"></script>
+  <script src="assets/js/locale-registry.js?v=v2026.6.20-r-locale-nav-compare"></script>
+  <script src="assets/js/i18n.js?v=v2026.6.20-r-locale-nav-compare"></script>
+  <script src="assets/js/content-i18n.js?v=v2026.6.20-r-locale-nav-compare"></script>
+  <script src="data/i18n_content/sql_en.js?v=v2026.6.20-r-responsive-fr-full-pack"></script>
+  <script src="data/i18n_content/sql_vi.js?v=v2026.6.20-r-responsive-fr-full-pack"></script>
+  <script src="data/i18n_content/sql_my.js?v=v2026.6.20-r-responsive-fr-full-pack"></script>
+  <script src="data/i18n_content/sql_fr.js?v=v2026.6.20-r-responsive-fr-full-pack"></script>
+  <script src="data/i18n_content/sql_ko.js?v=v2026.6.20-r-responsive-fr-full-pack"></script>
+  <script src="data/i18n_content/sql_th.js?v=v2026.6.20-r-responsive-fr-full-pack"></script>
+  <script src="data/i18n_content/sql_id.js?v=v2026.6.20-r-responsive-fr-full-pack"></script>
+  <script src="data/i18n_content/itpass_en.js?v=v2026.6.20-r-responsive-fr-full-pack"></script>
+  <script src="data/i18n_content/itpass_vi.js?v=v2026.6.20-r-responsive-fr-full-pack"></script>
+  <script src="data/i18n_content/itpass_my.js?v=v2026.6.20-r-responsive-fr-full-pack"></script>
+  <script src="data/i18n_content/itpass_fr.js?v=v2026.6.20-r-responsive-fr-full-pack"></script>
+  <script src="data/i18n_content/itpass_ko.js?v=v2026.6.20-r-responsive-fr-full-pack"></script>
+  <script src="data/i18n_content/sg_en.js?v=v2026.6.20-r-responsive-fr-full-pack"></script>
+  <script src="data/i18n_content/sg_vi.js?v=v2026.6.20-r-responsive-fr-full-pack"></script>
+  <script src="data/i18n_content/sg_my.js?v=v2026.6.20-r-responsive-fr-full-pack"></script>
+  <script src="data/i18n_content/sg_fr.js?v=v2026.6.20-r-responsive-fr-full-pack"></script>
+  <script src="data/i18n_content/sg_ko.js?v=v2026.6.20-r-responsive-fr-full-pack"></script>
+  <script src="data/i18n_content/java_en.js?v=v2026.6.20-r-responsive-fr-full-pack"></script>
+  <script src="data/i18n_content/java_vi.js?v=v2026.6.20-r-responsive-fr-full-pack"></script>
+  <script src="data/i18n_content/java_my.js?v=v2026.6.20-r-responsive-fr-full-pack"></script>
+  <script src="data/i18n_content/java_fr.js?v=v2026.6.20-r-responsive-fr-full-pack"></script>
+  <script src="data/i18n_content/java_ko.js?v=v2026.6.20-r-responsive-fr-full-pack"></script>
+  <script src="data/i18n_content/python_en.js?v=v2026.6.20-r-responsive-fr-full-pack"></script>
+  <script src="data/i18n_content/python_vi.js?v=v2026.6.20-r-responsive-fr-full-pack"></script>
+  <script src="data/i18n_content/python_my.js?v=v2026.6.20-r-responsive-fr-full-pack"></script>
+  <script src="data/i18n_content/python_fr.js?v=v2026.6.20-r-responsive-fr-full-pack"></script>
+  <script src="data/i18n_content/python_ko.js?v=v2026.6.20-r-responsive-fr-full-pack"></script>
   <script src="data/glossary/it_terms.js"></script>
   <script src="assets/js/glossary.js"></script>
-  <script src="assets/js/export-data.js?v=v2026.6.15-r33.0"></script>
-  <script src="assets/js/sync-engine.js"></script>
-  <script src="assets/js/supabase-config.local.js"></script>
+  <script src="assets/js/export-data.js?v=v2026.6.15-r90.0"></script>
+  <script src="assets/js/import-preview.js?v=v2026.6.15-r90.0"></script>
+  <script src="assets/js/dashboard.js?v=v2026.6.15-r29.1"></script>
+  <script src="assets/js/sync-engine.js?v=v2026.6.15-r25.2"></script>
+  <script src="assets/js/supabase-config.public.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="assets/js/supabase-client.js?v=round17.5"></script>
-  <script src="assets/js/auth-ui.js?v=round17.5"></script>
-  <script src="assets/js/version.js?v=v2026.6.20-r-pc-responsive-fr-full-pack"></script>
-  <script src="assets/js/app.js?v=v2026.6.20-r-pc-responsive-fr-full-pack"></script>
-  <script src="assets/js/syntax-highlighter.js?v=v2026.6.15-r136.0"></script>
-  <script src="assets/js/japanese-typing-helpers.js?v=v2026.6.15-r136.0"></script>
-  <script src="assets/js/keyboard-shortcuts.js?v=v2026.6.15-r136.0"></script>
+  <script src="assets/js/supabase-client.js?v=v2026.6.15-r24.0"></script>
+  <script src="assets/js/auth-ui.js?v=v2026.6.15-r25.0"></script>
+  <script src="data/i18n_content/navigation_ko.js?v=v2026.6.20-r-locale-nav-compare"></script>
+  <script src="data/i18n_content/navigation_my.js?v=v2026.6.20-r-locale-nav-compare"></script>
+  <script src="data/i18n_content/navigation_vi.js?v=v2026.6.20-r-locale-nav-compare"></script>
+  <script src="data/i18n_content/navigation_th.js?v=v2026.6.20-r-locale-nav-compare"></script>
+  <script src="data/i18n_content/navigation_fr.js?v=v2026.6.20-r-locale-nav-compare"></script>
+  <script src="data/i18n_content/navigation_zh.js?v=v2026.6.20-r-locale-nav-compare"></script>
+  <script src="assets/js/app.js?v=v2026.6.20-r-locale-nav-compare"></script>
+  <script src="assets/js/version.js?v=v2026.6.20-r-locale-nav-compare"></script>
+  <script src="assets/js/syntax-highlighter.js?v=v2026.6.16-r136.2"></script>
+  <script src="assets/js/japanese-typing-helpers.js?v=v2026.6.16-r136.2"></script>
+  <script src="assets/js/keyboard-shortcuts.js?v=v2026.6.16-r136.2"></script>
   <script src="assets/js/ai_assistant.js?v=20260608_global_target"></script>
 </body>
 </html>
-

@@ -416,7 +416,7 @@
         version = "?v=" + encodeURIComponent(window.STUDY_TOOLS_VERSION.assetVersion);
       }
       script.src = "data/i18n_content/" + subject + "_" + normLang + ".js" + version;
-
+      
       // Set fetch priority if supported
       if (typeof isHighPriority !== "undefined") {
         script.setAttribute("fetchpriority", isHighPriority ? "high" : "low");
@@ -454,15 +454,15 @@
    */
   function preheatAllPacks() {
     var subjects = ["sql", "itpass", "sg", "java", "python"];
-    var langs = ["en", "vi", "my", "fr", "ko", "th", "id"];
-
+    var langs = ["vi", "my", "fr", "ko", "th"];
+    
     var promises = [];
     for (var i = 0; i < subjects.length; i++) {
       for (var j = 0; j < langs.length; j++) {
         promises.push(loadPack(subjects[i], langs[j], false));
       }
     }
-
+    
     return Promise.all(promises).then(function () {
       return true;
     }).catch(function (err) {
@@ -482,6 +482,36 @@
     }
   }
 
+  /**
+   * Navigation I18n API — query localized chapter names and lesson titles.
+   * Navigation packs are loaded as inline <script> tags (not lazy-loaded).
+   */
+  function getNav(lang) {
+    var norm = normalizeLang(lang || getCurrentLang());
+    if (!window.NAVIGATION_I18N) return null;
+    return window.NAVIGATION_I18N[norm] || null;
+  }
+
+  function getLocalizedChapterName(subject, chapterName, lang) {
+    var nav = getNav(lang);
+    if (!nav) return chapterName;
+    var subjNav = nav[subject];
+    if (!subjNav || !subjNav.chapters) return chapterName;
+    return subjNav.chapters[chapterName] || chapterName;
+  }
+
+  function getLocalizedLessonTitle(subject, lessonId, lang) {
+    var nav = getNav(lang);
+    if (!nav) return null;
+    var subjNav = nav[subject];
+    if (!subjNav || !subjNav.titles) return null;
+    return subjNav.titles[lessonId] || null;
+  }
+
+  function hasNavigation(lang) {
+    return !!getNav(lang);
+  }
+
   window.ContentI18n = {
     normalizeLang: normalizeLang,
     getCurrentLang: getCurrentLang,
@@ -489,6 +519,9 @@
     has: has,
     loadPack: loadPack,
     isPackLoaded: isPackLoaded,
-    preheatAllPacks: preheatAllPacks
+    preheatAllPacks: preheatAllPacks,
+    getLocalizedChapterName: getLocalizedChapterName,
+    getLocalizedLessonTitle: getLocalizedLessonTitle,
+    hasNavigation: hasNavigation
   };
 })();

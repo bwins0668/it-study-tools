@@ -53,72 +53,26 @@
     "[data-content-type=\"explanation\"]"
   ].join(",");
 
-  const LANGUAGES = [
-    { code: DEFAULT_LANG, label: "默认中日双语", native: "既定: 日本語 / 中文", dir: "ltr" },
-    { code: "ja", label: "Japanese", native: "日本語", dir: "ltr" },
-    { code: "zh", label: "Chinese (Simplified)", native: "中文 (简体)", dir: "ltr" },
-    { code: "en", label: "English", native: "English", dir: "ltr" },
-    { code: "my", label: "Burmese", native: "မြန်မာဘာသာ", dir: "ltr" },
-    { code: "th", label: "Thai", native: "ไทย", dir: "ltr" },
-    { code: "ko", label: "Korean", native: "한국어", dir: "ltr" },
-    { code: "vi", label: "Vietnamese", native: "Tiếng Việt", dir: "ltr" },
-    { code: "id", label: "Indonesian", native: "Bahasa Indonesia", dir: "ltr" },
-    { code: "ms", label: "Malay", native: "Bahasa Melayu", dir: "ltr" },
-    { code: "tl", label: "Filipino", native: "Filipino", dir: "ltr" },
-    { code: "hi", label: "Hindi", native: "हिन्दी", dir: "ltr" },
-    { code: "bn", label: "Bengali", native: "বাংলা", dir: "ltr" },
-    { code: "ur", label: "Urdu", native: "اردو", dir: "rtl" },
-    { code: "ar", label: "Arabic", native: "العربية", dir: "rtl" },
-    { code: "fa", label: "Persian", native: "فارسی", dir: "rtl" },
-    { code: "he", label: "Hebrew", native: "עברית", dir: "rtl" },
-    { code: "tr", label: "Turkish", native: "Türkçe", dir: "ltr" },
-    { code: "fr", label: "French", native: "Français", dir: "ltr" },
-    { code: "de", label: "German", native: "Deutsch", dir: "ltr" },
-    { code: "es", label: "Spanish", native: "Español", dir: "ltr" },
-    { code: "pt", label: "Portuguese", native: "Português", dir: "ltr" },
-    { code: "it", label: "Italian", native: "Italiano", dir: "ltr" },
-    { code: "ru", label: "Russian", native: "Русский", dir: "ltr" },
-    { code: "uk", label: "Ukrainian", native: "Українська", dir: "ltr" },
-    { code: "pl", label: "Polish", native: "Polski", dir: "ltr" },
-    { code: "nl", label: "Dutch", native: "Nederlands", dir: "ltr" },
-    { code: "sv", label: "Swedish", native: "Svenska", dir: "ltr" },
-    { code: "da", label: "Danish", native: "Dansk", dir: "ltr" },
-    { code: "fi", label: "Finnish", native: "Suomi", dir: "ltr" },
-    { code: "no", label: "Norwegian", native: "Norsk", dir: "ltr" },
-    { code: "el", label: "Greek", native: "Ελληνικά", dir: "ltr" },
-    { code: "ro", label: "Romanian", native: "Română", dir: "ltr" },
-    { code: "hu", label: "Hungarian", native: "Magyar", dir: "ltr" },
-    { code: "cs", label: "Czech", native: "Čeština", dir: "ltr" },
-    { code: "sk", label: "Slovak", native: "Slovenčina", dir: "ltr" },
-    { code: "bg", label: "Bulgarian", native: "Български", dir: "ltr" },
-    { code: "sr", label: "Serbian", native: "Српски", dir: "ltr" },
-    { code: "hr", label: "Croatian", native: "Hrvatski", dir: "ltr" },
-    { code: "sl", label: "Slovenian", native: "Slovenščina", dir: "ltr" },
-    { code: "sw", label: "Swahili", native: "Kiswahili", dir: "ltr" },
-    { code: "am", label: "Amharic", native: "አማርኛ", dir: "ltr" },
-    { code: "zu", label: "Zulu", native: "isiZulu", dir: "ltr" },
-    { code: "af", label: "Afrikaans", native: "Afrikaans", dir: "ltr" },
-    { code: "ne", label: "Nepali", native: "नेपाली", dir: "ltr" },
-    { code: "si", label: "Sinhala", native: "සිංහල", dir: "ltr" },
-    { code: "ta", label: "Tamil", native: "தமிழ்", dir: "ltr" },
-    { code: "te", label: "Telugu", native: "తెలుగు", dir: "ltr" },
-    { code: "kn", label: "Kannada", native: "ಕನ್ನಡ", dir: "ltr" },
-    { code: "ml", label: "Malayalam", native: "മലയാളം", dir: "ltr" },
-    { code: "pa", label: "Punjabi", native: "ਪੰਜਾਬੀ", dir: "ltr" },
-    { code: "gu", label: "Gujarati", native: "ગુજરાતી", dir: "ltr" },
-    { code: "mr", label: "Marathi", native: "मराठी", dir: "ltr" },
-    { code: "km", label: "Khmer", native: "ខ្មែរ", dir: "ltr" },
-    { code: "lo", label: "Lao", native: "ລາວ", dir: "ltr" },
-    { code: "mn", label: "Mongolian", native: "Монгол", dir: "ltr" },
-    { code: "ka", label: "Georgian", native: "ქართული", dir: "ltr" },
-    { code: "hy", label: "Armenian", native: "Հայերեն", dir: "ltr" },
-    { code: "az", label: "Azerbaijani", native: "Azərbaycan", dir: "ltr" },
-    { code: "kk", label: "Kazakh", native: "Қазақ", dir: "ltr" },
-    { code: "uz", label: "Uzbek", native: "Oʻzbek", dir: "ltr" },
-    { code: "ky", label: "Kyrgyz", native: "Кыргызча", dir: "ltr" },
-    { code: "la", label: "Latin", native: "Latina", dir: "ltr" },
-    { code: "eo", label: "Esperanto", native: "Esperanto", dir: "ltr" },
-  ];
+  /* LANGUAGES populated from LOCALE_REGISTRY (loaded before i18n.js).
+     Only selectorEligible languages appear in the language switcher. */
+  const LANGUAGES = (function () {
+    if (window.LOCALE_REGISTRY && typeof window.LOCALE_REGISTRY.getSelectorCandidates === "function") {
+      return window.LOCALE_REGISTRY.getSelectorCandidates().map(function (l) {
+        return { code: l.code, label: l.label, native: l.native, dir: l.dir || "ltr" };
+      });
+    }
+    /* Fallback if registry not loaded — minimal safe list */
+    return [
+      { code: DEFAULT_LANG, label: "默认中日双语", native: "既定: 日本語 / 中文", dir: "ltr" },
+      { code: "ja", label: "Japanese", native: "日本語", dir: "ltr" },
+      { code: "zh", label: "Chinese (Simplified)", native: "中文 (简体)", dir: "ltr" },
+      { code: "ko", label: "Korean", native: "한국어", dir: "ltr" },
+      { code: "my", label: "Burmese", native: "မြန်မာဘာသာ", dir: "ltr" },
+      { code: "vi", label: "Vietnamese", native: "Tiếng Việt", dir: "ltr" },
+      { code: "th", label: "Thai", native: "ไทย", dir: "ltr" },
+      { code: "fr", label: "French", native: "Français", dir: "ltr" }
+    ];
+  })();
 
   const languageByCode = new Map(LANGUAGES.map((lang) => [lang.code, lang]));
   const textOriginals = new WeakMap();
@@ -241,8 +195,20 @@
     "ここにSQLを入力してください ...": "ここにSQLを入力してください..."
   };
 
+    /* Migration: auto-migrate unsupported language settings to a supported one */
   let currentLang = localStorage.getItem(STORAGE_KEY) || DEFAULT_LANG;
-  if (!languageByCode.has(currentLang)) currentLang = DEFAULT_LANG;
+  if (!languageByCode.has(currentLang)) {
+    var migratedTarget = DEFAULT_LANG;
+    if (window.LOCALE_REGISTRY && typeof window.LOCALE_REGISTRY.getMigrationTarget === "function") {
+      migratedTarget = window.LOCALE_REGISTRY.getMigrationTarget(currentLang);
+    }
+    if (!languageByCode.has(migratedTarget)) migratedTarget = DEFAULT_LANG;
+    console.warn("[I18n] Migrating unsupported language '" + currentLang + "' → '" + migratedTarget + "'");
+    currentLang = migratedTarget;
+    localStorage.setItem(STORAGE_KEY, currentLang);
+    /* Schedule migration toast (shown after UI is ready) */
+    window.__i18nMigrationToast = true;
+  }
   let observer = null;
   let scanTimer = null;
   let translating = false;
@@ -717,15 +683,26 @@ DISABLE_TRANSLATION_OVERLAY = true;
     });
   }
 
-  function applyLessonTargetLayout(active) {
+  function applyLessonTargetLayout(active, hideJaCol) {
     const tabs = document.querySelector(".lang-tabs");
     const container = document.getElementById("concept-container");
     const jaCol = document.querySelector(".ja-col");
     const targetCol = document.querySelector(".zh-col");
     const titleTargetEl = document.getElementById("lesson-title-zh");
+    const titleJaEl = document.getElementById("lesson-title-ja");
 
     if (tabs) tabs.style.display = active ? "none" : "";
     if (titleTargetEl) titleTargetEl.style.display = "";
+
+    /* target-only mode: hide Japanese column completely */
+    if (active && hideJaCol) {
+      if (container) container.style.flexDirection = "column";
+      if (jaCol) jaCol.style.display = "none";
+      if (targetCol) { targetCol.style.display = "flex"; targetCol.style.order = ""; }
+      if (titleJaEl) titleJaEl.style.display = "none";
+      return;
+    }
+    if (titleJaEl) titleJaEl.style.display = "";
 
     if (active) {
       if (container) container.style.flexDirection = "column";
@@ -926,12 +903,14 @@ DISABLE_TRANSLATION_OVERLAY = true;
     }
 
     if (short === "zh") {
-      applyLessonTargetLayout(true);
+      var dmZh = (window.DisplayMode && typeof window.DisplayMode.getEffective === "function")
+        ? window.DisplayMode.getEffective(currentLang) : "target-only";
       updateLessonBadge(lesson, "zh");
       titleTargetEl.textContent = textFromLessonLocale(lesson, "title", "zh", lesson.titleZh || "");
       conceptTargetEl.innerHTML = renderOriginalConcept(textFromLessonLocale(lesson, "concept", "zh", lesson.conceptZh || ""));
       titleJaEl.textContent = textFromLessonLocale(lesson, "title", "ja", lesson.titleJa || "");
       conceptJaEl.innerHTML = renderOriginalConcept(textFromLessonLocale(lesson, "concept", "ja", lesson.conceptJa || ""));
+      applyLessonTargetLayout(dmZh === "ja-compare" ? false : true, dmZh !== "ja-compare");
       setLessonFallbackState("zh", false);
       updateCourseLabels();
       updateLessonVisibleExtras(lesson, "zh");
@@ -1033,12 +1012,25 @@ DISABLE_TRANSLATION_OVERLAY = true;
       conceptHtml = renderOriginalConcept(lesson.conceptZh || lesson.conceptJa || "");
     }
 
-    // Render with fallback status
-    applyLessonTargetLayout(true);
-    titleTargetEl.textContent = titleText || "";
-    conceptTargetEl.innerHTML = conceptHtml || "";
-    titleJaEl.textContent = lesson.titleJa || "";
-    conceptJaEl.innerHTML = renderOriginalConcept(lesson.conceptJa || "") || "";
+    // Render with fallback status — respect display mode
+    var dmEffective = (window.DisplayMode && typeof window.DisplayMode.getEffective === "function")
+      ? window.DisplayMode.getEffective(currentLang) : "target-only";
+
+    if (dmEffective === "ja-compare") {
+      /* ja-compare: show Japanese + target side by side */
+      applyLessonTargetLayout(false);
+      titleJaEl.textContent = lesson.titleJa || "";
+      conceptJaEl.innerHTML = renderOriginalConcept(lesson.conceptJa || "") || "";
+      titleTargetEl.textContent = titleText || "";
+      conceptTargetEl.innerHTML = conceptHtml || "";
+    } else {
+      /* target-only: hide Japanese column, show only target */
+      applyLessonTargetLayout(true, true);
+      titleTargetEl.textContent = titleText || "";
+      conceptTargetEl.innerHTML = conceptHtml || "";
+      titleJaEl.textContent = lesson.titleJa || "";
+      conceptJaEl.innerHTML = renderOriginalConcept(lesson.conceptJa || "") || "";
+    }
 
     setLessonFallbackState(actualLang, isFallback);
     updateCourseLabels();
@@ -1402,13 +1394,16 @@ DISABLE_TRANSLATION_OVERLAY = true;
       <div class="language-popover" id="language-popover" role="menu">
         <div class="language-popover-head">
           <strong>语言切换</strong>
-          <small>默认保持现有中日双语；选择其他语言后显示日本語 + 目标语。</small>
-        </div>
-        <div class="language-search-wrap">
-          <i class="fa-solid fa-magnifying-glass"></i>
-          <input id="language-search-input" type="search" placeholder="搜索语言或地区代码">
+          <small>选择学习语言，课程内容离线切换。</small>
         </div>
         <div class="language-options-list" id="language-options-list" data-i18n-skip="true"></div>
+        <div class="display-mode-divider" id="display-mode-divider" data-i18n-skip="true" style="display:none;border-top:1px solid rgba(255,255,255,0.08);margin:6px 0;padding:6px 0;">
+          <div style="font-size:11px;color:var(--text-muted,#94a3b8);margin-bottom:4px;padding:0 8px;" id="display-mode-label">显示模式</div>
+          <button type="button" id="display-mode-toggle" style="width:100%;padding:6px 10px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:6px;color:var(--text-main,#e2e8f0);font-size:12px;cursor:pointer;text-align:left;display:flex;align-items:center;gap:6px;">
+            <i class="fa-solid fa-columns" id="display-mode-icon"></i>
+            <span id="display-mode-text">纯当前语言</span>
+          </button>
+        </div>
       </div>
     `;
     const header = document.querySelector(".app-header");
@@ -1422,12 +1417,8 @@ DISABLE_TRANSLATION_OVERLAY = true;
       popover.classList.toggle("open", open);
       event.currentTarget.setAttribute("aria-expanded", String(open));
       if (open) {
-        renderOptions(document.getElementById("language-search-input").value || "");
-        document.getElementById("language-search-input").focus();
+        renderOptions("");
       }
-    });
-    document.getElementById("language-search-input").addEventListener("input", (event) => {
-      renderOptions(event.target.value);
     });
     document.getElementById("language-options-list").addEventListener("click", (event) => {
       const option = event.target.closest("[data-lang]");
@@ -1438,7 +1429,24 @@ DISABLE_TRANSLATION_OVERLAY = true;
     document.addEventListener("click", (event) => {
       if (!switcher.contains(event.target)) closeMenu();
     });
+
+    /* Display mode toggle handler */
+    var dmToggle = document.getElementById("display-mode-toggle");
+    if (dmToggle) {
+      dmToggle.addEventListener("click", function (e) {
+        e.stopPropagation();
+        if (!window.DisplayMode) return;
+        var next = window.DisplayMode.toggle();
+        updateDisplayModeUI();
+        /* Instant re-render: re-apply current lesson with new display mode */
+        if (typeof window.refreshI18nForCurrentLesson === "function") {
+          window.refreshI18nForCurrentLesson();
+        }
+      });
+    }
+
     updateButton();
+    updateDisplayModeUI();
   }
 
   function shouldSkipStatic(el) {
@@ -1462,6 +1470,31 @@ DISABLE_TRANSLATION_OVERLAY = true;
     ].join(",");
     return el.closest(STATIC_SKIP_SELECTOR);
   }
+
+  /* Update display mode toggle button UI */
+  function updateDisplayModeUI() {
+    var divider = document.getElementById("display-mode-divider");
+    var label = document.getElementById("display-mode-label");
+    var text = document.getElementById("display-mode-text");
+    var icon = document.getElementById("display-mode-icon");
+    if (!divider || !window.DisplayMode) return;
+
+    var eligible = window.DisplayMode.isCompareEligible(currentLang);
+    divider.style.display = eligible ? "" : "none";
+    if (!eligible) return;
+
+    var mode = window.DisplayMode.get();
+    var langLabels = window.DisplayMode.getLocalizedLabels();
+    var short = normalizeLangShort(currentLang);
+    var langL = langLabels[short] || langLabels["default-ja-zh"];
+
+    if (label) label.textContent = langL.toggleLabel || "显示模式";
+    if (text) text.textContent = mode === "ja-compare" ? langL.jaCompare : langL.targetOnly;
+    if (icon) icon.className = mode === "ja-compare" ? "fa-solid fa-columns" : "fa-solid fa-file-lines";
+  }
+
+  /* Expose for setLanguage to call */
+  window.__updateDisplayModeUI = updateDisplayModeUI;
 
   function normalizeLanguageCode(code) {
     if (!code) return "default-ja-zh";
@@ -1723,6 +1756,7 @@ DISABLE_TRANSLATION_OVERLAY = true;
     localStorage.setItem(STORAGE_KEY, currentLang);
     updateDocumentState();
     updateButton();
+    updateDisplayModeUI();
     updateCourseLabels();
     
     // Apply static UI translations
@@ -1757,12 +1791,28 @@ DISABLE_TRANSLATION_OVERLAY = true;
     });
   }
 
+  function showMigrationToast() {
+    if (!window.__i18nMigrationToast) return;
+    window.__i18nMigrationToast = false;
+    var msg = (window.LOCALE_REGISTRY && typeof window.LOCALE_REGISTRY.getMigrationToast === "function")
+      ? window.LOCALE_REGISTRY.getMigrationToast(currentLang)
+      : "当前语言包暂不可用，已切换至可用语言。";
+    var toast = document.createElement("div");
+    toast.className = "i18n-migration-toast";
+    toast.setAttribute("role", "alert");
+    toast.textContent = msg;
+    toast.style.cssText = "position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#1e293b;color:#f1f5f9;padding:12px 24px;border-radius:8px;font-size:14px;z-index:99999;box-shadow:0 4px 12px rgba(0,0,0,.3);transition:opacity .4s;max-width:90vw;text-align:center;";
+    document.body.appendChild(toast);
+    setTimeout(function () { toast.style.opacity = "0"; setTimeout(function () { toast.remove(); }, 500); }, 4000);
+  }
+
   function init() {
     createMenu();
     updateDocumentState();
     updateCourseLabels();
     applyStaticUI(document.body);
     startObserver();
+    showMigrationToast();
     if (typeof window.refreshI18nForCurrentLesson === "function") {
       window.refreshI18nForCurrentLesson();
     }

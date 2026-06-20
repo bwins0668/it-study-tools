@@ -1125,6 +1125,14 @@ function initSidebar() {
   
   // 通用扁平两层侧边栏渲染器
   function renderFlatSidebar(lessonsList, completedList, currentId, selectFunc, idPrefix) {
+    /* Resolve current language for navigation localization */
+    var _sidebarLang = (window.I18n && typeof window.I18n.getLanguage === "function")
+      ? window.I18n.getLanguage() : "default-ja-zh";
+    var _sidebarShort = (window.ContentI18n && window.ContentI18n.normalizeLang)
+      ? window.ContentI18n.normalizeLang(_sidebarLang) : "default-ja-zh";
+    var _isJaOrZh = (_sidebarShort === "default-ja-zh" || _sidebarShort === "ja");
+    var _isZh = (_sidebarShort === "zh");
+
     const chapters = {};
     lessonsList.forEach(lesson => {
       const chName = lesson.chapterName || "基本部分";
@@ -1140,6 +1148,12 @@ function initSidebar() {
       
       const completedInCh = chLessons.filter(l => completedList.includes(l.id)).length;
       const hasActiveLesson = chLessons.some(l => l.id === currentId);
+
+      /* Localize chapter name */
+      var localizedChName = chapterName;
+      if (window.ContentI18n && window.ContentI18n.getLocalizedChapterName && _sidebarShort !== "default-ja-zh") {
+        localizedChName = window.ContentI18n.getLocalizedChapterName(idPrefix, chapterName, _sidebarShort);
+      }
       
       const chHeader = document.createElement("div");
       chHeader.className = `sidebar-chapter-header ${hasActiveLesson ? 'active-parent expanded' : ''}`;
@@ -1147,7 +1161,7 @@ function initSidebar() {
       chHeader.innerHTML = `
         <div class="chapter-header-title">
           <i class="fa-solid fa-chevron-right chapter-arrow"></i>
-          <span>${chapterName}</span>
+          <span>${escapeAttr(localizedChName)}</span>
         </div>
         <span class="chapter-progress-badge">${completedInCh} / ${chLessons.length}</span>
       `;
@@ -1166,7 +1180,6 @@ function initSidebar() {
       
       chLessons.forEach(lesson => {
         const item = document.createElement("div");
-        // 兼容原版 SQL ID 结构
         if (idPrefix === "sql") {
           item.id = `nav-item-${lesson.id}`;
         } else {
@@ -1179,19 +1192,35 @@ function initSidebar() {
         
         const iconClass = isCompleted ? "fa-solid fa-circle-check" : "fa-regular fa-circle";
         
-        // 渲染格式：小节编号 + 课件标题
-        const displayTitleJa = lesson.subSectionId
-          ? `${lesson.subSectionId} ${lesson.titleJa || lesson.titleZh}`
-          : (lesson.titleJa || lesson.titleZh);
-        const displayTitleZh = lesson.subSectionId
-          ? `${lesson.subSectionId} ${lesson.titleZh || lesson.titleJa}`
-          : (lesson.titleZh || lesson.titleJa);
-        const displayTitle = (window.I18n && window.I18n.isActive())
-          ? displayTitleJa
-          : displayTitleZh;
+        /* Resolve localized lesson title */
+        var locTitle = null;
+        if (window.ContentI18n && window.ContentI18n.getLocalizedLessonTitle && _sidebarShort !== "default-ja-zh") {
+          locTitle = window.ContentI18n.getLocalizedLessonTitle(idPrefix, lesson.id, _sidebarShort);
+        }
+        
+        var displayTitle;
+        if (locTitle) {
+          /* Use navigation pack title */
+          displayTitle = lesson.subSectionId
+            ? `${lesson.subSectionId} ${locTitle}`
+            : locTitle;
+        } else {
+          /* Fallback: ja for i18n-active, zh for default, or zh for zh lang */
+          const titleJa = lesson.titleJa || lesson.titleZh || "";
+          const titleZh = lesson.titleZh || lesson.titleJa || "";
+          if (_isZh) {
+            displayTitle = lesson.subSectionId
+              ? `${lesson.subSectionId} ${titleZh}`
+              : titleZh;
+          } else {
+            displayTitle = lesson.subSectionId
+              ? `${lesson.subSectionId} ${titleJa}`
+              : titleJa;
+          }
+        }
           
         item.innerHTML = `
-          <span data-i18n-source-lang="ja" data-i18n-source-text="${escapeAttr(displayTitleJa)}">${displayTitle}</span>
+          <span data-i18n-source-lang="ja" data-i18n-source-text="${escapeAttr(lesson.titleJa || lesson.titleZh || '')}">${displayTitle}</span>
           <i class="${iconClass} nav-status-icon"></i>
         `;
         
