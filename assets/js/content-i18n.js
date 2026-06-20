@@ -183,6 +183,40 @@
       outputLabel: "Đầu ra",
       incorrectOutputLabel: "Không đạt - kết quả mong đợi"
     },
+    fr: {
+      subjects: { sql: "SQL", java: "Java", python: "Python", itpass: "IT Passport", sg: "SG sécurité de l'information" },
+      subtitle: "Résumé des concepts et exercices pratiques",
+      analogy: function (title, subjectName) {
+        return "Exemple concret : considérez " + title + " comme une note d'apprentissage " + subjectName + ", puis vérifiez l'entrée, le traitement et la sortie étape par étape.";
+      },
+      sandboxInstruction: function (title, subjectName) {
+        return "Dans le bac à sable " + subjectName + ", modifiez légèrement l'exemple lié à " + title + " et comparez le résultat d'exécution.";
+      },
+      sandboxComment: function (title, subjectName) {
+        return "Bac à sable " + subjectName + " : vérifiez le flux d'entrée, de traitement et de sortie pour " + title + ".";
+      },
+      stdinPlaceholder: "Données d'entrée à transmettre au programme...",
+      expectedOutput: "Résultat attendu",
+      executionResult: "Résultat d'exécution",
+      resultExplanation: "Comparez la sortie au résultat attendu afin de vérifier le déroulement du code.",
+      emptyState: "Aucun résultat à afficher pour le moment.",
+      wordCardDesc: function (title) {
+        return "Carte de vocabulaire résumant les termes clés et le contexte d'utilisation de " + title + ".";
+      },
+      codeExampleLabel: function (subjectName) { return "Exemple de code " + subjectName; },
+      conceptLessonStatus: "Leçon théorique : aucune exécution de code n'est nécessaire.",
+      readyStatus: "Prêt",
+      runningStatus: "Exécution en cours...",
+      gradingStatus: "Vérification en cours...",
+      compileErrorStatus: "Erreur de compilation",
+      runtimeErrorStatus: "Erreur d'exécution",
+      syntaxErrorStatus: "Erreur de syntaxe",
+      successStatus: "Réussi",
+      failedStatus: "Échec",
+      errorStatus: "Erreur",
+      outputLabel: "Sortie",
+      incorrectOutputLabel: "Échec - résultat attendu"
+    },
     th: {
       subjects: { sql: "SQL", java: "Java", python: "Python", itpass: "IT Passport", sg: "SG ความมั่นคงสารสนเทศ" },
       subtitle: "สรุปแนวคิดและแบบฝึก",

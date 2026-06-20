@@ -8,18 +8,127 @@ let sqlSubMode = 'lessons'; // 'lessons' | 'exam'
 let pythonSubMode = 'lessons'; // 'lessons' | 'exam'
 let javaSubMode = 'lessons'; // 'lessons' | 'exam'
 
-// Mobile navigation drawers toggle helpers
+// Mobile navigation drawer state helpers
+let lastMobileDrawerTrigger = null;
+
+function syncMobileDrawerControls() {
+  const sidebarOpen = document.body.classList.contains('mobile-sidebar-open');
+  const playgroundOpen = document.body.classList.contains('mobile-playground-open');
+  const sidebarToggle = document.getElementById('mobile-sidebar-toggle');
+  const playgroundToggle = document.getElementById('mobile-playground-toggle');
+  const backdrop = document.getElementById('mobile-backdrop');
+  const sidebar = document.getElementById('app-sidebar');
+  const playground = document.getElementById('playground-section');
+
+  if (sidebarToggle) sidebarToggle.setAttribute('aria-expanded', sidebarOpen ? 'true' : 'false');
+  if (playgroundToggle) playgroundToggle.setAttribute('aria-expanded', playgroundOpen ? 'true' : 'false');
+  if (backdrop) backdrop.setAttribute('aria-hidden', sidebarOpen || playgroundOpen ? 'false' : 'true');
+  if (sidebar) sidebar.setAttribute('aria-hidden', (!sidebarOpen && window.matchMedia('(max-width: 720px)').matches) ? 'true' : 'false');
+  if (playground) playground.setAttribute('aria-hidden', (!playgroundOpen && window.matchMedia('(max-width: 900px)').matches) ? 'true' : 'false');
+}
+
+function bindMobileDrawerCloseButtons() {
+  document.querySelectorAll('[data-mobile-drawer-close]').forEach(function(button) {
+    if (button.dataset.mobileDrawerBound === 'true') return;
+    button.dataset.mobileDrawerBound = 'true';
+    button.addEventListener('click', function() {
+      window.closeMobileDrawers();
+    });
+  });
+}
+
+function rememberMobileDrawerTrigger() {
+  const active = document.activeElement;
+  if (active && typeof active.focus === 'function' && active !== document.body) {
+    lastMobileDrawerTrigger = active;
+  }
+}
+
+function replaceDrawerHistoryStateWithoutMarker() {
+  if (!window.history || !window.history.replaceState) return;
+  const state = window.history.state;
+  if (!state || !state.studyToolsMobileDrawer) return;
+  const nextState = Object.assign({}, state);
+  delete nextState.studyToolsMobileDrawer;
+  window.history.replaceState(nextState, '', window.location.href);
+}
+
+function markDrawerHistoryState(drawer) {
+  if (!window.history || !window.history.pushState) return;
+  const state = Object.assign({}, window.history.state || {});
+  state.studyToolsMobileDrawer = drawer;
+  if (window.history.state && window.history.state.studyToolsMobileDrawer) {
+    window.history.replaceState(state, '', window.location.href);
+  } else {
+    window.history.pushState(state, '', window.location.href);
+  }
+}
+
+function setMobileDrawerState(drawer, options) {
+  const opts = options || {};
+  const openingSidebar = drawer === 'sidebar';
+  const openingPlayground = drawer === 'playground';
+  const shouldOpen = openingSidebar || openingPlayground;
+
+  if (shouldOpen) {
+    rememberMobileDrawerTrigger();
+    document.body.classList.toggle('mobile-sidebar-open', openingSidebar);
+    document.body.classList.toggle('mobile-playground-open', openingPlayground);
+    if (!opts.skipHistory && window.matchMedia('(max-width: 900px)').matches) {
+      markDrawerHistoryState(drawer);
+    }
+  } else {
+    document.body.classList.remove('mobile-sidebar-open', 'mobile-playground-open');
+    if (!opts.skipHistory) replaceDrawerHistoryStateWithoutMarker();
+    if (!opts.skipFocus && lastMobileDrawerTrigger && typeof lastMobileDrawerTrigger.focus === 'function') {
+      window.setTimeout(function () {
+        lastMobileDrawerTrigger.focus();
+      }, 0);
+    }
+  }
+
+  syncMobileDrawerControls();
+}
+
 window.toggleMobileSidebar = function() {
-  document.body.classList.toggle('mobile-sidebar-open');
-  document.body.classList.remove('mobile-playground-open');
+  const isOpen = document.body.classList.contains('mobile-sidebar-open');
+  setMobileDrawerState(isOpen ? null : 'sidebar');
 };
 window.toggleMobilePlayground = function() {
-  document.body.classList.toggle('mobile-playground-open');
-  document.body.classList.remove('mobile-sidebar-open');
+  const isOpen = document.body.classList.contains('mobile-playground-open');
+  setMobileDrawerState(isOpen ? null : 'playground');
 };
-window.closeMobileDrawers = function() {
-  document.body.classList.remove('mobile-sidebar-open', 'mobile-playground-open');
+window.closeMobileDrawers = function(options) {
+  setMobileDrawerState(null, options);
 };
+window.openMobileSidebar = function() {
+  setMobileDrawerState('sidebar');
+};
+window.openMobilePlayground = function() {
+  setMobileDrawerState('playground');
+};
+
+window.addEventListener('popstate', function(event) {
+  const drawerOpen = document.body.classList.contains('mobile-sidebar-open') ||
+    document.body.classList.contains('mobile-playground-open');
+  if (drawerOpen && !(event.state && event.state.studyToolsMobileDrawer)) {
+    window.closeMobileDrawers({ skipHistory: true, skipFocus: true });
+  } else {
+    syncMobileDrawerControls();
+  }
+});
+
+window.addEventListener('resize', syncMobileDrawerControls);
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', function() {
+    bindMobileDrawerCloseButtons();
+    syncMobileDrawerControls();
+  });
+} else {
+  bindMobileDrawerCloseButtons();
+  syncMobileDrawerControls();
+}
 
 
 // SQL Hub original state
@@ -1307,7 +1416,7 @@ function switchJavaBook(book) {
 
 // Load Java lesson into content panel
 function loadJavaLesson(id) {
-  document.body.classList.remove('mobile-sidebar-open');
+  if (window.closeMobileDrawers) window.closeMobileDrawers({ skipFocus: true });
   if (typeof JAVA_LESSONS === 'undefined') return;
   const lesson = JAVA_LESSONS.find(l => l.id === id);
   if (!lesson) return;
@@ -1634,7 +1743,7 @@ function pickExerciseTaskText(exercise) {
 
 // Load Lesson Details into Content Panel
 function loadLesson(id) {
-  document.body.classList.remove('mobile-sidebar-open');
+  if (window.closeMobileDrawers) window.closeMobileDrawers({ skipFocus: true });
   const lesson = SQL_LESSONS.find(l => l.id === id);
   if (!lesson) return;
 
@@ -1696,7 +1805,7 @@ function loadLesson(id) {
 
 // Load IT Passport Lesson details into Center
 function loadItPassLesson(id) {
-  document.body.classList.remove('mobile-sidebar-open');
+  if (window.closeMobileDrawers) window.closeMobileDrawers({ skipFocus: true });
   const lesson = IT_PASSPORT_LESSONS.find(l => l.id === id);
   if (!lesson) return;
   
@@ -1784,7 +1893,7 @@ function loadItPassLesson(id) {
 
 // Load SG Lesson details into Center
 function loadSgLesson(id) {
-  document.body.classList.remove('mobile-sidebar-open');
+  if (window.closeMobileDrawers) window.closeMobileDrawers({ skipFocus: true });
   const lesson = SG_LESSONS.find(l => l.id === id);
   if (!lesson) return;
   
@@ -5597,7 +5706,7 @@ function selectPythonLesson(id) {
 }
 
 function loadPythonLesson(id) {
-  document.body.classList.remove('mobile-sidebar-open');
+  if (window.closeMobileDrawers) window.closeMobileDrawers({ skipFocus: true });
   if (typeof PYTHON_LESSONS === 'undefined') return;
   const lesson = PYTHON_LESSONS.find(l => l.id === id);
   if (!lesson) return;

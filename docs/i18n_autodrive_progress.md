@@ -191,3 +191,26 @@ If interrupted, run Q6 regression.
 
 #### Next Steps:
 - Build and publish Portable after final Web/PC confirmation gates remain PASS.
+
+---
+
+## Round: Dual-Responsive-Gold-UX-FR-Full-Pack-And-Portable-Release
+
+### Stage A Status: WEB + PC responsive UX PASS
+
+#### PC Completed:
+- Synced centralized mobile drawer state handling in `assets/js/app.js` for sidebar/playground `aria-expanded`, `aria-hidden`, focus return, and browser Back behavior.
+- Added mobile-only drawer headers and close/return controls in `index.html`.
+- Synced responsive CSS containment and mobile drawer geometry fixes in `assets/css/index.css`.
+- Added `tools/verify_responsive_navigation_smoke.js`, `tools/verify_responsive_visual_smoke.js`, and `tools/verify_mobile_layout.js`.
+- Added `docs/responsive_ux_audit_and_improvements.md` with Web and PC validation evidence.
+
+#### PC Responsive Results:
+- Responsive navigation smoke: PASS on 14 viewports, SQL/Java/Python mobile course flows, sidebar, playground, browser Back, language switch, and tools drawer.
+- Responsive visual smoke: PASS on 14 viewports, SQL/Java/Python layouts, horizontal overflow, drawer geometry, and language/tools containment.
+- Mobile layout smoke: PASS 12 / 0.
+- Language content switch: PASS 70 / 0 / 0 WARN.
+- Offline i18n switch: PASS with 0 translation requests.
+
+#### Next Steps:
+- Proceed to Stage B French pack only after both repos remain cleanly validated.

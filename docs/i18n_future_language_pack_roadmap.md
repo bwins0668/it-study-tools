@@ -16,10 +16,11 @@ FULL is reserved for packs that pass visible content checks without fallback. US
 ## Recommended Order
 
 1. Completed: Thai hotfix repaired Java Thai residue and raised Thai to USABLE through Visible Content Gold Gate.
-2. Vietnamese tone review: improve ASCII-only or weak tone sections while preserving current USABLE status.
-3. Indonesian id: build from the Gold Gate standard from the start.
-4. English IT Passport: starter to USABLE.
-5. Later packs: fr, de, es, pt.
+2. Completed: French (fr) full offline pack — SQL 36, Java 115, Python 255, IT Passport 85, SG 44, Glossary 1500/1500. AI-assisted, USABLE. Native review recommended.
+3. Vietnamese tone review: improve ASCII-only or weak tone sections while preserving current USABLE status.
+4. Indonesian id: build from the Gold Gate standard from the start.
+5. English IT Passport: starter to USABLE.
+6. Later packs: de, es, pt.
 
 ## Release Rule
 

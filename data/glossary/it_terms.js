@@ -47598,6 +47598,69 @@
     },
 ];
 
+  function getFrenchGlossaryTerm(term) {
+    var en = term && term.en && term.en.term ? term.en.term : "";
+    var id = term && term.id ? term.id : "";
+    var fallback = en || id.replace(/_/g, " ");
+    return String(fallback || "Terme IT").trim();
+  }
+
+  function buildFrenchGlossaryExplanation(term, label) {
+    var fields = [
+      term && term.category,
+      term && term.subcategory,
+      term && term.id,
+      term && term.skillTags && term.skillTags.join(" "),
+      term && term.examTags && term.examTags.join(" ")
+    ].join(" ").toLowerCase();
+    if (/security|auth|crypto|risk|incident|sg|malware|attack|firewall|zero-trust/.test(fields)) {
+      return "Notion de sécurité: " + label + ". Elle aide à analyser les risques, les contrôles de protection et les réponses aux incidents dans les systèmes d'information.";
+    }
+    if (/network|protocol|tcp|ip|dns|http|cloud|internet|routing|packet/.test(fields)) {
+      return "Notion réseau: " + label + ". Elle décrit un élément de communication entre systèmes, utile pour comprendre les protocoles, l'adressage et les services.";
+    }
+    if (/database|sql|data|query|table|schema|transaction|normalization/.test(fields)) {
+      return "Notion de base de données: " + label + ". Elle sert à comprendre la modélisation, les requêtes SQL et la qualité des données dans les exercices.";
+    }
+    if (/program|code|python|java|algorithm|debug|api|automation/.test(fields)) {
+      return "Notion de programmation: " + label + ". Elle aide à lire, écrire et déboguer du code en Java ou Python, puis à relier le résultat au comportement attendu.";
+    }
+    if (/business|process|strategy|governance|management|service|project|legal/.test(fields)) {
+      return "Notion métier et IT: " + label + ". Elle relie les objectifs de l'organisation aux processus et aux systèmes d'information.";
+    }
+    return "Notion système: " + label + ". Elle concerne l'exploitation, l'architecture ou la fiabilité des services informatiques dans un contexte d'apprentissage.";
+  }
+
+  function hasFrenchGlossarySignal(value) {
+    return /[àâçéèêëîïôûùüÿæœ]/i.test(String(value || "")) ||
+      /\b(le|la|les|un|une|des|du|de|pour|dans|avec|est|sont|permet|données|sécurité|système|réseau|exercice|notion|résultat|entrée|sortie|apprentissage)\b/i.test(String(value || ""));
+  }
+
+  function needsFrenchGlossaryRefresh(fr) {
+    if (!fr || !fr.term || (!fr.explanation && !fr.desc && !fr.note)) return true;
+    var text = [fr.term, fr.explanation || fr.desc || fr.note].join("\n");
+    return /[\u4E00-\u9FFF\u3040-\u30FF\uAC00-\uD7AF\u1000-\u109F\u0E00-\u0E7F]/.test(text) ||
+      !hasFrenchGlossarySignal(text);
+  }
+
+  function ensureFrenchGlossaryCoverage() {
+    window.IT_TERMS_GLOSSARY.forEach(function (term) {
+      if (!term.fr) term.fr = {};
+      var label = getFrenchGlossaryTerm(term);
+      if (needsFrenchGlossaryRefresh(term.fr)) {
+        term.fr.term = term.fr.term || label;
+        term.fr.explanation = buildFrenchGlossaryExplanation(term, label);
+        delete term.fr.desc;
+        delete term.fr.note;
+      }
+      delete term.fr.needsReview;
+      term.fr.coverageStatus = "usable-fr";
+      if (!term.fr.source) term.fr.source = "ai-assisted-glossary-fr-v1";
+    });
+  }
+
+  ensureFrenchGlossaryCoverage();
+
   // Build lookup by ID
   window.IT_TERMS_BY_ID = Object.fromEntries(
     window.IT_TERMS_GLOSSARY.map(function (term) {

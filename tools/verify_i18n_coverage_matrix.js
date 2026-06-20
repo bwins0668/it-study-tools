@@ -19,8 +19,8 @@ const path = require("path");
 const vm = require("vm");
 
 const ROOT = path.resolve(__dirname, "..");
-const LANGS = ["zh", "ja", "en", "ko", "my", "th", "vi", "id"];
-const TARGET_LANGS = ["zh", "ja", "en", "ko", "my", "th", "vi", "id", "default-ja-zh"];
+const LANGS = ["zh", "ja", "en", "ko", "my", "th", "vi", "id", "fr"];
+const TARGET_LANGS = ["zh", "ja", "en", "ko", "my", "th", "vi", "id", "fr", "default-ja-zh"];
 const SUBJECTS = [
   { id: "sql", label: "SQL lessons", file: "data/lessons.js", globalName: "SQL_LESSONS" },
   { id: "java", label: "Java lessons", file: "data/java_lessons.js", globalName: "JAVA_LESSONS" },
@@ -120,6 +120,11 @@ function hasIndonesianSignal(text) {
   return /\b(yang|dan|dengan|untuk|dari|pada|adalah|dalam|data|tabel|basis)\b/i.test(String(text || ""));
 }
 
+function hasFrenchSignal(text) {
+  return /[àâçéèêëîïôûùüÿæœ]/i.test(String(text || "")) ||
+    /\b(le|la|les|un|une|des|pour|dans|avec|est|sont|données|sécurité|système|réseau|exercice|notion)\b/i.test(String(text || ""));
+}
+
 function langSignal(lang, text) {
   const clean = stripHtml(text);
   if (!clean) return false;
@@ -130,6 +135,7 @@ function langSignal(lang, text) {
   if (lang === "th") return hasThai(clean);
   if (lang === "vi") return hasVietnamese(clean);
   if (lang === "id") return hasIndonesianSignal(clean) || hasLatin(clean);
+  if (lang === "fr") return hasFrenchSignal(clean);
   return true;
 }
 
@@ -218,7 +224,7 @@ function fallbackOrder(lang) {
   if (lang === "ja") return ["ja", "zh", "en"];
   if (lang === "en") return ["en", "ja", "zh"];
   if (lang === "ko") return ["ko", "ja", "zh", "en"];
-  if (lang === "my" || lang === "th" || lang === "vi" || lang === "id") return [lang, "ja", "zh", "en"];
+  if (lang === "my" || lang === "th" || lang === "vi" || lang === "id" || lang === "fr") return [lang, "ja", "zh", "en"];
   return [lang, "ja", "zh", "en"];
 }
 
@@ -396,7 +402,7 @@ function auditUiDict() {
     status("FAIL", "[UI dictionary]", "assets/js/i18n-ui-dict.js missing");
     return;
   }
-  const localeMap = { zh: "zh-CN", ja: "ja-JP", en: "en-US", ko: "ko-KR", my: "my-MM", th: "th-TH", vi: "vi-VN", id: "id-ID" };
+  const localeMap = { zh: "zh-CN", ja: "ja-JP", en: "en-US", ko: "ko-KR", my: "my-MM", th: "th-TH", vi: "vi-VN", id: "id-ID", fr: "fr-FR" };
   for (const lang of LANGS) {
     const code = localeMap[lang];
     const count = (raw.match(new RegExp(`["']${code}["']\\s*:`, "g")) || []).length;

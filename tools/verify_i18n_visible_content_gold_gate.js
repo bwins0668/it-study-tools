@@ -71,6 +71,12 @@ const LANGS = {
     forbidden: /[\u4E00-\u9FFF\u3040-\u30FF\uAC00-\uD7AF\u1000-\u109F\u0E00-\u0E7F]/,
     minStatus: "USABLE"
   },
+  fr: {
+    full: "fr-FR",
+    script: /[A-Za-zÀ-ÖØ-öø-ÿœŒæÆ]/,
+    forbidden: /[\u4E00-\u9FFF\u3040-\u30FF\uAC00-\uD7AF\u1000-\u109F\u0E00-\u0E7F]/,
+    minStatus: "USABLE"
+  },
   th: {
     full: "th-TH",
     script: /[\u0E00-\u0E7F]/,
@@ -281,8 +287,9 @@ function runForLang(lang, contentCtx, uiDict) {
   const offlineHits = checkOfflineTranslation();
   printResult("Offline translation API requests", offlineHits.length ? "FAIL" : "PASS", offlineHits.length ? offlineHits.join(", ") : "0 suspicious patterns");
   console.log("");
-  console.log(`${totalFailures ? "FAIL" : "PASS"} ${langInfo.full}: ${totalFailures} fail / ${totalWarnings} warn`);
-  return totalFailures === 0;
+  const ok = totalFailures === 0 && (lang !== "fr" || totalWarnings === 0);
+  console.log(`${ok ? "PASS" : "FAIL"} ${langInfo.full}: ${totalFailures} fail / ${totalWarnings} warn`);
+  return ok;
 }
 
 function parseArgs() {

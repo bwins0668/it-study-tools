@@ -53,6 +53,8 @@ Fallback must be honest. A module may not be marked FULL if its user-visible tar
 - Korean: FULL across SQL, Java, Python, IT Passport, and SG.
 - Myanmar: USABLE across SQL, Java, Python, IT Passport, and SG.
 - Thai: USABLE across SQL, Java, Python, IT Passport, and SG after the Thai Java hotfix. Thai Java is 115/115 and passes the visible Gold Gate.
+- Vietnamese: USABLE across SQL, Java, Python, IT Passport, and SG.
+- French: USABLE across SQL, Java, Python, IT Passport, SG, and Glossary (1500/1500). AI-assisted offline content; native review recommended.
 
 ## New Language Pack Standard
 

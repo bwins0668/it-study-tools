@@ -27,6 +27,10 @@ const LANG_RULES = {
     script: /[\u1000-\u109F]/,
     forbidden: /[\u4E00-\u9FFF\u3040-\u30FF\uAC00-\uD7AF\u0E00-\u0E7F]/
   },
+  fr: {
+    script: /[A-Za-zÀ-ÖØ-öø-ÿœŒæÆ]/,
+    forbidden: /[\u4E00-\u9FFF\u3040-\u30FF\uAC00-\uD7AF\u1000-\u109F\u0E00-\u0E7F]/
+  },
   th: {
     script: /[\u0E00-\u0E7F]/,
     forbidden: /[\u4E00-\u9FFF\u3040-\u30FF\uAC00-\uD7AF\u1000-\u109F]|[ăâđêôơưáàảãạấầẩẫậắằẳẵặéèẻẽẹếềểễệíìỉĩịóòỏõọốồổỗộớờởỡợúùủũụứừửữựýỳỷỹỵ]/i
@@ -36,6 +40,7 @@ const LANG_RULES = {
 const DISPLAY_LANGS = {
   ko: "ko-KR",
   my: "my-MM",
+  fr: "fr-FR",
   th: "th-TH"
 };
 
@@ -150,7 +155,7 @@ async function runCase(page, baseUrl, item) {
 
   const rule = LANG_RULES[item.short];
   const issues = [];
-  issues.push(...evaluateText("target body", data.targetBody, rule, item.short === "ko" || item.short === "th"));
+  issues.push(...evaluateText("target body", data.targetBody, rule, item.short === "ko" || item.short === "th" || item.short === "fr"));
   issues.push(...evaluateText("daily analogy", data.analogy, rule, true));
   if (["sql", "java", "python"].includes(item.subject)) {
     issues.push(...evaluateText("stdin placeholder", data.stdinPlaceholder, rule, true));
