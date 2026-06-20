@@ -45,7 +45,14 @@ Fallback must be honest. A module may not be marked FULL if its user-visible tar
 - Static pack gate: entry count and residue checks
 - Visible field gate: `node tools/verify_i18n_visible_content_gold_gate.js --lang <lang>`
 - DOM smoke gate when a dev server is available: `node tools/verify_visible_i18n_dom_smoke.js`
+- Thai release smoke: `node tools/verify_visible_i18n_dom_smoke.js --lang th --modules sql,java,python,itpass,sg`
 - Offline request gate: no `/api/translate`, DeepL, Google Translate, Gemini/OpenAI translation API, LibreTranslate, or translation overlay
+
+## Current Gold Gate Status
+
+- Korean: FULL across SQL, Java, Python, IT Passport, and SG.
+- Myanmar: USABLE across SQL, Java, Python, IT Passport, and SG.
+- Thai: USABLE across SQL, Java, Python, IT Passport, and SG after the Thai Java hotfix. Thai Java is 115/115 and passes the visible Gold Gate.
 
 ## New Language Pack Standard
 

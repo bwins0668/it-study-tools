@@ -74,8 +74,8 @@ const LANGS = {
   th: {
     full: "th-TH",
     script: /[\u0E00-\u0E7F]/,
-    forbidden: /[\u4E00-\u9FFF\u3040-\u30FF\uAC00-\uD7AF\u1000-\u109F]/,
-    minStatus: "NEEDS_REVIEW"
+    forbidden: /[\u4E00-\u9FFF\u3040-\u30FF\uAC00-\uD7AF\u1000-\u109F]|[ăâđêôơưáàảãạấầẩẫậắằẳẵặéèẻẽẹếềểễệíìỉĩịóòỏõọốồổỗộớờởỡợúùủũụứừửữựýỳỷỹỵ]/i,
+    minStatus: "USABLE"
   }
 };
 
@@ -207,7 +207,7 @@ function runForLang(lang, contentCtx, uiDict) {
       }
 
       const checks = [
-        ["Lesson body", localized.concept, lang === "ko"],
+        ["Lesson body", localized.concept, lang === "ko" || lang === "th"],
         ["Practice intro", localized.practiceIntro, false],
         ["Daily analogy", localized.analogy || localized.dailyAnalogy, true],
         ["Sandbox instruction", localized.sandboxInstruction, true],

@@ -113,6 +113,7 @@
       },
       sandbox: {
         run: "実行",
+        playground: "サンドボックス",
         runSql: "SQLを実行",
         resetDb: "DBリセット",
         hint: "ヒント",
@@ -734,6 +735,7 @@
       },
       sandbox: {
         run: "执行",
+        playground: "沙盒",
         runSql: "执行 SQL",
         resetDb: "重置 DB",
         hint: "提示",
@@ -1321,6 +1323,7 @@
       },
       sandbox: {
         run: "Run",
+        playground: "Sandbox",
         runSql: "Run SQL",
         resetDb: "Reset DB",
         hint: "Hint",
@@ -1859,9 +1862,9 @@
         continueRandom: "ဆက်လုပ်ရန်",
         python: "Python", java: "Java", sql: "SQL", symbols: "သင်္ကေတ",
         normalizeFullWidth: "အပြည့်→တစ်ဝက်", lenientIndent: "အင်တင်အာလျော့",
-        sendToSandbox: "Send to Sandbox",        runInSandbox: "Run in Sandbox",        sandboxUnavailable: "Sandbox unavailable",        sentToSandbox: "Sent to sandbox",        openSandbox: "Open sandbox",        shortcutHelp: "Alt+N နောက် / Alt+R ပြန်စ / Alt+S ကျပန်း",
+        sendToSandbox: "Sandbox သို့ပို့ရန်",        runInSandbox: "Sandbox တွင် run ရန်",        sandboxUnavailable: "Sandbox မရနိုင်ပါ",        sentToSandbox: "Sandbox သို့ပို့ပြီး",        openSandbox: "Sandbox ဖွင့်ရန်",        shortcutHelp: "Alt+N နောက် / Alt+R ပြန်စ / Alt+S ကျပန်း",
         summaryLine: "CPM: {cpm} | တိကျမှု: {acc}% | အမှား: {err} | အချိန်: {time}",
-        backToList: "Back to Practice List"
+        backToList: "လေ့ကျင့်ခန်းစာရင်းသို့ပြန်ရန်"
       },
       subnav: {
         lessons: "စာအုပ်နှင့် လေ့ကျင့်ခန်း",
@@ -1877,6 +1880,7 @@
       },
       sandbox: {
         run: "Run",
+        playground: "Sandbox",
         runSql: "SQL Run",
         resetDb: "DB ပြန်လည်စတင်",
         hint: "အရိပ်အမြွက်",
@@ -2320,7 +2324,7 @@
         continueRandom: "Tiếp tục ngẫu nhiên",
         python: "Python", java: "Java", sql: "SQL", symbols: "Ký hiệu",
         normalizeFullWidth: "Toàn→Bán sừng", lenientIndent: "Thụt lề linh hoạt",
-        sendToSandbox: "Send to Sandbox",        runInSandbox: "Run in Sandbox",        sandboxUnavailable: "Sandbox unavailable",        sentToSandbox: "Sent to sandbox",        openSandbox: "Open sandbox",        shortcutHelp: "Phím tắt: Alt+N Tiếp / Alt+R Làm lại / Alt+S Ngẫu nhiên",
+        sendToSandbox: "Gửi đến Sandbox",        runInSandbox: "Chạy trong Sandbox",        sandboxUnavailable: "Sandbox không khả dụng",        sentToSandbox: "Đã gửi đến Sandbox",        openSandbox: "Mở Sandbox",        shortcutHelp: "Phím tắt: Alt+N Tiếp / Alt+R Làm lại / Alt+S Ngẫu nhiên",
         summaryLine: "CPM: {cpm} | Độ chính xác: {acc}% | Lỗi: {err} | TG: {time}",
         backToList: "Quay lại danh sách"
       },
@@ -2338,6 +2342,7 @@
       },
       sandbox: {
         run: "Chạy",
+        playground: "Sandbox",
         runSql: "Chạy SQL",
         resetDb: "Đặt lại DB",
         hint: "Gợi ý",
@@ -2799,6 +2804,7 @@
       },
       sandbox: {
         run: "Exécuter",
+        playground: "Bac à sable",
         runSql: "Exécuter SQL",
         resetDb: "Réinitialiser la DB",
         hint: "Indice",
@@ -3242,7 +3248,7 @@
         continueRandom: "랜덤 연습 계속",
         python: "Python", java: "Java", sql: "SQL", symbols: "기호",
         normalizeFullWidth: "전각→반각", lenientIndent: "들여쓰기 허용",
-        sendToSandbox: "Send to Sandbox",        runInSandbox: "Run in Sandbox",        sandboxUnavailable: "Sandbox unavailable",        sentToSandbox: "Sent to sandbox",        openSandbox: "Open sandbox",        shortcutHelp: "단축키: Alt+N 다음 / Alt+R 다시 / Alt+S 랜덤",
+        sendToSandbox: "Sandbox로 보내기",        runInSandbox: "Sandbox에서 실행",        sandboxUnavailable: "Sandbox를 사용할 수 없음",        sentToSandbox: "Sandbox로 전송됨",        openSandbox: "Sandbox 열기",        shortcutHelp: "단축키: Alt+N 다음 / Alt+R 다시 / Alt+S 랜덤",
         summaryLine: "CPM: {cpm} | 정확도: {acc}% | 오류: {err} | 시간: {time}",
         backToList: "연습 목록으로 돌아가기"
       },
@@ -3260,6 +3266,7 @@
       },
       sandbox: {
         run: "실행",
+        playground: "샌드박스",
         runSql: "SQL 실행",
         resetDb: "DB 초기화",
         hint: "힌트",
@@ -3733,6 +3740,170 @@
         signOut: "로그아웃",
         sendMagicLink: "로그인 링크 보내기",
       }
+    },
+    "th-TH": {
+      common: {
+        save: "บันทึก", cancel: "ยกเลิก", confirm: "ตกลง", delete: "ลบ",
+        reset: "รีเซ็ต", resetProgress: "รีเซ็ตความคืบหน้า", loading: "กำลังโหลด...",
+        themeToggle: "สลับโหมดสว่าง/มืด", close: "ปิด", open: "เปิด", search: "ค้นหา",
+        random: "สุ่ม", restart: "เริ่มใหม่", copy: "คัดลอก", maximize: "ขยาย",
+        minimize: "ย่อ", challenging: "กำลังท้าทาย", lessonIndex: "บทที่ {id}",
+        changeQuestion: "เปลี่ยนคำถาม", stop: "หยุด", subtitle: "แพลตฟอร์มสนับสนุนการเรียน"
+      },
+      nav: {
+        sql: "เรียน SQL", java: "เรียน Java", python: "เรียน Python",
+        itpass: "เตรียมสอบ IT Passport", sg: "เตรียมสอบ SG",
+        typing: "พิมพ์ภาษาญี่ปุ่น", codingTyping: "พิมพ์โค้ด", sqlChallenge: "สุ่มท้าทาย"
+      },
+      moduleSwitch: { title: "เลือกส่วนเรียน", close: "ปิด", triggerLabel: "เปิดเลือกส่วน" },
+      moduleDesc: {
+        sql: "พื้นฐาน Database, query, แบบฝึก, sandbox",
+        sg: "เตรียมสอบ Information Security Management",
+        itpass: "พื้นฐาน IT Passport และแบบฝึกข้อสอบ", typing: "ฝึกพิมพ์ภาษาญี่ปุ่น",
+        codingTyping: "ฝึกพิมพ์และไวยากรณ์โค้ด", java: "พื้นฐาน Java, ไวยากรณ์, แบบฝึก",
+        python: "พื้นฐาน Python, ไวยากรณ์, แบบฝึก"
+      },
+      codingTyping: {
+        title: "ฝึกพิมพ์โค้ด", subtitle: "ฝึกพิมพ์เพื่อฝึกไวยากรณ์โปรแกรมมิ่ง",
+        language: "เลือกภาษา", category: "หมวดหมู่", allCategories: "ทั้งหมด",
+        difficulty: "ระดับความยาก", code: "โค้ดเป้าหมาย", input: "ป้อน",
+        inputPlaceholder: "พิมพ์โค้ดที่นี่...", focus: "จุดฝึก", hint: "คำใบ้",
+        speed: "CPM", accuracy: "ความแม่นยำ", progress: "ความคืบหน้า",
+        time: "เวลา", errors: "ข้อผิดพลาด", complete: "เสร็จสิ้น!",
+        result: "ผลลัพธ์", totalTime: "เวลา", errorChars: "อักขระที่ผิดบ่อย",
+        recentHistory: "ประวัติล่าสุด", noHistory: "ยังไม่มีประวัติ",
+        next: "ถัดไป (Alt+N)", random: "สุ่ม (Alt+S)", restart: "ใหม่ (Alt+R)",
+        continueRandom: "ฝึกสุ่มต่อ", python: "Python", java: "Java", sql: "SQL", symbols: "สัญลักษณ์",
+        normalizeFullWidth: "เต็ม→ครึ่ง", lenientIndent: "ย่อหน้ายืดหยุ่น",
+        sendToSandbox: "ส่งไป Sandbox", runInSandbox: "รันใน Sandbox",
+        sandboxUnavailable: "Sandbox ไม่พร้อม", sentToSandbox: "ส่งไป Sandbox แล้ว",
+        openSandbox: "เปิด Sandbox",
+        shortcutHelp: "ปุ่มลัด: Alt+N ถัดไป / Alt+R ใหม่ / Alt+S สุ่ม",
+        summaryLine: "CPM: {cpm} | แม่นยำ: {acc}% | ผิดพลาด: {err} | เวลา: {time}",
+        backToList: "กลับไปรายการฝึก"
+      },
+      subnav: {
+        lessons: "แบบเรียนและ Sandbox ฝึก", practicalExam: "จำลองสอบ",
+        study: "เรียนแบบเรียน", pastExams: "ข้อสอบเก่า & จำลองสอบ",
+        javaIntro: "บทนำ (พื้นฐาน) — บทที่ 1~8", javaPractice: "บทปฏิบัติ (ประยุกต์) — บทที่ 1~11"
+      },
+      sidebar: { progress: "ความคืบหน้า", unitList: "รายการบท" },
+      sandbox: {
+        run: "รัน", playground: "แซนด์บ็อกซ์", runSql: "รัน SQL", resetDb: "รีเซ็ต DB",
+        hint: "คำใบ้", maximize: "ขยาย", output: "ผลลัพธ์",
+        toolbarCopy: "คัดลอก",
+        toolbarCopyTitle: "คัดลอกโค้ด",
+        toolbarClear: "ล้าง",
+        toolbarClearTitle: "ล้างและรีเซ็ตโค้ด",
+        sqlPlaceholder: "พิมพ์คำสั่ง SQL...", currentMission: "ภารกิจปัจจุบัน",
+        randomPractice: "ฝึกสุ่ม", databaseStructure: "โครงสร้าง Database",
+        schoolDb: "DB โรงเรียน", bookstoreDb: "DB ร้านหนังสือ",
+        stdinPlaceholder: "ใส่ข้อมูล stdin สำหรับโปรแกรม...",
+        runCode: "รัน",
+        sqlPlayground: "SQL Playground", readyStatus: "พร้อมแล้ว",
+        outputPlaceholder: "(ผลลัพธ์จะแสดงที่นี่)"
+      },
+      toast: {
+        verifySuccess: "ตรวจผ่านแล้ว บันทึกคำตอบเรียบร้อย",
+        outputMismatch: "ผลลัพธ์ output ไม่ตรงกับที่คาดหวัง ตรวจไม่ผ่าน",
+        runtimeError: "เกิดข้อผิดพลาดระหว่างรัน"
+      },
+      exam: {
+        verify: "ตรวจและบันทึก", submit: "ส่งข้อสอบ", previous: "ข้อก่อนหน้า",
+        next: "ข้อถัดไป", exit: "ออกจากการสอบ", launchBtn: "เริ่มสอบ",
+        status: "สถานะ: ", notStarted: "ยังไม่ได้ทำ", remainingTime: "เวลาที่เหลือ: "
+      },
+      glossary: {
+        title: "ศัพท์ IT", open: "เปิดศัพท์", close: "ปิด", searchPlaceholder: "ค้นหาศัพท์...",
+        allCategories: "ทั้งหมด", category: "หมวดหมู่", noResults: "ไม่พบศัพท์ที่เกี่ยวข้อง"
+      },
+      quiz: {
+        title: "แบบทดสอบความเข้าใจ", previous: "ข้อก่อนหน้า", next: "ข้อถัดไป",
+        submitAnswer: "ส่งคำตอบ"
+      },
+      aiLearning: "AI เรียนรู้", language: "ภาษา", settings: "ตั้งค่า",
+      account: "บัญชี", login: "เข้าสู่ระบบ", logout: "ออกจากระบบ",
+      sync: "ซิงค์", manualSync: "ซิงค์ด้วยตนเอง", bookmarks: "บุ๊กมาร์ก",
+      randomChallenge: "สุ่มท้าทาย", practiceSandbox: "Sandbox ฝึก", dashboard: "แดชบอร์ด",
+      tools: "เครื่องมือ", glossary: "ศัพท์", japaneseTyping: "พิมพ์ภาษาญี่ปุ่น",
+      fallback: "สำรอง", error: "ข้อผิดพลาด", success: "สำเร็จ",
+      currentLanguage: "ภาษาปัจจุบัน"
+    },
+    "id-ID": {
+      common: {
+        save: "Simpan", cancel: "Batal", confirm: "OK", delete: "Hapus",
+        reset: "Reset", resetProgress: "Reset progres", loading: "Memuat...",
+        themeToggle: "Beralih mode terang/gelap", close: "Tutup", open: "Buka", search: "Cari",
+        random: "Acak", restart: "Ulang", copy: "Salin", maximize: "Maksimalkan",
+        minimize: "Minimalkan", challenging: "Menantang", lessonIndex: "Pelajaran {id}",
+        changeQuestion: "Ganti soal", stop: "Berhenti", subtitle: "Platform pendukung belajar"
+      },
+      nav: {
+        sql: "Belajar SQL", java: "Belajar Java", python: "Belajar Python",
+        itpass: "Persiapan IT Passport", sg: "Persiapan SG",
+        typing: "Mengetik Jepang", codingTyping: "Mengetik kode", sqlChallenge: "Tantangan acak"
+      },
+      moduleSwitch: { title: "Pilih bagian belajar", close: "Tutup", triggerLabel: "Buka pemilih bagian" },
+      moduleDesc: {
+        sql: "Dasar Database, query, latihan, sandbox",
+        sg: "Persiapan ujian Information Security Management",
+        itpass: "Dasar IT Passport dan latihan soal", typing: "Latihan mengetik bahasa Jepang",
+        codingTyping: "Latihan mengetik dan sintaks kode", java: "Dasar Java, sintaks, latihan",
+        python: "Dasar Python, sintaks, latihan"
+      },
+      codingTyping: {
+        title: "Latihan mengetik kode", subtitle: "Latih mengetik untuk menguasai sintaks pemrograman",
+        language: "Pilih bahasa", category: "Kategori", allCategories: "Semua",
+        difficulty: "Tingkat kesulitan", code: "Kode target", input: "Input",
+        inputPlaceholder: "Ketik kode di sini...", focus: "Poin latihan", hint: "Petunjuk",
+        speed: "CPM", accuracy: "Akurasi", progress: "Progres",
+        time: "Waktu", errors: "Kesalahan", complete: "Selesai!",
+        result: "Hasil", totalTime: "Waktu", errorChars: "Karakter sering salah",
+        recentHistory: "Riwayat terbaru", noHistory: "Belum ada riwayat",
+        next: "Berikutnya (Alt+N)", random: "Acak (Alt+S)", restart: "Ulang (Alt+R)",
+        continueRandom: "Lanjut latihan acak", python: "Python", java: "Java", sql: "SQL", symbols: "Simbol",
+        normalizeFullWidth: "Penuh→Setengah", lenientIndent: "Indent longgar",
+        sendToSandbox: "Kirim ke Sandbox", runInSandbox: "Jalankan di Sandbox",
+        sandboxUnavailable: "Sandbox tidak tersedia", sentToSandbox: "Terkirim ke Sandbox",
+        openSandbox: "Buka Sandbox",
+        shortcutHelp: "Pintasan: Alt+N berikutnya / Alt+R ulang / Alt+S acak",
+        summaryLine: "CPM: {cpm} | Akurasi: {acc}% | Salah: {err} | Waktu: {time}",
+        backToList: "Kembali ke daftar latihan"
+      },
+      subnav: {
+        lessons: "Buku & Sandbox latihan", practicalExam: "Simulasi ujian",
+        study: "Belajar buku", pastExams: "Soal lampau & simulasi ujian",
+        javaIntro: "Pengantar (dasar) — Bab 1~8", javaPractice: "Praktik (terapan) — Bab 1~11"
+      },
+      sidebar: { progress: "Progres", unitList: "Daftar bab" },
+      sandbox: {
+        run: "Jalankan", playground: "Sandbox", runSql: "Jalankan SQL", resetDb: "Reset DB",
+        hint: "Petunjuk", maximize: "Maksimalkan", output: "Hasil",
+        sqlPlaceholder: "Ketik perintah SQL...", currentMission: "Misi saat ini",
+        randomPractice: "Latihan acak", databaseStructure: "Struktur Database",
+        schoolDb: "DB sekolah", bookstoreDb: "DB toko buku",
+        sqlPlayground: "SQL Playground", readyStatus: "Siap",
+        outputPlaceholder: "(Hasil akan tampil di sini)"
+      },
+      exam: {
+        verify: "Periksa & simpan", submit: "Kumpulkan ujian", previous: "Soal sebelumnya",
+        next: "Soal berikutnya", exit: "Keluar ujian", launchBtn: "Mulai ujian",
+        status: "Status: ", notStarted: "Belum dikerjakan", remainingTime: "Sisa waktu: "
+      },
+      glossary: {
+        title: "Glosarium IT", open: "Buka glosarium", close: "Tutup", searchPlaceholder: "Cari istilah...",
+        allCategories: "Semua", category: "Kategori", noResults: "Tidak ada istilah terkait"
+      },
+      quiz: {
+        title: "Tes pemahaman", previous: "Sebelumnya", next: "Berikutnya",
+        submitAnswer: "Kirim jawaban"
+      },
+      aiLearning: "AI Belajar", language: "Bahasa", settings: "Pengaturan",
+      account: "Akun", login: "Masuk", logout: "Keluar", sync: "Sinkron",
+      manualSync: "Sinkron manual", bookmarks: "Penanda", randomChallenge: "Tantangan acak",
+      practiceSandbox: "Sandbox latihan", dashboard: "Dasbor", tools: "Alat",
+      glossary: "Glosarium", japaneseTyping: "Mengetik Jepang", fallback: "Cadangan",
+      error: "Kesalahan", success: "Berhasil", currentLanguage: "Bahasa saat ini"
     }
   };
 
@@ -3844,6 +4015,7 @@
     },
     sandbox: {
       run: "执行 / 実行",
+      playground: "沙盒 / サンドボックス",
       runSql: "执行 SQL / SQLを実行",
       resetDb: "重置 DB / DBリセット",
       hint: "提示 / ヒント",
@@ -5402,6 +5574,11 @@
     "ja-JP": { language: "言語", localMode: "ローカルモード", settings: "設定", randomChallenge: "総合ランダムチャレンジ", aiLearning: "AIアシスタント" },
     "en-US": { language: "Language", localMode: "Local mode", settings: "Settings", randomChallenge: "Random challenge", aiLearning: "AI Learning" },
     "ko-KR": { language: "언어", localMode: "로컬 모드", settings: "설정", randomChallenge: "종합 랜덤 도전", aiLearning: "AI 학습" },
+    "my-MM": { language: "ဘာသာစကား", localMode: "ဒေသတွင်းမုဒ်", settings: "ဆက်တင်များ", randomChallenge: "ကျပန်းစိန်ခေါ်မှု", aiLearning: "AI သင်ယူမှု" },
+    "vi-VN": { language: "Ngôn ngữ", localMode: "Chế độ cục bộ", settings: "Cài đặt", randomChallenge: "Thử thách ngẫu nhiên", aiLearning: "AI Học tập" },
+    "th-TH": { language: "ภาษา", localMode: "โหมดภายใน", settings: "ตั้งค่า", randomChallenge: "สุ่มท้าทาย", aiLearning: "AI เรียนรู้" },
+    "id-ID": { language: "Bahasa", localMode: "Mode lokal", settings: "Pengaturan", randomChallenge: "Tantangan acak", aiLearning: "AI Belajar" },
+    "fr-FR": { language: "Langue", localMode: "Mode local", settings: "Paramètres", randomChallenge: "Défi aléatoire", aiLearning: "IA Apprentissage" },
     "default-ja-zh": { language: "语言 / 言語", localMode: "本地模式 / ローカルモード", settings: "设置 / 設定", randomChallenge: "综合随机挑战 / 総合ランダムチャレンジ", aiLearning: "AI 学习 / AIアシスタント" }
   };
   Object.keys(WRONG_BOOK_ROUND_23_4).forEach(function (locale) {

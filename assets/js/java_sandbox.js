@@ -74,7 +74,7 @@ window.JavaSandbox = (() => {
 
     // User request: blank sandbox by default (boilerplate skeleton)
 
-    setTemplate(getBoilerplateTemplate());
+    setTemplate(getBoilerplateTemplate(visibleText(pack, 'sandboxComment', '')));
 
 
 
@@ -272,9 +272,21 @@ window.JavaSandbox = (() => {
 
 
 
-  function getBoilerplateTemplate() {
+  function getLocalizedSandboxComment() {
 
-    return `public class Main {
+    const pack = getVisiblePack(currentLesson);
+
+    return visibleText(pack, 'sandboxComment', '// Edit the code above and run it.');
+
+  }
+
+
+
+  function getBoilerplateTemplate(commentText) {
+
+    const comment = String(commentText || '').trim();
+
+    return `${comment ? comment + "\n" : ""}public class Main {
 
     public static void main(String[] args) {
 
@@ -314,7 +326,7 @@ window.JavaSandbox = (() => {
 
     }
 
-    return getBoilerplateTemplate();
+    return getBoilerplateTemplate(getLocalizedSandboxComment());
 
   }
 
@@ -332,7 +344,7 @@ window.JavaSandbox = (() => {
 
     if (currentVal === templateVal) {
 
-      setTemplate(getBoilerplateTemplate());
+      setTemplate(getBoilerplateTemplate(getLocalizedSandboxComment()));
 
     } else {
 
@@ -352,7 +364,7 @@ window.JavaSandbox = (() => {
 
     if (confirm('コードをクリアしますか？/ Clear code?')) {
 
-      setTemplate(getBoilerplateTemplate());
+      setTemplate(getBoilerplateTemplate(getLocalizedSandboxComment()));
 
     }
 

@@ -158,3 +158,36 @@ If interrupted, run Q6 regression.
 #### Known Out of Scope:
 - Thai Java original quality gate remains NEEDS_REVIEW / failing due existing Vietnamese residue and missing Thai entries. This round records it but does not repair Thai Java.
 - Portable release skipped because Phase 0-13 are not all PASS while the known Thai Java gate remains failing.
+
+---
+
+## Round: Dual-I18n-Thai-Gold-Gate-Hotfix-And-Portable-Release
+
+### Status: WEB + PC completed, Portable release pending
+
+#### Web Completed:
+- Rebuilt Java Thai visible lesson body content for all 115/115 Java lessons from the English source semantics.
+- Removed Vietnamese residue and missing-Thai issues from `data/i18n_content/java_th.js`.
+- Added Thai to the stricter Visible Content Gold Gate rule set: Thai must reach USABLE, contain Thai script in lesson bodies, and reject Vietnamese/CJK/Myanmar/Korean residue in must-localize fields.
+- Fixed Thai SQL and SG visible residue in main lesson bodies so course directory and Japanese explanation remain the only allowed Japanese areas.
+- Added Thai sandbox/toast UI keys required by visible field checks.
+- Extended DOM smoke to support `--lang th --modules sql,java,python,itpass,sg`.
+- Updated version and cache metadata to `v2026.6.20-r-i18n-gold-gate-thai-hotfix`.
+- Updated Thai entries in `data/i18n_content/manifest.json` to `coverageStatus: "usable-th"`.
+
+#### Gold Gate Results:
+- Thai quality gate: SQL, Java, Python, IT Passport, SG all USABLE; Java 115/115; 44 PASS / 0 FAIL / 0 WARN.
+- Thai Gold Gate: th-TH USABLE for SQL, Java, Python, IT Passport, SG; 0 fail / 0 warn.
+- Korean Gold Gate: ko-KR FULL for SQL, Java, Python, IT Passport, SG; 0 fail / 0 warn.
+- Myanmar Gold Gate: my-MM USABLE for SQL, Java, Python, IT Passport, SG; 0 fail / 0 warn.
+- Offline translation API requests: 0 suspicious patterns.
+
+#### PC Sync Results:
+- Synced Thai Java/SQL/SG visible content repairs, Thai UI keys, Java sandbox localization, Gold Gate tools, and standard docs to PC.
+- Synced SQL lesson Korean visible content/random practice i18n from Web to PC so offline ko random-practice smoke stays PASS.
+- Updated PC version metadata and cache-busters to `v2026.6.20-r-pc-i18n-gold-gate-thai-hotfix`.
+- PC DOM smoke: th-TH across SQL, Java, Python, IT Passport, and SG all PASS (5/5) on `http://127.0.0.1:5180`.
+- PC offline i18n switch: local content PASS for zh/ja/en/ko/my/th/vi/id, ko random practice PASS, translation requests 0.
+
+#### Next Steps:
+- Build and publish Portable after final Web/PC confirmation gates remain PASS.

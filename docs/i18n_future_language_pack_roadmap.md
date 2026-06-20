@@ -15,7 +15,7 @@ FULL is reserved for packs that pass visible content checks without fallback. US
 
 ## Recommended Order
 
-1. Thai hotfix: repair Java Thai residue before raising Thai beyond NEEDS_REVIEW.
+1. Completed: Thai hotfix repaired Java Thai residue and raised Thai to USABLE through Visible Content Gold Gate.
 2. Vietnamese tone review: improve ASCII-only or weak tone sections while preserving current USABLE status.
 3. Indonesian id: build from the Gold Gate standard from the start.
 4. English IT Passport: starter to USABLE.

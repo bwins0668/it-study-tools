@@ -3,12 +3,12 @@
   "use strict";
 
   window.STUDY_TOOLS_VERSION = {
-    webVersion: "v2026.6.20-r-pc-i18n-visible-gold-gate-ko-my",
-    desktopVersion: "v2026.6.20-r-pc-i18n-visible-gold-gate-ko-my",
-    releaseUrl: "https://github.com/bwins0668/it-study-tools/releases/tag/v2026.6.20-r-pc-i18n-visible-gold-gate-ko-my",
+    webVersion: "v2026.6.20-r-pc-i18n-gold-gate-thai-hotfix",
+    desktopVersion: "v2026.6.20-r-pc-i18n-gold-gate-thai-hotfix",
+    releaseUrl: "https://github.com/bwins0668/it-study-tools/releases/tag/v2026.6.20-r-pc-i18n-gold-gate-thai-hotfix",
     webUrl: "https://study-tools-web-pages.pages.dev",
     stage: "stable",
-    assetVersion: "v2026.6.20-r-pc-i18n-visible-gold-gate-ko-my"
+    assetVersion: "v2026.6.20-r-pc-i18n-gold-gate-thai-hotfix"
   };
 
   function applyVersionInfo() {
