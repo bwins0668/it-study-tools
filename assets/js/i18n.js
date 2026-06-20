@@ -1,4 +1,4 @@
-﻿// Study Tools language switcher and AI-backed translation runtime.
+// Study Tools language switcher and AI-backed translation runtime.
 (function () {
   "use strict";
 
@@ -1627,6 +1627,10 @@ DISABLE_TRANSLATION_OVERLAY = true;
     }
 
     if (translated === null || translated === undefined) {
+      // Emit observable warning for missing keys — never silently display key as UI text in future releases
+      if (typeof console !== "undefined" && console.warn) {
+        console.warn("[I18n] Missing UI key:", key, "for lang:", lang, "fallback chain:", fallbackChain.join(","));
+      }
       translated = key;
     }
 

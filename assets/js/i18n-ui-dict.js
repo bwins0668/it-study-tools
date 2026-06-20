@@ -97,7 +97,8 @@
         high: "高",
         medium: "中",
         low: "低",
-        backToList: "練習リストへ戻る"
+        backToList: "練習リストへ戻る",
+        exerciseList: "練習リスト"
       },
       subnav: {
         lessons: "テキスト・演習",
@@ -274,6 +275,9 @@
         submitCodingExamUnansweredConfirm: "未解答または判定未合格の問題が {count} 問あります。本当に今提出しますか？"
       },
       tools: {
+        quickStart: "クイックスタート",
+        quickStartTitle: "学習の流れ",
+        quickStartDesc: "科目を選ぶ → 課程を学ぶ → 練習する → 統計を確認する",
         tools: "ツール",
         openMenu: "ツールメニューを開く",
         closeMenu: "ツールメニューを閉じる",
@@ -719,7 +723,8 @@
         high: "高",
         medium: "中",
         low: "低",
-        backToList: "返回练习列表"
+        backToList: "返回练习列表",
+        exerciseList: "练习列表"
       },
       subnav: {
         lessons: "教科书与演练沙盒",
@@ -896,6 +901,9 @@
         submitCodingExamUnansweredConfirm: "还有 {count} 道题未作答或未判定成功，确定现在交卷吗？"
       },
       tools: {
+        quickStart: "快速开始",
+        quickStartTitle: "学习流程",
+        quickStartDesc: "选择科目 → 学习课程 → 做练习 → 查看统计",
         tools: "工具",
         openMenu: "打开工具菜单",
         closeMenu: "关闭工具菜单",
@@ -1307,7 +1315,8 @@
         high: "High",
         medium: "Medium",
         low: "Low",
-        backToList: "Back to Practice List"
+        backToList: "Back to Practice List",
+        exerciseList: "Practice List"
       },
       subnav: {
         lessons: "Textbook & Practice Sandbox",
@@ -1483,6 +1492,9 @@
         submitCodingExamUnansweredConfirm: "There are still {count} unanswered or failed questions. Are you sure you want to submit now?"
       },
       tools: {
+        quickStart: "Quick Start",
+        quickStartTitle: "Learning Flow",
+        quickStartDesc: "Select a subject → Study lessons → Practice → Check statistics",
         tools: "Tools",
         openMenu: "Open tools menu",
         closeMenu: "Close tools menu",
@@ -2041,24 +2053,62 @@
         submitCodingExamUnansweredConfirm: "မဖြေရသေးသော သို့မဟုတ် မအောင်မြင်သော မေးခွန်း {count} ခု ကျန်ရှိနေပါသေးသည်။ တင်သွင်းရန် သေချာပါသလား။"
       },
       tools: {
-        tools: "Tools",
-        openMenu: "Open tools menu",
-        closeMenu: "Close tools menu",
-        learningTools: "Learning Tools",
-        glossary: "Glossary",
-        glossaryDesc: "Search IT / SQL / programming terms",
-        settings: "Settings",
-        settingsDesc: "Adjust learning tool preferences",
-        dangerous: "Dangerous Actions",
-        resetProgress: "Reset Progress",
-        resetProgressDesc: "Clear current learning progress. Confirmation required",
-        confirmResetTitle: "Reset progress?",
-        confirmResetBody: "This will clear your current learning progress. Continue?",
-        cancel: "Cancel",
-        confirmReset: "Confirm reset",
+        quickStart: "အမြန်စတင်ရန်",
+        quickStartTitle: "သင်ယူမှု လုပ်ငန်းစဉ်",
+        quickStartDesc: "ဘာသာရပ်ရွေးရန် → သင်ခန်းစာလေ့လာရန် → လေ့ကျင့်ရန် → စာရင်းဇယားကြည့်ရန်",
+        tools: "ကိရိယာများ",
+        openMenu: "ကိရိယာမီနူးဖွင့်ရန်",
+        closeMenu: "ကိရိယာမီနူးပိတ်ရန်",
+        learningTools: "သင်ယူမှုကိရိယာများ",
+        glossary: "ဝေါဟာရစာရင်း",
+        glossaryDesc: "IT / SQL / ပရိုဂရမ်းမင်းဝေါဟာရများ ရှာဖွေရန်",
+        settings: "ဆက်တင်များ",
+        settingsDesc: "သင်ယူမှုကိရိယာ ဦးစားပေးမှုများ ပြင်ဆင်ရန်",
+        dangerous: "အန္တရာယ်ရှိသော လုပ်ဆောင်ချက်များ",
+        resetProgress: "တိုးတက်မှုပြန်လည်သတ်မှတ်ရန်",
+        resetProgressDesc: "လက်ရှိသင်ယူမှုတိုးတက်မှုကို ရှင်းလင်းမည်။ အတည်ပြုရန်လိုအပ်သည်",
+        confirmResetTitle: "တိုးတက်မှုပြန်လည်သတ်မှတ်ရန်？",
+        confirmResetBody: "ဤလုပ်ဆောင်ချက်သည် သင်၏လက်ရှိသင်ယူမှုတိုးတက်မှုကို ရှင်းလင်းမည်။ ဆက်လုပ်မည်လား？",
+        cancel: "မလုပ်တော့ပါ",
+        confirmReset: "ပြန်လည်သတ်မှတ်ရန် အတည်ပြုမည်",
         examTools: "စာမေးပွဲ ကိရိယာများ",
         examHistory: "စာမေးပွဲ မှတ်တမ်း",
-        examHistoryDesc: "မကြာသေးမီ စာမေးပွဲမှတ်တမ်းများ ကြည့်ရှုရန်"
+        examHistoryDesc: "မကြာသေးမီ စာမေးပွဲမှတ်တမ်းများ ကြည့်ရှုရန်",
+        dashboard: "သင်ယူမှု စာရင်းဇယားများ",
+        dashboardDesc: "သင်ယူမှုတိုးတက်မှုနှင့် ဒေတာ အကျဉ်းချုပ်ကြည့်ရန်",
+        exportData: "သင်ယူမှုဒေတာ ထုတ်ယူရန်",
+        exportDataDesc: "ဒေသနဲ့ဆိုင်သော သင်ယူမှုဒေတာ backup ဒေါင်းလုဒ်ဆွဲရန် (JSON)",
+        continueLearning: "သင်ယူမှုဆက်လုပ်ရန်",
+        continueLearningDesc: "ယခင်တိုးတက်မှုမှ ဆက်လုပ်ရန်",
+        exportSuccess: "ထုတ်ယူမှု အောင်မြင်သည်",
+        exportPartialSuccess: "ပျက်စီးနေသောဒေတာကို ကျော်သွားပြီး ထုတ်ယူပြီးပါပြီ",
+        exportFailed: "ထုတ်ယူမှု မအောင်မြင်ပါ",
+        exportScope: "စကားဝှက်နှင့် key မပါ — သင်ယူမှုဒေတာသာ",
+        importPreview: "Backup ထည့်သွင်းမှု ကြိုကြည့်ရန်",
+        importPreviewDesc: "ဖတ်ရှုသာ ကြိုကြည့်မှု — ဒေတာများ မပြောင်းလဲပါ",
+        importSelectFile: "Backup ဖိုင်ရွေးချယ်ရန်",
+        importParseFailed: "ဖိုင် parse မအောင်မြင်ပါ",
+        importSensitiveBlocked: "အထိခိုက်မခံသော ကွက်လပ်များ တွေ့ရှိ၍ ပိတ်ဆို့ခဲ့သည်",
+        importImportable: "ထည့်သွင်းနိုင်သော ဒေတာ",
+        importNew: "အသစ်",
+        importConflict: "ဆန့်ကျင်မှု",
+        importSkipped: "ကျော်သွားသည်",
+        importIncompatibleVersion: "ကိုက်ညီမှုမရှိသော Backup ဗားရှင်း",
+        importFileTooLarge: "ဖိုင်သည် အလွန်ကြီးသည်",
+        importClosePreview: "ကြိုကြည့်မှု ပိတ်ရန်",
+        importSummary: "ထည့်သွင်းမှု အကျဉ်းချုပ်",
+        importNoData: "ထည့်သွင်းနိုင်သော ဒေတာ မရှိပါ",
+        importSection: "အပိုင်း",
+        importSectionLessons: "ပြီးဆုံးသော သင်ခန်းစာများ",
+        importSectionQuiz: "Quiz ရလဒ်များ",
+        importSectionWrongBook: "မှားယွင်းမှုစာအုပ်",
+        importSectionBookmarks: "Bookmark များ",
+        importSectionTyping: "ရိုက်ခြင်း မှတ်တမ်း",
+        importSectionExam: "စာမေးပွဲ မှတ်တမ်း",
+        importSectionGoals: "သင်ယူမှု ပန်းတိုင်များ",
+        importSectionSettings: "ဘာသာစကားနှင့် Theme",
+        importSectionSync: "ချိတ်ဆက်မှု အခြေအနေ",
+        importSyncBlocked: "ထည့်သွင်းမဝင် — ချိတ်ဆက်မှုအခြေအနေသည် စက်ပစ္စည်းမှ စီမံသည်"
       },
       examHistory: {
         title: "Recent Exam History",
@@ -2326,7 +2376,8 @@
         normalizeFullWidth: "Toàn→Bán sừng", lenientIndent: "Thụt lề linh hoạt",
         sendToSandbox: "Gửi đến Sandbox",        runInSandbox: "Chạy trong Sandbox",        sandboxUnavailable: "Sandbox không khả dụng",        sentToSandbox: "Đã gửi đến Sandbox",        openSandbox: "Mở Sandbox",        shortcutHelp: "Phím tắt: Alt+N Tiếp / Alt+R Làm lại / Alt+S Ngẫu nhiên",
         summaryLine: "CPM: {cpm} | Độ chính xác: {acc}% | Lỗi: {err} | TG: {time}",
-        backToList: "Quay lại danh sách"
+        backToList: "Quay lại danh sách",
+        exerciseList: "Danh sách bài tập"
       },
       subnav: {
         lessons: "Sách giáo khoa & luyện tập",
@@ -2503,6 +2554,9 @@
         submitCodingExamUnansweredConfirm: "Vẫn còn {count} câu hỏi chưa trả lời hoặc chưa đạt. Bạn có chắc chắn muốn nộp bài bây giờ không?"
       },
       tools: {
+        quickStart: "Bắt đầu nhanh",
+        quickStartTitle: "Quy trình học tập",
+        quickStartDesc: "Chọn môn → Học bài → Luyện tập → Xem thống kê",
         tools: "Công cụ",
         openMenu: "Mở menu công cụ",
         closeMenu: "Đóng menu công cụ",
@@ -2520,7 +2574,13 @@
         confirmReset: "Xác nhận đặt lại",
         examTools: "Công cụ thi",
         examHistory: "Lịch sử thi",
-        examHistoryDesc: "Xem kết quả thi thử gần đây"
+        examHistoryDesc: "Xem kết quả thi thử gần đây",
+        dashboard: "Thống kê học tập",
+        dashboardDesc: "Xem tiến trình học và tổng quan dữ liệu",
+        exportData: "Xuất dữ liệu học tập",
+        exportDataDesc: "Tải bản sao lưu dữ liệu học cục bộ (JSON)",
+        continueLearning: "Tiếp tục học",
+        continueLearningDesc: "Tiếp tục từ lần học trước"
       },
       examHistory: {
         title: "Lịch sử thi gần đây",
@@ -2788,7 +2848,8 @@
         normalizeFullWidth: "Pleine→Demi-chasse", lenientIndent: "Indentation souple",
         sendToSandbox: "Send to Sandbox",        runInSandbox: "Run in Sandbox",        sandboxUnavailable: "Sandbox unavailable",        sentToSandbox: "Sent to sandbox",        openSandbox: "Open sandbox",        shortcutHelp: "Raccourcis: Alt+N Suivant / Alt+R Reco. / Alt+S Aléatoire",
         summaryLine: "CPM: {cpm} | Précision: {acc}% | Err: {err} | Temps: {time}",
-        backToList: "Retour à la liste"
+        backToList: "Retour à la liste",
+        exerciseList: "Liste des exercices"
       },
       subnav: {
         lessons: "Manuel & exercices",
@@ -2965,6 +3026,9 @@
         submitCodingExamUnansweredConfirm: "Il reste {count} questions sans réponse ou échouées. Voulez-vous vraiment soumettre maintenant ?"
       },
       tools: {
+        quickStart: "Démarrage rapide",
+        quickStartTitle: "Flux d'apprentissage",
+        quickStartDesc: "Sélectionner une matière → Étudier les leçons → Pratiquer → Consulter les statistiques",
         tools: "Outils",
         openMenu: "Ouvrir le menu des outils",
         closeMenu: "Fermer le menu des outils",
@@ -2982,7 +3046,13 @@
         confirmReset: "Confirmer la réinitialisation",
         examTools: "Outils d'examen",
         examHistory: "Historique d'examens",
-        examHistoryDesc: "Voir les résultats d'examens récents"
+        examHistoryDesc: "Voir les résultats d'examens récents",
+        dashboard: "Statistiques d'apprentissage",
+        dashboardDesc: "Voir la progression et l'aperçu des données",
+        exportData: "Exporter les données d'apprentissage",
+        exportDataDesc: "Télécharger une sauvegarde locale des données (JSON)",
+        continueLearning: "Continuer l'apprentissage",
+        continueLearningDesc: "Reprendre depuis la dernière progression"
       },
       examHistory: {
         title: "Historique récent",
@@ -3250,7 +3320,8 @@
         normalizeFullWidth: "전각→반각", lenientIndent: "들여쓰기 허용",
         sendToSandbox: "Sandbox로 보내기",        runInSandbox: "Sandbox에서 실행",        sandboxUnavailable: "Sandbox를 사용할 수 없음",        sentToSandbox: "Sandbox로 전송됨",        openSandbox: "Sandbox 열기",        shortcutHelp: "단축키: Alt+N 다음 / Alt+R 다시 / Alt+S 랜덤",
         summaryLine: "CPM: {cpm} | 정확도: {acc}% | 오류: {err} | 시간: {time}",
-        backToList: "연습 목록으로 돌아가기"
+        backToList: "연습 목록으로 돌아가기",
+        exerciseList: "연습 목록"
       },
       subnav: {
         lessons: "교재 및 실습 샌드박스",
@@ -3425,6 +3496,9 @@
         submitCodingExamUnansweredConfirm: "미답 또는 판정 미통과 문제가 {count}문 있습니다. 정말 지금 제출하시겠습니까?"
       },
       tools: {
+        quickStart: "빠른 시작",
+        quickStartTitle: "학습 흐름",
+        quickStartDesc: "과목 선택 → 학습하기 → 연습하기 → 통계 확인",
         tools: "도구",
         openMenu: "도구 메뉴 열기",
         closeMenu: "도구 메뉴 닫기",
@@ -3780,7 +3854,8 @@
         openSandbox: "เปิด Sandbox",
         shortcutHelp: "ปุ่มลัด: Alt+N ถัดไป / Alt+R ใหม่ / Alt+S สุ่ม",
         summaryLine: "CPM: {cpm} | แม่นยำ: {acc}% | ผิดพลาด: {err} | เวลา: {time}",
-        backToList: "กลับไปรายการฝึก"
+        backToList: "กลับไปรายการฝึก",
+        exerciseList: "รายการฝึก"
       },
       subnav: {
         lessons: "แบบเรียนและ Sandbox ฝึก", practicalExam: "จำลองสอบ",
@@ -3821,13 +3896,43 @@
         title: "แบบทดสอบความเข้าใจ", previous: "ข้อก่อนหน้า", next: "ข้อถัดไป",
         submitAnswer: "ส่งคำตอบ"
       },
-      aiLearning: "AI เรียนรู้", language: "ภาษา", settings: "ตั้งค่า",
+      aiLearning: "AI เรียนรู้", language: "ภาษา",
       account: "บัญชี", login: "เข้าสู่ระบบ", logout: "ออกจากระบบ",
       sync: "ซิงค์", manualSync: "ซิงค์ด้วยตนเอง", bookmarks: "บุ๊กมาร์ก",
       randomChallenge: "สุ่มท้าทาย", practiceSandbox: "Sandbox ฝึก", dashboard: "แดชบอร์ด",
-      tools: "เครื่องมือ", glossary: "ศัพท์", japaneseTyping: "พิมพ์ภาษาญี่ปุ่น",
+      glossary: "ศัพท์", japaneseTyping: "พิมพ์ภาษาญี่ปุ่น",
       fallback: "สำรอง", error: "ข้อผิดพลาด", success: "สำเร็จ",
-      currentLanguage: "ภาษาปัจจุบัน"
+      currentLanguage: "ภาษาปัจจุบัน",
+      settings: "การตั้งค่า",
+      tools: {
+        quickStart: "เริ่มต้นอย่างรวดเร็ว",
+        quickStartTitle: "ขั้นตอนการเรียน",
+        quickStartDesc: "เลือกวิชา → เรียนบท → ฝึกทำ → ดูสถิติ",
+        tools: "เครื่องมือ",
+        openMenu: "เปิดเมนูเครื่องมือ",
+        closeMenu: "ปิดเมนูเครื่องมือ",
+        learningTools: "เครื่องมือการเรียน",
+        glossary: "คำศัพท์",
+        glossaryDesc: "ค้นหาคำศัพท์ IT / SQL / การเขียนโปรแกรม",
+        settings: "การตั้งค่า",
+        settingsDesc: "ปรับการตั้งค่าเครื่องมือการเรียน",
+        dangerous: "การดำเนินการที่อันตราย",
+        resetProgress: "รีเซ็ตความคืบหน้า",
+        resetProgressDesc: "ล้างความคืบหน้าการเรียนปัจจุบัน ต้องยืนยัน",
+        confirmResetTitle: "รีเซ็ตความคืบหน้า?",
+        confirmResetBody: "การดำเนินการนี้จะล้างความคืบหน้าการเรียนปัจจุบัน ดำเนินการต่อ?",
+        cancel: "ยกเลิก",
+        confirmReset: "ยืนยันการรีเซ็ต",
+        examTools: "เครื่องมือสอบ",
+        examHistory: "ประวัติการสอบ",
+        examHistoryDesc: "ดูผลการสอบจำลองล่าสุด",
+        dashboard: "สถิติการเรียน",
+        dashboardDesc: "ดูความคืบหน้าและภาพรวมข้อมูล",
+        exportData: "ส่งออกข้อมูลการเรียน",
+        exportDataDesc: "ดาวน์โหลดสำรองข้อมูลการเรียนในเครื่อง (JSON)",
+        continueLearning: "เรียนต่อ",
+        continueLearningDesc: "ดำเนินการต่อจากครั้งที่แล้ว"
+      }
     },
     "id-ID": {
       common: {
@@ -3999,7 +4104,8 @@
       high: "高 / 高",
       medium: "中 / 中",
       low: "低 / 低",
-      backToList: "返回练习列表 / 練習リストへ戻る"
+      backToList: "返回练习列表 / 練習リストへ戻る",
+      exerciseList: "练习列表 / 練習リスト"
     },
     subnav: {
       lessons: "教科书与演练沙盒 / テキスト・演習",
@@ -4177,6 +4283,9 @@
     },
 
     tools: {
+      quickStart: "快速开始 / クイックスタート",
+      quickStartTitle: "学习流程 / 学習の流れ",
+      quickStartDesc: "选择科目 → 学习课程 → 做练习 → 查看统计 / 科目を選ぶ → 課程を学ぶ → 練習する → 統計を確認する",
       tools: "工具 / ツール",
       openMenu: "打开工具菜单 / ツールメニューを開く",
       closeMenu: "关闭工具菜单 / ツールメニューを閉じる",
