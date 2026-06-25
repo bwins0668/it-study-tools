@@ -334,8 +334,8 @@ async function verifyKeyboardCloseButton(page, label) {
 }
 
 async function verifyDesktopRegression(page, label) {
-  // On desktop the sidebar is part of the normal flex flow, not an off-canvas overlay.
-  // No sticky behaviour should be visible, and the toggle button should be hidden.
+  // On desktop the sidebar is collapsed by default, accessible via edge handle.
+  // The mobile toggle should be hidden.
 
   const toggleVisible = await page.evaluate(() => {
     const btn = document.getElementById("mobile-sidebar-toggle");
@@ -347,13 +347,24 @@ async function verifyDesktopRegression(page, label) {
     record(`${label} desktop: mobile toggle should be hidden`, {});
   }
 
-  // Sidebar should be visible in-flow
-  const sidebarWidth = await page.evaluate(() => {
-    const sidebar = document.getElementById("app-sidebar");
-    return sidebar ? sidebar.offsetWidth : 0;
+  // Edge handle should be visible on desktop
+  const edgeHandle = await page.evaluate(() => {
+    const eh = document.getElementById("sidebar-edge-handle");
+    if (!eh) return { exists: false };
+    const style = window.getComputedStyle(eh);
+    return { exists: true, display: style.display, width: eh.offsetWidth };
   });
-  if (sidebarWidth < 160) {
-    record(`${label} desktop: sidebar collapsed`, { sidebarWidth });
+  if (!edgeHandle.exists || edgeHandle.display === "none") {
+    record(`${label} desktop: edge handle missing or hidden`, edgeHandle);
+  }
+
+  // Sidebar should be collapsed (width ~0) when not expanded
+  const sidebarCollapsed = await page.evaluate(() => {
+    const sidebar = document.getElementById("app-sidebar");
+    return sidebar ? sidebar.offsetWidth : -1;
+  });
+  if (sidebarCollapsed > 20) {
+    record(`${label} desktop: sidebar should be collapsed by default`, { sidebarWidth: sidebarCollapsed });
   }
 
   // No horizontal overflow
@@ -367,8 +378,80 @@ async function verifyDesktopRegression(page, label) {
     return body ? body.offsetWidth : 0;
   });
   if (contentWidth < 200) {
-    record(`${label} desktop: main content too narrow`, { contentWidth, sidebarWidth });
+    record(`${label} desktop: main content too narrow`, { contentWidth });
   }
+}
+
+async function verifyDesktopEdgeHandle(page, label) {
+  // Edge handle hover → sidebar expands as overlay
+  // Use programmatic events to avoid Playwright hit-testing conflicts with collapsed sidebar
+
+  // 1. Dispatch mouseenter on edge handle → should expand sidebar
+  await page.evaluate(() => {
+    const eh = document.getElementById('sidebar-edge-handle');
+    if (eh) {
+      eh.dispatchEvent(new MouseEvent('mouseenter', { bubbles: true }));
+    }
+  });
+  await page.waitForTimeout(500);
+  const expanded = await page.evaluate(() => document.body.classList.contains("desktop-sidebar-expanded"));
+  if (!expanded) record(`${label} edge: mouseenter did not expand sidebar`, {});
+
+  // 2. Sidebar is overlay — content should still fill the app-body width
+  const contentWidthExpanded = await page.evaluate(() => {
+    const body = document.getElementById("main-app-body");
+    return body ? body.offsetWidth : 0;
+  });
+  if (contentWidthExpanded < 400) record(`${label} edge: content collapsed when sidebar expands`, { contentWidthExpanded });
+
+  // 3. Scroll within sidebar → sidebar stays open
+  const sidebar = page.locator("#app-sidebar");
+  if (expanded) {
+    await sidebar.evaluate(el => { el.scrollTop = el.scrollHeight; });
+    await page.waitForTimeout(200);
+    const stillExpanded = await page.evaluate(() => document.body.classList.contains("desktop-sidebar-expanded"));
+    if (!stillExpanded) record(`${label} edge: scroll closed sidebar`, {});
+  }
+
+  // 4. Close button closes sidebar
+  if (expanded) {
+    await page.evaluate(() => {
+      const btn = document.querySelector('.mobile-sidebar-return .mobile-drawer-close');
+      if (btn) btn.click();
+    });
+    await page.waitForTimeout(400);
+    const closed = await page.evaluate(() => !document.body.classList.contains("desktop-sidebar-expanded"));
+    if (!closed) record(`${label} edge: close button did not close`, {});
+  }
+
+  // 5. Click edge handle to toggle open
+  await page.evaluate(() => {
+    const eh = document.getElementById('sidebar-edge-handle');
+    if (eh) eh.click();
+  });
+  await page.waitForTimeout(400);
+  const toggledOpen = await page.evaluate(() => document.body.classList.contains("desktop-sidebar-expanded"));
+  if (!toggledOpen) record(`${label} edge: click toggle did not open`, {});
+
+  // 6. Esc closes sidebar
+  await page.keyboard.press("Escape");
+  await page.waitForTimeout(400);
+  const escClosed = await page.evaluate(() => !document.body.classList.contains("desktop-sidebar-expanded"));
+  if (!escClosed) record(`${label} edge: Escape did not close`, {});
+
+  // 7. Keyboard: focus edge handle + Enter opens
+  await page.evaluate(() => {
+    const eh = document.getElementById('sidebar-edge-handle');
+    if (eh) eh.focus();
+  });
+  await page.keyboard.press("Enter");
+  await page.waitForTimeout(400);
+  const keyOpen = await page.evaluate(() => document.body.classList.contains("desktop-sidebar-expanded"));
+  if (!keyOpen) record(`${label} edge: keyboard Enter did not open`, {});
+
+  // Close for cleanup
+  await page.evaluate(() => { if (window.closeDesktopSidebar) window.closeDesktopSidebar(); });
+  await page.waitForTimeout(300);
 }
 
 async function run() {
@@ -416,6 +499,7 @@ async function run() {
     // Desktop regression — sidebar in-flow, no sticky leakage, toggle hidden
     if (viewport.width >= 1280) {
       await verifyDesktopRegression(page, label);
+      await verifyDesktopEdgeHandle(page, label);
     }
 
     if ([320, 390, 768, 1024, 1440].includes(viewport.width)) {

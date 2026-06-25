@@ -164,6 +164,62 @@ body {
   color: var(--text-muted);
 }
 
+/* --- Compact Brand Mode (desktop hover expand) --- */
+.header-logo.header-logo--compact .module-switch-trigger {
+  max-width: 48px;
+  padding: 4px 6px;
+  justify-content: center;
+}
+.header-logo.header-logo--compact .logo-text,
+.header-logo.header-logo--compact .brand-caret {
+  display: none;
+}
+.header-logo.header-logo--compact .module-switch-trigger:hover,
+.header-logo.header-logo--compact .module-switch-trigger:focus-within {
+  max-width: 280px;
+  padding: 4px 10px 4px 4px;
+}
+.header-logo.header-logo--compact .module-switch-trigger:hover .logo-text,
+.header-logo.header-logo--compact .module-switch-trigger:focus-within .logo-text,
+.header-logo.header-logo--compact .module-switch-trigger:hover .brand-caret,
+.header-logo.header-logo--compact .module-switch-trigger:focus-within .brand-caret {
+  display: flex;
+}
+.header-logo.header-logo--compact .module-switch-trigger:hover .brand-caret,
+.header-logo.header-logo--compact .module-switch-trigger:focus-within .brand-caret {
+  display: inline;
+}
+
+/* --- Header Mode Navigation (moved from sub-header-bar) --- */
+.header-mode-nav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 1;
+  overflow: hidden;
+}
+.header-mode-nav .sub-header-tab {
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--text-muted);
+  padding: 6px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+.header-mode-nav .sub-header-tab:hover {
+  background: rgba(255,255,255,0.06);
+  border-color: rgba(255,255,255,0.10);
+  color: var(--text-primary);
+}
+.header-mode-nav .sub-header-tab.active {
+  background: rgba(56, 242, 255, 0.08);
+  border-color: var(--neon-cyan);
+  color: var(--neon-cyan);
+}
+
 .sidebar-progress {
   padding: 16px 20px 12px 20px;
   border-bottom: 1px solid var(--border-color);
@@ -487,6 +543,58 @@ body {
   display: flex;
   flex-direction: column;
   overflow: hidden;
+}
+
+/* --- Sidebar Edge Handle (desktop hover trigger) --- */
+.sidebar-edge-handle {
+  width: 16px;
+  flex-shrink: 0;
+  display: none; /* hidden by default, shown on desktop via JS/breakpoint */
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(to right, rgba(12, 16, 26, 0.9), transparent);
+  border-right: 1px solid rgba(148, 163, 184, 0.12);
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease;
+  z-index: 100;
+  writing-mode: vertical-lr;
+  letter-spacing: 2px;
+  font-size: 10px;
+  color: var(--text-muted);
+}
+.sidebar-edge-handle:hover,
+.sidebar-edge-handle:focus-visible {
+  background: linear-gradient(to right, rgba(56, 242, 255, 0.12), rgba(10, 14, 23, 0.7));
+  border-color: var(--neon-cyan);
+  color: var(--neon-cyan);
+}
+.sidebar-edge-label {
+  pointer-events: none;
+}
+.sidebar-edge-handle .fa-chevron-right {
+  transition: transform 0.3s ease;
+}
+.sidebar-edge-handle[aria-expanded="true"] .fa-chevron-right {
+  transform: rotate(180deg);
+}
+
+/* --- Desktop Sidebar Overlay Mode --- */
+body.desktop-sidebar-expanded .app-sidebar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: clamp(250px, 20vw, 320px);
+  z-index: 860;
+  transform: translateX(0);
+  box-shadow: 6px 0 24px rgba(0, 0, 0, 0.4);
+}
+body.desktop-sidebar-expanded .app-body {
+  position: relative;
+}
+body.desktop-sidebar-expanded .sidebar-edge-handle {
+  opacity: 0;
+  pointer-events: none;
 }
 
 .sidebar-title {
@@ -12176,6 +12284,66 @@ body.mobile-playground-open {
   }
 
   .mobile-drawer-close span {
+    display: none;
+  }
+}
+
+/* ===== Desktop Workspace (>720px): Sidebar edge handle, no permanent sidebar width ===== */
+@media (min-width: 721px) {
+  .app-body {
+    position: relative;
+  }
+
+  /* Hide sidebar by default — edge handle is the entry point */
+  .app-sidebar {
+    width: 0;
+    min-width: 0;
+    max-width: 0;
+    padding: 0;
+    border-right: none;
+    overflow: hidden;
+    display: none;
+  }
+
+  /* When desktop overlay is expanded, sidebar becomes position:absolute via JS/body class */
+  body.desktop-sidebar-expanded .app-sidebar {
+    width: clamp(250px, 20vw, 320px);
+    min-width: 250px;
+    max-width: 320px;
+    padding: 0;
+    overflow-y: auto;
+    border-right: 1px solid var(--border-color);
+    display: flex;
+  }
+
+  /* Edge handle shown on desktop */
+  .sidebar-edge-handle {
+    display: flex;
+  }
+
+  /* Main content gets full width without sidebar */
+  .lesson-content {
+    flex: 1.15;
+    min-width: 0;
+  }
+
+  .playground-section {
+    flex: 0.85;
+    min-width: 0;
+  }
+
+  /* Header mode nav spacing */
+  .header-mode-nav {
+    margin-left: 32px;
+  }
+
+  /* Hide sub-header bars on desktop */
+  .sub-header-bar {
+    display: none;
+  }
+
+  /* Secondary action row hidden on desktop */
+  #secondary-action-row {
     display: none;
   }
 }

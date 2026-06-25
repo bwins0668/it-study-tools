@@ -130,6 +130,334 @@ if (document.readyState === 'loading') {
   syncMobileDrawerControls();
 }
 
+// ========== Desktop Workspace: Sidebar Edge Handle + Compact Brand + Header Mode Nav ==========
+
+(function() {
+  var DESKTOP_BREAKPOINT = 720;
+  var SIDEBAR_CLOSE_DELAY_MS = 300;
+  var desktopSidebarOpen = false;
+  var desktopSidebarCloseTimer = null;
+  var desktopSidebarManuallyToggled = false;
+
+  /** Show sidebar edge handle and manage desktop overlays. */
+  function initDesktopWorkspace() {
+    var isDesktop = window.matchMedia('(min-width: ' + (DESKTOP_BREAKPOINT + 1) + 'px)').matches;
+    var edgeHandle = document.getElementById('sidebar-edge-handle');
+    var headerLogo = document.querySelector('.header-logo');
+    var headerModeNav = document.getElementById('header-mode-nav');
+    var sidebar = document.getElementById('app-sidebar');
+
+    if (!edgeHandle || !headerLogo || !headerModeNav) return;
+
+    if (isDesktop) {
+      // Show edge handle
+      edgeHandle.style.display = 'flex';
+      // Compact brand
+      headerLogo.classList.add('header-logo--compact');
+      // Show header mode nav, hide sub-header
+      headerModeNav.style.display = 'flex';
+      hideAllSubHeaderBars();
+      // Ensure sidebar is in static (non-overlay) mode unless manually opened
+      if (!desktopSidebarOpen) {
+        document.body.classList.remove('desktop-sidebar-expanded');
+        sidebar.style.position = '';
+        sidebar.style.width = '';
+        sidebar.style.transform = '';
+      }
+      populateHeaderModeNav();
+    } else {
+      // Mobile/tablet: revert all desktop changes
+      edgeHandle.style.display = 'none';
+      edgeHandle.setAttribute('aria-expanded', 'false');
+      headerLogo.classList.remove('header-logo--compact');
+      headerModeNav.style.display = 'none';
+      document.body.classList.remove('desktop-sidebar-expanded');
+      desktopSidebarOpen = false;
+      clearDesktopSidebarTimer();
+      // Restore sidebar to default static mode
+      sidebar.style.position = '';
+      sidebar.style.width = '';
+      sidebar.style.transform = '';
+    }
+  }
+
+  function hideAllSubHeaderBars() {
+    var bars = document.querySelectorAll('.sub-header-bar');
+    for (var i = 0; i < bars.length; i++) {
+      bars[i].style.display = 'none';
+    }
+  }
+
+  /** Open the sidebar as desktop overlay. */
+  function openDesktopSidebar() {
+    desktopSidebarOpen = true;
+    clearDesktopSidebarTimer();
+    var sidebar = document.getElementById('app-sidebar');
+    var edgeHandle = document.getElementById('sidebar-edge-handle');
+    document.body.classList.add('desktop-sidebar-expanded');
+    if (edgeHandle) edgeHandle.setAttribute('aria-expanded', 'true');
+    if (sidebar) {
+      sidebar.style.overflowY = 'auto';
+      sidebar.style.display = 'flex';
+      sidebar.style.flexDirection = 'column';
+    }
+  }
+
+  /** Close the sidebar desktop overlay. */
+  function closeDesktopSidebar() {
+    desktopSidebarOpen = false;
+    desktopSidebarManuallyToggled = false;
+    clearDesktopSidebarTimer();
+    var sidebar = document.getElementById('app-sidebar');
+    var edgeHandle = document.getElementById('sidebar-edge-handle');
+    document.body.classList.remove('desktop-sidebar-expanded');
+    if (edgeHandle) {
+      edgeHandle.setAttribute('aria-expanded', 'false');
+      edgeHandle.focus();
+    }
+    if (sidebar) {
+      sidebar.style.overflowY = '';
+      sidebar.style.display = '';
+      sidebar.style.flexDirection = '';
+      sidebar.style.position = '';
+      sidebar.style.width = '';
+      sidebar.style.transform = '';
+    }
+  }
+
+  function clearDesktopSidebarTimer() {
+    if (desktopSidebarCloseTimer) {
+      clearTimeout(desktopSidebarCloseTimer);
+      desktopSidebarCloseTimer = null;
+    }
+  }
+
+  function scheduleDesktopSidebarClose() {
+    if (desktopSidebarManuallyToggled) return; // don't auto-close if clicked open
+    clearDesktopSidebarTimer();
+    desktopSidebarCloseTimer = setTimeout(function() {
+      closeDesktopSidebar();
+    }, SIDEBAR_CLOSE_DELAY_MS);
+  }
+
+  function isDesktopViewport() {
+    return window.matchMedia('(min-width: ' + (DESKTOP_BREAKPOINT + 1) + 'px)').matches;
+  }
+
+  /** Populate header-mode-nav with mode tabs for current subject. */
+  function populateHeaderModeNav() {
+    var nav = document.getElementById('header-mode-nav');
+    if (!nav) return;
+    nav.innerHTML = '';
+
+    var subject = window.currentSubject || 'sql';
+    // Build mode tabs based on subject
+    var tabs = [];
+    if (subject === 'sql' || subject === 'python') {
+      tabs.push({ label: '教科书与演练沙盒', icon: 'fa-book-open', onClick: subject === 'sql' ? "switchSqlSubMode('lessons')" : "switchPythonSubMode('lessons')", active: (subject === 'sql' ? sqlSubMode : pythonSubMode) === 'lessons' });
+      tabs.push({ label: '实操模拟考试', icon: 'fa-laptop-code', onClick: subject === 'sql' ? "switchSqlSubMode('exam')" : "switchPythonSubMode('exam')", active: (subject === 'sql' ? sqlSubMode : pythonSubMode) === 'exam' });
+    } else if (subject === 'sg') {
+      tabs.push({ label: '教科书章节学习', icon: 'fa-book-open', onClick: "switchSgSubMode('lessons')", active: (typeof sgSubMode === 'undefined' || sgSubMode === 'lessons') });
+      tabs.push({ label: '过去问道场', icon: 'fa-compass', onClick: "switchSgSubMode('dojo')", active: (typeof sgSubMode !== 'undefined' && sgSubMode === 'dojo') });
+    } else if (subject === 'java') {
+      tabs.push({ label: '入門編', icon: 'fa-seedling', onClick: "switchJavaBook('nyumon')", active: (currentJavaBook === 'nyumon' && javaSubMode !== 'exam') });
+      tabs.push({ label: '実践編', icon: 'fa-rocket', onClick: "switchJavaBook('jissen')", active: (currentJavaBook === 'jissen' && javaSubMode !== 'exam') });
+      tabs.push({ label: '实操模拟考试', icon: 'fa-laptop-code', onClick: "switchJavaSubMode('exam')", active: javaSubMode === 'exam' });
+    } else if (subject === 'itpass') {
+      // IT Passport: mode tabs handled by sub-header; skip header-mode-nav
+      tabs = [];
+    }
+
+    for (var i = 0; i < tabs.length; i++) {
+      var t = tabs[i];
+      var btn = document.createElement('button');
+      btn.className = 'sub-header-tab' + (t.active ? ' active' : '');
+      btn.setAttribute('onclick', t.onClick);
+      btn.innerHTML = '<i class="fa-solid ' + t.icon + '"></i> <span>' + t.label + '</span>';
+      nav.appendChild(btn);
+    }
+
+    // Show nav only when content exists
+    nav.style.display = tabs.length ? 'flex' : 'none';
+  }
+
+  // ===== Sidebar Edge Handle Event Bindings =====
+  function bindDesktopInteractions() {
+    var edgeHandle = document.getElementById('sidebar-edge-handle');
+    var sidebar = document.getElementById('app-sidebar');
+    if (!edgeHandle || !sidebar) return;
+
+    // Mouse enter edge handle → open
+    edgeHandle.addEventListener('mouseenter', function() {
+      if (!isDesktopViewport()) return;
+      openDesktopSidebar();
+    });
+
+    // Mouse enter sidebar → keep open (clear close timer)
+    sidebar.addEventListener('mouseenter', function() {
+      if (!isDesktopViewport() || !desktopSidebarOpen) return;
+      clearDesktopSidebarTimer();
+    });
+
+    // Mouse leave sidebar → schedule close
+    sidebar.addEventListener('mouseleave', function() {
+      if (!isDesktopViewport() || !desktopSidebarOpen) return;
+      scheduleDesktopSidebarClose();
+    });
+
+    // Mouse leave edge handle → schedule close (unless mouse entered sidebar)
+    edgeHandle.addEventListener('mouseleave', function() {
+      if (!isDesktopViewport()) return;
+      // Short delay to allow mouse to enter sidebar
+      clearDesktopSidebarTimer();
+      desktopSidebarCloseTimer = setTimeout(function() {
+        if (!document.getElementById('app-sidebar').matches(':hover')) {
+          closeDesktopSidebar();
+        }
+      }, SIDEBAR_CLOSE_DELAY_MS);
+    });
+
+    // Click edge handle → toggle (for touch/click users)
+    edgeHandle.addEventListener('click', function() {
+      if (!isDesktopViewport()) return;
+      if (desktopSidebarOpen) {
+        closeDesktopSidebar();
+      } else {
+        desktopSidebarManuallyToggled = true;
+        openDesktopSidebar();
+      }
+    });
+
+    // Keyboard: Edge handle Enter/Space → toggle
+    edgeHandle.addEventListener('keydown', function(e) {
+      if (!isDesktopViewport()) return;
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        if (desktopSidebarOpen) {
+          closeDesktopSidebar();
+        } else {
+          desktopSidebarManuallyToggled = true;
+          openDesktopSidebar();
+        }
+      }
+      if (e.key === 'Escape' && desktopSidebarOpen) {
+        e.preventDefault();
+        closeDesktopSidebar();
+      }
+    });
+
+    // Esc anywhere closes sidebar
+    document.addEventListener('keydown', function(e) {
+      if (!isDesktopViewport() || !desktopSidebarOpen) return;
+      if (e.key === 'Escape' && !e.target.closest('.modal-overlay') && !e.target.closest('.tools-drawer')) {
+        closeDesktopSidebar();
+      }
+    });
+
+    // Focus within sidebar → keep open
+    document.addEventListener('focusin', function(e) {
+      if (!isDesktopViewport()) return;
+      if (sidebar.contains(e.target)) {
+        clearDesktopSidebarTimer();
+      } else if (desktopSidebarOpen && !edgeHandle.contains(e.target)) {
+        scheduleDesktopSidebarClose();
+      }
+    });
+
+    // Scroll within sidebar → keep open
+    sidebar.addEventListener('scroll', function() {
+      if (!isDesktopViewport() || !desktopSidebarOpen) return;
+      clearDesktopSidebarTimer();
+    });
+
+    // Resize → re-init desktop workspace state
+    var resizeTimer;
+    window.addEventListener('resize', function() {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(function() {
+        if (!isDesktopViewport()) {
+          closeDesktopSidebar();
+        }
+        initDesktopWorkspace();
+      }, 150);
+    });
+  }
+
+  // ===== Brand Compact Interaction =====
+  function bindBrandCompactInteraction() {
+    var logo = document.querySelector('.header-logo');
+    if (!logo) return;
+    // Click on compact brand → expands to full, clicking outside collapses back
+    document.addEventListener('click', function(e) {
+      if (!logo.classList.contains('header-logo--compact')) return;
+      if (logo.contains(e.target)) return; // clicking inside brand is fine
+      // Click outside → collapse back
+      logo.style.pointerEvents = '';
+    });
+  }
+
+  // ===== Expose globally =====
+  window.initDesktopWorkspace = initDesktopWorkspace;
+  window.populateHeaderModeNav = populateHeaderModeNav;
+  window.closeDesktopSidebar = closeDesktopSidebar;
+  window.isDesktopSidebarOpen = function() { return desktopSidebarOpen; };
+
+  // Hook: close button in sidebar also closes desktop overlay
+  var _origCloseMobileDrawers = window.closeMobileDrawers;
+  if (typeof _origCloseMobileDrawers === 'function') {
+    window.closeMobileDrawers = function(opts) {
+      if (desktopSidebarOpen && isDesktopViewport()) {
+        closeDesktopSidebar();
+      }
+      return _origCloseMobileDrawers.apply(this, arguments);
+    };
+  }
+
+  // Hook into existing init
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function() {
+      initDesktopWorkspace();
+      bindDesktopInteractions();
+      bindBrandCompactInteraction();
+    });
+  } else {
+    initDesktopWorkspace();
+    bindDesktopInteractions();
+    bindBrandCompactInteraction();
+  }
+
+  // Hook populateHeaderModeNav into existing switchSubject
+  var _origSwitchSubject = window.switchSubject;
+  if (typeof _origSwitchSubject === 'function') {
+    window.switchSubject = function() {
+      _origSwitchSubject.apply(this, arguments);
+      if (window.populateHeaderModeNav) {
+        setTimeout(window.populateHeaderModeNav, 100);
+        // Re-hide sub-header-bars on desktop in case switchSubject re-shows them
+        if (window.matchMedia('(min-width: 721px)').matches) {
+          var bars = document.querySelectorAll('.sub-header-bar');
+          for (var i = 0; i < bars.length; i++) {
+            bars[i].style.display = 'none';
+          }
+        }
+      }
+    };
+  }
+
+  // Hook populateHeaderModeNav into mode switch functions
+  ['switchSqlSubMode', 'switchPythonSubMode', 'switchJavaSubMode', 'switchSgSubMode', 'switchJavaBook'].forEach(function(name) {
+    var orig = window[name];
+    if (typeof orig === 'function') {
+      window[name] = function() {
+        orig.apply(this, arguments);
+        if (window.populateHeaderModeNav) {
+          setTimeout(window.populateHeaderModeNav, 80);
+        }
+      };
+    }
+  });
+})();
+
 
 // SQL Hub original state
 let currentLessonId = 1;

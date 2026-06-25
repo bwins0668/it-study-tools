@@ -41,6 +41,9 @@
         </button>
       </div>
 
+      <!-- Header Mode Navigation (Textbook/Practice vs Exam — moved from sub-header) -->
+      <nav class="header-mode-nav" id="header-mode-nav" aria-label="学习模式" data-i18n-aria-label="subnav.ariaLabel" style="display:none"></nav>
+
       <!-- Header Challenge Widget (SQL only) -->
       <div class="header-challenge" id="header-challenge">
         <button class="header-challenge-btn-start" id="challenge-start-btn" onclick="startCrossChallenge()">
@@ -295,6 +298,14 @@
     <!-- Main Workspace -->
     <div class="app-body" id="main-app-body">
       <div class="mobile-backdrop" id="mobile-backdrop" onclick="closeMobileDrawers()" aria-hidden="true"></div>
+
+      <!-- Sidebar Edge Handle (desktop hover target to open sidebar) -->
+      <div class="sidebar-edge-handle" id="sidebar-edge-handle" tabindex="0" role="button"
+        aria-label="课程目录" data-i18n-aria-label="sidebar.unitList"
+        aria-expanded="false" aria-controls="app-sidebar"
+        title="课程目录">
+        <span class="sidebar-edge-label"><i class="fa-solid fa-chevron-right"></i></span>
+      </div>
 
       <!-- Sidebar: Lessons List -->
       <aside class="app-sidebar" id="app-sidebar" aria-label="课程目录" data-i18n-aria-label="sidebar.unitList">
