@@ -809,6 +809,11 @@ async function main() {
     await page.locator('#module-switch-option-mos365').focus();
     await page.keyboard.press('Enter');
     await page.waitForSelector('#mos365-shell.is-open');
+    // Wait for module panel close transition to complete
+    await page.waitForFunction(() => {
+      const p = document.getElementById('module-switch-panel');
+      return p && (p.hidden || p.getAttribute('data-motion-state') === 'closed');
+    }, { timeout: 5000 });
     assert.strictEqual(await page.locator('#module-switch-panel').evaluate((node) => node.hidden), true, 'module drawer must close after MOS entry activation');
     assert.match(await page.locator('.mos365-head h2').textContent(), /MOS Excel 365/, 'MOS home must open after drawer activation');
     await page.locator('.mos365-close').click();

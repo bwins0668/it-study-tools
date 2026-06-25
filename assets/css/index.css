@@ -8014,31 +8014,52 @@ body.i18n-active :where(
   border-radius: 12px;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
   z-index: 920;
+  will-change: transform, opacity;
 
-  /* Animation states */
+  /* Closed — element renders but is invisible & non-interactive */
   opacity: 0;
-  transform: translateY(-10px) scale(0.985);
-  filter: blur(1.5px);
+  transform: translate3d(0, -12px, 0) scale(0.982);
   visibility: hidden;
   pointer-events: none;
   transition:
-    opacity 200ms cubic-bezier(.16, 1, .3, 1),
-    transform 300ms cubic-bezier(.16, 1, .3, 1),
-    filter 240ms ease,
-    visibility 0s linear 300ms;
+    transform 320ms cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 220ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    visibility 0s linear 320ms,
+    box-shadow 320ms ease;
 }
 
-.module-switch-panel:not([hidden]) {
+/* Open state — driven by [data-motion-state="open"] or [data-motion-state="opening"] */
+.module-switch-panel[data-motion-state="open"],
+.module-switch-panel[data-motion-state="opening"] {
   opacity: 1;
-  transform: translateY(0) scale(1);
-  filter: blur(0);
+  transform: translate3d(0, 0, 0) scale(1);
   visibility: visible;
   pointer-events: auto;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.7);
   transition:
-    opacity 180ms ease,
-    transform 260ms cubic-bezier(.16, 1, .3, 1),
-    filter 220ms ease,
-    visibility 0s linear 0s;
+    transform 320ms cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 220ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    visibility 0s linear 0s,
+    box-shadow 320ms ease;
+}
+
+/* Closing state — explicit reverse */
+.module-switch-panel[data-motion-state="closing"] {
+  opacity: 0;
+  transform: translate3d(0, -8px, 0) scale(0.988);
+  visibility: visible;
+  pointer-events: none;
+  transition:
+    transform 200ms cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 160ms ease,
+    visibility 0s linear 200ms,
+    box-shadow 200ms ease;
+}
+
+/* Reset will-change after transition ends */
+.module-switch-panel[data-motion-state="closed"],
+.module-switch-panel[data-motion-state="open"] {
+  will-change: auto;
 }
 
 @keyframes moduleSwitchSlideIn {
@@ -8583,6 +8604,8 @@ body.mobile-playground-open .mobile-backdrop {
   #mobile-sidebar-toggle {
     position: relative !important;
     z-index: 9999 !important;
+    contain: layout style paint !important;
+    isolation: isolate !important;
   }
 
   .header-mode-nav {
@@ -12384,10 +12407,19 @@ body.mobile-playground-open {
     padding: 0;
     border-right: none;
     overflow: hidden;
-    display: none;
+    /* Always rendered, visibility controls appearance */
+    opacity: 0;
+    transform: translate3d(-28px, 0, 0) scale(0.992);
+    visibility: hidden;
+    pointer-events: none;
+    transition:
+      transform 340ms cubic-bezier(0.16, 1, 0.3, 1),
+      opacity 220ms cubic-bezier(0.2, 0.8, 0.2, 1),
+      visibility 0s linear 340ms;
+    will-change: transform, opacity;
   }
 
-  /* Sidebar overlay — smooth slide-in animation */
+  /* Sidebar overlay — smooth slide-in */
   body.desktop-sidebar-expanded .app-sidebar {
     position: absolute;
     top: 0;
@@ -12401,22 +12433,18 @@ body.mobile-playground-open {
     border-right: 1px solid var(--border-color);
     display: flex;
     z-index: 860;
-    box-shadow: 6px 0 24px rgba(0, 0, 0, 0.4);
 
     opacity: 1;
-    transform: translateX(0);
+    transform: translate3d(0, 0, 0) scale(1);
+    visibility: visible;
+    pointer-events: auto;
     transition:
-      transform 280ms cubic-bezier(.16, 1, .3, 1),
-      opacity 200ms ease,
-      box-shadow 300ms ease;
-  }
-
-  .app-sidebar {
-    opacity: 0;
-    transform: translateX(-20px);
-    transition:
-      transform 220ms cubic-bezier(.16, 1, .3, 1),
-      opacity 160ms ease;
+      transform 340ms cubic-bezier(0.16, 1, 0.3, 1),
+      opacity 220ms cubic-bezier(0.2, 0.8, 0.2, 1),
+      visibility 0s linear 0s,
+      box-shadow 340ms ease;
+    box-shadow: 8px 0 28px rgba(0, 0, 0, 0.45);
+    will-change: auto;
   }
 
   body.desktop-sidebar-expanded .app-body {

@@ -204,20 +204,23 @@ if (document.readyState === 'loading') {
 
   /** Open the sidebar as desktop overlay. */
   function openDesktopSidebar() {
+    if (desktopSidebarOpen) return;
     desktopSidebarOpen = true;
     clearDesktopSidebarTimer();
     var sidebar = document.getElementById('app-sidebar');
     var edgeHandle = document.getElementById('sidebar-edge-handle');
+    if (!sidebar) return;
+    // Ensure sidebar is rendered before transition starts
     sidebar.style.display = 'flex';
     sidebar.style.flexDirection = 'column';
-    // Trigger reflow for transition to work
-    sidebar.offsetHeight;
+    sidebar.offsetHeight; // force reflow
     document.body.classList.add('desktop-sidebar-expanded');
     if (edgeHandle) edgeHandle.setAttribute('aria-expanded', 'true');
   }
 
   /** Close the sidebar desktop overlay. */
   function closeDesktopSidebar() {
+    if (!desktopSidebarOpen) return;
     desktopSidebarOpen = false;
     desktopSidebarManuallyToggled = false;
     clearDesktopSidebarTimer();
@@ -225,14 +228,27 @@ if (document.readyState === 'loading') {
     var edgeHandle = document.getElementById('sidebar-edge-handle');
     document.body.classList.remove('desktop-sidebar-expanded');
     if (edgeHandle) edgeHandle.setAttribute('aria-expanded', 'false');
-    // Let transition complete before hiding
+    // Use transitionend for clean teardown
+    function onTransitionEnd(e) {
+      if (e.propertyName !== 'transform' && e.propertyName !== 'opacity') return;
+      if (sidebar) {
+        sidebar.removeEventListener('transitionend', onTransitionEnd);
+        if (!document.body.classList.contains('desktop-sidebar-expanded')) {
+          sidebar.style.display = '';
+          sidebar.style.position = '';
+        }
+      }
+    }
+    if (sidebar) sidebar.addEventListener('transitionend', onTransitionEnd);
+    // Fallback timeout in case transitionend doesn't fire
     setTimeout(function() {
-      if (!document.body.classList.contains('desktop-sidebar-expanded')) {
+      if (sidebar && !document.body.classList.contains('desktop-sidebar-expanded')) {
+        sidebar.removeEventListener('transitionend', onTransitionEnd);
         sidebar.style.display = '';
         sidebar.style.position = '';
       }
-    }, 300);
-    setTimeout(function() { edgeHandle.focus(); }, 350);
+    }, 400);
+    setTimeout(function() { if (edgeHandle) edgeHandle.focus(); }, 380);
   }
 
   function clearDesktopSidebarTimer() {
@@ -7633,24 +7649,57 @@ function toggleModuleSwitchPanel() {
 
 function openModuleSwitchPanel() {
   if (!moduleSwitchPanel || !moduleSwitchTrigger) return;
-  moduleSwitchPanel.hidden = false;
+  // Cancel any pending close
+  moduleSwitchPanel.removeAttribute('hidden');
+  moduleSwitchPanel.setAttribute('data-motion-state', 'opening');
+  // Force reflow so browser picks up opening state
+  moduleSwitchPanel.offsetHeight;
+  moduleSwitchPanel.setAttribute('data-motion-state', 'open');
   moduleSwitchOpen = true;
-  moduleSwitchTrigger.setAttribute("aria-expanded", "true");
-  moduleSwitchTrigger.classList.add("active");
-  // Small delay then focus first option
+  moduleSwitchTrigger.setAttribute('aria-expanded', 'true');
+  moduleSwitchTrigger.classList.add('active');
+  // Cleanup after transition
+  function onOpenEnd(e) {
+    if (e.propertyName !== 'transform') return;
+    moduleSwitchPanel.removeEventListener('transitionend', onOpenEnd);
+    if (moduleSwitchPanel.getAttribute('data-motion-state') === 'open') {
+      moduleSwitchPanel.setAttribute('data-motion-state', 'open'); // reaffirm
+    }
+  }
+  moduleSwitchPanel.addEventListener('transitionend', onOpenEnd);
   requestAnimationFrame(function() {
-    var first = moduleSwitchPanel.querySelector(".module-switch-option");
+    var first = moduleSwitchPanel.querySelector('.module-switch-option');
     if (first) first.focus();
   });
 }
 
 function closeModuleSwitchPanel() {
   if (!moduleSwitchPanel || !moduleSwitchTrigger) return;
-  moduleSwitchPanel.hidden = true;
+  if (!moduleSwitchOpen) return;
+  // Set closing state
+  moduleSwitchPanel.setAttribute('data-motion-state', 'closing');
   moduleSwitchOpen = false;
-  moduleSwitchTrigger.setAttribute("aria-expanded", "false");
-  moduleSwitchTrigger.classList.remove("active");
-  moduleSwitchTrigger.focus();
+  moduleSwitchTrigger.setAttribute('aria-expanded', 'false');
+  moduleSwitchTrigger.classList.remove('active');
+  function onCloseEnd(e) {
+    if (e.propertyName !== 'opacity') return;
+    moduleSwitchPanel.removeEventListener('transitionend', onCloseEnd);
+    moduleSwitchPanel.setAttribute('data-motion-state', 'closed');
+    moduleSwitchPanel.setAttribute('hidden', ''); // fully hide for accessibility
+  }
+  moduleSwitchPanel.addEventListener('transitionend', onCloseEnd);
+  // Fallback
+  setTimeout(function() {
+    if (moduleSwitchPanel.getAttribute('data-motion-state') === 'closing') {
+      moduleSwitchPanel.removeEventListener('transitionend', onCloseEnd);
+      moduleSwitchPanel.setAttribute('data-motion-state', 'closed');
+      moduleSwitchPanel.setAttribute('hidden', '');
+    }
+  }, 280);
+  // Return focus to trigger
+  requestAnimationFrame(function() {
+    moduleSwitchTrigger.focus();
+  });
 }
 
 /* ====================================================
