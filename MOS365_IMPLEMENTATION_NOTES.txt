@@ -1,0 +1,9 @@
+MOS Excel 365 local training module
+
+Content: 5 domains, 60 skills, 80 bilingual lessons, 20 dictionary entries, 180 exercises, 30 guided practices, and 3 original scenarios with 4 variants.
+
+Guided learning is Japanese-first with Chinese support. Timed mock runs Japanese-only; review restores bilingual explanations.
+
+The browser submits only a session identifier. The local service creates and scores only its own session workbook. It does not inspect files outside the session sandbox.
+
+Validation: npm test runs the MOS content and safety verifier.

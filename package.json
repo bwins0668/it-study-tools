@@ -3,6 +3,11 @@
   "version": "2026.6.20-pc-responsive-fr-full-pack",
   "description": "Study Tools - Multi-Subject Learning Portal (SQL, Java, Python, IT Passport, SG)",
   "scripts": {
+    "pretest": "node tools/verify_mos365_content.js",
+    "test": ".\\python\\python.exe -m unittest discover -s tests -p test_mos365_service.py",
+    "test:mos-release": "node tools/verify_mos365_release_smoke.js",
+    "test:responsive-nav": "node tools/run_responsive_navigation_local.js",
+    "test:excel-com-probe": ".\\python\\python.exe tools/probe_excel_com.py",
     "dev": "npx -y live-server"
   }
 }

@@ -39,6 +39,7 @@ from study_ai import (
     provider_status,
     translate_items,
 )
+from mos365_service import MOS365Service, MOS365ServiceError
 
 # Reconfigure standard output and error to use UTF-8 to prevent UnicodeEncodeError on Windows console
 if hasattr(sys.stdout, 'reconfigure'):
@@ -50,6 +51,7 @@ if hasattr(sys.stdout, 'reconfigure'):
 
 PORT = int(sys.argv[1]) if len(sys.argv) > 1 else 8080
 LEARNING_STORE = LearningStore(os.path.join(APP_ROOT, "data", "study_ai.db"))
+MOS365_SERVICE = MOS365Service(APP_ROOT)
 
 # Known JDK bin paths to search
 KNOWN_JDK_PATHS = [
@@ -408,6 +410,14 @@ LAST_HEARTBEAT = time.time() + 10.0  # 10s grace period for startup
 class StudyHubHandler(SimpleHTTPRequestHandler):
     """Handler for IT Study Suite HTTP requests."""
     
+    def is_mos_local_request(self):
+        allowed = {f"http://127.0.0.1:{PORT}", f"http://localhost:{PORT}"}
+        origin = self.headers.get("Origin", "")
+        if origin:
+            return origin in allowed
+        host = self.headers.get("Host", "").lower()
+        return host in {f"127.0.0.1:{PORT}", f"localhost:{PORT}"}
+
     def log_message(self, format, *args):
         """Suppress default log output for cleaner terminal."""
         if args and (str(args[1]) == '200' or '/runjava' in str(args[0]) or '/heartbeat' in str(args[0])):
@@ -421,6 +431,13 @@ class StudyHubHandler(SimpleHTTPRequestHandler):
                 "success": True,
                 "data": provider_status(),
             })
+            return
+
+        if path.split('?')[0] == '/api/mos365/environment':
+            if not self.is_mos_local_request():
+                self.send_json(403, {"success": False, "error": "LOCAL_ONLY"})
+                return
+            self.send_json(200, {"success": True, "data": MOS365_SERVICE.environment_status()})
             return
 
         if path.split('?')[0] == '/api/learning/dashboard':
@@ -487,9 +504,20 @@ class StudyHubHandler(SimpleHTTPRequestHandler):
         path = unquote(self.path).split('?')[0]
 
         if path.startswith('/api/'):
+            if path.startswith('/api/mos365/') and not self.is_mos_local_request():
+                self.send_json(403, {"success": False, "error": "LOCAL_ONLY"})
+                return
             try:
                 body = self.read_json_body()
-                if path == '/api/learning/events':
+                if path == '/api/mos365/sessions':
+                    data = MOS365_SERVICE.create_session(body)
+                elif path == '/api/mos365/launch':
+                    data = MOS365_SERVICE.launch_excel(body)
+                elif path == '/api/mos365/score':
+                    data = MOS365_SERVICE.score_session(body)
+                elif path == '/api/mos365/delete-current-session-file':
+                    data = MOS365_SERVICE.delete_current_session(body)
+                elif path == '/api/learning/events':
                     data = LEARNING_STORE.record_event(body)
                 elif path == '/api/learning/import':
                     data = LEARNING_STORE.import_progress(body)
@@ -535,6 +563,8 @@ class StudyHubHandler(SimpleHTTPRequestHandler):
                 else:
                     raise ServiceError("NOT_FOUND", "未找到 API。", 404)
                 self.send_json(200, {"success": True, "data": data})
+            except MOS365ServiceError as exc:
+                self.send_json(exc.status, exc.as_dict())
             except ServiceError as exc:
                 self.send_service_error(exc)
             except json.JSONDecodeError:

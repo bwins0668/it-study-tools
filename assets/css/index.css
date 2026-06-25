@@ -11662,8 +11662,7 @@ a:focus-visible,
     top: 64px;
     left: 0;
     bottom: 0;
-    width: min(86vw, 320px);
-    max-width: 80vw;
+    width: min(86vw, 320px, 80vw);
     z-index: 860;
     background: #080d1a;
     border-right: 1px solid var(--border-color);
@@ -12127,6 +12126,9 @@ body.mobile-playground-open {
     justify-content: space-between;
     gap: 10px;
     flex: 0 0 auto;
+    position: sticky;
+    top: 0;
+    z-index: 1;
     width: 100%;
     padding: 12px;
     border-bottom: 1px solid rgba(148, 163, 184, 0.18);
