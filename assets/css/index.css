@@ -8012,7 +8012,8 @@ body.i18n-active :where(
   backdrop-filter: blur(16px);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 12px;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+  /* Static base shadow — no transition */
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
   z-index: 920;
   will-change: transform, opacity;
 
@@ -8024,8 +8025,21 @@ body.i18n-active :where(
   transition:
     transform 320ms cubic-bezier(0.16, 1, 0.3, 1),
     opacity 220ms cubic-bezier(0.2, 0.8, 0.2, 1),
-    visibility 0s linear 320ms,
-    box-shadow 320ms ease;
+    visibility 0s linear 320ms;
+}
+
+/* Shadow overlay layer — animated via opacity only (compositor-only) */
+.module-switch-panel::before {
+  content: '';
+  position: absolute;
+  inset: -20px;
+  border-radius: 16px;
+  background: transparent;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.7);
+  opacity: 0;
+  pointer-events: none;
+  z-index: -1;
+  transition: opacity 280ms ease;
 }
 
 /* Open state — driven by [data-motion-state="open"] or [data-motion-state="opening"] */
@@ -8035,12 +8049,16 @@ body.i18n-active :where(
   transform: translate3d(0, 0, 0) scale(1);
   visibility: visible;
   pointer-events: auto;
-  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.7);
   transition:
     transform 320ms cubic-bezier(0.16, 1, 0.3, 1),
     opacity 220ms cubic-bezier(0.2, 0.8, 0.2, 1),
-    visibility 0s linear 0s,
-    box-shadow 320ms ease;
+    visibility 0s linear 0s;
+}
+
+/* Show shadow layer when open */
+.module-switch-panel[data-motion-state="open"]::before,
+.module-switch-panel[data-motion-state="opening"]::before {
+  opacity: 1;
 }
 
 /* Closing state — explicit reverse */
@@ -8052,8 +8070,13 @@ body.i18n-active :where(
   transition:
     transform 200ms cubic-bezier(0.16, 1, 0.3, 1),
     opacity 160ms ease,
-    visibility 0s linear 200ms,
-    box-shadow 200ms ease;
+    visibility 0s linear 200ms;
+}
+
+/* Fade out shadow layer when closing */
+.module-switch-panel[data-motion-state="closing"]::before {
+  opacity: 0;
+  transition: opacity 160ms ease;
 }
 
 /* Reset will-change after transition ends */
@@ -12419,6 +12442,19 @@ body.mobile-playground-open {
     will-change: transform, opacity;
   }
 
+  /* Sidebar shadow layer — animated via opacity only */
+  .app-sidebar::before {
+    content: '';
+    position: absolute;
+    inset: 0 -30px 0 0;
+    background: transparent;
+    box-shadow: 8px 0 28px rgba(0, 0, 0, 0.45);
+    opacity: 0;
+    pointer-events: none;
+    z-index: -1;
+    transition: opacity 280ms ease;
+  }
+
   /* Sidebar overlay — smooth slide-in */
   body.desktop-sidebar-expanded .app-sidebar {
     position: absolute;
@@ -12441,10 +12477,15 @@ body.mobile-playground-open {
     transition:
       transform 340ms cubic-bezier(0.16, 1, 0.3, 1),
       opacity 220ms cubic-bezier(0.2, 0.8, 0.2, 1),
-      visibility 0s linear 0s,
-      box-shadow 340ms ease;
-    box-shadow: 8px 0 28px rgba(0, 0, 0, 0.45);
+      visibility 0s linear 0s;
+    /* Static base shadow — no transition */
+    box-shadow: 4px 0 16px rgba(0, 0, 0, 0.2);
     will-change: auto;
+  }
+
+  /* Show shadow layer when sidebar expanded */
+  body.desktop-sidebar-expanded .app-sidebar::before {
+    opacity: 1;
   }
 
   body.desktop-sidebar-expanded .app-body {
@@ -12514,6 +12555,15 @@ body.mobile-playground-open {
   .sub-header-bar,
   #secondary-action-row {
     display: none;
+  }
+}
+
+/* Tablet (721px-900px): hide header-mode-nav to prevent blocking mobile-playground-toggle */
+@media (min-width: 721px) and (max-width: 900px) {
+  .header-mode-nav {
+    display: none !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
   }
 }
 

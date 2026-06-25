@@ -210,12 +210,20 @@ if (document.readyState === 'loading') {
     var sidebar = document.getElementById('app-sidebar');
     var edgeHandle = document.getElementById('sidebar-edge-handle');
     if (!sidebar) return;
-    // Ensure sidebar is rendered before transition starts
+
+    // Step 1: Ensure sidebar is renderable with closed visual state
     sidebar.style.display = 'flex';
     sidebar.style.flexDirection = 'column';
-    sidebar.offsetHeight; // force reflow
-    document.body.classList.add('desktop-sidebar-expanded');
-    if (edgeHandle) edgeHandle.setAttribute('aria-expanded', 'true');
+
+    // Step 2: Force reflow to compute closed state layout
+    sidebar.offsetHeight;
+
+    // Step 3: Wait for next frame to ensure closed state is painted
+    requestAnimationFrame(function() {
+      // Step 4: Add class to trigger open animation
+      document.body.classList.add('desktop-sidebar-expanded');
+      if (edgeHandle) edgeHandle.setAttribute('aria-expanded', 'true');
+    });
   }
 
   /** Close the sidebar desktop overlay. */
@@ -226,13 +234,18 @@ if (document.readyState === 'loading') {
     clearDesktopSidebarTimer();
     var sidebar = document.getElementById('app-sidebar');
     var edgeHandle = document.getElementById('sidebar-edge-handle');
+
+    // Remove class to trigger close animation
     document.body.classList.remove('desktop-sidebar-expanded');
     if (edgeHandle) edgeHandle.setAttribute('aria-expanded', 'false');
-    // Use transitionend for clean teardown
+
+    // Clean up after transform transition completes
     function onTransitionEnd(e) {
-      if (e.propertyName !== 'transform' && e.propertyName !== 'opacity') return;
+      // Only respond to transform transition (primary motion property)
+      if (e.propertyName !== 'transform') return;
       if (sidebar) {
         sidebar.removeEventListener('transitionend', onTransitionEnd);
+        // Only clear display if still closed
         if (!document.body.classList.contains('desktop-sidebar-expanded')) {
           sidebar.style.display = '';
           sidebar.style.position = '';
@@ -240,7 +253,8 @@ if (document.readyState === 'loading') {
       }
     }
     if (sidebar) sidebar.addEventListener('transitionend', onTransitionEnd);
-    // Fallback timeout in case transitionend doesn't fire
+
+    // Fallback timeout (only if transitionend didn't fire)
     setTimeout(function() {
       if (sidebar && !document.body.classList.contains('desktop-sidebar-expanded')) {
         sidebar.removeEventListener('transitionend', onTransitionEnd);
@@ -248,6 +262,8 @@ if (document.readyState === 'loading') {
         sidebar.style.position = '';
       }
     }, 400);
+
+    // Return focus to edge handle
     setTimeout(function() { if (edgeHandle) edgeHandle.focus(); }, 380);
   }
 
@@ -7649,24 +7665,29 @@ function toggleModuleSwitchPanel() {
 
 function openModuleSwitchPanel() {
   if (!moduleSwitchPanel || !moduleSwitchTrigger) return;
-  // Cancel any pending close
+  if (moduleSwitchOpen) return;
+
+  // Remove hidden and set opening state
   moduleSwitchPanel.removeAttribute('hidden');
   moduleSwitchPanel.setAttribute('data-motion-state', 'opening');
+
   // Force reflow so browser picks up opening state
   moduleSwitchPanel.offsetHeight;
+
+  // Set open state
   moduleSwitchPanel.setAttribute('data-motion-state', 'open');
   moduleSwitchOpen = true;
   moduleSwitchTrigger.setAttribute('aria-expanded', 'true');
   moduleSwitchTrigger.classList.add('active');
-  // Cleanup after transition
+
+  // Cleanup after transition ends
   function onOpenEnd(e) {
     if (e.propertyName !== 'transform') return;
     moduleSwitchPanel.removeEventListener('transitionend', onOpenEnd);
-    if (moduleSwitchPanel.getAttribute('data-motion-state') === 'open') {
-      moduleSwitchPanel.setAttribute('data-motion-state', 'open'); // reaffirm
-    }
   }
   moduleSwitchPanel.addEventListener('transitionend', onOpenEnd);
+
+  // Focus first option after animation settles
   requestAnimationFrame(function() {
     var first = moduleSwitchPanel.querySelector('.module-switch-option');
     if (first) first.focus();
@@ -7676,26 +7697,38 @@ function openModuleSwitchPanel() {
 function closeModuleSwitchPanel() {
   if (!moduleSwitchPanel || !moduleSwitchTrigger) return;
   if (!moduleSwitchOpen) return;
-  // Set closing state
+
+  // Set closing state to trigger reverse animation
   moduleSwitchPanel.setAttribute('data-motion-state', 'closing');
   moduleSwitchOpen = false;
   moduleSwitchTrigger.setAttribute('aria-expanded', 'false');
   moduleSwitchTrigger.classList.remove('active');
+
+  // Clean up after transform transition completes
   function onCloseEnd(e) {
-    if (e.propertyName !== 'opacity') return;
+    // Only respond to transform transition (primary motion property)
+    if (e.propertyName !== 'transform') return;
     moduleSwitchPanel.removeEventListener('transitionend', onCloseEnd);
-    moduleSwitchPanel.setAttribute('data-motion-state', 'closed');
-    moduleSwitchPanel.setAttribute('hidden', ''); // fully hide for accessibility
+
+    // Only apply hidden if still in closing/closed state
+    var state = moduleSwitchPanel.getAttribute('data-motion-state');
+    if (state === 'closing' || state === 'closed') {
+      moduleSwitchPanel.setAttribute('data-motion-state', 'closed');
+      moduleSwitchPanel.setAttribute('hidden', ''); // Remove from accessibility tree
+    }
   }
   moduleSwitchPanel.addEventListener('transitionend', onCloseEnd);
-  // Fallback
+
+  // Fallback timeout (only if transitionend didn't fire)
   setTimeout(function() {
-    if (moduleSwitchPanel.getAttribute('data-motion-state') === 'closing') {
+    var state = moduleSwitchPanel.getAttribute('data-motion-state');
+    if (state === 'closing') {
       moduleSwitchPanel.removeEventListener('transitionend', onCloseEnd);
       moduleSwitchPanel.setAttribute('data-motion-state', 'closed');
       moduleSwitchPanel.setAttribute('hidden', '');
     }
-  }, 280);
+  }, 350);
+
   // Return focus to trigger
   requestAnimationFrame(function() {
     moduleSwitchTrigger.focus();

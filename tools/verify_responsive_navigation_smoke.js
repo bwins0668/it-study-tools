@@ -110,24 +110,95 @@ async function verifySidebarFlow(page, label) {
 }
 
 async function verifyPlaygroundFlow(page, label) {
-  // Pre-check: verify toggle is directly reachable via elementFromPoint
-  const hitTarget = await page.evaluate(() => {
-    const pg = document.getElementById("mobile-playground-toggle");
-    if (!pg) return null;
-    const r = pg.getBoundingClientRect();
-    const el = document.elementFromPoint(r.left + r.width/2, r.top + r.height/2);
-    let cur = el;
-    while (cur && cur !== document.body) {
-      if (cur.id === "mobile-playground-toggle") return "toggle";
-      if (cur.classList && cur.classList.contains("mobile-toggle-btn")) return "mobile-toggle-btn";
-      cur = cur.parentElement;
-    }
-    return el ? (el.tagName + (el.id ? "#" + el.id : "")) : "none";
-  });
+  // Step 1: Wait for page and toggle to be stable
+  await page.waitForTimeout(200);
 
-  // Use dispatchEvent for headless rendering resilience â€” hit-target pre-check confirms
-  // the toggle is the real interaction point regardless of Playwright's internals
-  await page.locator("#mobile-playground-toggle").dispatchEvent("click");
+  // Step 2: Verify toggle is visible and in viewport
+  const toggle = page.locator("#mobile-playground-toggle");
+  await toggle.waitFor({ state: "visible", timeout: 5000 });
+
+  const box = await toggle.boundingBox();
+  if (!box) {
+    record(`${label} playground toggle has no bounding box`, {});
+    return;
+  }
+
+  // Step 3: Continuous hit-test verification (3 frames)
+  const hitTestResults = [];
+  for (let i = 0; i < 3; i++) {
+    const hitResult = await page.evaluate(() => {
+      const pg = document.getElementById("mobile-playground-toggle");
+      if (!pg) return { success: false, reason: "element-not-found" };
+
+      const r = pg.getBoundingClientRect();
+      const centerX = r.left + r.width / 2;
+      const centerY = r.top + r.height / 2;
+
+      // Check viewport
+      if (centerX < 0 || centerY < 0 || centerX > window.innerWidth || centerY > window.innerHeight) {
+        return { success: false, reason: "outside-viewport", center: { x: centerX, y: centerY } };
+      }
+
+      // Check hit stack
+      const hitStack = document.elementsFromPoint(centerX, centerY);
+      const topElement = hitStack[0];
+
+      // Walk up to find if toggle or its children are the hit target
+      let cur = topElement;
+      let foundToggle = false;
+      while (cur && cur !== document.body) {
+        if (cur.id === "mobile-playground-toggle") {
+          foundToggle = true;
+          break;
+        }
+        cur = cur.parentElement;
+      }
+
+      if (foundToggle) {
+        return { success: true, topElement: topElement.tagName + (topElement.id ? "#" + topElement.id : "") };
+      }
+
+      // Check for blocking layers
+      const blockingLayers = [];
+      for (const el of hitStack) {
+        if (el.id === "mobile-playground-toggle") break;
+        const style = window.getComputedStyle(el);
+        const hasPointerEvents = style.pointerEvents !== "none";
+        const isVisible = style.visibility !== "hidden" && style.display !== "none";
+        if (hasPointerEvents && isVisible) {
+          blockingLayers.push(el.id || el.className || el.tagName);
+        }
+      }
+
+      return {
+        success: false,
+        reason: "blocked",
+        topElement: topElement.tagName + (topElement.id ? "#" + topElement.id : ""),
+        blockingLayers: blockingLayers.slice(0, 3)
+      };
+    });
+
+    hitTestResults.push(hitResult);
+    if (i < 2) await page.waitForTimeout(50);
+  }
+
+  // Verify all 3 frames have successful hit-test
+  const allFramesPass = hitTestResults.every(r => r.success);
+  if (!allFramesPass) {
+    record(`${label} playground toggle hit-test failed`, { hitTestResults });
+    return;
+  }
+
+  // Step 4: Use trial click to verify Playwright can click without issues
+  try {
+    await toggle.click({ trial: true, timeout: 3000 });
+  } catch (e) {
+    record(`${label} playground toggle trial click failed`, { error: e.message, hitTestResults });
+    return;
+  }
+
+  // Step 5: Real click (no force, no dispatchEvent)
+  await toggle.click();
   await page.waitForTimeout(320);
   await assertState(page, `${label} playground opens with aria`, (m) =>
     m.appPresent && m.playgroundOpen && !m.sidebarOpen && m.playgroundExpanded === "true"
@@ -144,7 +215,8 @@ async function verifyPlaygroundFlow(page, label) {
     record(`${label} missing playground close button`, await pageMetrics(page));
   }
 
-  await page.locator("#mobile-playground-toggle").dispatchEvent("click");
+  // Second click - also use real click
+  await toggle.click();
   await page.waitForTimeout(250);
   await page.goBack({ waitUntil: "domcontentloaded", timeout: 2000 }).catch(() => null);
   await page.waitForTimeout(350);
@@ -224,7 +296,7 @@ async function verifyCloseButtonSticky(page, label, viewport) {
     return;
   }
 
-  // Initial bounding box before scroll â€” should be fully in viewport
+  // Initial bounding box before scroll â€?should be fully in viewport
   const initialBox = await closeBtn.first().boundingBox();
   if (!initialBox) {
     record(`${label} sticky: no bounding box initially`, {});
@@ -256,7 +328,7 @@ async function verifyCloseButtonSticky(page, label, viewport) {
     });
   }
 
-  // Click close button (no force:true) â€” must work without positional override
+  // Click close button (no force:true) â€?must work without positional override
   await closeBtn.first().click();
   await page.waitForTimeout(250);
 
@@ -400,10 +472,10 @@ async function verifyDesktopRegression(page, label) {
 }
 
 async function verifyDesktopEdgeHandle(page, label) {
-  // Edge handle hover â†’ sidebar expands as overlay
+  // Edge handle hover â†?sidebar expands as overlay
   // Use programmatic events to avoid Playwright hit-testing conflicts with collapsed sidebar
 
-  // 1. Dispatch mouseenter on edge handle â†’ should expand sidebar
+  // 1. Dispatch mouseenter on edge handle â†?should expand sidebar
   await page.evaluate(() => {
     const eh = document.getElementById('sidebar-edge-handle');
     if (eh) {
@@ -414,14 +486,14 @@ async function verifyDesktopEdgeHandle(page, label) {
   const expanded = await page.evaluate(() => document.body.classList.contains("desktop-sidebar-expanded"));
   if (!expanded) record(`${label} edge: mouseenter did not expand sidebar`, {});
 
-  // 2. Sidebar is overlay â€” content should still fill the app-body width
+  // 2. Sidebar is overlay â€?content should still fill the app-body width
   const contentWidthExpanded = await page.evaluate(() => {
     const body = document.getElementById("main-app-body");
     return body ? body.offsetWidth : 0;
   });
   if (contentWidthExpanded < 400) record(`${label} edge: content collapsed when sidebar expands`, { contentWidthExpanded });
 
-  // 3. Scroll within sidebar â†’ sidebar stays open
+  // 3. Scroll within sidebar â†?sidebar stays open
   const sidebar = page.locator("#app-sidebar");
   if (expanded) {
     await sidebar.evaluate(el => { el.scrollTop = el.scrollHeight; });
@@ -471,6 +543,125 @@ async function verifyDesktopEdgeHandle(page, label) {
   await page.waitForTimeout(300);
 }
 
+async function verifyModuleSwitchMotion(page, label) {
+  // Verify module switch panel has real intermediate frames during animation
+  const trigger = page.locator("#module-switch-trigger");
+  if (!await trigger.count()) return;
+
+  // Click to open
+  await trigger.click();
+  await page.waitForTimeout(50);
+
+  // Sample animation at multiple points
+  const samples = [];
+  for (const delay of [0, 80, 180, 300]) {
+    await page.waitForTimeout(delay === 0 ? 0 : delay - (samples.length > 0 ? samples[samples.length - 1].delay : 0));
+    const state = await page.evaluate(() => {
+      const panel = document.querySelector(".module-switch-panel");
+      if (!panel) return null;
+      const style = window.getComputedStyle(panel);
+      return {
+        opacity: parseFloat(style.opacity),
+        transform: style.transform,
+        visibility: style.visibility,
+        motionState: panel.getAttribute("data-motion-state")
+      };
+    });
+    samples.push({ delay, state });
+  }
+
+  // Verify intermediate frames exist
+  const hasIntermediateFrames = samples.some((s, i) => {
+    if (i === 0 || i === samples.length - 1) return false;
+    return s.state && s.state.opacity > 0 && s.state.opacity < 1;
+  });
+
+  if (!hasIntermediateFrames) {
+    record(`${label} module-switch: no intermediate frames detected`, { samples });
+  }
+
+  // Close panel
+  const closeBtn = page.locator(".module-switch-close");
+  if (await closeBtn.count()) {
+    await closeBtn.click();
+    await page.waitForTimeout(350);
+  }
+
+  // Verify panel is fully hidden after close
+  const closedState = await page.evaluate(() => {
+    const panel = document.querySelector(".module-switch-panel");
+    if (!panel) return null;
+    return {
+      hidden: panel.hidden,
+      motionState: panel.getAttribute("data-motion-state"),
+      computedVisibility: window.getComputedStyle(panel).visibility
+    };
+  });
+
+  if (!closedState || !closedState.hidden) {
+    record(`${label} module-switch: not hidden after close`, { closedState });
+  }
+}
+
+async function verifySidebarOverlayMotion(page, label) {
+  // Verify sidebar overlay has real transform animation
+  const edgeHandle = page.locator("#sidebar-edge-handle");
+  if (!await edgeHandle.count()) return;
+
+  // Trigger open via mouseenter
+  await page.evaluate(() => {
+    const eh = document.getElementById('sidebar-edge-handle');
+    if (eh) eh.dispatchEvent(new MouseEvent('mouseenter', { bubbles: true }));
+  });
+
+  // Sample animation
+  const samples = [];
+  for (const delay of [0, 100, 200, 350]) {
+    await page.waitForTimeout(delay === 0 ? 0 : delay - (samples.length > 0 ? samples[samples.length - 1].delay : 0));
+    const state = await page.evaluate(() => {
+      const sidebar = document.getElementById("app-sidebar");
+      if (!sidebar) return null;
+      const style = window.getComputedStyle(sidebar);
+      return {
+        opacity: parseFloat(style.opacity),
+        transform: style.transform,
+        visibility: style.visibility
+      };
+    });
+    samples.push({ delay, state });
+  }
+
+  // Verify intermediate frames with transform changes
+  const hasTransformMotion = samples.some((s, i) => {
+    if (i === 0 || !s.state) return false;
+    const prev = samples[i - 1].state;
+    return prev && s.state.transform !== prev.transform;
+  });
+
+  if (!hasTransformMotion) {
+    record(`${label} sidebar-overlay: no transform motion detected`, { samples });
+  }
+
+  // Verify shadow layer exists and is animated
+  const shadowState = await page.evaluate(() => {
+    const sidebar = document.getElementById("app-sidebar");
+    if (!sidebar) return null;
+    const beforeStyle = window.getComputedStyle(sidebar, "::before");
+    return {
+      hasBefore: beforeStyle.content !== "none",
+      opacity: parseFloat(beforeStyle.opacity)
+    };
+  });
+
+  if (!shadowState || !shadowState.hasBefore) {
+    record(`${label} sidebar-overlay: shadow layer not found`, { shadowState });
+  }
+
+  // Close sidebar
+  await page.evaluate(() => { if (window.closeDesktopSidebar) window.closeDesktopSidebar(); });
+  await page.waitForTimeout(400);
+}
+
 async function run() {
   const browser = await chromium.launch({ headless: true });
   for (const viewport of REQUIRED_VIEWPORTS) {
@@ -513,10 +704,13 @@ async function run() {
       }
     }
 
-    // Desktop regression â€” sidebar in-flow, no sticky leakage, toggle hidden
+    // Desktop regression â€?sidebar in-flow, no sticky leakage, toggle hidden
     if (viewport.width >= 1280) {
       await verifyDesktopRegression(page, label);
       await verifyDesktopEdgeHandle(page, label);
+      // Motion verification for desktop
+      await verifyModuleSwitchMotion(page, label);
+      await verifySidebarOverlayMotion(page, label);
     }
 
     if ([320, 390, 768, 1024, 1440].includes(viewport.width)) {
