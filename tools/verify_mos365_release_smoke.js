@@ -774,7 +774,7 @@ async function main() {
     // collect only errors caused by MOS drawer/module interaction.
     report.consoleErrors = [];
 
-    await page.locator('#module-switch-trigger').click();
+    await page.locator('#header-brand-trigger').click();
     await page.waitForFunction(() => !document.getElementById('module-switch-panel').hidden);
     const desktopDrawer = await page.evaluate(() => {
       const panel = document.getElementById('module-switch-panel');
@@ -815,7 +815,7 @@ async function main() {
     await page.waitForFunction(() => !document.getElementById('mos365-shell').classList.contains('is-open'));
 
     await page.setViewportSize({ width: 320, height: 568 });
-    await page.locator('#module-switch-trigger').click();
+    await page.locator('#header-brand-trigger').click();
     await page.waitForFunction(() => !document.getElementById('module-switch-panel').hidden);
     const narrowDrawer = await page.evaluate(() => {
       const panel = document.getElementById('module-switch-panel');
@@ -842,7 +842,7 @@ async function main() {
     await page.locator('.module-switch-close').click();
 
     await page.setViewportSize({ width: 1440, height: 900 });
-    await page.locator('#module-switch-trigger').click();
+    await page.locator('#header-brand-trigger').click();
     await page.locator('#module-switch-option-mos365').click();
     await page.waitForSelector('#mos365-shell.is-open');
     const environmentNetwork = page.waitForResponse((response) => response.url().endsWith('/api/mos365/environment') && response.request().method() === 'GET');

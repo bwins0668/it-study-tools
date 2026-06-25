@@ -110,6 +110,22 @@ async function verifySidebarFlow(page, label) {
 }
 
 async function verifyPlaygroundFlow(page, label) {
+  // Pre-check: verify toggle is directly reachable via elementFromPoint
+  const hitTarget = await page.evaluate(() => {
+    const pg = document.getElementById("mobile-playground-toggle");
+    if (!pg) return null;
+    const r = pg.getBoundingClientRect();
+    const el = document.elementFromPoint(r.left + r.width/2, r.top + r.height/2);
+    // Walk up to find if toggle or its children are the hit target
+    let cur = el;
+    while (cur && cur !== document.body) {
+      if (cur.id === "mobile-playground-toggle") return "toggle";
+      if (cur.classList && cur.classList.contains("mobile-toggle-btn")) return "mobile-toggle-btn";
+      cur = cur.parentElement;
+    }
+    return el ? (el.tagName + (el.id ? "#" + el.id : "")) : "none";
+  });
+
   await page.click("#mobile-playground-toggle");
   await page.waitForTimeout(320);
   await assertState(page, `${label} playground opens with aria`, (m) =>

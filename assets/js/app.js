@@ -135,50 +135,64 @@ if (document.readyState === 'loading') {
 (function() {
   var DESKTOP_BREAKPOINT = 720;
   var SIDEBAR_CLOSE_DELAY_MS = 300;
+  var MODULE_PANEL_HOVER_DELAY_MS = 380;
   var desktopSidebarOpen = false;
   var desktopSidebarCloseTimer = null;
   var desktopSidebarManuallyToggled = false;
+  var modulePanelCloseTimer = null;
+  var modulePanelHoverOpenTimer = null;
 
   /** Show sidebar edge handle and manage desktop overlays. */
   function initDesktopWorkspace() {
     var isDesktop = window.matchMedia('(min-width: ' + (DESKTOP_BREAKPOINT + 1) + 'px)').matches;
     var edgeHandle = document.getElementById('sidebar-edge-handle');
-    var headerLogo = document.querySelector('.header-logo');
-    var headerModeNav = document.getElementById('header-mode-nav');
     var sidebar = document.getElementById('app-sidebar');
 
-    if (!edgeHandle || !headerLogo || !headerModeNav) return;
+    if (!edgeHandle) return;
 
     if (isDesktop) {
-      // Show edge handle
       edgeHandle.style.display = 'flex';
-      // Compact brand
-      headerLogo.classList.add('header-logo--compact');
-      // Show header mode nav, hide sub-header
-      headerModeNav.style.display = 'flex';
       hideAllSubHeaderBars();
-      // Ensure sidebar is in static (non-overlay) mode unless manually opened
+      ensureHeaderModeNav();
       if (!desktopSidebarOpen) {
         document.body.classList.remove('desktop-sidebar-expanded');
         sidebar.style.position = '';
-        sidebar.style.width = '';
-        sidebar.style.transform = '';
       }
       populateHeaderModeNav();
     } else {
-      // Mobile/tablet: revert all desktop changes
       edgeHandle.style.display = 'none';
       edgeHandle.setAttribute('aria-expanded', 'false');
-      headerLogo.classList.remove('header-logo--compact');
-      headerModeNav.style.display = 'none';
       document.body.classList.remove('desktop-sidebar-expanded');
       desktopSidebarOpen = false;
       clearDesktopSidebarTimer();
-      // Restore sidebar to default static mode
       sidebar.style.position = '';
-      sidebar.style.width = '';
-      sidebar.style.transform = '';
+      hideAllSubHeaderBars();
+      // Aggressively remove any nav that might have been created
+      var nav = document.getElementById('header-mode-nav');
+      if (nav && nav.parentNode) nav.parentNode.removeChild(nav);
     }
+    initBrandHoverIntent();
+  }
+
+  function ensureHeaderModeNav() {
+    var nav = document.getElementById('header-mode-nav');
+    if (nav) return;
+    nav = document.createElement('nav');
+    nav.id = 'header-mode-nav';
+    nav.className = 'header-mode-nav';
+    nav.setAttribute('aria-label', '学习模式');
+    nav.setAttribute('data-i18n-aria-label', 'subnav.ariaLabel');
+    var header = document.querySelector('.app-header');
+    // Insert after brand wrapper, before header-challenge
+    var brandWrapper = document.getElementById('header-brand-wrapper');
+    if (brandWrapper && header) {
+      brandWrapper.insertAdjacentElement('afterend', nav);
+    }
+  }
+
+  function removeHeaderModeNav() {
+    var nav = document.getElementById('header-mode-nav');
+    if (nav) nav.remove();
   }
 
   function hideAllSubHeaderBars() {
@@ -194,13 +208,12 @@ if (document.readyState === 'loading') {
     clearDesktopSidebarTimer();
     var sidebar = document.getElementById('app-sidebar');
     var edgeHandle = document.getElementById('sidebar-edge-handle');
+    sidebar.style.display = 'flex';
+    sidebar.style.flexDirection = 'column';
+    // Trigger reflow for transition to work
+    sidebar.offsetHeight;
     document.body.classList.add('desktop-sidebar-expanded');
     if (edgeHandle) edgeHandle.setAttribute('aria-expanded', 'true');
-    if (sidebar) {
-      sidebar.style.overflowY = 'auto';
-      sidebar.style.display = 'flex';
-      sidebar.style.flexDirection = 'column';
-    }
   }
 
   /** Close the sidebar desktop overlay. */
@@ -211,18 +224,15 @@ if (document.readyState === 'loading') {
     var sidebar = document.getElementById('app-sidebar');
     var edgeHandle = document.getElementById('sidebar-edge-handle');
     document.body.classList.remove('desktop-sidebar-expanded');
-    if (edgeHandle) {
-      edgeHandle.setAttribute('aria-expanded', 'false');
-      edgeHandle.focus();
-    }
-    if (sidebar) {
-      sidebar.style.overflowY = '';
-      sidebar.style.display = '';
-      sidebar.style.flexDirection = '';
-      sidebar.style.position = '';
-      sidebar.style.width = '';
-      sidebar.style.transform = '';
-    }
+    if (edgeHandle) edgeHandle.setAttribute('aria-expanded', 'false');
+    // Let transition complete before hiding
+    setTimeout(function() {
+      if (!document.body.classList.contains('desktop-sidebar-expanded')) {
+        sidebar.style.display = '';
+        sidebar.style.position = '';
+      }
+    }, 300);
+    setTimeout(function() { edgeHandle.focus(); }, 350);
   }
 
   function clearDesktopSidebarTimer() {
@@ -248,6 +258,14 @@ if (document.readyState === 'loading') {
   function populateHeaderModeNav() {
     var nav = document.getElementById('header-mode-nav');
     if (!nav) return;
+
+    var onDesktop = window.matchMedia('(min-width: 721px)').matches && window.innerWidth > 720;
+    if (!onDesktop) {
+      // Safety: ensure no nav exists on mobile
+      if (nav.parentNode) nav.parentNode.removeChild(nav);
+      return;
+    }
+
     nav.innerHTML = '';
 
     var subject = window.currentSubject || 'sql';
@@ -277,8 +295,18 @@ if (document.readyState === 'loading') {
       nav.appendChild(btn);
     }
 
-    // Show nav only when content exists
-    nav.style.display = tabs.length ? 'flex' : 'none';
+    // Show nav only when content exists AND on desktop
+    var onDesktop = window.matchMedia('(min-width: 721px)').matches;
+    if (tabs.length && onDesktop) {
+      nav.style.display = 'flex';
+      nav.style.visibility = 'visible';
+      nav.style.position = '';
+      nav.style.left = '';
+      nav.style.transform = '';
+    } else {
+      nav.style.display = 'none';
+      nav.style.visibility = 'hidden';
+    }
   }
 
   // ===== Sidebar Edge Handle Event Bindings =====
@@ -383,18 +411,63 @@ if (document.readyState === 'loading') {
     });
   }
 
-  // ===== Brand Compact Interaction =====
-  function bindBrandCompactInteraction() {
-    var logo = document.querySelector('.header-logo');
-    if (!logo) return;
-    // Click on compact brand → expands to full, clicking outside collapses back
-    document.addEventListener('click', function(e) {
-      if (!logo.classList.contains('header-logo--compact')) return;
-      if (logo.contains(e.target)) return; // clicking inside brand is fine
-      // Click outside → collapse back
-      logo.style.pointerEvents = '';
+  // ===== Brand Hover Intent: open module panel on hover =====
+  function initBrandHoverIntent() {
+    var wrapper = document.getElementById('header-brand-wrapper');
+    var trigger = document.getElementById('header-brand-trigger');
+    var panel = document.getElementById('module-switch-panel');
+    if (!wrapper || !trigger || !panel) return;
+
+    function openPanel() {
+      clearTimeout(modulePanelCloseTimer);
+      clearTimeout(modulePanelHoverOpenTimer);
+      modulePanelHoverOpenTimer = setTimeout(function() {
+        if (panel.hidden) {
+          openModuleSwitchPanel();
+        }
+      }, 100);
+    }
+
+    function closePanel() {
+      clearTimeout(modulePanelHoverOpenTimer);
+      clearTimeout(modulePanelCloseTimer);
+      modulePanelCloseTimer = setTimeout(function() {
+        if (!wrapper.matches(':hover') && !panel.matches(':hover')) {
+          closeModuleSwitchPanel();
+        }
+      }, MODULE_PANEL_HOVER_DELAY_MS);
+    }
+
+    wrapper.addEventListener('mouseenter', openPanel);
+    wrapper.addEventListener('mouseleave', function() {
+      clearTimeout(modulePanelHoverOpenTimer);
+      modulePanelCloseTimer = setTimeout(function() {
+        if (!wrapper.matches(':hover') && !panel.matches(':hover')) {
+          closeModuleSwitchPanel();
+        }
+      }, MODULE_PANEL_HOVER_DELAY_MS);
+    });
+    panel.addEventListener('mouseenter', function() {
+      clearTimeout(modulePanelCloseTimer);
+      clearTimeout(modulePanelHoverOpenTimer);
+    });
+    panel.addEventListener('mouseleave', closePanel);
+    trigger.addEventListener('click', function(e) {
+      if (isDesktopViewport()) toggleModuleSwitchPanel();
+    });
+    trigger.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        toggleModuleSwitchPanel();
+      }
+      if (e.key === 'Escape' && !panel.hidden) {
+        closeModuleSwitchPanel();
+        trigger.focus();
+      }
     });
   }
+
+  // ===== REMOVED: old bindBrandCompactInteraction — full brand always visible =====
 
   // ===== Expose globally =====
   window.initDesktopWorkspace = initDesktopWorkspace;
@@ -418,12 +491,10 @@ if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', function() {
       initDesktopWorkspace();
       bindDesktopInteractions();
-      bindBrandCompactInteraction();
     });
   } else {
     initDesktopWorkspace();
     bindDesktopInteractions();
-    bindBrandCompactInteraction();
   }
 
   // Hook populateHeaderModeNav into existing switchSubject
@@ -542,7 +613,7 @@ const sqlEngine = new MockSQLEngine();
 document.addEventListener("DOMContentLoaded", () => {
   logoIcon = document.getElementById("main-logo-icon");
   mainTitle = document.getElementById("main-title-text");
-  moduleSwitchTrigger = document.getElementById("module-switch-trigger");
+  moduleSwitchTrigger = document.getElementById("header-brand-trigger");
   moduleSwitchPanel = document.getElementById("module-switch-panel");
   maximizeAppWindow();
   loadCompletedProgress();

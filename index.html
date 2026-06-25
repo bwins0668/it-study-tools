@@ -25,24 +25,91 @@
 
     <!-- Header Panel -->
     <header class="app-header">
-      <div class="header-logo">
-        <button id="mobile-sidebar-toggle" class="mobile-toggle-btn" onclick="toggleMobileSidebar()" title="目录" data-i18n-title="sidebar.unitList" aria-label="目录" data-i18n-aria-label="sidebar.unitList" aria-controls="app-sidebar" aria-expanded="false">
-          <i class="fa-solid fa-bars"></i>
-        </button>
-        <button class="module-switch-trigger" id="module-switch-trigger" type="button"
-          aria-expanded="false" aria-controls="module-switch-panel"
+      <!-- Brand area with module dropdown -->
+      <div class="header-brand-wrapper" id="header-brand-wrapper">
+        <div class="header-brand-trigger" id="header-brand-trigger" tabindex="0" role="button"
+          aria-expanded="false" aria-haspopup="true" aria-controls="module-switch-panel"
           data-i18n-aria-label="moduleSwitch.triggerLabel">
+          <button id="mobile-sidebar-toggle" class="mobile-toggle-btn" onclick="toggleMobileSidebar(); event.stopPropagation();" title="目录" data-i18n-title="sidebar.unitList" aria-label="目录" data-i18n-aria-label="sidebar.unitList" aria-controls="app-sidebar" aria-expanded="false">
+            <i class="fa-solid fa-bars"></i>
+          </button>
           <i class="fa-solid fa-graduation-cap logo-icon" id="main-logo-icon"></i>
           <div class="logo-text">
             <h1 id="main-title-text">Study Tools</h1>
             <span><span data-i18n="common.subtitle">配套备考平台</span> &nbsp;•&nbsp; By: Coco</span>
           </div>
           <span class="brand-caret" aria-hidden="true">▾</span>
-        </button>
+        </div>
+        <!-- Module Switch Panel — anchored below brand card -->
+        <div class="module-switch-panel" id="module-switch-panel" hidden role="listbox" aria-modal="false" data-i18n-aria-label="moduleSwitch.title">
+          <div class="module-switch-panel__header">
+            <strong data-i18n="moduleSwitch.title">选择学习版块</strong>
+            <button type="button" class="module-switch-close" aria-label="Close" data-i18n-aria-label="moduleSwitch.close">&times;</button>
+          </div>
+          <div class="module-switch-panel__body">
+
+
+            <button class="module-switch-option active" data-module="sql" onclick="switchSubject('sql')">
+              <span class="module-switch-option__icon"><i class="fa-solid fa-database"></i></span>
+              <span class="module-switch-option__text">
+                <strong data-i18n="nav.sql">SQL 学习</strong>
+                <span data-i18n="moduleDesc.sql">数据库基础、查询、练习与沙盒</span>
+              </span>
+            </button>
+
+            <button class="module-switch-option" data-module="sg" onclick="switchSubject('sg')">
+              <span class="module-switch-option__icon"><i class="fa-solid fa-shield-halved"></i></span>
+              <span class="module-switch-option__text">
+                <strong data-i18n="nav.sg">SG 备考</strong>
+                <span data-i18n="moduleDesc.sg">情報セキュリティマネジメント試験対策</span>
+              </span>
+            </button>
+
+            <button class="module-switch-option" data-module="itpass" onclick="switchSubject('itpass')">
+              <span class="module-switch-option__icon"><i class="fa-solid fa-graduation-cap"></i></span>
+              <span class="module-switch-option__text">
+                <strong data-i18n="nav.itpass">IT Passport 备考</strong>
+                <span data-i18n="moduleDesc.itpass">IT Passport 基础与真题练习</span>
+              </span>
+            </button>
+
+            <button class="module-switch-option" data-module="typing" onclick="switchSubject('typing')">
+              <span class="module-switch-option__icon"><i class="fa-solid fa-keyboard"></i></span>
+              <span class="module-switch-option__text">
+                <strong data-i18n="nav.typing">日本語タイピング</strong>
+                <span data-i18n="moduleDesc.typing">日本语输入与打字练习</span>
+              </span>
+            </button>
+
+            <button class="module-switch-option" data-module="coding-typing" onclick="switchSubject('coding-typing')">
+              <span class="module-switch-option__icon"><i class="fa-solid fa-laptop-code"></i></span>
+              <span class="module-switch-option__text">
+                <strong data-i18n="nav.codingTyping">编程打字</strong>
+                <span data-i18n="moduleDesc.codingTyping">代码输入与语法练习</span>
+              </span>
+            </button>
+
+            <button class="module-switch-option" data-module="java" onclick="switchSubject('java')">
+              <span class="module-switch-option__icon"><i class="fa-brands fa-java"></i></span>
+              <span class="module-switch-option__text">
+                <strong data-i18n="nav.java">Java 学习</strong>
+                <span data-i18n="moduleDesc.java">Java 基础、语法与练习</span>
+              </span>
+            </button>
+
+            <button class="module-switch-option" data-module="python" onclick="switchSubject('python')">
+              <span class="module-switch-option__icon"><i class="fa-brands fa-python"></i></span>
+              <span class="module-switch-option__text">
+                <strong data-i18n="nav.python">Python 学习</strong>
+                <span data-i18n="moduleDesc.python">Python 基础、语法与练习</span>
+              </span>
+            </button>
+
+          </div>
+        </div>
       </div>
 
-      <!-- Header Mode Navigation (Textbook/Practice vs Exam — moved from sub-header) -->
-      <nav class="header-mode-nav" id="header-mode-nav" aria-label="学习模式" data-i18n-aria-label="subnav.ariaLabel" style="display:none"></nav>
+      <!-- Header Mode Navigation — created dynamically by JS on desktop -->
 
       <!-- Header Challenge Widget (SQL only) -->
       <div class="header-challenge" id="header-challenge">
@@ -172,65 +239,6 @@
       </div>
     </aside>
 
-    <!-- Module Switch Panel -->
-    <div class="module-switch-panel" id="module-switch-panel" hidden role="dialog" aria-modal="true" data-i18n-aria-label="moduleSwitch.title">
-      <div class="module-switch-panel__header">
-        <strong data-i18n="moduleSwitch.title">选择学习版块</strong>
-        <button type="button" class="module-switch-close" aria-label="Close" data-i18n-aria-label="moduleSwitch.close">&times;</button>
-      </div>
-      <div class="module-switch-panel__body">
-        <button class="module-switch-option active" data-module="sql" onclick="switchSubject('sql')">
-          <span class="module-switch-option__icon"><i class="fa-solid fa-database"></i></span>
-          <span class="module-switch-option__text">
-            <strong data-i18n="nav.sql">SQL 学习</strong>
-            <span data-i18n="moduleDesc.sql">数据库基础、查询、练习与沙盒</span>
-          </span>
-        </button>
-        <button class="module-switch-option" data-module="sg" onclick="switchSubject('sg')">
-          <span class="module-switch-option__icon"><i class="fa-solid fa-shield-halved"></i></span>
-          <span class="module-switch-option__text">
-            <strong data-i18n="nav.sg">SG 备考</strong>
-            <span data-i18n="moduleDesc.sg">情報セキュリティマネジメント試験対策</span>
-          </span>
-        </button>
-        <button class="module-switch-option" data-module="itpass" onclick="switchSubject('itpass')">
-          <span class="module-switch-option__icon"><i class="fa-solid fa-graduation-cap"></i></span>
-          <span class="module-switch-option__text">
-            <strong data-i18n="nav.itpass">IT Passport 备考</strong>
-            <span data-i18n="moduleDesc.itpass">IT Passport 基础与真题练习</span>
-          </span>
-        </button>
-        <button class="module-switch-option" data-module="typing" onclick="switchSubject('typing')">
-          <span class="module-switch-option__icon"><i class="fa-solid fa-keyboard"></i></span>
-          <span class="module-switch-option__text">
-            <strong data-i18n="nav.typing">日本語タイピング</strong>
-            <span data-i18n="moduleDesc.typing">日本语输入与打字练习</span>
-          </span>
-        </button>
-        <button class="module-switch-option" data-module="coding-typing" onclick="switchSubject('coding-typing')">
-          <span class="module-switch-option__icon"><i class="fa-solid fa-laptop-code"></i></span>
-          <span class="module-switch-option__text">
-            <strong data-i18n="nav.codingTyping">编程打字</strong>
-            <span data-i18n="moduleDesc.codingTyping">代码输入与语法练习</span>
-          </span>
-        </button>
-        <button class="module-switch-option" data-module="java" onclick="switchSubject('java')">
-          <span class="module-switch-option__icon"><i class="fa-brands fa-java"></i></span>
-          <span class="module-switch-option__text">
-            <strong data-i18n="nav.java">Java 学习</strong>
-            <span data-i18n="moduleDesc.java">Java 基础、语法与练习</span>
-          </span>
-        </button>
-        <button class="module-switch-option" data-module="python" onclick="switchSubject('python')">
-          <span class="module-switch-option__icon"><i class="fa-brands fa-python"></i></span>
-          <span class="module-switch-option__text">
-            <strong data-i18n="nav.python">Python 学习</strong>
-            <span data-i18n="moduleDesc.python">Python 基础、语法与练习</span>
-          </span>
-        </button>
-      </div>
-    </div>
-
     <!-- Sub-Header Bar (Visible in SQL mode to toggle Textbook vs Mock Exam) -->
     <div class="sub-header-bar" id="sql-sub-header" style="display: none;">
       <div class="sub-header-tabs">
@@ -304,7 +312,7 @@
         aria-label="课程目录" data-i18n-aria-label="sidebar.unitList"
         aria-expanded="false" aria-controls="app-sidebar"
         title="课程目录">
-        <span class="sidebar-edge-label"><i class="fa-solid fa-chevron-right"></i></span>
+        <span class="sidebar-edge-label"><span class="sidebar-edge-text" data-i18n="sidebar.unitList">目录</span><i class="fa-solid fa-chevron-right"></i></span>
       </div>
 
       <!-- Sidebar: Lessons List -->
@@ -345,7 +353,10 @@
         </div>
       </aside>
 
-      <main class="lesson-content" data-i18n-policy="source-ja">
+      <!-- Workspace Shell: centered symmetric two-column grid -->
+      <div class="workspace-shell">
+        <div class="workspace-grid">
+          <main class="lesson-content" data-i18n-policy="source-ja">
 
         <div class="content-card">
           <!-- Lesson Header -->
@@ -1071,6 +1082,9 @@
         <div class="maximize-overlay" id="maximize-overlay" onclick="toggleMaximizeOutput()" title="restore" data-i18n-title="common.minimize"></div>
 
       </section>
+
+        </div><!-- /workspace-grid -->
+      </div><!-- /workspace-shell -->
 
     </div>
 
