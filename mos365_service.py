@@ -124,6 +124,25 @@ SCORING_SPECS: dict[str, dict[str, Any]] = {
             }
         }],
         "resultPolicy": {"mode": "all_or_nothing", "total": 1}
+    },
+    "R17_STATIC_FORMULA_TEXT_DEMO": {
+        "specVersion": 1,
+        "taskId": "R17_STATIC_FORMULA_TEXT_DEMO",
+        "assertions": [{
+            "id": "calc-c2-formula",
+            "type": "cell_formula_equals",
+            "sheetName": "計算",
+            "cellRef": "C2",
+            "expectedFormula": "=SUM(A2:B2)",
+            "weight": 1,
+            "comparison": "strict_text_equals",
+            "feedback": {
+                "correct": {"ja": "「計算」シートの C2 セルに =SUM(A2:B2) が入力されています。", "zh": "「計算」工作表的 C2 单元格已输入 =SUM(A2:B2)。"},
+                "incorrect": {"ja": "「計算」シートの C2 セルに =SUM(A2:B2) と入力してください。", "zh": "请在「計算」工作表的 C2 单元格输入 =SUM(A2:B2)。"},
+                "indeterminate": {"ja": "対象のセルを安全に確認できませんでした。", "zh": "无法安全确认目标单元格。"}
+            }
+        }],
+        "resultPolicy": {"mode": "all_or_nothing", "total": 1}
     }
 }
 
@@ -273,6 +292,8 @@ class MOS365Service:
             return self._create_r15_session()
         if mode == "r16_static_training":
             return self._create_r16_session()
+        if mode == "r17_static_training":
+            return self._create_r17_session()
 
         scenario = str(payload.get("scenarioId", "retail"))
         variant = payload.get("variant", 1)
@@ -824,7 +845,7 @@ class MOS365Service:
             mf_path.write_text(json.dumps(manifest, ensure_ascii=False, indent=2), encoding="utf-8")
         result = {"ok": True, "session": {"sessionId": session_id, "state": "attached", "excelPid": raw_pid, "createdAt": manifest.get("createdAt", "")}}
         # For R8 sessions, include training task
-        STATIC_MODES = {"r8_static_training", "r11_static_training", "r12_static_training", "r15_static_training", "r16_static_training"}
+        STATIC_MODES = {"r8_static_training", "r11_static_training", "r12_static_training", "r15_static_training", "r16_static_training", "r17_static_training"}
         training_mode = manifest.get("trainingMode", "")
         if training_mode in STATIC_MODES:
             task = manifest.get("staticTask", {})
@@ -887,7 +908,7 @@ class MOS365Service:
             raise MOS365ServiceError("SESSION_NOT_FOUND", "セッションが見つかりません。", "未找到会话。", 404)
         manifest = json.loads(paths.manifest.read_text(encoding="utf-8"))
         mode = manifest.get("trainingMode", manifest.get("mode", ""))
-        STATIC_MODES = {"r8_static_training", "r11_static_training", "r12_static_training", "r15_static_training", "r16_static_training"}
+        STATIC_MODES = {"r8_static_training", "r11_static_training", "r12_static_training", "r15_static_training", "r16_static_training", "r17_static_training"}
         if mode not in STATIC_MODES:
             raise MOS365ServiceError("SESSION_MODE_REJECTED", "練習セッションではありません。", "不是练习会话。")
         state = manifest.get("state", "created")
@@ -926,7 +947,7 @@ class MOS365Service:
             raise MOS365ServiceError("SESSION_NOT_FOUND", "セッションが見つかりません。", "未找到会话。", 404)
         manifest = json.loads(paths.manifest.read_text(encoding="utf-8"))
         mode = manifest.get("trainingMode", manifest.get("mode", ""))
-        STATIC_MODES = {"r8_static_training", "r11_static_training", "r12_static_training", "r15_static_training", "r16_static_training"}
+        STATIC_MODES = {"r8_static_training", "r11_static_training", "r12_static_training", "r15_static_training", "r16_static_training", "r17_static_training"}
         if mode not in STATIC_MODES:
             raise MOS365ServiceError("SESSION_MODE_REJECTED", "練習セッションではありません。", "不是练习会话。")
         state = manifest.get("state", "created")
@@ -967,6 +988,8 @@ class MOS365Service:
                 r = self._assert_worksheet_visibility(root, assertion, NS)
             elif atype == "cell_value_equals":
                 r = self._assert_cell_value_equals(str(paths.workbook), assertion, NS)
+            elif atype == "cell_formula_equals":
+                r = self._assert_cell_formula_equals(str(paths.workbook), assertion, NS)
             else:
                 raise MOS365ServiceError("SCORING_ASSERTION_UNSUPPORTED", f"未対応のアサーション: {atype}", f"不支持的断言类型: {atype}")
             assertion_results.append(r)
@@ -1063,13 +1086,13 @@ class MOS365Service:
                         break
                 if not target:
                     return {"id": assertion["id"], "type": assertion["type"], "result": "indeterminate", "earned": 0, "total": assertion["weight"]}
-                # Normalize and validate path
                 normalized = target.lstrip('/')
+                if not normalized.startswith('xl/'):
+                    normalized = 'xl/' + normalized
                 if not normalized.startswith('xl/worksheets/'):
                     return {"id": assertion["id"], "type": assertion["type"], "result": "indeterminate", "earned": 0, "total": assertion["weight"]}
                 if normalized not in names:
                     return {"id": assertion["id"], "type": assertion["type"], "result": "indeterminate", "earned": 0, "total": assertion["weight"]}
-                # Parse cell
                 sheet_root = ET.fromstring(archive.read(normalized))
                 for cell in sheet_root.findall('.//m:c', ns):
                     if cell.attrib.get('r', '') != target_ref:
@@ -1244,6 +1267,116 @@ class MOS365Service:
             archive.writestr("xl/_rels/workbook.xml.rels", wbr)
             archive.writestr("xl/styles.xml", st)
             archive.writestr("xl/worksheets/sheet1.xml", sx)
+
+    def _create_r17_session(self) -> dict[str, Any]:
+        """Create a server-owned R17 formula text training session with 計算 sheet."""
+        session_id = secrets.token_urlsafe(24).replace("-", "_")
+        paths = self._paths(session_id, require_exists=False)
+        paths.directory.mkdir(mode=0o700, parents=False, exist_ok=False)
+        task_data = {
+            "taskId": "R17_STATIC_FORMULA_TEXT_DEMO",
+            "instructionJa": "練習用：「計算」シートの C2 セルに =SUM(A2:B2) と入力してください。",
+            "instructionZh": "练习用：请在「計算」工作表的 C2 单元格输入 =SUM(A2:B2)。"
+        }
+        manifest = {"schemaVersion": 1, "sessionId": session_id, "mode": "r17_static_training", "trainingMode": "r17_static_training",
+            "staticTask": task_data, "completion": {"acknowledged": False, "acknowledgedAt": None, "acknowledgedPid": None},
+            "workbook": paths.workbook.name, "createdAt": __import__("datetime").datetime.now().astimezone().isoformat()}
+        self._write_r17_workbook(paths.workbook)
+        paths.manifest.write_text(json.dumps(manifest, ensure_ascii=False, indent=2), encoding="utf-8")
+        return {"sessionId": session_id, "mode": "r17_static_training", "scenarioId": "r17_static", "variant": 1,
+                "fileName": paths.workbook.name, "sandboxRoot": str(paths.directory),
+                "staticTask": task_data, "tasks": [], "environment": self.environment_status()}
+
+    def _write_r17_workbook(self, destination: Path) -> None:
+        """Write a minimal workbook with 入力 + 計算 sheets and formula C2 for R17."""
+        sheets = ["入力", "計算"]
+        input_rows = [["項目", "値"], ["", ""]]
+        calc_rows = [["", "", ""], [2, 3, "=SUM(A2:B2)"]]
+        input_sx = self._sheet_xml(input_rows)
+        calc_sx = self._sheet_xml_calc()
+        ws1 = f'<sheet name="{self._xml_escape(sheets[0])}" sheetId="1" r:id="rId1"/>'
+        ws2 = f'<sheet name="{self._xml_escape(sheets[1])}" sheetId="2" r:id="rId2"/>'
+        wb = f'<?xml version="1.0" encoding="UTF-8" standalone="yes"?><workbook xmlns="{NS_MAIN}" xmlns:r="{NS_REL}"><sheets>{ws1}{ws2}</sheets></workbook>'
+        wbr = f'<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="{NS_PKG_REL}"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet1.xml"/><Relationship Id="rId2" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet2.xml"/><Relationship Id="rId3" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/></Relationships>'
+        ct = ['<Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/>', '<Default Extension="xml" ContentType="application/xml"/>', '<Override PartName="/xl/workbook.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"/>', '<Override PartName="/xl/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml"/>', '<Override PartName="/xl/worksheets/sheet1.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/>', '<Override PartName="/xl/worksheets/sheet2.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/>']
+        rr = f'<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="{NS_PKG_REL}"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="xl/workbook.xml"/></Relationships>'
+        st = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><styleSheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><numFmts count="0"/><fonts count="1"><font><sz val="11"/><name val="Calibri"/></font></fonts><fills count="2"><fill><patternFill patternType="none"/></fill><fill><patternFill patternType="gray125"/></fill></fills><borders count="1"><border><left/><right/><top/><bottom/><diagonal/></border></borders><cellStyleXfs count="1"><xf numFmtId="0" fontId="0" fillId="0" borderId="0"/></cellStyleXfs><cellXfs count="1"><xf numFmtId="0" fontId="0" fillId="0" borderId="0" xfId="0"/></cellXfs></styleSheet>'
+        with zipfile.ZipFile(destination, "w", compression=zipfile.ZIP_DEFLATED) as archive:
+            archive.writestr("[Content_Types].xml", '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types">' + "".join(ct) + "</Types>")
+            archive.writestr("_rels/.rels", rr)
+            archive.writestr("xl/workbook.xml", wb)
+            archive.writestr("xl/_rels/workbook.xml.rels", wbr)
+            archive.writestr("xl/styles.xml", st)
+            archive.writestr("xl/worksheets/sheet1.xml", input_sx)
+            archive.writestr("xl/worksheets/sheet2.xml", calc_sx)
+
+    @staticmethod
+    def _sheet_xml_calc() -> str:
+        """Write 計算 sheet: A2=2, B2=3, C2=<f>SUM(A2:B2)</f>."""
+        return (
+            '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'
+            '<worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main">'
+            '<sheetData>'
+            '<row r="1"><c r="A1" t="inlineStr"><is><t></t></is></c>'
+            '<c r="B1" t="inlineStr"><is><t></t></is></c>'
+            '<c r="C1" t="inlineStr"><is><t></t></is></c></row>'
+            '<row r="2"><c r="A2"><v>2</v></c>'
+            '<c r="B2"><v>3</v></c>'
+            '<c r="C2"><f>SUM(A2:B2)</f></c></row>'
+            '</sheetData></worksheet>'
+        )
+
+    @staticmethod
+    def _assert_cell_formula_equals(workbook_path: str, assertion, ns):
+        """Score cell_formula_equals — read only <f> from target cell, reject unsupported types."""
+        target_sheet = assertion.get("sheetName", "")
+        target_ref = assertion.get("cellRef", "")
+        expected = assertion.get("expectedFormula", "")
+        try:
+            with zipfile.ZipFile(workbook_path, "r") as archive:
+                names = set(archive.namelist())
+                wb_root = ET.fromstring(archive.read("xl/workbook.xml"))
+                rels_root = ET.fromstring(archive.read("xl/_rels/workbook.xml.rels"))
+                sheet_rel_id = None
+                for sheet in wb_root.findall('.//m:sheets/m:sheet', ns):
+                    if sheet.get('name', '') == target_sheet:
+                        sheet_rel_id = sheet.attrib.get('{' + ns['r'] + '}id', sheet.attrib.get('r:id', ''))
+                        break
+                if not sheet_rel_id:
+                    return {"id": assertion["id"], "type": assertion["type"], "result": "indeterminate", "earned": 0, "total": assertion["weight"]}
+                target = ""
+                for rel in rels_root.findall('pr:Relationship', ns):
+                    if rel.attrib.get('Id', '') == sheet_rel_id:
+                        target = rel.attrib.get('Target', '')
+                        break
+                if not target:
+                    return {"id": assertion["id"], "type": assertion["type"], "result": "indeterminate", "earned": 0, "total": assertion["weight"]}
+                normalized = target.lstrip('/')
+                if not normalized.startswith('xl/'):
+                    normalized = 'xl/' + normalized
+                if not normalized.startswith('xl/worksheets/'):
+                    return {"id": assertion["id"], "type": assertion["type"], "result": "indeterminate", "earned": 0, "total": assertion["weight"]}
+                if normalized not in names:
+                    return {"id": assertion["id"], "type": assertion["type"], "result": "indeterminate", "earned": 0, "total": assertion["weight"]}
+                sheet_root = ET.fromstring(archive.read(normalized))
+                for cell in sheet_root.findall('.//m:c', ns):
+                    if cell.attrib.get('r', '') != target_ref:
+                        continue
+                    f_node = cell.find('m:f', ns)
+                    if f_node is None:
+                        return {"id": assertion["id"], "type": assertion["type"], "result": "incorrect", "earned": 0, "total": assertion["weight"]}
+                    f_text = f_node.text
+                    if f_text is None or not f_text.strip():
+                        return {"id": assertion["id"], "type": assertion["type"], "result": "indeterminate", "earned": 0, "total": assertion["weight"]}
+                    f_type = f_node.attrib.get('t', '')
+                    if f_type == 'shared':
+                        return {"id": assertion["id"], "type": assertion["type"], "result": "indeterminate", "earned": 0, "total": assertion["weight"]}
+                    actual_formula = "=" + f_text.strip()
+                    correct = actual_formula == expected
+                    return {"id": assertion["id"], "type": assertion["type"], "result": "correct" if correct else "incorrect", "earned": assertion["weight"] if correct else 0, "total": assertion["weight"]}
+                return {"id": assertion["id"], "type": assertion["type"], "result": "incorrect", "earned": 0, "total": assertion["weight"]}
+        except (zipfile.BadZipFile, KeyError, ET.ParseError, OSError):
+            return {"id": assertion["id"], "type": assertion["type"], "result": "indeterminate", "earned": 0, "total": assertion["weight"]}
 
     @staticmethod
     def _normal_formula(value: Any) -> str:
