@@ -88,6 +88,23 @@ SCORING_SPECS: dict[str, dict[str, Any]] = {
             }
         ],
         "resultPolicy": {"mode": "weighted_sum", "total": 2, "allowPartialCredit": True}
+    },
+    "R15_STATIC_SHEET_HIDE_DEMO": {
+        "specVersion": 1,
+        "taskId": "R15_STATIC_SHEET_HIDE_DEMO",
+        "assertions": [{
+            "id": "worksheet-visibility",
+            "type": "worksheet_visibility_equals",
+            "targetName": "データベース",
+            "expected": "hidden_or_very_hidden",
+            "weight": 1,
+            "feedback": {
+                "correct": {"ja": "「データベース」シートは非表示になっています。", "zh": "「データベース」工作表已隐藏。"},
+                "incorrect": {"ja": "「データベース」シートを非表示にしてください。", "zh": "请隐藏「データベース」工作表。"},
+                "indeterminate": {"ja": "対象のシートを確認できませんでした。", "zh": "无法确认目标工作表。"}
+            }
+        }],
+        "resultPolicy": {"mode": "all_or_nothing", "total": 1}
     }
 }
 
@@ -233,6 +250,8 @@ class MOS365Service:
             return self._create_r11_session()
         if mode == "r12_static_training":
             return self._create_r12_session()
+        if mode == "r15_static_training":
+            return self._create_r15_session()
 
         scenario = str(payload.get("scenarioId", "retail"))
         variant = payload.get("variant", 1)
@@ -784,7 +803,7 @@ class MOS365Service:
             mf_path.write_text(json.dumps(manifest, ensure_ascii=False, indent=2), encoding="utf-8")
         result = {"ok": True, "session": {"sessionId": session_id, "state": "attached", "excelPid": raw_pid, "createdAt": manifest.get("createdAt", "")}}
         # For R8 sessions, include training task
-        STATIC_MODES = {"r8_static_training", "r11_static_training", "r12_static_training"}
+        STATIC_MODES = {"r8_static_training", "r11_static_training", "r12_static_training", "r15_static_training"}
         training_mode = manifest.get("trainingMode", "")
         if training_mode in STATIC_MODES:
             task = manifest.get("staticTask", {})
@@ -847,7 +866,7 @@ class MOS365Service:
             raise MOS365ServiceError("SESSION_NOT_FOUND", "セッションが見つかりません。", "未找到会话。", 404)
         manifest = json.loads(paths.manifest.read_text(encoding="utf-8"))
         mode = manifest.get("trainingMode", manifest.get("mode", ""))
-        STATIC_MODES = {"r8_static_training", "r11_static_training", "r12_static_training"}
+        STATIC_MODES = {"r8_static_training", "r11_static_training", "r12_static_training", "r15_static_training"}
         if mode not in STATIC_MODES:
             raise MOS365ServiceError("SESSION_MODE_REJECTED", "練習セッションではありません。", "不是练习会话。")
         state = manifest.get("state", "created")
@@ -886,7 +905,7 @@ class MOS365Service:
             raise MOS365ServiceError("SESSION_NOT_FOUND", "セッションが見つかりません。", "未找到会话。", 404)
         manifest = json.loads(paths.manifest.read_text(encoding="utf-8"))
         mode = manifest.get("trainingMode", manifest.get("mode", ""))
-        STATIC_MODES = {"r8_static_training", "r11_static_training", "r12_static_training"}
+        STATIC_MODES = {"r8_static_training", "r11_static_training", "r12_static_training", "r15_static_training"}
         if mode not in STATIC_MODES:
             raise MOS365ServiceError("SESSION_MODE_REJECTED", "練習セッションではありません。", "不是练习会话。")
         state = manifest.get("state", "created")
@@ -923,6 +942,8 @@ class MOS365Service:
                 r = self._assert_first_sheet_name(root, assertion, NS)
             elif atype == "worksheet_exists":
                 r = self._assert_worksheet_exists(root, assertion, NS)
+            elif atype == "worksheet_visibility_equals":
+                r = self._assert_worksheet_visibility(root, assertion, NS)
             else:
                 raise MOS365ServiceError("SCORING_ASSERTION_UNSUPPORTED", f"未対応のアサーション: {atype}", f"不支持的断言类型: {atype}")
             assertion_results.append(r)
@@ -979,6 +1000,21 @@ class MOS365Service:
         return {"id": assertion["id"], "type": assertion["type"], "result": "correct" if correct else "incorrect", "earned": assertion["weight"] if correct else 0, "total": assertion["weight"]}
 
     @staticmethod
+    def _assert_worksheet_visibility(root, assertion, ns):
+        target = assertion.get("targetName", "")
+        sheets = root.findall('.//m:sheets/m:sheet', ns)
+        for sheet in sheets:
+            if sheet.get('name', '') == target:
+                state = sheet.get('state', 'visible')
+                if state in ('hidden', 'veryHidden'):
+                    return {"id": assertion["id"], "type": assertion["type"], "result": "correct", "earned": assertion["weight"], "total": assertion["weight"]}
+                elif state in ('visible', ''):
+                    return {"id": assertion["id"], "type": assertion["type"], "result": "incorrect", "earned": 0, "total": assertion["weight"]}
+                else:
+                    return {"id": assertion["id"], "type": assertion["type"], "result": "indeterminate", "earned": 0, "total": assertion["weight"]}
+        return {"id": assertion["id"], "type": assertion["type"], "result": "indeterminate", "earned": 0, "total": assertion["weight"]}
+
+    @staticmethod
     def _assert_worksheet_exists(root, assertion, ns):
         sheets = root.findall('.//m:sheets/m:sheet', ns)
         for sheet in sheets:
@@ -1033,6 +1069,52 @@ class MOS365Service:
         return {"sessionId": session_id, "mode": "r12_static_training", "scenarioId": "r12_static", "variant": 1,
                 "fileName": paths.workbook.name, "sandboxRoot": str(paths.directory),
                 "staticTask": task_data, "tasks": [], "environment": self.environment_status()}
+
+    def _create_r15_session(self) -> dict[str, Any]:
+        """Create a server-owned R15 visibility training session with データベース sheet."""
+        session_id = secrets.token_urlsafe(24).replace("-", "_")
+        paths = self._paths(session_id, require_exists=False)
+        paths.directory.mkdir(mode=0o700, parents=False, exist_ok=False)
+        task_data = {
+            "taskId": "R15_STATIC_SHEET_HIDE_DEMO",
+            "instructionJa": "練習用：「データベース」シートを非表示にしてください。",
+            "instructionZh": "练习用：请隐藏「データベース」工作表。"
+        }
+        manifest = {
+            "schemaVersion": 1, "sessionId": session_id,
+            "mode": "r15_static_training", "trainingMode": "r15_static_training",
+            "staticTask": task_data,
+            "completion": {"acknowledged": False, "acknowledgedAt": None, "acknowledgedPid": None},
+            "workbook": paths.workbook.name,
+            "createdAt": __import__("datetime").datetime.now().astimezone().isoformat(),
+        }
+        self._write_r15_workbook(paths.workbook)
+        paths.manifest.write_text(json.dumps(manifest, ensure_ascii=False, indent=2), encoding="utf-8")
+        return {"sessionId": session_id, "mode": "r15_static_training", "scenarioId": "r15_static", "variant": 1,
+                "fileName": paths.workbook.name, "sandboxRoot": str(paths.directory),
+                "staticTask": task_data, "tasks": [], "environment": self.environment_status()}
+
+    def _write_r15_workbook(self, destination: Path) -> None:
+        """Write a minimal workbook with a visible データベース sheet for R15."""
+        sheets = ["作業用", "データベース"]
+        rows = [["項目", "値"], ["", ""]]
+        sheet_xml = [self._sheet_xml(rows) for _ in sheets]
+        workbook_sheets = "".join(f'<sheet name="{self._xml_escape(name)}" sheetId="{idx + 1}" r:id="rId{idx + 1}"/>' for idx, name in enumerate(sheets))
+        workbook_xml = f'<?xml version="1.0" encoding="UTF-8" standalone="yes"?><workbook xmlns="{NS_MAIN}" xmlns:r="{NS_REL}"><sheets>{workbook_sheets}</sheets></workbook>'
+        rels = "".join(f'<Relationship Id="rId{idx + 1}" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet{idx + 1}.xml"/>' for idx in range(len(sheets)))
+        workbook_rels = f'<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="{NS_PKG_REL}">{rels}<Relationship Id="rId{len(sheets) + 1}" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/></Relationships>'
+        content_types = ['<Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/>', '<Default Extension="xml" ContentType="application/xml"/>', '<Override PartName="/xl/workbook.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"/>', '<Override PartName="/xl/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml"/>']
+        content_types += [f'<Override PartName="/xl/worksheets/sheet{idx + 1}.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/>' for idx in range(len(sheets))]
+        root_rels = f'<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="{NS_PKG_REL}"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="xl/workbook.xml"/></Relationships>'
+        styles = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><styleSheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><numFmts count="0"/><fonts count="1"><font><sz val="11"/><name val="Calibri"/></font></fonts><fills count="2"><fill><patternFill patternType="none"/></fill><fill><patternFill patternType="gray125"/></fill></fills><borders count="1"><border><left/><right/><top/><bottom/><diagonal/></border></borders><cellStyleXfs count="1"><xf numFmtId="0" fontId="0" fillId="0" borderId="0"/></cellStyleXfs><cellXfs count="1"><xf numFmtId="0" fontId="0" fillId="0" borderId="0" xfId="0"/></cellXfs></styleSheet>'
+        with zipfile.ZipFile(destination, "w", compression=zipfile.ZIP_DEFLATED) as archive:
+            archive.writestr("[Content_Types].xml", '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types">' + "".join(content_types) + "</Types>")
+            archive.writestr("_rels/.rels", root_rels)
+            archive.writestr("xl/workbook.xml", workbook_xml)
+            archive.writestr("xl/_rels/workbook.xml.rels", workbook_rels)
+            archive.writestr("xl/styles.xml", styles)
+            for index, content in enumerate(sheet_xml, start=1):
+                archive.writestr(f"xl/worksheets/sheet{index}.xml", content)
 
     @staticmethod
     def _normal_formula(value: Any) -> str:
