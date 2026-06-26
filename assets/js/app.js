@@ -304,7 +304,7 @@ if (document.readyState === 'loading') {
 
     nav.innerHTML = '';
 
-    var subject = window.currentSubject || 'sql';
+    var subject = (typeof currentSubject !== 'undefined' ? currentSubject : null) || 'sql';
     // Build mode tabs based on subject
     var tabs = [];
     if (subject === 'sql' || subject === 'python') {
@@ -541,10 +541,12 @@ if (document.readyState === 'loading') {
       _origSwitchSubject.apply(this, arguments);
       if (window.populateHeaderModeNav) {
         setTimeout(window.populateHeaderModeNav, 100);
-        // Re-hide sub-header-bars on desktop in case switchSubject re-shows them
+        // Re-hide sub-header-bars on desktop for subjects that use header-mode-nav.
+        // ITPass sub-header is the primary nav (header-mode-nav is hidden for ITPass).
         if (window.matchMedia('(min-width: 721px)').matches) {
           var bars = document.querySelectorAll('.sub-header-bar');
           for (var i = 0; i < bars.length; i++) {
+            if (bars[i].id === 'itpass-sub-header') continue;
             bars[i].style.display = 'none';
           }
         }
