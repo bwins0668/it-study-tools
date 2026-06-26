@@ -38,7 +38,9 @@ namespace StudyTools.Mos365ExamHost
         private static readonly int[] RetryDelaysMs = { 250, 750, 1500 };
         private const int RequestTimeoutMs = 2500;
 
-        public SessionBridge() : this("http://127.0.0.1:8765") { }
+        public const string BridgeRevision = "R28_ATTACH_RUNTIME_1";
+
+        public SessionBridge() : this("http://127.0.0.1:8080") { }
 
         public SessionBridge(string baseUrl)
         {
@@ -142,7 +144,7 @@ namespace StudyTools.Mos365ExamHost
             string workbookPath, int excelPid,
             CancellationToken cancellationToken)
         {
-            var payload = new { workbookPath, excelPid, client = "vsto" };
+            var payload = new { workbookPath, excelPid, client = "vsto", bridgeRevision = BridgeRevision };
             string jsonPayload = _json.Serialize(payload);
             var content = new StringContent(jsonPayload, Encoding.UTF8, "application/json");
 

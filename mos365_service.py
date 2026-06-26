@@ -150,6 +150,61 @@ SCORING_SPECS: dict[str, dict[str, Any]] = {
 _LAUNCH_STATE: dict = None
 _LAUNCH_LOCK = None
 
+
+def _foreground_excel_async(pid: int, session_id: str) -> None:
+    """Bring the just-launched Excel window to foreground and maximize it.
+
+    Runs in a background thread — never blocks the launch HTTP response.
+    Only touches the Excel process started by THIS session.
+    """
+    import ctypes
+    import threading
+    import time
+
+    SW_RESTORE = 9
+    SW_MAXIMIZE = 3
+
+    def _bring_to_front():
+        try:
+            user32 = ctypes.windll.user32
+            kernel32 = ctypes.windll.kernel32
+
+            # Wait up to 8 seconds for Excel main window to appear
+            for _ in range(80):
+                hwnd = _find_main_window_for_pid(kernel32, user32, pid)
+                if hwnd:
+                    # Restore if minimized, then maximize
+                    user32.ShowWindow(hwnd, SW_RESTORE)
+                    time.sleep(0.1)
+                    user32.ShowWindow(hwnd, SW_MAXIMIZE)
+                    user32.SetForegroundWindow(hwnd)
+                    return True
+                time.sleep(0.1)
+            return False
+        except Exception:
+            return False
+
+    def _find_main_window_for_pid(kernel32, user32, target_pid):
+        """Find the top-level visible window belonging to the target PID."""
+        result = []
+
+        def enum_callback(hwnd, lparam):
+            process_id = ctypes.c_ulong()
+            user32.GetWindowThreadProcessId(hwnd, ctypes.byref(process_id))
+            if process_id.value == target_pid:
+                if user32.IsWindowVisible(hwnd):
+                    # Prefer the window with a title (main window)
+                    length = user32.GetWindowTextLengthW(hwnd)
+                    if length > 0:
+                        result.append(hwnd)
+            return True
+
+        WNDENUMPROC = ctypes.WINFUNCTYPE(ctypes.c_bool, ctypes.c_void_p, ctypes.c_void_p)
+        user32.EnumWindows(WNDENUMPROC(enum_callback), 0)
+        return result[0] if result else None
+
+    threading.Thread(target=_bring_to_front, daemon=True, name=f"fg-excel-{pid}").start()
+
 class MOS365ServiceError(Exception):
     def __init__(self, code: str, message_ja: str, message_zh: str, status: int = 400):
         super().__init__(message_ja)
@@ -416,6 +471,9 @@ class MOS365Service:
         # /x isolates this Session from Excel's DDE reuse of an older workbook window.
         process = subprocess.Popen([str(excel), "/x", str(paths.workbook)], shell=False, close_fds=(os.name != "nt"))
         self._mark_launch_phase(session_id, "excel_process_started", state="awaiting_attach", pid=process.pid)
+
+        # P0-B: Bring Excel to foreground and maximize (async, never blocks launch response)
+        _foreground_excel_async(process.pid, session_id)
         # Update manifest with launch state
         manifest = json.loads(paths.manifest.read_text(encoding="utf-8"))
         manifest["excelPid"] = process.pid
@@ -893,6 +951,16 @@ class MOS365Service:
         session_dir, manifest = matched_session
         session_id = manifest.get("sessionId", "")
         state = manifest.get("state", "created")
+
+        # Bridge revision check — reject old/unpatched VSTO builds
+        EXPECTED_REVISION = "R28_ATTACH_RUNTIME_1"
+        received_revision = str(payload.get("bridgeRevision", ""))
+        if received_revision != EXPECTED_REVISION:
+            raise MOS365ServiceError(
+                "BRIDGE_REVISION_MISMATCH",
+                "トレーニングパネルが古いバージョンです。Excel を完全に閉じてからもう一度お試しください。",
+                "训练面板版本过旧。请完全关闭 Excel 后重新尝试。",
+            )
         # PID check
         server_pid = manifest.get("excelPid")
         if server_pid is not None and server_pid != raw_pid:

@@ -8033,7 +8033,7 @@ window.StudySync = window.StudySync || null;
 
     if (overlay && startBtn && skipBtn) {
       const started = sessionStorage.getItem('immersive_started');
-      if (started === 'true' || navigator.webdriver) {
+      if (started === 'true') {
         overlay.setAttribute('hidden', '');
       } else {
         overlay.removeAttribute('hidden');

@@ -481,6 +481,7 @@ class MOS365R17FormulaTextTests(unittest.TestCase):
             "sessionId": session["sessionId"],
             "workbookPath": str(paths.workbook),
             "excelPid": 12345,
+            "bridgeRevision": "R28_ATTACH_RUNTIME_1",
         })
         self.assertTrue(result["ok"])
         self.assertEqual(result["session"]["training"]["mode"], "r17_static_training")
@@ -658,6 +659,7 @@ class MOS365R22FlowContractTests(unittest.TestCase):
         return self.service.session_verify({
             "workbookPath": str(paths.workbook),
             "excelPid": pid,
+            "bridgeRevision": "R28_ATTACH_RUNTIME_1",
         })
 
     def test_r22_training_display_is_bilingual_and_r17_does_not_leak_formula(self):
