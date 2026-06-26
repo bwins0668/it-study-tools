@@ -21,6 +21,7 @@ namespace StudyTools.Mos365ExamHost
         {
             _sessionId = Guid.NewGuid();
             _probe = new RuntimeProbe();
+            if (_pane != null) { _paneControl?.UpdateSession(_sessionId, Process.GetCurrentProcess().Id); _probe?.Write("startup.duplicate.prevented", _sessionId.ToString("N"), excelPid: Process.GetCurrentProcess().Id); return; }
             _probe.Write("startup.begin", _sessionId.ToString("N"), excelPid: Process.GetCurrentProcess().Id);
             try
             {
@@ -28,7 +29,7 @@ namespace StudyTools.Mos365ExamHost
                 _paneControl = new ExamHostPaneControl();
                 _paneControl.UpdateSession(_sessionId, Process.GetCurrentProcess().Id);
                 _probe.Write("control.handle.created", _sessionId.ToString("N"), excelPid: Process.GetCurrentProcess().Id);
-                _pane = this.CustomTaskPanes.Add(_paneControl, "MOS Native Exam Host · R3 VSTO POC");
+                _pane = this.CustomTaskPanes.Add(_paneControl, "MOS 実技トレーニング（MVP）");
                 _probe.Write("pane.created", _sessionId.ToString("N"), excelPid: Process.GetCurrentProcess().Id, paneTitle: "MOS Native Exam Host · R3 VSTO POC", dockPosition: "Bottom");
                 _pane.DockPosition = Office.MsoCTPDockPosition.msoCTPDockPositionBottom;
                 _pane.Height = 140;
@@ -54,7 +55,8 @@ namespace StudyTools.Mos365ExamHost
             try
             {
                 if (_excelApp != null) { _excelApp.WorkbookActivate -= OnWorkbookActivate; _excelApp.WorkbookDeactivate -= OnWorkbookDeactivate; _excelApp.WorkbookOpen -= OnWorkbookOpen; }
-                _probe?.Write("shutdown.complete", _sessionId.ToString("N"), excelPid: Process.GetCurrentProcess().Id);
+                if (_pane != null) { try { this.CustomTaskPanes.Remove(_pane); } catch { } _pane = null; _paneControl = null; }
+            _probe?.Write("shutdown.complete", _sessionId.ToString("N"), excelPid: Process.GetCurrentProcess().Id);
             }
             catch (Exception ex) { _probe?.Write("exception", _sessionId.ToString("N"), exceptionType: ex.GetType().Name, exceptionMessage: ex.Message); }
         }

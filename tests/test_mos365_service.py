@@ -486,5 +486,151 @@ class MOS365R17FormulaTextTests(unittest.TestCase):
         self.assertEqual(result["session"]["training"]["taskId"], "R17_STATIC_FORMULA_TEXT_DEMO")
 
 
+
+
+    def test_idempotent_session_creation(self):
+        """R20: Multiple create_session calls should return same active session."""
+        from mos365_service import _LAUNCH_STATE, _LAUNCH_LOCK
+        # Reset launch state
+        with _LAUNCH_LOCK:
+            _LAUNCH_STATE = None
+        s1 = self.service.create_session({"mode": "r16_static_training"})
+        s2 = self.service.create_session({"mode": "r16_static_training"})
+        self.assertEqual(s1["sessionId"], s2["sessionId"], "Second create should return same session")
+        self.assertTrue(s2.get("idempotent"), "Second response should mark idempotent")
+        with _LAUNCH_LOCK:
+            _LAUNCH_STATE = None
+
+    def test_task_display_no_leak(self):
+        """R20: Task display must not leak expected or expectedFormula."""
+        from mos365_service import _LAUNCH_STATE, _LAUNCH_LOCK
+        with _LAUNCH_LOCK:
+            _LAUNCH_STATE = None
+        for mode in ("r16_static_training", "r17_static_training"):
+            s = self.service.create_session({"mode": mode})
+            sid = s["sessionId"]
+            # Retrieve manifest and session_verify-like debug info
+            paths = self.service._paths(sid)
+            import json
+            manifest = json.loads(paths.manifest.read_text(encoding="utf-8"))
+            training_mode = manifest.get("trainingMode") or manifest.get("mode", "")
+            static_task = manifest.get("staticTask")
+            if static_task:
+                self.assertNotIn("expected", str(static_task.get("taskId", "")), "Static task taskId should not leak expected")
+                # Check that instructionJa and Zh are safe
+                self.assertNotIn("=SUM(", static_task.get("instructionJa", ""), "R17 instruction must not leak formula")
+        with _LAUNCH_LOCK:
+            _LAUNCH_STATE = None
+
+    def test_r16_session_initial_state(self):
+        """R20: R16 workbook must have empty B2."""
+        from mos365_service import _LAUNCH_STATE, _LAUNCH_LOCK
+        with _LAUNCH_LOCK:
+            _LAUNCH_STATE = None
+        s = self.service.create_session({"mode": "r16_static_training"})
+        sid = s["sessionId"]
+        paths = self.service._paths(sid)
+        import zipfile
+        from xml.etree import ElementTree as ET
+        ns = {"m": "http://schemas.openxmlformats.org/spreadsheetml/2006/main"}
+        with zipfile.ZipFile(str(paths.workbook), "r") as z:
+            sheet = z.read("xl/worksheets/sheet1.xml")
+            root = ET.fromstring(sheet)
+            for cell in root.findall(".//m:c", ns):
+                if cell.attrib.get("r", "") == "B2":
+                    cell_type = cell.attrib.get("t", "")
+                    is_node = cell.find("m:is", ns)
+                    if is_node is not None:
+                        val = "".join(is_node.itertext())
+                        self.assertEqual(val, "", f"R16 B2 should be empty, got '{val}'")
+                    break
+        with _LAUNCH_LOCK:
+            _LAUNCH_STATE = None
+
+    def test_r17_session_initial_state(self):
+        """R20: R17 workbook must have A2=2, B2=3, C2 empty."""
+        from mos365_service import _LAUNCH_STATE, _LAUNCH_LOCK
+        with _LAUNCH_LOCK:
+            _LAUNCH_STATE = None
+        s = self.service.create_session({"mode": "r17_static_training"})
+        sid = s["sessionId"]
+        paths = self.service._paths(sid)
+        import zipfile
+        from xml.etree import ElementTree as ET
+        ns = {"m": "http://schemas.openxmlformats.org/spreadsheetml/2006/main"}
+        with zipfile.ZipFile(str(paths.workbook), "r") as z:
+            sheet = z.read("xl/worksheets/sheet2.xml")
+            root = ET.fromstring(sheet)
+            cells = {}
+            for cell in root.findall(".//m:c", ns):
+                ref = cell.attrib.get("r", "")
+                cell_type = cell.attrib.get("t", "")
+                v = cell.find("m:v", ns)
+                is_node = cell.find("m:is", ns)
+                if v is not None and v.text:
+                    cells[ref] = v.text
+                elif is_node is not None:
+                    cells[ref] = "".join(is_node.itertext())
+                else:
+                    cells[ref] = ""
+            self.assertEqual(cells.get("A2", ""), "2", "R17 A2 should be 2")
+            self.assertEqual(cells.get("B2", ""), "3", "R17 B2 should be 3")
+            self.assertEqual(cells.get("C2", ""), "", "R17 C2 should be empty")
+        with _LAUNCH_LOCK:
+            _LAUNCH_STATE = None
+
+    def test_r16_positive_score(self):
+        """R16: cell_value_equals scoring for correct answer."""
+        from mos365_service import _LAUNCH_STATE, _LAUNCH_LOCK
+        with _LAUNCH_LOCK:
+            _LAUNCH_STATE = None
+        s = self.service.create_session({"mode": "r16_static_training"})
+        sid = s["sessionId"]
+        paths = self.service._paths(sid)
+        # Modify workbook: set B2 to "完了"
+        import zipfile, io
+        from xml.etree import ElementTree as ET
+        ns = {"m": "http://schemas.openxmlformats.org/spreadsheetml/2006/main"}
+        with zipfile.ZipFile(str(paths.workbook), "r") as z:
+            sheet = z.read("xl/worksheets/sheet1.xml")
+            root = ET.fromstring(sheet)
+            for cell in root.findall(".//m:c", ns):
+                if cell.attrib.get("r", "") == "B2":
+                    cell.clear()
+                    cell.set("r", "B2")
+                    cell.set("t", "inlineStr")
+                    is_elem = ET.SubElement(cell, f'{{{ns["m"]}}}is')
+                    t_elem = ET.SubElement(is_elem, f'{{{ns["m"]}}}t')
+                    t_elem.text = "完了"
+                    break
+            modified = ET.tostring(root, encoding="unicode", xml_declaration=True)
+        buf = io.BytesIO()
+        with zipfile.ZipFile(str(paths.workbook), "r") as z:
+            with zipfile.ZipFile(buf, "w", compression=zipfile.ZIP_DEFLATED) as out:
+                for item in z.infolist():
+                    data = z.read(item.filename)
+                    if item.filename == "xl/worksheets/sheet1.xml":
+                        out.writestr(item, modified.encode("utf-8"))
+                    else:
+                        out.writestr(item, data)
+        with open(str(paths.workbook), "wb") as f:
+            f.write(buf.getvalue())
+        # Set manifest state to attached for complete/score flow
+        import json
+        mf = json.loads(paths.manifest.read_text(encoding="utf-8"))
+        mf["state"] = "attached"
+        mf["completion"] = {"acknowledged": True, "acknowledgedAt": "2026-06-26T00:00:00+09:00", "acknowledgedPid": 99999}
+        paths.manifest.write_text(json.dumps(mf, ensure_ascii=False, indent=2), encoding="utf-8")
+        # Complete (required before score)
+        self.service.session_complete({"sessionId": sid, "excelPid": 99999})
+        # Score
+        result = self.service.session_score({"sessionId": sid})
+        self.assertEqual(result["assessment"]["result"], "correct", "R16 positive should be correct")
+        self.assertEqual(result["assessment"]["earned"], 1, "R16 positive should earn 1")
+        self.assertEqual(result["assessment"]["total"], 1, "R16 positive total 1")
+        with _LAUNCH_LOCK:
+            _LAUNCH_STATE = None
+
+
 if __name__ == "__main__":
     unittest.main()

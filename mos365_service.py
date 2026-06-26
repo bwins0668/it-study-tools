@@ -147,6 +147,9 @@ SCORING_SPECS: dict[str, dict[str, Any]] = {
 }
 
 
+_LAUNCH_STATE: dict = None
+_LAUNCH_LOCK = None
+
 class MOS365ServiceError(Exception):
     def __init__(self, code: str, message_ja: str, message_zh: str, status: int = 400):
         super().__init__(message_ja)
@@ -177,6 +180,11 @@ class MOS365Service:
 
     def __init__(self, app_root: str | os.PathLike[str], session_root: str | os.PathLike[str] | None = None):
         self.app_root = Path(app_root).resolve()
+        global _LAUNCH_STATE, _LAUNCH_LOCK
+        if _LAUNCH_LOCK is None:
+            import threading
+            _LAUNCH_LOCK = threading.Lock()
+            _LAUNCH_STATE = None
         base = session_root or os.environ.get("LOCALAPPDATA")
         if not base:
             base = Path(tempfile.gettempdir()) / "StudyToolsLocalAppData"
@@ -280,6 +288,21 @@ class MOS365Service:
         }
 
     def create_session(self, payload: dict[str, Any]) -> dict[str, Any]:
+        global _LAUNCH_STATE
+        with _LAUNCH_LOCK:
+            if _LAUNCH_STATE and _LAUNCH_STATE.get("state") in ("creating","launching","awaiting_attach","ready"):
+                existing_id = _LAUNCH_STATE["session_id"]
+                try:
+                    paths = self._paths(existing_id)
+                    import json as _j
+                    manifest = _j.loads(paths.manifest.read_text(encoding="utf-8"))
+                    return {"sessionId": existing_id, "mode": manifest.get("mode","guided"),
+                        "scenarioId": manifest.get("scenarioId","r16_static"), "variant": manifest.get("variant",1),
+                        "fileName": paths.workbook.name, "sandboxRoot": str(paths.directory),
+                        "tasks": [], "environment": self.environment_status(),
+                        "launchState": _LAUNCH_STATE.get("state"), "idempotent": True}
+                except Exception:
+                    pass
         mode = str(payload.get("mode", "guided"))
         # R8 static training: fixed task, no scoring, server-owned
         if mode == "r8_static_training":
@@ -325,6 +348,10 @@ class MOS365Service:
         }
         self._write_original_workbook(paths.workbook, scenario, variant)
         paths.manifest.write_text(json.dumps(manifest, ensure_ascii=False, indent=2), encoding="utf-8")
+        with _LAUNCH_LOCK:
+            if _LAUNCH_STATE and _LAUNCH_STATE["session_id"] == session_id:
+                _LAUNCH_STATE["state"] = "awaiting_attach"
+                _LAUNCH_STATE["pid"] = process.pid
         return {
             "sessionId": session_id,
             "mode": mode,
@@ -338,6 +365,10 @@ class MOS365Service:
 
     def launch_excel(self, payload: dict[str, Any]) -> dict[str, Any]:
         session_id = self._safe_session_id(str(payload.get("sessionId", "")))
+        global _LAUNCH_STATE
+        with _LAUNCH_LOCK:
+            if _LAUNCH_STATE and _LAUNCH_STATE["session_id"] == session_id:
+                _LAUNCH_STATE["state"] = "launching"
         paths = self._paths(session_id)
         if not paths.workbook.is_file() or paths.workbook.suffix.lower() != ".xlsx":
             raise MOS365ServiceError("WORKBOOK_NOT_FOUND", "練習ファイルが見つかりません。", "未找到练习文件。", 404)
@@ -1184,6 +1215,26 @@ class MOS365Service:
                 "fileName": paths.workbook.name, "sandboxRoot": str(paths.directory),
                 "staticTask": task_data, "tasks": [], "environment": self.environment_status()}
 
+    def launch_status(self) -> dict[str, Any]:
+        """Return current active launch state."""
+        global _LAUNCH_STATE
+        with _LAUNCH_LOCK:
+            if _LAUNCH_STATE is None:
+                return {"active": False, "state": None}
+            return {"active": True, "sessionId": _LAUNCH_STATE["session_id"],
+                "state": _LAUNCH_STATE["state"], "createdAt": _LAUNCH_STATE.get("created_at"),
+                "pid": _LAUNCH_STATE.get("pid")}
+
+    def clear_launch(self) -> dict[str, Any]:
+        """Clear active launch state for retry."""
+        global _LAUNCH_STATE
+        with _LAUNCH_LOCK:
+            prev = _LAUNCH_STATE
+            _LAUNCH_STATE = None
+            if prev:
+                return {"cleared": True, "previousState": prev.get("state"), "sessionId": prev.get("session_id")}
+            return {"cleared": True, "previousState": None}
+
     def _create_r15_session(self) -> dict[str, Any]:
         """Create a server-owned R15 visibility training session with データベース sheet."""
         session_id = secrets.token_urlsafe(24).replace("-", "_")
@@ -1233,6 +1284,9 @@ class MOS365Service:
     def _create_r16_session(self) -> dict[str, Any]:
         """Create a server-owned R16 cell value training session with 入力 sheet."""
         session_id = secrets.token_urlsafe(24).replace("-", "_")
+        global _LAUNCH_STATE
+        with _LAUNCH_LOCK:
+            _LAUNCH_STATE = {"session_id": session_id, "state": "creating", "created_at": __import__("datetime").datetime.now().astimezone().isoformat()}
         paths = self._paths(session_id, require_exists=False)
         paths.directory.mkdir(mode=0o700, parents=False, exist_ok=False)
         task_data = {
@@ -1271,6 +1325,9 @@ class MOS365Service:
     def _create_r17_session(self) -> dict[str, Any]:
         """Create a server-owned R17 formula text training session with 計算 sheet."""
         session_id = secrets.token_urlsafe(24).replace("-", "_")
+        global _LAUNCH_STATE
+        with _LAUNCH_LOCK:
+            _LAUNCH_STATE = {"session_id": session_id, "state": "creating", "created_at": __import__("datetime").datetime.now().astimezone().isoformat()}
         paths = self._paths(session_id, require_exists=False)
         paths.directory.mkdir(mode=0o700, parents=False, exist_ok=False)
         task_data = {
@@ -1387,3 +1444,4 @@ class MOS365Service:
     @staticmethod
     def _normal(value: Any) -> str:
         return re.sub(r"\s+", "", str(value or "")).upper().lstrip("=")
+

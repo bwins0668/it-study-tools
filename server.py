@@ -424,6 +424,13 @@ class StudyHubHandler(SimpleHTTPRequestHandler):
             # Suppress heartbeat logging to keep terminal clean
             if '/heartbeat' not in str(args[0]):
                 print(f"[{self.address_string()}] {format % args}")
+    def _serve_mos365_launch_state(self):
+        try:
+            data = MOS365_SERVICE.launch_status()
+            self.send_json(200, {"success": True, "data": data})
+        except Exception as ex:
+            self.send_json(500, {"success": False, "error": str(ex)})
+
     def do_GET(self):
         path = unquote(self.path)
         if path.split('?')[0] == '/api/ai/providers':
@@ -433,6 +440,9 @@ class StudyHubHandler(SimpleHTTPRequestHandler):
             })
             return
 
+        if path.split('?')[0] == '/api/mos365/launch/state':
+            self._serve_mos365_launch_state()
+            return
         if path.split('?')[0] == '/api/mos365/environment':
             if not self.is_mos_local_request():
                 self.send_json(403, {"success": False, "error": "LOCAL_ONLY"})
@@ -521,6 +531,8 @@ class StudyHubHandler(SimpleHTTPRequestHandler):
                     data = MOS365_SERVICE.session_complete(body)
                 elif path == '/api/mos365/session/score':
                     data = MOS365_SERVICE.session_score(body)
+                elif path == '/api/mos365/clear-launch':
+                    data = MOS365_SERVICE.clear_launch()
                 elif path == '/api/mos365/delete-current-session-file':
                     data = MOS365_SERVICE.delete_current_session(body)
                 elif path == '/api/learning/events':
