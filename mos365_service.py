@@ -59,6 +59,35 @@ SCORING_SPECS: dict[str, dict[str, Any]] = {
             }
         }],
         "resultPolicy": {"mode": "all_or_nothing"}
+    },
+    "R12_STATIC_DUAL_SHEET_DEMO": {
+        "specVersion": 1,
+        "taskId": "R12_STATIC_DUAL_SHEET_DEMO",
+        "assertions": [
+            {
+                "id": "first-sheet-name",
+                "type": "first_sheet_name_equals",
+                "expected": "練習集計",
+                "weight": 1,
+                "comparison": "strict_equals",
+                "feedback": {
+                    "correct": {"ja": "1枚目のシート名は「練習集計」です。", "zh": "第 1 个工作表名称正确。"},
+                    "incorrect": {"ja": "1枚目のシート名を「練習集計」にしてください。", "zh": "请将第 1 个工作表重命名为「練習集計」。"}
+                }
+            },
+            {
+                "id": "worksheet-exists",
+                "type": "worksheet_exists",
+                "expected": "集計結果",
+                "weight": 1,
+                "comparison": "strict_equals",
+                "feedback": {
+                    "correct": {"ja": "「集計結果」というワークシートが作成されています。", "zh": "已创建名为「集計結果」的工作表。"},
+                    "incorrect": {"ja": "「集計結果」という名前のワークシートを作成してください。", "zh": "请创建名为「集計結果」的工作表。"}
+                }
+            }
+        ],
+        "resultPolicy": {"mode": "weighted_sum", "total": 2, "allowPartialCredit": True}
     }
 }
 
@@ -202,6 +231,8 @@ class MOS365Service:
             return self._create_r8_session()
         if mode == "r11_static_training":
             return self._create_r11_session()
+        if mode == "r12_static_training":
+            return self._create_r12_session()
 
         scenario = str(payload.get("scenarioId", "retail"))
         variant = payload.get("variant", 1)
@@ -753,11 +784,13 @@ class MOS365Service:
             mf_path.write_text(json.dumps(manifest, ensure_ascii=False, indent=2), encoding="utf-8")
         result = {"ok": True, "session": {"sessionId": session_id, "state": "attached", "excelPid": raw_pid, "createdAt": manifest.get("createdAt", "")}}
         # For R8 sessions, include training task
-        if manifest.get("trainingMode") == "r8_static_training":
+        STATIC_MODES = {"r8_static_training", "r11_static_training", "r12_static_training"}
+        training_mode = manifest.get("trainingMode", "")
+        if training_mode in STATIC_MODES:
             task = manifest.get("staticTask", {})
             comp = manifest.get("completion", {})
             result["session"]["training"] = {
-                "mode": "r8_static_training",
+                "mode": training_mode,
                 "taskId": task.get("taskId", ""),
                 "instructionJa": task.get("instructionJa", ""),
                 "instructionZh": task.get("instructionZh", ""),
@@ -814,8 +847,9 @@ class MOS365Service:
             raise MOS365ServiceError("SESSION_NOT_FOUND", "セッションが見つかりません。", "未找到会话。", 404)
         manifest = json.loads(paths.manifest.read_text(encoding="utf-8"))
         mode = manifest.get("trainingMode", manifest.get("mode", ""))
-        if mode != "r8_static_training":
-            raise MOS365ServiceError("SESSION_MODE_REJECTED", "R8 練習セッションではありません。", "不是 R8 练习会话。")
+        STATIC_MODES = {"r8_static_training", "r11_static_training", "r12_static_training"}
+        if mode not in STATIC_MODES:
+            raise MOS365ServiceError("SESSION_MODE_REJECTED", "練習セッションではありません。", "不是练习会话。")
         state = manifest.get("state", "created")
         if state != "attached":
             raise MOS365ServiceError("SESSION_STATE_REJECTED", "セッションが接続されていません。", "会话未连接。")
@@ -852,8 +886,9 @@ class MOS365Service:
             raise MOS365ServiceError("SESSION_NOT_FOUND", "セッションが見つかりません。", "未找到会话。", 404)
         manifest = json.loads(paths.manifest.read_text(encoding="utf-8"))
         mode = manifest.get("trainingMode", manifest.get("mode", ""))
-        if mode != "r8_static_training":
-            raise MOS365ServiceError("SESSION_MODE_REJECTED", "R8 練習セッションではありません。", "不是 R8 练习会话。")
+        STATIC_MODES = {"r8_static_training", "r11_static_training", "r12_static_training"}
+        if mode not in STATIC_MODES:
+            raise MOS365ServiceError("SESSION_MODE_REJECTED", "練習セッションではありません。", "不是练习会话。")
         state = manifest.get("state", "created")
         if state != "attached":
             raise MOS365ServiceError("SESSION_STATE_REJECTED", "セッションが接続されていません。", "会话未连接。")
@@ -895,12 +930,20 @@ class MOS365Service:
         total = sum(a["total"] for a in assertion_results)
         earned = sum(a["earned"] for a in assertion_results)
         all_correct = all(a["result"] == "correct" for a in assertion_results)
+        any_correct = any(a["result"] == "correct" for a in assertion_results)
+
+        if all_correct:
+            overall = "correct"
+        elif any_correct:
+            overall = "partial"
+        else:
+            overall = "incorrect"
 
         assessment = {
             "specVersion": spec["specVersion"],
             "attemptedAt": __import__("datetime").datetime.now().astimezone().isoformat(),
             "excelPid": raw_pid,
-            "result": "correct" if all_correct else "incorrect",
+            "result": overall,
             "earned": earned,
             "total": total,
             "assertions": assertion_results
@@ -908,11 +951,22 @@ class MOS365Service:
         manifest["assessment"] = assessment
         paths.manifest.write_text(json.dumps(manifest, ensure_ascii=False, indent=2), encoding="utf-8")
 
-        # Build bilingual feedback from spec's first assertion
-        fb = spec["assertions"][0]["feedback"]
-        key = "correct" if all_correct else "incorrect"
-        result_ja = fb[key]["ja"] + f" {earned} / {total}"
-        result_zh = fb[key]["zh"] + f" {earned} / {total}"
+        # Build bilingual feedback: result header + per-assertion details
+        header_map = {"correct": ("結果：正解", "结果：正确"), "partial": ("結果：一部完了", "结果：部分完成"), "incorrect": ("結果：未完了", "结果：未完成")}
+        hja, hzh = header_map[overall]
+        lines_ja = [f"{hja}（{earned} / {total}）"]
+        lines_zh = [f"{hzh}（{earned} / {total}）"]
+        for a in assertion_results:
+            fb = None
+            for sa in spec["assertions"]:
+                if sa["id"] == a["id"]:
+                    fb = sa.get("feedback", {}); break
+            if fb:
+                key = "correct" if a["result"] == "correct" else "incorrect"
+                lines_ja.append(fb.get(key, {}).get("ja", ""))
+                lines_zh.append(fb.get(key, {}).get("zh", ""))
+        result_ja = "\n".join(lines_ja)
+        result_zh = "\n".join(lines_zh)
         return {"ok": True, "assessment": assessment,
                 "resultJa": result_ja, "resultZh": result_zh}
 
@@ -953,6 +1007,30 @@ class MOS365Service:
         self._write_original_workbook(paths.workbook, "retail", 1)
         paths.manifest.write_text(json.dumps(manifest, ensure_ascii=False, indent=2), encoding="utf-8")
         return {"sessionId": session_id, "mode": "r11_static_training", "scenarioId": "r11_static", "variant": 1,
+                "fileName": paths.workbook.name, "sandboxRoot": str(paths.directory),
+                "staticTask": task_data, "tasks": [], "environment": self.environment_status()}
+
+    def _create_r12_session(self) -> dict[str, Any]:
+        """Create a server-owned R12 dual-assertion training session."""
+        session_id = secrets.token_urlsafe(24).replace("-", "_")
+        paths = self._paths(session_id, require_exists=False)
+        paths.directory.mkdir(mode=0o700, parents=False, exist_ok=False)
+        task_data = {
+            "taskId": "R12_STATIC_DUAL_SHEET_DEMO",
+            "instructionJa": "練習用：\n1. 1枚目のシート名を「練習集計」に変更してください。\n2. 新しいワークシートを追加し、「集計結果」という名前にしてください。",
+            "instructionZh": "练习用：\n1. 请将第 1 个工作表重命名为「練習集計」。\n2. 请新建一个工作表，并命名为「集計結果」。"
+        }
+        manifest = {
+            "schemaVersion": 1, "sessionId": session_id,
+            "mode": "r12_static_training", "trainingMode": "r12_static_training",
+            "staticTask": task_data,
+            "completion": {"acknowledged": False, "acknowledgedAt": None, "acknowledgedPid": None},
+            "workbook": paths.workbook.name,
+            "createdAt": __import__("datetime").datetime.now().astimezone().isoformat(),
+        }
+        self._write_original_workbook(paths.workbook, "retail", 1)
+        paths.manifest.write_text(json.dumps(manifest, ensure_ascii=False, indent=2), encoding="utf-8")
+        return {"sessionId": session_id, "mode": "r12_static_training", "scenarioId": "r12_static", "variant": 1,
                 "fileName": paths.workbook.name, "sandboxRoot": str(paths.directory),
                 "staticTask": task_data, "tasks": [], "environment": self.environment_status()}
 
