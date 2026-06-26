@@ -4,6 +4,11 @@ using System.Windows.Forms;
 
 namespace StudyTools.Mos365ExamHost
 {
+    /// <summary>
+    /// MOS training task pane with proper state machine.
+    /// States: connecting → retrying → attached → failed → ending → ended
+    /// Exit button is always available during connecting/retrying/failed states.
+    /// </summary>
     public class ExamHostPaneControl : UserControl
     {
         private Label _titleLabel;
@@ -35,27 +40,49 @@ namespace StudyTools.Mos365ExamHost
         {
         }
 
+        /// <summary>
+        /// State machine: accepts "connecting", "retrying", "attached", "failed", "ending", "ended".
+        /// </summary>
         public void UpdateSessionState(string state, string sessionId = null, int? excelPid = null)
         {
-            var value = state ?? "";
-            if (value.IndexOf("HTTP", StringComparison.OrdinalIgnoreCase) >= 0 ||
-                value.IndexOf("FAILED", StringComparison.OrdinalIgnoreCase) >= 0 ||
-                value.IndexOf("REJECTED", StringComparison.OrdinalIgnoreCase) >= 0 ||
-                value.IndexOf("失败", StringComparison.OrdinalIgnoreCase) >= 0)
-            {
-                ShowConnectionFailed(null);
-                return;
-            }
+            if (string.IsNullOrEmpty(state)) { ShowConnecting(); return; }
 
-            if (value.IndexOf("验证", StringComparison.OrdinalIgnoreCase) >= 0 ||
-                value.IndexOf("connected", StringComparison.OrdinalIgnoreCase) >= 0 ||
-                value.IndexOf("接続", StringComparison.OrdinalIgnoreCase) >= 0)
+            switch (state.ToLowerInvariant())
             {
-                _stateLabel.Text = "接続済み / 已连接";
-                return;
+                case "connecting":
+                    ShowConnecting();
+                    break;
+                case "retrying":
+                    ShowRetrying();
+                    break;
+                case "attached":
+                case "connected":
+                    _stateLabel.Text = "接続済み / 已连接";
+                    break;
+                case "failed":
+                    ShowConnectionFailed(null);
+                    break;
+                case "ending":
+                    ShowEnding();
+                    break;
+                case "ended":
+                    ShowEnded();
+                    break;
+                default:
+                    // Legacy: check for error keywords in state string
+                    if (state.IndexOf("HTTP", StringComparison.OrdinalIgnoreCase) >= 0 ||
+                        state.IndexOf("FAILED", StringComparison.OrdinalIgnoreCase) >= 0 ||
+                        state.IndexOf("REJECTED", StringComparison.OrdinalIgnoreCase) >= 0 ||
+                        state.IndexOf("失败", StringComparison.OrdinalIgnoreCase) >= 0)
+                    {
+                        ShowConnectionFailed(null);
+                    }
+                    else
+                    {
+                        ShowConnecting();
+                    }
+                    break;
             }
-
-            ShowConnecting();
         }
 
         public void ShowTask(string instructionJa, string instructionZh)
@@ -71,6 +98,7 @@ namespace StudyTools.Mos365ExamHost
             _gradeBtn.Text = "完成并评分";
             _retryBtn.Visible = false;
             _exitBtn.Visible = true;
+            _exitBtn.Enabled = true;
             _resultLabel.Visible = true;
             _resultLabel.ForeColor = Color.FromArgb(210, 220, 225);
             _resultLabel.Text = "Excel で操作してから採点します。\n完成 Excel 操作后可评分。";
@@ -87,6 +115,7 @@ namespace StudyTools.Mos365ExamHost
         {
             _gradeBtn.Enabled = false;
             _gradeBtn.Text = "採点中...";
+            _exitBtn.Enabled = false;
             _resultLabel.Visible = true;
             _resultLabel.ForeColor = Color.FromArgb(210, 220, 225);
             _resultLabel.Text = "採点しています / 正在评分";
@@ -97,8 +126,12 @@ namespace StudyTools.Mos365ExamHost
             var correct = total > 0 && earned == total;
             _gradeBtn.Enabled = true;
             _gradeBtn.Text = "完成并评分";
+            _exitBtn.Enabled = true;
+            _retryBtn.Visible = false;
             _resultLabel.Visible = true;
-            _resultLabel.ForeColor = correct ? Color.FromArgb(80, 170, 100) : Color.FromArgb(180, 105, 80);
+            _resultLabel.ForeColor = correct
+                ? Color.FromArgb(80, 170, 100)
+                : Color.FromArgb(180, 105, 80);
             _resultLabel.Text =
                 earned + "/" + total + (correct ? " correct" : " incorrect") + "\n" +
                 (correct ? "正解です / 正确" : "不正解です / 不正确") + "\n" +
@@ -110,9 +143,13 @@ namespace StudyTools.Mos365ExamHost
         {
             _stateLabel.Text = "接続できませんでした / 连接失败";
             _progressLabel.Text = "問題 1 / 1";
+            _taskInstructionJa.Visible = false;
+            _taskInstructionZh.Visible = false;
             _gradeBtn.Visible = false;
             _retryBtn.Visible = true;
+            _retryBtn.Enabled = true;
             _exitBtn.Visible = true;
+            _exitBtn.Enabled = true;
             _resultLabel.Visible = true;
             _resultLabel.ForeColor = Color.FromArgb(180, 105, 80);
             _resultLabel.Text = "接続を再試行できます。\n可以重新连接训练面板。";
@@ -132,6 +169,8 @@ namespace StudyTools.Mos365ExamHost
         public void ShowEnded()
         {
             _stateLabel.Text = "終了しました / 训练已结束";
+            _taskInstructionJa.Visible = false;
+            _taskInstructionZh.Visible = false;
             _gradeBtn.Visible = false;
             _retryBtn.Visible = false;
             _exitBtn.Enabled = false;
@@ -141,14 +180,38 @@ namespace StudyTools.Mos365ExamHost
             _resultLabel.Text = "今回のセッションは終了しました。\n本次 session 已结束。";
         }
 
+        /// <summary>
+        /// Connecting state: exit button IS visible so user can cancel.
+        /// </summary>
         private void ShowConnecting()
         {
-            _stateLabel.Text = "接続を確認しています / 正在连接";
+            _stateLabel.Text = "接続を確認しています / 正在连接训练…";
             _progressLabel.Text = "問題 1 / 1";
+            _taskInstructionJa.Visible = false;
+            _taskInstructionZh.Visible = false;
             _gradeBtn.Visible = false;
             _retryBtn.Visible = false;
-            _exitBtn.Visible = false;
-            _resultLabel.Visible = false;
+            // Exit button available during connecting — user can bail out
+            _exitBtn.Visible = true;
+            _exitBtn.Enabled = true;
+            _resultLabel.Visible = true;
+            _resultLabel.ForeColor = Color.FromArgb(210, 220, 225);
+            _resultLabel.Text = "右侧面板正在连接训练服务…\nパネルがトレーニングに接続しています…";
+        }
+
+        private void ShowRetrying()
+        {
+            _stateLabel.Text = "再接続しています… / 正在重新连接…";
+            _progressLabel.Text = "問題 1 / 1";
+            _taskInstructionJa.Visible = false;
+            _taskInstructionZh.Visible = false;
+            _gradeBtn.Visible = false;
+            _retryBtn.Visible = false;
+            _exitBtn.Visible = true;
+            _exitBtn.Enabled = true;
+            _resultLabel.Visible = true;
+            _resultLabel.ForeColor = Color.FromArgb(210, 220, 225);
+            _resultLabel.Text = "再接続中…\n正在尝试重新连接训练面板。";
         }
 
         private static Label BuildLabel(Font font, Color color, Size size, Point location)
@@ -165,12 +228,41 @@ namespace StudyTools.Mos365ExamHost
 
         private void InitializeComponent()
         {
-            _titleLabel = BuildLabel(new Font("Segoe UI", 12f, FontStyle.Bold), Color.FromArgb(18, 92, 68), new Size(320, 28), new Point(18, 16));
-            _stateLabel = BuildLabel(new Font("Segoe UI", 10f, FontStyle.Bold), Color.FromArgb(18, 92, 68), new Size(320, 26), new Point(18, 52));
-            _progressLabel = BuildLabel(new Font("Segoe UI", 10f, FontStyle.Bold), Color.FromArgb(58, 76, 70), new Size(320, 24), new Point(18, 82));
-            _taskInstructionJa = BuildLabel(new Font("Segoe UI", 9.5f, FontStyle.Bold), Color.FromArgb(35, 45, 42), new Size(320, 82), new Point(18, 118));
-            _taskInstructionZh = BuildLabel(new Font("Segoe UI", 9.5f, FontStyle.Regular), Color.FromArgb(62, 78, 72), new Size(320, 78), new Point(18, 206));
-            _resultLabel = BuildLabel(new Font("Segoe UI", 9f, FontStyle.Regular), Color.FromArgb(62, 78, 72), new Size(320, 116), new Point(18, 344));
+            _titleLabel = BuildLabel(
+                new Font("Segoe UI", 12f, FontStyle.Bold),
+                Color.FromArgb(18, 92, 68),
+                new Size(320, 28),
+                new Point(18, 16));
+
+            _stateLabel = BuildLabel(
+                new Font("Segoe UI", 10f, FontStyle.Bold),
+                Color.FromArgb(18, 92, 68),
+                new Size(320, 26),
+                new Point(18, 52));
+
+            _progressLabel = BuildLabel(
+                new Font("Segoe UI", 10f, FontStyle.Bold),
+                Color.FromArgb(58, 76, 70),
+                new Size(320, 24),
+                new Point(18, 82));
+
+            _taskInstructionJa = BuildLabel(
+                new Font("Segoe UI", 9.5f, FontStyle.Bold),
+                Color.FromArgb(35, 45, 42),
+                new Size(320, 82),
+                new Point(18, 118));
+
+            _taskInstructionZh = BuildLabel(
+                new Font("Segoe UI", 9.5f, FontStyle.Regular),
+                Color.FromArgb(62, 78, 72),
+                new Size(320, 78),
+                new Point(18, 206));
+
+            _resultLabel = BuildLabel(
+                new Font("Segoe UI", 9f, FontStyle.Regular),
+                Color.FromArgb(62, 78, 72),
+                new Size(320, 116),
+                new Point(18, 344));
 
             _titleLabel.Text = "MOS 実技トレーニング";
             _taskInstructionJa.Visible = false;
