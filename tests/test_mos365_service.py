@@ -9,6 +9,7 @@ ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
+import mos365_service
 from mos365_service import MOS365Service, MOS365ServiceError
 
 
@@ -630,6 +631,163 @@ class MOS365R17FormulaTextTests(unittest.TestCase):
         self.assertEqual(result["assessment"]["total"], 1, "R16 positive total 1")
         with _LAUNCH_LOCK:
             _LAUNCH_STATE = None
+
+
+class MOS365R22FlowContractTests(unittest.TestCase):
+    def setUp(self):
+        self.temp = tempfile.TemporaryDirectory()
+        self.service = MOS365Service(Path(__file__).resolve().parents[1], session_root=self.temp.name)
+        self._reset_launch_state()
+
+    def tearDown(self):
+        self._reset_launch_state()
+        self.temp.cleanup()
+
+    def _reset_launch_state(self):
+        if mos365_service._LAUNCH_LOCK is None:
+            return
+        with mos365_service._LAUNCH_LOCK:
+            mos365_service._LAUNCH_STATE = None
+
+    def _attach_session(self, session, pid=24680):
+        paths = self.service._paths(session["sessionId"])
+        manifest = json.loads(paths.manifest.read_text(encoding="utf-8"))
+        manifest["state"] = "launched"
+        manifest["excelPid"] = pid
+        paths.manifest.write_text(json.dumps(manifest, ensure_ascii=False, indent=2), encoding="utf-8")
+        return self.service.session_verify({
+            "workbookPath": str(paths.workbook),
+            "excelPid": pid,
+        })
+
+    def test_r22_training_display_is_bilingual_and_r17_does_not_leak_formula(self):
+        r16 = self.service.create_session({"mode": "r16_static_training"})
+        r16_verify = self._attach_session(r16)
+        r16_training = r16_verify["session"]["training"]
+        self.assertIn("入力", r16_training["instructionJa"])
+        self.assertIn("完了", r16_training["instructionJa"])
+        self.assertIn("输入", r16_training["instructionZh"])
+
+        self._reset_launch_state()
+        r17 = self.service.create_session({"mode": "r17_static_training"})
+        r17_verify = self._attach_session(r17)
+        r17_training = r17_verify["session"]["training"]
+        combined = json.dumps(r17_training, ensure_ascii=False)
+        self.assertIn("計算", r17_training["instructionJa"])
+        self.assertIn("数式", r17_training["instructionJa"])
+        self.assertIn("公式", r17_training["instructionZh"])
+        self.assertNotIn("=SUM(", combined)
+        self.assertNotIn("expectedFormula", combined)
+        self.assertNotIn("expected", combined)
+
+    def test_r22_duplicate_launch_returns_existing_process(self):
+        session = self.service.create_session({"mode": "r16_static_training"})
+        calls = []
+
+        class FakeProcess:
+            def __init__(self, args, shell=False, close_fds=True):
+                calls.append(args)
+                self.pid = 43210
+
+        old_popen = mos365_service.subprocess.Popen
+        old_find_excel = self.service.find_excel
+        try:
+            mos365_service.subprocess.Popen = FakeProcess
+            self.service.find_excel = lambda: Path("C:/Program Files/Microsoft Office/root/Office16/EXCEL.EXE")
+            first = self.service.launch_excel({"sessionId": session["sessionId"]})
+            second = self.service.launch_excel({"sessionId": session["sessionId"]})
+        finally:
+            mos365_service.subprocess.Popen = old_popen
+            self.service.find_excel = old_find_excel
+
+        self.assertEqual(len(calls), 1)
+        self.assertEqual(first["processId"], 43210)
+        self.assertEqual(second["processId"], 43210)
+        self.assertTrue(second["idempotent"])
+        self.assertEqual(second["launchState"], "awaiting_attach")
+
+    def test_r22_launch_state_records_required_phases(self):
+        session = self.service.create_session({"mode": "r17_static_training"})
+        state = self.service.launch_status()
+        phases = state["phases"]
+        self.assertEqual(state["state"], "creating")
+        self.assertIn("click_received", phases)
+        self.assertIn("session_created", phases)
+        self.assertIn("workbook_ready", phases)
+
+        self._attach_session(session)
+        state = self.service.launch_status()
+        phases = state["phases"]
+        self.assertEqual(state["state"], "ready")
+        self.assertIn("excel_window_visible", phases)
+        self.assertIn("vsto_attached", phases)
+        self.assertIn("task_rendered", phases)
+
+    def test_r22_exit_ends_only_current_session(self):
+        first = self.service.create_session({"mode": "r16_static_training"})
+        first_paths = self.service._paths(first["sessionId"])
+        first_manifest = json.loads(first_paths.manifest.read_text(encoding="utf-8"))
+        first_manifest["state"] = "attached"
+        first_manifest["excelPid"] = 101
+        first_manifest["attachedPid"] = 101
+        first_paths.manifest.write_text(json.dumps(first_manifest, ensure_ascii=False, indent=2), encoding="utf-8")
+
+        self._reset_launch_state()
+        second = self.service.create_session({"mode": "r17_static_training"})
+        second_paths = self.service._paths(second["sessionId"])
+        second_manifest = json.loads(second_paths.manifest.read_text(encoding="utf-8"))
+        second_manifest["state"] = "attached"
+        second_manifest["excelPid"] = 202
+        second_manifest["attachedPid"] = 202
+        second_paths.manifest.write_text(json.dumps(second_manifest, ensure_ascii=False, indent=2), encoding="utf-8")
+
+        result = self.service.end_session({"sessionId": first["sessionId"], "excelPid": 101})
+        self.assertTrue(result["ok"])
+        self.assertEqual(json.loads(first_paths.manifest.read_text(encoding="utf-8"))["state"], "ended")
+        self.assertEqual(json.loads(second_paths.manifest.read_text(encoding="utf-8"))["state"], "attached")
+        self.assertTrue(second_paths.workbook.is_file())
+
+    def test_r22_vsto_source_contract_single_right_pane_no_legacy_debug_text(self):
+        root = Path(__file__).resolve().parents[1]
+        addin = (root / "native/StudyTools.Mos365ExamHost.VstoBottomPanePoc/ThisAddIn.cs").read_text(encoding="utf-8")
+        pane = (root / "native/StudyTools.Mos365ExamHost.VstoBottomPanePoc/ExamHostPaneControl.cs").read_text(encoding="utf-8")
+        combined = addin + pane
+
+        self.assertEqual(addin.count("CustomTaskPanes.Add"), 1)
+        self.assertIn("RemoveExistingTrainingPanes", addin)
+        self.assertIn("CustomTaskPanes.Remove", addin)
+        self.assertNotIn("HideLegacyPaneWindows", addin)
+        self.assertNotIn("EnumChildWindows", addin)
+        self.assertNotIn("ShowWindow", addin)
+        self.assertNotIn("SetWindowPos", addin)
+        self.assertNotIn("DllImport", addin)
+        self.assertNotIn("SW_HIDE", addin)
+        self.assertNotIn("SWP_HIDEWINDOW", addin)
+        self.assertNotIn("WM_CLOSE", addin)
+        self.assertIn('"MOS 実技トレーニング"', addin)
+        self.assertIn("msoCTPDockPositionRight", addin)
+        self.assertIn("_pane.Width = 360", addin)
+        self.assertNotIn("msoCTPDockPositionBottom", addin)
+        self.assertNotIn("MOS Native Exam Host", combined)
+        self.assertNotIn("R3 VSTO POC", combined)
+        self.assertNotIn("Excel PID", pane)
+        self.assertNotIn("Workbook:", pane)
+        self.assertNotIn("Platform:", pane)
+        self.assertNotIn("HTTP FAILED", combined)
+        self.assertNotIn("HTTP_FAILED", combined)
+        self.assertIn("完成并评分", pane)
+        self.assertIn("退出训练", pane)
+
+    def test_r22_terminal_launch_state_does_not_start_another_poll_render_loop(self):
+        root = Path(__file__).resolve().parents[1]
+        web = (root / "assets/js/mos365.js").read_text(encoding="utf-8")
+        self.assertIn("function isTerminalLaunchState", web)
+        self.assertIn("if (!isTerminalLaunchState(state.launchState)) scheduleLaunchPoll(0);", web)
+
+    def test_r22_active_nonterminal_launch_disables_new_start(self):
+        root = Path(__file__).resolve().parents[1]
+        web = (root / "assets/js/mos365.js").read_text(encoding="utf-8")
+        self.assertIn("state.launchState && state.launchState.active && !isTerminalLaunchState(state.launchState)", web)
 
 
 if __name__ == "__main__":

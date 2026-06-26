@@ -137,8 +137,8 @@ SCORING_SPECS: dict[str, dict[str, Any]] = {
             "weight": 1,
             "comparison": "strict_text_equals",
             "feedback": {
-                "correct": {"ja": "「計算」シートの C2 セルに =SUM(A2:B2) が入力されています。", "zh": "「計算」工作表的 C2 单元格已输入 =SUM(A2:B2)。"},
-                "incorrect": {"ja": "「計算」シートの C2 セルに =SUM(A2:B2) と入力してください。", "zh": "请在「計算」工作表的 C2 单元格输入 =SUM(A2:B2)。"},
+                "correct": {"ja": "「計算」シートの C2 セルに、A2 から B2 の合計を求める数式が入力されています。", "zh": "「計算」工作表的 C2 单元格已输入计算 A2 到 B2 总和的公式。"},
+                "incorrect": {"ja": "「計算」シートの C2 セルに、A2 から B2 の合計を求める数式を入力してください。", "zh": "请在「計算」工作表的 C2 单元格中，输入计算 A2 到 B2 总和的公式。"},
                 "indeterminate": {"ja": "対象のセルを安全に確認できませんでした。", "zh": "无法安全确认目标单元格。"}
             }
         }],
@@ -220,6 +220,24 @@ class MOS365Service:
         return SessionPaths(session_id, directory, workbook, manifest)
 
     @staticmethod
+    def _now_iso() -> str:
+        return __import__("datetime").datetime.now().astimezone().isoformat()
+
+    def _mark_launch_phase(self, session_id: str, phase: str, state: str | None = None, pid: int | None = None) -> None:
+        global _LAUNCH_STATE
+        now = self._now_iso()
+        with _LAUNCH_LOCK:
+            if not _LAUNCH_STATE or _LAUNCH_STATE.get("session_id") != session_id:
+                return
+            phases = _LAUNCH_STATE.setdefault("phases", {})
+            phases[phase] = now
+            _LAUNCH_STATE["updated_at"] = now
+            if state is not None:
+                _LAUNCH_STATE["state"] = state
+            if pid is not None:
+                _LAUNCH_STATE["pid"] = pid
+
+    @staticmethod
     def _is_trusted_excel(path: Path) -> bool:
         try:
             candidate = path.resolve()
@@ -299,8 +317,8 @@ class MOS365Service:
                     return {"sessionId": existing_id, "mode": manifest.get("mode","guided"),
                         "scenarioId": manifest.get("scenarioId","r16_static"), "variant": manifest.get("variant",1),
                         "fileName": paths.workbook.name, "sandboxRoot": str(paths.directory),
-                        "tasks": [], "environment": self.environment_status(),
-                        "launchState": _LAUNCH_STATE.get("state"), "idempotent": True}
+                        "staticTask": manifest.get("staticTask"), "tasks": [], "environment": self.environment_status(),
+                        "launchState": _LAUNCH_STATE.get("state"), "launchPhases": dict(_LAUNCH_STATE.get("phases", {})), "idempotent": True}
                 except Exception:
                     pass
         mode = str(payload.get("mode", "guided"))
@@ -366,9 +384,23 @@ class MOS365Service:
     def launch_excel(self, payload: dict[str, Any]) -> dict[str, Any]:
         session_id = self._safe_session_id(str(payload.get("sessionId", "")))
         global _LAUNCH_STATE
+        existing_pid = None
+        existing_state = None
         with _LAUNCH_LOCK:
             if _LAUNCH_STATE and _LAUNCH_STATE["session_id"] == session_id:
+                existing_pid = _LAUNCH_STATE.get("pid")
+                existing_state = _LAUNCH_STATE.get("state")
+                if existing_pid and existing_state in ("launching", "awaiting_attach", "ready"):
+                    return {
+                        "launched": True,
+                        "fileName": self._paths(session_id).workbook.name,
+                        "sessionId": session_id,
+                        "processId": existing_pid,
+                        "launchState": existing_state,
+                        "idempotent": True,
+                    }
                 _LAUNCH_STATE["state"] = "launching"
+                _LAUNCH_STATE.setdefault("phases", {})["excel_launch_requested"] = self._now_iso()
         paths = self._paths(session_id)
         if not paths.workbook.is_file() or paths.workbook.suffix.lower() != ".xlsx":
             raise MOS365ServiceError("WORKBOOK_NOT_FOUND", "練習ファイルが見つかりません。", "未找到练习文件。", 404)
@@ -383,10 +415,11 @@ class MOS365Service:
         # Only EXCEL.EXE and the server-created workbook are ever passed to Popen.
         # /x isolates this Session from Excel's DDE reuse of an older workbook window.
         process = subprocess.Popen([str(excel), "/x", str(paths.workbook)], shell=False, close_fds=(os.name != "nt"))
+        self._mark_launch_phase(session_id, "excel_process_started", state="awaiting_attach", pid=process.pid)
         # Update manifest with launch state
         manifest = json.loads(paths.manifest.read_text(encoding="utf-8"))
         manifest["excelPid"] = process.pid
-        manifest["launchedAt"] = __import__("datetime").datetime.now().astimezone().isoformat()
+        manifest["launchedAt"] = self._now_iso()
         manifest["state"] = "launched"
         paths.manifest.write_text(json.dumps(manifest, ensure_ascii=False, indent=2), encoding="utf-8")
         return {
@@ -870,7 +903,7 @@ class MOS365Service:
         # Update state to attached (idempotent)
         if state == "launched":
             manifest["state"] = "attached"
-            manifest["attachedAt"] = __import__("datetime").datetime.now().astimezone().isoformat()
+            manifest["attachedAt"] = self._now_iso()
             manifest["attachedPid"] = raw_pid
             mf_path = session_dir / "session_manifest.json"
             mf_path.write_text(json.dumps(manifest, ensure_ascii=False, indent=2), encoding="utf-8")
@@ -888,6 +921,10 @@ class MOS365Service:
                 "instructionZh": task.get("instructionZh", ""),
                 "completionAcknowledged": comp.get("acknowledged", False)
             }
+        self._mark_launch_phase(session_id, "excel_window_visible", state="ready", pid=raw_pid)
+        self._mark_launch_phase(session_id, "vsto_attached", state="ready", pid=raw_pid)
+        if training_mode in STATIC_MODES:
+            self._mark_launch_phase(session_id, "task_rendered", state="ready", pid=raw_pid)
         return result
 
     def _create_r8_session(self) -> dict[str, Any]:
@@ -956,7 +993,7 @@ class MOS365Service:
         if comp.get("acknowledged"):
             return {"ok": True, "session": {"sessionId": session_id, "state": "attached", "completionAcknowledged": True, "completionAcknowledgedAt": comp.get("acknowledgedAt")},
                     "message": {"ja": "既に完了が記録されています。", "zh": "已完成记录，无需重复操作。"}}
-        now = __import__("datetime").datetime.now().astimezone().isoformat()
+        now = self._now_iso()
         comp["acknowledged"] = True
         comp["acknowledgedAt"] = now
         comp["acknowledgedPid"] = raw_pid
@@ -1223,7 +1260,8 @@ class MOS365Service:
                 return {"active": False, "state": None}
             return {"active": True, "sessionId": _LAUNCH_STATE["session_id"],
                 "state": _LAUNCH_STATE["state"], "createdAt": _LAUNCH_STATE.get("created_at"),
-                "pid": _LAUNCH_STATE.get("pid")}
+                "updatedAt": _LAUNCH_STATE.get("updated_at"),
+                "pid": _LAUNCH_STATE.get("pid"), "phases": dict(_LAUNCH_STATE.get("phases", {}))}
 
     def clear_launch(self) -> dict[str, Any]:
         """Clear active launch state for retry."""
@@ -1234,6 +1272,35 @@ class MOS365Service:
             if prev:
                 return {"cleared": True, "previousState": prev.get("state"), "sessionId": prev.get("session_id")}
             return {"cleared": True, "previousState": None}
+
+    def end_session(self, payload: dict[str, Any]) -> dict[str, Any]:
+        """End one training session without deleting files or touching other Excel workbooks."""
+        session_id = self._safe_session_id(str(payload.get("sessionId", "")))
+        raw_pid = payload.get("excelPid")
+        try:
+            raw_pid = int(raw_pid) if raw_pid is not None else None
+        except (TypeError, ValueError):
+            raise MOS365ServiceError("SESSION_PID_MISMATCH", "プロセス ID が無効です。", "进程 ID 无效。")
+        if raw_pid is None:
+            raise MOS365ServiceError("SESSION_PID_MISMATCH", "プロセス ID が必要です。", "需要提供进程 ID。")
+        paths = self._paths(session_id)
+        if not paths.manifest.is_file():
+            raise MOS365ServiceError("SESSION_NOT_FOUND", "セッションが見つかりません。", "未找到会话。", 404)
+        manifest = json.loads(paths.manifest.read_text(encoding="utf-8"))
+        server_pid = manifest.get("excelPid")
+        attached_pid = manifest.get("attachedPid")
+        if server_pid is not None and server_pid != raw_pid:
+            raise MOS365ServiceError("SESSION_PID_MISMATCH", "セッションのプロセス ID が一致しません。", "会话进程 ID 不匹配。")
+        if attached_pid is not None and attached_pid != raw_pid:
+            raise MOS365ServiceError("SESSION_PID_MISMATCH", "バインドされたプロセス ID が一致しません。", "绑定进程 ID 不匹配。")
+        now = self._now_iso()
+        manifest["state"] = "ended"
+        manifest["endedAt"] = now
+        manifest["endedPid"] = raw_pid
+        manifest["endReason"] = "user_exit"
+        paths.manifest.write_text(json.dumps(manifest, ensure_ascii=False, indent=2), encoding="utf-8")
+        self._mark_launch_phase(session_id, "session_ended", state="ended", pid=raw_pid)
+        return {"ok": True, "session": {"sessionId": session_id, "state": "ended", "endedAt": now, "excelPid": raw_pid}}
 
     def _create_r15_session(self) -> dict[str, Any]:
         """Create a server-owned R15 visibility training session with データベース sheet."""
@@ -1285,8 +1352,10 @@ class MOS365Service:
         """Create a server-owned R16 cell value training session with 入力 sheet."""
         session_id = secrets.token_urlsafe(24).replace("-", "_")
         global _LAUNCH_STATE
+        now = self._now_iso()
         with _LAUNCH_LOCK:
-            _LAUNCH_STATE = {"session_id": session_id, "state": "creating", "created_at": __import__("datetime").datetime.now().astimezone().isoformat()}
+            _LAUNCH_STATE = {"session_id": session_id, "state": "creating", "created_at": now, "updated_at": now,
+                             "phases": {"click_received": now, "session_created": now}}
         paths = self._paths(session_id, require_exists=False)
         paths.directory.mkdir(mode=0o700, parents=False, exist_ok=False)
         task_data = {
@@ -1296,9 +1365,10 @@ class MOS365Service:
         }
         manifest = {"schemaVersion": 1, "sessionId": session_id, "mode": "r16_static_training", "trainingMode": "r16_static_training",
             "staticTask": task_data, "completion": {"acknowledged": False, "acknowledgedAt": None, "acknowledgedPid": None},
-            "workbook": paths.workbook.name, "createdAt": __import__("datetime").datetime.now().astimezone().isoformat()}
+            "workbook": paths.workbook.name, "createdAt": self._now_iso()}
         self._write_r16_workbook(paths.workbook)
         paths.manifest.write_text(json.dumps(manifest, ensure_ascii=False, indent=2), encoding="utf-8")
+        self._mark_launch_phase(session_id, "workbook_ready")
         return {"sessionId": session_id, "mode": "r16_static_training", "scenarioId": "r16_static", "variant": 1,
                 "fileName": paths.workbook.name, "sandboxRoot": str(paths.directory),
                 "staticTask": task_data, "tasks": [], "environment": self.environment_status()}
@@ -1326,20 +1396,23 @@ class MOS365Service:
         """Create a server-owned R17 formula text training session with 計算 sheet."""
         session_id = secrets.token_urlsafe(24).replace("-", "_")
         global _LAUNCH_STATE
+        now = self._now_iso()
         with _LAUNCH_LOCK:
-            _LAUNCH_STATE = {"session_id": session_id, "state": "creating", "created_at": __import__("datetime").datetime.now().astimezone().isoformat()}
+            _LAUNCH_STATE = {"session_id": session_id, "state": "creating", "created_at": now, "updated_at": now,
+                             "phases": {"click_received": now, "session_created": now}}
         paths = self._paths(session_id, require_exists=False)
         paths.directory.mkdir(mode=0o700, parents=False, exist_ok=False)
         task_data = {
             "taskId": "R17_STATIC_FORMULA_TEXT_DEMO",
-            "instructionJa": "練習用：「計算」シートの C2 セルに =SUM(A2:B2) と入力してください。",
-            "instructionZh": "练习用：请在「計算」工作表的 C2 单元格输入 =SUM(A2:B2)。"
+            "instructionJa": "「計算」シートの C2 セルに、A2 から B2 の合計を求める数式を入力してください。",
+            "instructionZh": "请在「計算」工作表的 C2 单元格中，输入计算 A2 到 B2 总和的公式。"
         }
         manifest = {"schemaVersion": 1, "sessionId": session_id, "mode": "r17_static_training", "trainingMode": "r17_static_training",
             "staticTask": task_data, "completion": {"acknowledged": False, "acknowledgedAt": None, "acknowledgedPid": None},
-            "workbook": paths.workbook.name, "createdAt": __import__("datetime").datetime.now().astimezone().isoformat()}
+            "workbook": paths.workbook.name, "createdAt": self._now_iso()}
         self._write_r17_workbook(paths.workbook)
         paths.manifest.write_text(json.dumps(manifest, ensure_ascii=False, indent=2), encoding="utf-8")
+        self._mark_launch_phase(session_id, "workbook_ready")
         return {"sessionId": session_id, "mode": "r17_static_training", "scenarioId": "r17_static", "variant": 1,
                 "fileName": paths.workbook.name, "sandboxRoot": str(paths.directory),
                 "staticTask": task_data, "tasks": [], "environment": self.environment_status()}

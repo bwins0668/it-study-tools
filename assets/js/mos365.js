@@ -5,7 +5,7 @@
   if (!content || document.getElementById('mos365-shell')) return;
 
   var STORAGE_KEY = 'study-tools.mos365.v1.records';
-  var state = { view: 'dashboard', session: null, examTimer: null, environment: null, launchState: null, mvpInProgress: false };
+  var state = { view: 'dashboard', session: null, examTimer: null, environment: null, launchState: null, mvpInProgress: false, launchPollTimer: null };
 
   function escapeHtml(value) {
     return String(value == null ? '' : value).replace(/[&<>'"]/g, function (char) {
@@ -37,6 +37,14 @@
         return payload.data;
       });
     });
+  }
+
+  function scheduleLaunchPoll(delay) {
+    if (state.launchPollTimer) return;
+    state.launchPollTimer = window.setTimeout(function () {
+      state.launchPollTimer = null;
+      pollLaunchState();
+    }, delay);
   }
 
   function addStyles() {
@@ -345,36 +353,45 @@
     main.innerHTML = '<h3>报名准备度</h3><p class="mos365-muted">有效记录条件：正式真机模拟、全日文、未使用提示、50 分钟、已完成评分、90% 以上。</p><section class="mos365-card"><h4>受験準備度：' + (status.ready ? '目標達成' : '未達成') + '</h4><p class="mos365-kpi">' + (status.ready ? '3 / 3' : status.valid.filter(function (item) { return item.percentage >= 90; }).length + ' / 3') + '</p><p>この表示は学習上の目安であり、公式試験の合格を保証するものではありません。<br>此状态只是训练建议，不代表官方合格保证。</p></section><div class="mos365-list">' + (status.valid.length ? status.valid.map(function (record, index) { return '<article class="mos365-item"><strong>' + (index + 1) + '. ' + escapeHtml(record.completedAt) + '</strong><br>スコア：' + record.percentage + '% / 有効：' + (record.percentage >= 90 ? 'はい' : 'いいえ') + '</article>'; }).join('') : '<div class="mos365-notice">まだ有効な正式真机模拟记录はありません。</div>') + '</div>';
   }
 
+  function isTerminalLaunchState(launchState) {
+    return !!(launchState && launchState.active &&
+      (launchState.state === 'ready' || launchState.state === 'failed' || launchState.state === 'ended'));
+  }
+
   function renderMvp(main) {
-    var isCreating = state.mvpInProgress;
+    var isCreating = state.mvpInProgress ||
+      (state.launchState && state.launchState.active && !isTerminalLaunchState(state.launchState));
     var ls = state.launchState;
     var statusHtml = '';
     if (isCreating || (ls && ls.active)) {
-      var statusText = '準備中…';
+      var statusText = '正在创建训练';
       if (ls && ls.active) {
-        var stateMap = { creating: 'トレーニングを作成中…', launching: 'Excel を起動中…', awaiting_attach: 'Excel への接続を確認中…', ready: '準備完了。Excel で問題を解いてください。', failed: '起動に失敗しました。再試行してください。' };
+        var stateMap = {
+          creating: '正在创建训练 / トレーニングを作成中',
+          launching: '正在打开 Excel / Excel を起動中',
+          awaiting_attach: '正在连接训练面板 / トレーニングパネルへ接続中',
+          ready: '已开始答题 / Excel で問題を解いてください',
+          ended: '训练已结束 / トレーニングを終了しました',
+          failed: '启动失败，可安全重试 / 起動に失敗しました'
+        };
         statusText = stateMap[ls.state] || ls.state;
       }
-      statusHtml = '<div class="mos365-notice"><strong>' + statusText + '</strong>' + (ls && ls.pid ? '<br>Excel PID: ' + ls.pid : '') + '</div>';
+      statusHtml = '<div class="mos365-notice"><strong>' + statusText + '</strong></div>';
     }
-    main.innerHTML = '<h3>MOS 実技トレーニング（MVP）</h3><p class="mos365-muted">本物の Excel を使って操作を練習します。评分系统は実際の Open XML 分析に基づきます。</p>' +
+    main.innerHTML = '<h3>MOS 実技トレーニング</h3><p class="mos365-muted">本物の Excel を使って操作を練習します。评分系统は実際の Open XML 分析に基づきます。</p>' +
       '<div class="mos365-list">' +
       '<article class="mos365-item"><h4>R16: セルに値を入力する</h4><p>「入力」シートの B2 セルに「完了」と入力する練習。</p><div class="mos365-actions"><button class="mos365-btn" data-mvp-start="r16" ' + (isCreating ? 'disabled' : '') + '>開始する（R16）</button></div></article>' +
-      '<article class="mos365-item"><h4>R17: 数式を入力する</h4><p>「計算」シートの C2 セルに =SUM(A2:B2) を入力する練習。</p><div class="mos365-actions"><button class="mos365-btn" data-mvp-start="r17" ' + (isCreating ? 'disabled' : '') + '>開始する（R17）</button></div></article>' +
+      '<article class="mos365-item"><h4>R17: 数式を入力する</h4><p>「計算」シートの C2 セルに、A2 から B2 の合計を求める数式を入力する練習。</p><div class="mos365-actions"><button class="mos365-btn" data-mvp-start="r17" ' + (isCreating ? 'disabled' : '') + '>開始する（R17）</button></div></article>' +
       '</div>' + statusHtml +
       '<div id="mos-mvp-output"></div><div class="mos365-actions">' +
-      '<button class="mos365-btn secondary" data-mvp-grade ' + (!state.session ? 'disabled' : '') + '>保存して採点する</button>' +
-      '<button class="mos365-btn danger" data-mvp-clear>クリア / リセット</button></div>';
+      '<button class="mos365-btn danger" data-mvp-clear>重新开始 / リセット</button></div>';
     main.querySelector('[data-mvp-start]') && main.querySelectorAll('[data-mvp-start]').forEach(function (btn) {
       btn.addEventListener('click', function () { startMvpTraining(btn.dataset.mvpStart); });
-    });
-    main.querySelector('[data-mvp-grade]') && main.querySelector('[data-mvp-grade]').addEventListener('click', function () {
-      if (state.session) gradeCurrent('guided', false, document.getElementById('mos-mvp-output'));
     });
     main.querySelector('[data-mvp-clear]') && main.querySelector('[data-mvp-clear]').addEventListener('click', function () {
       api('/api/mos365/clear-launch', {}).then(function () { state.mvpInProgress = false; state.launchState = null; render(); });
     });
-    pollLaunchState();
+    if (!isTerminalLaunchState(state.launchState)) scheduleLaunchPoll(0);
   }
 
   function pollLaunchState() {
@@ -382,12 +399,12 @@
     api('/api/mos365/launch/state', null, 'GET').then(function (data) {
       if (data && data.active) {
         state.launchState = data;
-        if (data.state === 'ready' || data.state === 'failed') { state.mvpInProgress = false; render(); }
-        else { render(); }
+        if (data.state === 'ready' || data.state === 'failed' || data.state === 'ended') { state.mvpInProgress = false; render(); }
+        else { render(); scheduleLaunchPoll(1000); }
       } else if (state.mvpInProgress) {
-        setTimeout(pollLaunchState, 2000);
+        scheduleLaunchPoll(1000);
       }
-    }).catch(function () { /* retry */ setTimeout(pollLaunchState, 3000); });
+    }).catch(function () { scheduleLaunchPoll(2000); });
   }
 
   function startMvpTraining(mode) {
@@ -402,9 +419,9 @@
       return api('/api/mos365/launch', { sessionId: session.sessionId });
     }).then(function (launchData) {
       state.session.processId = launchData.processId;
-      state.launchState = { active: true, state: 'launching', pid: launchData.processId };
+      state.launchState = { active: true, state: launchData.launchState || 'launching' };
       render();
-      pollLaunchState();
+      scheduleLaunchPoll(500);
     }).catch(function (error) {
       state.mvpInProgress = false;
       state.launchState = { active: true, state: 'failed' };

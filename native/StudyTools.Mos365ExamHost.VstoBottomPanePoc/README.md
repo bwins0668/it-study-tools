@@ -1,6 +1,6 @@
 # MOS Excel VSTO Host POC
 
-Excel VSTO Bottom CustomTaskPane 开发 POC，已验证 F5 调试运行时。
+Excel VSTO 右侧 CustomTaskPane 开发项目，已验证 F5 调试运行时。
 
 ## 状态
 
@@ -20,9 +20,9 @@ Excel VSTO Bottom CustomTaskPane 开发 POC，已验证 F5 调试运行时。
 1. 在 Visual Studio 中打开 `StudyTools.Mos365ExamHost.sln`
 2. 确认启动项目为 `StudyTools.Mos365ExamHost`
 3. 按 F5 启动调试
-4. Excel 启动后底部应出现 "MOS Native Exam Host · R3 VSTO POC" 面板
+4. Excel 启动后右侧应出现 "MOS 実技トレーニング" 面板
 
-> 注：Pane 标题中 "R3 VSTO POC" 是历史运行时标题，不代表代码未迁移。实际命名空间已统一为 `StudyTools.Mos365ExamHost`。
+> 注：正常训练流程只应显示用户训练面板。历史调试面板不得出现在普通训练路径中。
 
 ## Runtime 日志
 
