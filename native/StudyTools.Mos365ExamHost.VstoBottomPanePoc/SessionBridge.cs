@@ -35,7 +35,7 @@ namespace StudyTools.Mos365ExamHost
         private const int RetryDelayMs = 1500;
         private const int TimeoutMs = 2000;
 
-        public SessionBridge() : this("http://127.0.0.1") { }
+        public SessionBridge() : this("http://127.0.0.1:8080") { }
 
         public SessionBridge(string baseUrl)
         {
@@ -89,7 +89,10 @@ namespace StudyTools.Mos365ExamHost
             using (var reader = new StreamReader(response.GetResponseStream(), Encoding.UTF8))
             {
                 var body = reader.ReadToEnd();
-                var result = _json.Deserialize<VerifyResponse>(body);
+                var envelope = _json.Deserialize<ApiResponse<VerifyResponse>>(body);
+                var result = envelope != null && envelope.success && envelope.data != null
+                    ? envelope.data
+                    : _json.Deserialize<VerifyResponse>(body);
                 if (result.ok)
                 {
                     var vr = new SessionVerificationResult { Ok = true, SessionId = result.session.sessionId, State = result.session.state, ExcelPid = result.session.excelPid };
@@ -151,7 +154,10 @@ namespace StudyTools.Mos365ExamHost
                 using (var reader = new StreamReader(response.GetResponseStream(), Encoding.UTF8))
                 {
                     var body = reader.ReadToEnd();
-                    var result = _json.Deserialize<ScoreResponse>(body);
+                    var envelope = _json.Deserialize<ApiResponse<ScoreResponse>>(body);
+                    var result = envelope != null && envelope.success && envelope.data != null
+                        ? envelope.data
+                        : _json.Deserialize<ScoreResponse>(body);
                     if (result.ok && result.assessment != null)
                         return new SessionVerificationResult { Ok = true, SessionId = sessionId, Earned = result.assessment.earned, Total = result.assessment.total, ResultJa = result.resultJa, ResultZh = result.resultZh };
                     return new SessionVerificationResult { Ok = false, ErrorCode = "REJECTED" };
@@ -161,6 +167,7 @@ namespace StudyTools.Mos365ExamHost
             catch (Exception ex) { return new SessionVerificationResult { Ok = false, ErrorCode = "HTTP_FAILED", ErrorMessage = ex.Message }; }
         }
 
+        private class ApiResponse<T> { public bool success { get; set; } public T data { get; set; } public string error { get; set; } }
         private class VerifyResponse { public bool ok { get; set; } public SessionData session { get; set; } }
         private class SessionData { public string sessionId { get; set; } public string state { get; set; } public int excelPid { get; set; } public string createdAt { get; set; } public TrainingData training { get; set; } }
         private class TrainingData { public string mode { get; set; } public string taskId { get; set; } public string instructionJa { get; set; } public string instructionZh { get; set; } public bool completionAcknowledged { get; set; } }

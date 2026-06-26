@@ -151,7 +151,7 @@ namespace StudyTools.Mos365ExamHost
                 {
                     string path = null;
                     try { path = wb.FullName; } catch { }
-                    if (!string.IsNullOrEmpty(path) && path.Contains("MOS365_Sessions")) { wb.Save(); }
+                    if (!string.IsNullOrEmpty(path) && path.IndexOf("\\StudyTools\\MOS365\\Sessions\\", StringComparison.OrdinalIgnoreCase) >= 0) { wb.Save(); }
                 }
             }
             catch (Exception ex) { _probe?.Write("scoring.save.failed", guid, excelPid: pid); Debug.WriteLine("Workbook save failed: " + ex.Message); }
