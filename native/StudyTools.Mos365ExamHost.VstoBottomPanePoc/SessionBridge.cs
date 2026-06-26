@@ -15,6 +15,10 @@ namespace StudyTools.Mos365ExamHost
         public int? ExcelPid { get; set; }
         public string ErrorCode { get; set; }
         public string ErrorMessage { get; set; }
+        public string TaskId { get; set; }
+        public string InstructionJa { get; set; }
+        public string InstructionZh { get; set; }
+        public bool CompletionAcknowledged { get; set; }
     }
 
     public class SessionBridge
@@ -117,13 +121,21 @@ namespace StudyTools.Mos365ExamHost
                     var result = _json.Deserialize<VerifyResponse>(body);
                     if (result.ok)
                     {
-                        return new SessionVerificationResult
+                        var vr = new SessionVerificationResult
                         {
                             Ok = true,
                             SessionId = result.session.sessionId,
                             State = result.session.state,
                             ExcelPid = result.session.excelPid
                         };
+                        if (result.session.training != null)
+                        {
+                            vr.TaskId = result.session.training.taskId;
+                            vr.InstructionJa = result.session.training.instructionJa;
+                            vr.InstructionZh = result.session.training.instructionZh;
+                            vr.CompletionAcknowledged = result.session.training.completionAcknowledged;
+                        }
+                        return vr;
                     }
                     return new SessionVerificationResult
                     {
@@ -170,6 +182,45 @@ namespace StudyTools.Mos365ExamHost
             public string state { get; set; }
             public int excelPid { get; set; }
             public string createdAt { get; set; }
+            public TrainingData training { get; set; }
+        }
+
+        private class TrainingData
+        {
+            public string mode { get; set; }
+            public string taskId { get; set; }
+            public string instructionJa { get; set; }
+            public string instructionZh { get; set; }
+            public bool completionAcknowledged { get; set; }
+        }
+
+        public SessionVerificationResult SendCompletion(string sessionId, int excelPid)
+        {
+            var payload = new { sessionId = sessionId, excelPid = excelPid, client = "vsto" };
+            string jsonPayload = _json.Serialize(payload);
+            try
+            {
+                var request = (HttpWebRequest)WebRequest.Create(_baseUrl + "/api/mos365/session/complete");
+                request.Method = "POST";
+                request.ContentType = "application/json";
+                request.Timeout = TimeoutMs;
+                var bytes = Encoding.UTF8.GetBytes(jsonPayload);
+                request.ContentLength = bytes.Length;
+                using (var stream = request.GetRequestStream()) { stream.Write(bytes, 0, bytes.Length); }
+                using (var response = (HttpWebResponse)request.GetResponse())
+                using (var reader = new StreamReader(response.GetResponseStream(), Encoding.UTF8))
+                {
+                    return new SessionVerificationResult { Ok = true, SessionId = sessionId, CompletionAcknowledged = true };
+                }
+            }
+            catch (WebException ex)
+            {
+                return new SessionVerificationResult { Ok = false, ErrorCode = "HTTP_FAILED", ErrorMessage = ex.Message };
+            }
+            catch (Exception ex)
+            {
+                return new SessionVerificationResult { Ok = false, ErrorCode = "HTTP_FAILED", ErrorMessage = ex.Message };
+            }
         }
 
         private class ErrorResponse

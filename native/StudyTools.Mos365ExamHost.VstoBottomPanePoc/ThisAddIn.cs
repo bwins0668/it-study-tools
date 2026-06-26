@@ -141,6 +141,16 @@ namespace StudyTools.Mos365ExamHost
                     _probe?.Write("session.bound", result.SessionId, excelPid: pid);
                     _boundSessionId = result.SessionId;
                     _paneControl.UpdateSessionState("已验证", result.SessionId, result.ExcelPid ?? pid);
+                    // R8 training: show task if available
+                    if (!string.IsNullOrEmpty(result.TaskId))
+                    {
+                        _probe?.Write("training.task.received", _sessionId.ToString("N"), excelPid: pid);
+                        _paneControl.ShowTask(result.InstructionJa, result.InstructionZh);
+                        if (result.CompletionAcknowledged)
+                            _paneControl.ShowCompletionAccepted();
+                        // Wire completion button
+                        _paneControl.OnCompleteClicked = () => HandleCompletion(pid);
+                    }
                 }
                 else
                 {
@@ -164,6 +174,30 @@ namespace StudyTools.Mos365ExamHost
         private void OnWorkbookDeactivate(Excel.Workbook wb)
         {
             _paneControl.UpdateWorkbook("(inactive)");
+        }
+
+        private void HandleCompletion(int pid)
+        {
+            var guid = _sessionId.ToString("N");
+            _probe?.Write("training.complete.begin", guid, excelPid: pid);
+            try
+            {
+                var result = _bridge.SendCompletion(_boundSessionId, pid);
+                if (result.Ok)
+                {
+                    _probe?.Write("training.complete.accepted", guid, excelPid: pid);
+                    _paneControl.ShowCompletionAccepted();
+                }
+                else
+                {
+                    _probe?.Write("training.complete.rejected", guid, excelPid: pid);
+                }
+            }
+            catch (Exception ex)
+            {
+                _probe?.Write("training.complete.http_failed", guid, excelPid: pid);
+                Debug.WriteLine("Completion failed: " + ex.Message);
+            }
         }
 
         private string GetWorkbookName()

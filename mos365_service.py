@@ -161,6 +161,10 @@ class MOS365Service:
 
     def create_session(self, payload: dict[str, Any]) -> dict[str, Any]:
         mode = str(payload.get("mode", "guided"))
+        # R8 static training: fixed task, no scoring, server-owned
+        if mode == "r8_static_training":
+            return self._create_r8_session()
+
         scenario = str(payload.get("scenarioId", "retail"))
         variant = payload.get("variant", 1)
         try:
@@ -709,7 +713,93 @@ class MOS365Service:
             manifest["attachedPid"] = raw_pid
             mf_path = session_dir / "session_manifest.json"
             mf_path.write_text(json.dumps(manifest, ensure_ascii=False, indent=2), encoding="utf-8")
-        return {"ok": True, "session": {"sessionId": session_id, "state": "attached", "excelPid": raw_pid, "createdAt": manifest.get("createdAt", "")}}
+        result = {"ok": True, "session": {"sessionId": session_id, "state": "attached", "excelPid": raw_pid, "createdAt": manifest.get("createdAt", "")}}
+        # For R8 sessions, include training task
+        if manifest.get("trainingMode") == "r8_static_training":
+            task = manifest.get("staticTask", {})
+            comp = manifest.get("completion", {})
+            result["session"]["training"] = {
+                "mode": "r8_static_training",
+                "taskId": task.get("taskId", ""),
+                "instructionJa": task.get("instructionJa", ""),
+                "instructionZh": task.get("instructionZh", ""),
+                "completionAcknowledged": comp.get("acknowledged", False)
+            }
+        return result
+
+    def _create_r8_session(self) -> dict[str, Any]:
+        """Create a server-owned R8 static training session — no scoring, no quiz."""
+        session_id = secrets.token_urlsafe(24).replace("-", "_")
+        paths = self._paths(session_id, require_exists=False)
+        paths.directory.mkdir(mode=0o700, parents=False, exist_ok=False)
+        task_data = {
+            "taskId": "R8_STATIC_SHEET_RENAME_DEMO",
+            "instructionJa": "練習用：1枚目のシート名を「練習集計」に変更してください。",
+            "instructionZh": "练习用：请将第1个工作表重命名为「練習集計」。"
+        }
+        manifest = {
+            "schemaVersion": 1,
+            "sessionId": session_id,
+            "mode": "r8_static_training",
+            "trainingMode": "r8_static_training",
+            "staticTask": task_data,
+            "completion": {"acknowledged": False, "acknowledgedAt": None, "acknowledgedPid": None},
+            "workbook": paths.workbook.name,
+            "createdAt": __import__("datetime").datetime.now().astimezone().isoformat(),
+        }
+        self._write_original_workbook(paths.workbook, "retail", 1)
+        paths.manifest.write_text(json.dumps(manifest, ensure_ascii=False, indent=2), encoding="utf-8")
+        return {
+            "sessionId": session_id,
+            "mode": "r8_static_training",
+            "scenarioId": "r8_static",
+            "variant": 1,
+            "fileName": paths.workbook.name,
+            "sandboxRoot": str(paths.directory),
+            "staticTask": task_data,
+            "tasks": [],
+            "environment": self.environment_status(),
+        }
+
+    def session_complete(self, payload: dict[str, Any]) -> dict[str, Any]:
+        """Record a completion acknowledgement — no scoring."""
+        session_id = self._safe_session_id(str(payload.get("sessionId", "")))
+        raw_pid = payload.get("excelPid")
+        try:
+            raw_pid = int(raw_pid) if raw_pid is not None else None
+        except (TypeError, ValueError):
+            raise MOS365ServiceError("SESSION_PID_MISMATCH", "プロセス ID が無効です。", "进程 ID 无效。")
+        if raw_pid is None:
+            raise MOS365ServiceError("SESSION_PID_MISMATCH", "プロセス ID が必要です。", "需要提供进程 ID。")
+        paths = self._paths(session_id)
+        if not paths.manifest.is_file():
+            raise MOS365ServiceError("SESSION_NOT_FOUND", "セッションが見つかりません。", "未找到会话。", 404)
+        manifest = json.loads(paths.manifest.read_text(encoding="utf-8"))
+        mode = manifest.get("trainingMode", manifest.get("mode", ""))
+        if mode != "r8_static_training":
+            raise MOS365ServiceError("SESSION_MODE_REJECTED", "R8 練習セッションではありません。", "不是 R8 练习会话。")
+        state = manifest.get("state", "created")
+        if state != "attached":
+            raise MOS365ServiceError("SESSION_STATE_REJECTED", "セッションが接続されていません。", "会话未连接。")
+        server_pid = manifest.get("excelPid")
+        if server_pid is not None and server_pid != raw_pid:
+            raise MOS365ServiceError("SESSION_PID_MISMATCH", "セッションのプロセス ID が一致しません。", "会话进程 ID 不匹配。")
+        attached_pid = manifest.get("attachedPid")
+        if attached_pid is not None and attached_pid != raw_pid:
+            raise MOS365ServiceError("SESSION_PID_MISMATCH", "バインドされたプロセス ID が一致しません。", "绑定进程 ID 不匹配。")
+
+        comp = manifest.get("completion", {})
+        if comp.get("acknowledged"):
+            return {"ok": True, "session": {"sessionId": session_id, "state": "attached", "completionAcknowledged": True, "completionAcknowledgedAt": comp.get("acknowledgedAt")},
+                    "message": {"ja": "既に完了が記録されています。", "zh": "已完成记录，无需重复操作。"}}
+        now = __import__("datetime").datetime.now().astimezone().isoformat()
+        comp["acknowledged"] = True
+        comp["acknowledgedAt"] = now
+        comp["acknowledgedPid"] = raw_pid
+        manifest["completion"] = comp
+        paths.manifest.write_text(json.dumps(manifest, ensure_ascii=False, indent=2), encoding="utf-8")
+        return {"ok": True, "session": {"sessionId": session_id, "state": "attached", "completionAcknowledged": True, "completionAcknowledgedAt": now},
+                "message": {"ja": "完了を記録しました。採点はまだ行われません。", "zh": "已记录完成确认，当前不会评分。"}}
 
     @staticmethod
     def _normal_formula(value: Any) -> str:

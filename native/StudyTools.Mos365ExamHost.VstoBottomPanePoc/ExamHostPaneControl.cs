@@ -15,7 +15,14 @@ namespace StudyTools.Mos365ExamHost
         private Label _platformLabel;
         private Label _stateLabel;
         private Label _boundSessionLabel;
+        private Label _taskInstructionJa;
+        private Label _taskInstructionZh;
+        private Button _completeBtn;
+        private Label _completeStatus;
         private Timer _timer;
+
+        // Callback for completion button
+        public Action OnCompleteClicked { get; set; }
 
         public ExamHostPaneControl()
         {
@@ -48,6 +55,26 @@ namespace StudyTools.Mos365ExamHost
             _timeLabel.Text = DateTime.Now.ToString("HH:mm:ss");
         }
 
+        public void ShowTask(string instructionJa, string instructionZh)
+        {
+            _taskInstructionJa.Text = "練習\n" + (instructionJa ?? "");
+            _taskInstructionZh.Text = "说明\n" + (instructionZh ?? "");
+            _taskInstructionJa.Visible = true;
+            _taskInstructionZh.Visible = true;
+            _completeBtn.Visible = true;
+            _completeStatus.Visible = true;
+            _completeStatus.Text = "採点はまだ行われません。";
+            _completeBtn.Text = "完了を記録する";
+            _completeBtn.Enabled = true;
+        }
+
+        public void ShowCompletionAccepted()
+        {
+            _completeBtn.Enabled = false;
+            _completeBtn.Text = "完了を記録する";
+            _completeStatus.Text = "完了を記録しました。\n採点はまだ行われません。";
+        }
+
         private void InitializeComponent()
         {
             _titleLabel = new Label();
@@ -58,6 +85,10 @@ namespace StudyTools.Mos365ExamHost
             _platformLabel = new Label();
             _stateLabel = new Label();
             _boundSessionLabel = new Label();
+            _taskInstructionJa = new Label();
+            _taskInstructionZh = new Label();
+            _completeBtn = new Button();
+            _completeStatus = new Label();
             _timer = new Timer();
 
             _titleLabel.Text = "MOS Native Exam Host · R3 VSTO POC";
@@ -108,6 +139,37 @@ namespace StudyTools.Mos365ExamHost
             _boundSessionLabel.Size = new Size(500, 20);
             _boundSessionLabel.Location = new Point(15, 120);
 
+            _taskInstructionJa.Text = "";
+            _taskInstructionJa.Font = new Font("Segoe UI", 9f, FontStyle.Bold);
+            _taskInstructionJa.ForeColor = Color.FromArgb(255, 220, 100);
+            _taskInstructionJa.Size = new Size(560, 36);
+            _taskInstructionJa.Location = new Point(15, 148);
+            _taskInstructionJa.Visible = false;
+
+            _taskInstructionZh.Text = "";
+            _taskInstructionZh.Font = new Font("Segoe UI", 8f, FontStyle.Regular);
+            _taskInstructionZh.ForeColor = Color.FromArgb(180, 200, 210);
+            _taskInstructionZh.Size = new Size(560, 30);
+            _taskInstructionZh.Location = new Point(15, 186);
+            _taskInstructionZh.Visible = false;
+
+            _completeBtn.Text = "完了を記録する";
+            _completeBtn.Font = new Font("Segoe UI", 9f, FontStyle.Bold);
+            _completeBtn.ForeColor = Color.White;
+            _completeBtn.BackColor = Color.FromArgb(29, 103, 69);
+            _completeBtn.FlatStyle = FlatStyle.Flat;
+            _completeBtn.Size = new Size(140, 32);
+            _completeBtn.Location = new Point(15, 224);
+            _completeBtn.Visible = false;
+            _completeBtn.Click += (s, ev) => OnCompleteClicked?.Invoke();
+
+            _completeStatus.Text = "";
+            _completeStatus.Font = new Font("Segoe UI", 8f, FontStyle.Italic);
+            _completeStatus.ForeColor = Color.FromArgb(160, 200, 180);
+            _completeStatus.Size = new Size(400, 30);
+            _completeStatus.Location = new Point(165, 226);
+            _completeStatus.Visible = false;
+
             _timer.Interval = 1000;
             _timer.Tick += OnTimerTick;
             _timer.Start();
@@ -115,7 +177,7 @@ namespace StudyTools.Mos365ExamHost
             this.BackColor = Color.FromArgb(30, 40, 55);
             this.ForeColor = Color.FromArgb(200, 210, 220);
             this.Font = new Font("Segoe UI", 9f, FontStyle.Regular);
-            this.Size = new Size(600, 110);
+            this.Size = new Size(600, 270);
 
             this.Controls.Add(_titleLabel);
             this.Controls.Add(_pidLabel);
@@ -125,6 +187,10 @@ namespace StudyTools.Mos365ExamHost
             this.Controls.Add(_platformLabel);
             this.Controls.Add(_stateLabel);
             this.Controls.Add(_boundSessionLabel);
+            this.Controls.Add(_taskInstructionJa);
+            this.Controls.Add(_taskInstructionZh);
+            this.Controls.Add(_completeBtn);
+            this.Controls.Add(_completeStatus);
         }
     }
 }
