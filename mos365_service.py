@@ -26,6 +26,42 @@ SESSION_ID_RE = re.compile(r"^[A-Za-z0-9_-]{20,80}$")
 SAFE_SCENARIOS = {"retail", "shift", "budget"}
 SAFE_MODES = {"guided", "mock"}
 
+# R8/R11 scoring specs — server-owned, never client-controlled
+SCORING_SPECS: dict[str, dict[str, Any]] = {
+    "R8_STATIC_SHEET_RENAME_DEMO": {
+        "specVersion": 1,
+        "taskId": "R8_STATIC_SHEET_RENAME_DEMO",
+        "assertions": [{
+            "id": "first-sheet-name",
+            "type": "first_sheet_name_equals",
+            "expected": "練習集計",
+            "weight": 1,
+            "comparison": "strict_equals",
+            "feedback": {
+                "correct": {"ja": "1枚目のシート名は「練習集計」です。", "zh": "第 1 个工作表名称正确。"},
+                "incorrect": {"ja": "1枚目のシート名を「練習集計」にしてください。", "zh": "请将第 1 个工作表重命名为「練習集計」。"}
+            }
+        }],
+        "resultPolicy": {"mode": "all_or_nothing"}
+    },
+    "R11_STATIC_WORKSHEET_EXISTS_DEMO": {
+        "specVersion": 1,
+        "taskId": "R11_STATIC_WORKSHEET_EXISTS_DEMO",
+        "assertions": [{
+            "id": "worksheet-exists",
+            "type": "worksheet_exists",
+            "expected": "集計結果",
+            "weight": 1,
+            "comparison": "strict_equals",
+            "feedback": {
+                "correct": {"ja": "「集計結果」というワークシートが作成されています。", "zh": "已创建名为「集計結果」的工作表。"},
+                "incorrect": {"ja": "「集計結果」という名前のワークシートを作成してください。", "zh": "请创建名为「集計結果」的工作表。"}
+            }
+        }],
+        "resultPolicy": {"mode": "all_or_nothing"}
+    }
+}
+
 
 class MOS365ServiceError(Exception):
     def __init__(self, code: str, message_ja: str, message_zh: str, status: int = 400):
@@ -164,6 +200,8 @@ class MOS365Service:
         # R8 static training: fixed task, no scoring, server-owned
         if mode == "r8_static_training":
             return self._create_r8_session()
+        if mode == "r11_static_training":
+            return self._create_r11_session()
 
         scenario = str(payload.get("scenarioId", "retail"))
         variant = payload.get("variant", 1)
@@ -829,38 +867,94 @@ class MOS365Service:
         if not paths.workbook.is_file():
             raise MOS365ServiceError("WORKBOOK_MISSING", "練習ファイルが見つかりません。", "未找到练习文件。", 404)
 
-        # Score: read first sheet name from Open XML
+        # Read workbook.xml once
         try:
             with zipfile.ZipFile(str(paths.workbook), 'r') as zf:
                 wb_xml = zf.read('xl/workbook.xml').decode('utf-8')
             root = ET.fromstring(wb_xml)
-            first_sheet = root.find('.//m:sheets/m:sheet', NS)
-            if first_sheet is None:
-                actual_name = "(no sheets)"
-                correct = False
-            else:
-                actual_name = first_sheet.get('name', '')
-                correct = (actual_name == '練習集計')
         except (zipfile.BadZipFile, KeyError, ET.ParseError, OSError) as exc:
             raise MOS365ServiceError("WORKBOOK_PARSE_FAILED", "練習ファイルを読み取れませんでした。", "无法读取练习文件。") from exc
 
+        # Score using spec
+        task_id = manifest.get("staticTask", {}).get("taskId", "")
+        spec = SCORING_SPECS.get(task_id)
+        if not spec:
+            raise MOS365ServiceError("SCORING_SPEC_NOT_FOUND", "このタスクの採点ルールが見つかりません。", "未找到此任务的评分规则。")
+
+        assertion_results = []
+        for assertion in spec["assertions"]:
+            atype = assertion["type"]
+            if atype == "first_sheet_name_equals":
+                r = self._assert_first_sheet_name(root, assertion, NS)
+            elif atype == "worksheet_exists":
+                r = self._assert_worksheet_exists(root, assertion, NS)
+            else:
+                raise MOS365ServiceError("SCORING_ASSERTION_UNSUPPORTED", f"未対応のアサーション: {atype}", f"不支持的断言类型: {atype}")
+            assertion_results.append(r)
+
+        total = sum(a["total"] for a in assertion_results)
+        earned = sum(a["earned"] for a in assertion_results)
+        all_correct = all(a["result"] == "correct" for a in assertion_results)
+
         assessment = {
-            "type": "first_sheet_name_equals",
+            "specVersion": spec["specVersion"],
             "attemptedAt": __import__("datetime").datetime.now().astimezone().isoformat(),
             "excelPid": raw_pid,
-            "result": "correct" if correct else "incorrect",
-            "earned": 1 if correct else 0,
-            "total": 1
+            "result": "correct" if all_correct else "incorrect",
+            "earned": earned,
+            "total": total,
+            "assertions": assertion_results
         }
         manifest["assessment"] = assessment
         paths.manifest.write_text(json.dumps(manifest, ensure_ascii=False, indent=2), encoding="utf-8")
 
-        result_ja = "1枚目のシート名は「練習集計」です。1 / 1" if correct \
-            else "1枚目のシート名を「練習集計」にしてください。0 / 1"
-        result_zh = "第 1 个工作表名称正确。1 / 1" if correct \
-            else "请将第 1 个工作表重命名为「練習集計」。0 / 1"
+        # Build bilingual feedback from spec's first assertion
+        fb = spec["assertions"][0]["feedback"]
+        key = "correct" if all_correct else "incorrect"
+        result_ja = fb[key]["ja"] + f" {earned} / {total}"
+        result_zh = fb[key]["zh"] + f" {earned} / {total}"
         return {"ok": True, "assessment": assessment,
                 "resultJa": result_ja, "resultZh": result_zh}
+
+    @staticmethod
+    def _assert_first_sheet_name(root, assertion, ns):
+        first_sheet = root.find('.//m:sheets/m:sheet', ns)
+        if first_sheet is None:
+            return {"id": assertion["id"], "type": assertion["type"], "result": "incorrect", "earned": 0, "total": assertion["weight"]}
+        correct = first_sheet.get('name', '') == assertion["expected"]
+        return {"id": assertion["id"], "type": assertion["type"], "result": "correct" if correct else "incorrect", "earned": assertion["weight"] if correct else 0, "total": assertion["weight"]}
+
+    @staticmethod
+    def _assert_worksheet_exists(root, assertion, ns):
+        sheets = root.findall('.//m:sheets/m:sheet', ns)
+        for sheet in sheets:
+            if sheet.get('name', '') == assertion["expected"]:
+                return {"id": assertion["id"], "type": assertion["type"], "result": "correct", "earned": assertion["weight"], "total": assertion["weight"]}
+        return {"id": assertion["id"], "type": assertion["type"], "result": "incorrect", "earned": 0, "total": assertion["weight"]}
+
+    def _create_r11_session(self) -> dict[str, Any]:
+        """Create a server-owned R11 static training session."""
+        session_id = secrets.token_urlsafe(24).replace("-", "_")
+        paths = self._paths(session_id, require_exists=False)
+        paths.directory.mkdir(mode=0o700, parents=False, exist_ok=False)
+        task_data = {
+            "taskId": "R11_STATIC_WORKSHEET_EXISTS_DEMO",
+            "instructionJa": "練習用：新しいワークシートを追加し、「集計結果」という名前にしてください。",
+            "instructionZh": "练习用：请新建一个工作表，并命名为「集計結果」。"
+        }
+        manifest = {
+            "schemaVersion": 1, "sessionId": session_id,
+            "mode": "r11_static_training", "trainingMode": "r11_static_training",
+            "staticTask": task_data,
+            "completion": {"acknowledged": False, "acknowledgedAt": None, "acknowledgedPid": None},
+            "workbook": paths.workbook.name,
+            "createdAt": __import__("datetime").datetime.now().astimezone().isoformat(),
+        }
+        self._write_original_workbook(paths.workbook, "retail", 1)
+        paths.manifest.write_text(json.dumps(manifest, ensure_ascii=False, indent=2), encoding="utf-8")
+        return {"sessionId": session_id, "mode": "r11_static_training", "scenarioId": "r11_static", "variant": 1,
+                "fileName": paths.workbook.name, "sandboxRoot": str(paths.directory),
+                "staticTask": task_data, "tasks": [], "environment": self.environment_status()}
 
     @staticmethod
     def _normal_formula(value: Any) -> str:
