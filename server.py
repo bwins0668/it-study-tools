@@ -515,6 +515,8 @@ class StudyHubHandler(SimpleHTTPRequestHandler):
                     data = MOS365_SERVICE.launch_excel(body)
                 elif path == '/api/mos365/score':
                     data = MOS365_SERVICE.score_session(body)
+                elif path == '/api/mos365/session/verify':
+                    data = MOS365_SERVICE.session_verify(body)
                 elif path == '/api/mos365/delete-current-session-file':
                     data = MOS365_SERVICE.delete_current_session(body)
                 elif path == '/api/learning/events':

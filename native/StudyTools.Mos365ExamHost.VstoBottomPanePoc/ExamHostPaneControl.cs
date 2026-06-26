@@ -13,6 +13,8 @@ namespace StudyTools.Mos365ExamHost
         private Label _timeLabel;
         private Label _wbLabel;
         private Label _platformLabel;
+        private Label _stateLabel;
+        private Label _boundSessionLabel;
         private Timer _timer;
 
         public ExamHostPaneControl()
@@ -24,6 +26,14 @@ namespace StudyTools.Mos365ExamHost
         {
             _sessionLabel.Text = "Session: " + sessionId.ToString("N").Substring(0, 8) + "...";
             _pidLabel.Text = "Excel PID: " + processId;
+        }
+
+        public void UpdateSessionState(string state, string sessionId = null, int? excelPid = null)
+        {
+            _stateLabel.Text = (System.Threading.Thread.CurrentThread.CurrentUICulture.TwoLetterISOLanguageName == "ja" ? "状態：" : "状态：") + (state ?? "---");
+            if (!string.IsNullOrEmpty(sessionId) && sessionId.Length > 12)
+                sessionId = sessionId.Substring(0, 12) + "...";
+            _boundSessionLabel.Text = "Session: " + (sessionId ?? "---") + "  Excel PID: " + (excelPid?.ToString() ?? "---");
         }
 
         public void UpdateWorkbook(string name)
@@ -46,6 +56,8 @@ namespace StudyTools.Mos365ExamHost
             _timeLabel = new Label();
             _wbLabel = new Label();
             _platformLabel = new Label();
+            _stateLabel = new Label();
+            _boundSessionLabel = new Label();
             _timer = new Timer();
 
             _titleLabel.Text = "MOS Native Exam Host · R3 VSTO POC";
@@ -84,6 +96,18 @@ namespace StudyTools.Mos365ExamHost
             _platformLabel.Size = new Size(150, 20);
             _platformLabel.Location = new Point(450, 80);
 
+            _stateLabel.Text = "状态：---";
+            _stateLabel.Font = new Font("Segoe UI", 9f, FontStyle.Bold);
+            _stateLabel.ForeColor = Color.FromArgb(56, 242, 255);
+            _stateLabel.Size = new Size(250, 20);
+            _stateLabel.Location = new Point(15, 102);
+
+            _boundSessionLabel.Text = "Session: ---  Excel PID: ---";
+            _boundSessionLabel.Font = new Font("Segoe UI", 8f, FontStyle.Regular);
+            _boundSessionLabel.ForeColor = Color.FromArgb(140, 160, 180);
+            _boundSessionLabel.Size = new Size(500, 20);
+            _boundSessionLabel.Location = new Point(15, 120);
+
             _timer.Interval = 1000;
             _timer.Tick += OnTimerTick;
             _timer.Start();
@@ -99,6 +123,8 @@ namespace StudyTools.Mos365ExamHost
             this.Controls.Add(_timeLabel);
             this.Controls.Add(_wbLabel);
             this.Controls.Add(_platformLabel);
+            this.Controls.Add(_stateLabel);
+            this.Controls.Add(_boundSessionLabel);
         }
     }
 }

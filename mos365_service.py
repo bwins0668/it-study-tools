@@ -218,6 +218,12 @@ class MOS365Service:
         # Only EXCEL.EXE and the server-created workbook are ever passed to Popen.
         # /x isolates this Session from Excel's DDE reuse of an older workbook window.
         process = subprocess.Popen([str(excel), "/x", str(paths.workbook)], shell=False, close_fds=(os.name != "nt"))
+        # Update manifest with launch state
+        manifest = json.loads(paths.manifest.read_text(encoding="utf-8"))
+        manifest["excelPid"] = process.pid
+        manifest["launchedAt"] = __import__("datetime").datetime.now().astimezone().isoformat()
+        manifest["state"] = "launched"
+        paths.manifest.write_text(json.dumps(manifest, ensure_ascii=False, indent=2), encoding="utf-8")
         return {
             "launched": True,
             "fileName": paths.workbook.name,
@@ -647,6 +653,63 @@ class MOS365Service:
             passed = all(term in raw for term in terms)
             return passed, "sheet setting found" if passed else ""
         return False, "unsupported rule"
+
+    def session_verify(self, payload: dict[str, Any]) -> dict[str, Any]:
+        """Verify a VSTO client bind request against a known session manifest."""
+        raw_path = str(payload.get("workbookPath", ""))
+        raw_pid = payload.get("excelPid")
+        try:
+            raw_pid = int(raw_pid) if raw_pid is not None else None
+        except (TypeError, ValueError):
+            raise MOS365ServiceError("SESSION_PID_MISMATCH", "プロセス ID が無効です。", "进程 ID 无效。")
+        if raw_pid is None:
+            raise MOS365ServiceError("SESSION_PID_MISMATCH", "プロセス ID が必要です。", "需要提供进程 ID。")
+        # Normalize and validate path
+        try:
+            wb_path = Path(raw_path).resolve()
+        except OSError:
+            raise MOS365ServiceError("SESSION_PATH_REJECTED", "ワークブックのパスが無効です。", "工作簿路径无效。")
+        if not self._within(wb_path, self.root):
+            raise MOS365ServiceError("SESSION_PATH_REJECTED", "このワークブックはセッション外です。", "此工作簿不位于会话目录内。")
+        # Find matching session by workbook path
+        matched_session = None
+        for child in self.root.iterdir():
+            if not child.is_dir():
+                continue
+            mf = child / "session_manifest.json"
+            if not mf.is_file():
+                continue
+            try:
+                mf_data = json.loads(mf.read_text(encoding="utf-8"))
+            except (OSError, json.JSONDecodeError):
+                continue
+            expected = (child / mf_data.get("workbook", "")).resolve()
+            try:
+                if wb_path == expected:
+                    matched_session = (child, mf_data)
+                    break
+            except OSError:
+                continue
+        if matched_session is None:
+            raise MOS365ServiceError("SESSION_NOT_FOUND", "このワークブックに一致するセッションが見つかりません。", "未找到与此工作簿匹配的会话。", 404)
+        session_dir, manifest = matched_session
+        session_id = manifest.get("sessionId", "")
+        state = manifest.get("state", "created")
+        # PID check
+        server_pid = manifest.get("excelPid")
+        if server_pid is not None and server_pid != raw_pid:
+            raise MOS365ServiceError("SESSION_PID_MISMATCH", "セッションのプロセス ID が一致しません。", "会话进程 ID 不匹配。")
+        # State check
+        if state not in ("launched", "attached"):
+            raise MOS365ServiceError("SESSION_STATE_REJECTED", f"セッション状態が '{state}' のため検証できません。", f"会话状态为 '{state}'，无法验证。")
+        # Update state to attached (idempotent)
+        if state == "launched":
+            manifest["state"] = "attached"
+            manifest["attachedAt"] = __import__("datetime").datetime.now().astimezone().isoformat()
+            manifest["attachedPid"] = raw_pid
+            mf_path = session_dir / "session_manifest.json"
+            mf_path.write_text(json.dumps(manifest, ensure_ascii=False, indent=2), encoding="utf-8")
+        return {"ok": True, "session": {"sessionId": session_id, "state": "attached", "excelPid": raw_pid, "createdAt": manifest.get("createdAt", "")}}
 
     @staticmethod
     def _normal_formula(value: Any) -> str:

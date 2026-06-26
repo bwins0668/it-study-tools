@@ -66,7 +66,9 @@ assert.ok(!/shell\s*=\s*True|os\.system|cmd\.exe|powershell/i.test(service), 'MO
 assert.ok(server.includes('def is_mos_local_request'), 'MOS routes must enforce local origin checks');
 assert.ok(server.includes("path.startswith('/api/mos365/') and not self.is_mos_local_request()"), 'MOS POST routes must reject non-local callers');
 assert.ok(service.includes('subprocess.Popen([str(excel), "/x", str(paths.workbook)], shell=False'), 'Excel launch must use only the allowlisted executable, fixed /x isolation flag, and current-session workbook');
-assert.ok(!/payload\.get\(["'](?:path|file|workbookPath|exe|executable)["']/.test(service), 'MOS service must not accept arbitrary executable or workbook paths');
+// Verify service does not accept arbitrary paths EXCEPT in session_verify (which validates against manifest)
+var servicePaths = service.replace(/def session_verify[\s\S]*?def _normal_formula/, '');
+assert.ok(!/payload\.get\(["'](?:path|file|workbookPath|exe|executable)["']/.test(servicePaths), 'MOS service must not accept arbitrary executable or workbook paths outside session_verify');
 
 console.log(JSON.stringify({
   status: 'PASS',

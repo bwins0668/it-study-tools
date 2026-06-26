@@ -290,8 +290,11 @@
 
   function launchCurrent(output, japaneseOnly) {
     if (!state.session) return;
-    api('/api/mos365/launch', { sessionId: state.session.sessionId }).then(function () {
-      if (output) output.innerHTML = '<div class="mos365-notice">' + (japaneseOnly ? 'Excel を起動しました。保存後に提出してください。' : '已启动 Excel。完成并保存后回到此处评分。') + '</div>';
+    api('/api/mos365/launch', { sessionId: state.session.sessionId }).then(function (launchData) {
+      state.session.processId = launchData.processId;
+      if (output) output.innerHTML = '<div class="mos365-notice">'
+        + (japaneseOnly ? 'Excel を起動しました（PID: ' + launchData.processId + '）。VSTO パネルが接続中です…' : '已启动 Excel（PID: ' + launchData.processId + '）。正在连接 VSTO 本地面板…')
+        + '</div>';
     }).catch(function (error) {
       if (output) output.innerHTML = '<div class="mos365-notice mos365-error">' + escapeHtml(japaneseOnly ? (error.payload && error.payload.messageJa || error.message) : (error.payload && error.payload.messageZh || error.message)) + '</div>';
       else alert(error.message);

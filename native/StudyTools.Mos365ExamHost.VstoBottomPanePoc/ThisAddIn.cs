@@ -13,6 +13,9 @@ namespace StudyTools.Mos365ExamHost
         private Guid _sessionId;
         private Excel.Application _excelApp;
         private RuntimeProbe _probe;
+        private SessionBridge _bridge;
+        private string _boundSessionId;
+        private bool _verifying;
 
         private void ThisAddIn_Startup(object sender, System.EventArgs e)
         {
@@ -56,6 +59,8 @@ namespace StudyTools.Mos365ExamHost
                 _excelApp.WorkbookDeactivate += OnWorkbookDeactivate;
                 _excelApp.WorkbookOpen += OnWorkbookOpen;
 
+                _bridge = new SessionBridge();
+
                 _probe.Write("startup.complete", _sessionId.ToString("N"),
                     excelPid: Process.GetCurrentProcess().Id,
                     workbookCount: GetWorkbookCount());
@@ -95,19 +100,70 @@ namespace StudyTools.Mos365ExamHost
         private void OnWorkbookActivate(Excel.Workbook wb)
         {
             try { _paneControl.UpdateWorkbook(wb.Name); } catch { _paneControl.UpdateWorkbook("(unknown)"); }
+            TryBindWorkbook(wb);
             _probe?.Write("excel.window.activate", _sessionId.ToString("N"),
                 excelPid: Process.GetCurrentProcess().Id,
                 workbookCount: GetWorkbookCount());
         }
 
-        private void OnWorkbookDeactivate(Excel.Workbook wb)
-        {
-            _paneControl.UpdateWorkbook("(inactive)");
-        }
-
         private void OnWorkbookOpen(Excel.Workbook wb)
         {
             try { Debug.WriteLine("Workbook opened: " + wb.Name); } catch { }
+            TryBindWorkbook(wb);
+        }
+
+        private void TryBindWorkbook(Excel.Workbook wb)
+        {
+            if (_verifying || wb == null) return;
+            _verifying = true;
+            var pid = Process.GetCurrentProcess().Id;
+            var guid = _sessionId.ToString("N");
+            try
+            {
+                string path = null;
+                try { path = wb.FullName; } catch { }
+
+                if (string.IsNullOrEmpty(path))
+                {
+                    _probe?.Write("session.verify.begin", guid, excelPid: pid);
+                    _probe?.Write("session.verify.rejected", guid, excelPid: pid);
+                    _paneControl.UpdateSessionState("未绑定");
+                    _boundSessionId = null;
+                    return;
+                }
+
+                _probe?.Write("session.verify.begin", guid, excelPid: pid);
+                var result = _bridge.VerifyWorkbook(path, pid);
+
+                if (result.Ok)
+                {
+                    _probe?.Write("session.verify.accepted", guid, excelPid: pid);
+                    _probe?.Write("session.bound", result.SessionId, excelPid: pid);
+                    _boundSessionId = result.SessionId;
+                    _paneControl.UpdateSessionState("已验证", result.SessionId, result.ExcelPid ?? pid);
+                }
+                else
+                {
+                    _probe?.Write("session.verify.rejected", guid, excelPid: pid);
+                    _boundSessionId = null;
+                    _paneControl.UpdateSessionState(result.ErrorCode ?? "验证失败");
+                }
+            }
+            catch (Exception ex)
+            {
+                _probe?.Write("session.http_failed", guid, excelPid: pid);
+                _paneControl.UpdateSessionState("HTTP失败");
+                Debug.WriteLine("SessionBridge error: " + ex.Message);
+            }
+            finally
+            {
+                _verifying = false;
+            }
+        }
+
+        private void OnWorkbookDeactivate(Excel.Workbook wb)
+        {
+            _paneControl.UpdateWorkbook("(inactive)");
         }
 
         private string GetWorkbookName()
