@@ -19,10 +19,13 @@ namespace StudyTools.Mos365ExamHost
         private Label _taskInstructionZh;
         private Button _completeBtn;
         private Label _completeStatus;
+        private Button _scoreBtn;
+        private Label _scoreResult;
         private Timer _timer;
 
         // Callback for completion button
         public Action OnCompleteClicked { get; set; }
+        public Action OnScoreClicked { get; set; }
 
         public ExamHostPaneControl()
         {
@@ -73,6 +76,24 @@ namespace StudyTools.Mos365ExamHost
             _completeBtn.Enabled = false;
             _completeBtn.Text = "完了を記録する";
             _completeStatus.Text = "完了を記録しました。\n採点はまだ行われません。";
+            // Show score button after completion
+            _scoreBtn.Visible = true;
+            _scoreResult.Visible = true;
+            _scoreResult.Text = "採点はこの練習用ブックの1枚目のシート名だけを確認します。\n评分只检查本练习工作簿第1个工作表的名称。";
+        }
+
+        public void ShowScoreResult(string resultJa, string resultZh, bool correct)
+        {
+            _scoreBtn.Enabled = true;
+            _scoreBtn.Text = "保存して採点する";
+            _scoreResult.ForeColor = correct ? Color.FromArgb(100, 255, 150) : Color.FromArgb(255, 180, 100);
+            _scoreResult.Text = "結果：" + (correct ? "正解" : "未完了") + "\n" + resultJa + "\n" + resultZh;
+        }
+
+        public void ShowScoreSaving()
+        {
+            _scoreBtn.Enabled = false;
+            _scoreBtn.Text = "保存中…";
         }
 
         private void InitializeComponent()
@@ -89,6 +110,8 @@ namespace StudyTools.Mos365ExamHost
             _taskInstructionZh = new Label();
             _completeBtn = new Button();
             _completeStatus = new Label();
+            _scoreBtn = new Button();
+            _scoreResult = new Label();
             _timer = new Timer();
 
             _titleLabel.Text = "MOS Native Exam Host · R3 VSTO POC";
@@ -170,6 +193,23 @@ namespace StudyTools.Mos365ExamHost
             _completeStatus.Location = new Point(165, 226);
             _completeStatus.Visible = false;
 
+            _scoreBtn.Text = "保存して採点する";
+            _scoreBtn.Font = new Font("Segoe UI", 9f, FontStyle.Bold);
+            _scoreBtn.ForeColor = Color.White;
+            _scoreBtn.BackColor = Color.FromArgb(140, 90, 30);
+            _scoreBtn.FlatStyle = FlatStyle.Flat;
+            _scoreBtn.Size = new Size(150, 32);
+            _scoreBtn.Location = new Point(15, 268);
+            _scoreBtn.Visible = false;
+            _scoreBtn.Click += (s, ev) => OnScoreClicked?.Invoke();
+
+            _scoreResult.Text = "";
+            _scoreResult.Font = new Font("Segoe UI", 8f, FontStyle.Regular);
+            _scoreResult.ForeColor = Color.FromArgb(180, 200, 210);
+            _scoreResult.Size = new Size(500, 48);
+            _scoreResult.Location = new Point(175, 260);
+            _scoreResult.Visible = false;
+
             _timer.Interval = 1000;
             _timer.Tick += OnTimerTick;
             _timer.Start();
@@ -177,7 +217,7 @@ namespace StudyTools.Mos365ExamHost
             this.BackColor = Color.FromArgb(30, 40, 55);
             this.ForeColor = Color.FromArgb(200, 210, 220);
             this.Font = new Font("Segoe UI", 9f, FontStyle.Regular);
-            this.Size = new Size(600, 270);
+            this.Size = new Size(600, 310);
 
             this.Controls.Add(_titleLabel);
             this.Controls.Add(_pidLabel);
@@ -191,6 +231,8 @@ namespace StudyTools.Mos365ExamHost
             this.Controls.Add(_taskInstructionZh);
             this.Controls.Add(_completeBtn);
             this.Controls.Add(_completeStatus);
+            this.Controls.Add(_scoreBtn);
+            this.Controls.Add(_scoreResult);
         }
     }
 }

@@ -801,6 +801,67 @@ class MOS365Service:
         return {"ok": True, "session": {"sessionId": session_id, "state": "attached", "completionAcknowledged": True, "completionAcknowledgedAt": now},
                 "message": {"ja": "完了を記録しました。採点はまだ行われません。", "zh": "已记录完成确认，当前不会评分。"}}
 
+    def session_score(self, payload: dict[str, Any]) -> dict[str, Any]:
+        """Score the first sheet name for R8 static training sessions."""
+        session_id = self._safe_session_id(str(payload.get("sessionId", "")))
+        raw_pid = payload.get("excelPid")
+        try:
+            raw_pid = int(raw_pid) if raw_pid is not None else None
+        except (TypeError, ValueError):
+            raise MOS365ServiceError("SESSION_PID_MISMATCH", "プロセス ID が無効です。", "进程 ID 无效。")
+        paths = self._paths(session_id)
+        if not paths.manifest.is_file():
+            raise MOS365ServiceError("SESSION_NOT_FOUND", "セッションが見つかりません。", "未找到会话。", 404)
+        manifest = json.loads(paths.manifest.read_text(encoding="utf-8"))
+        mode = manifest.get("trainingMode", manifest.get("mode", ""))
+        if mode != "r8_static_training":
+            raise MOS365ServiceError("SESSION_MODE_REJECTED", "R8 練習セッションではありません。", "不是 R8 练习会话。")
+        state = manifest.get("state", "created")
+        if state != "attached":
+            raise MOS365ServiceError("SESSION_STATE_REJECTED", "セッションが接続されていません。", "会话未连接。")
+        server_pid = manifest.get("excelPid")
+        if server_pid is not None and server_pid != raw_pid:
+            raise MOS365ServiceError("SESSION_PID_MISMATCH", "セッションのプロセス ID が一致しません。", "会话进程 ID 不匹配。")
+        comp = manifest.get("completion", {})
+        if not comp.get("acknowledged"):
+            raise MOS365ServiceError("SESSION_COMPLETION_REQUIRED", "先に完了を記録してください。", "请先记录完成确认。")
+
+        if not paths.workbook.is_file():
+            raise MOS365ServiceError("WORKBOOK_MISSING", "練習ファイルが見つかりません。", "未找到练习文件。", 404)
+
+        # Score: read first sheet name from Open XML
+        try:
+            with zipfile.ZipFile(str(paths.workbook), 'r') as zf:
+                wb_xml = zf.read('xl/workbook.xml').decode('utf-8')
+            root = ET.fromstring(wb_xml)
+            first_sheet = root.find('.//m:sheets/m:sheet', NS)
+            if first_sheet is None:
+                actual_name = "(no sheets)"
+                correct = False
+            else:
+                actual_name = first_sheet.get('name', '')
+                correct = (actual_name == '練習集計')
+        except (zipfile.BadZipFile, KeyError, ET.ParseError, OSError) as exc:
+            raise MOS365ServiceError("WORKBOOK_PARSE_FAILED", "練習ファイルを読み取れませんでした。", "无法读取练习文件。") from exc
+
+        assessment = {
+            "type": "first_sheet_name_equals",
+            "attemptedAt": __import__("datetime").datetime.now().astimezone().isoformat(),
+            "excelPid": raw_pid,
+            "result": "correct" if correct else "incorrect",
+            "earned": 1 if correct else 0,
+            "total": 1
+        }
+        manifest["assessment"] = assessment
+        paths.manifest.write_text(json.dumps(manifest, ensure_ascii=False, indent=2), encoding="utf-8")
+
+        result_ja = "1枚目のシート名は「練習集計」です。1 / 1" if correct \
+            else "1枚目のシート名を「練習集計」にしてください。0 / 1"
+        result_zh = "第 1 个工作表名称正确。1 / 1" if correct \
+            else "请将第 1 个工作表重命名为「練習集計」。0 / 1"
+        return {"ok": True, "assessment": assessment,
+                "resultJa": result_ja, "resultZh": result_zh}
+
     @staticmethod
     def _normal_formula(value: Any) -> str:
         # Excel may omit syntactically optional single quotes around a sheet name

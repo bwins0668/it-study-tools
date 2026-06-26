@@ -19,6 +19,11 @@ namespace StudyTools.Mos365ExamHost
         public string InstructionJa { get; set; }
         public string InstructionZh { get; set; }
         public bool CompletionAcknowledged { get; set; }
+        public string ResultJa { get; set; }
+        public string ResultZh { get; set; }
+        public int Earned { get; set; }
+        public int Total { get; set; }
+        public bool FileSaved { get; set; }
     }
 
     public class SessionBridge
@@ -44,48 +49,28 @@ namespace StudyTools.Mos365ExamHost
             _retryCount = 0;
             while (_retryCount < MaxRetries)
             {
-                try
-                {
-                    return TryVerify(workbookPath, excelPid);
-                }
+                try { return TryVerify(workbookPath, excelPid); }
                 catch (WebException ex)
                 {
                     var statusCode = (ex.Response as HttpWebResponse)?.StatusCode;
-                    // 4xx errors are final — don't retry
                     if (statusCode >= HttpStatusCode.BadRequest && statusCode < HttpStatusCode.InternalServerError)
                     {
                         var resp = (HttpWebResponse)ex.Response;
                         using (var reader = new StreamReader(resp.GetResponseStream(), Encoding.UTF8))
                         {
-                            var body = reader.ReadToEnd();
-                            return ParseError(body, (int)statusCode);
+                            return ParseError(reader.ReadToEnd(), (int)statusCode);
                         }
                     }
-                    // 5xx or timeout — retry
                     _retryCount++;
                     if (_retryCount >= MaxRetries)
-                    {
-                        return new SessionVerificationResult
-                        {
-                            Ok = false,
-                            ErrorCode = "HTTP_FAILED",
-                            ErrorMessage = "验证服务不可用: " + ex.Message
-                        };
-                    }
+                        return new SessionVerificationResult { Ok = false, ErrorCode = "HTTP_FAILED", ErrorMessage = "验证服务不可用: " + ex.Message };
                     System.Threading.Thread.Sleep(RetryDelayMs);
                 }
                 catch (Exception ex)
                 {
                     _retryCount++;
                     if (_retryCount >= MaxRetries)
-                    {
-                        return new SessionVerificationResult
-                        {
-                            Ok = false,
-                            ErrorCode = "HTTP_FAILED",
-                            ErrorMessage = "验证请求失败: " + ex.Message
-                        };
-                    }
+                        return new SessionVerificationResult { Ok = false, ErrorCode = "HTTP_FAILED", ErrorMessage = "验证请求失败: " + ex.Message };
                     System.Threading.Thread.Sleep(RetryDelayMs);
                 }
             }
@@ -94,56 +79,30 @@ namespace StudyTools.Mos365ExamHost
 
         private SessionVerificationResult TryVerify(string workbookPath, int excelPid)
         {
-            var payload = new
-            {
-                workbookPath = workbookPath,
-                excelPid = excelPid,
-                client = "vsto"
-            };
+            var payload = new { workbookPath = workbookPath, excelPid = excelPid, client = "vsto" };
             string jsonPayload = _json.Serialize(payload);
-
             var request = (HttpWebRequest)WebRequest.Create(_baseUrl + "/api/mos365/session/verify");
-            request.Method = "POST";
-            request.ContentType = "application/json";
-            request.Timeout = TimeoutMs;
-            var bytes = Encoding.UTF8.GetBytes(jsonPayload);
-            request.ContentLength = bytes.Length;
-            using (var stream = request.GetRequestStream())
-            {
-                stream.Write(bytes, 0, bytes.Length);
-            }
-
+            request.Method = "POST"; request.ContentType = "application/json"; request.Timeout = TimeoutMs;
+            var bytes = Encoding.UTF8.GetBytes(jsonPayload); request.ContentLength = bytes.Length;
+            using (var stream = request.GetRequestStream()) { stream.Write(bytes, 0, bytes.Length); }
             using (var response = (HttpWebResponse)request.GetResponse())
+            using (var reader = new StreamReader(response.GetResponseStream(), Encoding.UTF8))
             {
-                using (var reader = new StreamReader(response.GetResponseStream(), Encoding.UTF8))
+                var body = reader.ReadToEnd();
+                var result = _json.Deserialize<VerifyResponse>(body);
+                if (result.ok)
                 {
-                    var body = reader.ReadToEnd();
-                    var result = _json.Deserialize<VerifyResponse>(body);
-                    if (result.ok)
+                    var vr = new SessionVerificationResult { Ok = true, SessionId = result.session.sessionId, State = result.session.state, ExcelPid = result.session.excelPid };
+                    if (result.session.training != null)
                     {
-                        var vr = new SessionVerificationResult
-                        {
-                            Ok = true,
-                            SessionId = result.session.sessionId,
-                            State = result.session.state,
-                            ExcelPid = result.session.excelPid
-                        };
-                        if (result.session.training != null)
-                        {
-                            vr.TaskId = result.session.training.taskId;
-                            vr.InstructionJa = result.session.training.instructionJa;
-                            vr.InstructionZh = result.session.training.instructionZh;
-                            vr.CompletionAcknowledged = result.session.training.completionAcknowledged;
-                        }
-                        return vr;
+                        vr.TaskId = result.session.training.taskId;
+                        vr.InstructionJa = result.session.training.instructionJa;
+                        vr.InstructionZh = result.session.training.instructionZh;
+                        vr.CompletionAcknowledged = result.session.training.completionAcknowledged;
                     }
-                    return new SessionVerificationResult
-                    {
-                        Ok = false,
-                        ErrorCode = "REJECTED",
-                        ErrorMessage = "服务端拒绝验证"
-                    };
+                    return vr;
                 }
+                return new SessionVerificationResult { Ok = false, ErrorCode = "REJECTED", ErrorMessage = "服务端拒绝验证" };
             }
         }
 
@@ -152,46 +111,12 @@ namespace StudyTools.Mos365ExamHost
             try
             {
                 var error = _json.Deserialize<ErrorResponse>(body);
-                return new SessionVerificationResult
-                {
-                    Ok = false,
-                    ErrorCode = error.error ?? ("HTTP_" + statusCode),
-                    ErrorMessage = error.messageJa ?? ("HTTP " + statusCode)
-                };
+                return new SessionVerificationResult { Ok = false, ErrorCode = error.error ?? ("HTTP_" + statusCode), ErrorMessage = error.messageJa ?? ("HTTP " + statusCode) };
             }
             catch
             {
-                return new SessionVerificationResult
-                {
-                    Ok = false,
-                    ErrorCode = "HTTP_" + statusCode,
-                    ErrorMessage = "HTTP " + statusCode
-                };
+                return new SessionVerificationResult { Ok = false, ErrorCode = "HTTP_" + statusCode, ErrorMessage = "HTTP " + statusCode };
             }
-        }
-
-        private class VerifyResponse
-        {
-            public bool ok { get; set; }
-            public SessionData session { get; set; }
-        }
-
-        private class SessionData
-        {
-            public string sessionId { get; set; }
-            public string state { get; set; }
-            public int excelPid { get; set; }
-            public string createdAt { get; set; }
-            public TrainingData training { get; set; }
-        }
-
-        private class TrainingData
-        {
-            public string mode { get; set; }
-            public string taskId { get; set; }
-            public string instructionJa { get; set; }
-            public string instructionZh { get; set; }
-            public bool completionAcknowledged { get; set; }
         }
 
         public SessionVerificationResult SendCompletion(string sessionId, int excelPid)
@@ -201,34 +126,46 @@ namespace StudyTools.Mos365ExamHost
             try
             {
                 var request = (HttpWebRequest)WebRequest.Create(_baseUrl + "/api/mos365/session/complete");
-                request.Method = "POST";
-                request.ContentType = "application/json";
-                request.Timeout = TimeoutMs;
-                var bytes = Encoding.UTF8.GetBytes(jsonPayload);
-                request.ContentLength = bytes.Length;
+                request.Method = "POST"; request.ContentType = "application/json"; request.Timeout = TimeoutMs;
+                var bytes = Encoding.UTF8.GetBytes(jsonPayload); request.ContentLength = bytes.Length;
+                using (var stream = request.GetRequestStream()) { stream.Write(bytes, 0, bytes.Length); }
+                using (var response = (HttpWebResponse)request.GetResponse())
+                using (var reader = new StreamReader(response.GetResponseStream(), Encoding.UTF8))
+                    return new SessionVerificationResult { Ok = true, SessionId = sessionId, CompletionAcknowledged = true };
+            }
+            catch (WebException ex) { return new SessionVerificationResult { Ok = false, ErrorCode = "HTTP_FAILED", ErrorMessage = ex.Message }; }
+            catch (Exception ex) { return new SessionVerificationResult { Ok = false, ErrorCode = "HTTP_FAILED", ErrorMessage = ex.Message }; }
+        }
+
+        public SessionVerificationResult SendScore(string sessionId, int excelPid)
+        {
+            var payload = new { sessionId = sessionId, excelPid = excelPid, client = "vsto" };
+            string jsonPayload = _json.Serialize(payload);
+            try
+            {
+                var request = (HttpWebRequest)WebRequest.Create(_baseUrl + "/api/mos365/session/score");
+                request.Method = "POST"; request.ContentType = "application/json"; request.Timeout = TimeoutMs;
+                var bytes = Encoding.UTF8.GetBytes(jsonPayload); request.ContentLength = bytes.Length;
                 using (var stream = request.GetRequestStream()) { stream.Write(bytes, 0, bytes.Length); }
                 using (var response = (HttpWebResponse)request.GetResponse())
                 using (var reader = new StreamReader(response.GetResponseStream(), Encoding.UTF8))
                 {
-                    return new SessionVerificationResult { Ok = true, SessionId = sessionId, CompletionAcknowledged = true };
+                    var body = reader.ReadToEnd();
+                    var result = _json.Deserialize<ScoreResponse>(body);
+                    if (result.ok && result.assessment != null)
+                        return new SessionVerificationResult { Ok = true, SessionId = sessionId, Earned = result.assessment.earned, Total = result.assessment.total, ResultJa = result.resultJa, ResultZh = result.resultZh };
+                    return new SessionVerificationResult { Ok = false, ErrorCode = "REJECTED" };
                 }
             }
-            catch (WebException ex)
-            {
-                return new SessionVerificationResult { Ok = false, ErrorCode = "HTTP_FAILED", ErrorMessage = ex.Message };
-            }
-            catch (Exception ex)
-            {
-                return new SessionVerificationResult { Ok = false, ErrorCode = "HTTP_FAILED", ErrorMessage = ex.Message };
-            }
+            catch (WebException ex) { return new SessionVerificationResult { Ok = false, ErrorCode = "HTTP_FAILED", ErrorMessage = ex.Message }; }
+            catch (Exception ex) { return new SessionVerificationResult { Ok = false, ErrorCode = "HTTP_FAILED", ErrorMessage = ex.Message }; }
         }
 
-        private class ErrorResponse
-        {
-            public bool success { get; set; }
-            public string error { get; set; }
-            public string messageJa { get; set; }
-            public string messageZh { get; set; }
-        }
+        private class VerifyResponse { public bool ok { get; set; } public SessionData session { get; set; } }
+        private class SessionData { public string sessionId { get; set; } public string state { get; set; } public int excelPid { get; set; } public string createdAt { get; set; } public TrainingData training { get; set; } }
+        private class TrainingData { public string mode { get; set; } public string taskId { get; set; } public string instructionJa { get; set; } public string instructionZh { get; set; } public bool completionAcknowledged { get; set; } }
+        private class ScoreResponse { public bool ok { get; set; } public AssessmentData assessment { get; set; } public string resultJa { get; set; } public string resultZh { get; set; } }
+        private class AssessmentData { public string type { get; set; } public string result { get; set; } public int earned { get; set; } public int total { get; set; } }
+        private class ErrorResponse { public bool success { get; set; } public string error { get; set; } public string messageJa { get; set; } public string messageZh { get; set; } }
     }
 }
