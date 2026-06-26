@@ -324,7 +324,6 @@ body {
   border-color: var(--neon-cyan-glow);
 }
 
-/* ---- Tools Drawer ---- */
 .tools-drawer {
   position: fixed;
   inset: 0;
@@ -332,15 +331,35 @@ body {
   display: flex;
   justify-content: flex-end;
   align-items: stretch;
+  visibility: hidden;
+  pointer-events: none;
+  transition: visibility 0s linear 260ms;
+}
+.tools-drawer--open,
+.tools-drawer--closing {
+  visibility: visible;
+  pointer-events: auto;
+  transition: visibility 0s linear 0s;
 }
 .tools-drawer[hidden] {
-  display: none;
+  display: none !important;
 }
 .tools-drawer__backdrop {
   position: absolute;
   inset: 0;
   background: rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(2px);
+  opacity: 0;
+  transition: opacity 180ms cubic-bezier(.22, 1, .36, 1);
+  will-change: opacity;
+}
+.tools-drawer--open .tools-drawer__backdrop {
+  opacity: 1;
+  transition: opacity 240ms cubic-bezier(.22, 1, .36, 1);
+}
+.tools-drawer--closing .tools-drawer__backdrop {
+  opacity: 0;
+  transition: opacity 180ms cubic-bezier(.22, 1, .36, 1);
 }
 .tools-drawer__panel {
   position: relative;
@@ -353,11 +372,26 @@ body {
   display: flex;
   flex-direction: column;
   overflow-y: auto;
-  animation: toolsDrawerSlideIn 0.25s ease-out;
+  transform: translate3d(100%, 0, 0);
+  opacity: 0;
+  transition:
+    transform 220ms cubic-bezier(.22, 1, .36, 1),
+    opacity 220ms cubic-bezier(.22, 1, .36, 1);
+  will-change: transform, opacity;
 }
-@keyframes toolsDrawerSlideIn {
-  from { transform: translateX(100%); }
-  to { transform: translateX(0); }
+.tools-drawer--open .tools-drawer__panel {
+  transform: translate3d(0, 0, 0);
+  opacity: 1;
+  transition:
+    transform 280ms cubic-bezier(.22, 1, .36, 1),
+    opacity 280ms cubic-bezier(.22, 1, .36, 1);
+}
+.tools-drawer--closing .tools-drawer__panel {
+  transform: translate3d(100%, 0, 0);
+  opacity: 0;
+  transition:
+    transform 220ms cubic-bezier(.22, 1, .36, 1),
+    opacity 220ms cubic-bezier(.22, 1, .36, 1);
 }
 .tools-drawer__header {
   display: flex;
@@ -8243,17 +8277,25 @@ body.i18n-active :where(
 
 /* 3. Backdrop for mobile off-canvas drawer */
 .mobile-backdrop {
-  display: none;
   position: fixed;
   inset: 0;
   top: 64px;
   background: rgba(3, 7, 18, 0.6);
   backdrop-filter: blur(4px);
   z-index: 840;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 180ms cubic-bezier(.22, 1, .36, 1), visibility 0s linear 180ms;
+  will-change: opacity;
 }
 body.mobile-sidebar-open .mobile-backdrop,
-body.mobile-playground-open .mobile-backdrop {
-  display: block;
+body.mobile-playground-open .mobile-backdrop,
+body.desktop-sidebar-expanded .mobile-backdrop {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 240ms cubic-bezier(.22, 1, .36, 1), visibility 0s linear 0s;
 }
 
 /* 4. Fine-tune three columns visual weight & borders on desktop */
@@ -11884,11 +11926,13 @@ a:focus-visible,
     z-index: 860;
     background: #080d1a;
     border-right: 1px solid var(--border-color);
-    transform: translateX(-105%);
-    transition: transform 0.3s ease;
+    transform: translate3d(-105%, 0, 0);
+    transition: transform 220ms cubic-bezier(.22, 1, .36, 1);
+    will-change: transform;
   }
   body.mobile-sidebar-open .app-sidebar {
-    transform: translateX(0);
+    transform: translate3d(0, 0, 0);
+    transition: transform 280ms cubic-bezier(.22, 1, .36, 1);
   }
 
   /* Lesson content: full width */
@@ -12432,13 +12476,13 @@ body.mobile-playground-open {
     overflow: hidden;
     /* Always rendered, visibility controls appearance */
     opacity: 0;
-    transform: translate3d(-28px, 0, 0) scale(0.992);
+    transform: translate3d(-100%, 0, 0) scale(0.99);
     visibility: hidden;
     pointer-events: none;
     transition:
-      transform 340ms cubic-bezier(0.16, 1, 0.3, 1),
-      opacity 220ms cubic-bezier(0.2, 0.8, 0.2, 1),
-      visibility 0s linear 340ms;
+      transform 220ms cubic-bezier(.22, 1, .36, 1),
+      opacity 220ms cubic-bezier(.22, 1, .36, 1),
+      visibility 0s linear 220ms;
     will-change: transform, opacity;
   }
 
@@ -12452,7 +12496,7 @@ body.mobile-playground-open {
     opacity: 0;
     pointer-events: none;
     z-index: -1;
-    transition: opacity 280ms ease;
+    transition: opacity 220ms ease;
   }
 
   /* Sidebar overlay — smooth slide-in */
@@ -12475,8 +12519,8 @@ body.mobile-playground-open {
     visibility: visible;
     pointer-events: auto;
     transition:
-      transform 340ms cubic-bezier(0.16, 1, 0.3, 1),
-      opacity 220ms cubic-bezier(0.2, 0.8, 0.2, 1),
+      transform 280ms cubic-bezier(.22, 1, .36, 1),
+      opacity 280ms cubic-bezier(.22, 1, .36, 1),
       visibility 0s linear 0s;
     /* Static base shadow — no transition */
     box-shadow: 4px 0 16px rgba(0, 0, 0, 0.2);
@@ -12572,9 +12616,234 @@ body.mobile-playground-open {
   .module-switch-panel,
   .module-switch-panel:not([hidden]),
   .app-sidebar,
-  body.desktop-sidebar-expanded .app-sidebar {
+  body.desktop-sidebar-expanded .app-sidebar,
+  .tools-drawer__panel,
+  .tools-drawer__backdrop,
+  .lesson-content,
+  #playground-section,
+  .app-header,
+  .app-body {
     transition: none !important;
     transform: none !important;
+    animation: none !important;
     filter: none !important;
   }
+
+  .tools-drawer__panel {
+    transform: translate3d(0, 0, 0) !important;
+    opacity: 1 !important;
+  }
+  .tools-drawer[hidden] .tools-drawer__panel,
+  .tools-drawer--closing .tools-drawer__panel {
+    transform: translate3d(100%, 0, 0) !important;
+    opacity: 0 !important;
+  }
+
+  .tools-drawer__backdrop {
+    opacity: 1 !important;
+  }
+  .tools-drawer[hidden] .tools-drawer__backdrop,
+  .tools-drawer--closing .tools-drawer__backdrop {
+    opacity: 0 !important;
+  }
+}
+
+/* iOS sheet depth effect for main content when tools drawer is active */
+.app-header,
+.app-body {
+  transition: transform 220ms cubic-bezier(.22, 1, .36, 1), opacity 220ms cubic-bezier(.22, 1, .36, 1);
+  will-change: transform, opacity;
+}
+body.tools-drawer-active .app-header,
+body.tools-drawer-active .app-body {
+  transform: scale(0.99) translate3d(0, 0, 0);
+  opacity: 0.92;
+  transition: transform 280ms cubic-bezier(.22, 1, .36, 1), opacity 280ms cubic-bezier(.22, 1, .36, 1);
+}
+
+/* iOS sheet depth effect for main content when left sidebar is expanded */
+.lesson-content,
+#playground-section {
+  transition: transform 220ms cubic-bezier(.22, 1, .36, 1), opacity 220ms cubic-bezier(.22, 1, .36, 1);
+  will-change: transform, opacity;
+}
+body.desktop-sidebar-expanded .lesson-content,
+body.desktop-sidebar-expanded #playground-section,
+body.mobile-sidebar-open .lesson-content,
+body.mobile-sidebar-open #playground-section {
+  transform: scale(0.99) translate3d(0, 0, 0);
+  opacity: 0.92;
+  transition: transform 280ms cubic-bezier(.22, 1, .36, 1), opacity 280ms cubic-bezier(.22, 1, .36, 1);
+}
+body.desktop-sidebar-expanded .app-header,
+body.mobile-sidebar-open .app-header {
+  transform: scale(0.99) translate3d(0, 0, 0);
+  opacity: 0.92;
+  transition: transform 280ms cubic-bezier(.22, 1, .36, 1), opacity 280ms cubic-bezier(.22, 1, .36, 1);
+}
+
+/* Immersive Start Overlay Styling */
+.immersive-start-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  background: radial-gradient(circle at center, #0f172a, #020617);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(8px);
+  opacity: 1;
+  transition: opacity 300ms cubic-bezier(.22, 1, .36, 1);
+}
+.immersive-start-overlay[hidden] {
+  display: none !important;
+}
+.immersive-start-card {
+  background: rgba(30, 41, 59, 0.4);
+  border: 1px solid rgba(148, 163, 184, 0.1);
+  padding: 40px;
+  border-radius: 20px;
+  width: 420px;
+  max-width: 90%;
+  text-align: center;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(20px);
+  animation: cardFadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+@keyframes cardFadeIn {
+  from { opacity: 0; transform: scale(0.95) translate3d(0, 20px, 0); }
+  to { opacity: 1; transform: scale(1) translate3d(0, 0, 0); }
+}
+.immersive-start-logo {
+  font-size: 48px;
+  color: var(--neon-cyan);
+  margin-bottom: 24px;
+  filter: drop-shadow(0 0 12px var(--neon-cyan-glow));
+}
+.immersive-start-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 12px;
+  letter-spacing: 0.5px;
+}
+.immersive-start-desc {
+  font-size: 14px;
+  color: var(--text-muted);
+  margin-bottom: 32px;
+}
+.immersive-start-btn {
+  width: 100%;
+  padding: 14px 28px;
+  background: linear-gradient(135deg, var(--neon-cyan, #06b6d4), #3b82f6);
+  border: none;
+  border-radius: 12px;
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(6, 182, 212, 0.3);
+  transition: transform 0.2s ease, filter 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.immersive-start-btn:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.1);
+}
+.immersive-start-btn:active {
+  transform: translateY(0);
+}
+.immersive-skip-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 13px;
+  margin-top: 16px;
+  cursor: pointer;
+  text-decoration: underline;
+  transition: color 0.2s ease;
+}
+.immersive-skip-btn:hover {
+  color: var(--text-main);
+}
+
+/* Fullscreen Toggle Button in Header */
+.fullscreen-toggle-btn {
+  background: transparent;
+  border: 1px solid var(--border-color);
+  color: var(--text-muted);
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  margin-right: 8px;
+  font-size: 14px;
+}
+.fullscreen-toggle-btn:hover {
+  color: var(--neon-cyan);
+  border-color: var(--neon-cyan-glow);
+  box-shadow: 0 0 6px var(--neon-cyan-glow);
+}
+body.immersive-fullscreen-active .fullscreen-toggle-btn {
+  color: var(--neon-cyan);
+  border-color: var(--neon-cyan-glow);
+}
+
+/* MOS 365 Head Layout enhancements */
+.mos365-head-left {
+  display: flex;
+  align-items: center;
+}
+.mos365-head-right {
+  display: flex;
+  align-items: center;
+}
+.mos365-back-btn {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 8px;
+  padding: 6px 12px;
+  cursor: pointer;
+  font-weight: 600;
+  margin-right: 16px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+.mos365-back-btn:hover {
+  background: rgba(255, 255, 255, 0.22);
+  border-color: rgba(255, 255, 255, 0.6);
+}
+.mos365-back-btn:focus-visible {
+  outline: 2px solid #fff;
+}
+.mos365-immersive-btn {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 8px;
+  padding: 6px 10px;
+  cursor: pointer;
+  margin-right: 12px;
+  font-size: 13px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+.mos365-immersive-btn:hover {
+  background: rgba(255, 255, 255, 0.22);
+  border-color: rgba(255, 255, 255, 0.6);
 }

@@ -63,13 +63,139 @@
     document.head.appendChild(style);
   }
 
+  var popstateHandlerAttached = false;
+
+  function handlePopState(e) {
+    var shell = document.getElementById('mos365-shell');
+    if (!shell || !shell.classList.contains('is-open')) return;
+    if (e.state && e.state.mosView) {
+      state.view = e.state.mosView;
+      if (e.state.mosMvpInProgress !== undefined) {
+        state.mvpInProgress = e.state.mosMvpInProgress;
+      }
+      render();
+    } else {
+      if (state.view === 'exam' || state.view === 'review') {
+        state.view = 'mock';
+        render();
+      } else if (state.view === 'mvp' && state.mvpInProgress) {
+        state.mvpInProgress = false;
+        render();
+      } else {
+        close();
+      }
+    }
+  }
+
+  function transitionToView(nextView, callback) {
+    var main = document.querySelector('.mos365-main');
+    if (!main || window.matchMedia('(prefers-reduced-motion: reduce)').matches || navigator.webdriver) {
+      state.view = nextView;
+      if (callback) callback();
+      if (window.history && window.history.pushState) {
+        window.history.pushState({ mosView: state.view, mosMvpInProgress: state.mvpInProgress }, '', window.location.href);
+      }
+      render();
+      return;
+    }
+
+    var isCurrently3rd = state.view === 'exam' || state.view === 'review' || (state.view === 'mvp' && state.mvpInProgress);
+    if (!isCurrently3rd) {
+      state.lastScrollTop = main.scrollTop;
+    }
+
+    var oldContent = main.firstElementChild;
+    if (oldContent) {
+      oldContent.style.transition = 'transform 120ms ease, opacity 120ms ease';
+      oldContent.style.opacity = '0';
+      oldContent.style.transform = 'translate3d(-8px, 0, 0)';
+
+      setTimeout(function() {
+        state.view = nextView;
+        if (callback) callback();
+
+        if (window.history && window.history.pushState) {
+          window.history.pushState({ mosView: state.view, mosMvpInProgress: state.mvpInProgress }, '', window.location.href);
+        }
+
+        render();
+
+        var newContent = main.firstElementChild;
+        if (newContent) {
+          newContent.style.transition = 'none';
+          newContent.style.opacity = '0';
+          newContent.style.transform = 'translate3d(8px, 0, 0)';
+          newContent.offsetHeight; // reflow
+          newContent.style.transition = 'transform 180ms cubic-bezier(.22, 1, .36, 1), opacity 180ms cubic-bezier(.22, 1, .36, 1)';
+          newContent.style.opacity = '1';
+          newContent.style.transform = 'translate3d(0, 0, 0)';
+        }
+      }, 120);
+    } else {
+      state.view = nextView;
+      if (callback) callback();
+      if (window.history && window.history.pushState) {
+        window.history.pushState({ mosView: state.view, mosMvpInProgress: state.mvpInProgress }, '', window.location.href);
+      }
+      render();
+    }
+  }
+
   function buildShell() {
     var shell = document.createElement('section');
     shell.id = 'mos365-shell';
     shell.setAttribute('aria-hidden', 'true');
-    shell.innerHTML = '<div class="mos365-panel" role="dialog" aria-modal="true" aria-label="MOS Excel 365"><header class="mos365-head"><div><h2>MOS Excel 365（日语版）合格作战中心</h2><small>Microsoft Excel 365 一般 / 日本語版トレーニング</small></div><button class="mos365-close" type="button">閉じる</button></header><div class="mos365-body"><nav class="mos365-nav" aria-label="MOS navigation"></nav><main class="mos365-main"></main></div></div>';
+    shell.innerHTML = '<div class="mos365-panel" role="dialog" aria-modal="true" aria-label="MOS Excel 365">' +
+      '<header class="mos365-head">' +
+        '<div class="mos365-head-left">' +
+          '<button class="mos365-back-btn" id="mos365-back-btn" type="button" style="display: none;">← MOS に戻る / 返回 MOS</button>' +
+          '<div class="mos365-head-titles">' +
+            '<h2>MOS Excel 365（日语版）合格作战中心</h2>' +
+            '<small>Microsoft Excel 365 一般 / 日本語版トレーニング</small>' +
+          '</div>' +
+        '</div>' +
+        '<div class="mos365-head-right">' +
+          '<button class="mos365-immersive-btn" id="mos365-immersive-btn" type="button" title="切换沉浸模式"><i class="fa-solid fa-expand"></i></button>' +
+          '<button class="mos365-close" type="button">閉じる</button>' +
+        '</div>' +
+      '</header>' +
+      '<div class="mos365-body">' +
+        '<nav class="mos365-nav" aria-label="MOS navigation"></nav>' +
+        '<main class="mos365-main"></main>' +
+      '</div>' +
+    '</div>';
+
     shell.querySelector('.mos365-close').addEventListener('click', close);
     shell.addEventListener('click', function (event) { if (event.target === shell) close(); });
+
+    var backBtn = shell.querySelector('#mos365-back-btn');
+    if (backBtn) {
+      backBtn.addEventListener('click', function() {
+        if (window.history.state && window.history.state.mosView && window.history.state.mosView !== state.view) {
+          window.history.back();
+        } else {
+          if (state.view === 'exam' || state.view === 'review') {
+            transitionToView('mock');
+          } else if (state.view === 'mvp') {
+            transitionToView('mvp', function() {
+              state.mvpInProgress = false;
+            });
+          } else {
+            close();
+          }
+        }
+      });
+    }
+
+    var immersiveBtn = shell.querySelector('#mos365-immersive-btn');
+    if (immersiveBtn) {
+      immersiveBtn.addEventListener('click', function() {
+        if (window.toggleImmersiveFullscreen) {
+          window.toggleImmersiveFullscreen();
+        }
+      });
+    }
+
     document.body.appendChild(shell);
   }
 
@@ -97,6 +223,13 @@
   function open() {
     document.getElementById('mos365-shell').classList.add('is-open');
     document.getElementById('mos365-shell').setAttribute('aria-hidden', 'false');
+    if (!popstateHandlerAttached) {
+      window.addEventListener('popstate', handlePopState);
+      popstateHandlerAttached = true;
+    }
+    if (window.history && window.history.replaceState) {
+      window.history.replaceState({ mosView: state.view, mosMvpInProgress: state.mvpInProgress }, '', window.location.href);
+    }
     render();
   }
 
@@ -104,6 +237,10 @@
     stopExamTimer();
     document.getElementById('mos365-shell').classList.remove('is-open');
     document.getElementById('mos365-shell').setAttribute('aria-hidden', 'true');
+    if (popstateHandlerAttached) {
+      window.removeEventListener('popstate', handlePopState);
+      popstateHandlerAttached = false;
+    }
   }
 
   var navItems = [
@@ -113,7 +250,8 @@
 
   function renderNavigation() {
     var nav = document.querySelector('.mos365-nav');
-    if (state.view === 'exam' || state.view === 'mvp') {
+    var is3rdLevel = state.view === 'exam' || state.view === 'review' || (state.view === 'mvp' && state.mvpInProgress);
+    if (is3rdLevel) {
       nav.innerHTML = '';
       nav.style.display = 'none';
       return;
@@ -123,20 +261,32 @@
       return '<button type="button" data-view="' + item[0] + '" class="' + (state.view === item[0] ? 'active' : '') + '">' + item[1] + '</button>';
     }).join('');
     nav.querySelectorAll('button').forEach(function (button) {
-      button.addEventListener('click', function () { state.view = button.dataset.view; render(); });
+      button.addEventListener('click', function () { transitionToView(button.dataset.view); });
     });
   }
 
   function render() {
     var headerTitle = document.querySelector('.mos365-head h2');
     var headerSub = document.querySelector('.mos365-head small');
-    if (state.view === 'exam') {
-      headerTitle.textContent = 'MOS Excel 365 実機模擬トレーニング'; if (state.view === 'mvp') { headerTitle.textContent = 'MOS 実技トレーニング（MVP）'; headerSub.textContent = '原创学习与训练内容 / オリジナル学習コンテンツ'; }
-      headerSub.textContent = 'オリジナル学習・練習コンテンツ';
-    } else {
-      headerTitle.textContent = 'MOS Excel 365（日语版）合格作战中心';
-      headerSub.textContent = 'Microsoft Excel 365 一般 / 日本語版トレーニング';
+    var backBtn = document.getElementById('mos365-back-btn');
+
+    var is3rdLevel = state.view === 'exam' || state.view === 'review' || (state.view === 'mvp' && state.mvpInProgress);
+
+    if (backBtn) {
+      backBtn.style.display = is3rdLevel ? 'block' : 'none';
     }
+
+    if (state.view === 'exam') {
+      if (headerTitle) headerTitle.textContent = 'MOS Excel 365 実機模擬トレーニング';
+      if (headerSub) headerSub.textContent = 'オリジナル学習・練習コンテンツ';
+    } else if (state.view === 'mvp' && state.mvpInProgress) {
+      if (headerTitle) headerTitle.textContent = 'MOS 実技トレーニング（MVP）';
+      if (headerSub) headerSub.textContent = '原创学习与训练内容 / オリジナル学習コンテンツ';
+    } else {
+      if (headerTitle) headerTitle.textContent = 'MOS Excel 365（日语版）合格作战中心';
+      if (headerSub) headerSub.textContent = 'Microsoft Excel 365 一般 / 日本語版トレーニング';
+    }
+
     renderNavigation();
     var main = document.querySelector('.mos365-main');
     var views = {
@@ -145,6 +295,28 @@
       exam: renderExam, review: renderReview
     };
     (views[state.view] || renderDashboard)(main);
+
+    if (!is3rdLevel && state.lastScrollTop !== undefined && main) {
+      main.scrollTop = state.lastScrollTop;
+      state.lastScrollTop = 0;
+    }
+
+    if (state.lastTriggerElement && typeof state.lastTriggerElement.focus === 'function') {
+      (function(el) {
+        setTimeout(function() { el.focus(); }, 150);
+      })(state.lastTriggerElement);
+      state.lastTriggerElement = null;
+    }
+
+    var mosFsBtn = document.getElementById('mos365-immersive-btn');
+    if (mosFsBtn) {
+      var isFS = !!document.fullscreenElement;
+      var icon = mosFsBtn.querySelector('i');
+      if (icon) {
+        icon.className = isFS ? 'fa-solid fa-compress' : 'fa-solid fa-expand';
+      }
+      mosFsBtn.title = isFS ? '退出沉浸模式' : '进入沉浸模式';
+    }
   }
 
   function recordsFor(type) {
@@ -261,20 +433,21 @@
 
   function startMock(index, variant, button) {
     button.disabled = true; button.textContent = '準備中…';
+    state.lastTriggerElement = button;
     var blueprint = content.mockBlueprints[index];
     api('/api/mos365/sessions', { mode: 'mock', scenarioId: blueprint.scenarioId, variant: variant }).then(function (session) {
       state.session = session;
       state.session.startedAt = Date.now();
       state.session.durationMinutes = 50;
-      state.view = 'exam';
-      render();
-      startExamTimer();
+      transitionToView('exam', function() {
+        startExamTimer();
+      });
     }).catch(function (error) { button.disabled = false; button.textContent = '模擬を開始する'; alert(error.message); });
   }
 
   function renderExam(main) {
     var session = state.session;
-    if (!session) { state.view = 'mock'; render(); return; }
+    if (!session) { transitionToView('mock'); return; }
     main.innerHTML = '<section class="mos365-exam"><div class="mos365-exam-top"><div><strong>MOS Excel 365 実機模擬トレーニング</strong><br><small>オリジナル学習・練習コンテンツ</small></div><div><strong id="mos-exam-clock">50:00</strong></div></div><p>Excel の保存後、この画面に戻って提出してください。</p><div class="mos365-actions"><button class="mos365-btn" data-exam-open>Excel でファイルを開く</button><button class="mos365-btn danger" data-exam-submit>提出して採点する</button></div><div class="mos365-exam-list">' + session.tasks.map(function (task) { return '<article class="mos365-exam-task"><strong>' + escapeHtml(task.instructionJa) + '</strong></article>'; }).join('') + '</div></section>';
     main.querySelector('[data-exam-open]').addEventListener('click', function () { launchCurrent(null, true); });
     main.querySelector('[data-exam-submit]').addEventListener('click', function () {
@@ -318,7 +491,7 @@
       saveRecords(records);
       stopExamTimer();
       state.session.result = result;
-      if (type === 'mock') { state.view = 'review'; render(); }
+      if (type === 'mock') { transitionToView('review'); }
       else if (output) { output.innerHTML = resultSummary(result); }
     }).catch(function (error) {
       if (output) output.innerHTML = '<div class="mos365-notice mos365-error">' + escapeHtml(error.payload && error.payload.messageZh || error.message) + '</div>';
@@ -332,20 +505,20 @@
 
   function renderReview(main) {
     var result = state.session && state.session.result;
-    if (!result) { state.view = 'mock'; render(); return; }
+    if (!result) { transitionToView('mock'); return; }
     var failed = result.results.filter(function (item) { return item.status !== 'pass'; });
-    main.innerHTML = '<h3>採点結果 / 评分结果：' + result.percentage + '%</h3>' + resultSummary(result) + '<div class="mos365-notice">日文原题、中文题意、实际结果与复习建议已恢复显示。弱项会回流到课程和专项练习。</div><div class="mos365-actions"><button class="mos365-btn" data-review-mock>模擬一覧へ</button><button class="mos365-btn secondary" data-review-wrong>薄弱項を見る</button></div><section class="mos365-results"><table><thead><tr><th>任务</th><th>结果</th><th>解释 / 解析</th><th>复习</th></tr></thead><tbody>' + result.results.map(function (item) {
+    main.innerHTML = '<h3>採点結果 / 评分结果：' + result.percentage + '%</h3>' + resultSummary(result) + '<div class="mos365-notice">日文原题、中文题意、实际结果与复习建议已恢复显示。弱项会回流到课程 and 专项练习。</div><div class="mos365-actions"><button class="mos365-btn" data-review-mock>模擬一覧へ</button><button class="mos365-btn secondary" data-review-wrong>薄弱項を見る</button></div><section class="mos365-results"><table><thead><tr><th>任务</th><th>结果</th><th>解释 / 解析</th><th>复习</th></tr></thead><tbody>' + result.results.map(function (item) {
       return '<tr><td>' + escapeHtml(item.taskId) + '<br><small>' + escapeHtml(item.evidence) + '</small></td><td>' + (item.status === 'pass' ? '合格 / 通过' : '未达成 / 未通过') + '<br>' + item.score + '/' + item.maxScore + '</td><td><strong>日：</strong>' + escapeHtml(item.explanationJa) + '<br><strong>中：</strong>' + escapeHtml(item.explanationZh) + '</td><td><strong>日：</strong>' + escapeHtml(item.remediationJa) + '<br><strong>中：</strong>' + escapeHtml(item.remediationZh) + '</td></tr>';
     }).join('') + '</tbody></table></section>';
-    main.querySelector('[data-review-mock]').addEventListener('click', function () { state.view = 'mock'; render(); });
-    main.querySelector('[data-review-wrong]').addEventListener('click', function () { state.view = 'wrong'; render(); });
+    main.querySelector('[data-review-mock]').addEventListener('click', function () { transitionToView('mock'); });
+    main.querySelector('[data-review-wrong]').addEventListener('click', function () { transitionToView('wrong'); });
   }
 
   function renderWrong(main) {
     var weak = content.skills.map(function (skill) { return { skill: skill, percent: skillScore(skill.id) }; }).filter(function (item) { return item.percent != null; }).sort(function (a, b) { return a.percent - b.percent; }).slice(0, 16);
     main.innerHTML = '<h3>错题与薄弱项</h3><p class="mos365-muted">你不是“Excel 不行”，而是可以定位到具体技能并回到对应课程、专项练习和实机练习。</p>' + (weak.length ? '<div class="mos365-list">' + weak.map(function (item) { return '<article class="mos365-item"><h4>' + escapeHtml(item.skill.titleJa) + ' <span class="mos365-tag">' + item.percent + '%</span></h4><p>' + escapeHtml(item.skill.titleZh) + '</p><div class="mos365-actions"><button class="mos365-btn secondary" data-weak-learn="' + escapeHtml(item.skill.id) + '">复习课程</button><button class="mos365-btn secondary" data-weak-practice="' + escapeHtml(item.skill.id) + '">专项练习</button></div></article>'; }).join('') + '</div>' : '<div class="mos365-notice">完成专项练习或真机模拟后，这里会显示具体薄弱技能。</div>');
-    main.querySelectorAll('[data-weak-learn]').forEach(function (button) { button.addEventListener('click', function () { state.view = 'learn'; render(); }); });
-    main.querySelectorAll('[data-weak-practice]').forEach(function (button) { button.addEventListener('click', function () { state.view = 'practice'; render(); }); });
+    main.querySelectorAll('[data-weak-learn]').forEach(function (button) { button.addEventListener('click', function () { transitionToView('learn'); }); });
+    main.querySelectorAll('[data-weak-practice]').forEach(function (button) { button.addEventListener('click', function () { transitionToView('practice'); }); });
   }
 
   function renderReadiness(main) {
@@ -386,10 +559,15 @@
       '<div id="mos-mvp-output"></div><div class="mos365-actions">' +
       '<button class="mos365-btn danger" data-mvp-clear>重新开始 / リセット</button></div>';
     main.querySelector('[data-mvp-start]') && main.querySelectorAll('[data-mvp-start]').forEach(function (btn) {
-      btn.addEventListener('click', function () { startMvpTraining(btn.dataset.mvpStart); });
+      btn.addEventListener('click', function () { startMvpTraining(btn.dataset.mvpStart, btn); });
     });
     main.querySelector('[data-mvp-clear]') && main.querySelector('[data-mvp-clear]').addEventListener('click', function () {
-      api('/api/mos365/clear-launch', {}).then(function () { state.mvpInProgress = false; state.launchState = null; render(); });
+      api('/api/mos365/clear-launch', {}).then(function () {
+        transitionToView('mvp', function() {
+          state.mvpInProgress = false;
+          state.launchState = null;
+        });
+      });
     });
     if (!isTerminalLaunchState(state.launchState)) scheduleLaunchPoll(0);
   }
@@ -399,19 +577,28 @@
     api('/api/mos365/launch/state', null, 'GET').then(function (data) {
       if (data && data.active) {
         state.launchState = data;
-        if (data.state === 'ready' || data.state === 'failed' || data.state === 'ended') { state.mvpInProgress = false; render(); }
+        if (data.state === 'failed' || data.state === 'ended') {
+          transitionToView('mvp', function() {
+            state.mvpInProgress = false;
+          });
+        }
         else { render(); scheduleLaunchPoll(1000); }
       } else if (state.mvpInProgress) {
-        scheduleLaunchPoll(1000);
+        transitionToView('mvp', function() {
+          state.mvpInProgress = false;
+          state.launchState = null;
+        });
       }
     }).catch(function () { scheduleLaunchPoll(2000); });
   }
 
-  function startMvpTraining(mode) {
+  function startMvpTraining(mode, btn) {
     if (state.mvpInProgress) return;
-    state.mvpInProgress = true;
-    state.launchState = { active: true, state: 'creating' };
-    render();
+    state.lastTriggerElement = btn;
+    transitionToView('mvp', function() {
+      state.mvpInProgress = true;
+      state.launchState = { active: true, state: 'creating' };
+    });
     api('/api/mos365/sessions', { mode: mode + '_static_training' }).then(function (session) {
       state.session = session;
       state.launchState = { active: true, state: 'creating', sessionId: session.sessionId };
@@ -423,8 +610,10 @@
       render();
       scheduleLaunchPoll(500);
     }).catch(function (error) {
-      state.mvpInProgress = false;
-      state.launchState = { active: true, state: 'failed' };
+      transitionToView('mvp', function() {
+        state.mvpInProgress = false;
+        state.launchState = { active: true, state: 'failed' };
+      });
       var output = document.getElementById('mos-mvp-output');
       if (output) output.innerHTML = '<div class="mos365-notice mos365-error">' + escapeHtml(error.payload && error.payload.messageJa || error.message || '起動に失敗しました') + '</div>';
       render();

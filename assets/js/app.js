@@ -71,6 +71,8 @@ function setMobileDrawerState(drawer, options) {
   const shouldOpen = openingSidebar || openingPlayground;
 
   if (shouldOpen) {
+    if (window.closeToolsDrawer) window.closeToolsDrawer();
+    if (window.closeDesktopSidebar) window.closeDesktopSidebar();
     rememberMobileDrawerTrigger();
     document.body.classList.toggle('mobile-sidebar-open', openingSidebar);
     document.body.classList.toggle('mobile-playground-open', openingPlayground);
@@ -100,6 +102,7 @@ window.toggleMobilePlayground = function() {
 };
 window.closeMobileDrawers = function(options) {
   setMobileDrawerState(null, options);
+  if (window.closeDesktopSidebar) window.closeDesktopSidebar();
 };
 window.openMobileSidebar = function() {
   setMobileDrawerState('sidebar');
@@ -205,6 +208,7 @@ if (document.readyState === 'loading') {
   /** Open the sidebar as desktop overlay. */
   function openDesktopSidebar() {
     if (desktopSidebarOpen) return;
+    if (window.closeToolsDrawer) window.closeToolsDrawer();
     desktopSidebarOpen = true;
     clearDesktopSidebarTimer();
     var sidebar = document.getElementById('app-sidebar');
@@ -451,6 +455,7 @@ if (document.readyState === 'loading') {
     if (!wrapper || !trigger || !panel) return;
 
     function openPanel() {
+      if (typeof isDesktopViewport === 'function' && !isDesktopViewport()) return;
       clearTimeout(modulePanelCloseTimer);
       clearTimeout(modulePanelHoverOpenTimer);
       modulePanelHoverOpenTimer = setTimeout(function() {
@@ -609,7 +614,7 @@ let currentJavaBook = 'nyumon';        // 'nyumon' | 'jissen'
 let javaQuizIdx = 0;
 let selectedJavaQuizOption = null;
 let completedJavaLessons = [];         // array of lesson ids
-    
+
 // Python Learning State
 let currentPythonLessonId = 1;
 let pythonQuizIdx = 0;
@@ -771,7 +776,7 @@ function loadCompletedProgress() {
       completedItPassLessons = [];
     }
   }
-  
+
   const savedSg = localStorage.getItem("sg_completed_lessons");
   if (savedSg) {
     try {
@@ -780,7 +785,7 @@ function loadCompletedProgress() {
       completedSgLessons = [];
     }
   }
-  
+
   const savedPython = localStorage.getItem("python_completed_lessons");
   if (savedPython) {
     try {
@@ -789,11 +794,11 @@ function loadCompletedProgress() {
       completedPythonLessons = [];
     }
   }
-  
+
   const javaSaved = localStorage.getItem("java_completed_lessons");
   if (javaSaved) {
-    try { 
-      completedJavaLessons = JSON.parse(javaSaved); 
+    try {
+      completedJavaLessons = JSON.parse(javaSaved);
       // 迁移旧版进度数据 (nyumon-1 等字符串ID) 到扁平的子节数字ID
       if (completedJavaLessons.some(id => typeof id === 'string')) {
         let newIds = [];
@@ -812,8 +817,8 @@ function loadCompletedProgress() {
         completedJavaLessons = newIds;
         localStorage.setItem("java_completed_lessons", JSON.stringify(completedJavaLessons));
       }
-    } catch(e) { 
-      completedJavaLessons = []; 
+    } catch(e) {
+      completedJavaLessons = [];
     }
   }
 }
@@ -837,7 +842,7 @@ function saveProgress() {
 // Switch Subject between SQL, IT Passport, Java and SG
 function switchSubject(subject) {
   if (currentSubject === subject) return;
-  
+
   // Prompt if a CBT or Coding mock exam is currently active
   if (activeCbtExam && !activeCbtExam.isSubmitted) {
     if (!confirmKey("dialog.switchExamConfirm")) {
@@ -867,20 +872,20 @@ function switchSubject(subject) {
   // Hide all exam layouts and restore default textbook/workspace view by default
   const cbtContainer = document.getElementById("cbt-exam-container");
   if (cbtContainer) cbtContainer.style.display = "none";
-  
+
   const configPanel = document.getElementById("coding-exam-config");
   const runningPanel = document.getElementById("coding-exam-panel");
   const resultsPanel = document.getElementById("coding-exam-results");
   if (configPanel) configPanel.style.display = "none";
   if (runningPanel) runningPanel.style.display = "none";
   if (resultsPanel) resultsPanel.style.display = "none";
-  
+
   const textbookCard = document.querySelector(".lesson-content > .content-card:not([class*='coding-exam'])");
   if (textbookCard) textbookCard.style.display = "flex";
-  
+
   const mainAppBody = document.getElementById("main-app-body");
   if (mainAppBody) mainAppBody.style.display = "flex";
-  
+
   // Toggle tab buttons — replaced by module switch panel
   // Keep tab DOM elements alive for any legacy dependencies; remove visual classes
   document.querySelectorAll(".subject-tab").forEach(function(t) { t.classList.remove("active"); });
@@ -889,24 +894,24 @@ function switchSubject(subject) {
   document.querySelectorAll(".module-switch-option").forEach(function(opt) {
     opt.classList.toggle("active", opt.getAttribute("data-module") === subject);
   });
-  
+
   // Update header content  // Clear body mode classes
   if (document.body) {
     document.body.classList.remove('mode-java');
     document.body.classList.remove('mode-sg');
     document.body.classList.remove('mode-python');
   }
-  
+
   // Hide all sub-headers by default
   const subHeaders = ["sql-sub-header", "python-sub-header", "java-sub-header", "itpass-sub-header", "sg-sub-header"];
   subHeaders.forEach(id => {
     const el = document.getElementById(id);
     if (el) el.style.display = "none";
   });
-  
+
   // Update the CBT Year Select element options based on current subject
   updateCbtYearOptions();
-  
+
   if (subject === "typing") {
     if (mainAppBody) mainAppBody.style.display = "none";
     document.getElementById("header-challenge").style.display = "none";
@@ -930,12 +935,12 @@ function switchSubject(subject) {
     logoIcon.className = "fa-solid fa-database logo-icon";
     mainTitle.setAttribute("data-i18n", "nav.sql");
     mainTitle.innerText = I18n.t("nav.sql");
-    
+
     // Show/hide sub-headers and containers
     document.getElementById("sql-sub-header").style.display = "flex";
     document.getElementById("cbt-exam-container").style.display = "none";
     document.getElementById("main-app-body").style.display = "flex";
-    
+
     // Toggle sidebar/widgets
     document.querySelectorAll(".sql-widget").forEach(el => el.style.display = "flex");
     document.querySelectorAll(".itpass-widget").forEach(el => el.style.display = "none");
@@ -946,16 +951,16 @@ function switchSubject(subject) {
     document.getElementById("sidebar-pdf-container").style.display = "none";
     document.getElementById("locate-pdf-btn").style.display = "none";
     closeEmbeddedPdf();
-    
+
     document.getElementById("header-challenge").style.display = "flex";
-    
+
     // Hide glossary and show code
     document.getElementById("lesson-glossary").style.display = "none";
     document.getElementById("example-pre-block").style.display = "block";
     document.getElementById("copy-example-btn").style.display = "inline-flex";
     document.getElementById("example-header-title").innerHTML = `<i class="fa-solid fa-code"></i> <span data-i18n="lesson.sqlExample">${I18n.t("lesson.sqlExample")}</span>`;
     document.getElementById("java-vocab-section").style.display = "none";
-    
+
     // Toggle sub-modes (Textbook vs Exam)
     switchSqlSubMode(sqlSubMode);
   } else if (subject === "java") {
@@ -963,7 +968,7 @@ function switchSubject(subject) {
     mainTitle.setAttribute("data-i18n", "nav.java");
     mainTitle.innerText = I18n.t("nav.java");
     if (document.body) document.body.classList.add('mode-java');
-    
+
     document.getElementById("java-sub-header").style.display = "flex";
     document.getElementById("cbt-exam-container").style.display = "none";
     document.getElementById("main-app-body").style.display = "flex";
@@ -993,7 +998,7 @@ function switchSubject(subject) {
     mainTitle.setAttribute("data-i18n", "nav.python");
     mainTitle.innerText = I18n.t("nav.python");
     if (document.body) document.body.classList.add('mode-python');
-    
+
     document.getElementById("python-sub-header").style.display = "flex";
     document.getElementById("cbt-exam-container").style.display = "none";
     document.getElementById("main-app-body").style.display = "flex";
@@ -1023,34 +1028,34 @@ function switchSubject(subject) {
     mainTitle.setAttribute("data-i18n", "nav.sg");
     mainTitle.innerText = I18n.t("nav.sg");
     if (document.body) document.body.classList.add('mode-sg');
-    
+
     document.getElementById("sg-sub-header").style.display = "flex";
     document.getElementById("header-challenge").style.display = "none";
     document.getElementById("java-vocab-section").style.display = "none";
-    
+
     // Hide SQL/Java widgets, show IT Passport widgets (re-used for SG!)
     document.querySelectorAll(".sql-widget").forEach(el => el.style.display = "none");
     document.querySelectorAll(".itpass-widget").forEach(el => el.style.display = "flex");
     document.querySelectorAll(".java-widget").forEach(el => el.style.display = "none");
     document.querySelectorAll(".python-widget").forEach(el => el.style.display = "none");
     document.getElementById("python-vocab-section").style.display = "none";
-    
+
     // Hide calculators tool card specifically in SG mode
     document.getElementById("itpass-tools-card").style.display = "none";
-    
+
     document.getElementById("sidebar-pdf-container").style.display = "block";
-    
+
     // Toggle sub-modes (Textbook vs. Dojo)
     switchSgSubMode(sgSubMode);
   } else {
     logoIcon.className = "fa-solid fa-graduation-cap logo-icon";
     mainTitle.setAttribute("data-i18n", "nav.itpass");
     mainTitle.innerText = I18n.t("nav.itpass");
-    
+
     document.getElementById("itpass-sub-header").style.display = "flex";
     document.getElementById("header-challenge").style.display = "none";
     document.getElementById("java-vocab-section").style.display = "none";
-    
+
     // Hide SQL/Java widgets, show IT Passport widgets
     document.querySelectorAll(".sql-widget").forEach(el => el.style.display = "none");
     document.querySelectorAll(".itpass-widget").forEach(el => el.style.display = "flex");
@@ -1058,20 +1063,20 @@ function switchSubject(subject) {
     document.querySelectorAll(".python-widget").forEach(el => el.style.display = "none");
     document.getElementById("python-vocab-section").style.display = "none";
     document.getElementById("sidebar-pdf-container").style.display = "block";
-    
+
     // Toggle sub-modes (Textbook vs. Dojo)
     switchItPassSubMode(itpassSubMode);
   }
-  
+
   updateProgressUI();
 }
 
 function updateCbtYearOptions() {
   const select = document.getElementById("cbt-year-select");
   if (!select) return;
-  
+
   select.innerHTML = "";
-  
+
   if (currentSubject === "sg") {
     select.innerHTML = `
       <option value="all" selected>随机混合真题 (推荐 - 综合模考)</option>
@@ -1105,12 +1110,12 @@ function switchItPassSubMode(mode) {
   itpassSubMode = mode;
   document.getElementById("sub-tab-lessons").classList.toggle("active", mode === "lessons");
   document.getElementById("sub-tab-dojo").classList.toggle("active", mode === "dojo");
-  
+
   if (mode === "lessons") {
     // Hide CBT and show main body
     document.getElementById("cbt-exam-container").style.display = "none";
     document.getElementById("main-app-body").style.display = "flex";
-    
+
     // Populate sidebar with IT Passport chapters
     initSidebar();
     loadItPassLesson(currentItPassLessonId);
@@ -1119,7 +1124,7 @@ function switchItPassSubMode(mode) {
     document.getElementById("main-app-body").style.display = "none";
     document.getElementById("cbt-exam-container").style.display = "flex";
     closeEmbeddedPdf();
-    
+
     // If an exam is currently active, show test screen, else show config screen
     if (activeCbtExam) {
       document.getElementById("cbt-config-screen").style.display = "none";
@@ -1139,12 +1144,12 @@ function switchSgSubMode(mode) {
   sgSubMode = mode;
   document.getElementById("sg-sub-tab-lessons").classList.toggle("active", mode === "lessons");
   document.getElementById("sg-sub-tab-dojo").classList.toggle("active", mode === "dojo");
-  
+
   if (mode === "lessons") {
     // Hide CBT and show main body
     document.getElementById("cbt-exam-container").style.display = "none";
     document.getElementById("main-app-body").style.display = "flex";
-    
+
     // Populate sidebar with SG chapters
     initSidebar();
     loadSgLesson(currentSgLessonId);
@@ -1153,7 +1158,7 @@ function switchSgSubMode(mode) {
     document.getElementById("main-app-body").style.display = "none";
     document.getElementById("cbt-exam-container").style.display = "flex";
     closeEmbeddedPdf();
-    
+
     // If an exam is currently active, show test screen, else show config screen
     if (activeCbtExam) {
       document.getElementById("cbt-config-screen").style.display = "none";
@@ -1234,16 +1239,66 @@ function initToolsDrawer() {
   if (!trigger || !drawer) return;
 
   function openDrawer() {
+    if (window.closeDesktopSidebar) window.closeDesktopSidebar();
+    if (window.closeMobileDrawers) window.closeMobileDrawers({ skipFocus: true });
+
     drawer.removeAttribute('hidden');
     trigger.setAttribute('aria-expanded', 'true');
     document.body.style.overflow = 'hidden';
+
+    drawer.offsetHeight; // force reflow
+    drawer.classList.remove('tools-drawer--closing');
+    drawer.classList.add('tools-drawer--open');
+    document.body.classList.add('tools-drawer-active');
+
+    var focusable = drawer.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+    if (focusable.length > 0) {
+      var first = document.getElementById('tools-drawer-close') || focusable[0];
+      if (first) {
+        setTimeout(function() { first.focus(); }, 50);
+      }
+    }
   }
+
   function closeDrawer() {
-    drawer.setAttribute('hidden', '');
+    if (drawer.hasAttribute('hidden')) return;
+
+    drawer.classList.remove('tools-drawer--open');
+    drawer.classList.add('tools-drawer--closing');
+    document.body.classList.remove('tools-drawer-active');
+
     trigger.setAttribute('aria-expanded', 'false');
     document.body.style.overflow = '';
+
+    if (trigger && typeof trigger.focus === 'function') {
+      trigger.focus();
+    }
+
+    function onTransitionEnd(e) {
+      if (e.target.classList.contains('tools-drawer__panel') && e.propertyName === 'transform') {
+        drawer.removeEventListener('transitionend', onTransitionEnd);
+        if (drawer.classList.contains('tools-drawer--closing')) {
+          drawer.setAttribute('hidden', '');
+          drawer.classList.remove('tools-drawer--closing');
+        }
+      }
+    }
+    drawer.addEventListener('transitionend', onTransitionEnd);
+
+    setTimeout(function() {
+      if (drawer.classList.contains('tools-drawer--closing')) {
+        drawer.setAttribute('hidden', '');
+        drawer.classList.remove('tools-drawer--closing');
+      }
+    }, 300);
   }
-  function isDrawerOpen() { return !drawer.hasAttribute('hidden'); }
+
+  window.closeToolsDrawer = closeDrawer;
+  window.openToolsDrawer = openDrawer;
+
+  function isDrawerOpen() {
+    return !drawer.hasAttribute('hidden') && drawer.classList.contains('tools-drawer--open');
+  }
 
   trigger.addEventListener('click', function (e) {
     e.stopPropagation();
@@ -1523,33 +1578,33 @@ function initSidebar() {
   const navContainer = document.getElementById("lessons-nav");
   navContainer.innerHTML = "";
   const titleText = document.getElementById("sidebar-title-text");
-  
+
   if (isCodingExamActiveAndRunning()) {
     titleText.innerText = "問題リスト (考题列表)";
     const qList = activeCodingExam.questions;
     qList.forEach((q, idx) => {
       const item = document.createElement("div");
       item.id = `nav-item-exam-${idx}`;
-      
+
       const isCompleted = activeCodingExam.userStatuses[q.id] === 'passed';
       const isActive = idx === activeCodingExam.currentQIdx;
       item.className = `lesson-nav-item exam-item ${isActive ? 'active' : ''} ${isCompleted ? 'completed' : ''}`;
-      
+
       let iconClass = "fa-regular fa-circle";
       if (isCompleted) {
         iconClass = "fa-solid fa-circle-check";
       } else if (activeCodingExam.userStatuses[q.id] === 'failed') {
         iconClass = "fa-solid fa-circle-xmark";
       }
-      
+
       const isFlagged = activeCodingExam.flags[idx];
       const flagIcon = isFlagged ? ` <i class="fa-solid fa-flag" style="color:#f87171; font-size:10px; margin-left:4px;"></i>` : "";
-      
+
       item.innerHTML = `
         <span>問 ${idx + 1}: ${q.titleJa}${flagIcon}</span>
         <i class="${iconClass} nav-status-icon" style="${activeCodingExam.userStatuses[q.id] === 'failed' ? 'color:#f87171;' : ''}"></i>
       `;
-      
+
       item.addEventListener("click", (e) => {
         e.stopPropagation();
         jumpToCodingQuestion(idx);
@@ -1558,7 +1613,7 @@ function initSidebar() {
     });
     return;
   }
-  
+
   // 通用扁平两层侧边栏渲染器
   function renderFlatSidebar(lessonsList, completedList, currentId, selectFunc, idPrefix) {
     /* Resolve current language for navigation localization */
@@ -1577,11 +1632,11 @@ function initSidebar() {
       }
       chapters[chName].lessons.push(lesson);
     });
-    
+
     Object.keys(chapters).forEach((chapterName, chIdx) => {
       const chId = chIdx + 1;
       const chLessons = chapters[chapterName].lessons;
-      
+
       const completedInCh = chLessons.filter(l => completedList.includes(l.id)).length;
       const hasActiveLesson = chLessons.some(l => l.id === currentId);
 
@@ -1590,7 +1645,7 @@ function initSidebar() {
       if (window.ContentI18n && window.ContentI18n.getLocalizedChapterName && _sidebarShort !== "default-ja-zh") {
         localizedChName = window.ContentI18n.getLocalizedChapterName(idPrefix, chapterName, _sidebarShort);
       }
-      
+
       const chHeader = document.createElement("div");
       chHeader.className = `sidebar-chapter-header ${hasActiveLesson ? 'active-parent expanded' : ''}`;
       chHeader.id = `${idPrefix}-chapter-header-${chId}`;
@@ -1602,18 +1657,18 @@ function initSidebar() {
         <span class="chapter-progress-badge">${completedInCh} / ${chLessons.length}</span>
       `;
       navContainer.appendChild(chHeader);
-      
+
       const chBody = document.createElement("div");
       chBody.className = "sidebar-chapter-body";
       chBody.id = `${idPrefix}-chapter-body-${chId}`;
       chBody.style.display = hasActiveLesson ? "block" : "none";
-      
+
       chHeader.addEventListener("click", () => {
         const isExpanded = chBody.style.display === "block";
         chBody.style.display = isExpanded ? "none" : "block";
         chHeader.classList.toggle("expanded", !isExpanded);
       });
-      
+
       chLessons.forEach(lesson => {
         const item = document.createElement("div");
         if (idPrefix === "sql") {
@@ -1621,19 +1676,19 @@ function initSidebar() {
         } else {
           item.id = `nav-item-${idPrefix}-${lesson.id}`;
         }
-        
+
         const isCompleted = completedList.includes(lesson.id);
         const isActive = lesson.id === currentId;
         item.className = `lesson-nav-item ${idPrefix}-item ${isActive ? 'active' : ''} ${isCompleted ? 'completed' : ''}`;
-        
+
         const iconClass = isCompleted ? "fa-solid fa-circle-check" : "fa-regular fa-circle";
-        
+
         /* Resolve localized lesson title */
         var locTitle = null;
         if (window.ContentI18n && window.ContentI18n.getLocalizedLessonTitle && _sidebarShort !== "default-ja-zh") {
           locTitle = window.ContentI18n.getLocalizedLessonTitle(idPrefix, lesson.id, _sidebarShort);
         }
-        
+
         var displayTitle;
         if (locTitle) {
           /* Use navigation pack title */
@@ -1654,19 +1709,19 @@ function initSidebar() {
               : titleJa;
           }
         }
-          
+
         item.innerHTML = `
           <span data-i18n-source-lang="ja" data-i18n-source-text="${escapeAttr(lesson.titleJa || lesson.titleZh || '')}">${displayTitle}</span>
           <i class="${iconClass} nav-status-icon"></i>
         `;
-        
+
         item.addEventListener("click", (e) => {
           e.stopPropagation();
           selectFunc(lesson.id);
         });
         chBody.appendChild(item);
       });
-      
+
       navContainer.appendChild(chBody);
     });
   }
@@ -1714,15 +1769,15 @@ function scrollSidebarToActive() {
 function selectLesson(id) {
   const oldActive = document.getElementById(`nav-item-${currentLessonId}`);
   if (oldActive) oldActive.classList.remove("active");
-  
+
   currentLessonId = id;
-  
+
   const newActive = document.getElementById(`nav-item-${currentLessonId}`);
   if (newActive) {
     newActive.classList.add("active");
-    
+
     document.querySelectorAll(".sidebar-chapter-header").forEach(el => el.classList.remove("active-parent"));
-    
+
     const chBody = newActive.parentElement;
     if (chBody && chBody.classList.contains("sidebar-chapter-body")) {
       const chHeader = chBody.previousElementSibling;
@@ -1730,10 +1785,10 @@ function selectLesson(id) {
         chHeader.classList.add("active-parent");
       }
     }
-    
+
     newActive.scrollIntoView({ block: "nearest", behavior: "smooth" });
   }
-  
+
   loadLesson(currentLessonId);
 }
 
@@ -1741,15 +1796,15 @@ function selectLesson(id) {
 function selectItPassLesson(id) {
   const oldActive = document.getElementById(`nav-item-itpass-${currentItPassLessonId}`);
   if (oldActive) oldActive.classList.remove("active");
-  
+
   currentItPassLessonId = id;
-  
+
   const newActive = document.getElementById(`nav-item-itpass-${currentItPassLessonId}`);
   if (newActive) {
     newActive.classList.add("active");
-    
+
     document.querySelectorAll(".sidebar-chapter-header").forEach(el => el.classList.remove("active-parent"));
-    
+
     const chBody = newActive.parentElement;
     if (chBody && chBody.classList.contains("sidebar-chapter-body")) {
       const chHeader = chBody.previousElementSibling;
@@ -1757,10 +1812,10 @@ function selectItPassLesson(id) {
         chHeader.classList.add("active-parent");
       }
     }
-    
+
     newActive.scrollIntoView({ block: "nearest", behavior: "smooth" });
   }
-  
+
   loadItPassLesson(currentItPassLessonId);
 }
 
@@ -1768,15 +1823,15 @@ function selectItPassLesson(id) {
 function selectSgLesson(id) {
   const oldActive = document.getElementById(`nav-item-sg-${currentSgLessonId}`);
   if (oldActive) oldActive.classList.remove("active");
-  
+
   currentSgLessonId = id;
-  
+
   const newActive = document.getElementById(`nav-item-sg-${currentSgLessonId}`);
   if (newActive) {
     newActive.classList.add("active");
-    
+
     document.querySelectorAll(".sidebar-chapter-header").forEach(el => el.classList.remove("active-parent"));
-    
+
     const chBody = newActive.parentElement;
     if (chBody && chBody.classList.contains("sidebar-chapter-body")) {
       const chHeader = chBody.previousElementSibling;
@@ -1784,10 +1839,10 @@ function selectSgLesson(id) {
         chHeader.classList.add("active-parent");
       }
     }
-    
+
     newActive.scrollIntoView({ block: "nearest", behavior: "smooth" });
   }
-  
+
   loadSgLesson(currentSgLessonId);
 }
 
@@ -1796,12 +1851,12 @@ function parseJavaSections(lesson) {
   const sections = [];
   const jaParts = lesson.conceptJa.split("<h3>");
   const zhParts = lesson.conceptZh.split("<h3>");
-  
+
   const count = Math.min(jaParts.length, zhParts.length);
   for (let i = 1; i < count; i++) {
     const jaSub = jaParts[i].split("</h3>");
     const zhSub = zhParts[i].split("</h3>");
-    
+
     sections.push({
       titleJa: jaSub[0].trim(),
       titleZh: zhSub[0].trim(),
@@ -1809,7 +1864,7 @@ function parseJavaSections(lesson) {
       bodyZh: `<h3>${zhSub[0]}</h3>` + zhSub.slice(1).join("</h3>")
     });
   }
-  
+
   if (sections.length === 0) {
     sections.push({
       titleJa: lesson.titleJa,
@@ -1825,15 +1880,15 @@ function parseJavaSections(lesson) {
 function selectJavaLesson(id) {
   const oldActive = document.getElementById(`nav-item-java-${currentJavaLessonId}`);
   if (oldActive) oldActive.classList.remove("active");
-  
+
   currentJavaLessonId = id;
-  
+
   const newActive = document.getElementById(`nav-item-java-${currentJavaLessonId}`);
   if (newActive) {
     newActive.classList.add("active");
-    
+
     document.querySelectorAll(".sidebar-chapter-header").forEach(el => el.classList.remove("active-parent"));
-    
+
     const chBody = newActive.parentElement;
     if (chBody && chBody.classList.contains("sidebar-chapter-body")) {
       const chHeader = chBody.previousElementSibling;
@@ -1841,10 +1896,10 @@ function selectJavaLesson(id) {
         chHeader.classList.add("active-parent");
       }
     }
-    
+
     newActive.scrollIntoView({ block: "nearest", behavior: "smooth" });
   }
-  
+
   loadJavaLesson(currentJavaLessonId);
 }
 
@@ -1863,9 +1918,9 @@ function switchJavaBook(book) {
 
   document.getElementById("java-sub-tab-nyumon").classList.toggle("active", book === "nyumon");
   document.getElementById("java-sub-tab-jissen").classList.toggle("active", book === "jissen");
-  
+
   handleSubModeViewToggle('lessons');
-  
+
   // Set default lesson for this book
   if (typeof JAVA_LESSONS !== 'undefined') {
     const bookName = book === 'nyumon' ? '入門編' : '実践編';
@@ -1874,7 +1929,7 @@ function switchJavaBook(book) {
       currentJavaLessonId = first.id;
     }
   }
-  
+
   initSidebar();
   loadJavaLesson(currentJavaLessonId);
 }
@@ -1885,7 +1940,7 @@ function loadJavaLesson(id) {
   if (typeof JAVA_LESSONS === 'undefined') return;
   const lesson = JAVA_LESSONS.find(l => l.id === id);
   if (!lesson) return;
-  
+
   currentJavaLessonId = id;
 
   // Resolve localized title/concept for current subject
@@ -1897,7 +1952,7 @@ function loadJavaLesson(id) {
   badge.className = "lesson-badge java-badge";
   document.getElementById("lesson-title-ja").innerText = localized && localized.title ? localized.title : lesson.titleJa;
   document.getElementById("lesson-title-zh").innerText = lesson.titleZh;
-  
+
   // 启用“显示原书 PDF”按钮！
   const pdfBtn = document.getElementById("locate-pdf-btn");
   if (pdfBtn) {
@@ -1933,7 +1988,7 @@ function loadJavaLesson(id) {
   glossaryBlock.style.display = "none";
   const exIcon = document.getElementById("example-toggle-icon");
   if (exIcon) exIcon.style.transform = "rotate(-90deg)";
-  
+
   codeEl.textContent = lesson.example || "";
   codeEl.className = "language-java";
   copyBtn.style.display = "inline-flex";
@@ -1942,7 +1997,7 @@ function loadJavaLesson(id) {
   // Vocab flashcards
   document.getElementById("java-vocab-section").style.display =
     (lesson.vocabList && lesson.vocabList.length > 0) ? "flex" : "none";
-  
+
   // Quiz
   document.getElementById("itpass-quiz-nav").style.display = "none";
   loadJavaQuiz(lesson);
@@ -1974,10 +2029,10 @@ function loadJavaQuiz(lesson) {
     document.getElementById("quiz-options").innerHTML = "";
     return;
   }
-  
+
   // Show navigation bar
   document.getElementById("itpass-quiz-nav").style.display = "flex";
-  
+
   // Retrieve completed quizzes for this lesson from localStorage
   const completedJavaQuizSaved = localStorage.getItem(`java_quiz_completed_${lesson.id}`);
   let completedQuizIndices = [];
@@ -1989,7 +2044,7 @@ function loadJavaQuiz(lesson) {
     }
   }
   lesson.completedQuizIndices = completedQuizIndices;
-  
+
   javaQuizIdx = 0;
   selectedJavaQuizOption = null;
   renderJavaQuizQuestion();
@@ -2001,19 +2056,19 @@ function renderJavaQuizQuestion() {
 
   const totalQuizzes = lesson.quizList.length;
   document.getElementById("itpass-quiz-progress-text").innerText = `問題 ${javaQuizIdx + 1} / 共 ${totalQuizzes} 题`;
-  
+
   const quiz = lesson.quizList[javaQuizIdx];
   const useZhQuiz = selectedLang === 'zh' && !(window.I18n && window.I18n.isActive());
   document.getElementById("quiz-question").innerText = (useZhQuiz && quiz.questionZh) ? quiz.questionZh : quiz.question;
-  
+
   const optionsContainer = document.getElementById("quiz-options");
   optionsContainer.innerHTML = "";
   selectedJavaQuizOption = null;
-  
+
   // Hide feedback
   const feedback = document.getElementById("quiz-feedback");
   feedback.className = "quiz-feedback hidden";
-  
+
   quiz.options.forEach((opt, idx) => {
     const optDiv = document.createElement("div");
     optDiv.className = "quiz-option";
@@ -2081,11 +2136,11 @@ function markJavaProgress(lessonId, action) {
   if (action === 'quiz') data.quizDone = true;
   if (action === 'code_run') data.codeRun = true;
   localStorage.setItem(key, JSON.stringify(data));
-  
+
   if (data.quizDone && !completedJavaLessons.includes(lessonId)) {
     completedJavaLessons.push(lessonId);
     saveProgress();
-    
+
     // Update all section item checkmarks
     const lesson = (typeof JAVA_LESSONS !== 'undefined') ? JAVA_LESSONS.find(l => l.id === lessonId) : null;
     if (lesson) {
@@ -2098,7 +2153,7 @@ function markJavaProgress(lessonId, action) {
           if (icon) icon.className = "fa-solid fa-circle-check";
         }
       });
-      
+
       // Update chapter header progress badge
       const bookLessons = JAVA_LESSONS.filter(l => l.book === (currentJavaBook === 'nyumon' ? '入門編' : '実践編'));
       const chapIdx = bookLessons.findIndex(l => l.id === lessonId);
@@ -2109,9 +2164,9 @@ function markJavaProgress(lessonId, action) {
         }
       }
     }
-    
+
     if (typeof JavaSandbox !== 'undefined') JavaSandbox.updateProgressDisplay();
-    
+
     const title = lesson ? lesson.titleJa : lessonId;
     showToastKey("toast.lessonQuizPassed", "success", { title: title });
   }
@@ -2319,11 +2374,11 @@ function loadLesson(id, isLanguageSwitch = false) {
     document.getElementById("concept-ja-body").innerHTML = formatMarkdown(lesson.conceptJa);
   }
   document.getElementById("concept-zh-body").innerHTML = formatMarkdown(lesson.conceptZh);
-  
+
   // Analogy & Example
   document.getElementById("lesson-analogy").innerText = pickLessonAnalogy("sql", lesson);
   document.getElementById("lesson-example").innerText = lesson.example;
-  
+
   // Collapse example card by default on SQL lesson load
   const exCardSql = document.getElementById("example-card");
   exCardSql.classList.add("collapsed");
@@ -2331,7 +2386,7 @@ function loadLesson(id, isLanguageSwitch = false) {
   document.getElementById("lesson-glossary").style.display = "none";
   const exIconSql = document.getElementById("example-toggle-icon");
   if (exIconSql) exIconSql.style.transform = "rotate(-90deg)";
-  
+
   // Mission Task
   isRandomPracticeActive = false;
   updateMissionUI();
@@ -2354,15 +2409,15 @@ function loadLesson(id, isLanguageSwitch = false) {
   if (window.I18n && typeof window.I18n.t === "function") {
     sqlEditor.setAttribute("placeholder", window.I18n.t("sandbox.sqlPlaceholder", "Please enter an SQL query here..."));
   }
-  
+
   // Initialize Quiz
   initQuiz(lesson);
   initFlashcards(id);
   if (window.I18n) window.I18n.applyLessonTranslation(lesson);
-  
+
   // Hide IT Passport elements on quiz
   document.getElementById("itpass-quiz-nav").style.display = "none";
-  
+
   // Scroll content to top
   document.querySelector(".lesson-content").scrollTop = 0;
 }
@@ -2372,7 +2427,7 @@ function loadItPassLesson(id) {
   if (window.closeMobileDrawers) window.closeMobileDrawers({ skipFocus: true });
   const lesson = IT_PASSPORT_LESSONS.find(l => l.id === id);
   if (!lesson) return;
-  
+
   // Load checking quizzes completed index array
   const completedItPassQuizSaved = localStorage.getItem(`itpass_quiz_completed_${id}`);
   let completedQuizIndices = [];
@@ -2384,21 +2439,21 @@ function loadItPassLesson(id) {
     }
   }
   lesson.completedQuizIndices = completedQuizIndices;
-  
+
   // Reset active checking question
   itpassQuizIdx = 0;
   selectedItPassQuizOption = null;
-  
+
   // Resolve localized text for IT Passport (Round 8.1 addition)
   const localized = getLessonLocalizedText("itpass", lesson);
-  
+
   // Header details
   document.getElementById("lesson-section-badge").innerText = lesson.section;
   document.getElementById("lesson-title-ja").innerText = localized && localized.title ? localized.title : lesson.titleJa;
   document.getElementById("lesson-title-zh").innerText = lesson.titleZh;
   const locatePdfBtn = document.getElementById("locate-pdf-btn");
   locatePdfBtn.style.display = lesson.pdfPage ? "inline-flex" : "none";
-  
+
   // Concepts & Analogy
   if (localized && localized.concept) {
     document.getElementById("concept-ja-body").innerHTML = formatMarkdown(localized.concept);
@@ -2407,13 +2462,13 @@ function loadItPassLesson(id) {
   }
   document.getElementById("concept-zh-body").innerHTML = formatMarkdown(lesson.conceptZh);
   document.getElementById("lesson-analogy").innerText = pickLessonAnalogy("itpass", lesson);
-  
+
   // Glossary card details
   const glossaryBlock = document.getElementById("lesson-glossary");
   const preBlock = document.getElementById("example-pre-block");
   const copyBtn = document.getElementById("copy-example-btn");
   const exampleHeaderTitle = document.getElementById("example-header-title");
-  
+
   // Collapse example card by default on IT Passport lesson load
   const exCardItpass = document.getElementById("example-card");
   exCardItpass.classList.add("collapsed");
@@ -2424,20 +2479,20 @@ function loadItPassLesson(id) {
   if (exIconItpass) exIconItpass.style.transform = "rotate(-90deg)";
   exampleHeaderTitle.innerHTML = `<i class="fa-solid fa-book-bookmark"></i> 重要用語・公式 (核心术语 & 公式)`;
   glossaryBlock.innerHTML = formatMarkdown(lesson.example);
-  
+
   // Render Checklist
   renderChecklist(lesson);
-  
+
   // Render Flashcards
   initFlashcards(id);
-  
+
   // Show checking quizzes navigations
   document.getElementById("itpass-quiz-nav").style.display = "flex";
-  
+
   // Render the quiz
   loadItPassChapterQuiz();
   if (window.I18n) window.I18n.applyLessonTranslation(lesson);
-  
+
   // Auto-expand parent chapter accordion in sidebar
   const activeChapterId = lesson.chapterId;
   const chBody = document.getElementById(`chapter-body-${activeChapterId}`);
@@ -2446,11 +2501,11 @@ function loadItPassLesson(id) {
     chBody.style.display = "block";
     if (chHeader) chHeader.classList.add("expanded");
   }
-  
+
   // Update parent chapter active parent style
   document.querySelectorAll(".sidebar-chapter-header").forEach(el => el.classList.remove("active-parent"));
   if (chHeader) chHeader.classList.add("active-parent");
-  
+
   // Reset scroll of lesson content
   document.querySelector(".lesson-content").scrollTop = 0;
 }
@@ -2460,7 +2515,7 @@ function loadSgLesson(id) {
   if (window.closeMobileDrawers) window.closeMobileDrawers({ skipFocus: true });
   const lesson = SG_LESSONS.find(l => l.id === id);
   if (!lesson) return;
-  
+
   // Load checking quizzes completed index array
   const completedSgQuizSaved = localStorage.getItem(`sg_quiz_completed_${id}`);
   let completedQuizIndices = [];
@@ -2472,21 +2527,21 @@ function loadSgLesson(id) {
     }
   }
   lesson.completedQuizIndices = completedQuizIndices;
-  
+
   // Reset active checking question
   sgQuizIdx = 0;
   selectedSgQuizOption = null;
-  
+
   // Resolve localized title/concept for current subject
   const localized = getLessonLocalizedText("sg", lesson);
-  
+
   // Header details
   document.getElementById("lesson-section-badge").innerText = lesson.section;
   document.getElementById("lesson-title-ja").innerText = localized && localized.title ? localized.title : lesson.titleJa;
   document.getElementById("lesson-title-zh").innerText = lesson.titleZh;
   const locatePdfBtn = document.getElementById("locate-pdf-btn");
   locatePdfBtn.style.display = lesson.pdfPage ? "inline-flex" : "none";
-  
+
   // Concepts & Analogy
   if (localized && localized.concept) {
     document.getElementById("concept-ja-body").innerHTML = formatMarkdown(localized.concept);
@@ -2495,13 +2550,13 @@ function loadSgLesson(id) {
   }
   document.getElementById("concept-zh-body").innerHTML = formatMarkdown(lesson.conceptZh);
   document.getElementById("lesson-analogy").innerText = pickLessonAnalogy("sg", lesson);
-  
+
   // Glossary card details
   const glossaryBlock = document.getElementById("lesson-glossary");
   const preBlock = document.getElementById("example-pre-block");
   const copyBtn = document.getElementById("copy-example-btn");
   const exampleHeaderTitle = document.getElementById("example-header-title");
-  
+
   // Collapse example card by default on SG lesson load
   const exCardSg = document.getElementById("example-card");
   exCardSg.classList.add("collapsed");
@@ -2512,20 +2567,20 @@ function loadSgLesson(id) {
   if (exIconSg) exIconSg.style.transform = "rotate(-90deg)";
   exampleHeaderTitle.innerHTML = `<i class="fa-solid fa-book-bookmark"></i> 重要用語・公式 (核心术语 & 公式)`;
   glossaryBlock.innerHTML = formatMarkdown(lesson.example);
-  
+
   // Render Checklist
   renderChecklist(lesson);
-  
+
   // Render Flashcards
   initFlashcards(id);
-  
+
   // Show checking quizzes navigations
   document.getElementById("itpass-quiz-nav").style.display = "flex";
-  
+
   // Render the quiz
   loadSgChapterQuiz();
   if (window.I18n) window.I18n.applyLessonTranslation(lesson);
-  
+
   // Auto-expand parent chapter accordion in sidebar
   const activeChapterId = lesson.chapterId;
   const chBody = document.getElementById(`sg-chapter-body-${activeChapterId}`);
@@ -2534,11 +2589,11 @@ function loadSgLesson(id) {
     chBody.style.display = "block";
     if (chHeader) chHeader.classList.add("expanded");
   }
-  
+
   // Update parent chapter active parent style
   document.querySelectorAll(".sidebar-chapter-header").forEach(el => el.classList.remove("active-parent"));
   if (chHeader) chHeader.classList.add("active-parent");
-  
+
   // Reset scroll of lesson content
   document.querySelector(".lesson-content").scrollTop = 0;
 }
@@ -2593,7 +2648,7 @@ function formatMarkdown(text) {
 // Set translation tab view
 function setLangView(view) {
   selectedLang = view;
-  
+
   // Update button tabs
   document.querySelectorAll(".lang-tab").forEach(tab => {
     if (tab.getAttribute("data-lang") === view) {
@@ -2602,11 +2657,11 @@ function setLangView(view) {
       tab.classList.remove("active");
     }
   });
-  
+
   const container = document.getElementById("concept-container");
   const jaCol = document.querySelector(".ja-col");
   const zhCol = document.querySelector(".zh-col");
-  
+
   if (view === 'both') {
     jaCol.style.display = 'flex';
     zhCol.style.display = 'flex';
@@ -2679,15 +2734,15 @@ function copyExampleToPlayground() {
 function initQuiz(lesson) {
   const quiz = lesson.quiz;
   document.getElementById("quiz-question").innerText = quiz.question;
-  
+
   const optionsContainer = document.getElementById("quiz-options");
   optionsContainer.innerHTML = "";
   selectedQuizOption = null;
-  
+
   // Hide feedback
   const feedback = document.getElementById("quiz-feedback");
   feedback.className = "quiz-feedback hidden";
-  
+
   quiz.options.forEach((opt, idx) => {
     const optDiv = document.createElement("div");
     optDiv.className = "quiz-option";
@@ -2777,20 +2832,20 @@ function loadItPassChapterQuiz() {
     document.getElementById("quiz-options").replaceChildren();
     return;
   }
-  
+
   const totalQuizzes = lesson.quizList.length;
   setQuizProgressText(itpassQuizIdx + 1, totalQuizzes);
-  
+
   const quiz = getVisibleLessonQuiz("itpass", lesson, itpassQuizIdx);
   document.getElementById("quiz-question").textContent = quiz.question;
-  
+
   const optionsContainer = document.getElementById("quiz-options");
   selectedItPassQuizOption = null;
-  
+
   // Hide feedback
   const feedback = document.getElementById("quiz-feedback");
   feedback.className = "quiz-feedback hidden";
-  
+
   renderLessonQuizOptions(optionsContainer, quiz, (idx) => {
     selectedItPassQuizOption = idx;
   });
@@ -2824,20 +2879,20 @@ function loadSgChapterQuiz() {
     document.getElementById("quiz-options").replaceChildren();
     return;
   }
-  
+
   const totalQuizzes = lesson.quizList.length;
   setQuizProgressText(sgQuizIdx + 1, totalQuizzes);
-  
+
   const quiz = getVisibleLessonQuiz("sg", lesson, sgQuizIdx);
   document.getElementById("quiz-question").textContent = quiz.question;
-  
+
   const optionsContainer = document.getElementById("quiz-options");
   selectedSgQuizOption = null;
-  
+
   // Hide feedback
   const feedback = document.getElementById("quiz-feedback");
   feedback.className = "quiz-feedback hidden";
-  
+
   renderLessonQuizOptions(optionsContainer, quiz, (idx) => {
     selectedSgQuizOption = idx;
   });
@@ -2867,7 +2922,7 @@ function markSgLessonComplete(id) {
   if (!completedSgLessons.includes(id)) {
     completedSgLessons.push(id);
     saveProgress();
-    
+
     const navItem = document.getElementById(`nav-item-sg-${id}`);
     if (navItem) {
       navItem.classList.add("completed");
@@ -2876,10 +2931,10 @@ function markSgLessonComplete(id) {
         icon.className = "fa-solid fa-circle-check";
       }
     }
-    
+
     // Update parent chapter progress badge in sidebar
     updateSgChapterProgressBadge(id);
-    
+
     const lesson = SG_LESSONS.find(l => l.id === id);
     const displayTitle = lesson ? lesson.titleZh : `第 ${id} 节`;
     showToastKey("toast.lessonQuizPassed", "success", { title: displayTitle });
@@ -2890,11 +2945,11 @@ function markSgLessonComplete(id) {
 function updateSgChapterProgressBadge(lessonId) {
   const lesson = SG_LESSONS.find(l => l.id === lessonId);
   if (!lesson) return;
-  
+
   const chapterName = lesson.chapterName;
   const chapterLessons = SG_LESSONS.filter(l => l.chapterName === chapterName);
   const chId = lesson.chapterId;
-  
+
   const completedInCh = chapterLessons.filter(l => completedSgLessons.includes(l.id)).length;
   const badge = document.querySelector(`#sg-chapter-header-${chId} .chapter-progress-badge`);
   if (badge) {
@@ -2936,7 +2991,7 @@ function checkQuizAnswer() {
     if (selectedJavaQuizOption === quiz.answerIdx) {
       feedback.innerHTML = `<strong>正解！(答对了！)</strong><br>${quiz.hint}`;
       feedback.className = "quiz-feedback success";
-      
+
       // Store completed quizzes indexes
       if (!lesson.completedQuizIndices) {
         lesson.completedQuizIndices = [];
@@ -2945,7 +3000,7 @@ function checkQuizAnswer() {
         lesson.completedQuizIndices.push(javaQuizIdx);
         localStorage.setItem(`java_quiz_completed_${currentJavaLessonId}`, JSON.stringify(lesson.completedQuizIndices));
       }
-      
+
       // If all quizzes are complete, mark chapter complete
       if (lesson.completedQuizIndices.length === lesson.quizList.length) {
         markJavaProgress(currentJavaLessonId, 'quiz');
@@ -2997,17 +3052,17 @@ function checkQuizAnswer() {
     if (!lesson || !lesson.quizList || lesson.quizList.length === 0) return;
     const quiz = lesson.quizList[sgQuizIdx];
     const feedback = document.getElementById("quiz-feedback");
-    
+
     if (selectedSgQuizOption === null) {
       feedback.innerText = "選択肢を選んでください。(请选择一个选项。)";
       feedback.className = "quiz-feedback error";
       return;
     }
-    
+
     if (selectedSgQuizOption === quiz.answerIdx) {
       feedback.innerHTML = `<strong>正解！(答对了！)</strong><br>${quiz.hint}`;
       feedback.className = "quiz-feedback success";
-      
+
       // Store completed quizzes indexes
       if (!lesson.completedQuizIndices) {
         lesson.completedQuizIndices = [];
@@ -3016,7 +3071,7 @@ function checkQuizAnswer() {
         lesson.completedQuizIndices.push(sgQuizIdx);
         localStorage.setItem(`sg_quiz_completed_${currentSgLessonId}`, JSON.stringify(lesson.completedQuizIndices));
       }
-      
+
       // If all quizzes are complete, mark chapter complete
       if (lesson.completedQuizIndices.length === lesson.quizList.length) {
         markSgLessonComplete(currentSgLessonId);
@@ -3032,23 +3087,23 @@ function checkQuizAnswer() {
     if (!lesson || !lesson.quizList) return;
     const quiz = lesson.quizList[itpassQuizIdx];
     const feedback = document.getElementById("quiz-feedback");
-    
+
     if (selectedItPassQuizOption === null) {
       feedback.innerText = "選択肢を選んでください。(请选择一个选项。)";
       feedback.className = "quiz-feedback error";
       return;
     }
-    
+
     if (selectedItPassQuizOption === quiz.answerIdx) {
       feedback.innerHTML = `<strong>正解！(答对了！)</strong><br>${quiz.hint}`;
       feedback.className = "quiz-feedback success";
-      
+
       // Store completed quizzes indexes
       if (!lesson.completedQuizIndices.includes(itpassQuizIdx)) {
         lesson.completedQuizIndices.push(itpassQuizIdx);
         localStorage.setItem(`itpass_quiz_completed_${currentItPassLessonId}`, JSON.stringify(lesson.completedQuizIndices));
       }
-      
+
       // If all quizzes are complete, mark chapter complete
       if (lesson.completedQuizIndices.length === lesson.quizList.length) {
         markItPassLessonComplete(currentItPassLessonId);
@@ -3066,7 +3121,7 @@ function markLessonComplete(id) {
   if (!completedLessons.includes(id)) {
     completedLessons.push(id);
     saveProgress();
-    
+
     // Update sidebar navigation list item
     const navItem = document.getElementById(`nav-item-${id}`);
     if (navItem) {
@@ -3084,7 +3139,7 @@ function markItPassLessonComplete(id) {
   if (!completedItPassLessons.includes(id)) {
     completedItPassLessons.push(id);
     saveProgress();
-    
+
     const navItem = document.getElementById(`nav-item-itpass-${id}`);
     if (navItem) {
       navItem.classList.add("completed");
@@ -3093,10 +3148,10 @@ function markItPassLessonComplete(id) {
         icon.className = "fa-solid fa-circle-check";
       }
     }
-    
+
     // Update parent chapter progress badge in sidebar
     updateChapterProgressBadge(id);
-    
+
     const lesson = IT_PASSPORT_LESSONS.find(l => l.id === id);
     const displayTitle = lesson ? lesson.titleZh : `第 ${id} 节`;
     showToastKey("toast.lessonQuizPassed", "success", { title: displayTitle });
@@ -3107,11 +3162,11 @@ function markItPassLessonComplete(id) {
 function updateChapterProgressBadge(lessonId) {
   const lesson = IT_PASSPORT_LESSONS.find(l => l.id === lessonId);
   if (!lesson) return;
-  
+
   const chapterName = lesson.chapterName;
   const chapterLessons = IT_PASSPORT_LESSONS.filter(l => l.chapterName === chapterName);
   const chId = lesson.chapterId;
-  
+
   const completedInCh = chapterLessons.filter(l => completedItPassLessons.includes(l.id)).length;
   const badge = document.querySelector(`#chapter-header-${chId} .chapter-progress-badge`);
   if (badge) {
@@ -3144,7 +3199,7 @@ function updateLineNumbers() {
 function initSchemaVisualizer() {
   const tabsContainer = document.getElementById("schema-tabs");
   tabsContainer.innerHTML = "";
-  
+
   // Filter tables by current DB group
   const groupTables = DB_GROUPS[currentDBGroup] || Object.keys(DB_SCHEMA);
   const firstTable = groupTables.includes(selectedSchemaTable) ? selectedSchemaTable : groupTables[0];
@@ -3157,7 +3212,7 @@ function initSchemaVisualizer() {
     tab.addEventListener("click", () => selectSchemaTable(tableName));
     tabsContainer.appendChild(tab);
   });
-  
+
   renderSchemaDetails(selectedSchemaTable);
 }
 
@@ -3203,12 +3258,12 @@ function renderSchemaDetails(tableName) {
   const meta = DB_SCHEMA[tableName];
   const detailsContainer = document.getElementById("schema-table-details");
   if (!meta) return;
-  
+
   let html = `
     <h6>列構成 (字段信息) &bull; ${tableName}</h6>
     <ul class="schema-col-list">
   `;
-  
+
   meta.columns.forEach(col => {
     const pkGlow = col.primary ? ' <i class="fa-solid fa-key" style="color: #fbbf24; font-size:10px;"></i>' : '';
     html += `
@@ -3221,14 +3276,14 @@ function renderSchemaDetails(tableName) {
       </li>
     `;
   });
-  
+
   html += `
     </ul>
     <button class="console-btn" style="margin-top: 10px; width: 100%; justify-content: center; background: rgba(255,255,255,0.03);" onclick="previewTableData('${tableName}')">
       <i class="fa-solid fa-table"></i> テーブルをプレビュー (预览此表数据)
     </button>
   `;
-  
+
   detailsContainer.innerHTML = html;
 }
 
@@ -3260,7 +3315,7 @@ function resetOutputPlaceholder() {
       <span>${escapeHtml(emptySub)}</span>
     </div>
   `;
-  
+
   // Status text resetting
   const statusDiv = document.getElementById("playground-status");
   const readyText = window.I18n && typeof window.I18n.t === "function"
@@ -3282,15 +3337,15 @@ function resetMockDB() {
 function showToast(message, type = 'info') {
   // Remove existing toasts
   document.querySelectorAll('.sql-toast').forEach(t => t.remove());
-  
+
   const toast = document.createElement('div');
   toast.className = `sql-toast sql-toast-${type}`;
   toast.innerHTML = `<i class="fa-solid ${type === 'success' ? 'fa-circle-check' : type === 'error' ? 'fa-triangle-exclamation' : 'fa-circle-info'}"></i><span>${message}</span>`;
   document.body.appendChild(toast);
-  
+
   // Animate in
   requestAnimationFrame(() => toast.classList.add('visible'));
-  
+
   // Auto-remove after 3.5 seconds
   setTimeout(() => {
     toast.classList.remove('visible');
@@ -3312,41 +3367,41 @@ function showPlaygroundHint() {
 function runPlaygroundQuery() {
   const editor = document.getElementById("sql-editor");
   const sql = editor.value.trim();
-  
+
   if (!sql) {
     alertKey("message.inputSqlRequired");
     return;
   }
-  
+
   // Auto-expand output card if it is collapsed
   const outputCard = document.getElementById("output-card");
   if (outputCard && outputCard.classList.contains("collapsed")) {
     toggleOutputDetails();
   }
-  
+
   const statusDiv = document.getElementById("playground-status");
   const outputBody = document.getElementById("output-body");
   const countBadge = document.getElementById("output-row-count");
-  
+
   // Run SQL logic through engine
   const res = sqlEngine.execute(sql);
-  
+
   if (res.success) {
     // Show success status
     const successStatus = pickVisibleRuntimeText("sql", "successStatus", "Success");
     statusDiv.innerHTML = `<span class="status-success"><i class="fa-solid fa-circle-check"></i> ${escapeHtml(successStatus)}</span>`;
-    
+
     // Render result table
     let tableHtml = "";
-    
+
     if (res.message) {
       tableHtml += `<div class="output-message-box"><i class="fa-solid fa-circle-info"></i> ${res.message}</div>`;
     }
-    
+
     if (res.columns && res.columns.length > 0) {
       countBadge.innerText = String(res.rows.length);
       countBadge.style.display = "inline";
-      
+
       tableHtml += `<div class="table-scroll-wrapper"><table class="result-table"><thead><tr>`;
       res.columns.forEach(col => {
         tableHtml += `<th>${col}</th>`;
@@ -3365,9 +3420,9 @@ function runPlaygroundQuery() {
       countBadge.style.display = "none";
       countBadge.textContent = "0";
     }
-    
+
     outputBody.innerHTML = tableHtml;
-    
+
     // Validate whether the query matches the task goal
     validateTaskCompletion(sql);
     if (window.StudyAI) StudyAI.gradeGeneratedExecution('sql', res);
@@ -3382,14 +3437,14 @@ function runPlaygroundQuery() {
         metadata: { rowCount: res.rows ? res.rows.length : 0 }
       });
     }
-    
+
   } else {
     // Show failed status
     const syntaxErrorStatus = pickVisibleRuntimeText("sql", "syntaxErrorStatus", "Syntax Error");
     statusDiv.innerHTML = `<span class="status-error"><i class="fa-solid fa-circle-exclamation"></i> ${escapeHtml(syntaxErrorStatus)}</span>`;
     countBadge.style.display = "none";
     countBadge.textContent = "0";
-    
+
     // Render error message
     const errorLabel = pickVisibleRuntimeText("sql", "errorStatus", "SQL Error");
     outputBody.innerHTML = `
@@ -3416,14 +3471,14 @@ function runPlaygroundQuery() {
 function validateTaskCompletion(userSql) {
   const lesson = SQL_LESSONS.find(l => l.id === currentLessonId);
   if (!lesson) return;
-  
+
   // Match check using pattern
-  const expectedPattern = isRandomPracticeActive && lesson.randomExercise 
-    ? lesson.randomExercise.expectedQuery 
+  const expectedPattern = isRandomPracticeActive && lesson.randomExercise
+    ? lesson.randomExercise.expectedQuery
     : lesson.expectedQuery;
-    
+
   const isMatch = expectedPattern.test(userSql);
-  
+
   if (isMatch) {
     // Show positive reinforcement in playground status
     const statusDiv = document.getElementById("playground-status");
@@ -3432,7 +3487,7 @@ function validateTaskCompletion(userSql) {
     } else {
       statusDiv.innerHTML = `<span class="status-success"><i class="fa-solid fa-star"></i> 任务完成！</span>`;
     }
-    
+
     // Mark completed
     markLessonComplete(currentLessonId);
   }
@@ -3444,7 +3499,7 @@ function toggleSchemaDetails() {
   const header = document.querySelector(".schema-header");
   const body = document.getElementById("schema-body");
   const icon = document.getElementById("schema-toggle-icon");
-  
+
   const isCollapsed = body.style.display === "none";
   if (isCollapsed) {
     body.style.display = "flex";
@@ -3465,7 +3520,7 @@ function toggleConsoleDetails() {
   const header = document.querySelector(".console-header");
   const body = document.getElementById("console-card-body");
   const icon = document.getElementById("console-toggle-icon");
-  
+
   const isCollapsed = body.style.display === "none";
   if (isCollapsed) {
     body.style.display = "flex";
@@ -3486,7 +3541,7 @@ function toggleOutputDetails() {
   const header = document.querySelector(".output-header");
   const body = document.getElementById("output-card-body");
   const icon = document.getElementById("output-toggle-icon");
-  
+
   const isCollapsed = body.style.display === "none";
   if (isCollapsed) {
     body.style.display = "flex";
@@ -3507,7 +3562,7 @@ function toggleMaximizeOutput() {
   const btn = document.getElementById("output-maximize-btn");
   const overlay = document.getElementById("maximize-overlay");
   const isMaximized = card.classList.toggle("maximized");
-  
+
   if (isMaximized) {
     btn.innerHTML = `<i class="fa-solid fa-compress"></i> 还原`;
     btn.classList.add('active');
@@ -3530,7 +3585,7 @@ function toggleExampleCard() {
   const pre = document.getElementById("example-pre-block");
   const glossary = document.getElementById("lesson-glossary");
   const icon = document.getElementById("example-toggle-icon");
-  
+
   const isCollapsed = card.classList.contains("collapsed");
   if (isCollapsed) {
     card.classList.remove("collapsed");
@@ -3556,7 +3611,7 @@ function toggleJavaOutputDetails() {
   const header = document.querySelector(".java-output-header");
   const body = document.getElementById("java-output-card-body");
   const icon = document.getElementById("java-output-toggle-icon");
-  
+
   const isCollapsed = body.style.display === "none";
   if (isCollapsed) {
     body.style.display = "flex";
@@ -3577,7 +3632,7 @@ function toggleMaximizeJavaOutput() {
   const btn = document.getElementById("java-output-maximize-btn");
   const overlay = document.getElementById("maximize-overlay");
   const isMaximized = card.classList.toggle("maximized");
-  
+
   if (isMaximized) {
     if (btn) btn.innerHTML = `<i class="fa-solid fa-compress"></i> 还原`;
     if (btn) btn.classList.add('active');
@@ -3611,14 +3666,14 @@ function toggleItPassCard(cardName) {
     'flashcards': { card: 'itpass-flashcards-card', body: 'flashcards-body', icon: 'flashcards-toggle-icon' },
     'tools': { card: 'itpass-tools-card', body: 'tools-body', icon: 'tools-toggle-icon' }
   };
-  
+
   const conf = cardMap[cardName];
   if (!conf) return;
-  
+
   const card = document.getElementById(conf.card);
   const body = document.getElementById(conf.body);
   const icon = document.getElementById(conf.icon);
-  
+
   const isCollapsed = body.style.display === "none";
   if (isCollapsed) {
     body.style.display = conf.body === "checklist-body" ? "block" : "flex";
@@ -3656,12 +3711,12 @@ function pickSqlUiText(map, fallback) {
 function updateMissionUI() {
   const lesson = SQL_LESSONS.find(l => l.id === currentLessonId);
   if (!lesson) return;
-  
+
   const label = document.getElementById("mission-label-text");
   const taskText = document.getElementById("playground-task-text");
   const btn = document.getElementById("random-practice-btn");
   const changeBtn = document.getElementById("change-practice-btn");
-  
+
   if (isRandomPracticeActive) {
     label.innerText = pickSqlUiText({
       "default-ja-zh": "随机练习 / ランダム課題",
@@ -3725,7 +3780,7 @@ function toggleRandomPractice() {
 function changeRandomPracticeQuestion() {
   const lesson = SQL_LESSONS.find(l => l.id === currentLessonId);
   if (!lesson || !lesson.randomExercises || lesson.randomExercises.length === 0) return;
-  
+
   let nextIdx = lesson.randomExerciseIndex;
   if (lesson.randomExercises.length > 1) {
     while (nextIdx === lesson.randomExerciseIndex) {
@@ -3734,7 +3789,7 @@ function changeRandomPracticeQuestion() {
   }
   lesson.randomExerciseIndex = nextIdx;
   lesson.randomExercise = lesson.randomExercises[nextIdx];
-  
+
   updateMissionUI();
   resetOutputPlaceholder();
 }
@@ -3796,7 +3851,7 @@ function nextCrossChallenge() {
 function renderCrossChallenge() {
   const ex = crossChallengePool[crossChallengeIndex];
   crossChallengeCurrentExercise = ex;
-  
+
   const statusText = document.getElementById('challenge-status-text');
   if (statusText) {
     statusText.innerText = `挑战中 (${crossChallengeIndex + 1} / ${crossChallengePool.length})`;
@@ -3996,7 +4051,7 @@ function initFlashcards(lessonId) {
   }
 
   cards = getLocalizedFlashcards(currentSubject, lesson, cards);
-  
+
   if (cards.length === 0) {
     const defaultTerm = currentSubject === 'sql' ? "SQL" : (currentSubject === 'sg' ? "情報セキュリティ" : "ITパスポート");
     cards = [{ ja: defaultTerm, target: defaultTerm, desc: getEmptyFlashcardText("desc") }];
@@ -4004,7 +4059,7 @@ function initFlashcards(lessonId) {
 
   currentFlashcardIdx = 0;
   isFlashcardFlipped = false;
-  
+
   renderFlashcard(cards);
 }
 
@@ -4015,10 +4070,10 @@ function initSgFlashcards(lessonId) {
 function renderFlashcard(cards) {
   const cardElement = document.getElementById("flashcard-element");
   if (!cardElement) return;
-  
+
   cardElement.classList.remove("flipped");
   isFlashcardFlipped = false;
-  
+
   if (!cards || cards.length === 0) {
     document.getElementById("fc-ja-term").innerText = getEmptyFlashcardText("title");
     document.getElementById("fc-zh-term").innerText = getEmptyFlashcardText("title");
@@ -4026,13 +4081,13 @@ function renderFlashcard(cards) {
     document.getElementById("fc-counter").innerText = "0 / 0";
     return;
   }
-  
+
   const currentCard = normalizeFlashcard(cards[currentFlashcardIdx]);
-  
+
   document.getElementById("fc-ja-term").innerText = currentCard.ja;
   document.getElementById("fc-zh-term").innerText = currentCard.target;
   document.getElementById("fc-desc").innerText = currentCard.desc;
-  
+
   document.getElementById("fc-counter").innerText = `${currentFlashcardIdx + 1} / ${cards.length}`;
 }
 
@@ -4057,7 +4112,7 @@ function prevFlashcard() {
   }
   cards = getLocalizedFlashcards(currentSubject, lesson, cards);
   if (cards.length === 0) return;
-  
+
   currentFlashcardIdx = (currentFlashcardIdx - 1 + cards.length) % cards.length;
   renderFlashcard(cards);
 }
@@ -4077,7 +4132,7 @@ function nextFlashcard() {
   }
   cards = getLocalizedFlashcards(currentSubject, lesson, cards);
   if (cards.length === 0) return;
-  
+
   currentFlashcardIdx = (currentFlashcardIdx + 1) % cards.length;
   renderFlashcard(cards);
 }
@@ -5619,35 +5674,35 @@ function startCbtExam() {
   const countSelect = parseInt(document.getElementById("cbt-count-select").value);
   const optShuffle = document.getElementById("cbt-opt-shuffle").checked;
   const optNoCalc = document.getElementById("cbt-opt-nocalc").checked;
-  
+
   const fullPool = getExamPool();
   let filtered = [];
-  
+
   if (yearSelect === "all") {
     filtered = [...fullPool];
   } else {
     filtered = fullPool.filter(q => q.yearId === yearSelect);
   }
-  
+
   // Apply no calculation filter
   if (optNoCalc) {
     const calcRegex = /計算|MTBF|MTTR|稼働率|2進数|16進数|確率|売上高|利益|固定费|变动费|回收期间|损益分岐点/i;
     filtered = filtered.filter(q => !calcRegex.test(q.question) && !calcRegex.test(q.explanation));
   }
-  
+
   if (filtered.length === 0) {
     showToastKey("toast.examEmpty", "error");
     return;
   }
-  
+
   // Shuffle full pool and slice to requested count
   for (let i = filtered.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [filtered[i], filtered[j]] = [filtered[j], filtered[i]];
   }
-  
+
   const examQuestions = filtered.slice(0, countSelect);
-  
+
   // Prepare questions options (and shuffle option keys if requested)
   const preparedQuestions = examQuestions.map(q => {
     let options = q.options.map((opt, idx) => ({ text: opt, originalIdx: idx }));
@@ -5662,7 +5717,7 @@ function startCbtExam() {
       options: options
     };
   });
-  
+
   const yearsMapping = {
     "08_haru": "令和8年",
     "07_haru": "令和7年",
@@ -5709,38 +5764,38 @@ function startCbtExam() {
       version: 1
     }
   };
-  
+
   // Hide config screen, show testing screen
   document.getElementById("cbt-config-screen").style.display = "none";
   document.getElementById("cbt-testing-screen").style.display = "flex";
   document.getElementById("cbt-results-screen").style.display = "none";
-  
+
   // Start Timer
   startCbtTimer();
-  
+
   // Render CBT Question Navigator Grid
   initCbtNavigatorGrid();
-  
+
   // Render First Question
   renderCbtQuestion();
-  
+
   showToastKey("toast.examStarted", "success");
 }
 
 function startCbtTimer() {
   if (cbtTimerInterval) clearInterval(cbtTimerInterval);
-  
+
   updateTimerDisplay();
-  
+
   cbtTimerInterval = setInterval(() => {
     if (!activeCbtExam) {
       clearInterval(cbtTimerInterval);
       return;
     }
-    
+
     activeCbtExam.timeRemaining--;
     updateTimerDisplay();
-    
+
     if (activeCbtExam.timeRemaining <= 0) {
       clearInterval(cbtTimerInterval);
       showToastKey("toast.examTimeout", "error");
@@ -5752,11 +5807,11 @@ function startCbtTimer() {
 function updateTimerDisplay() {
   const display = document.getElementById("cbt-timer-display");
   if (!display || !activeCbtExam) return;
-  
+
   const min = Math.floor(activeCbtExam.timeRemaining / 60);
   const sec = activeCbtExam.timeRemaining % 60;
   display.innerText = `${min.toString().padStart(2, '0')}:${sec.toString().padStart(2, '0')}`;
-  
+
   if (activeCbtExam.timeRemaining < 300) {
     display.style.color = "#f87171";
   } else {
@@ -5767,7 +5822,7 @@ function updateTimerDisplay() {
 function initCbtNavigatorGrid() {
   const grid = document.getElementById("cbt-grid-canvas");
   if (!grid || !activeCbtExam) return;
-  
+
   grid.innerHTML = "";
   activeCbtExam.questions.forEach((q, idx) => {
     const btn = document.createElement("button");
@@ -5777,26 +5832,26 @@ function initCbtNavigatorGrid() {
     btn.addEventListener("click", () => jumpToCbtQuestion(idx));
     grid.appendChild(btn);
   });
-  
+
   updateCbtNavigatorGridUI();
 }
 
 function updateCbtNavigatorGridUI() {
   if (!activeCbtExam) return;
-  
+
   activeCbtExam.questions.forEach((q, idx) => {
     const btn = document.getElementById(`cbt-grid-btn-${idx}`);
     if (!btn) return;
-    
+
     btn.classList.toggle("active", idx === activeCbtExam.currentQIdx);
-    
+
     const isAnswered = activeCbtExam.answers[idx] !== -1;
     btn.classList.toggle("answered", isAnswered);
-    
+
     const isFlagged = activeCbtExam.flags[idx];
     btn.classList.toggle("flagged", isFlagged);
   });
-  
+
   const total = activeCbtExam.questions.length;
   const answered = activeCbtExam.answers.filter(a => a !== -1).length;
   const statusFormat = window.I18n ? I18n.t("mockExam.navStatus", "第 {current} 题，共 {total} 题 (已作答 {answered} 题)") : "第 {current} 题，共 {total} 题 (已作答 {answered} 题)";
@@ -5953,44 +6008,44 @@ function submitCbtExam(auto = false) {
       if (!confirmKey("dialog.submitExamConfirm")) return;
     }
   }
-  
+
   clearInterval(cbtTimerInterval);
   activeCbtExam.isSubmitted = true;
-  
+
   const qList = activeCbtExam.questions;
   const answers = activeCbtExam.answers;
-  
+
   let totalQuestions = qList.length;
   let correctCount = 0;
-  
+
   const fields = {
     "ストラテジ系": { total: 0, correct: 0 },
     "マネジメント系": { total: 0, correct: 0 },
     "テクノロジ系": { total: 0, correct: 0 },
     "科目B": { total: 0, correct: 0 }
   };
-  
+
   const reviews = [];
-  
+
   qList.forEach((q, idx) => {
     const userChoiceIdx = answers[idx];
     const isAnswered = userChoiceIdx !== -1;
-    
+
     let isCorrect = false;
     let originalUserAnswerIdx = -1;
     if (isAnswered) {
       originalUserAnswerIdx = q.options[userChoiceIdx].originalIdx;
       isCorrect = originalUserAnswerIdx === q.answer;
     }
-    
+
     if (isCorrect) correctCount++;
-    
+
     const fieldName = q.category;
     if (fields[fieldName]) {
       fields[fieldName].total++;
       if (isCorrect) fields[fieldName].correct++;
     }
-    
+
     reviews.push({
       num: idx + 1,
       qId: q.id || `${currentSubject === 'sg' ? 'sg' : 'itpass'}:${q.yearId || 'unknown'}:${q.number || (idx + 1)}`,
@@ -6010,31 +6065,31 @@ function submitCbtExam(auto = false) {
       explanation: q.explanation
     });
   });
-  
+
   const scoreTotal = Math.round((correctCount / totalQuestions) * 1000);
-  
-  const scoreStrat = fields["ストラテジ系"].total > 0 
+
+  const scoreStrat = fields["ストラテジ系"].total > 0
     ? Math.round((fields["ストラテジ系"].correct / fields["ストラテジ系"].total) * 1000)
     : 1000;
-    
-  const scoreMan = fields["マネジメント系"].total > 0 
+
+  const scoreMan = fields["マネジメント系"].total > 0
     ? Math.round((fields["マネジメント系"].correct / fields["マネジメント系"].total) * 1000)
     : 1000;
-    
-  const scoreTech = fields["テクノロジ系"].total > 0 
+
+  const scoreTech = fields["テクノロジ系"].total > 0
     ? Math.round((fields["テクノロジ系"].correct / fields["テクノロジ系"].total) * 1000)
     : 1000;
 
   const scoreSubB = fields["科目B"].total > 0
     ? Math.round((fields["科目B"].correct / fields["科目B"].total) * 1000)
     : 1000;
-    
+
   const passesTotal = scoreTotal >= 600;
   const passesStrat = scoreStrat >= 300;
   const passesMan = scoreMan >= 300;
   const passesTech = scoreTech >= 300;
   const passesSubB = scoreSubB >= 300;
-  
+
   const hasSubB = fields["科目B"].total > 0;
   const isPassed = passesTotal && passesStrat && passesMan && passesTech && (!hasSubB || passesSubB);
   if (window.StudyAI) StudyAI.track({
@@ -6047,19 +6102,19 @@ function submitCbtExam(auto = false) {
     source: 'official',
     metadata: { correctCount, totalQuestions, scoreTotal, autoSubmitted: auto }
   });
-  
+
   // Render result view
   document.getElementById("cbt-testing-screen").style.display = "none";
   document.getElementById("cbt-results-screen").style.display = "flex";
-  
+
   document.getElementById("cbt-score-total").innerText = scoreTotal;
-  
+
   const badge = document.getElementById("cbt-pass-status-badge");
   badge.className = `pass-status-badge ${isPassed ? 'pass' : 'fail'}`;
   const passText = window.I18n ? I18n.t("examHistory.passed", "合格") : "合格";
   const failText = window.I18n ? I18n.t("examHistory.failed", "不合格") : "不合格";
   badge.innerText = isPassed ? passText : failText;
-  
+
   const scoreFormat = window.I18n ? I18n.t("mockExam.scoreFormat", "{score} / 1000 点") : "{score} / 1000 点";
   const scorePassText = window.I18n ? I18n.t("mockExam.scorePass", "合格 (>=300)") : "合格 (>=300)";
   const scoreFailText = window.I18n ? I18n.t("mockExam.scoreFail", "基準点未達 (<300)") : "基準点未達 (<300)";
@@ -6069,13 +6124,13 @@ function submitCbtExam(auto = false) {
   const stratStatus = document.getElementById("cbt-field-status-strat");
   stratStatus.innerText = passesStrat ? scorePassText : scoreFailText;
   stratStatus.style.color = passesStrat ? "var(--success-color)" : "#f87171";
-  
+
   document.getElementById("cbt-field-score-man").innerText = scoreFormat.replace("{score}", scoreMan);
   document.getElementById("cbt-field-bar-man").style.width = `${scoreMan / 10}%`;
   const manStatus = document.getElementById("cbt-field-status-man");
   manStatus.innerText = passesMan ? scorePassText : scoreFailText;
   manStatus.style.color = passesMan ? "var(--success-color)" : "#f87171";
-  
+
   document.getElementById("cbt-field-score-tech").innerText = scoreFormat.replace("{score}", scoreTech);
   document.getElementById("cbt-field-bar-tech").style.width = `${scoreTech / 10}%`;
   const techStatus = document.getElementById("cbt-field-status-tech");
@@ -6098,7 +6153,7 @@ function submitCbtExam(auto = false) {
       subbItem.style.display = "none";
     }
   }
-  
+
   // Render review records — card-based layout
   const reviewList = document.getElementById("cbt-results-table-body");
   reviewList.innerHTML = "";
@@ -6178,7 +6233,7 @@ function submitCbtExam(auto = false) {
   }
 
   activeCbtExam = null;
-  
+
   showToastKey(isPassed ? "toast.examPassed" : "toast.examFailed", isPassed ? "success" : "info");
 }
 
@@ -6407,15 +6462,15 @@ function closeCbtResults() {
 function selectPythonLesson(id) {
   const oldActive = document.getElementById(`nav-item-python-${currentPythonLessonId}`);
   if (oldActive) oldActive.classList.remove("active");
-  
+
   currentPythonLessonId = id;
-  
+
   const newActive = document.getElementById(`nav-item-python-${currentPythonLessonId}`);
   if (newActive) {
     newActive.classList.add("active");
-    
+
     document.querySelectorAll(".sidebar-chapter-header").forEach(el => el.classList.remove("active-parent"));
-    
+
     const chBody = newActive.parentElement;
     if (chBody && chBody.classList.contains("sidebar-chapter-body")) {
       const chHeader = chBody.previousElementSibling;
@@ -6425,7 +6480,7 @@ function selectPythonLesson(id) {
     }
     newActive.scrollIntoView({ block: "nearest", behavior: "smooth" });
   }
-  
+
   loadPythonLesson(id);
 }
 
@@ -6478,7 +6533,7 @@ function loadPythonLesson(id) {
   glossaryBlock.style.display = "none";
   const exIcon = document.getElementById("example-toggle-icon");
   if (exIcon) exIcon.style.transform = "rotate(-90deg)";
-  
+
   codeEl.textContent = lesson.example || "";
   codeEl.className = "language-python";
   copyBtn.style.display = "inline-flex";
@@ -6532,7 +6587,7 @@ function loadPythonLesson(id) {
   // Vocab flashcards section display
   document.getElementById("python-vocab-section").style.display =
     (lesson.vocabList && lesson.vocabList.length > 0) ? "flex" : "none";
-  
+
   // Quiz
   document.getElementById("itpass-quiz-nav").style.display = "none";
   loadPythonQuiz(lesson);
@@ -6564,9 +6619,9 @@ function loadPythonQuiz(lesson) {
     document.getElementById("quiz-options").innerHTML = "";
     return;
   }
-  
+
   document.getElementById("itpass-quiz-nav").style.display = "flex";
-  
+
   const completedPythonQuizSaved = localStorage.getItem(`python_quiz_completed_${lesson.id}`);
   let completedQuizIndices = [];
   if (completedPythonQuizSaved) {
@@ -6577,7 +6632,7 @@ function loadPythonQuiz(lesson) {
     }
   }
   lesson.completedQuizIndices = completedQuizIndices;
-  
+
   pythonQuizIdx = 0;
   selectedPythonQuizOption = null;
   renderPythonQuizQuestion();
@@ -6589,18 +6644,18 @@ function renderPythonQuizQuestion() {
 
   const totalQuizzes = lesson.quizList.length;
   document.getElementById("itpass-quiz-progress-text").innerText = `問題 ${pythonQuizIdx + 1} / 共 ${totalQuizzes} 题`;
-  
+
   const quiz = lesson.quizList[pythonQuizIdx];
   const useZhQuiz = selectedLang === 'zh' && !(window.I18n && window.I18n.isActive());
   document.getElementById("quiz-question").innerText = (useZhQuiz && quiz.questionZh) ? quiz.questionZh : quiz.question;
-  
+
   const optionsContainer = document.getElementById("quiz-options");
   optionsContainer.innerHTML = "";
   selectedPythonQuizOption = null;
-  
+
   const feedback = document.getElementById("quiz-feedback");
   feedback.className = "quiz-feedback hidden";
-  
+
   quiz.options.forEach((opt, idx) => {
     const optDiv = document.createElement("div");
     optDiv.className = "quiz-option";
@@ -6642,11 +6697,11 @@ function markPythonProgress(lessonId, action) {
   if (action === 'quiz') data.quizDone = true;
   if (action === 'code_run') data.codeRun = true;
   localStorage.setItem(key, JSON.stringify(data));
-  
+
   if (data.quizDone && !completedPythonLessons.includes(lessonId)) {
     completedPythonLessons.push(lessonId);
     saveProgress();
-    
+
     const lesson = (typeof PYTHON_LESSONS !== 'undefined') ? PYTHON_LESSONS.find(l => l.id === lessonId) : null;
     if (lesson) {
       const navItem = document.getElementById(`nav-item-python-${lessonId}`);
@@ -6667,7 +6722,7 @@ function togglePythonOutputDetails() {
   const header = document.querySelector(".python-output-header");
   const body = document.getElementById("python-output-card-body");
   const icon = document.getElementById("python-output-toggle-icon");
-  
+
   const isCollapsed = body.style.display === "none";
   if (isCollapsed) {
     body.style.display = "flex";
@@ -6687,7 +6742,7 @@ function toggleMaximizePythonOutput() {
   const btn = document.getElementById("python-output-maximize-btn");
   const overlay = document.getElementById("maximize-overlay");
   const isMaximized = card.classList.toggle("maximized");
-  
+
   if (isMaximized) {
     if (btn) btn.innerHTML = `<i class="fa-solid fa-compress"></i> 还原`;
     if (btn) btn.classList.add('active');
@@ -6710,9 +6765,9 @@ function switchSqlSubMode(mode) {
   sqlSubMode = mode;
   document.getElementById("sql-sub-tab-lessons").classList.toggle("active", mode === "lessons");
   document.getElementById("sql-sub-tab-exam").classList.toggle("active", mode === "exam");
-  
+
   handleSubModeViewToggle(mode);
-  
+
   if (mode === "lessons") {
     initSidebar();
     loadLesson(currentLessonId);
@@ -6726,9 +6781,9 @@ function switchPythonSubMode(mode) {
   pythonSubMode = mode;
   document.getElementById("python-sub-tab-lessons").classList.toggle("active", mode === "lessons");
   document.getElementById("python-sub-tab-exam").classList.toggle("active", mode === "exam");
-  
+
   handleSubModeViewToggle(mode);
-  
+
   if (mode === "lessons") {
     initSidebar();
     loadPythonLesson(currentPythonLessonId);
@@ -6740,14 +6795,14 @@ function switchPythonSubMode(mode) {
 // Switch Java sub modes (Lessons/Sandbox vs Mock Exam)
 function switchJavaSubMode(mode) {
   javaSubMode = mode;
-  
+
   // Update tabs (NYUMON/JISSEN / EXAM)
   document.getElementById("java-sub-tab-nyumon").classList.toggle("active", mode === "lessons" && currentJavaBook === "nyumon");
   document.getElementById("java-sub-tab-jissen").classList.toggle("active", mode === "lessons" && currentJavaBook === "jissen");
   document.getElementById("java-sub-tab-exam").classList.toggle("active", mode === "exam");
-  
+
   handleSubModeViewToggle(mode);
-  
+
   if (mode === "lessons") {
     initSidebar();
     loadJavaLesson(currentJavaLessonId);
@@ -6763,7 +6818,7 @@ function handleSubModeViewToggle(mode) {
   const configPanel = document.getElementById("coding-exam-config");
   const runningPanel = document.getElementById("coding-exam-panel");
   const resultsPanel = document.getElementById("coding-exam-results");
-  
+
   if (mode === "lessons") {
     if (textbookCard) textbookCard.style.display = "flex";
     if (configPanel) configPanel.style.display = "none";
@@ -6781,10 +6836,10 @@ function initCodingExamSubLayout() {
   const configPanel = document.getElementById("coding-exam-config");
   const runningPanel = document.getElementById("coding-exam-panel");
   const resultsPanel = document.getElementById("coding-exam-results");
-  
+
   const configTitle = document.getElementById("coding-config-title");
   const configDesc = document.getElementById("coding-config-desc");
-  
+
   if (currentSubject === "sql") {
     const lesson = typeof SQL_LESSONS !== "undefined" ? SQL_LESSONS.find(l => l.id === currentLessonId) : null;
     configTitle.innerText = pickLessonLocalText(lesson, "practicalExamTitle", "SQL 实操模拟考试 (実技模試)");
@@ -6806,7 +6861,7 @@ function initCodingExamSubLayout() {
       ko: "Python 프로그래밍 실기 시험을 연습하는 모드입니다. 제한 시간 안에 오른쪽 Python 샌드박스에서 로직을 작성하고, 예상 표준 출력과의 비교로 통과 여부를 판정합니다."
     }, "本考试模拟日本 IT 专门学校的 Python 编程能力测试。在限定时间内，在右侧 Python 沙盒中编写对应程序逻辑，完成预期的 stdout 输出比对即算通过。");
   }
-  
+
   // Show right panel based on current state
   if (activeCodingExam && activeCodingExam.subject === currentSubject) {
     if (activeCodingExam.isSubmitted) {
@@ -6836,17 +6891,17 @@ function isCodingExamActiveAndRunning() {
 // Start Coding Exam (Launches the timer and prepares questions)
 function startCodingExam() {
   const countSelect = parseInt(document.getElementById("coding-exam-count").value);
-  
+
   let pool = [];
   if (currentSubject === 'sql') pool = [...SQL_EXAM_QUESTIONS];
   else if (currentSubject === 'java') pool = [...JAVA_EXAM_QUESTIONS];
   else if (currentSubject === 'python') pool = [...PYTHON_EXAM_QUESTIONS];
-  
+
   if (pool.length === 0) {
     showToastKey("toast.examDbNotFound", "error");
     return;
   }
-  
+
   // Randomly select count questions (and sort by ID)
   const poolCopy = [...pool];
   for (let i = poolCopy.length - 1; i > 0; i--) {
@@ -6854,7 +6909,7 @@ function startCodingExam() {
     [poolCopy[i], poolCopy[j]] = [poolCopy[j], poolCopy[i]];
   }
   const selectedQ = poolCopy.slice(0, countSelect).sort((a, b) => a.id - b.id);
-  
+
   // Set global state
   activeCodingExam = {
     subject: currentSubject,
@@ -6868,11 +6923,11 @@ function startCodingExam() {
     timeSpent: 0,
     isSubmitted: false
   };
-  
+
   // Initialize grid states
   selectedQ.forEach(q => {
     activeCodingExam.userStatuses[q.id] = 'idle'; // 'idle' | 'passed' | 'failed'
-    
+
     // Set standard templates
     if (currentSubject === 'sql') {
       activeCodingExam.userCodes[q.id] = '-- 这里输入 SQL 语句...\n';
@@ -6882,42 +6937,42 @@ function startCodingExam() {
       activeCodingExam.userCodes[q.id] = q.templateCode || '';
     }
   });
-  
+
   // Switch layouts
   document.getElementById("coding-exam-config").style.display = "none";
   document.getElementById("coding-exam-panel").style.display = "flex";
   document.getElementById("coding-exam-results").style.display = "none";
-  
+
   // Start Timer
   startCodingTimer();
-  
+
   // Render
   renderCodingQuestion();
   initSidebar();
-  
+
   showToastKey("toast.practicalExamStarted", "success");
 }
 
 // Timer loops every 1 second
 function startCodingTimer() {
   if (cbtTimerInterval) clearInterval(cbtTimerInterval);
-  
+
   const timerDisplay = document.getElementById("coding-timer-display");
   if (timerDisplay) {
     const min = Math.floor(activeCodingExam.timeRemaining / 60);
     const sec = activeCodingExam.timeRemaining % 60;
     timerDisplay.innerText = `${min.toString().padStart(2, '0')}:${sec.toString().padStart(2, '0')}`;
   }
-  
+
   cbtTimerInterval = setInterval(() => {
     if (!activeCodingExam || activeCodingExam.isSubmitted) {
       clearInterval(cbtTimerInterval);
       return;
     }
-    
+
     activeCodingExam.timeRemaining--;
     activeCodingExam.timeSpent++;
-    
+
     const min = Math.floor(activeCodingExam.timeRemaining / 60);
     const sec = activeCodingExam.timeRemaining % 60;
     if (timerDisplay) {
@@ -6930,7 +6985,7 @@ function startCodingTimer() {
         timerDisplay.style.color = "#f87171";
       }
     }
-    
+
     if (activeCodingExam.timeRemaining <= 0) {
       clearInterval(cbtTimerInterval);
       showToastKey("toast.examTimeout", "error");
@@ -6942,18 +6997,18 @@ function startCodingTimer() {
 // Render the active question in the running panel
 function renderCodingQuestion() {
   if (!activeCodingExam) return;
-  
+
   const idx = activeCodingExam.currentQIdx;
   const q = activeCodingExam.questions[idx];
-  
+
   document.getElementById("coding-exam-display-title").innerText = activeCodingExam.title;
   document.getElementById("eq-number-text").innerText = `第 ${idx + 1} 题 / 問 ${idx + 1}`;
   document.getElementById("eq-diff-text").innerText = `难度: ${q.difficulty}`;
-  
+
   // Set rules and texts
   document.getElementById("eq-task-ja").innerHTML = q.taskJa.replace(/\n/g, "<br>");
   document.getElementById("eq-task-zh").innerHTML = q.taskZh.replace(/\n/g, "<br>");
-  
+
   // Set expected output box
   const expectedBox = document.getElementById("eq-expected-output-box");
   if (currentSubject === 'sql') {
@@ -6962,17 +7017,17 @@ function renderCodingQuestion() {
     expectedBox.style.display = "block";
     document.getElementById("eq-expected-output").innerText = q.expectedOutput;
   }
-  
+
   // Update flag button state
   const flagBtn = document.getElementById("eq-flag-btn");
   if (flagBtn) {
     const isFlagged = activeCodingExam.flags[idx];
     flagBtn.classList.toggle("flagged", isFlagged);
-    flagBtn.innerHTML = isFlagged 
+    flagBtn.innerHTML = isFlagged
       ? `<i class="fa-solid fa-flag" style="color:#f87171;"></i> 已标记复查`
       : `<i class="fa-regular fa-flag"></i> 标记此题复查`;
   }
-  
+
   // Update Verification Status Badge
   const statusBadge = document.getElementById("eq-verify-status-badge");
   const status = activeCodingExam.userStatuses[q.id];
@@ -6992,7 +7047,7 @@ function renderCodingQuestion() {
     statusBadge.style.color = "var(--text-muted)";
     statusBadge.style.background = "rgba(255,255,255,0.05)";
   }
-  
+
   // Load code in Editor
   const currentCode = activeCodingExam.userCodes[q.id];
   if (currentSubject === 'sql') {
@@ -7001,7 +7056,7 @@ function renderCodingQuestion() {
       editor.value = currentCode;
       setupEditorLineNumbers();
     }
-    
+
     // SQL Schema check
     if (q.dbGroup && q.dbGroup !== currentDBGroup) {
       switchDBGroup(q.dbGroup);
@@ -7029,7 +7084,7 @@ function renderCodingQuestion() {
     const stdinEl = document.getElementById("python-input-content");
     if (stdinEl) stdinEl.value = q.stdinExample || "";
   }
-  
+
   // Render navigator grid
   renderCodingNavigatorGrid();
   // Wrap tables for horizontal scroll
@@ -7044,21 +7099,21 @@ function renderCodingQuestion() {
 function renderCodingNavigatorGrid() {
   const container = document.getElementById("coding-navigator-grid");
   if (!container || !activeCodingExam) return;
-  
+
   container.innerHTML = "";
   activeCodingExam.questions.forEach((q, idx) => {
     const btn = document.createElement("button");
     btn.className = "cbt-grid-btn";
     btn.id = `coding-grid-btn-${idx}`;
     btn.innerText = idx + 1;
-    
+
     // Colors
     btn.classList.toggle("active", idx === activeCodingExam.currentQIdx);
-    
+
     const status = activeCodingExam.userStatuses[q.id];
     if (status === 'passed') btn.classList.add("answered");
     else if (status === 'failed') btn.classList.add("flagged"); // red/grey indicator
-    
+
     btn.addEventListener("click", () => jumpToCodingQuestion(idx));
     container.appendChild(btn);
   });
@@ -7067,7 +7122,7 @@ function renderCodingNavigatorGrid() {
 // Jump to specific index in active exam
 function jumpToCodingQuestion(idx) {
   if (!activeCodingExam) return;
-  
+
   // Save current code
   const oldQ = activeCodingExam.questions[activeCodingExam.currentQIdx];
   if (activeCodingExam.subject === 'sql') {
@@ -7077,7 +7132,7 @@ function jumpToCodingQuestion(idx) {
   } else if (activeCodingExam.subject === 'python') {
     activeCodingExam.userCodes[oldQ.id] = document.getElementById("python-editor").value;
   }
-  
+
   activeCodingExam.currentQIdx = idx;
   renderCodingQuestion();
   initSidebar();
@@ -7121,24 +7176,24 @@ function compareSqlResults(resUser, resSol) {
   if (!resUser.columns || !resSol.columns) return false;
   if (resUser.columns.length !== resSol.columns.length) return false;
   if (resUser.rows.length !== resSol.rows.length) return false;
-  
+
   // Check column names
   for (let i = 0; i < resSol.columns.length; i++) {
     if (resUser.columns[i].toLowerCase() !== resSol.columns[i].toLowerCase()) return false;
   }
-  
+
   // Format rows to string representation
   const formatRow = row => row.map(cell => cell === null ? 'NULL' : String(cell).trim()).join('|');
   const rowsUser = resUser.rows.map(formatRow);
   const rowsSol = resSol.rows.map(formatRow);
-  
+
   // Verify order if it specifies ORDER BY
   const isOrdered = /ORDER\s+BY/i.test(resSol.message || '') || /ORDER\s+BY/i.test(resUser.message || '');
   if (!isOrdered) {
     rowsUser.sort();
     rowsSol.sort();
   }
-  
+
   for (let i = 0; i < rowsSol.length; i++) {
     if (rowsUser[i] !== rowsSol[i]) return false;
   }
@@ -7148,34 +7203,34 @@ function compareSqlResults(resUser, resSol) {
 // Verify student code against solution criteria (Auto-graders)
 async function verifyCurrentCodingQuestion() {
   if (!activeCodingExam) return;
-  
+
   const idx = activeCodingExam.currentQIdx;
   const q = activeCodingExam.questions[idx];
   const statusBadge = document.getElementById("eq-verify-status-badge");
-  
+
   statusBadge.innerText = "正在验证 (判定中)...";
   statusBadge.className = "verify-status-badge";
   statusBadge.style.color = "var(--text-muted)";
   statusBadge.style.background = "rgba(255,255,255,0.05)";
-  
+
   if (currentSubject === "sql") {
     const editor = document.getElementById("sql-editor");
     const code = editor ? editor.value.trim() : '';
     activeCodingExam.userCodes[q.id] = code;
-    
+
     // Auto-expand output details
     const outputCard = document.getElementById("output-card");
     if (outputCard && outputCard.classList.contains("collapsed")) {
       toggleOutputDetails();
     }
-    
+
     const statusDiv = document.getElementById("playground-status");
     const outputBody = document.getElementById("output-body");
     const countBadge = document.getElementById("output-row-count");
-    
+
     // 1. Run User Code
     const resUser = sqlEngine.execute(code);
-    
+
     if (!resUser.success) {
       const syntaxErrorStatus = pickVisibleRuntimeText("sql", "syntaxErrorStatus", "Syntax Error");
       statusDiv.innerHTML = `<span class="status-error"><i class="fa-solid fa-circle-exclamation"></i> ${escapeHtml(syntaxErrorStatus)}</span>`;
@@ -7183,20 +7238,20 @@ async function verifyCurrentCodingQuestion() {
       countBadge.textContent = "0";
       const errorLabel = pickVisibleRuntimeText("sql", "errorStatus", "SQL Error");
       outputBody.innerHTML = `<div class="output-error-box"><i class="fa-solid fa-triangle-exclamation"></i> SQL ${escapeHtml(errorLabel)}:<br><br>${escapeHtml(resUser.error)}</div>`;
-      
+
       activeCodingExam.userStatuses[q.id] = 'failed';
       renderCodingQuestion();
       initSidebar();
       showToastKey("toast.sqlSyntaxError", "error");
       return;
     }
-    
+
     // 2. Render execution output
     let tableHtml = "";
     if (resUser.columns && resUser.columns.length > 0) {
       countBadge.innerText = String(resUser.rows.length);
       countBadge.style.display = "inline";
-      
+
       tableHtml += `<table class="result-table"><thead><tr>`;
       resUser.columns.forEach(col => {
         tableHtml += `<th>${col}</th>`;
@@ -7217,10 +7272,10 @@ async function verifyCurrentCodingQuestion() {
     outputBody.innerHTML = tableHtml;
     const successStatus = pickVisibleRuntimeText("sql", "successStatus", "Success");
     statusDiv.innerHTML = `<span class="status-success"><i class="fa-solid fa-circle-check"></i> ${escapeHtml(successStatus)}</span>`;
-    
+
     // 3. Run Reference Query
     const resSol = sqlEngine.execute(q.solutionQuery);
-    
+
     // 4. Compare Results
     const isCorrect = compareSqlResults(resUser, resSol);
     if (isCorrect) {
@@ -7232,23 +7287,23 @@ async function verifyCurrentCodingQuestion() {
       statusDiv.innerHTML = `<span class="status-error"><i class="fa-solid fa-circle-xmark"></i> 判定失敗 (结果不一致)</span>`;
       showToastKey("toast.sqlOutputMismatch", "error");
     }
-    
+
     renderCodingQuestion();
     initSidebar();
-    
+
   } else if (currentSubject === "java") {
     const editor = document.getElementById("java-editor");
     const code = editor ? editor.value.trim() : '';
     activeCodingExam.userCodes[q.id] = code;
-    
+
     const outputCard = document.getElementById("java-output-card");
     const outputContent = document.getElementById("java-output-content");
     const sandboxStatus = document.getElementById("java-sandbox-status");
-    
+
     if (outputCard && outputCard.classList.contains("collapsed")) {
       toggleJavaOutputDetails();
     }
-    
+
     if (sandboxStatus) {
       sandboxStatus.innerText = pickVisibleRuntimeText("java", "runningStatus", "実行中... / Running...");
       sandboxStatus.className = "java-sandbox-status java-status-running";
@@ -7256,7 +7311,7 @@ async function verifyCurrentCodingQuestion() {
     if (outputContent) {
       outputContent.textContent = "// " + pickVisibleRuntimeText("java", "gradingStatus", "判定を行っています / Grading...");
     }
-    
+
     try {
       const response = await fetch('/runjava', {
         method: 'POST',
@@ -7264,10 +7319,10 @@ async function verifyCurrentCodingQuestion() {
         body: JSON.stringify({ code, stdin: q.stdinExample || "" }),
         signal: AbortSignal.timeout(15000)
       });
-      
+
       if (!response.ok) throw new Error("HTTP connection error");
       const res = await response.json();
-      
+
       // Update output display
       let textToShow = "";
       if (res.compileError) {
@@ -7291,7 +7346,7 @@ async function verifyCurrentCodingQuestion() {
       } else {
         textToShow = res.output || '';
         outputContent.className = "java-output-content java-output-success";
-        
+
         // Match comparison
         const isMatch = cleanStringOutput(res.output) === cleanStringOutput(q.expectedOutput);
         if (isMatch) {
@@ -7311,11 +7366,11 @@ async function verifyCurrentCodingQuestion() {
           showToastKey("toast.outputMismatch", "error");
         }
       }
-      
+
       outputContent.textContent = textToShow;
       renderCodingQuestion();
       initSidebar();
-      
+
     } catch (e) {
       if (sandboxStatus) {
         sandboxStatus.innerText = pickVisibleRuntimeText("java", "errorStatus", "エラー / Error");
@@ -7328,20 +7383,20 @@ async function verifyCurrentCodingQuestion() {
       renderCodingQuestion();
       initSidebar();
     }
-    
+
   } else if (currentSubject === "python") {
     const editor = document.getElementById("python-editor");
     const code = editor ? editor.value.trim() : '';
     activeCodingExam.userCodes[q.id] = code;
-    
+
     const outputCard = document.getElementById("python-output-card");
     const outputContent = document.getElementById("python-output-content");
     const sandboxStatus = document.getElementById("python-sandbox-status");
-    
+
     if (outputCard && outputCard.classList.contains("collapsed")) {
       togglePythonOutputDetails();
     }
-    
+
     if (sandboxStatus) {
       sandboxStatus.innerText = pickVisibleRuntimeText("python", "runningStatus", "実行中... / Running...");
       sandboxStatus.className = "python-sandbox-status python-status-running";
@@ -7349,7 +7404,7 @@ async function verifyCurrentCodingQuestion() {
     if (outputContent) {
       outputContent.textContent = "# " + pickVisibleRuntimeText("python", "gradingStatus", "判定中... / Running checks...");
     }
-    
+
     try {
       const response = await fetch('/runpython', {
         method: 'POST',
@@ -7357,10 +7412,10 @@ async function verifyCurrentCodingQuestion() {
         body: JSON.stringify({ code, stdin: q.stdinExample || "" }),
         signal: AbortSignal.timeout(15000)
       });
-      
+
       if (!response.ok) throw new Error("HTTP connection error");
       const res = await response.json();
-      
+
       // Update output display
       let textToShow = "";
       if (res.compileError) {
@@ -7384,7 +7439,7 @@ async function verifyCurrentCodingQuestion() {
       } else {
         textToShow = res.output || '';
         outputContent.className = "python-output-content python-output-success";
-        
+
         // Match comparison
         const isMatch = cleanStringOutput(res.output) === cleanStringOutput(q.expectedOutput);
         if (isMatch) {
@@ -7404,11 +7459,11 @@ async function verifyCurrentCodingQuestion() {
           showToastKey("toast.outputMismatch", "error");
         }
       }
-      
+
       outputContent.textContent = textToShow;
       renderCodingQuestion();
       initSidebar();
-      
+
     } catch (e) {
       if (sandboxStatus) {
         sandboxStatus.innerText = pickVisibleRuntimeText("python", "errorStatus", "エラー / Error");
@@ -7429,7 +7484,7 @@ function exitCodingExam() {
   if (confirmKey("dialog.exitExamConfirm")) {
     if (cbtTimerInterval) clearInterval(cbtTimerInterval);
     activeCodingExam = null;
-    
+
     // Switch sub-mode back to lessons
     if (currentSubject === "sql") {
       switchSqlSubMode("lessons");
@@ -7444,7 +7499,7 @@ function exitCodingExam() {
 // Stop exam and submit all codes for final scoring
 function submitCodingExam(auto = false) {
   if (!activeCodingExam) return;
-  
+
   if (!auto) {
     const unanswered = activeCodingExam.questions.filter(q => activeCodingExam.userStatuses[q.id] === 'idle').length;
 
@@ -7454,7 +7509,7 @@ function submitCodingExam(auto = false) {
       if (!confirmKey("dialog.submitExamConfirm")) return;
     }
   }
-  
+
   // Save active code of current question
   const currQ = activeCodingExam.questions[activeCodingExam.currentQIdx];
   if (activeCodingExam.subject === 'sql') {
@@ -7464,7 +7519,7 @@ function submitCodingExam(auto = false) {
   } else if (activeCodingExam.subject === 'python') {
     activeCodingExam.userCodes[currQ.id] = document.getElementById("python-editor").value;
   }
-  
+
   if (cbtTimerInterval) clearInterval(cbtTimerInterval);
   activeCodingExam.isSubmitted = true;
   if (window.StudyAI) {
@@ -7487,29 +7542,29 @@ function submitCodingExam(auto = false) {
   } catch (_wrongBookErr) {
     console.warn('[WrongBook] Unexpected error during coding exam save:', _wrongBookErr);
   }
-  
+
   // Show results view
   document.getElementById("coding-exam-panel").style.display = "none";
   document.getElementById("coding-exam-results").style.display = "flex";
-  
+
   renderCodingExamResults();
   initSidebar();
-  
+
   showToastKey("toast.practicalExamSubmitted", "success");
 }
 
 // Render scorecard results
 function renderCodingExamResults() {
   if (!activeCodingExam) return;
-  
+
   const qList = activeCodingExam.questions;
   const totalCount = qList.length;
   const correctCount = qList.filter(q => activeCodingExam.userStatuses[q.id] === 'passed').length;
   const percentage = Math.round((correctCount / totalCount) * 100);
-  
+
   // Qualified standard (60% or higher is considered a Pass in Japanese IT schools)
   const isPassed = percentage >= 60;
-  
+
   // Update UI Elements
   const badge = document.getElementById("coding-pass-badge");
   if (badge) {
@@ -7518,27 +7573,27 @@ function renderCodingExamResults() {
     badge.style.color = "#fff";
     badge.style.background = isPassed ? "var(--success-color)" : "var(--error-color)";
   }
-  
+
   document.getElementById("coding-score-correct-count").innerText = correctCount;
   document.getElementById("coding-score-correct-count").nextElementSibling.innerText = ` / ${totalCount} 题通过`;
-  
+
   document.getElementById("coding-results-percentage-text").innerText = `${percentage}%`;
   document.getElementById("coding-results-progress-bar").style.width = `${percentage}%`;
-  
+
   // Format spent time
   const timeSpentSec = activeCodingExam.timeSpent;
   const m = Math.floor(timeSpentSec / 60);
   const s = timeSpentSec % 60;
   document.getElementById("coding-results-time-spent").innerText = `${m}分${s}秒`;
-  
+
   // Populate details table rows
   const tbody = document.getElementById("coding-results-table-body");
   tbody.innerHTML = "";
-  
+
   qList.forEach((q, idx) => {
     const tr = document.createElement("tr");
     tr.style.borderBottom = "1px solid rgba(255, 255, 255, 0.05)";
-    
+
     const status = activeCodingExam.userStatuses[q.id];
     let statusHtml = "";
     if (status === 'passed') {
@@ -7548,7 +7603,7 @@ function renderCodingExamResults() {
     } else {
       statusHtml = `<span style="color:var(--text-muted); font-style:italic;"><i class="fa-regular fa-circle"></i> Unattempted</span>`;
     }
-    
+
     tr.innerHTML = `
       <td style="padding: 12px 16px;"><strong>${idx + 1}</strong></td>
       <td style="padding: 12px 16px;"><strong>${q.titleJa}</strong></td>
@@ -7566,11 +7621,11 @@ function renderCodingExamResults() {
 function reviewCodingExamQuestion(idx) {
   if (!activeCodingExam) return;
   activeCodingExam.currentQIdx = idx;
-  
+
   // Hide results, show run panel (but read-only? Actually let them interact with the sandboxes to see results)
   document.getElementById("coding-exam-results").style.display = "none";
   document.getElementById("coding-exam-panel").style.display = "flex";
-  
+
   renderCodingQuestion();
   initSidebar();
 }
@@ -7579,7 +7634,7 @@ function reviewCodingExamQuestion(idx) {
 function closeCodingExamResults() {
   if (cbtTimerInterval) clearInterval(cbtTimerInterval);
   activeCodingExam = null;
-  
+
   // Return to textbook
   if (currentSubject === "sql") {
     switchSqlSubMode("lessons");
@@ -7596,7 +7651,7 @@ function toggleMinimizePdf() {
   const btnText = document.getElementById("pdf-minimize-text");
   const btnIcon = document.getElementById("pdf-minimize-icon");
   if (!panel) return;
-  
+
   const isMinimized = panel.classList.toggle("minimized");
   if (isMinimized) {
     if (btnText) btnText.innerText = "展开";
@@ -7923,3 +7978,89 @@ function initTheme() {
 
 // Expose StudySync debug entry (no-op if sync-engine.js not loaded)
 window.StudySync = window.StudySync || null;
+
+// ========== Immersive Fullscreen and Startup Overlay ==========
+(function initImmersiveFullscreen() {
+  function handleFullscreenChange() {
+    const isFS = !!document.fullscreenElement;
+    document.body.classList.toggle('immersive-fullscreen-active', isFS);
+
+    // Update main header button
+    const fsBtn = document.getElementById('fullscreen-toggle-btn');
+    if (fsBtn) {
+      const icon = fsBtn.querySelector('i');
+      if (icon) {
+        icon.className = isFS ? 'fa-solid fa-compress' : 'fa-solid fa-expand';
+      }
+      fsBtn.title = isFS ? '退出沉浸模式' : '进入沉浸模式';
+      fsBtn.setAttribute('aria-label', isFS ? '退出沉浸模式' : '进入沉浸模式');
+    }
+
+    // Update MOS header button if present
+    const mosFsBtn = document.getElementById('mos365-immersive-btn');
+    if (mosFsBtn) {
+      const icon = mosFsBtn.querySelector('i');
+      if (icon) {
+        icon.className = isFS ? 'fa-solid fa-compress' : 'fa-solid fa-expand';
+      }
+      mosFsBtn.title = isFS ? '退出沉浸模式' : '进入沉浸模式';
+    }
+  }
+
+  function toggleFullscreen() {
+    if (document.fullscreenElement) {
+      document.exitFullscreen().catch(err => console.error('Exit fullscreen failed:', err));
+    } else {
+      document.documentElement.requestFullscreen().catch(err => console.error('Request fullscreen failed:', err));
+    }
+  }
+
+  document.addEventListener('fullscreenchange', handleFullscreenChange);
+
+  // Bind early or on DOMContentLoaded
+  function setupEvents() {
+    const fsBtn = document.getElementById('fullscreen-toggle-btn');
+    if (fsBtn) {
+      fsBtn.addEventListener('click', toggleFullscreen);
+    }
+
+    // Startup Overlay logic
+    const overlay = document.getElementById('immersive-start-overlay');
+    const startBtn = document.getElementById('immersive-start-btn');
+    const skipBtn = document.getElementById('immersive-skip-btn');
+
+    if (overlay && startBtn && skipBtn) {
+      const started = sessionStorage.getItem('immersive_started');
+      if (started === 'true' || navigator.webdriver) {
+        overlay.setAttribute('hidden', '');
+      } else {
+        overlay.removeAttribute('hidden');
+      }
+
+      startBtn.addEventListener('click', function() {
+        document.documentElement.requestFullscreen().then(() => {
+          overlay.setAttribute('hidden', '');
+          sessionStorage.setItem('immersive_started', 'true');
+        }).catch(err => {
+          console.error('Fullscreen request failed:', err);
+          overlay.setAttribute('hidden', '');
+          sessionStorage.setItem('immersive_started', 'true');
+        });
+      });
+
+      skipBtn.addEventListener('click', function() {
+        overlay.setAttribute('hidden', '');
+        sessionStorage.setItem('immersive_started', 'true');
+      });
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', setupEvents);
+  } else {
+    setupEvents();
+  }
+
+  // Expose toggle globally for other scripts (like MOS)
+  window.toggleImmersiveFullscreen = toggleFullscreen;
+})();
