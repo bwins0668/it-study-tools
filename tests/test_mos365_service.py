@@ -139,7 +139,7 @@ class MOS365R17FormulaTextTests(unittest.TestCase):
         self.assertIn("xl/worksheets/sheet2.xml", names)
         self.assertNotIn("xl/sharedStrings.xml", names)
 
-    def test_r17_workbook_contains_expected_sheets_and_formula(self):
+    def test_r17_workbook_has_blank_c2_no_answer_leak(self):
         session = self.service.create_session({"mode": "r17_static_training"})
         paths = self.service._paths(session["sessionId"])
         import zipfile
@@ -156,16 +156,40 @@ class MOS365R17FormulaTextTests(unittest.TestCase):
             calc_idx = sheet_names.index("計算") + 1
             calc_xml = zf.read(f"xl/worksheets/sheet{calc_idx}.xml")
             calc_root = ET.fromstring(calc_xml)
+            a2_val = b2_val = c2_f = None
             for cell in calc_root.findall('.//m:c', ns):
-                if cell.attrib.get("r") == "C2":
-                    f_node = cell.find("m:f", ns)
-                    self.assertIsNotNone(f_node)
-                    self.assertEqual(f_node.text, "SUM(A2:B2)")
-                    return
-            self.fail("C2 not found in 計算 sheet")
+                ref = cell.attrib.get("r", "")
+                if ref == "A2":
+                    v = cell.find("m:v", ns)
+                    a2_val = v.text if v is not None else None
+                elif ref == "B2":
+                    v = cell.find("m:v", ns)
+                    b2_val = v.text if v is not None else None
+                elif ref == "C2":
+                    c2_f = cell.find("m:f", ns)
+            self.assertEqual(a2_val, "2")
+            self.assertEqual(b2_val, "3")
+            self.assertIsNone(c2_f, "C2 must not have <f> in initial template (answer leak)")
+
+    @staticmethod
+    def _inject_r17_formula(workbook_path, formula_xml):
+        """Replace C2 in the 計算 sheet with the given formula XML fragment."""
+        import zipfile
+        with zipfile.ZipFile(workbook_path, "r") as zf:
+            parts = {name: zf.read(name) for name in zf.namelist()}
+        calc_xml = parts["xl/worksheets/sheet2.xml"].decode("utf-8")
+        calc_xml = calc_xml.replace(
+            '<c r="C2" t="inlineStr"><is><t></t></is></c>',
+            f'<c r="C2">{formula_xml}</c>'
+        )
+        parts["xl/worksheets/sheet2.xml"] = calc_xml.encode("utf-8")
+        with zipfile.ZipFile(workbook_path, "w", compression=zipfile.ZIP_DEFLATED) as zf:
+            for name, value in parts.items():
+                zf.writestr(name, value)
 
     def test_r17_score_correct_formula(self):
         session = self._create_r17_session_with_scored_manifest()
+        self._inject_r17_formula(self.service._paths(session["sessionId"]).workbook, '<f>SUM(A2:B2)</f>')
         result = self.service.session_score({"sessionId": session["sessionId"], "excelPid": 0})
         self.assertTrue(result["ok"])
         self.assertEqual(result["assessment"]["result"], "correct")
@@ -175,17 +199,7 @@ class MOS365R17FormulaTextTests(unittest.TestCase):
 
     def test_r17_score_incorrect_formula(self):
         session = self._create_r17_session_with_scored_manifest()
-        paths = self.service._paths(session["sessionId"])
-        import zipfile
-        with zipfile.ZipFile(paths.workbook, "r") as zf:
-            parts = {name: zf.read(name) for name in zf.namelist()}
-        calc_xml = parts["xl/worksheets/sheet2.xml"].decode("utf-8")
-        parts["xl/worksheets/sheet2.xml"] = calc_xml.replace(
-            '<f>SUM(A2:B2)</f>', '<f>A2+B2</f>'
-        ).encode("utf-8")
-        with zipfile.ZipFile(paths.workbook, "w", compression=zipfile.ZIP_DEFLATED) as zf:
-            for name, value in parts.items():
-                zf.writestr(name, value)
+        self._inject_r17_formula(self.service._paths(session["sessionId"]).workbook, '<f>A2+B2</f>')
         result = self.service.session_score({"sessionId": session["sessionId"], "excelPid": 0})
         self.assertTrue(result["ok"])
         self.assertEqual(result["assessment"]["result"], "incorrect")
@@ -212,58 +226,55 @@ class MOS365R17FormulaTextTests(unittest.TestCase):
 
     def test_r17_score_text_formula_no_f_node(self):
         session = self._create_r17_session_with_scored_manifest()
-        paths = self.service._paths(session["sessionId"])
-        import zipfile
-        with zipfile.ZipFile(paths.workbook, "r") as zf:
-            parts = {name: zf.read(name) for name in zf.namelist()}
-        calc_xml = parts["xl/worksheets/sheet2.xml"].decode("utf-8")
-        import re
-        calc_xml = re.sub(r'<c r="C2">.*?</c>',
-            '<c r="C2" t="inlineStr"><is><t>=SUM(A2:B2)</t></is></c>', calc_xml, flags=re.DOTALL)
-        parts["xl/worksheets/sheet2.xml"] = calc_xml.encode("utf-8")
-        with zipfile.ZipFile(paths.workbook, "w", compression=zipfile.ZIP_DEFLATED) as zf:
-            for name, value in parts.items():
-                zf.writestr(name, value)
+        self._inject_r17_formula_text(self.service._paths(session["sessionId"]).workbook, "=SUM(A2:B2)")
         result = self.service.session_score({"sessionId": session["sessionId"], "excelPid": 0})
         self.assertTrue(result["ok"])
         self.assertEqual(result["assessment"]["result"], "incorrect")
         self.assertEqual(result["assessment"]["earned"], 0)
 
-    def test_r17_score_cache_value_isolation(self):
-        session = self._create_r17_session_with_scored_manifest()
-        paths = self.service._paths(session["sessionId"])
+    @staticmethod
+    def _inject_r17_formula_text(workbook_path, text):
+        """Replace C2 with an inline string containing the given text (no <f>)."""
         import zipfile
-        with zipfile.ZipFile(paths.workbook, "r") as zf:
+        with zipfile.ZipFile(workbook_path, "r") as zf:
             parts = {name: zf.read(name) for name in zf.namelist()}
         calc_xml = parts["xl/worksheets/sheet2.xml"].decode("utf-8")
         calc_xml = calc_xml.replace(
-            '<c r="C2"><f>SUM(A2:B2)</f></c>',
-            '<c r="C2"><f>SUM(A2:B2)</f><v>99999</v></c>'
+            '<c r="C2" t="inlineStr"><is><t></t></is></c>',
+            f'<c r="C2" t="inlineStr"><is><t>{text}</t></is></c>'
         )
         parts["xl/worksheets/sheet2.xml"] = calc_xml.encode("utf-8")
-        with zipfile.ZipFile(paths.workbook, "w", compression=zipfile.ZIP_DEFLATED) as zf:
+        with zipfile.ZipFile(workbook_path, "w", compression=zipfile.ZIP_DEFLATED) as zf:
             for name, value in parts.items():
                 zf.writestr(name, value)
+
+    def test_r17_score_cache_value_isolation(self):
+        session = self._create_r17_session_with_scored_manifest()
+        self._inject_r17_formula_with_cache(self.service._paths(session["sessionId"]).workbook)
         result = self.service.session_score({"sessionId": session["sessionId"], "excelPid": 0})
         self.assertTrue(result["ok"])
         self.assertEqual(result["assessment"]["result"], "correct")
         self.assertEqual(result["assessment"]["earned"], 1)
 
-    def test_r17_score_shared_formula_indeterminate(self):
-        session = self._create_r17_session_with_scored_manifest()
-        paths = self.service._paths(session["sessionId"])
+    @staticmethod
+    def _inject_r17_formula_with_cache(workbook_path):
+        """Replace C2 with correct formula + wrong cache value."""
         import zipfile
-        with zipfile.ZipFile(paths.workbook, "r") as zf:
+        with zipfile.ZipFile(workbook_path, "r") as zf:
             parts = {name: zf.read(name) for name in zf.namelist()}
         calc_xml = parts["xl/worksheets/sheet2.xml"].decode("utf-8")
         calc_xml = calc_xml.replace(
-            '<c r="C2"><f>SUM(A2:B2)</f></c>',
-            '<c r="C2"><f t="shared" si="0">SUM(A2:B2)</f></c>'
+            '<c r="C2" t="inlineStr"><is><t></t></is></c>',
+            '<c r="C2"><f>SUM(A2:B2)</f><v>99999</v></c>'
         )
         parts["xl/worksheets/sheet2.xml"] = calc_xml.encode("utf-8")
-        with zipfile.ZipFile(paths.workbook, "w", compression=zipfile.ZIP_DEFLATED) as zf:
+        with zipfile.ZipFile(workbook_path, "w", compression=zipfile.ZIP_DEFLATED) as zf:
             for name, value in parts.items():
                 zf.writestr(name, value)
+
+    def test_r17_score_shared_formula_indeterminate(self):
+        session = self._create_r17_session_with_scored_manifest()
+        self._inject_r17_formula(self.service._paths(session["sessionId"]).workbook, '<f t="shared" si="0">SUM(A2:B2)</f>')
         result = self.service.session_score({"sessionId": session["sessionId"], "excelPid": 0})
         self.assertTrue(result["ok"])
         self.assertEqual(result["assessment"]["result"], "incorrect")
@@ -271,19 +282,7 @@ class MOS365R17FormulaTextTests(unittest.TestCase):
 
     def test_r17_score_empty_f_indeterminate(self):
         session = self._create_r17_session_with_scored_manifest()
-        paths = self.service._paths(session["sessionId"])
-        import zipfile
-        with zipfile.ZipFile(paths.workbook, "r") as zf:
-            parts = {name: zf.read(name) for name in zf.namelist()}
-        calc_xml = parts["xl/worksheets/sheet2.xml"].decode("utf-8")
-        calc_xml = calc_xml.replace(
-            '<c r="C2"><f>SUM(A2:B2)</f></c>',
-            '<c r="C2"><f></f></c>'
-        )
-        parts["xl/worksheets/sheet2.xml"] = calc_xml.encode("utf-8")
-        with zipfile.ZipFile(paths.workbook, "w", compression=zipfile.ZIP_DEFLATED) as zf:
-            for name, value in parts.items():
-                zf.writestr(name, value)
+        self._inject_r17_formula(self.service._paths(session["sessionId"]).workbook, '<f></f>')
         result = self.service.session_score({"sessionId": session["sessionId"], "excelPid": 0})
         self.assertTrue(result["ok"])
         self.assertEqual(result["assessment"]["result"], "incorrect")
@@ -404,6 +403,31 @@ class MOS365R17FormulaTextTests(unittest.TestCase):
         self.assertTrue(result["ok"])
         self.assertEqual(result["assessment"]["result"], "incorrect")
         self.assertEqual(result["assessment"]["earned"], 0)
+
+    def test_r16_template_b2_blank_no_answer_leak(self):
+        """R16 initial workbook must not pre-fill 完了 in B2."""
+        session = self.service.create_session({"mode": "r16_static_training"})
+        paths = self.service._paths(session["sessionId"])
+        import zipfile
+        from xml.etree import ElementTree as ET
+        NS_MAIN = "http://schemas.openxmlformats.org/spreadsheetml/2006/main"
+        NS_REL = "http://schemas.openxmlformats.org/officeDocument/2006/relationships"
+        NS_PKG = "http://schemas.openxmlformats.org/package/2006/relationships"
+        ns = {"m": NS_MAIN, "r": NS_REL, "pr": NS_PKG}
+        with zipfile.ZipFile(paths.workbook, "r") as zf:
+            parts = {name: zf.read(name) for name in zf.namelist()}
+        sx = parts["xl/worksheets/sheet1.xml"].decode("utf-8")
+        self.assertNotIn("完了", sx, "R16 initial workbook must not contain 完了")
+        root = ET.fromstring(parts["xl/worksheets/sheet1.xml"])
+        for cell in root.findall('.//m:c', ns):
+            if cell.attrib.get("r") == "B2":
+                inline = cell.find("m:is", ns)
+                if inline is not None:
+                    text = "".join(inline.itertext())
+                    self.assertEqual(text, "", "R16 B2 must be empty, not prefilled with answer")
+                self.assertIsNone(cell.find("m:f", ns), "R16 B2 must not have formula")
+                return
+        self.fail("B2 not found in 入力 sheet")
 
     def test_r17_regression_r16_formula_cell_indeterminate(self):
         """R16 regression: formula cell in B2 scores indeterminate."""

@@ -1288,10 +1288,10 @@ class MOS365Service:
                 "staticTask": task_data, "tasks": [], "environment": self.environment_status()}
 
     def _write_r17_workbook(self, destination: Path) -> None:
-        """Write a minimal workbook with 入力 + 計算 sheets and formula C2 for R17."""
+        """Write a minimal workbook with 入力 + 計算 sheets, C2 blank for R17."""
         sheets = ["入力", "計算"]
         input_rows = [["項目", "値"], ["", ""]]
-        calc_rows = [["", "", ""], [2, 3, "=SUM(A2:B2)"]]
+        calc_rows = [["", "", ""], [2, 3, ""]]
         input_sx = self._sheet_xml(input_rows)
         calc_sx = self._sheet_xml_calc()
         ws1 = f'<sheet name="{self._xml_escape(sheets[0])}" sheetId="1" r:id="rId1"/>'
@@ -1312,7 +1312,7 @@ class MOS365Service:
 
     @staticmethod
     def _sheet_xml_calc() -> str:
-        """Write 計算 sheet: A2=2, B2=3, C2=<f>SUM(A2:B2)</f>."""
+        """Write 計算 sheet: A2=2, B2=3, C2 blank (answer must be user-entered)."""
         return (
             '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'
             '<worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main">'
@@ -1322,7 +1322,7 @@ class MOS365Service:
             '<c r="C1" t="inlineStr"><is><t></t></is></c></row>'
             '<row r="2"><c r="A2"><v>2</v></c>'
             '<c r="B2"><v>3</v></c>'
-            '<c r="C2"><f>SUM(A2:B2)</f></c></row>'
+            '<c r="C2" t="inlineStr"><is><t></t></is></c></row>'
             '</sheetData></worksheet>'
         )
 
