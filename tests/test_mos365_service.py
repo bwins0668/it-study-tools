@@ -1149,5 +1149,58 @@ class R33BottomConsoleGateTests(unittest.TestCase):
         self.assertIsNotNone(session_r17.get("sessionId"))
 
 
+class R34BottomConsoleFixGateTests(unittest.TestCase):
+    """R34 门禁测试：底部训练台空白修复与控制按钮合约。"""
+
+    def setUp(self):
+        self.project_root = Path(__file__).resolve().parents[1]
+        self.vsto_dir = self.project_root / "native" / "StudyTools.Mos365ExamHost.VstoBottomPanePoc"
+        self.pane_control_path = self.vsto_dir / "ExamHostPaneControl.cs"
+        self.this_addin_path = self.vsto_dir / "ThisAddIn.cs"
+
+    def test_r34_buttons_exist_in_source(self):
+        """All 6 core buttons must exist in ExamHostPaneControl.cs."""
+        src = self.pane_control_path.read_text(encoding="utf-8")
+        self.assertIn("Button _startBtn;", src)
+        self.assertIn("Button _pauseBtn;", src)
+        self.assertIn("Button _resumeBtn;", src)
+        self.assertIn("Button _gradeBtn;", src)
+        self.assertIn("Button _exitBtn;", src)
+        self.assertIn("Button _retryBtn;", src)
+
+    def test_r34_light_background_color(self):
+        """Content area must use light warm/cool gray/beige color."""
+        src = self.pane_control_path.read_text(encoding="utf-8")
+        self.assertIn("BgContent", src)
+        self.assertIn("Color.FromArgb", src)
+        # Transparent backgrounds for task labels inside the light area
+        self.assertIn("Color.Transparent", src)
+
+    def test_r34_nested_controls_no_sibling_overlap(self):
+        """Child controls must be nested inside their respective parent Panels."""
+        src = self.pane_control_path.read_text(encoding="utf-8")
+        self.assertIn("statusBarBg.Controls.Add(_statusBarTitle)", src)
+        self.assertIn("progressBg.Controls.Add(_progressBar)", src)
+        self.assertIn("taskBg.Controls.Add(_taskTitleJa)", src)
+        self.assertIn("actionBg.Controls.Add(_startBtn)", src)
+
+    def test_r34_timer_cumulative_logic(self):
+        """Timer must support cumulative pause/resume logic."""
+        src = self.pane_control_path.read_text(encoding="utf-8")
+        self.assertIn("_accumulatedTime", src)
+        self.assertIn("PauseTimer()", src)
+        self.assertIn("ResumeTimer()", src)
+        self.assertIn("_statusBarTimer.Text", src)
+
+    def test_r34_state_machine_apply_ui_state(self):
+        """ApplyUIState must manage buttons and state transitions."""
+        src = self.pane_control_path.read_text(encoding="utf-8")
+        self.assertIn("ApplyUIState(string state)", src)
+        self.assertIn("ready_to_start", src)
+        self.assertIn("running", src)
+        self.assertIn("paused", src)
+        self.assertIn("ended", src)
+
+
 if __name__ == "__main__":
     unittest.main()

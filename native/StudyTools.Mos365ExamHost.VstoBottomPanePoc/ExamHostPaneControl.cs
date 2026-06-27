@@ -5,39 +5,39 @@ using System.Windows.Forms;
 namespace StudyTools.Mos365ExamHost
 {
     /// <summary>
-    /// MOS 底部极简训练控制台 — R33 灰黑四层布局。
+    /// MOS 底部极简训练控制台 — R34 灰黑与浅色高级内容区四层布局。
     ///
-    /// 四层结构：
-    ///   A. 顶部状态栏（训练名 + 状态 + 计时）
-    ///   B. 进度导航栏（プロジェクト / タスク）
-    ///   C. 主任务题干区（日文主层 + 中文辅助 + 作業場所）
-    ///   D. 操作栏（採点する / 終了する）
-    ///
-    /// 状态合约：
-    ///   task_metadata_ready → 立即渲染题干，不等 attach
-    ///   connecting         → 只更新状态标，不覆盖题干
-    ///   ready              → 只更新状态标，不清空题干
-    ///   failed             → 保留题干，只更新状态标
-    ///   ended              → 保留最后题干，操作变不可用
-    ///
-    /// Generation 防护：ShowTask(gen) 检查 gen == _renderGeneration。
-    /// ShowTaskFromMetadata 不需要 gen，因为来自 workbook 本地读取。
+    /// 四层结构（嵌套于 Panel 中，绝无 sibling 遮挡）：
+    ///   A. 顶部状态栏（BgMain: #15171A, 计时器, 状态）
+    ///   B. 进度导航栏（BgLayer: #202328, 项目与任务进度）
+    ///   C. 主任务题干区（暖灰白: #F3F1ED, 题干高对比，主文字 #1C2228, 辅助文字 #59616A）
+    ///   D. 操作栏（BgMain: #15171A, 開始/一時停止/再開/採点する/終了する/再試行 + 提示与结果）
     /// </summary>
     public class ExamHostPaneControl : UserControl
     {
-        // ── 配色令牌（灰黒极简）
+        // ── 配色令牌（灰黒与浅色层级）
         private static readonly Color BgMain    = Color.FromArgb(0x15, 0x17, 0x1A); // #15171A
         private static readonly Color BgLayer   = Color.FromArgb(0x20, 0x23, 0x28); // #202328
-        private static readonly Color BgSection = Color.FromArgb(0x28, 0x2C, 0x32); // #282C32
+        private static readonly Color BgContent = Color.FromArgb(0xF3, 0xF1, 0xED); // #F3F1ED (暖灰白内容区)
         private static readonly Color Divider   = Color.FromArgb(0x34, 0x38, 0x3E); // #34383E
-        private static readonly Color TextMain  = Color.FromArgb(0xF3, 0xF4, 0xF6); // #F3F4F6
-        private static readonly Color TextSub   = Color.FromArgb(0xA9, 0xAF, 0xB8); // #A9AFB8
-        private static readonly Color TextWeak  = Color.FromArgb(0x72, 0x79, 0x84); // #727984
-        private static readonly Color BtnMain   = Color.FromArgb(0x3B, 0x3F, 0x46); // #3B3F46
-        private static readonly Color BtnExit   = Color.FromArgb(0x46, 0x3B, 0x3B); // #463B3B
-        private static readonly Color BtnDisabledBg  = Color.FromArgb(0x28, 0x2C, 0x32);
-        private static readonly Color ColCorrect = Color.FromArgb(0x6E, 0xE7, 0xB7); // soft green
-        private static readonly Color ColIncorrect = Color.FromArgb(0xFC, 0xA5, 0xA5); // soft red
+
+        // ── 文本颜色
+        private static readonly Color TextMainDark = Color.FromArgb(0x1C, 0x22, 0x28); // #1C2228 (浅色区主字)
+        private static readonly Color TextSubDark  = Color.FromArgb(0x59, 0x61, 0x6A); // #59616A (浅色区副字)
+        private static readonly Color TextMainLight = Color.FromArgb(0xF3, 0xF4, 0xF6); // #F3F4F6 (深色区主字)
+        private static readonly Color TextSubLight  = Color.FromArgb(0xA9, 0xAF, 0xB8); // #A9AFB8 (深色区副字)
+        private static readonly Color TextWeak      = Color.FromArgb(0x72, 0x79, 0x84); // #727984
+
+        // ── 按钮配色
+        private static readonly Color BtnMainBg   = Color.FromArgb(0xE2, 0xE8, 0xF0); // #E2E8F0 (主要操作背景)
+        private static readonly Color BtnMainFg   = Color.FromArgb(0x1E, 0x29, 0x3B); // #1E293B
+        private static readonly Color BtnPauseBg  = Color.FromArgb(0x47, 0x55, 0x69); // #475569
+        private static readonly Color BtnGradeBg  = Color.FromArgb(0x1E, 0x29, 0x3B); // #1E293B (评分深色)
+        private static readonly Color BtnExitBg   = Color.FromArgb(0x33, 0x41, 0x55); // #334155
+
+
+        private static readonly Color ColCorrect   = Color.FromArgb(0x10, 0x5B, 0x3E); // 暗绿色（适合浅色背景）
+        private static readonly Color ColIncorrect = Color.FromArgb(0x99, 0x1B, 0x1B); // 暗红色（适合浅色背景）
 
         // ── A. 顶部状态栏
         private Label _statusBarTitle;   // "MOS Excel 365 実技トレーニング"
@@ -55,31 +55,38 @@ namespace StudyTools.Mos365ExamHost
         private Label _taskLocation;     // 作業場所：シート名!セル
 
         // ── D. 操作栏
+        private Button _startBtn;        // 開始
+        private Button _pauseBtn;        // 一時停止
+        private Button _resumeBtn;       // 再開
         private Button _gradeBtn;        // 採点する
         private Button _retryBtn;        // 再試行
         private Button _exitBtn;         // 終了する
-        private Label  _resultLabel;     // 评分结果
+        private Label  _resultLabel;     // 评分结果及提示
 
-        // ── 分割线（WinForms Panel 模拟）
+        // ── 分割线
         private Panel _dividerAB;
         private Panel _dividerBC;
         private Panel _dividerCD;
 
-        public Action OnGradeClicked { get; set; }
-        public Action OnRetryClicked { get; set; }
-        public Action OnExitClicked  { get; set; }
+        public Action OnStartClicked  { get; set; }
+        public Action OnPauseClicked  { get; set; }
+        public Action OnResumeClicked { get; set; }
+        public Action OnGradeClicked  { get; set; }
+        public Action OnRetryClicked  { get; set; }
+        public Action OnExitClicked   { get; set; }
 
-        // R31 generation 防护
         private long _renderGeneration;
         public long RenderGeneration { get { return _renderGeneration; } }
 
-        // 计时器
+        // 计时器 (支持暂停与累计)
         private System.Windows.Forms.Timer _timer;
+        private TimeSpan _accumulatedTime = TimeSpan.Zero;
         private DateTime _timerStart;
         private bool _timerRunning;
 
-        // 当前是否已显示任务题干（workbook 元数据或服务端 attach 均可触发）
         private bool _taskVisible;
+        private string _currentUIState = "idle";
+        private bool _sessionBound = false;
 
         public ExamHostPaneControl()
         {
@@ -89,16 +96,14 @@ namespace StudyTools.Mos365ExamHost
             ShowIdle();
         }
 
-        // ── 公开接口
-
         public void UpdateSession(Guid sessionId, int processId)
         {
-            // 不清空题干，只确保状态为初始
+            // 不清除题干，保持状态
         }
 
         public void UpdateWorkbook(string name)
         {
-            // 不做任何事：workbook 切换由 StartBindWorkbook 驱动
+            // 由 StartBindWorkbook 驱动
         }
 
         public long NewRenderGeneration()
@@ -107,9 +112,7 @@ namespace StudyTools.Mos365ExamHost
         }
 
         /// <summary>
-        /// R33 核心：从 workbook 安全元数据立即渲染题干。
-        /// 不需要 generation guard（本地读取，不是服务端异步）。
-        /// 此方法设置 _taskVisible = true，后续状态更新不覆盖题干。
+        /// 从 workbook 安全元数据立即渲染题干。
         /// </summary>
         public void ShowTaskFromMetadata(
             string titleJa, string titleZh,
@@ -129,29 +132,19 @@ namespace StudyTools.Mos365ExamHost
             _taskInstrZh.Visible  = true;
             _taskLocation.Visible = !(string.IsNullOrEmpty(sheetLabel) && string.IsNullOrEmpty(targetLabel));
 
-            _resultLabel.Text      = "Excel で操作してください。\n完成 Excel 操作后，点击採点する。";
-            _resultLabel.ForeColor = TextWeak;
-            _resultLabel.Visible   = true;
+            _accumulatedTime = TimeSpan.Zero;
+            _statusBarTimer.Text = "00:00";
 
-            // 评分按钮：等到服务端 ready 才启用（grade 需要 _boundSessionId）
-            _gradeBtn.Enabled  = false;
-            _gradeBtn.Visible  = true;
-            _retryBtn.Visible  = false;
-            _exitBtn.Visible   = true;
-            _exitBtn.Enabled   = true;
-
-            SetStatusState("task_metadata_ready");
-            StartTimer();
+            ApplyUIState("ready_to_start");
         }
 
         /// <summary>
-        /// 从服务端 attach 结果渲染题干（有 generation guard）。
+        /// 从服务端 attach 结果渲染或更新题干。
         /// </summary>
         public bool ShowTask(string instrJa, string instrZh, long gen)
         {
             if (gen != _renderGeneration) return false;
 
-            // 如果 workbook 元数据已经渲染了题干，只更新说明文字（服务端版本可能更详细）
             if (!_taskVisible)
             {
                 _taskInstrJa.Text = instrJa ?? "";
@@ -162,36 +155,33 @@ namespace StudyTools.Mos365ExamHost
             }
             else
             {
-                // 已有 metadata 版本：只更新指令（服务端数据更权威）
                 if (!string.IsNullOrEmpty(instrJa)) _taskInstrJa.Text = instrJa;
                 if (!string.IsNullOrEmpty(instrZh)) _taskInstrZh.Text = instrZh;
             }
 
-            _resultLabel.Text      = "Excel で操作してから採点します。\n完成 Excel 操作后可评分。";
-            _resultLabel.ForeColor = TextWeak;
-            _resultLabel.Visible   = true;
+            _sessionBound = true;
+            if (_currentUIState == "running")
+            {
+                _gradeBtn.Enabled = true;
+                _resultLabel.Text = "Excel で操作してから「採点する」を押してください。\n完成 Excel 操作后，点击「评分」。";
+                _resultLabel.ForeColor = TextMainLight;
+            }
 
-            // attach 成功 → 启用评分按钮
-            _gradeBtn.Enabled = true;
-            _gradeBtn.Visible = true;
-            _retryBtn.Visible = false;
-            _exitBtn.Visible  = true;
-            _exitBtn.Enabled  = true;
-
-            SetStatusState("ready");
             return true;
         }
 
-        /// <summary>backward compat</summary>
         public void ShowTask(string instrJa, string instrZh)
         {
             ShowTask(instrJa, instrZh, _renderGeneration);
         }
 
-        /// <summary>服务端 attach 成功 → 只启用评分按钮，不清空题干。</summary>
         public void EnableGrading()
         {
-            _gradeBtn.Enabled = true;
+            _sessionBound = true;
+            if (_currentUIState == "running")
+            {
+                _gradeBtn.Enabled = true;
+            }
         }
 
         public void UpdateSessionState(string state, string sessionId = null, int? excelPid = null)
@@ -201,9 +191,8 @@ namespace StudyTools.Mos365ExamHost
             switch (state.ToLowerInvariant())
             {
                 case "connecting":
-                    // R33 关键：connecting 不覆盖题干，只更新状态标
-                    SetStatusState("connecting");
-                    // 如果没有 metadata，显示连接中提示（不替换题干区）
+                case "attach_verified":
+                    _statusBarState.Text = "接続中 / 正在连接…";
                     if (!_taskVisible)
                     {
                         _resultLabel.Text      = "トレーニングサービスに接続しています…\n正在连接训练服务…";
@@ -213,72 +202,47 @@ namespace StudyTools.Mos365ExamHost
                     break;
 
                 case "retrying":
-                    SetStatusState("retrying");
+                    _statusBarState.Text = "再接続中 / 正在重新连接…";
                     break;
 
                 case "attached":
                 case "connected":
-                    // 不在这里清空题干，由 ShowTask() 处理
-                    SetStatusState("ready");
-                    _gradeBtn.Enabled = true;
-                    break;
-
-                case "attach_verified":
-                    SetStatusState("connecting");
-                    if (!_taskVisible)
+                    _sessionBound = true;
+                    if (_currentUIState == "running")
                     {
-                        _resultLabel.Text      = "トレーニング問題を読み込んでいます…\n正在加载训练题目…";
-                        _resultLabel.ForeColor = TextWeak;
-                        _resultLabel.Visible   = true;
+                        _gradeBtn.Enabled = true;
                     }
                     break;
 
-                case "task_metadata_ready":
-                    SetStatusState("task_metadata_ready");
-                    break;
-
                 case "failed":
-                    // R33 关键：failed 保留题干，只更新状态栏
-                    SetStatusState("failed");
+                    _statusBarState.Text = "接続失敗 / 连接失败";
                     if (!_taskVisible)
                     {
                         ShowConnectionFailed(null);
                     }
                     else
                     {
-                        // 有题干：显示重试选项但不清空题干
                         _resultLabel.Text      = "接続に失敗しました。再試行または終了してください。\n连接失败，请重试或退出。";
                         _resultLabel.ForeColor = ColIncorrect;
                         _resultLabel.Visible   = true;
                         _retryBtn.Visible      = true;
-                        _gradeBtn.Visible      = false;
                     }
                     break;
 
                 case "ending":
-                    ShowEnding();
+                    ApplyUIState("ending");
                     break;
 
                 case "ended":
-                    ShowEnded();
-                    break;
-
-                default:
-                    if (state.IndexOf("HTTP", StringComparison.OrdinalIgnoreCase) >= 0 ||
-                        state.IndexOf("FAILED", StringComparison.OrdinalIgnoreCase) >= 0 ||
-                        state.IndexOf("REJECTED", StringComparison.OrdinalIgnoreCase) >= 0)
-                    {
-                        if (!_taskVisible) ShowConnectionFailed(null);
-                        else SetStatusState("failed");
-                    }
+                    ApplyUIState("ended");
                     break;
             }
         }
 
         public void ShowTaskLoadFailed()
         {
-            if (_taskVisible) return; // 已有 metadata 题干，不覆盖
-            SetStatusState("failed");
+            if (_taskVisible) return;
+            _statusBarState.Text = "接続失敗 / 连接失败";
             _resultLabel.Text      = "訓練問題を取得できませんでした。再接続してください。\n无法获取训练题目，请重新连接。";
             _resultLabel.ForeColor = ColIncorrect;
             _resultLabel.Visible   = true;
@@ -290,48 +254,37 @@ namespace StudyTools.Mos365ExamHost
         public void ShowCompletionAccepted()
         {
             _resultLabel.Text      = "完了を記録しました。\n已记录完成状态。";
-            _resultLabel.ForeColor = TextSub;
+            _resultLabel.ForeColor = TextSubLight;
             _resultLabel.Visible   = true;
         }
 
         public void ShowScoreSaving()
         {
-            _gradeBtn.Enabled = false;
-            _gradeBtn.Text    = "採点中…";
-            _exitBtn.Enabled  = false;
-            _resultLabel.Text      = "採点しています / 正在评分…";
-            _resultLabel.ForeColor = TextWeak;
-            _resultLabel.Visible   = true;
+            ApplyUIState("scoring");
         }
 
         public void ShowScoreResult(string resultJa, string resultZh, int earned, int total)
         {
             var correct = total > 0 && earned == total;
-            _gradeBtn.Enabled  = true;
-            _gradeBtn.Text     = "採点する";
-            _exitBtn.Enabled   = true;
-            _retryBtn.Visible  = false;
+            ApplyUIState(correct ? "scored_correct" : "scored_incorrect");
             _resultLabel.Visible   = true;
             _resultLabel.ForeColor = correct ? ColCorrect : ColIncorrect;
             _resultLabel.Text  =
                 (correct ? "✓ " : "× ") +
-                earned + " / " + total + (correct ? " correct" : " incorrect") + "\n" +
-                (correct ? "正解 / 正确" : "再確認 / 请重新检查") + "\n" +
-                (resultJa ?? "") +
-                (correct ? "" : "\n目標セルと数式を確認してください。\n请检查目标单元格或公式。");
+                earned + " / " + total + (correct ? " correct" : " incorrect") + "   " +
+                (correct ? "正解 / 回答正确" : "再確認 / 请重新检查") + "\n" +
+                (correct ? "" : "目标单元格或公式有误，请重新检查。");
         }
 
         public void ShowConnectionFailed(string message)
         {
-            SetStatusState("failed");
+            _statusBarState.Text = "接続失敗 / 连接失败";
             if (_taskVisible)
             {
-                // 有题干 → 只显示操作提示，不清空题干
                 _resultLabel.Text      = "接続できませんでした。再試行または終了してください。\n请重新连接或退出训练。";
                 _resultLabel.ForeColor = ColIncorrect;
                 _resultLabel.Visible   = true;
                 _retryBtn.Visible      = true;
-                _gradeBtn.Visible      = false;
             }
             else
             {
@@ -353,67 +306,129 @@ namespace StudyTools.Mos365ExamHost
 
         public void ShowEnding()
         {
-            SetStatusState("ending");
-            StopTimer();
-            _gradeBtn.Enabled = false;
-            _retryBtn.Enabled = false;
-            _exitBtn.Enabled  = false;
-            _resultLabel.Text      = "このトレーニングを終了しています。\n正在结束本次训练。";
-            _resultLabel.ForeColor = TextWeak;
-            _resultLabel.Visible   = true;
+            ApplyUIState("ending");
         }
 
         public void ShowEnded()
         {
-            SetStatusState("ended");
-            StopTimer();
-            _gradeBtn.Visible = false;
-            _retryBtn.Visible = false;
-            _exitBtn.Enabled  = false;
-            _exitBtn.Visible  = true;
-            _resultLabel.Text      = "今回のセッションは終了しました。\n本次训练已结束。";
-            _resultLabel.ForeColor = TextSub;
-            _resultLabel.Visible   = true;
+            ApplyUIState("ended");
         }
 
-        // ── 私有：状态栏文字
-
-        private void SetStatusState(string state)
+        // ── 状态机管理
+        public void ApplyUIState(string state)
         {
+            _currentUIState = state;
             switch (state)
             {
-                case "task_metadata_ready":
-                    _statusBarState.Text = "準備完了 / 已准备（接続中…）";
+                case "idle":
+                    _statusBarState.Text = "起動中 / 正在启动…";
+                    _startBtn.Visible   = true;  _startBtn.Enabled   = false;
+                    _pauseBtn.Visible   = false; _pauseBtn.Enabled   = false;
+                    _resumeBtn.Visible  = false; _resumeBtn.Enabled  = false;
+                    _gradeBtn.Visible   = true;  _gradeBtn.Enabled   = false;
+                    _exitBtn.Visible    = true;  _exitBtn.Enabled    = true;
+                    _retryBtn.Visible   = false;
+                    _resultLabel.Text   = "トレーニングを準備しています…\n正在准备训练环境…";
+                    _resultLabel.ForeColor = TextWeak;
+                    _resultLabel.Visible = true;
                     break;
-                case "connecting":
-                    _statusBarState.Text = "接続中 / 正在连接…";
+
+                case "ready_to_start":
+                    _statusBarState.Text = "準備完了 / 已准备";
+                    _startBtn.Visible   = true;  _startBtn.Enabled   = true;
+                    _pauseBtn.Visible   = false; _pauseBtn.Enabled   = false;
+                    _resumeBtn.Visible  = false; _resumeBtn.Enabled  = false;
+                    _gradeBtn.Visible   = true;  _gradeBtn.Enabled   = false;
+                    _exitBtn.Visible    = true;  _exitBtn.Enabled    = true;
+                    _retryBtn.Visible   = false;
+                    _resultLabel.Text   = "「開始」をクリックして、トレーニングを開始してください。\n请点击「开始」以开始训练。";
+                    _resultLabel.ForeColor = TextSubLight;
+                    _resultLabel.Visible = true;
                     break;
-                case "ready":
-                    _statusBarState.Text = "トレーニング中 / 训练中";
+
+                case "running":
+                    _statusBarState.Text = "進行中 / 进行中";
+                    _startBtn.Visible   = false; _startBtn.Enabled   = false;
+                    _pauseBtn.Visible   = true;  _pauseBtn.Enabled   = true;
+                    _resumeBtn.Visible  = false; _resumeBtn.Enabled  = false;
+                    _gradeBtn.Visible   = true;  _gradeBtn.Enabled   = _sessionBound;
+                    _exitBtn.Visible    = true;  _exitBtn.Enabled    = true;
+                    _retryBtn.Visible   = false;
+                    _resultLabel.Text   = "Excel で操作してから「採点する」を押してください。\n完成 Excel 操作后，点击「评分」。";
+                    _resultLabel.ForeColor = TextMainLight;
+                    _resultLabel.Visible = true;
                     break;
-                case "retrying":
-                    _statusBarState.Text = "再接続中 / 正在重新连接…";
+
+                case "paused":
+                    _statusBarState.Text = "一時停止 / 已暂停";
+                    _startBtn.Visible   = false; _startBtn.Enabled   = false;
+                    _pauseBtn.Visible   = false; _pauseBtn.Enabled   = false;
+                    _resumeBtn.Visible  = true;  _resumeBtn.Enabled  = true;
+                    _gradeBtn.Visible   = true;  _gradeBtn.Enabled   = false;
+                    _exitBtn.Visible    = true;  _exitBtn.Enabled    = true;
+                    _retryBtn.Visible   = false;
+                    _resultLabel.Text   = "トレーニングは一時停止しています。「再開」で続行します。\n训练已暂停。点击「继续」以恢复。";
+                    _resultLabel.ForeColor = TextWeak;
+                    _resultLabel.Visible = true;
                     break;
-                case "failed":
-                    _statusBarState.Text = "接続失敗 / 连接失败";
-                    break;
+
                 case "scoring":
                     _statusBarState.Text = "採点中 / 评分中…";
+                    _startBtn.Visible   = false; _startBtn.Enabled   = false;
+                    _pauseBtn.Visible   = false; _pauseBtn.Enabled   = false;
+                    _resumeBtn.Visible  = false; _resumeBtn.Enabled  = false;
+                    _gradeBtn.Visible   = true;  _gradeBtn.Enabled   = false;
+                    _exitBtn.Visible    = true;  _exitBtn.Enabled    = false;
+                    _retryBtn.Visible   = false;
+                    _resultLabel.Text   = "採点しています / 正在评分…";
+                    _resultLabel.ForeColor = TextWeak;
+                    _resultLabel.Visible = true;
                     break;
+
                 case "scored_correct":
                     _statusBarState.Text = "採点済み ✓ / 已评分";
+                    _startBtn.Visible   = false; _startBtn.Enabled   = false;
+                    _pauseBtn.Visible   = true;  _pauseBtn.Enabled   = true;
+                    _resumeBtn.Visible  = false; _resumeBtn.Enabled  = false;
+                    _gradeBtn.Visible   = true;  _gradeBtn.Enabled   = true;
+                    _exitBtn.Visible    = true;  _exitBtn.Enabled    = true;
+                    _retryBtn.Visible   = false;
                     break;
+
                 case "scored_incorrect":
                     _statusBarState.Text = "採点済み × / 已评分";
+                    _startBtn.Visible   = false; _startBtn.Enabled   = false;
+                    _pauseBtn.Visible   = true;  _pauseBtn.Enabled   = true;
+                    _resumeBtn.Visible  = false; _resumeBtn.Enabled  = false;
+                    _gradeBtn.Visible   = true;  _gradeBtn.Enabled   = true;
+                    _exitBtn.Visible    = true;  _exitBtn.Enabled    = true;
+                    _retryBtn.Visible   = false;
                     break;
+
                 case "ending":
                     _statusBarState.Text = "終了中 / 正在结束";
+                    _startBtn.Visible   = false; _startBtn.Enabled   = false;
+                    _pauseBtn.Visible   = false; _pauseBtn.Enabled   = false;
+                    _resumeBtn.Visible  = false; _resumeBtn.Enabled  = false;
+                    _gradeBtn.Visible   = false; _gradeBtn.Enabled   = false;
+                    _exitBtn.Visible    = true;  _exitBtn.Enabled    = false;
+                    _retryBtn.Visible   = false;
+                    _resultLabel.Text   = "このトレーニングを終了しています。\n正在结束本次训练。";
+                    _resultLabel.ForeColor = TextWeak;
+                    _resultLabel.Visible = true;
                     break;
+
                 case "ended":
                     _statusBarState.Text = "終了 / 已结束";
-                    break;
-                default:
-                    _statusBarState.Text = state;
+                    _startBtn.Visible   = false; _startBtn.Enabled   = false;
+                    _pauseBtn.Visible   = false; _pauseBtn.Enabled   = false;
+                    _resumeBtn.Visible  = false; _resumeBtn.Enabled  = false;
+                    _gradeBtn.Visible   = false; _gradeBtn.Enabled   = false;
+                    _exitBtn.Visible    = true;  _exitBtn.Enabled    = false;
+                    _retryBtn.Visible   = false;
+                    _resultLabel.Text   = "トレーニングを終了しました / 训练已结束";
+                    _resultLabel.ForeColor = TextSubLight;
+                    _resultLabel.Visible = true;
                     break;
             }
         }
@@ -428,25 +443,11 @@ namespace StudyTools.Mos365ExamHost
 
         private void ShowIdle()
         {
-            _statusBarState.Text   = "起動中 / 正在启动…";
-            _progressBar.Text      = "プロジェクト 1 / 1  ·  タスク 1 / 1";
-            _taskTitleJa.Visible   = false;
-            _taskTitleZh.Visible   = false;
-            _taskInstrJa.Visible   = false;
-            _taskInstrZh.Visible   = false;
-            _taskLocation.Visible  = false;
-            _gradeBtn.Visible      = false;
-            _retryBtn.Visible      = false;
-            _exitBtn.Visible       = true;
-            _exitBtn.Enabled       = true;
-            _resultLabel.Text      = "トレーニングを準備しています…\n正在准备训练环境…";
-            _resultLabel.ForeColor = TextWeak;
-            _resultLabel.Visible   = true;
+            ApplyUIState("idle");
         }
 
-        // ── 计时器
-
-        private void StartTimer()
+        // ── 计时器控制
+        public void StartTimer()
         {
             if (_timerRunning) return;
             _timerStart   = DateTime.Now;
@@ -454,7 +455,23 @@ namespace StudyTools.Mos365ExamHost
             _timer.Start();
         }
 
-        private void StopTimer()
+        public void PauseTimer()
+        {
+            if (!_timerRunning) return;
+            _accumulatedTime += (DateTime.Now - _timerStart);
+            _timerRunning = false;
+            _timer.Stop();
+        }
+
+        public void ResumeTimer()
+        {
+            if (_timerRunning) return;
+            _timerStart   = DateTime.Now;
+            _timerRunning = true;
+            _timer.Start();
+        }
+
+        public void StopTimer()
         {
             _timerRunning = false;
             _timer.Stop();
@@ -463,34 +480,29 @@ namespace StudyTools.Mos365ExamHost
         private void OnTimerTick(object sender, EventArgs e)
         {
             if (!_timerRunning) return;
-            var elapsed = DateTime.Now - _timerStart;
+            var elapsed = _accumulatedTime + (DateTime.Now - _timerStart);
             _statusBarTimer.Text = string.Format("{0:D2}:{1:D2}", (int)elapsed.TotalMinutes, elapsed.Seconds % 60);
         }
 
-        // ── InitializeComponent（灰黑四层布局）
-
+        // ── InitializeComponent（嵌套式防遮挡灰黑四层布局）
         private void InitializeComponent()
         {
-            // Panel 高度定义
             const int StatusH   = 44;   // A. 顶部状态栏
             const int DivH      = 1;    // 分割线高度
             const int ProgressH = 30;   // B. 进度导航栏
             const int TaskH     = 102;  // C. 主任务题干区
             const int ActionH   = 58;   // D. 操作栏
             const int PadX      = 14;
-            const int FullW     = 9000; // 水平充满（底部 pane 横向布局，AutoScroll）
-
-            // 以下坐标为整体控件内的绝对位置
-            int y = 0;
+            const int FullW     = 9000;
 
             // ── A. 顶部状态栏 ──────────────────────────────────────
             _statusBarTitle = new Label
             {
                 Text      = "MOS Excel 365  実技トレーニング / 实操训练",
                 Font      = new Font("Segoe UI", 9.5f, FontStyle.Bold),
-                ForeColor = TextMain,
-                BackColor = BgMain,
-                Location  = new Point(PadX, y + 8),
+                ForeColor = TextMainLight,
+                BackColor = Color.Transparent,
+                Location  = new Point(PadX, 8),
                 Size      = new Size(520, 26),
                 AutoSize  = false,
                 TextAlign = ContentAlignment.MiddleLeft
@@ -499,10 +511,10 @@ namespace StudyTools.Mos365ExamHost
             _statusBarState = new Label
             {
                 Text      = "起動中 / 正在启动…",
-                Font      = new Font("Segoe UI", 8.5f, FontStyle.Regular),
-                ForeColor = TextSub,
-                BackColor = BgMain,
-                Location  = new Point(550, y + 8),
+                Font = new Font("Segoe UI", 8.5f, FontStyle.Regular),
+                ForeColor = TextSubLight,
+                BackColor = Color.Transparent,
+                Location  = new Point(550, 8),
                 Size      = new Size(300, 26),
                 AutoSize  = false,
                 TextAlign = ContentAlignment.MiddleLeft
@@ -513,16 +525,24 @@ namespace StudyTools.Mos365ExamHost
                 Text      = "00:00",
                 Font      = new Font("Segoe UI", 9f, FontStyle.Bold),
                 ForeColor = TextWeak,
-                BackColor = BgMain,
-                Location  = new Point(870, y + 8),
+                BackColor = Color.Transparent,
+                Location  = new Point(870, 8),
                 Size      = new Size(60, 26),
                 AutoSize  = false,
                 TextAlign = ContentAlignment.MiddleRight
             };
 
-            y += StatusH;
-            _dividerAB = new Panel { BackColor = Divider, Location = new Point(0, y), Size = new Size(FullW, DivH) };
-            y += DivH;
+            var statusBarBg = new Panel
+            {
+                BackColor = BgMain,
+                Location  = new Point(0, 0),
+                Size      = new Size(FullW, StatusH)
+            };
+            statusBarBg.Controls.Add(_statusBarTitle);
+            statusBarBg.Controls.Add(_statusBarState);
+            statusBarBg.Controls.Add(_statusBarTimer);
+
+            _dividerAB = new Panel { BackColor = Divider, Location = new Point(0, StatusH), Size = new Size(FullW, DivH) };
 
             // ── B. 进度导航栏 ──────────────────────────────────────
             _progressBar = new Label
@@ -530,27 +550,31 @@ namespace StudyTools.Mos365ExamHost
                 Text      = "プロジェクト 1 / 1  ·  タスク 1 / 1  ·  基礎",
                 Font      = new Font("Segoe UI", 8f, FontStyle.Regular),
                 ForeColor = TextWeak,
-                BackColor = BgLayer,
-                Location  = new Point(PadX, y + 6),
+                BackColor = Color.Transparent,
+                Location  = new Point(PadX, 6),
                 Size      = new Size(600, 18),
                 AutoSize  = false,
                 TextAlign = ContentAlignment.MiddleLeft
             };
 
-            y += ProgressH;
-            _dividerBC = new Panel { BackColor = Divider, Location = new Point(0, y), Size = new Size(FullW, DivH) };
-            y += DivH;
+            var progressBg = new Panel
+            {
+                BackColor = BgLayer,
+                Location  = new Point(0, StatusH + DivH),
+                Size      = new Size(FullW, ProgressH)
+            };
+            progressBg.Controls.Add(_progressBar);
 
-            // ── C. 主任务题干区 ────────────────────────────────────
-            int taskY = y + 6;
+            _dividerBC = new Panel { BackColor = Divider, Location = new Point(0, StatusH + DivH + ProgressH), Size = new Size(FullW, DivH) };
 
+            // ── C. 主任务题干区（浅色暖灰白高级配色） ───────────────────────
             _taskTitleJa = new Label
             {
-                Font      = new Font("Segoe UI", 13f, FontStyle.Bold),
-                ForeColor = TextMain,
-                BackColor = BgSection,
-                Location  = new Point(PadX, taskY),
-                Size      = new Size(400, 26),
+                Font      = new Font("Segoe UI", 12f, FontStyle.Bold),
+                ForeColor = TextMainDark,
+                BackColor = Color.Transparent,
+                Location  = new Point(PadX, 6),
+                Size      = new Size(400, 24),
                 AutoSize  = false,
                 TextAlign = ContentAlignment.MiddleLeft,
                 Visible   = false
@@ -559,9 +583,9 @@ namespace StudyTools.Mos365ExamHost
             _taskTitleZh = new Label
             {
                 Font      = new Font("Segoe UI", 9f, FontStyle.Regular),
-                ForeColor = TextSub,
-                BackColor = BgSection,
-                Location  = new Point(PadX, taskY + 28),
+                ForeColor = TextSubDark,
+                BackColor = Color.Transparent,
+                Location  = new Point(PadX, 30),
                 Size      = new Size(400, 18),
                 AutoSize  = false,
                 TextAlign = ContentAlignment.MiddleLeft,
@@ -571,9 +595,9 @@ namespace StudyTools.Mos365ExamHost
             _taskInstrJa = new Label
             {
                 Font      = new Font("Segoe UI", 9.5f, FontStyle.Regular),
-                ForeColor = TextMain,
-                BackColor = BgSection,
-                Location  = new Point(440, taskY),
+                ForeColor = TextMainDark,
+                BackColor = Color.Transparent,
+                Location  = new Point(440, 6),
                 Size      = new Size(500, 52),
                 AutoSize  = false,
                 TextAlign = ContentAlignment.TopLeft,
@@ -583,9 +607,9 @@ namespace StudyTools.Mos365ExamHost
             _taskInstrZh = new Label
             {
                 Font      = new Font("Segoe UI", 8.5f, FontStyle.Regular),
-                ForeColor = TextSub,
-                BackColor = BgSection,
-                Location  = new Point(440, taskY + 54),
+                ForeColor = TextSubDark,
+                BackColor = Color.Transparent,
+                Location  = new Point(440, 60),
                 Size      = new Size(500, 36),
                 AutoSize  = false,
                 TextAlign = ContentAlignment.TopLeft,
@@ -595,116 +619,156 @@ namespace StudyTools.Mos365ExamHost
             _taskLocation = new Label
             {
                 Font      = new Font("Segoe UI", 8.5f, FontStyle.Bold),
-                ForeColor = TextWeak,
-                BackColor = BgSection,
-                Location  = new Point(960, taskY),
+                ForeColor = TextSubDark,
+                BackColor = Color.Transparent,
+                Location  = new Point(960, 6),
                 Size      = new Size(200, 26),
                 AutoSize  = false,
                 TextAlign = ContentAlignment.MiddleLeft,
                 Visible   = false
             };
 
-            y += TaskH;
-            _dividerCD = new Panel { BackColor = Divider, Location = new Point(0, y), Size = new Size(FullW, DivH) };
-            y += DivH;
+            var taskBg = new Panel
+            {
+                BackColor = BgContent,
+                Location  = new Point(0, StatusH + DivH + ProgressH + DivH),
+                Size      = new Size(FullW, TaskH)
+            };
+            taskBg.Controls.Add(_taskTitleJa);
+            taskBg.Controls.Add(_taskTitleZh);
+            taskBg.Controls.Add(_taskInstrJa);
+            taskBg.Controls.Add(_taskInstrZh);
+            taskBg.Controls.Add(_taskLocation);
+
+            _dividerCD = new Panel { BackColor = Divider, Location = new Point(0, StatusH + DivH + ProgressH + DivH + TaskH), Size = new Size(FullW, DivH) };
 
             // ── D. 操作栏 ──────────────────────────────────────────
-            int btnY = y + 12;
+            _startBtn = new Button
+            {
+                Text      = "開始",
+                Font      = new Font("Segoe UI", 9f, FontStyle.Bold),
+                ForeColor = BtnMainFg,
+                BackColor = BtnMainBg,
+                FlatStyle = FlatStyle.Flat,
+                Size      = new Size(100, 32),
+                Location  = new Point(PadX, 12),
+                Visible   = true,
+                Enabled   = false
+            };
+            _startBtn.FlatAppearance.BorderColor = Divider;
+            _startBtn.Click += (s, ev) => OnStartClicked?.Invoke();
+
+            _pauseBtn = new Button
+            {
+                Text      = "一時停止",
+                Font      = new Font("Segoe UI", 9f, FontStyle.Bold),
+                ForeColor = Color.White,
+                BackColor = BtnPauseBg,
+                FlatStyle = FlatStyle.Flat,
+                Size      = new Size(100, 32),
+                Location  = new Point(PadX + 110, 12),
+                Visible   = false,
+                Enabled   = false
+            };
+            _pauseBtn.FlatAppearance.BorderColor = Divider;
+            _pauseBtn.Click += (s, ev) => OnPauseClicked?.Invoke();
+
+            _resumeBtn = new Button
+            {
+                Text      = "再開",
+                Font      = new Font("Segoe UI", 9f, FontStyle.Bold),
+                ForeColor = BtnMainFg,
+                BackColor = BtnMainBg,
+                FlatStyle = FlatStyle.Flat,
+                Size      = new Size(100, 32),
+                Location  = new Point(PadX + 220, 12),
+                Visible   = false,
+                Enabled   = false
+            };
+            _resumeBtn.FlatAppearance.BorderColor = Divider;
+            _resumeBtn.Click += (s, ev) => OnResumeClicked?.Invoke();
 
             _gradeBtn = new Button
             {
                 Text      = "採点する",
                 Font      = new Font("Segoe UI", 9f, FontStyle.Bold),
-                ForeColor = TextMain,
-                BackColor = BtnMain,
+                ForeColor = Color.White,
+                BackColor = BtnGradeBg,
                 FlatStyle = FlatStyle.Flat,
-                Size      = new Size(110, 32),
-                Location  = new Point(PadX, btnY),
-                Visible   = false,
+                Size      = new Size(100, 32),
+                Location  = new Point(PadX + 330, 12),
+                Visible   = true,
                 Enabled   = false
             };
             _gradeBtn.FlatAppearance.BorderColor = Divider;
             _gradeBtn.Click += (s, ev) => OnGradeClicked?.Invoke();
 
+            _exitBtn = new Button
+            {
+                Text      = "終了する",
+                Font      = new Font("Segoe UI", 9f, FontStyle.Bold),
+                ForeColor = Color.White,
+                BackColor = BtnExitBg,
+                FlatStyle = FlatStyle.Flat,
+                Size      = new Size(100, 32),
+                Location  = new Point(PadX + 440, 12),
+                Visible   = true,
+                Enabled   = true
+            };
+            _exitBtn.FlatAppearance.BorderColor = Divider;
+            _exitBtn.Click += (s, ev) => OnExitClicked?.Invoke();
+
             _retryBtn = new Button
             {
-                Text      = "再試行 / 重新连接",
-                Font      = new Font("Segoe UI", 8.5f, FontStyle.Regular),
-                ForeColor = TextSub,
-                BackColor = BtnMain,
+                Text      = "再試行",
+                Font      = new Font("Segoe UI", 9f, FontStyle.Regular),
+                ForeColor = Color.White,
+                BackColor = BtnPauseBg,
                 FlatStyle = FlatStyle.Flat,
-                Size      = new Size(130, 32),
-                Location  = new Point(PadX + 120, btnY),
+                Size      = new Size(100, 32),
+                Location  = new Point(PadX + 550, 12),
                 Visible   = false,
                 Enabled   = true
             };
             _retryBtn.FlatAppearance.BorderColor = Divider;
             _retryBtn.Click += (s, ev) => OnRetryClicked?.Invoke();
 
-            _exitBtn = new Button
-            {
-                Text      = "終了する",
-                Font      = new Font("Segoe UI", 9f, FontStyle.Bold),
-                ForeColor = TextMain,
-                BackColor = BtnExit,
-                FlatStyle = FlatStyle.Flat,
-                Size      = new Size(100, 32),
-                Location  = new Point(PadX + 260, btnY),
-                Visible   = false,
-                Enabled   = true
-            };
-            _exitBtn.FlatAppearance.BorderColor = Divider;
-            _exitBtn.Click += (s, ev) => OnExitClicked?.Invoke();
-
             _resultLabel = new Label
             {
                 Font      = new Font("Segoe UI", 8.5f, FontStyle.Regular),
                 ForeColor = TextWeak,
-                BackColor = BgMain,
-                Location  = new Point(PadX + 380, btnY - 2),
+                BackColor = Color.Transparent,
+                Location  = new Point(PadX + 680, 10),
                 Size      = new Size(560, 40),
                 AutoSize  = false,
                 TextAlign = ContentAlignment.MiddleLeft,
                 Visible   = false
             };
 
-            // ── 计时器 ─────────────────────────────────────────────
-            _timer = new System.Windows.Forms.Timer { Interval = 1000 };
-            _timer.Tick += OnTimerTick;
-
-            // ── 整体面板设置 ────────────────────────────────────────
-            this.BackColor  = BgSection;
-            this.ForeColor  = TextMain;
-            this.Font       = new Font("Segoe UI", 9f, FontStyle.Regular);
-            this.AutoScroll = false;
-
-            // 添加背景层（用 Panel 覆盖分层背景色）
-            var statusBarBg = new Panel
-            {
-                BackColor = BgMain,
-                Location  = new Point(0, 0),
-                Size      = new Size(FullW, StatusH)
-            };
-            var progressBg = new Panel
-            {
-                BackColor = BgLayer,
-                Location  = new Point(0, StatusH + DivH),
-                Size      = new Size(FullW, ProgressH)
-            };
-            var taskBg = new Panel
-            {
-                BackColor = BgSection,
-                Location  = new Point(0, StatusH + DivH + ProgressH + DivH),
-                Size      = new Size(FullW, TaskH)
-            };
             var actionBg = new Panel
             {
                 BackColor = BgMain,
                 Location  = new Point(0, StatusH + DivH + ProgressH + DivH + TaskH + DivH),
                 Size      = new Size(FullW, ActionH)
             };
+            actionBg.Controls.Add(_startBtn);
+            actionBg.Controls.Add(_pauseBtn);
+            actionBg.Controls.Add(_resumeBtn);
+            actionBg.Controls.Add(_gradeBtn);
+            actionBg.Controls.Add(_exitBtn);
+            actionBg.Controls.Add(_retryBtn);
+            actionBg.Controls.Add(_resultLabel);
 
-            // 注意：WinForms 中 Controls 越后添加 z-order 越高（在背景之上）
+            // ── 计时器 ─────────────────────────────────────────────
+            _timer = new System.Windows.Forms.Timer { Interval = 1000 };
+            _timer.Tick += OnTimerTick;
+
+            // ── 整体面板设置 ────────────────────────────────────────
+            this.BackColor  = BgMain;
+            this.ForeColor  = TextMainLight;
+            this.Font       = new Font("Segoe UI", 9f, FontStyle.Regular);
+            this.AutoScroll = false;
+
             this.Controls.Add(statusBarBg);
             this.Controls.Add(progressBg);
             this.Controls.Add(taskBg);
@@ -712,19 +776,6 @@ namespace StudyTools.Mos365ExamHost
             this.Controls.Add(_dividerAB);
             this.Controls.Add(_dividerBC);
             this.Controls.Add(_dividerCD);
-            this.Controls.Add(_statusBarTitle);
-            this.Controls.Add(_statusBarState);
-            this.Controls.Add(_statusBarTimer);
-            this.Controls.Add(_progressBar);
-            this.Controls.Add(_taskTitleJa);
-            this.Controls.Add(_taskTitleZh);
-            this.Controls.Add(_taskInstrJa);
-            this.Controls.Add(_taskInstrZh);
-            this.Controls.Add(_taskLocation);
-            this.Controls.Add(_gradeBtn);
-            this.Controls.Add(_retryBtn);
-            this.Controls.Add(_exitBtn);
-            this.Controls.Add(_resultLabel);
         }
 
         protected override void Dispose(bool disposing)

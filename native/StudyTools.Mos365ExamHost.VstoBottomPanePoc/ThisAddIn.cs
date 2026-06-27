@@ -70,6 +70,25 @@ namespace StudyTools.Mos365ExamHost
                     else _paneControl.UpdateSessionState("retrying");
                 };
                 _paneControl.OnExitClicked = () => HandleExitAsync(Process.GetCurrentProcess().Id);
+                _paneControl.OnStartClicked = () =>
+                {
+                    _paneControl.StartTimer();
+                    _paneControl.ApplyUIState("running");
+                };
+                _paneControl.OnPauseClicked = () =>
+                {
+                    _paneControl.PauseTimer();
+                    _paneControl.ApplyUIState("paused");
+                };
+                _paneControl.OnResumeClicked = () =>
+                {
+                    _paneControl.ResumeTimer();
+                    _paneControl.ApplyUIState("running");
+                };
+                _paneControl.OnGradeClicked = () =>
+                {
+                    HandleGradeAsync(Process.GetCurrentProcess().Id);
+                };
                 _probe.Write("control.handle.created", _sessionId.ToString("N"),
                     excelPid: Process.GetCurrentProcess().Id);
 

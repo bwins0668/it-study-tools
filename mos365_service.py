@@ -181,7 +181,7 @@ MOS_CATALOG: dict[str, dict[str, Any]] = {
         "titleJa": "数値の合計計算",
         "titleZh": "计算两数之和",
         "instructionJa": "「計算」シートの C2 セルに、A2 から B2 の合計を求める数式を入力してください。",
-        "instructionZh": "请在「計算」工作表的 C2 单元格中，输入计算 A2 到 B2 总和 Jun的公式。",
+        "instructionZh": "请在「計算」工作表的 C2 单元格中，输入计算 A2 到 B2 总和的公式。",
         "estimatedMinutes": 3,
         "assessment": {
             "type": "cell_formula_equals",
