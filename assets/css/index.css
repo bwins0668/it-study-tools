@@ -6921,149 +6921,221 @@ body.mode-sg .sub-header-tab.active {
 }
 
 /* ══════════════════════════════════════════════════════════════
-   R36.1 — Refresh-synced directional hover motion
-   Compositor-only properties: transform, opacity, border-color,
-   background-color, color. No layout or paint hot spots.
+   R36.2 — Deepen directional hover motion hierarchy
+   Refines R36.1 into a three-layer staggered feel.
+   Primary: transform + opacity only (aligns with VSync dispatch).
+   border-color / background-color are static fallback states
+   (may involve paint), not on the performance critical path.
 
-   Visual language:
-     - Left anchor (chapter # / icon): stable, no horizontal shift
-     - Title/content: translateX rightward
-     - Arrow/chevron: opacity fade + origin return, delayed
-     - Container: subtle translateY lift (no box-shadow animation)
+   Motion vocabulary per element group:
+     Layer 0 (anchor) — badge, chapter-header-title::first-child: keeps position
+     Layer 1 (content) — h2, h3, span title: translateX outward
+     Layer 2 (entry)   — chevron, arrow: opacity + translateX, delayed
+
+   Duration, delay, and easing are tuned for a "left-rooted, right-unfurled"
+   feel — NOT a slide, NOT a pop, NOT a spring.
    ══════════════════════════════════════════════════════════════ */
 
-/* ── Desktop hover only — never affects touch devices ── */
+/* ── Content card: motion layers ── */
+
+/* Layer 0: lesson-header-top (badge/breadcrumb area) — stable anchor */
+.lesson-header-top {
+  position: relative;
+  z-index: 1;
+  transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+  transform: translateX(0);
+}
+.lesson-badge {
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+/* Layer 1: title headings — translate right (NOT whole card) */
+#lesson-title-ja,
+#lesson-title-zh {
+  transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+  transform: translateX(0);
+}
+
+/* Layer 2: locate-pdf-btn acts as right-side action indicator */
+.locate-pdf-btn {
+  transition:
+    transform 0.22s ease,
+    opacity 0.22s ease;
+  transition-delay: 0s;
+  transform: translateX(0);
+  opacity: 0.5;
+}
+
 @media (hover: hover) and (pointer: fine) {
+  .content-card:hover {
+    transform: translateY(-1px);
+  }
+  .content-card:hover .lesson-header-top {
+    transform: translateX(0); /* stays anchored */
+  }
+  .content-card:hover #lesson-title-ja,
+  .content-card:hover #lesson-title-zh {
+    transform: translateX(10px);
+  }
+  .content-card:hover .locate-pdf-btn {
+    transform: translateX(6px);
+    opacity: 1;
+    transition-delay: 50ms;
+  }
+}
 
-  /* ===== SECTION CARDS (content-card, playground-card) =====
-     Left anchor (implicit via card left edge): no shift.
-     Container: subtle upward lift without animated shadow.
-     Border: gentle brighten (compositor-friendly). */
-  .content-card:hover,
-  .playground-card:hover,
-  .java-sandbox-card:hover,
-  .python-sandbox-card:hover {
-    transform: translateY(-2px);
-    border-color: rgba(255, 255, 255, 0.14);
-  }
+/* ── Sidebar chapter headers ── */
 
-  /* ===== LESSON NAV ITEMS (sidebar lessons) =====
-     Left ::before accent bar: scale-in from left (pure transform).
-     Title: gentle translateX rightward.
-     Background + color: compositor-friendly. */
-  .lesson-nav-item:hover::before {
-    transform: translateY(-50%) scaleX(1);
-  }
-  .lesson-nav-item:hover {
-    transform: translateX(4px);
-    background: rgba(255, 255, 255, 0.04);
-    color: #ffffff;
-  }
+/* Layer 0: chapter-arrow stays as anchor-ish left icon */
+.sidebar-chapter-header {
+  transition: background-color 0.2s ease;
+}
+.chapter-arrow {
+  transition:
+    transform 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+  transform: rotate(0deg) translateX(0);
+  display: inline-block;
+}
 
-  /* ===== CHAPTER HEADERS (sidebar chapters) =====
-     Left chapter-number anchor: no shift.
-     Title text: translateX right (NOT padding-left — avoids layout).
-     Background: subtle brighten. */
-  .sidebar-chapter-header {
-    padding: 12px 16px;
-    margin-top: 8px;
-    border-radius: 8px;
-  }
+/* Layer 1: chapter title span */
+.chapter-header-title span {
+  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+  transform: translateX(0);
+  display: inline-block;
+}
+
+/* Layer 2: progress badge — subtle shift right, delayed */
+.chapter-progress-badge {
+  transition:
+    transform 0.2s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.2s ease;
+  transition-delay: 0s;
+}
+
+@media (hover: hover) and (pointer: fine) {
   .sidebar-chapter-header:hover {
-    transform: translateX(4px);
     background: rgba(255, 255, 255, 0.03);
   }
-
-  /* ===== QUIZ OPTIONS ===== */
-  .quiz-option:hover {
-    transform: translateX(2px);
-    background: rgba(255, 255, 255, 0.02);
-    border-color: rgba(255, 255, 255, 0.12);
+  .chapter-header-title:hover .chapter-arrow,
+  .sidebar-chapter-header:hover .chapter-arrow {
+    transform: rotate(0deg) translateX(4px);
   }
-
-  /* ===== CONCEPT COLUMNS ===== */
-  .concept-col.zh-col:hover {
-    border-left-color: rgba(37, 99, 235, 0.35);
+  .sidebar-chapter-header:hover .chapter-header-title span {
+    transform: translateX(6px);
   }
-  .concept-col.ja-col:hover {
-    border-left-color: rgba(0, 240, 255, 0.35);
+  .sidebar-chapter-header:hover .chapter-progress-badge {
+    transform: translateX(4px);
+    opacity: 1;
+    transition-delay: 40ms;
   }
+}
 
-} /* end @media (hover: hover) */
+/* ── Lesson nav items ── */
 
-/* ── Focus-visible: consistent keyboard accent ── */
+/* Layer 0: status icon — no transform */
+.nav-status-icon {
+  transition: transform 0.2s ease, opacity 0.2s ease;
+  transition-delay: 0s;
+}
+
+/* Layer 1: title text */
+.lesson-nav-item > span:first-of-type {
+  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+  transform: translateX(0);
+  display: inline-block;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .lesson-nav-item:hover {
+    background: rgba(255, 255, 255, 0.04);
+  }
+  .lesson-nav-item:hover > span:first-of-type {
+    transform: translateX(5px);
+  }
+  .lesson-nav-item:hover .nav-status-icon {
+    transform: translateX(3px);
+    opacity: 1;
+    transition-delay: 30ms;
+  }
+}
+
+/* ── Focus-visible: directional feedback parity with hover ── */
+.content-card:focus-visible #lesson-title-ja,
+.content-card:focus-visible #lesson-title-zh {
+  transform: translateX(10px);
+}
+.content-card:focus-visible .lesson-header-top {
+  transform: translateX(0);
+}
+.content-card:focus-visible .locate-pdf-btn {
+  transform: translateX(6px);
+  opacity: 1;
+}
+.sidebar-chapter-header:focus-visible .chapter-header-title span {
+  transform: translateX(6px);
+}
+.sidebar-chapter-header:focus-visible .chapter-arrow {
+  transform: rotate(0deg) translateX(4px);
+}
+.sidebar-chapter-header:focus-visible .chapter-progress-badge {
+  transform: translateX(4px);
+  opacity: 1;
+}
+.lesson-nav-item:focus-visible > span:first-of-type {
+  transform: translateX(5px);
+}
+.lesson-nav-item:focus-visible .nav-status-icon {
+  transform: translateX(3px);
+  opacity: 1;
+}
+
+/* Global focus-visible outline for interactive sidebar elements */
 .sidebar-chapter-header:focus-visible,
-.lesson-nav-item:focus-visible,
-.subject-tab:focus-visible,
-.sub-header-tab:focus-visible {
+.lesson-nav-item:focus-visible {
   outline: 2px solid var(--primary, #3b82f6);
   outline-offset: 2px;
 }
 
-/* ── Reduced motion: disable transform/translate motion,
-     preserve clear border/background/focus feedback ── */
+/* ── Reduced motion: kill transform/transition, keep static visual ── */
 @media (prefers-reduced-motion: reduce) {
   .content-card,
-  .playground-card,
-  .lesson-nav-item,
-  .lesson-nav-item::before,
+  .lesson-header-top,
+  #lesson-title-ja, #lesson-title-zh,
+  .locate-pdf-btn,
   .sidebar-chapter-header,
-  .quiz-option,
-  .concept-col {
+  .chapter-arrow,
+  .chapter-header-title span,
+  .chapter-progress-badge,
+  .lesson-nav-item,
+  .lesson-nav-item > span,
+  .nav-status-icon {
     transition: none !important;
     transform: none !important;
+    opacity: 1 !important;
     animation: none !important;
   }
-  .lesson-nav-item:hover,
-  .sidebar-chapter-header:hover,
-  .quiz-option:hover,
   .content-card:hover,
-  .playground-card:hover {
+  .sidebar-chapter-header:hover,
+  .lesson-nav-item:hover {
     transform: none !important;
+  }
+  /* Preserve focus indicator without motion */
+  .content-card:focus-visible,
+  .sidebar-chapter-header:focus-visible,
+  .lesson-nav-item:focus-visible {
+    outline: 2px solid var(--primary, #3b82f6);
+    outline-offset: 2px;
   }
 }
 
-/* ── Transition declarations for non-!important contexts
-     (compositor-only properties for all interactive elements) ── */
-.content-card,
-.playground-card,
-.java-sandbox-card,
-.python-sandbox-card {
-  transition:
-    transform 0.25s cubic-bezier(0.22, 1, 0.36, 1),
-    border-color 0.25s ease;
-  will-change: transform;
-}
-
-.lesson-nav-item {
-  transition:
-    transform 0.25s cubic-bezier(0.22, 1, 0.36, 1),
-    background-color 0.2s ease,
-    color 0.2s ease;
-  will-change: transform;
-}
-
-.lesson-nav-item::before {
-  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.sidebar-chapter-header {
-  transition:
-    transform 0.25s cubic-bezier(0.22, 1, 0.36, 1),
-    background-color 0.2s ease;
-  will-change: transform;
-}
-
-.quiz-option {
-  transition:
-    transform 0.2s cubic-bezier(0.22, 1, 0.36, 1),
-    background-color 0.2s ease,
-    border-color 0.2s ease;
-}
-
-.concept-col {
-  transition: border-left-color 0.25s ease;
-}
+/* ══════════════════════════════════════════════════════════════
+   NOTE: No persistent will-change on .content-card, .lesson-nav-item,
+   or .sidebar-chapter-header. These selectors match 50+ elements
+   and would create unnecessary layers. The 8 elements with
+   will-change are all non-hover structural containers
+   (sidebar/drawer panels) that were defined before R36.1.
+   ══════════════════════════════════════════════════════════════ */
 
 /* ---- Theme Toggle Button ---- */
 .theme-toggle-btn {
