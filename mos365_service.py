@@ -953,7 +953,7 @@ class MOS365Service:
         state = manifest.get("state", "created")
 
         # Bridge revision check — reject old/unpatched VSTO builds
-        EXPECTED_REVISION = "R28_ATTACH_RUNTIME_1"
+        EXPECTED_REVISION = "R30_RUNTIME_PROOF_1"
         received_revision = str(payload.get("bridgeRevision", ""))
         if received_revision != EXPECTED_REVISION:
             raise MOS365ServiceError(

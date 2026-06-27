@@ -389,22 +389,7 @@ namespace StudyTools.Mos365ExamHost
                 Debug.WriteLine("Exit session end failed: " + ex.Message);
             }
 
-            // 4. Close workbook on UI thread
-            try
-            {
-                var wb = GetActiveSessionWorkbook(sessionId);
-                if (wb != null)
-                {
-                    // Close without saving unsaved changes (training workbook)
-                    wb.Close(false);
-                }
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine("Workbook close failed: " + ex.Message);
-            }
-
-            // 5. Pane shows ended
+            // 4. Pane shows ended — workbook stays open, user closes it manually
             _paneControl.ShowEnded();
             _boundSessionId = null;
             _exiting = false;

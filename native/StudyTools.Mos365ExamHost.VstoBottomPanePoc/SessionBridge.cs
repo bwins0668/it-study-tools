@@ -38,9 +38,36 @@ namespace StudyTools.Mos365ExamHost
         private static readonly int[] RetryDelaysMs = { 250, 750, 1500 };
         private const int RequestTimeoutMs = 2500;
 
-        public const string BridgeRevision = "R28_ATTACH_RUNTIME_1";
+        public const string BridgeRevision = "R30_RUNTIME_PROOF_1";
 
-        public SessionBridge() : this("http://127.0.0.1:8080") { }
+        /// <summary>
+        /// Discover the bridge origin from the server's well-known file.
+        /// Falls back to http://127.0.0.1:8080 if not found.
+        /// </summary>
+        private static string DiscoverBridgeOrigin()
+        {
+            try
+            {
+                string localAppData = Environment.GetFolderPath(
+                    Environment.SpecialFolder.LocalApplicationData);
+                string bridgeFile = System.IO.Path.Combine(
+                    localAppData, "StudyTools", "MOS365", ".bridge");
+                if (System.IO.File.Exists(bridgeFile))
+                {
+                    string origin = System.IO.File.ReadAllText(bridgeFile).Trim();
+                    if (!string.IsNullOrEmpty(origin) &&
+                        (origin.StartsWith("http://127.0.0.1:") ||
+                         origin.StartsWith("http://localhost:")))
+                    {
+                        return origin;
+                    }
+                }
+            }
+            catch { }
+            return "http://127.0.0.1:8080";
+        }
+
+        public SessionBridge() : this(DiscoverBridgeOrigin()) { }
 
         public SessionBridge(string baseUrl)
         {

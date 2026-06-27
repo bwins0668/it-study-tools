@@ -141,7 +141,7 @@ namespace StudyTools.Mos365ExamHost
 
         public void ShowConnectionFailed(string message)
         {
-            _stateLabel.Text = "接続できませんでした / 连接失败";
+            _stateLabel.Text = "接続できませんでした / 暂时无法连接训练服务";
             _progressLabel.Text = "問題 1 / 1";
             _taskInstructionJa.Visible = false;
             _taskInstructionZh.Visible = false;
@@ -152,7 +152,7 @@ namespace StudyTools.Mos365ExamHost
             _exitBtn.Enabled = true;
             _resultLabel.Visible = true;
             _resultLabel.ForeColor = Color.FromArgb(180, 105, 80);
-            _resultLabel.Text = "接続を再試行できます。\n可以重新连接训练面板。";
+            _resultLabel.Text = "再接続するか、終了してください。\n请重新连接或退出训练。";
         }
 
         public void ShowEnding()

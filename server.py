@@ -53,6 +53,17 @@ PORT = int(sys.argv[1]) if len(sys.argv) > 1 else 8080
 LEARNING_STORE = LearningStore(os.path.join(APP_ROOT, "data", "study_ai.db"))
 MOS365_SERVICE = MOS365Service(APP_ROOT)
 
+# R30: Write bridge origin to well-known file so VSTO can discover the actual port
+_BRIDGE_ORIGIN = f"http://127.0.0.1:{PORT}"
+try:
+    _bridge_dir = os.path.join(os.environ.get("LOCALAPPDATA", ""), "StudyTools", "MOS365")
+    os.makedirs(_bridge_dir, exist_ok=True)
+    with open(os.path.join(_bridge_dir, ".bridge"), "w", encoding="utf-8") as _bf:
+        _bf.write(_BRIDGE_ORIGIN)
+    print(f"MOS bridge origin written: {_BRIDGE_ORIGIN}")
+except Exception as exc:
+    print(f"Warning: could not write bridge origin file: {exc}")
+
 # Known JDK bin paths to search
 KNOWN_JDK_PATHS = [
     # Eclipse Adoptium (most common)
