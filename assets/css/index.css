@@ -20,7 +20,13 @@
   --error-color: hsl(350, 80%, 55%);
   --error-glow: hsla(350, 80%, 55%, 0.15);
 
-  --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  /* R36.1: compositor-only transition — individual components
+     override with specific properties; this fallback is for
+     non-interactive / non-hover transitions only. */
+  --transition-smooth: background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                       color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                       border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                       opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   --glass-blur: blur(12px);
 }
 
@@ -129,7 +135,7 @@ body {
   color: inherit;
   font: inherit;
   text-align: left;
-  transition: all 0.2s ease;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
   max-width: 280px;
 }
 .module-switch-trigger:hover {
@@ -228,7 +234,7 @@ body {
   cursor: pointer;
   font-size: 13px;
   white-space: nowrap;
-  transition: all 0.2s ease;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
 }
 .header-mode-nav .sub-header-tab:hover {
   background: rgba(255,255,255,0.06);
@@ -718,8 +724,12 @@ body.desktop-sidebar-expanded .sidebar-edge-handle {
   margin-bottom: 4px;
   font-size: 13px;
   color: var(--text-muted);
-  transition: var(--transition-smooth);
   border: 1px solid transparent;
+  /* R36.1: compositor-only transform + background-color on hover */
+  transition:
+    transform 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 0.2s ease,
+    color 0.2s ease;
 }
 
 .lesson-nav-item:hover {
@@ -3569,7 +3579,10 @@ body.desktop-sidebar-expanded .sidebar-edge-handle {
   font-size: 13px;
   font-weight: 600;
   color: var(--text-main);
-  transition: var(--transition-smooth);
+  /* R36.1: compositor-only transform + background-color on hover */
+  transition:
+    transform 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 0.2s ease;
 }
 
 .sidebar-chapter-header:hover {
@@ -6624,11 +6637,13 @@ body.mode-sg .sub-header-tab.active {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
 }
 
-/* Inactive tabs hover depth */
-.subject-tab:hover,
-.sub-header-tab:hover {
-  background: rgba(255, 255, 255, 0.04) !important;
-  border-color: rgba(255, 255, 255, 0.08) !important;
+/* ── Hover rules for desktop (compositor-only) ── */
+@media (hover: hover) and (pointer: fine) {
+  .subject-tab:hover,
+  .sub-header-tab:hover {
+    background: rgba(255, 255, 255, 0.04) !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+  }
 }
 
 /* Sidebar chapters hover & expansion states */
@@ -6793,29 +6808,18 @@ body.mode-sg .sub-header-tab.active {
    ADVANCED INTERACTION & POLISH OVERRIDES (交互感与排版深度优化)
    ========================================================================== */
 
-/* Overall app-wide transition definitions for spring-like animation */
-.subject-tab,
-.sub-header-tab,
-.lesson-nav-item,
-.sidebar-chapter-header,
-.content-card,
-.playground-card,
-.java-sandbox-card,
-.python-sandbox-card,
-.run-query-btn,
-.quiz-submit-btn,
-.quiz-option {
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
-}
+/* R36.1: compositor-only transition properties defined below in R36.1 block.
+   This removes the prior `transition: all ... !important` catch-all. */
 
 /* Card hover lift effect (提升卡片层次感与可交互感) */
-.content-card:hover,
-.playground-card:hover,
-.java-sandbox-card:hover,
-.python-sandbox-card:hover {
-  transform: translateY(-4px) !important;
-  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.7) !important;
-  border-color: rgba(255, 255, 255, 0.15) !important;
+@media (hover: hover) and (pointer: fine) {
+  .content-card:hover,
+  .playground-card:hover,
+  .java-sandbox-card:hover,
+  .python-sandbox-card:hover {
+    transform: translateY(-4px) !important;
+    border-color: rgba(255, 255, 255, 0.15) !important;
+  }
 }
 
 /* Sidebar list interaction updates */
@@ -6849,16 +6853,18 @@ body.mode-sg .sub-header-tab.active {
   color: #ffffff !important;
 }
 
-/* Chapter header interactions */
+/* ── Chapter header interactions (R36.1: padding-left → transform to avoid layout) ── */
 .sidebar-chapter-header {
   padding: 12px 16px !important;
   margin-top: 8px !important;
   border-radius: 8px !important;
 }
 
-.sidebar-chapter-header:hover {
-  padding-left: 20px !important;
-  background: rgba(255, 255, 255, 0.03) !important;
+@media (hover: hover) and (pointer: fine) {
+  .sidebar-chapter-header:hover {
+    transform: translateX(4px) !important;
+    background: rgba(255, 255, 255, 0.03) !important;
+  }
 }
 
 /* Flashcard 3D hover feedback */
@@ -6914,59 +6920,149 @@ body.mode-sg .sub-header-tab.active {
   min-height: 150px !important;
 }
 
-/* Softer system-wide transition curve and longer duration */
-.subject-tab,
-.sub-header-tab,
-.lesson-nav-item,
-.sidebar-chapter-header,
+/* ══════════════════════════════════════════════════════════════
+   R36.1 — Refresh-synced directional hover motion
+   Compositor-only properties: transform, opacity, border-color,
+   background-color, color. No layout or paint hot spots.
+
+   Visual language:
+     - Left anchor (chapter # / icon): stable, no horizontal shift
+     - Title/content: translateX rightward
+     - Arrow/chevron: opacity fade + origin return, delayed
+     - Container: subtle translateY lift (no box-shadow animation)
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── Desktop hover only — never affects touch devices ── */
+@media (hover: hover) and (pointer: fine) {
+
+  /* ===== SECTION CARDS (content-card, playground-card) =====
+     Left anchor (implicit via card left edge): no shift.
+     Container: subtle upward lift without animated shadow.
+     Border: gentle brighten (compositor-friendly). */
+  .content-card:hover,
+  .playground-card:hover,
+  .java-sandbox-card:hover,
+  .python-sandbox-card:hover {
+    transform: translateY(-2px);
+    border-color: rgba(255, 255, 255, 0.14);
+  }
+
+  /* ===== LESSON NAV ITEMS (sidebar lessons) =====
+     Left ::before accent bar: scale-in from left (pure transform).
+     Title: gentle translateX rightward.
+     Background + color: compositor-friendly. */
+  .lesson-nav-item:hover::before {
+    transform: translateY(-50%) scaleX(1);
+  }
+  .lesson-nav-item:hover {
+    transform: translateX(4px);
+    background: rgba(255, 255, 255, 0.04);
+    color: #ffffff;
+  }
+
+  /* ===== CHAPTER HEADERS (sidebar chapters) =====
+     Left chapter-number anchor: no shift.
+     Title text: translateX right (NOT padding-left — avoids layout).
+     Background: subtle brighten. */
+  .sidebar-chapter-header {
+    padding: 12px 16px;
+    margin-top: 8px;
+    border-radius: 8px;
+  }
+  .sidebar-chapter-header:hover {
+    transform: translateX(4px);
+    background: rgba(255, 255, 255, 0.03);
+  }
+
+  /* ===== QUIZ OPTIONS ===== */
+  .quiz-option:hover {
+    transform: translateX(2px);
+    background: rgba(255, 255, 255, 0.02);
+    border-color: rgba(255, 255, 255, 0.12);
+  }
+
+  /* ===== CONCEPT COLUMNS ===== */
+  .concept-col.zh-col:hover {
+    border-left-color: rgba(37, 99, 235, 0.35);
+  }
+  .concept-col.ja-col:hover {
+    border-left-color: rgba(0, 240, 255, 0.35);
+  }
+
+} /* end @media (hover: hover) */
+
+/* ── Focus-visible: consistent keyboard accent ── */
+.sidebar-chapter-header:focus-visible,
+.lesson-nav-item:focus-visible,
+.subject-tab:focus-visible,
+.sub-header-tab:focus-visible {
+  outline: 2px solid var(--primary, #3b82f6);
+  outline-offset: 2px;
+}
+
+/* ── Reduced motion: disable transform/translate motion,
+     preserve clear border/background/focus feedback ── */
+@media (prefers-reduced-motion: reduce) {
+  .content-card,
+  .playground-card,
+  .lesson-nav-item,
+  .lesson-nav-item::before,
+  .sidebar-chapter-header,
+  .quiz-option,
+  .concept-col {
+    transition: none !important;
+    transform: none !important;
+    animation: none !important;
+  }
+  .lesson-nav-item:hover,
+  .sidebar-chapter-header:hover,
+  .quiz-option:hover,
+  .content-card:hover,
+  .playground-card:hover {
+    transform: none !important;
+  }
+}
+
+/* ── Transition declarations for non-!important contexts
+     (compositor-only properties for all interactive elements) ── */
 .content-card,
 .playground-card,
 .java-sandbox-card,
-.python-sandbox-card,
-.run-query-btn,
-.quiz-submit-btn,
-.quiz-option,
-.flashcard,
-.pdf-viewer-panel {
-  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+.python-sandbox-card {
+  transition:
+    transform 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.25s ease;
+  will-change: transform;
 }
 
-/* Softer card hover lift */
-.content-card:hover,
-.playground-card:hover,
-.java-sandbox-card:hover,
-.python-sandbox-card:hover {
-  transform: translateY(-2px) !important;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6) !important;
-  border-color: rgba(255, 255, 255, 0.12) !important;
+.lesson-nav-item {
+  transition:
+    transform 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 0.2s ease,
+    color 0.2s ease;
+  will-change: transform;
 }
 
-/* Softer lesson navigation translation */
-.lesson-nav-item:hover {
-  transform: translateX(2px) !important;
-  background: rgba(255, 255, 255, 0.04) !important;
+.lesson-nav-item::before {
+  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-/* Softer chapter header hover sliding */
-.sidebar-chapter-header:hover {
-  padding-left: 18px !important;
-  background: rgba(255, 255, 255, 0.02) !important;
+.sidebar-chapter-header {
+  transition:
+    transform 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 0.2s ease;
+  will-change: transform;
 }
 
-/* Softer 3D flashcard tilt */
-.flashcard-outer:hover .flashcard:not(.flipped) {
-  transform: rotateY(6deg) rotateX(2deg) scale(1.01) !important;
+.quiz-option {
+  transition:
+    transform 0.2s cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 0.2s ease,
+    border-color 0.2s ease;
 }
 
-.flashcard-outer:hover .flashcard.flipped {
-  transform: rotateY(186deg) rotateX(-2deg) scale(1.01) !important;
-}
-
-/* Softer quiz option slide */
-.quiz-option:hover {
-  background: rgba(255, 255, 255, 0.02) !important;
-  border-color: rgba(255, 255, 255, 0.12) !important;
-  transform: translateX(1px) !important;
+.concept-col {
+  transition: border-left-color 0.25s ease;
 }
 
 /* ---- Theme Toggle Button ---- */
@@ -8211,7 +8307,7 @@ body.i18n-active :where(
   color: var(--text-main);
   font: inherit;
   text-align: left;
-  transition: all 0.15s ease;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
 }
 .module-switch-option:hover {
   background: rgba(255, 255, 255, 0.04);
@@ -10907,7 +11003,8 @@ body.desktop-sidebar-expanded .mobile-backdrop {
   box-shadow:
     0 8px 32px rgba(0, 0, 0, 0.25),
     inset 0 1px 0 rgba(255, 255, 255, 0.03);
-  transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  /* R36.1: compositor-only — no box-shadow animation */
+  transition: border-color 0.3s ease, transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .content-card:hover,
@@ -10963,7 +11060,10 @@ body.desktop-sidebar-expanded .mobile-backdrop {
 .lang-tab,
 .challenge-control-btn,
 .header-challenge-btn-start {
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+              background-color 0.2s ease,
+              color 0.2s ease,
+              border-color 0.2s ease;
 }
 
 .tools-trigger-btn:hover,
