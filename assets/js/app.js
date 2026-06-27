@@ -671,10 +671,10 @@ document.addEventListener("DOMContentLoaded", () => {
   // Set default values for calculators in IT Passport Mode
   initItPassCalculators();
 
-  // Start heartbeat to keep local server alive
+  // Start heartbeat to keep local server alive (only when server.py is running)
   startHeartbeat();
 
-  // Initialize auth UI (try/catch — feature may not exist)
+  /*=snip=*/
   try { if (window.StudyAuthUI) window.StudyAuthUI.initAuthUI(); }
   catch (_) { console.warn("[App] AuthUI init skipped"); }
 
@@ -712,8 +712,11 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-// Heartbeat function
+// Heartbeat function — only valid when server.py is running
 function startHeartbeat() {
+  // Check if server.py is likely running by looking for a known local backend
+  // If STUDY_TOOLS_DISABLE_LOCAL_BACKEND is set, skip heartbeat entirely
+  if (window.STUDY_TOOLS_DISABLE_LOCAL_BACKEND) return;
   setInterval(() => {
     fetch('/heartbeat', { method: 'POST' }).catch(() => {});
   }, 4000);
@@ -7919,63 +7922,10 @@ function initTheme() {
 
 
 // ========== Service Worker Registration & PWA Update Prompt ==========
+// This branch (main) is the Windows full version with server.py backend.
+// Service Worker is not applicable here — it belongs to the Web public branch.
 (function initServiceWorker() {
-  if (!('serviceWorker' in navigator)) return;
-
-  let refreshing = false;
-
-  function showUpdatePrompt(reg) {
-    if (document.querySelector('.pwa-update-prompt')) return;
-
-    const t = window.t || function(k) { return k; };
-    const messages = {
-      'zh-CN': { text: '发现新版本，点击刷新', btn: '立即刷新' },
-      'ja-JP': { text: '新しいバージョンがあります。更新してください', btn: '更新する' },
-      'en-US': { text: 'A new version is available. Refresh to update.', btn: 'Refresh Now' },
-      'ko-KR': { text: '새 버전이 있습니다. 새로고침하세요.', btn: '새로고침' }
-    };
-    const lang = (window.I18n && window.I18n.getLanguage && window.I18n.getLanguage()) || 'zh-CN';
-    const m = messages[lang] || messages['en-US'];
-
-    const prompt = document.createElement('div');
-    prompt.className = 'pwa-update-prompt';
-    prompt.innerHTML = '<span class="pwa-update-text">' + m.text + '</span><button class="pwa-update-btn">' + m.btn + '</button>';
-    prompt.querySelector('.pwa-update-btn').addEventListener('click', function() {
-      if (reg.waiting) {
-        reg.waiting.postMessage({ type: 'SKIP_WAITING' });
-      }
-      prompt.remove();
-    });
-    document.body.appendChild(prompt);
-  }
-
-  navigator.serviceWorker.register('/service-worker.js').then(function(reg) {
-    console.log('[SW] Registered, scope:', reg.scope);
-
-    reg.addEventListener('updatefound', function() {
-      const newWorker = reg.installing;
-      newWorker.addEventListener('statechange', function() {
-        if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-          console.log('[SW] New version waiting');
-          showUpdatePrompt(reg);
-        }
-      });
-    });
-
-    navigator.serviceWorker.addEventListener('controllerchange', function() {
-      if (!refreshing) {
-        refreshing = true;
-        window.location.reload();
-      }
-    });
-
-    if (reg.waiting) {
-      console.log('[SW] Waiting worker found');
-      showUpdatePrompt(reg);
-    }
-  }).catch(function(err) {
-    console.warn('[SW] Registration failed:', err);
-  });
+  // noop — SW belongs to Web public branch only
 })();
 
 // Expose StudySync debug entry (no-op if sync-engine.js not loaded)

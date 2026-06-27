@@ -1513,6 +1513,8 @@ window.StudyAI = (() => {
   function init() {
     createUiV2();
     installContextWrappers();
+    /* Import legacy progress silently — StudyAI 405 on Web-only runs is
+       caught internally (window.STUDY_TOOLS_DISABLE_LOCAL_BACKEND check) */
     importLegacyProgress();
     loadProviders();
     syncContext();
