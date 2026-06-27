@@ -99,7 +99,7 @@ namespace StudyTools.Mos365ExamHost
                     paneTitle: "MOS 実技トレーニング", dockPosition: "Bottom");
 
                 _pane.DockPosition = Office.MsoCTPDockPosition.msoCTPDockPositionBottom;
-                _pane.Height = 240;
+                _pane.Height = 280;
                 _pane.Visible = true;
 
                 _probe.Write("pane.visible", _sessionId.ToString("N"),
@@ -163,6 +163,14 @@ namespace StudyTools.Mos365ExamHost
 
         private void OnWorkbookActivate(Excel.Workbook wb)
         {
+            try
+            {
+                if (this.Application != null)
+                {
+                    this.Application.WindowState = Excel.XlWindowState.xlMaximized;
+                }
+            }
+            catch { }
             // R33: 先渲染 metadata（即时），再异步 attach
             TryRenderMetadata(wb);
             if (!_exiting) StartBindWorkbook(wb);
@@ -173,6 +181,14 @@ namespace StudyTools.Mos365ExamHost
 
         private void OnWorkbookOpen(Excel.Workbook wb)
         {
+            try
+            {
+                if (this.Application != null)
+                {
+                    this.Application.WindowState = Excel.XlWindowState.xlMaximized;
+                }
+            }
+            catch { }
             try { Debug.WriteLine("Workbook opened: " + wb.Name); } catch { }
             TryRenderMetadata(wb);
             if (!_exiting) StartBindWorkbook(wb);
@@ -336,11 +352,35 @@ namespace StudyTools.Mos365ExamHost
                                         _sessionId.ToString("N"), excelPid: pid);
                                     // R33: ShowTask 不清空 metadata 题干，只更新说明文字并启用评分
                                     _paneControl.ShowTask(result.InstructionJa,
-                                        result.InstructionZh, capturedGen);
+                                        result.InstructionZh, capturedGen,
+                                        result.IsExam, result.CurrentStep, result.TotalSteps,
+                                        result.TitleJa, result.TitleZh,
+                                        result.SheetLabel, result.TargetLabel);
                                     if (result.CompletionAcknowledged)
                                         _paneControl.ShowCompletionAccepted();
                                     _paneControl.OnGradeClicked = () =>
                                         HandleGradeAsync(pid);
+                                    _paneControl.OnNextClicked = async () =>
+                                    {
+                                        _paneControl.ApplyUIState("scoring");
+                                        try
+                                        {
+                                            var ok = await _bridge.NextStepAsync(_boundSessionId, pid);
+                                            if (ok)
+                                            {
+                                                var activeWb = _excelApp?.ActiveWorkbook;
+                                                if (activeWb != null)
+                                                {
+                                                    StartBindWorkbook(activeWb);
+                                                }
+                                            }
+                                        }
+                                        catch (Exception ex)
+                                        {
+                                            Debug.WriteLine("Next step transition failed: " + ex.Message);
+                                            _paneControl.ApplyUIState("running");
+                                        }
+                                    };
                                 }
                                 else
                                 {
@@ -505,7 +545,11 @@ namespace StudyTools.Mos365ExamHost
                     _probe?.Write("scoring.request.accepted", guid, excelPid: pid);
                     _probe?.Write("scoring.result.shown", guid, excelPid: pid);
                     _paneControl.ShowScoreResult(result.ResultJa, result.ResultZh,
-                        result.Earned, result.Total);
+                        result.Earned, result.Total,
+                        result.IsExam, result.CurrentStep, result.TotalSteps,
+                        result.TaskId, result.InstructionJa, result.InstructionZh,
+                        result.TitleJa, result.TitleZh,
+                        result.SheetLabel, result.TargetLabel);
                 }
                 else
                 {

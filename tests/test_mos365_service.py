@@ -1202,5 +1202,88 @@ class R34BottomConsoleFixGateTests(unittest.TestCase):
         self.assertIn("ended", src)
 
 
+class R35ExamAndConsoleTests(unittest.TestCase):
+    """R35 门禁测试：模拟考试 V1 接入与 VSTO 响应式布局。"""
+
+    def setUp(self):
+        self.project_root = Path(__file__).resolve().parents[1]
+        self.vsto_dir = self.project_root / "native" / "StudyTools.Mos365ExamHost.VstoBottomPanePoc"
+        self.pane_control_path = self.vsto_dir / "ExamHostPaneControl.cs"
+        self.this_addin_path = self.vsto_dir / "ThisAddIn.cs"
+        self.temp_dir = tempfile.TemporaryDirectory()
+        self.service = MOS365Service(self.project_root, session_root=self.temp_dir.name)
+
+    def tearDown(self):
+        self.temp_dir.cleanup()
+
+    def test_r35_vsto_pane_responsive_layout(self):
+        """Verify that responsive layout and Next button are integrated in VSTO pane."""
+        src = self.pane_control_path.read_text(encoding="utf-8")
+        self.assertIn("LayoutControls()", src)
+        self.assertIn("Button _nextBtn;", src)
+        self.assertIn("OnNextClicked", src)
+        self.assertIn("next_step_ready", src)
+        self.assertIn("exam_completed", src)
+        self.assertIn("Resize +=", src)
+
+    def test_r35_original_exam_v1_lifecycle(self):
+        """Verify the backend lifecycle of original_exam_v1 session."""
+        session = self.service.create_session({
+            "mode": "exam",
+            "scenarioId": "original_exam_v1"
+        })
+        self.assertEqual(session["mode"], "exam")
+        self.assertEqual(session["scenarioId"], "original_exam_v1")
+        self.assertEqual(len(session["tasks"]), 4)
+
+        paths = self.service._paths(session["sessionId"])
+        self.assertTrue(paths.workbook.is_file())
+        self.assertTrue(paths.manifest.is_file())
+
+        # Verify worksheets
+        with zipfile.ZipFile(paths.workbook, "r") as archive:
+            names = archive.namelist()
+            sheet_xmls = [n for n in names if n.startswith("xl/worksheets/sheet")]
+            self.assertEqual(len(sheet_xmls), 3)
+
+        # Check metadata properties has custom XML with step = 1
+        with zipfile.ZipFile(paths.workbook, "r") as archive:
+            custom_xml = archive.read("docProps/custom.xml").decode("utf-8")
+            self.assertIn('name="MOS_CURRENT_STEP"', custom_xml)
+            self.assertIn("<vt:lpwstr>1</vt:lpwstr>", custom_xml)
+
+        # Inject attached state and completion acknowledged to run session_score
+        manifest = json.loads(paths.manifest.read_text(encoding="utf-8"))
+        manifest["state"] = "attached"
+        manifest["excelPid"] = 0
+        manifest["attachedPid"] = 0
+        manifest["completion"] = {"acknowledged": True, "acknowledgedAt": "", "acknowledgedPid": 0}
+        paths.manifest.write_text(json.dumps(manifest, ensure_ascii=False, indent=2), encoding="utf-8")
+
+        # Execute scoring on unmodified exam
+        res = self.service.session_score({"sessionId": session["sessionId"], "excelPid": 0})
+        self.assertTrue(res["ok"])
+        self.assertEqual(res["assessment"]["total"], 1) # one assertion per step
+        self.assertEqual(res["assessment"]["earned"], 0)
+        self.assertEqual(res["isExam"], True)
+        self.assertEqual(res["currentStep"], 1)
+
+        # Advance to next step (should return error if not correct, but here we can simulate it or call the API)
+        next_step_res = self.service.session_next_step({
+            "sessionId": session["sessionId"],
+            "excelPid": 0
+        })
+        self.assertTrue(next_step_res["ok"])
+        
+        # Manifest currentStep is 0-indexed, so 0 advances to 1 (Step 2)
+        manifest = json.loads(paths.manifest.read_text(encoding="utf-8"))
+        self.assertEqual(manifest["currentStep"], 1)
+
+        # Check docProps/custom.xml has been updated in-place to step = 2
+        with zipfile.ZipFile(paths.workbook, "r") as archive:
+            custom_xml = archive.read("docProps/custom.xml").decode("utf-8")
+            self.assertIn("<vt:lpwstr>2</vt:lpwstr>", custom_xml)
+
+
 if __name__ == "__main__":
     unittest.main()

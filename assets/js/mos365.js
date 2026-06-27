@@ -66,11 +66,19 @@
       '#mos365-shell{position:fixed;inset:0;z-index:10060;display:none;background:rgba(10,12,15,.65);padding:20px;box-sizing:border-box}',
       '#mos365-shell.is-open{display:block}',
       // ── パネル
-      '.mos365-panel{height:100%;max-width:1360px;margin:0 auto;display:flex;flex-direction:column;overflow:hidden;background:#15171A;color:#F3F4F6;border-radius:10px;box-shadow:0 24px 80px rgba(0,0,0,.6);font-family:system-ui,-apple-system,"Segoe UI","Noto Sans JP",sans-serif;border:1px solid #34383E}',
+      '.mos365-panel{height:100%;max-width:min(96vw,1680px);margin:0 auto;display:flex;flex-direction:column;overflow:hidden;background:#15171A;color:#F3F4F6;border-radius:10px;box-shadow:0 24px 80px rgba(0,0,0,.6);font-family:system-ui,-apple-system,"Segoe UI","Noto Sans JP",sans-serif;border:1px solid #34383E}',
       // ── ヘッダ
       '.mos365-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 20px;background:#202328;color:#F3F4F6;border-bottom:1px solid #34383E}.mos365-head h2{font-size:15px;margin:0;font-weight:700;color:#F3F4F6}.mos365-head small{opacity:.6;font-size:11px;color:#A9AFB8}.mos365-close{color:#A9AFB8;background:transparent;border:1px solid #34383E;border-radius:6px;padding:5px 10px;cursor:pointer;font-size:12px;transition:border-color .2s}.mos365-close:hover{border-color:#A9AFB8;color:#F3F4F6}',
       // ── ナビ
-      '.mos365-body{min-height:0;display:flex;flex:1}.mos365-nav{width:200px;overflow-y:auto;padding:12px 8px;background:#0E1013;border-right:1px solid #34383E}.mos365-nav button{display:block;width:100%;padding:8px 12px;margin:0 0 2px;text-align:left;border:0;border-radius:6px;background:transparent;color:#A9AFB8;cursor:pointer;font-size:12.5px;font-weight:500;transition:background .15s,color .15s}.mos365-nav button:hover,.mos365-nav button.active{background:#282C32;color:#F3F4F6}',
+      '.mos365-body{min-height:0;display:flex;flex:1}.mos365-nav{width:230px;overflow-y:auto;padding:12px 8px;background:#0E1013;border-right:1px solid #34383E}.mos365-nav button{display:block;width:100%;padding:8px 12px;margin:0 0 2px;text-align:left;border:0;border-radius:6px;background:transparent;color:#A9AFB8;cursor:pointer;font-size:12.5px;font-weight:500;transition:background .15s,color .15s}.mos365-nav button:hover,.mos365-nav button.active{background:#282C32;color:#F3F4F6}',
+      // ── 辞書グリッド・カード（R35 宽屏高对比度浅色内容面）
+      '.mos365-dict-grid{display:grid;gap:16px;grid-template-columns:1fr;margin-top:14px}@media(min-width:1240px){.mos365-dict-grid{grid-template-columns:repeat(2,1fr)}}',
+      '.mos365-dict-card{border:1px solid #D5D9DE;border-radius:8px;background:#FAF9F6;color:#1C2228;padding:16px;line-height:1.6;box-shadow:0 2px 8px rgba(0,0,0,.15)}',
+      '.mos365-dict-card h4{margin:0 0 8px;font-size:15px;color:#1C2228;font-weight:700;display:flex;justify-content:space-between;align-items:center}',
+      '.mos365-dict-card p{margin:6px 0;font-size:12.5px;color:#59616A}',
+      '.mos365-dict-card code{display:block;font-family:Consolas,Monaco,monospace;background:#E9ECEF;color:#1E293B;padding:6px 10px;border-radius:4px;margin:8px 0;font-size:12px;font-weight:500;border:1px solid #D5D9DE}',
+      '.mos365-dict-group{margin-top:10px;border-top:1px dashed #D5D9DE;padding-top:8px}',
+      '.mos365-dict-group-title{font-size:11.5px;font-weight:bold;color:#1C2228;margin-bottom:2px}',
       // ── メインエリア
       '.mos365-main{flex:1;overflow:auto;padding:20px}.mos365-main h3{margin:0 0 6px;font-size:18px;color:#F3F4F6;font-weight:700}.mos365-muted{color:#727984;font-size:12.5px;margin:0 0 16px}',
       // ── グリッド・カード
@@ -407,8 +415,27 @@
   }
 
   function renderDictionary(main) {
-    main.innerHTML = '<h3>功能・函数词典</h3><p class="mos365-muted">主力考点与实务扩展分开标注，不把扩展函数混成核心备考范围。</p><div class="mos365-list">' + content.dictionary.map(function (entry) {
-      return '<article class="mos365-item"><h4>' + escapeHtml(entry.name) + ' <span class="mos365-tag">' + escapeHtml(entry.tier) + '</span></h4><p><strong>日文：</strong>' + escapeHtml(entry.descriptionJa) + '<br><strong>中文：</strong>' + escapeHtml(entry.descriptionZh) + '</p><p><code>' + escapeHtml(entry.syntax) + '</code></p><p><strong>メニュー：</strong>' + escapeHtml(entry.menuJa) + '<br><strong>中文入口：</strong>' + escapeHtml(entry.menuZh) + '</p><p><strong>常见错误：</strong>' + escapeHtml(entry.errorsZh) + '</p><p><strong>关联技能：</strong>' + entry.skillIds.map(escapeHtml).join('、') + '</p></article>';
+    main.innerHTML = '<h3>功能・函数词典</h3><p class="mos365-muted">主力考点与实务扩展分开标注，不把扩展函数混成核心备考范围。</p><div class="mos365-dict-grid">' + content.dictionary.map(function (entry) {
+      return '<article class="mos365-dict-card">' +
+        '<h4>' + escapeHtml(entry.name) + ' <span class="mos365-tag" style="background:#E9ECEF;color:#59616A;border-color:#D5D9DE;">' + escapeHtml(entry.tier) + '</span></h4>' +
+        '<div style="margin-bottom:8px;">' +
+          '<div style="font-size:13.5px;font-weight:600;color:#1C2228;">' + escapeHtml(entry.descriptionJa) + '</div>' +
+          '<div style="font-size:12px;color:#727984;margin-top:1px;">' + escapeHtml(entry.descriptionZh) + '</div>' +
+        '</div>' +
+        '<code>' + escapeHtml(entry.syntax) + '</code>' +
+        '<div class="mos365-dict-group">' +
+          '<div class="mos365-dict-group-title">メニューパス / 菜单路径：</div>' +
+          '<div style="font-size:12px;color:#59616A;">' + escapeHtml(entry.menuJa) + '<br><span style="color:#727984;font-size:11.5px;">（中文入口：' + escapeHtml(entry.menuZh) + '）</span></div>' +
+        '</div>' +
+        '<div class="mos365-dict-group">' +
+          '<div class="mos365-dict-group-title">常见错误：</div>' +
+          '<div style="font-size:12px;color:#991B1B;font-weight:500;">' + escapeHtml(entry.errorsZh) + '</div>' +
+        '</div>' +
+        '<div class="mos365-dict-group">' +
+          '<div class="mos365-dict-group-title">关联技能：</div>' +
+          '<div style="font-size:12px;color:#59616A;">' + entry.skillIds.map(function(s) { return '<span class="mos365-tag" style="margin-right:4px;">' + escapeHtml(s) + '</span>'; }).join('') + '</div>' +
+        '</div>' +
+      '</article>';
     }).join('') + '</div>';
   }
 
@@ -454,12 +481,55 @@
   }
 
   function renderMock(main) {
-    main.innerHTML = '<h3>练习蓝图（50 分钟模拟 · 预览）</h3><p class="mos365-muted">本區為多任務模擬藍圖預覽，非 VSTO 実技トレーニング。實機單任務訓練請使用左側「実技トレーニング（R16/R17）」。Microsoft、Certiport、GMetrix 等の公式試験クライアントではありません。</p><div class="mos365-notice mos365-error">⚠ 本模块尚未与 Excel 右侧训练面板（VSTO）绑定。当前仅创建独立工作簿，不与 pane 任务联动。如需真实 pane 训练，请使用 R16/R17。</div><div class="mos365-list">' + content.mockBlueprints.map(function (blueprint, index) {
-      return '<article class="mos365-item"><h4>' + escapeHtml(blueprint.titleJa) + '</h4><p><strong>中文场景：</strong>' + escapeHtml(blueprint.titleZh) + '</p><p>50 分 / 全日文 / 无提示 / ' + blueprint.tasks.length + ' 个自动评分点 / 4 个可复现变式</p><div class="mos365-actions"><select data-variant="' + index + '"><option value="1">変式 1</option><option value="2">変式 2</option><option value="3">変式 3</option><option value="4">変式 4</option></select><button class="mos365-btn secondary" data-mock="' + index + '">创建练习（无 pane 联动）</button></div></article>';
-    }).join('') + '</div>';
-    main.querySelectorAll('[data-mock]').forEach(function (button) { button.addEventListener('click', function () {
-      var index = Number(button.dataset.mock); var variant = Number(main.querySelector('[data-variant="' + index + '"]').value); startMock(index, variant, button);
-    }); });
+    main.innerHTML = '<h3>模擬試験 / 模拟考试 (VSTO 联动)</h3>' +
+      '<p class="mos365-muted">Excel 底部コントロール台と完全に連動した模擬試験です。練習時の時間配分や操作手順の確認にご利用ください。</p>' +
+      '<div class="mos365-list">' +
+        '<article class="mos365-item" style="border: 1px solid #34383E; background: #202328;">' +
+          '<h4>オリジナル実技模擬試験 V1 <span class="mos365-tag" style="background:#105B3E;color:#FFF;border:0;">本番联动</span></h4>' +
+          '<p><strong>中文场景：</strong>原创模拟考试 V1 — 多步骤真实 Excel 实操模拟考试</p>' +
+          '<p>50 分 / 4 个评分步骤 / 自动 Excel 前置最大化 / 底部控制台 wizard 导航 / 完全支持评分与下一步跳转</p>' +
+          '<div class="mos365-actions">' +
+            '<button class="mos365-btn" data-exam-start-v1 style="background:#E2E8F0;color:#1E293B;">模擬試験を開始する / 开始模拟考试</button>' +
+          '</div>' +
+        '</article>' +
+      '</div>' +
+      '<h3 style="margin-top:28px;">その他の模擬試験（近日公開 / 敬请期待）</h3>' +
+      '<p class="mos365-muted">以下模擬試験は将来のリリースにて提供される予定です。</p>' +
+      '<div class="mos365-list">' + content.mockBlueprints.map(function (blueprint, index) {
+        return '<article class="mos365-item" style="opacity: 0.6;"><h4>' + escapeHtml(blueprint.titleJa) + ' <span class="mos365-tag">近日公開</span></h4><p><strong>中文场景：</strong>' + escapeHtml(blueprint.titleZh) + '</p><p>50 分 / 全日文 / 无提示 / ' + blueprint.tasks.length + ' 个自动评分点</p></article>';
+      }).join('') + '</div>';
+
+    var startBtn = main.querySelector('[data-exam-start-v1]');
+    if (startBtn) {
+      startBtn.addEventListener('click', function () {
+        startOriginalExamV1(this);
+      });
+    }
+  }
+
+  function startOriginalExamV1(button) {
+    button.disabled = true; button.textContent = '準備中…';
+    api('/api/mos365/sessions', { mode: 'exam', scenarioId: 'original_exam_v1' }).then(function (session) {
+      state.session = session;
+      state.session.startedAt = Date.now();
+      button.disabled = false;
+      button.textContent = '模擬試験を開始する / 开始模拟考试';
+      
+      // Update sidebar active button to "mock"
+      var nav = document.querySelector('.mos365-nav');
+      if (nav) {
+        nav.querySelectorAll('button').forEach(function (b) { b.classList.remove('active'); });
+        var mockNavBtn = Array.prototype.slice.call(nav.querySelectorAll('button')).find(function (b) { return b.textContent.indexOf('模擬試験') >= 0; });
+        if (mockNavBtn) mockNavBtn.classList.add('active');
+      }
+
+      // Automatically launch Excel!
+      launchCurrent(null, false);
+    }).catch(function (error) { 
+      button.disabled = false; 
+      button.textContent = '模擬試験を開始する / 开始模拟考试'; 
+      alert(error.message); 
+    });
   }
 
   function startMock(index, variant, button) {

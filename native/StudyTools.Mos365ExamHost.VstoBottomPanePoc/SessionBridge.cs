@@ -25,6 +25,13 @@ namespace StudyTools.Mos365ExamHost
         public int Earned { get; set; }
         public int Total { get; set; }
         public bool FileSaved { get; set; }
+        public bool IsExam { get; set; }
+        public int CurrentStep { get; set; }
+        public int TotalSteps { get; set; }
+        public string TitleJa { get; set; }
+        public string TitleZh { get; set; }
+        public string SheetLabel { get; set; }
+        public string TargetLabel { get; set; }
     }
 
     public class SessionBridge
@@ -207,6 +214,13 @@ namespace StudyTools.Mos365ExamHost
                     vr.InstructionJa = result.session.training.instructionJa;
                     vr.InstructionZh = result.session.training.instructionZh;
                     vr.CompletionAcknowledged = result.session.training.completionAcknowledged;
+                    vr.IsExam = result.session.training.isExam;
+                    vr.CurrentStep = result.session.training.currentStep;
+                    vr.TotalSteps = result.session.training.totalSteps;
+                    vr.TitleJa = result.session.training.titleJa;
+                    vr.TitleZh = result.session.training.titleZh;
+                    vr.SheetLabel = result.session.training.sheetLabel;
+                    vr.TargetLabel = result.session.training.targetLabel;
                 }
                 return vr;
             }
@@ -304,7 +318,17 @@ namespace StudyTools.Mos365ExamHost
                         Earned = result.assessment.earned,
                         Total = result.assessment.total,
                         ResultJa = result.resultJa,
-                        ResultZh = result.resultZh
+                        ResultZh = result.resultZh,
+                        IsExam = result.isExam,
+                        CurrentStep = result.currentStep,
+                        TotalSteps = result.totalSteps,
+                        TaskId = result.nextStep != null ? result.nextStep.taskId : null,
+                        InstructionJa = result.nextStep != null ? result.nextStep.instructionJa : null,
+                        InstructionZh = result.nextStep != null ? result.nextStep.instructionZh : null,
+                        TitleJa = result.nextStep != null ? result.nextStep.titleJa : null,
+                        TitleZh = result.nextStep != null ? result.nextStep.titleZh : null,
+                        SheetLabel = result.nextStep != null ? result.nextStep.sheetLabel : null,
+                        TargetLabel = result.nextStep != null ? result.nextStep.targetLabel : null
                     };
                 }
                 return new SessionVerificationResult
@@ -319,6 +343,25 @@ namespace StudyTools.Mos365ExamHost
                     Ok = false, ErrorCode = "CONNECTION_FAILED",
                     ErrorMessage = ex.Message
                 };
+            }
+        }
+
+        public async Task<bool> NextStepAsync(string sessionId, int excelPid, CancellationToken cancellationToken = default)
+        {
+            var payload = new { sessionId, excelPid, client = "vsto" };
+            string jsonPayload = _json.Serialize(payload);
+            var content = new StringContent(jsonPayload, Encoding.UTF8, "application/json");
+
+            try
+            {
+                var response = await _httpClient.PostAsync(
+                    _baseUrl + "/api/mos365/session/next_step", content, cancellationToken)
+                    .ConfigureAwait(false);
+                return response.IsSuccessStatusCode;
+            }
+            catch
+            {
+                return false;
             }
         }
 
@@ -413,6 +456,24 @@ namespace StudyTools.Mos365ExamHost
             public string instructionJa { get; set; }
             public string instructionZh { get; set; }
             public bool completionAcknowledged { get; set; }
+            public bool isExam { get; set; }
+            public int currentStep { get; set; }
+            public int totalSteps { get; set; }
+            public string titleJa { get; set; }
+            public string titleZh { get; set; }
+            public string sheetLabel { get; set; }
+            public string targetLabel { get; set; }
+        }
+
+        private class NextStepData
+        {
+            public string taskId { get; set; }
+            public string instructionJa { get; set; }
+            public string instructionZh { get; set; }
+            public string titleJa { get; set; }
+            public string titleZh { get; set; }
+            public string sheetLabel { get; set; }
+            public string targetLabel { get; set; }
         }
 
         private class ScoreResponse
@@ -421,6 +482,10 @@ namespace StudyTools.Mos365ExamHost
             public AssessmentData assessment { get; set; }
             public string resultJa { get; set; }
             public string resultZh { get; set; }
+            public bool isExam { get; set; }
+            public int currentStep { get; set; }
+            public int totalSteps { get; set; }
+            public NextStepData nextStep { get; set; }
         }
 
         private class AssessmentData

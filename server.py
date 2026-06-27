@@ -542,6 +542,8 @@ class StudyHubHandler(SimpleHTTPRequestHandler):
                     data = MOS365_SERVICE.session_complete(body)
                 elif path == '/api/mos365/session/score':
                     data = MOS365_SERVICE.session_score(body)
+                elif path == '/api/mos365/session/next_step':
+                    data = MOS365_SERVICE.session_next_step(body)
                 elif path == '/api/mos365/session/end':
                     data = MOS365_SERVICE.end_session(body)
                 elif path == '/api/mos365/clear-launch':

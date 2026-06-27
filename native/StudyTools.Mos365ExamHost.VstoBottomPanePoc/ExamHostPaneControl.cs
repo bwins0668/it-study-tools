@@ -59,9 +59,16 @@ namespace StudyTools.Mos365ExamHost
         private Button _pauseBtn;        // 一時停止
         private Button _resumeBtn;       // 再開
         private Button _gradeBtn;        // 採点する
+        private Button _nextBtn;         // 次へ
         private Button _retryBtn;        // 再試行
         private Button _exitBtn;         // 終了する
         private Label  _resultLabel;     // 评分结果及提示
+
+        // ── 背景面板（字段化以便在 LayoutControls() 中修改）
+        private Panel _statusBarBg;
+        private Panel _progressBg;
+        private Panel _taskBg;
+        private Panel _actionBg;
 
         // ── 分割线
         private Panel _dividerAB;
@@ -72,6 +79,7 @@ namespace StudyTools.Mos365ExamHost
         public Action OnPauseClicked  { get; set; }
         public Action OnResumeClicked { get; set; }
         public Action OnGradeClicked  { get; set; }
+        public Action OnNextClicked   { get; set; }
         public Action OnRetryClicked  { get; set; }
         public Action OnExitClicked   { get; set; }
 
@@ -84,9 +92,22 @@ namespace StudyTools.Mos365ExamHost
         private DateTime _timerStart;
         private bool _timerRunning;
 
+        // 考试状态缓存（用于 wizard 步骤控制）
+        private bool _hasNextStep = false;
+        private string _nextTaskId;
+        private string _nextInstructionJa;
+        private string _nextInstructionZh;
+        private string _nextTitleJa;
+        private string _nextTitleZh;
+        private string _nextSheetLabel;
+        private string _nextTargetLabel;
+        private int _nextStepNum;
+        private int _nextTotalSteps;
+
         private bool _taskVisible;
         private string _currentUIState = "idle";
         private bool _sessionBound = false;
+
 
         public ExamHostPaneControl()
         {
@@ -138,25 +159,37 @@ namespace StudyTools.Mos365ExamHost
             ApplyUIState("ready_to_start");
         }
 
-        /// <summary>
-        /// 从服务端 attach 结果渲染或更新题干。
-        /// </summary>
-        public bool ShowTask(string instrJa, string instrZh, long gen)
+        public bool ShowTask(
+            string instrJa, string instrZh, long gen,
+            bool isExam = false, int currentStep = 1, int totalSteps = 1,
+            string titleJa = "", string titleZh = "",
+            string sheetLabel = "", string targetLabel = "")
         {
             if (gen != _renderGeneration) return false;
 
-            if (!_taskVisible)
+            _taskInstrJa.Text = instrJa ?? "";
+            _taskInstrZh.Text = instrZh ?? "";
+            _taskInstrJa.Visible = true;
+            _taskInstrZh.Visible = true;
+            _taskVisible = true;
+
+            if (isExam)
             {
-                _taskInstrJa.Text = instrJa ?? "";
-                _taskInstrZh.Text = instrZh ?? "";
-                _taskInstrJa.Visible = true;
-                _taskInstrZh.Visible = true;
-                _taskVisible = true;
+                _progressBar.Text = string.Format("プロジェクト 1 / 1  ·  タスク {0} / {1}  ·  模擬", currentStep, totalSteps);
+                _statusBarTitle.Text = "オリジナル実技模擬試験 V1 / 原创模拟考试 V1";
+                
+                if (!string.IsNullOrEmpty(titleJa)) _taskTitleJa.Text = titleJa;
+                if (!string.IsNullOrEmpty(titleZh)) _taskTitleZh.Text = titleZh;
+                _taskTitleJa.Visible = true;
+                _taskTitleZh.Visible = true;
+                
+                _taskLocation.Text = BuildLocationText(sheetLabel, targetLabel);
+                _taskLocation.Visible = !string.IsNullOrEmpty(_taskLocation.Text);
             }
             else
             {
-                if (!string.IsNullOrEmpty(instrJa)) _taskInstrJa.Text = instrJa;
-                if (!string.IsNullOrEmpty(instrZh)) _taskInstrZh.Text = instrZh;
+                _progressBar.Text = "プロジェクト 1 / 1  ·  タスク 1 / 1  ·  基礎";
+                _statusBarTitle.Text = "MOS Excel 365  実技トレーニング / 实操训练";
             }
 
             _sessionBound = true;
@@ -167,12 +200,15 @@ namespace StudyTools.Mos365ExamHost
                 _resultLabel.ForeColor = TextMainLight;
             }
 
+            // Trigger responsive layout update
+            LayoutControls();
+
             return true;
         }
 
         public void ShowTask(string instrJa, string instrZh)
         {
-            ShowTask(instrJa, instrZh, _renderGeneration);
+            ShowTask(instrJa, instrZh, _renderGeneration, false, 1, 1, "", "", "", "");
         }
 
         public void EnableGrading()
@@ -263,17 +299,62 @@ namespace StudyTools.Mos365ExamHost
             ApplyUIState("scoring");
         }
 
-        public void ShowScoreResult(string resultJa, string resultZh, int earned, int total)
+        public void ShowScoreResult(
+            string resultJa, string resultZh, int earned, int total,
+            bool isExam = false, int currentStep = 1, int totalSteps = 1,
+            string nextTaskId = null, string nextInstructionJa = null, string nextInstructionZh = null,
+            string nextTitleJa = null, string nextTitleZh = null,
+            string nextSheetLabel = null, string nextTargetLabel = null)
         {
             var correct = total > 0 && earned == total;
-            ApplyUIState(correct ? "scored_correct" : "scored_incorrect");
-            _resultLabel.Visible   = true;
-            _resultLabel.ForeColor = correct ? ColCorrect : ColIncorrect;
-            _resultLabel.Text  =
-                (correct ? "✓ " : "× ") +
-                earned + " / " + total + (correct ? " correct" : " incorrect") + "   " +
-                (correct ? "正解 / 回答正确" : "再確認 / 请重新检查") + "\n" +
-                (correct ? "" : "目标单元格或公式有误，请重新检查。");
+            
+            if (isExam)
+            {
+                if (correct)
+                {
+                    if (currentStep < totalSteps)
+                    {
+                        _hasNextStep = true;
+                        _nextTaskId = nextTaskId;
+                        _nextInstructionJa = nextInstructionJa;
+                        _nextInstructionZh = nextInstructionZh;
+                        _nextTitleJa = nextTitleJa;
+                        _nextTitleZh = nextTitleZh;
+                        _nextSheetLabel = nextSheetLabel;
+                        _nextTargetLabel = nextTargetLabel;
+                        _nextStepNum = currentStep + 1;
+                        _nextTotalSteps = totalSteps;
+
+                        ApplyUIState("next_step_ready");
+                    }
+                    else
+                    {
+                        _hasNextStep = false;
+                        ApplyUIState("exam_completed");
+                    }
+                }
+                else
+                {
+                    ApplyUIState("scored_incorrect");
+                    _resultLabel.Visible = true;
+                    _resultLabel.ForeColor = ColIncorrect;
+                    _resultLabel.Text = string.Format("× {0} / {1} correct   再確認 / 请重新检查\n目标单元格或公式有误，请重新检查。", earned, total);
+                }
+            }
+            else
+            {
+                ApplyUIState(correct ? "scored_correct" : "scored_incorrect");
+                _resultLabel.Visible   = true;
+                _resultLabel.ForeColor = correct ? ColCorrect : ColIncorrect;
+                _resultLabel.Text  =
+                    (correct ? "✓ " : "× ") +
+                    earned + " / " + total + (correct ? " correct" : " incorrect") + "   " +
+                    (correct ? "正解 / 回答正确" : "再確認 / 请重新检查") + "\n" +
+                    (correct ? "" : "目标单元格或公式有误，请重新检查。");
+            }
+
+            // Trigger responsive layout update
+            LayoutControls();
         }
 
         public void ShowConnectionFailed(string message)
@@ -318,14 +399,19 @@ namespace StudyTools.Mos365ExamHost
         public void ApplyUIState(string state)
         {
             _currentUIState = state;
+            
+            // Ensure nextBtn exists (to avoid nullref during early init)
+            if (_nextBtn == null) return;
+
             switch (state)
             {
                 case "idle":
                     _statusBarState.Text = "起動中 / 正在启动…";
                     _startBtn.Visible   = true;  _startBtn.Enabled   = false;
-                    _pauseBtn.Visible   = false; _pauseBtn.Enabled   = false;
-                    _resumeBtn.Visible  = false; _resumeBtn.Enabled  = false;
+                    _pauseBtn.Visible   = true;  _pauseBtn.Enabled   = false;
+                    _resumeBtn.Visible  = true;  _resumeBtn.Enabled  = false;
                     _gradeBtn.Visible   = true;  _gradeBtn.Enabled   = false;
+                    _nextBtn.Visible    = false; _nextBtn.Enabled    = false;
                     _exitBtn.Visible    = true;  _exitBtn.Enabled    = true;
                     _retryBtn.Visible   = false;
                     _resultLabel.Text   = "トレーニングを準備しています…\n正在准备训练环境…";
@@ -336,9 +422,10 @@ namespace StudyTools.Mos365ExamHost
                 case "ready_to_start":
                     _statusBarState.Text = "準備完了 / 已准备";
                     _startBtn.Visible   = true;  _startBtn.Enabled   = true;
-                    _pauseBtn.Visible   = false; _pauseBtn.Enabled   = false;
-                    _resumeBtn.Visible  = false; _resumeBtn.Enabled  = false;
+                    _pauseBtn.Visible   = true;  _pauseBtn.Enabled   = false;
+                    _resumeBtn.Visible  = true;  _resumeBtn.Enabled  = false;
                     _gradeBtn.Visible   = true;  _gradeBtn.Enabled   = false;
+                    _nextBtn.Visible    = false; _nextBtn.Enabled    = false;
                     _exitBtn.Visible    = true;  _exitBtn.Enabled    = true;
                     _retryBtn.Visible   = false;
                     _resultLabel.Text   = "「開始」をクリックして、トレーニングを開始してください。\n请点击「开始」以开始训练。";
@@ -348,10 +435,11 @@ namespace StudyTools.Mos365ExamHost
 
                 case "running":
                     _statusBarState.Text = "進行中 / 进行中";
-                    _startBtn.Visible   = false; _startBtn.Enabled   = false;
+                    _startBtn.Visible   = true;  _startBtn.Enabled   = false;
                     _pauseBtn.Visible   = true;  _pauseBtn.Enabled   = true;
-                    _resumeBtn.Visible  = false; _resumeBtn.Enabled  = false;
+                    _resumeBtn.Visible  = true;  _resumeBtn.Enabled  = false;
                     _gradeBtn.Visible   = true;  _gradeBtn.Enabled   = _sessionBound;
+                    _nextBtn.Visible    = false; _nextBtn.Enabled    = false;
                     _exitBtn.Visible    = true;  _exitBtn.Enabled    = true;
                     _retryBtn.Visible   = false;
                     _resultLabel.Text   = "Excel で操作してから「採点する」を押してください。\n完成 Excel 操作后，点击「评分」。";
@@ -361,10 +449,11 @@ namespace StudyTools.Mos365ExamHost
 
                 case "paused":
                     _statusBarState.Text = "一時停止 / 已暂停";
-                    _startBtn.Visible   = false; _startBtn.Enabled   = false;
-                    _pauseBtn.Visible   = false; _pauseBtn.Enabled   = false;
+                    _startBtn.Visible   = true;  _startBtn.Enabled   = false;
+                    _pauseBtn.Visible   = true;  _pauseBtn.Enabled   = false;
                     _resumeBtn.Visible  = true;  _resumeBtn.Enabled  = true;
                     _gradeBtn.Visible   = true;  _gradeBtn.Enabled   = false;
+                    _nextBtn.Visible    = false; _nextBtn.Enabled    = false;
                     _exitBtn.Visible    = true;  _exitBtn.Enabled    = true;
                     _retryBtn.Visible   = false;
                     _resultLabel.Text   = "トレーニングは一時停止しています。「再開」で続行します。\n训练已暂停。点击「继续」以恢复。";
@@ -374,10 +463,11 @@ namespace StudyTools.Mos365ExamHost
 
                 case "scoring":
                     _statusBarState.Text = "採点中 / 评分中…";
-                    _startBtn.Visible   = false; _startBtn.Enabled   = false;
-                    _pauseBtn.Visible   = false; _pauseBtn.Enabled   = false;
-                    _resumeBtn.Visible  = false; _resumeBtn.Enabled  = false;
+                    _startBtn.Visible   = true;  _startBtn.Enabled   = false;
+                    _pauseBtn.Visible   = true;  _pauseBtn.Enabled   = false;
+                    _resumeBtn.Visible  = true;  _resumeBtn.Enabled  = false;
                     _gradeBtn.Visible   = true;  _gradeBtn.Enabled   = false;
+                    _nextBtn.Visible    = false; _nextBtn.Enabled    = false;
                     _exitBtn.Visible    = true;  _exitBtn.Enabled    = false;
                     _retryBtn.Visible   = false;
                     _resultLabel.Text   = "採点しています / 正在评分…";
@@ -387,30 +477,62 @@ namespace StudyTools.Mos365ExamHost
 
                 case "scored_correct":
                     _statusBarState.Text = "採点済み ✓ / 已评分";
-                    _startBtn.Visible   = false; _startBtn.Enabled   = false;
+                    _startBtn.Visible   = true;  _startBtn.Enabled   = false;
                     _pauseBtn.Visible   = true;  _pauseBtn.Enabled   = true;
-                    _resumeBtn.Visible  = false; _resumeBtn.Enabled  = false;
+                    _resumeBtn.Visible  = true;  _resumeBtn.Enabled  = false;
                     _gradeBtn.Visible   = true;  _gradeBtn.Enabled   = true;
+                    _nextBtn.Visible    = false; _nextBtn.Enabled    = false;
                     _exitBtn.Visible    = true;  _exitBtn.Enabled    = true;
                     _retryBtn.Visible   = false;
                     break;
 
                 case "scored_incorrect":
                     _statusBarState.Text = "採点済み × / 已评分";
-                    _startBtn.Visible   = false; _startBtn.Enabled   = false;
+                    _startBtn.Visible   = true;  _startBtn.Enabled   = false;
                     _pauseBtn.Visible   = true;  _pauseBtn.Enabled   = true;
-                    _resumeBtn.Visible  = false; _resumeBtn.Enabled  = false;
+                    _resumeBtn.Visible  = true;  _resumeBtn.Enabled  = false;
                     _gradeBtn.Visible   = true;  _gradeBtn.Enabled   = true;
+                    _nextBtn.Visible    = false; _nextBtn.Enabled    = false;
                     _exitBtn.Visible    = true;  _exitBtn.Enabled    = true;
                     _retryBtn.Visible   = false;
                     break;
 
+                case "next_step_ready":
+                    _statusBarState.Text = "ステップ完了 / 步骤已完成";
+                    _startBtn.Visible   = true;  _startBtn.Enabled   = false;
+                    _pauseBtn.Visible   = true;  _pauseBtn.Enabled   = false;
+                    _resumeBtn.Visible  = true;  _resumeBtn.Enabled  = false;
+                    _gradeBtn.Visible   = true;  _gradeBtn.Enabled   = false;
+                    _nextBtn.Visible    = true;  _nextBtn.Enabled    = true;
+                    _exitBtn.Visible    = true;  _exitBtn.Enabled    = true;
+                    _retryBtn.Visible   = false;
+                    _resultLabel.Text   = "正解です！「次へ」を押して次の問題に進んでください。\n回答正确！请点击「下一题」继续。";
+                    _resultLabel.ForeColor = ColCorrect;
+                    _resultLabel.Visible = true;
+                    break;
+
+                case "exam_completed":
+                    _statusBarState.Text = "試験完了 / 考试已完成";
+                    _startBtn.Visible   = true;  _startBtn.Enabled   = false;
+                    _pauseBtn.Visible   = true;  _pauseBtn.Enabled   = false;
+                    _resumeBtn.Visible  = true;  _resumeBtn.Enabled  = false;
+                    _gradeBtn.Visible   = true;  _gradeBtn.Enabled   = false;
+                    _nextBtn.Visible    = false; _nextBtn.Enabled    = false;
+                    _exitBtn.Visible    = true;  _exitBtn.Enabled    = true;
+                    _retryBtn.Visible   = false;
+                    _resultLabel.Text   = "4 / 4 correct   模擬試験を完了しました\n恭喜！原创模拟考试已完成。";
+                    _resultLabel.ForeColor = ColCorrect;
+                    _resultLabel.Visible = true;
+                    StopTimer();
+                    break;
+
                 case "ending":
                     _statusBarState.Text = "終了中 / 正在结束";
-                    _startBtn.Visible   = false; _startBtn.Enabled   = false;
-                    _pauseBtn.Visible   = false; _pauseBtn.Enabled   = false;
-                    _resumeBtn.Visible  = false; _resumeBtn.Enabled  = false;
-                    _gradeBtn.Visible   = false; _gradeBtn.Enabled   = false;
+                    _startBtn.Visible   = true;  _startBtn.Enabled   = false;
+                    _pauseBtn.Visible   = true;  _pauseBtn.Enabled   = false;
+                    _resumeBtn.Visible  = true;  _resumeBtn.Enabled  = false;
+                    _gradeBtn.Visible   = true;  _gradeBtn.Enabled   = false;
+                    _nextBtn.Visible    = false; _nextBtn.Enabled    = false;
                     _exitBtn.Visible    = true;  _exitBtn.Enabled    = false;
                     _retryBtn.Visible   = false;
                     _resultLabel.Text   = "このトレーニングを終了しています。\n正在结束本次训练。";
@@ -420,10 +542,11 @@ namespace StudyTools.Mos365ExamHost
 
                 case "ended":
                     _statusBarState.Text = "終了 / 已结束";
-                    _startBtn.Visible   = false; _startBtn.Enabled   = false;
-                    _pauseBtn.Visible   = false; _pauseBtn.Enabled   = false;
-                    _resumeBtn.Visible  = false; _resumeBtn.Enabled  = false;
-                    _gradeBtn.Visible   = false; _gradeBtn.Enabled   = false;
+                    _startBtn.Visible   = true;  _startBtn.Enabled   = false;
+                    _pauseBtn.Visible   = true;  _pauseBtn.Enabled   = false;
+                    _resumeBtn.Visible  = true;  _resumeBtn.Enabled  = false;
+                    _gradeBtn.Visible   = true;  _gradeBtn.Enabled   = false;
+                    _nextBtn.Visible    = false; _nextBtn.Enabled    = false;
                     _exitBtn.Visible    = true;  _exitBtn.Enabled    = false;
                     _retryBtn.Visible   = false;
                     _resultLabel.Text   = "トレーニングを終了しました / 训练已结束";
@@ -431,6 +554,9 @@ namespace StudyTools.Mos365ExamHost
                     _resultLabel.Visible = true;
                     break;
             }
+
+            // Re-trigger layout to reposition
+            LayoutControls();
         }
 
         private string BuildLocationText(string sheetLabel, string targetLabel)
@@ -532,15 +658,15 @@ namespace StudyTools.Mos365ExamHost
                 TextAlign = ContentAlignment.MiddleRight
             };
 
-            var statusBarBg = new Panel
+            _statusBarBg = new Panel
             {
                 BackColor = BgMain,
                 Location  = new Point(0, 0),
                 Size      = new Size(FullW, StatusH)
             };
-            statusBarBg.Controls.Add(_statusBarTitle);
-            statusBarBg.Controls.Add(_statusBarState);
-            statusBarBg.Controls.Add(_statusBarTimer);
+            _statusBarBg.Controls.Add(_statusBarTitle);
+            _statusBarBg.Controls.Add(_statusBarState);
+            _statusBarBg.Controls.Add(_statusBarTimer);
 
             _dividerAB = new Panel { BackColor = Divider, Location = new Point(0, StatusH), Size = new Size(FullW, DivH) };
 
@@ -557,13 +683,13 @@ namespace StudyTools.Mos365ExamHost
                 TextAlign = ContentAlignment.MiddleLeft
             };
 
-            var progressBg = new Panel
+            _progressBg = new Panel
             {
                 BackColor = BgLayer,
                 Location  = new Point(0, StatusH + DivH),
                 Size      = new Size(FullW, ProgressH)
             };
-            progressBg.Controls.Add(_progressBar);
+            _progressBg.Controls.Add(_progressBar);
 
             _dividerBC = new Panel { BackColor = Divider, Location = new Point(0, StatusH + DivH + ProgressH), Size = new Size(FullW, DivH) };
 
@@ -628,17 +754,17 @@ namespace StudyTools.Mos365ExamHost
                 Visible   = false
             };
 
-            var taskBg = new Panel
+            _taskBg = new Panel
             {
                 BackColor = BgContent,
                 Location  = new Point(0, StatusH + DivH + ProgressH + DivH),
                 Size      = new Size(FullW, TaskH)
             };
-            taskBg.Controls.Add(_taskTitleJa);
-            taskBg.Controls.Add(_taskTitleZh);
-            taskBg.Controls.Add(_taskInstrJa);
-            taskBg.Controls.Add(_taskInstrZh);
-            taskBg.Controls.Add(_taskLocation);
+            _taskBg.Controls.Add(_taskTitleJa);
+            _taskBg.Controls.Add(_taskTitleZh);
+            _taskBg.Controls.Add(_taskInstrJa);
+            _taskBg.Controls.Add(_taskInstrZh);
+            _taskBg.Controls.Add(_taskLocation);
 
             _dividerCD = new Panel { BackColor = Divider, Location = new Point(0, StatusH + DivH + ProgressH + DivH + TaskH), Size = new Size(FullW, DivH) };
 
@@ -667,7 +793,7 @@ namespace StudyTools.Mos365ExamHost
                 FlatStyle = FlatStyle.Flat,
                 Size      = new Size(100, 32),
                 Location  = new Point(PadX + 110, 12),
-                Visible   = false,
+                Visible   = true,
                 Enabled   = false
             };
             _pauseBtn.FlatAppearance.BorderColor = Divider;
@@ -682,7 +808,7 @@ namespace StudyTools.Mos365ExamHost
                 FlatStyle = FlatStyle.Flat,
                 Size      = new Size(100, 32),
                 Location  = new Point(PadX + 220, 12),
-                Visible   = false,
+                Visible   = true,
                 Enabled   = false
             };
             _resumeBtn.FlatAppearance.BorderColor = Divider;
@@ -703,6 +829,21 @@ namespace StudyTools.Mos365ExamHost
             _gradeBtn.FlatAppearance.BorderColor = Divider;
             _gradeBtn.Click += (s, ev) => OnGradeClicked?.Invoke();
 
+            _nextBtn = new Button
+            {
+                Text      = "次へ",
+                Font      = new Font("Segoe UI", 9f, FontStyle.Bold),
+                ForeColor = BtnMainFg,
+                BackColor = BtnMainBg,
+                FlatStyle = FlatStyle.Flat,
+                Size      = new Size(100, 32),
+                Location  = new Point(PadX + 440, 12),
+                Visible   = false,
+                Enabled   = false
+            };
+            _nextBtn.FlatAppearance.BorderColor = Divider;
+            _nextBtn.Click += (s, ev) => OnNextClicked?.Invoke();
+
             _exitBtn = new Button
             {
                 Text      = "終了する",
@@ -711,7 +852,7 @@ namespace StudyTools.Mos365ExamHost
                 BackColor = BtnExitBg,
                 FlatStyle = FlatStyle.Flat,
                 Size      = new Size(100, 32),
-                Location  = new Point(PadX + 440, 12),
+                Location  = new Point(PadX + 550, 12),
                 Visible   = true,
                 Enabled   = true
             };
@@ -726,7 +867,7 @@ namespace StudyTools.Mos365ExamHost
                 BackColor = BtnPauseBg,
                 FlatStyle = FlatStyle.Flat,
                 Size      = new Size(100, 32),
-                Location  = new Point(PadX + 550, 12),
+                Location  = new Point(PadX + 660, 12),
                 Visible   = false,
                 Enabled   = true
             };
@@ -738,26 +879,27 @@ namespace StudyTools.Mos365ExamHost
                 Font      = new Font("Segoe UI", 8.5f, FontStyle.Regular),
                 ForeColor = TextWeak,
                 BackColor = Color.Transparent,
-                Location  = new Point(PadX + 680, 10),
-                Size      = new Size(560, 40),
+                Location  = new Point(PadX + 770, 10),
+                Size      = new Size(560, 48),
                 AutoSize  = false,
                 TextAlign = ContentAlignment.MiddleLeft,
                 Visible   = false
             };
 
-            var actionBg = new Panel
+            _actionBg = new Panel
             {
                 BackColor = BgMain,
                 Location  = new Point(0, StatusH + DivH + ProgressH + DivH + TaskH + DivH),
                 Size      = new Size(FullW, ActionH)
             };
-            actionBg.Controls.Add(_startBtn);
-            actionBg.Controls.Add(_pauseBtn);
-            actionBg.Controls.Add(_resumeBtn);
-            actionBg.Controls.Add(_gradeBtn);
-            actionBg.Controls.Add(_exitBtn);
-            actionBg.Controls.Add(_retryBtn);
-            actionBg.Controls.Add(_resultLabel);
+            _actionBg.Controls.Add(_startBtn);
+            _actionBg.Controls.Add(_pauseBtn);
+            _actionBg.Controls.Add(_resumeBtn);
+            _actionBg.Controls.Add(_gradeBtn);
+            _actionBg.Controls.Add(_nextBtn);
+            _actionBg.Controls.Add(_exitBtn);
+            _actionBg.Controls.Add(_retryBtn);
+            _actionBg.Controls.Add(_resultLabel);
 
             // ── 计时器 ─────────────────────────────────────────────
             _timer = new System.Windows.Forms.Timer { Interval = 1000 };
@@ -769,13 +911,112 @@ namespace StudyTools.Mos365ExamHost
             this.Font       = new Font("Segoe UI", 9f, FontStyle.Regular);
             this.AutoScroll = false;
 
-            this.Controls.Add(statusBarBg);
-            this.Controls.Add(progressBg);
-            this.Controls.Add(taskBg);
-            this.Controls.Add(actionBg);
+            this.Controls.Add(_statusBarBg);
+            this.Controls.Add(_progressBg);
+            this.Controls.Add(_taskBg);
+            this.Controls.Add(_actionBg);
             this.Controls.Add(_dividerAB);
             this.Controls.Add(_dividerBC);
             this.Controls.Add(_dividerCD);
+
+            // Hook Resize event and run initial layout
+            this.Resize += (s, ev) => LayoutControls();
+            LayoutControls();
+        }
+
+        private void LayoutControls()
+        {
+            const int StatusH   = 44;
+            const int DivH      = 1;
+            const int ProgressH = 30;
+            const int TaskH     = 130;
+            const int ActionH   = 74;
+            const int PadX      = 14;
+
+            int w = this.Width;
+            if (w <= 0) return; // Prevent zero-width crash
+
+            // Update backgrounds
+            if (_statusBarBg != null) { _statusBarBg.Width = w; _statusBarBg.Height = StatusH; }
+            if (_dividerAB != null)   { _dividerAB.Location = new Point(0, StatusH); _dividerAB.Width = w; }
+            
+            if (_progressBg != null)  { _progressBg.Location = new Point(0, StatusH + DivH); _progressBg.Width = w; _progressBg.Height = ProgressH; }
+            if (_dividerBC != null)   { _dividerBC.Location = new Point(0, StatusH + DivH + ProgressH); _dividerBC.Width = w; }
+            
+            if (_taskBg != null)      { _taskBg.Location = new Point(0, StatusH + DivH + ProgressH + DivH); _taskBg.Width = w; _taskBg.Height = TaskH; }
+            if (_dividerCD != null)   { _dividerCD.Location = new Point(0, StatusH + DivH + ProgressH + DivH + TaskH); _dividerCD.Width = w; }
+            
+            if (_actionBg != null)    { _actionBg.Location = new Point(0, StatusH + DivH + ProgressH + DivH + TaskH + DivH); _actionBg.Width = w; _actionBg.Height = ActionH; }
+
+            // Align A: status bar children
+            if (_statusBarTitle != null) { _statusBarTitle.Location = new Point(PadX, 8); }
+            if (_statusBarTimer != null) { _statusBarTimer.Location = new Point(w - PadX - 60, 8); }
+            if (_statusBarState != null) { _statusBarState.Location = new Point(w - PadX - 60 - 320, 8); }
+
+            // Align B: progress children
+            if (_progressBar != null) { _progressBar.Location = new Point(PadX, 6); _progressBar.Width = w - PadX * 2; }
+
+            // Align C: task children (Responsive to width 1100px)
+            if (_taskTitleJa != null && _taskTitleZh != null && _taskInstrJa != null && _taskInstrZh != null && _taskLocation != null)
+            {
+                if (w >= 1100)
+                {
+                    _taskTitleJa.Location = new Point(PadX, 10);
+                    _taskTitleJa.Size = new Size(380, 24);
+                    _taskTitleZh.Location = new Point(PadX, 36);
+                    _taskTitleZh.Size = new Size(380, 18);
+
+                    _taskInstrJa.Location = new Point(410, 10);
+                    _taskInstrJa.Size = new Size(w - 410 - 240, 52);
+                    _taskInstrZh.Location = new Point(410, 64);
+                    _taskInstrZh.Size = new Size(w - 410 - 240, 36);
+
+                    _taskLocation.Location = new Point(w - 220, 10);
+                    _taskLocation.Size = new Size(200, 26);
+                }
+                else
+                {
+                    _taskTitleJa.Location = new Point(PadX, 4);
+                    _taskTitleJa.Size = new Size(330, 20);
+                    _taskTitleZh.Location = new Point(PadX, 26);
+                    _taskTitleZh.Size = new Size(330, 16);
+                    _taskLocation.Location = new Point(PadX, 44);
+                    _taskLocation.Size = new Size(330, 20);
+
+                    _taskInstrJa.Location = new Point(360, 4);
+                    _taskInstrJa.Size = new Size(w - 360 - PadX, 60);
+                    _taskInstrZh.Location = new Point(360, 66);
+                    _taskInstrZh.Size = new Size(w - 360 - PadX, 40);
+                }
+            }
+
+            // Align D: buttons in action bar (fixed sequential positioning)
+            int btnY = 12;
+            int btnW = 90;
+            int gap = 8;
+            int curX = PadX;
+
+            if (_startBtn != null)  { _startBtn.Location = new Point(curX, btnY); _startBtn.Size = new Size(btnW, 32); curX += btnW + gap; }
+            if (_pauseBtn != null)  { _pauseBtn.Location = new Point(curX, btnY); _pauseBtn.Size = new Size(btnW, 32); curX += btnW + gap; }
+            if (_resumeBtn != null) { _resumeBtn.Location = new Point(curX, btnY); _resumeBtn.Size = new Size(btnW, 32); curX += btnW + gap; }
+            if (_gradeBtn != null)  { _gradeBtn.Location = new Point(curX, btnY); _gradeBtn.Size = new Size(btnW, 32); curX += btnW + gap; }
+            if (_nextBtn != null)   
+            { 
+                _nextBtn.Location = new Point(curX, btnY); 
+                _nextBtn.Size = new Size(btnW, 32); 
+                if (_nextBtn.Visible)
+                {
+                    curX += btnW + gap;
+                }
+            }
+            if (_exitBtn != null)   { _exitBtn.Location = new Point(curX, btnY); _exitBtn.Size = new Size(btnW, 32); curX += btnW + gap; }
+            if (_retryBtn != null)  { _retryBtn.Location = new Point(curX, btnY); _retryBtn.Size = new Size(btnW, 32); curX += btnW + gap; }
+
+            if (_resultLabel != null)
+            {
+                _resultLabel.Location = new Point(curX, 10);
+                _resultLabel.Size = new Size(Math.Max(150, w - curX - PadX), 48);
+            }
         }
 
         protected override void Dispose(bool disposing)

@@ -383,6 +383,106 @@ MOS_CATALOG: dict[str, dict[str, Any]] = {
 }
 
 
+EXAM_CATALOG: dict[str, dict[str, Any]] = {
+    "MOS_EXAM_ORIGINAL_V1_OPERATIONS": {
+        "id": "MOS_EXAM_ORIGINAL_V1_OPERATIONS",
+        "titleJa": "オリジナル実技模擬試験 V1：業務データ処理",
+        "titleZh": "原创实操模拟考试 V1：业务数据处理",
+        "steps": [
+            {
+                "stepId": "EXAM_V1_STEP_01_CALCULATE_ROW_1",
+                "titleJa": "金額の計算（ノート）",
+                "titleZh": "计算金额（笔记本）",
+                "instructionJa": "「作業用」シートの E2 セルに、ノートの金額を求めるために、単価（C2）と数量（D2）を掛け算する数式を入力してください。",
+                "instructionZh": "请在“作業用”工作表的 E2 单元格中，输入计算笔记本金额的公式（单价 C2 乘以数量 D2）。",
+                "sheetLabel": "作業用",
+                "targetLabel": "E2",
+                "estimatedSeconds": 120,
+                "contentProvenance": "original_project_content_r35",
+                "assessment": {
+                    "type": "cell_formula_equals",
+                    "sheetName": "作業用",
+                    "cellRef": "E2",
+                    "expectedFormula": "=C2*D2",
+                    "alternativeFormulas": ["=D2*C2"],
+                    "feedback": {
+                        "correct": {"ja": "ノートの金額が正しく入力されています。", "zh": "笔记本的金额已正确输入。"},
+                        "incorrect": {"ja": "単価と数量を掛ける正しい数式を入力してください。", "zh": "请输入将单价与数量相乘的正确公式。"}
+                    }
+                }
+            },
+            {
+                "stepId": "EXAM_V1_STEP_02_CALCULATE_ROW_2",
+                "titleJa": "金額の计算（消しゴム）",
+                "titleZh": "计算金额（橡皮擦）",
+                "instructionJa": "「作業用」シートの E3 セルに、消しゴムの金額を求めるために、単価（C3）と数量（D3）を掛け算する数式を入力してください。",
+                "instructionZh": "请在“作業用”工作表的 E3 单元格中，输入计算橡皮擦金额的公式（单价 C3 乘以数量 D3）。",
+                "sheetLabel": "作業用",
+                "targetLabel": "E3",
+                "estimatedSeconds": 120,
+                "contentProvenance": "original_project_content_r35",
+                "assessment": {
+                    "type": "cell_formula_equals",
+                    "sheetName": "作業用",
+                    "cellRef": "E3",
+                    "expectedFormula": "=C3*D3",
+                    "alternativeFormulas": ["=D3*C3"],
+                    "feedback": {
+                        "correct": {"ja": "消しゴムの金額が正しく入力されています。", "zh": "橡皮擦的金额已正确输入。"},
+                        "incorrect": {"ja": "単価と数量を掛ける正しい数式を入力してください。", "zh": "请输入将单价与数量相乘的正确公式。"}
+                    }
+                }
+            },
+            {
+                "stepId": "EXAM_V1_STEP_03_SUMMARY_TOTAL",
+                "titleJa": "合計金額の算出",
+                "titleZh": "计算总金额",
+                "instructionJa": "「集計」シートの B2 セルに、SUM関数を使って「作業用」シートの金額（E2:E3）の合計を計算する数式を入力してください。",
+                "instructionZh": "请在“集计”工作表的 B2 单元格中，使用 SUM 函数计算“作業用”工作表金额（E2:E3）的总和。",
+                "sheetLabel": "集計",
+                "targetLabel": "B2",
+                "estimatedSeconds": 120,
+                "contentProvenance": "original_project_content_r35",
+                "assessment": {
+                    "type": "cell_formula_equals",
+                    "sheetName": "集計",
+                    "cellRef": "B2",
+                    "expectedFormula": "=SUM(作業用!E2:E3)",
+                    "alternativeFormulas": ["=SUM(作業用!$E$2:$E$3)", "=SUM(作業用!E2,作業用!E3)", "=SUM(作業用!$E$2,作業用!$E$3)"],
+                    "feedback": {
+                        "correct": {"ja": "金額の合計が正しく計算されています。", "zh": "金额的总和已正确计算。"},
+                        "incorrect": {"ja": "SUM関数を使って正しい合計数式を入力してください。", "zh": "请使用 SUM 函数输入正确的求和公式。"}
+                    }
+                }
+            },
+            {
+                "stepId": "EXAM_V1_STEP_04_SUMMARY_AVERAGE",
+                "titleJa": "平均金額の算出",
+                "titleZh": "计算平均金额",
+                "instructionJa": "「集計」シートの B3 セルに、AVERAGE関数を使って「作業用」シートの金額（E2:E3）の平均を計算する数式を入力してください。",
+                "instructionZh": "请在“集计”工作表的 B3 单元格中，使用 AVERAGE 函数计算“作業用”工作表金额（E2:E3）的平均值。",
+                "sheetLabel": "集計",
+                "targetLabel": "B3",
+                "estimatedSeconds": 120,
+                "contentProvenance": "original_project_content_r35",
+                "assessment": {
+                    "type": "cell_formula_equals",
+                    "sheetName": "集計",
+                    "cellRef": "B3",
+                    "expectedFormula": "=AVERAGE(作業用!E2:E3)",
+                    "alternativeFormulas": ["=AVERAGE(作業用!$E$2:$E$3)", "=AVERAGE(作業用!E2,作業用!E3)", "=AVERAGE(作業用!$E$2,作業用!$E$3)"],
+                    "feedback": {
+                        "correct": {"ja": "金額の平均が正しく計算されています。", "zh": "金额的平均值已正确计算。"},
+                        "incorrect": {"ja": "AVERAGE関数を使って正しい平均数式を入力してください。", "zh": "请使用 AVERAGE 函数输入正确的平均数公式。"}
+                    }
+                }
+            }
+        ]
+    }
+}
+
+
+
 _LAUNCH_STATE: dict = None
 _LAUNCH_LOCK = None
 
@@ -413,7 +513,20 @@ def _foreground_excel_async(pid: int, session_id: str) -> None:
                     user32.ShowWindow(hwnd, SW_RESTORE)
                     time.sleep(0.1)
                     user32.ShowWindow(hwnd, SW_MAXIMIZE)
-                    user32.SetForegroundWindow(hwnd)
+                    
+                    # Classic Windows thread input attachment focus bypass
+                    fore_hwnd = user32.GetForegroundWindow()
+                    fore_thread = user32.GetWindowThreadProcessId(fore_hwnd, None)
+                    curr_thread = kernel32.GetCurrentThreadId()
+                    
+                    if fore_thread != 0 and fore_thread != curr_thread:
+                        user32.AttachThreadInput(curr_thread, fore_thread, True)
+                        user32.BringWindowToTop(hwnd)
+                        user32.SetForegroundWindow(hwnd)
+                        user32.AttachThreadInput(curr_thread, fore_thread, False)
+                    else:
+                        user32.BringWindowToTop(hwnd)
+                        user32.SetForegroundWindow(hwnd)
                     return True
                 time.sleep(0.1)
             return False
@@ -614,8 +727,59 @@ class MOS365Service:
                     pass
         mode = str(payload.get("mode", "guided"))
         task_id = payload.get("taskId")
+        exam_id = payload.get("examId")
+
+        if mode == "exam" or (exam_id and exam_id in EXAM_CATALOG):
+            if not exam_id:
+                exam_id = "MOS_EXAM_ORIGINAL_V1_OPERATIONS"
+            exam_info = EXAM_CATALOG[exam_id]
+            session_id = secrets.token_urlsafe(24).replace("-", "_")
+            now = self._now_iso()
+            with _LAUNCH_LOCK:
+                _LAUNCH_STATE = {"session_id": session_id, "state": "creating", "created_at": now, "updated_at": now,
+                                 "phases": {"click_received": now, "session_created": now}}
+            paths = self._paths(session_id, require_exists=False)
+            paths.directory.mkdir(mode=0o700, parents=False, exist_ok=False)
+
+            manifest = {
+                "schemaVersion": 1,
+                "sessionId": session_id,
+                "mode": "exam",
+                "trainingMode": "original_exam_v1",
+                "examId": exam_id,
+                "currentStep": 0,
+                "completion": {"acknowledged": False, "acknowledgedAt": None, "acknowledgedPid": None},
+                "workbook": paths.workbook.name,
+                "createdAt": now
+            }
+            self._write_gp_workbook(paths.workbook, exam_id)
+            paths.manifest.write_text(json.dumps(manifest, ensure_ascii=False, indent=2), encoding="utf-8")
+            self._mark_launch_phase(session_id, "workbook_ready")
+            
+            tasks_list = []
+            for step in exam_info["steps"]:
+                tasks_list.append({
+                    "stepId": step["stepId"],
+                    "titleJa": step["titleJa"],
+                    "titleZh": step["titleZh"],
+                    "instructionJa": step["instructionJa"],
+                    "instructionZh": step["instructionZh"]
+                })
+            
+            return {
+                "sessionId": session_id,
+                "mode": "exam",
+                "examId": exam_id,
+                "scenarioId": "original_exam_v1",
+                "variant": 1,
+                "fileName": paths.workbook.name,
+                "sandboxRoot": str(paths.directory),
+                "tasks": tasks_list,
+                "environment": self.environment_status()
+            }
 
         # Alias mapping and legacy compatibility (only resolve if explicit taskId or MOS_GP mode)
+
         if not task_id and mode.endswith("_static_training"):
             potential_tid = mode[:-16]
             if potential_tid in MOS_CATALOG:
@@ -1263,22 +1427,44 @@ class MOS365Service:
         # For R8 sessions, include training task
         STATIC_MODES = {"r8_static_training", "r11_static_training", "r12_static_training", "r15_static_training", "r16_static_training", "r17_static_training"}
         training_mode = manifest.get("trainingMode", "")
+        is_exam = training_mode == "original_exam_v1"
         is_static = training_mode in STATIC_MODES or (isinstance(training_mode, str) and training_mode.endswith("_static_training"))
-        if is_static:
-            task = manifest.get("staticTask", {})
+        if is_static or is_exam:
             comp = manifest.get("completion", {})
-            result["session"]["training"] = {
-                "mode": training_mode,
-                "taskId": task.get("taskId", ""),
-                "instructionJa": task.get("instructionJa", ""),
-                "instructionZh": task.get("instructionZh", ""),
-                "completionAcknowledged": comp.get("acknowledged", False)
-            }
+            if is_exam:
+                exam_id = manifest.get("examId", "MOS_EXAM_ORIGINAL_V1_OPERATIONS")
+                exam_info = EXAM_CATALOG[exam_id]
+                step_idx = manifest.get("currentStep", 0)
+                step = exam_info["steps"][step_idx]
+                result["session"]["training"] = {
+                    "mode": training_mode,
+                    "taskId": step["stepId"],
+                    "instructionJa": step["instructionJa"],
+                    "instructionZh": step["instructionZh"],
+                    "completionAcknowledged": comp.get("acknowledged", False),
+                    "isExam": True,
+                    "currentStep": step_idx + 1,
+                    "totalSteps": len(exam_info["steps"]),
+                    "titleJa": exam_info["titleJa"],
+                    "titleZh": exam_info["titleZh"],
+                    "sheetLabel": step.get("sheetLabel", ""),
+                    "targetLabel": step.get("targetLabel", "")
+                }
+            else:
+                task = manifest.get("staticTask", {})
+                result["session"]["training"] = {
+                    "mode": training_mode,
+                    "taskId": task.get("taskId", ""),
+                    "instructionJa": task.get("instructionJa", ""),
+                    "instructionZh": task.get("instructionZh", ""),
+                    "completionAcknowledged": comp.get("acknowledged", False)
+                }
         self._mark_launch_phase(session_id, "excel_window_visible", state="ready", pid=raw_pid)
         self._mark_launch_phase(session_id, "vsto_attached", state="ready", pid=raw_pid)
-        if is_static:
+        if is_static or is_exam:
             self._mark_launch_phase(session_id, "task_rendered", state="ready", pid=raw_pid)
         return result
+
 
     def _create_r8_session(self) -> dict[str, Any]:
         """Create a server-owned R8 static training session — no scoring, no quiz."""
@@ -1330,7 +1516,8 @@ class MOS365Service:
         manifest = json.loads(paths.manifest.read_text(encoding="utf-8"))
         mode = manifest.get("trainingMode", manifest.get("mode", ""))
         STATIC_MODES = {"r8_static_training", "r11_static_training", "r12_static_training", "r15_static_training", "r16_static_training", "r17_static_training"}
-        if mode not in STATIC_MODES and not (isinstance(mode, str) and mode.endswith("_static_training")):
+        is_exam = mode == "original_exam_v1"
+        if mode not in STATIC_MODES and not is_exam and not (isinstance(mode, str) and mode.endswith("_static_training")):
             raise MOS365ServiceError("SESSION_MODE_REJECTED", "練習セッションではありません。", "不是练习会话。")
         state = manifest.get("state", "created")
         if state != "attached":
@@ -1369,7 +1556,8 @@ class MOS365Service:
         manifest = json.loads(paths.manifest.read_text(encoding="utf-8"))
         mode = manifest.get("trainingMode", manifest.get("mode", ""))
         STATIC_MODES = {"r8_static_training", "r11_static_training", "r12_static_training", "r15_static_training", "r16_static_training", "r17_static_training"}
-        if mode not in STATIC_MODES and not (isinstance(mode, str) and mode.endswith("_static_training")):
+        is_exam = mode == "original_exam_v1"
+        if mode not in STATIC_MODES and not is_exam and not (isinstance(mode, str) and mode.endswith("_static_training")):
             raise MOS365ServiceError("SESSION_MODE_REJECTED", "練習セッションではありません。", "不是练习会话。")
         state = manifest.get("state", "created")
         if state != "attached":
@@ -1393,28 +1581,53 @@ class MOS365Service:
             raise MOS365ServiceError("WORKBOOK_PARSE_FAILED", "練習ファイルを読み取れませんでした。", "无法读取练习文件。") from exc
 
         # Score using spec
-        task_id = manifest.get("staticTask", {}).get("taskId", "")
-        spec = SCORING_SPECS.get(task_id)
-        if not spec and task_id in MOS_CATALOG:
-            task_info = MOS_CATALOG[task_id]
+        if is_exam:
+            exam_id = manifest.get("examId", "MOS_EXAM_ORIGINAL_V1_OPERATIONS")
+            exam_info = EXAM_CATALOG[exam_id]
+            step_idx = manifest.get("currentStep", 0)
+            step = exam_info["steps"][step_idx]
             spec = {
-                "specVersion": task_info["version"],
-                "taskId": task_info["id"],
+                "specVersion": 1,
+                "taskId": step["stepId"],
                 "assertions": [
                     {
-                        "id": task_info["id"] + "-assertion",
-                        "type": task_info["assessment"]["type"],
-                        "sheetName": task_info["assessment"]["sheetName"],
-                        "cellRef": task_info["assessment"].get("cellRef"),
-                        "expected": task_info["assessment"].get("expected"),
-                        "expectedFormula": task_info["assessment"].get("expectedFormula"),
+                        "id": step["stepId"] + "-assertion",
+                        "type": step["assessment"]["type"],
+                        "sheetName": step["assessment"]["sheetName"],
+                        "cellRef": step["assessment"]["cellRef"],
+                        "expectedFormula": step["assessment"]["expectedFormula"],
+                        "alternativeFormulas": step["assessment"].get("alternativeFormulas", []),
                         "weight": 1,
                         "comparison": "strict_text_equals",
-                        "feedback": task_info["assessment"]["feedback"]
+                        "feedback": step["assessment"].get("feedback", {})
                     }
                 ],
                 "resultPolicy": {"mode": "all_or_nothing"}
             }
+        else:
+            task_id = manifest.get("staticTask", {}).get("taskId", "")
+            spec = SCORING_SPECS.get(task_id)
+            if not spec and task_id in MOS_CATALOG:
+                task_info = MOS_CATALOG[task_id]
+                spec = {
+                    "specVersion": task_info["version"],
+                    "taskId": task_info["id"],
+                    "assertions": [
+                        {
+                            "id": task_info["id"] + "-assertion",
+                            "type": task_info["assessment"]["type"],
+                            "sheetName": task_info["assessment"]["sheetName"],
+                            "cellRef": task_info["assessment"].get("cellRef"),
+                            "expected": task_info["assessment"].get("expected"),
+                            "expectedFormula": task_info["assessment"].get("expectedFormula"),
+                            "weight": 1,
+                            "comparison": "strict_text_equals",
+                            "feedback": task_info["assessment"]["feedback"]
+                        }
+                    ],
+                    "resultPolicy": {"mode": "all_or_nothing"}
+                }
+
         if not spec:
             raise MOS365ServiceError("SCORING_SPEC_NOT_FOUND", "このタスクの採点ルールが見つかりません。", "未找到此任务的评分规则。")
 
@@ -1475,8 +1688,91 @@ class MOS365Service:
                 lines_zh.append(fb.get(key, {}).get("zh", ""))
         result_ja = "\n".join(lines_ja)
         result_zh = "\n".join(lines_zh)
-        return {"ok": True, "assessment": assessment,
-                "resultJa": result_ja, "resultZh": result_zh}
+
+        res = {
+            "ok": True, "assessment": assessment,
+            "resultJa": result_ja, "resultZh": result_zh
+        }
+        if is_exam:
+            exam_id = manifest.get("examId", "MOS_EXAM_ORIGINAL_V1_OPERATIONS")
+            exam_info = EXAM_CATALOG[exam_id]
+            step_idx = manifest.get("currentStep", 0)
+            res["isExam"] = True
+            res["currentStep"] = step_idx + 1
+            res["totalSteps"] = len(exam_info["steps"])
+            
+            next_step_data = None
+            if all_correct and step_idx + 1 < len(exam_info["steps"]):
+                next_step = exam_info["steps"][step_idx + 1]
+                next_step_data = {
+                    "taskId": next_step["stepId"],
+                    "instructionJa": next_step["instructionJa"],
+                    "instructionZh": next_step["instructionZh"],
+                    "titleJa": exam_info["titleJa"],
+                    "titleZh": exam_info["titleZh"],
+                    "sheetLabel": next_step.get("sheetLabel", ""),
+                    "targetLabel": next_step.get("targetLabel", "")
+                }
+            res["nextStep"] = next_step_data
+
+        return res
+
+    def session_next_step(self, payload: dict[str, Any]) -> dict[str, Any]:
+        """Advance exam step index and reset completion acknowledgment status."""
+        session_id = self._safe_session_id(str(payload.get("sessionId", "")))
+        raw_pid = payload.get("excelPid")
+        try:
+            raw_pid = int(raw_pid) if raw_pid is not None else None
+        except (TypeError, ValueError):
+            raise MOS365ServiceError("SESSION_PID_MISMATCH", "プロセス ID が無効です。", "进程 ID 无效。")
+        paths = self._paths(session_id)
+        if not paths.manifest.is_file():
+            raise MOS365ServiceError("SESSION_NOT_FOUND", "セッションが見つかりません。", "未找到会话。", 404)
+        manifest = json.loads(paths.manifest.read_text(encoding="utf-8"))
+        
+        # Advance the step
+        current_step = manifest.get("currentStep", 0)
+        exam_id = manifest.get("examId", "MOS_EXAM_ORIGINAL_V1_OPERATIONS")
+        exam_info = EXAM_CATALOG[exam_id]
+        if current_step + 1 < len(exam_info["steps"]):
+            manifest["currentStep"] = current_step + 1
+        
+        # Reset completion status so they can grade the next step
+        manifest["completion"] = {
+            "acknowledged": False,
+            "acknowledgedAt": None,
+            "acknowledgedPid": None
+        }
+        # Also clean up any cached assessment so they don't immediately get a success
+        if "assessment" in manifest:
+            del manifest["assessment"]
+
+        paths.manifest.write_text(json.dumps(manifest, ensure_ascii=False, indent=2), encoding="utf-8")
+        
+        # R35: Dynamically rewrite workbook metadata (docProps/custom.xml) for the next step!
+        # This guarantees that if they restart Excel/Addin during the exam, it loads the correct next step!
+        custom_props_xml = self._safe_metadata_custom_xml(exam_id, manifest["currentStep"])
+        if custom_props_xml and paths.workbook.is_file():
+            try:
+                # We need to replace docProps/custom.xml inside the zip file
+                # To do this safely and simply in-memory:
+                import io
+                buffer = io.BytesIO()
+                with zipfile.ZipFile(paths.workbook, 'r') as zin:
+                    with zipfile.ZipFile(buffer, 'w', zipfile.ZIP_DEFLATED) as zout:
+                        for item in zin.infolist():
+                            if item.filename == "docProps/custom.xml":
+                                continue
+                            zout.writestr(item, zin.read(item.filename))
+                        zout.writestr("docProps/custom.xml", custom_props_xml)
+                paths.workbook.write_bytes(buffer.getvalue())
+            except Exception as e:
+                # Fallback silently on zip error
+                pass
+
+        return {"ok": True}
+
+
 
     @staticmethod
     def _assert_first_sheet_name(root, assertion, ns):
@@ -1822,7 +2118,7 @@ class MOS365Service:
                 .replace(">", "&gt;")
                 .replace('"', "&quot;"))
 
-    def _safe_metadata_custom_xml(self, task_id: str) -> str:
+    def _safe_metadata_custom_xml(self, task_id: str, step_idx: int = 0) -> str:
         """Build docProps/custom.xml with safe task metadata.
 
         Fields written (safe, no answers):
@@ -1833,13 +2129,6 @@ class MOS365Service:
         Fields never written:
           expectedFormula, expectedValue, scoringSpec, assessmentType.
         """
-        info = MOS_CATALOG.get(task_id)
-        if not info:
-            return ""
-        assessment = info.get("assessment", {})
-        sheet_label  = assessment.get("sheetName", "")
-        target_label = assessment.get("cellRef", "")
-
         def prop(pid: int, name: str, value: str) -> str:
             esc_name  = self._xml_escape_attr(name)
             esc_value = self._xml_escape_attr(value)
@@ -1848,17 +2137,44 @@ class MOS365Service:
                     f'<vt:lpwstr>{esc_value}</vt:lpwstr>'
                     f'</vt:property>')
 
-        props = [
-            prop(2,  "MOS_TASK_ID",       task_id),
-            prop(3,  "MOS_TITLE_JA",      info.get("titleJa",       "")),
-            prop(4,  "MOS_TITLE_ZH",      info.get("titleZh",       "")),
-            prop(5,  "MOS_INSTRUCTION_JA",info.get("instructionJa", "")),
-            prop(6,  "MOS_INSTRUCTION_ZH",info.get("instructionZh", "")),
-            prop(7,  "MOS_SHEET_LABEL",   sheet_label),
-            prop(8,  "MOS_TARGET_LABEL",  target_label),
-            prop(9,  "MOS_TIER",          info.get("tier",          "基礎")),
-            prop(10, "MOS_ESTIMATED_MINUTES", str(info.get("estimatedMinutes", 3))),
-        ]
+        if task_id in EXAM_CATALOG:
+            exam_info = EXAM_CATALOG[task_id]
+            step = exam_info["steps"][step_idx]
+            sheet_label = step.get("sheetLabel", "")
+            target_label = step.get("targetLabel", "")
+            props = [
+                prop(2,  "MOS_TASK_ID",       step["stepId"]),
+                prop(3,  "MOS_TITLE_JA",      exam_info["titleJa"]),
+                prop(4,  "MOS_TITLE_ZH",      exam_info["titleZh"]),
+                prop(5,  "MOS_INSTRUCTION_JA",step.get("instructionJa", "")),
+                prop(6,  "MOS_INSTRUCTION_ZH",step.get("instructionZh", "")),
+                prop(7,  "MOS_SHEET_LABEL",   sheet_label),
+                prop(8,  "MOS_TARGET_LABEL",  target_label),
+                prop(9,  "MOS_TIER",          "模擬"),
+                prop(10, "MOS_ESTIMATED_MINUTES", "50"),
+                prop(11, "MOS_EXAM_ID",       task_id),
+                prop(12, "MOS_CURRENT_STEP",   str(step_idx + 1)),
+                prop(13, "MOS_TOTAL_STEPS",    str(len(exam_info["steps"])))
+            ]
+        else:
+            info = MOS_CATALOG.get(task_id)
+            if not info:
+                return ""
+            assessment = info.get("assessment", {})
+            sheet_label  = assessment.get("sheetName", "")
+            target_label = assessment.get("cellRef", "")
+            props = [
+                prop(2,  "MOS_TASK_ID",       task_id),
+                prop(3,  "MOS_TITLE_JA",      info.get("titleJa",       "")),
+                prop(4,  "MOS_TITLE_ZH",      info.get("titleZh",       "")),
+                prop(5,  "MOS_INSTRUCTION_JA",info.get("instructionJa", "")),
+                prop(6,  "MOS_INSTRUCTION_ZH",info.get("instructionZh", "")),
+                prop(7,  "MOS_SHEET_LABEL",   sheet_label),
+                prop(8,  "MOS_TARGET_LABEL",  target_label),
+                prop(9,  "MOS_TIER",          info.get("tier",          "基礎")),
+                prop(10, "MOS_ESTIMATED_MINUTES", str(info.get("estimatedMinutes", 3))),
+            ]
+
         ns = "http://schemas.openxmlformats.org/officeDocument/2006/custom-properties"
         vt = "http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes"
         return (
@@ -1867,6 +2183,7 @@ class MOS365Service:
             + "".join(props)
             + "</Properties>"
         )
+
 
     def _write_gp_workbook(self, destination: Path, task_id: str) -> None:
         """Write a minimal original workbook configured for the specific MOS task_id."""
@@ -1877,7 +2194,26 @@ class MOS365Service:
             sheet_data = {
                 "入力": [["項目", "値"], ["", ""]]
             }
+        elif task_id == "MOS_EXAM_ORIGINAL_V1_OPERATIONS":
+            sheets = ["作業用", "集計", "メモ"]
+            sheet_data = {
+                "作業用": [
+                    ["ID", "商品名", "単価", "数量", "金額"],
+                    ["1001", "ノート", 150, 3, ""],
+                    ["1002", "消しゴム", 80, 5, ""]
+                ],
+                "集計": [
+                    ["項目", "値"],
+                    ["合計金額", ""],
+                    ["平均金額", ""]
+                ],
+                "メモ": [
+                    ["メモ用シートです。", ""],
+                    ["", ""]
+                ]
+            }
         elif task_id in ("MOS_GP_002_SUM_TWO_VALUES", "R17_STATIC_FORMULA_TEXT_DEMO"):
+
             sheets = ["入力", "計算"]
             sheet_data = {
                 "入力": [["項目", "値"], ["", ""]],
@@ -2076,6 +2412,11 @@ class MOS365Service:
                         return {"id": assertion["id"], "type": assertion["type"], "result": "indeterminate", "earned": 0, "total": assertion["weight"]}
                     actual_formula = "=" + f_text.strip()
                     correct = MOS365Service._normal_formula_comparer(actual_formula, expected)
+                    if not correct and "alternativeFormulas" in assertion:
+                        for alt in assertion["alternativeFormulas"]:
+                            if MOS365Service._normal_formula_comparer(actual_formula, alt):
+                                correct = True
+                                break
                     return {"id": assertion["id"], "type": assertion["type"], "result": "correct" if correct else "incorrect", "earned": assertion["weight"] if correct else 0, "total": assertion["weight"]}
                 return {"id": assertion["id"], "type": assertion["type"], "result": "incorrect", "earned": 0, "total": assertion["weight"]}
         except (zipfile.BadZipFile, KeyError, ET.ParseError, OSError):
