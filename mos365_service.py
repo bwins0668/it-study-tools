@@ -147,6 +147,242 @@ SCORING_SPECS: dict[str, dict[str, Any]] = {
 }
 
 
+MOS_CATALOG: dict[str, dict[str, Any]] = {
+    "MOS_GP_001_ENTER_STATUS": {
+        "id": "MOS_GP_001_ENTER_STATUS",
+        "version": 1,
+        "contentProvenance": "original_project_content_r32",
+        "tier": "基礎",
+        "domain": "セル値の入力",
+        "titleJa": "ステータス入力",
+        "titleZh": "状态输入",
+        "instructionJa": "入力シートの B2 に「完了」と入力してください。",
+        "instructionZh": "请在“输入”工作表的 B2 中输入“完了”。",
+        "estimatedMinutes": 2,
+        "assessment": {
+            "type": "cell_value_equals",
+            "sheetName": "入力",
+            "cellRef": "B2",
+            "expected": "完了",
+            "feedback": {
+                "correct": {"ja": "「入力」シートの B2 セルに「完了」が入力されています。", "zh": "「入力」工作表的 B2 单元格已输入“完了”。"},
+                "incorrect": {"ja": "「入力」シートの B2 セルに「完了」と入力してください。", "zh": "请在「入力」工作表的 B2 单元格输入“完了”。"},
+                "indeterminate": {"ja": "対象のセルを安全に確認できませんでした。", "zh": "无法安全确认目标单元格。"}
+            }
+        },
+        "legacyAliases": ["R16_STATIC_CELL_VALUE_DEMO"]
+    },
+    "MOS_GP_002_SUM_TWO_VALUES": {
+        "id": "MOS_GP_002_SUM_TWO_VALUES",
+        "version": 1,
+        "contentProvenance": "original_project_content_r32",
+        "tier": "基礎",
+        "domain": "SUM関数",
+        "titleJa": "数値の合計計算",
+        "titleZh": "计算两数之和",
+        "instructionJa": "「計算」シートの C2 セルに、A2 から B2 の合計を求める数式を入力してください。",
+        "instructionZh": "请在「計算」工作表的 C2 单元格中，输入计算 A2 到 B2 总和 Jun的公式。",
+        "estimatedMinutes": 3,
+        "assessment": {
+            "type": "cell_formula_equals",
+            "sheetName": "計算",
+            "cellRef": "C2",
+            "expectedFormula": "=SUM(A2:B2)",
+            "feedback": {
+                "correct": {"ja": "「計算」シートの C2 セルに、A2 から B2 の合計を求める数式が入力されています。", "zh": "「計算」工作表的 C2 单元格已输入计算 A2 到 B2 总和的公式。"},
+                "incorrect": {"ja": "「計算」シートの C2 セルに、A2 から B2 の合計を求める数式を入力してください。", "zh": "请在「計算」工作表的 C2 单元格中，输入计算 A2 到 B2 总和的公式。"},
+                "indeterminate": {"ja": "対象のセルを安全に確認できませんでした。", "zh": "无法安全确认目标单元格。"}
+            }
+        },
+        "legacyAliases": ["R17_STATIC_FORMULA_TEXT_DEMO"]
+    },
+    "MOS_GP_003_SUM_WEEKLY_SALES": {
+        "id": "MOS_GP_003_SUM_WEEKLY_SALES",
+        "version": 1,
+        "contentProvenance": "original_project_content_r32",
+        "tier": "基礎",
+        "domain": "SUM関数(連続範囲)",
+        "titleJa": "週間売上集計",
+        "titleZh": "每周销售汇总",
+        "instructionJa": "売上シートの B7 セルに、月曜日から金曜日（B2:B6）までの売上合計を求める数式を入力してください。",
+        "instructionZh": "请在“売上”工作表的 B7 单元格中，输入计算星期一至星期五（B2:B6）销售额总和的公式。",
+        "estimatedMinutes": 3,
+        "assessment": {
+            "type": "cell_formula_equals",
+            "sheetName": "売上",
+            "cellRef": "B7",
+            "expectedFormula": "=SUM(B2:B6)",
+            "feedback": {
+                "correct": {"ja": "売上シートの B7 セルに、月曜日から金曜日までの売上合計を求める数式が入力されています。", "zh": "“売上”工作表的 B7 单元格已输入计算星期一至星期五销售额总和的公式。"},
+                "incorrect": {"ja": "売上シートの B7 セルに、SUM関数を使って月曜日から金曜日（B2:B6）までの売上合計を求める数式を入力してください。", "zh": "请在“売上”工作表的 B7 单元格中，使用 SUM 函数计算星期一至星期五（B2:B6）的销售额总和。"},
+                "indeterminate": {"ja": "対象のセルを安全に確認できませんでした。", "zh": "无法安全确认目标单元格。"}
+            }
+        }
+    },
+    "MOS_GP_004_AVERAGE_SCORE": {
+        "id": "MOS_GP_004_AVERAGE_SCORE",
+        "version": 1,
+        "contentProvenance": "original_project_content_r32",
+        "tier": "基礎",
+        "domain": "AVERAGE関数",
+        "titleJa": "平均成績算出",
+        "titleZh": "计算平均成绩",
+        "instructionJa": "成績シートの B5 セルに、国語、数学、英語（B2:B4）の平均点を計算する数式を入力してください。",
+        "instructionZh": "请在“成績”工作表的 B5 单元格中，输入计算国语、数学、英语（B2:B4）平均分的公式。",
+        "estimatedMinutes": 3,
+        "assessment": {
+            "type": "cell_formula_equals",
+            "sheetName": "成績",
+            "cellRef": "B5",
+            "expectedFormula": "=AVERAGE(B2:B4)",
+            "feedback": {
+                "correct": {"ja": "成績シートの B5 セルに、平均点を求める数式が入力されています。", "zh": "“成績”工作表的 B5 单元格已输入计算平均分的公式。"},
+                "incorrect": {"ja": "成績シートの B5 セルに、AVERAGE関数を使って国語、数学、英語（B2:B4）の平均点を計算する数式を入力してください。", "zh": "请在“成績”工作表的 B5 单元格中，使用 AVERAGE 函数计算国语、数学、英语（B2:B4）的平均分。"},
+                "indeterminate": {"ja": "対象のセルを安全に確認できませんでした。", "zh": "无法安全确认目标单元格。"}
+            }
+        }
+    },
+    "MOS_GP_005_IF_DELIVERY_STATUS": {
+        "id": "MOS_GP_005_IF_DELIVERY_STATUS",
+        "version": 1,
+        "contentProvenance": "original_project_content_r32",
+        "tier": "基礎",
+        "domain": "IF関数",
+        "titleJa": "配達状況チェック",
+        "titleZh": "检查配送状态",
+        "instructionJa": "配達シートの C2 セルに、B2セルの値が「完了」の場合は「✓」を表示し、それ以外の場合は「✗」を表示する数式を入力してください。",
+        "instructionZh": "请在“配達”工作表的 C2 单元格中，输入一个公式，当 B2 单元格的值为“完了”时显示“✓”，否则显示“✗”。",
+        "estimatedMinutes": 4,
+        "assessment": {
+            "type": "cell_formula_equals",
+            "sheetName": "配達",
+            "cellRef": "C2",
+            "expectedFormula": '=IF(B2="完了","✓","✗")',
+            "feedback": {
+                "correct": {"ja": "配達シートの C2 セルに、正しい判定を行うIF数式が入力されています。", "zh": "“配達”工作表的 C2 单元格已输入正确的 IF 判定公式。"},
+                "incorrect": {"ja": "配達シートの C2 セルに、IF関数を使ってB2の値が「完了」の場合は「✓」、それ以外は「✗」を表示する数式を入力してください。", "zh": "请在“配達”工作表的 C2 单元格中，使用 IF 函数实现当 B2 的值为“完了”时显示“✓”，否则显示“✗”。"},
+                "indeterminate": {"ja": "対象のセルを安全に確認できませんでした。", "zh": "无法安全确认目标单元格。"}
+            }
+        }
+    },
+    "MOS_GP_006_COUNTA_BOOKS": {
+        "id": "MOS_GP_006_COUNTA_BOOKS",
+        "version": 1,
+        "contentProvenance": "original_project_content_r32",
+        "tier": "基礎",
+        "domain": "COUNTA関数",
+        "titleJa": "書籍データ数カウント",
+        "titleZh": "统计已登记书籍数",
+        "instructionJa": "新着シートの B1 セルに、A2からA11までの範囲で書籍名が入力されているセル数を求める数式を入力してください。",
+        "instructionZh": "请在“新着”工作表的 B1 单元格中，输入计算 A2 到 A11 范围内输入了书名的单元格数量的公式。",
+        "estimatedMinutes": 3,
+        "assessment": {
+            "type": "cell_formula_equals",
+            "sheetName": "新着",
+            "cellRef": "B1",
+            "expectedFormula": "=COUNTA(A2:A11)",
+            "feedback": {
+                "correct": {"ja": "新着シートの B1 セルに、データの件数をカウントするCOUNTA数式が入力されています。", "zh": "“新着”工作表的 B1 单元格已输入计算数据件数的 COUNTA 公式。"},
+                "incorrect": {"ja": "新着シートの B1 セルに、COUNTA関数を使ってA2からA11までの範囲のデータ件数を求める数式を入力してください。", "zh": "请在“新着”工作表的 B1 单元格中，使用 COUNTA 函数计算 A2 到 A11 范围内的已输入数据的单元格数量。"},
+                "indeterminate": {"ja": "対象のセルを安全に確認できませんでした。", "zh": "无法安全确认目标单元格。"}
+            }
+        }
+    },
+    "MOS_GP_007_MAX_VISITORS": {
+        "id": "MOS_GP_007_MAX_VISITORS",
+        "version": 1,
+        "contentProvenance": "original_project_content_r32",
+        "tier": "基礎",
+        "domain": "MAX関数",
+        "titleJa": "最大来客数算出",
+        "titleZh": "计算最高来客数",
+        "instructionJa": "来客シートの B9 セルに、月曜日から日曜日（B2:B8）までの期間での最高来客数を求める数式を入力してください。",
+        "instructionZh": "请在“来客”工作表的 B9 单元格中，输入计算星期一至星期日（B2:B8）期间最高来客数的公式。",
+        "estimatedMinutes": 3,
+        "assessment": {
+            "type": "cell_formula_equals",
+            "sheetName": "来客",
+            "cellRef": "B9",
+            "expectedFormula": "=MAX(B2:B8)",
+            "feedback": {
+                "correct": {"ja": "来客シートの B9 セルに、最大値を求めるMAX数式が入力されています。", "zh": "“来客”工作表的 B9 单元格已输入计算最大值的 MAX 公式。"},
+                "incorrect": {"ja": "来客シートの B9 セルに、MAX関数を使ってB2からB8の範囲での最大値を計算する数式を入力してください。", "zh": "请在“来客”工作表的 B9 单元格中，使用 MAX 函数计算 B2 到 B8 范围内的最大值。"},
+                "indeterminate": {"ja": "対象のセルを安全に確認できませんでした。", "zh": "无法安全确认目标单元格。"}
+            }
+        }
+    },
+    "MOS_GP_008_MIN_VISITORS": {
+        "id": "MOS_GP_008_MIN_VISITORS",
+        "version": 1,
+        "contentProvenance": "original_project_content_r32",
+        "tier": "基礎",
+        "domain": "MIN関数",
+        "titleJa": "最低来客数算出",
+        "titleZh": "计算最低来客数",
+        "instructionJa": "来客シートの B10 セルに、月曜日から日曜日（B2:B8）までの期間での最低来客数を求める数式を入力してください。",
+        "instructionZh": "请在“来客”工作表的 B10 单元格中，输入计算星期一至星期日（B2:B8）期间最低来客数的公式。",
+        "estimatedMinutes": 3,
+        "assessment": {
+            "type": "cell_formula_equals",
+            "sheetName": "来客",
+            "cellRef": "B10",
+            "expectedFormula": "=MIN(B2:B8)",
+            "feedback": {
+                "correct": {"ja": "来客シートの B10 セルに、最小値を求めるMIN数式が入力されています。", "zh": "“来客”工作表的 B10 单元格已输入计算最小值的 MIN 公式。"},
+                "incorrect": {"ja": "来客シートの B10 セルに、MIN関数を使ってB2からB8の範囲での最小値を計算する数式を入力してください。", "zh": "请在“来客”工作表的 B10 单元格中，使用 MIN 函数计算 B2 到 B8 范围内的最小值。"},
+                "indeterminate": {"ja": "対象のセルを安全に確認できませんでした。", "zh": "无法安全确认目标单元格。"}
+            }
+        }
+    },
+    "MOS_GP_009_LEFT_DEPARTMENT_CODE": {
+        "id": "MOS_GP_009_LEFT_DEPARTMENT_CODE",
+        "version": 1,
+        "contentProvenance": "original_project_content_r32",
+        "tier": "基礎",
+        "domain": "LEFT関数",
+        "titleJa": "部門コード抽出",
+        "titleZh": "提取部门代码",
+        "instructionJa": "社員シートの B2 セルに、社員コード（A2）の左側から2文字の部門コードを取り出す数式を入力してください。",
+        "instructionZh": "请在“社員”工作表的 B2 单元格中，输入一个公式，提取员工代码（A2）左侧的 2 位部门代码。",
+        "estimatedMinutes": 3,
+        "assessment": {
+            "type": "cell_formula_equals",
+            "sheetName": "社員",
+            "cellRef": "B2",
+            "expectedFormula": "=LEFT(A2,2)",
+            "feedback": {
+                "correct": {"ja": "社員シートの B2 セルに、左側の文字列を取り出すLEFT数式が入力されています。", "zh": "“社員”工作表的 B2 单元格已输入提取左侧字符的 LEFT 公式。"},
+                "incorrect": {"ja": "社員シートの B2 セルに、LEFT関数を使ってA2の左側から2文字を抽出する数式を入力してください。", "zh": "请在“社員”工作表的 B2 单元格中，使用 LEFT 函数提取 A2 左侧的 2 位字符。"},
+                "indeterminate": {"ja": "対象のセルを安全に確認できませんでした。", "zh": "无法安全确认目标单元格。"}
+            }
+        }
+    },
+    "MOS_GP_010_TEXTJOIN_PRODUCT_TAG": {
+        "id": "MOS_GP_010_TEXTJOIN_PRODUCT_TAG",
+        "version": 1,
+        "contentProvenance": "original_project_content_r32",
+        "tier": "基礎",
+        "domain": "TEXTJOIN関数",
+        "titleJa": "商品タグ生成",
+        "titleZh": "生成商品标签",
+        "instructionJa": "商品シートの D2 セルに、TEXTJOIN関数を使って、区切り文字に「/」を指定し、空のセルは無視して、A2からC2までのテキストを結合する数式を入力してください。",
+        "instructionZh": "请在“商品”工作表的 D2 单元格中，使用 TEXTJOIN 函数输入公式，指定分隔符为“/”，忽略空单元格，结合 A2 到 C2 的文本内容。",
+        "estimatedMinutes": 4,
+        "assessment": {
+            "type": "cell_formula_equals",
+            "sheetName": "商品",
+            "cellRef": "D2",
+            "expectedFormula": '=TEXTJOIN("/",TRUE,A2:C2)',
+            "feedback": {
+                "correct": {"ja": "商品シートの D2 セルに、TEXTJOIN数式が正しく入力されています。", "zh": "“商品”工作表的 D2 单元格已正确输入 TEXTJOIN 公式。"},
+                "incorrect": {"ja": "商品シートの D2 セルに、TEXTJOIN関数を使って「/」を区切り文字とし、空セルは無視してA2:C2を結合する数式を入力してください。", "zh": "请在“商品”工作表的 D2 单元格中，使用 TEXTJOIN 函数，指定“/”为分隔符并忽略空单元格，将 A2:C2 结合。"},
+                "indeterminate": {"ja": "対象のセルを安全に確認できませんでした。", "zh": "无法安全确认目标单元格。"}
+            }
+        }
+    }
+}
+
+
 _LAUNCH_STATE: dict = None
 _LAUNCH_LOCK = None
 
@@ -377,6 +613,54 @@ class MOS365Service:
                 except Exception:
                     pass
         mode = str(payload.get("mode", "guided"))
+        task_id = payload.get("taskId")
+
+        # Alias mapping and legacy compatibility (only resolve if explicit taskId or MOS_GP mode)
+        if not task_id and mode.endswith("_static_training"):
+            potential_tid = mode[:-16]
+            if potential_tid in MOS_CATALOG:
+                task_id = potential_tid
+
+        if task_id in MOS_CATALOG:
+            task_info = MOS_CATALOG[task_id]
+            session_id = secrets.token_urlsafe(24).replace("-", "_")
+            now = self._now_iso()
+            with _LAUNCH_LOCK:
+                _LAUNCH_STATE = {"session_id": session_id, "state": "creating", "created_at": now, "updated_at": now,
+                                 "phases": {"click_received": now, "session_created": now}}
+            paths = self._paths(session_id, require_exists=False)
+            paths.directory.mkdir(mode=0o700, parents=False, exist_ok=False)
+
+            task_data = {
+                "taskId": task_info["id"],
+                "instructionJa": task_info["instructionJa"],
+                "instructionZh": task_info["instructionZh"]
+            }
+            manifest = {
+                "schemaVersion": 1,
+                "sessionId": session_id,
+                "mode": f"{task_id}_static_training",
+                "trainingMode": f"{task_id}_static_training",
+                "staticTask": task_data,
+                "completion": {"acknowledged": False, "acknowledgedAt": None, "acknowledgedPid": None},
+                "workbook": paths.workbook.name,
+                "createdAt": self._now_iso()
+            }
+            self._write_gp_workbook(paths.workbook, task_id)
+            paths.manifest.write_text(json.dumps(manifest, ensure_ascii=False, indent=2), encoding="utf-8")
+            self._mark_launch_phase(session_id, "workbook_ready")
+            return {
+                "sessionId": session_id,
+                "mode": f"{task_id}_static_training",
+                "scenarioId": "mos_gp_static",
+                "variant": 1,
+                "fileName": paths.workbook.name,
+                "sandboxRoot": str(paths.directory),
+                "staticTask": task_data,
+                "tasks": [],
+                "environment": self.environment_status()
+            }
+
         # R8 static training: fixed task, no scoring, server-owned
         if mode == "r8_static_training":
             return self._create_r8_session()
@@ -979,7 +1263,8 @@ class MOS365Service:
         # For R8 sessions, include training task
         STATIC_MODES = {"r8_static_training", "r11_static_training", "r12_static_training", "r15_static_training", "r16_static_training", "r17_static_training"}
         training_mode = manifest.get("trainingMode", "")
-        if training_mode in STATIC_MODES:
+        is_static = training_mode in STATIC_MODES or (isinstance(training_mode, str) and training_mode.endswith("_static_training"))
+        if is_static:
             task = manifest.get("staticTask", {})
             comp = manifest.get("completion", {})
             result["session"]["training"] = {
@@ -991,7 +1276,7 @@ class MOS365Service:
             }
         self._mark_launch_phase(session_id, "excel_window_visible", state="ready", pid=raw_pid)
         self._mark_launch_phase(session_id, "vsto_attached", state="ready", pid=raw_pid)
-        if training_mode in STATIC_MODES:
+        if is_static:
             self._mark_launch_phase(session_id, "task_rendered", state="ready", pid=raw_pid)
         return result
 
@@ -1045,7 +1330,7 @@ class MOS365Service:
         manifest = json.loads(paths.manifest.read_text(encoding="utf-8"))
         mode = manifest.get("trainingMode", manifest.get("mode", ""))
         STATIC_MODES = {"r8_static_training", "r11_static_training", "r12_static_training", "r15_static_training", "r16_static_training", "r17_static_training"}
-        if mode not in STATIC_MODES:
+        if mode not in STATIC_MODES and not (isinstance(mode, str) and mode.endswith("_static_training")):
             raise MOS365ServiceError("SESSION_MODE_REJECTED", "練習セッションではありません。", "不是练习会话。")
         state = manifest.get("state", "created")
         if state != "attached":
@@ -1084,7 +1369,7 @@ class MOS365Service:
         manifest = json.loads(paths.manifest.read_text(encoding="utf-8"))
         mode = manifest.get("trainingMode", manifest.get("mode", ""))
         STATIC_MODES = {"r8_static_training", "r11_static_training", "r12_static_training", "r15_static_training", "r16_static_training", "r17_static_training"}
-        if mode not in STATIC_MODES:
+        if mode not in STATIC_MODES and not (isinstance(mode, str) and mode.endswith("_static_training")):
             raise MOS365ServiceError("SESSION_MODE_REJECTED", "練習セッションではありません。", "不是练习会话。")
         state = manifest.get("state", "created")
         if state != "attached":
@@ -1110,6 +1395,26 @@ class MOS365Service:
         # Score using spec
         task_id = manifest.get("staticTask", {}).get("taskId", "")
         spec = SCORING_SPECS.get(task_id)
+        if not spec and task_id in MOS_CATALOG:
+            task_info = MOS_CATALOG[task_id]
+            spec = {
+                "specVersion": task_info["version"],
+                "taskId": task_info["id"],
+                "assertions": [
+                    {
+                        "id": task_info["id"] + "-assertion",
+                        "type": task_info["assessment"]["type"],
+                        "sheetName": task_info["assessment"]["sheetName"],
+                        "cellRef": task_info["assessment"].get("cellRef"),
+                        "expected": task_info["assessment"].get("expected"),
+                        "expectedFormula": task_info["assessment"].get("expectedFormula"),
+                        "weight": 1,
+                        "comparison": "strict_text_equals",
+                        "feedback": task_info["assessment"]["feedback"]
+                    }
+                ],
+                "resultPolicy": {"mode": "all_or_nothing"}
+            }
         if not spec:
             raise MOS365ServiceError("SCORING_SPEC_NOT_FOUND", "このタスクの採点ルールが見つかりません。", "未找到此任务的评分规则。")
 
@@ -1508,6 +1813,132 @@ class MOS365Service:
             archive.writestr("xl/worksheets/sheet1.xml", input_sx)
             archive.writestr("xl/worksheets/sheet2.xml", calc_sx)
 
+    def _write_gp_workbook(self, destination: Path, task_id: str) -> None:
+        """Write a minimal original workbook configured for the specific MOS task_id."""
+        if task_id in ("MOS_GP_001_ENTER_STATUS", "R16_STATIC_CELL_VALUE_DEMO"):
+            sheets = ["入力"]
+            sheet_data = {
+                "入力": [["項目", "値"], ["", ""]]
+            }
+        elif task_id in ("MOS_GP_002_SUM_TWO_VALUES", "R17_STATIC_FORMULA_TEXT_DEMO"):
+            sheets = ["入力", "計算"]
+            sheet_data = {
+                "入力": [["項目", "値"], ["", ""]],
+                "計算": [["", "", ""], [2, 3, ""]]
+            }
+        elif task_id == "MOS_GP_003_SUM_WEEKLY_SALES":
+            sheets = ["売上"]
+            sheet_data = {
+                "売上": [
+                    ["曜日", "売上高"],
+                    ["月", 12000],
+                    ["火", 8500],
+                    ["水", 16200],
+                    ["木", 7300],
+                    ["金", 9400],
+                    ["合計", ""]
+                ]
+            }
+        elif task_id == "MOS_GP_004_AVERAGE_SCORE":
+            sheets = ["成績"]
+            sheet_data = {
+                "成績": [
+                    ["教科", "得点"],
+                    ["国語", 78],
+                    ["数学", 85],
+                    ["英語", 92],
+                    ["平均", ""]
+                ]
+            }
+        elif task_id == "MOS_GP_005_IF_DELIVERY_STATUS":
+            sheets = ["配達"]
+            sheet_data = {
+                "配達": [
+                    ["配送先", "配送ステータス", "チェック結果"],
+                    ["配送先A", "完了", ""]
+                ]
+            }
+        elif task_id == "MOS_GP_006_COUNTA_BOOKS":
+            sheets = ["新着"]
+            sheet_data = {
+                "新着": [
+                    ["書籍名", ""],
+                    ["Python入門", ""],
+                    ["Javaの基本", ""],
+                    ["", ""],
+                    ["SQL超入門", ""],
+                    ["", ""],
+                    ["HTML/CSS基本", ""],
+                    ["ネットワーク基礎", ""],
+                    ["情報セキュリティ", ""],
+                    ["", ""],
+                    ["アルゴリズム解説", ""]
+                ]
+            }
+        elif task_id in ("MOS_GP_007_MAX_VISITORS", "MOS_GP_008_MIN_VISITORS"):
+            sheets = ["来客"]
+            sheet_data = {
+                "来客": [
+                    ["曜日", "来客数"],
+                    ["月", 42],
+                    ["火", 35],
+                    ["水", 68],
+                    ["木", 29],
+                    ["金", 55],
+                    ["土", 91],
+                    ["日", 47],
+                    ["最大来客数", ""],
+                    ["最小来客数", ""]
+                ]
+            }
+        elif task_id == "MOS_GP_009_LEFT_DEPARTMENT_CODE":
+            sheets = ["社員"]
+            sheet_data = {
+                "社員": [
+                    ["社員コード", "部門コード"],
+                    ["SA0381", ""]
+                ]
+            }
+        elif task_id == "MOS_GP_010_TEXTJOIN_PRODUCT_TAG":
+            sheets = ["商品"]
+            sheet_data = {
+                "商品": [
+                    ["商品名", "型番", "カラー", "商品タグ"],
+                    ["ノート", "A5", "紺", ""]
+                ]
+            }
+        else:
+            raise MOS365ServiceError("TASK_NOT_FOUND", "タスクが見つかりません。", "任务未找到。")
+
+        sheet_xml = [self._sheet_xml(sheet_data[name]) for name in sheets]
+        workbook_sheets = "".join(f'<sheet name="{self._xml_escape(name)}" sheetId="{idx + 1}" r:id="rId{idx + 1}"/>' for idx, name in enumerate(sheets))
+        workbook_xml = f'<?xml version="1.0" encoding="UTF-8" standalone="yes"?><workbook xmlns="{NS_MAIN}" xmlns:r="{NS_REL}"><sheets>{workbook_sheets}</sheets></workbook>'
+        rels = "".join(f'<Relationship Id="rId{idx + 1}" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet{idx + 1}.xml"/>' for idx in range(len(sheets)))
+        workbook_rels = f'<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="{NS_PKG_REL}">{rels}<Relationship Id="rId{len(sheets) + 1}" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/></Relationships>'
+        content_types = ['<Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/>', '<Default Extension="xml" ContentType="application/xml"/>', '<Override PartName="/xl/workbook.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"/>', '<Override PartName="/xl/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml"/>']
+        content_types += [f'<Override PartName="/xl/worksheets/sheet{idx + 1}.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/>' for idx in range(len(sheets))]
+        root_rels = f'<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="{NS_PKG_REL}"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="xl/workbook.xml"/></Relationships>'
+        styles = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><styleSheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><numFmts count="0"/><fonts count="1"><font><sz val="11"/><name val="Calibri"/></font></fonts><fills count="2"><fill><patternFill patternType="none"/></fill><fill><patternFill patternType="gray125"/></fill></fills><borders count="1"><border><left/><right/><top/><bottom/><diagonal/></border></borders><cellStyleXfs count="1"><xf numFmtId="0" fontId="0" fillId="0" borderId="0"/></cellStyleXfs><cellXfs count="1"><xf numFmtId="0" fontId="0" fillId="0" borderId="0" xfId="0"/></cellXfs></styleSheet>'
+
+        with zipfile.ZipFile(destination, "w", compression=zipfile.ZIP_DEFLATED) as archive:
+            archive.writestr("[Content_Types].xml", '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types">' + "".join(content_types) + "</Types>")
+            archive.writestr("_rels/.rels", root_rels)
+            archive.writestr("xl/workbook.xml", workbook_xml)
+            archive.writestr("xl/_rels/workbook.xml.rels", workbook_rels)
+            archive.writestr("xl/styles.xml", styles)
+            for index, content in enumerate(sheet_xml, start=1):
+                archive.writestr(f"xl/worksheets/sheet{index}.xml", content)
+
+    @staticmethod
+    def _normal_formula_comparer(actual: str, expected: str) -> bool:
+        def normalize(f: str) -> str:
+            f = str(f or "").strip()
+            if not f.startswith("="):
+                f = "=" + f
+            f = re.sub(r"\s+", "", f).upper()
+            return f
+        return normalize(actual) == normalize(expected)
+
     @staticmethod
     def _sheet_xml_calc() -> str:
         """Write 計算 sheet: A2=2, B2=3, C2 blank (answer must be user-entered)."""
@@ -1570,7 +2001,7 @@ class MOS365Service:
                     if f_type == 'shared':
                         return {"id": assertion["id"], "type": assertion["type"], "result": "indeterminate", "earned": 0, "total": assertion["weight"]}
                     actual_formula = "=" + f_text.strip()
-                    correct = actual_formula == expected
+                    correct = MOS365Service._normal_formula_comparer(actual_formula, expected)
                     return {"id": assertion["id"], "type": assertion["type"], "result": "correct" if correct else "incorrect", "earned": assertion["weight"] if correct else 0, "total": assertion["weight"]}
                 return {"id": assertion["id"], "type": assertion["type"], "result": "incorrect", "earned": 0, "total": assertion["weight"]}
         except (zipfile.BadZipFile, KeyError, ET.ParseError, OSError):

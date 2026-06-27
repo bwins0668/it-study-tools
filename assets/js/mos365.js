@@ -5,6 +5,18 @@
   if (!content || document.getElementById('mos365-shell')) return;
 
   var STORAGE_KEY = 'study-tools.mos365.v1.records';
+  var ORIGINAL_TASKS = [
+    { taskId: "MOS_GP_001_ENTER_STATUS", titleJa: "ステータス入力", titleZh: "状态输入", descJa: "入力シートの B2 に「完了」と入力してください。", descZh: "请在“输入”工作表的 B2 中输入“完了”。", domain: "セル値の入力", tier: "基礎", time: 2 },
+    { taskId: "MOS_GP_002_SUM_TWO_VALUES", titleJa: "数値の合計計算", titleZh: "计算两数之和", descJa: "「計算」シートの C2 セルに、A2 から B2 の合計を求める数式を入力してください。", descZh: "请在「計算」工作表的 C2 单元格中，输入计算 A2 到 B2 总和的公式。", domain: "SUM関数", tier: "基礎", time: 3 },
+    { taskId: "MOS_GP_003_SUM_WEEKLY_SALES", titleJa: "週間売上集計", titleZh: "每周销售汇总", descJa: "売上シートの B7 セルに、月曜日から金曜日（B2:B6）までの売上合計を求める数式を入力してください。", descZh: "请在“売上”工作表的 B7 单元格中，输入计算星期一至星期五（B2:B6）销售额总和的公式。", domain: "SUM関数(連続范围)", tier: "基礎", time: 3 },
+    { taskId: "MOS_GP_004_AVERAGE_SCORE", titleJa: "平均成績算出", titleZh: "计算平均成绩", descJa: "成績シートの B5 セルに、国語、数学、英語（B2:B4）の平均点を計算する数式を入力してください。", descZh: "请在“成績”工作表的 B5 单元格中，输入计算国语、数学、英语（B2:B4）平均分的公式。", domain: "AVERAGE関数", tier: "基礎", time: 3 },
+    { taskId: "MOS_GP_005_IF_DELIVERY_STATUS", titleJa: "配達状況チェック", titleZh: "检查配送状态", descJa: "配達シートの C2 セルに、B2セルの値が「完了」の場合は「✓」を表示し、それ以外の場合は「✗」を表示する数式を入力してください。", descZh: "请在“配達”工作表的 C2 单元格中，输入一个公式，当 B2 单元格的值为“完了”时显示“✓”，否则显示“✗”。", domain: "IF関数", tier: "基礎", time: 4 },
+    { taskId: "MOS_GP_006_COUNTA_BOOKS", titleJa: "書籍データ数カウント", titleZh: "统计已登记书籍数", descJa: "新着シートの B1 セルに、A2からA11までの範囲で書籍名が入力されているセル数を求める数式を入力してください。", descZh: "请在“新着”工作表的 B1 单元格中，输入计算 A2 到 A11 范围内输入了书名的单元格数量的公式。", domain: "COUNTA関数", tier: "基礎", time: 3 },
+    { taskId: "MOS_GP_007_MAX_VISITORS", titleJa: "最大来客数算出", titleZh: "计算最高来客数", descJa: "来客シートの B9 セルに、月曜日から日曜日（B2:B8）までの期間での最高来客数を求める数式を入力してください。", descZh: "请在“来客”工作表的 B9 单元格中，输入计算星期一至星期日（B2:B8）期间最高来客数的公式。", domain: "MAX関数", tier: "基礎", time: 3 },
+    { taskId: "MOS_GP_008_MIN_VISITORS", titleJa: "最低来客数算出", titleZh: "计算最低来客数", descJa: "来客シートの B10 セルに、月曜日から日曜日（B2:B8）までの期間での最低来客数を求める数式を入力してください。", descZh: "请在“来客”工作表的 B10 单元格中，输入计算星期一至星期日（B2:B8）期间最低来客数的公式。", domain: "MIN関数", tier: "基礎", time: 3 },
+    { taskId: "MOS_GP_009_LEFT_DEPARTMENT_CODE", titleJa: "部門コード抽出", titleZh: "提取部门代码", descJa: "社員シートの B2 セルに、社員コード（A2）の左側から2文字の部門コードを取り出す数式を入力してください。", descZh: "请在“社員”工作表的 B2 单元格中，输入一个公式，提取员工代码（A2）左侧的 2 位部门代码。", domain: "LEFT関数", tier: "基礎", time: 3 },
+    { taskId: "MOS_GP_010_TEXTJOIN_PRODUCT_TAG", titleJa: "商品タグ生成", titleZh: "生成商品标签", descJa: "商品シートの D2 セルに、TEXTJOIN関数を使って、区切り文字に「/」を指定し、空のセルは無視して、A2からC2までのテキストを結合する数式を入力してください。", descZh: "请在“商品”工作表的 D2 单元格中，使用 TEXTJOIN 函数输入公式，指定分隔符为“/”，忽略空单元格，将 A2 到 C2 的文本进行结合。", domain: "TEXTJOIN関数", tier: "基礎", time: 4 }
+  ];
   var state = { view: 'mvp', session: null, examTimer: null, environment: null, launchState: null, mvpInProgress: false, launchPollTimer: null };
 
   function escapeHtml(value) {
@@ -553,12 +565,25 @@
     }
     main.innerHTML = '<h3>MOS 実技トレーニング</h3><p class="mos365-muted">本物の Excel を使って操作を練習します。评分系统は実際の Open XML 分析に基づきます。</p>' +
       '<div class="mos365-list">' +
-      '<article class="mos365-item"><h4>R16: セルに値を入力する</h4><p>「入力」シートの B2 セルに「完了」と入力する練習。</p><div class="mos365-actions"><button class="mos365-btn" data-mvp-start="r16" ' + (isCreating ? 'disabled' : '') + '>開始する（R16）</button></div></article>' +
-      '<article class="mos365-item"><h4>R17: 数式を入力する</h4><p>「計算」シートの C2 セルに、A2 から B2 の合計を求める数式を入力する練習。</p><div class="mos365-actions"><button class="mos365-btn" data-mvp-start="r17" ' + (isCreating ? 'disabled' : '') + '>開始する（R17）</button></div></article>' +
+      ORIGINAL_TASKS.map(function (task) {
+        return '<article class="mos365-item">' +
+          '<h4>' + escapeHtml(task.titleJa) + '</h4>' +
+          '<p><strong>中文辅助：</strong>' + escapeHtml(task.titleZh) + '</p>' +
+          '<p><strong>タスク：</strong>' + escapeHtml(task.descJa) + '<br><strong>说明：</strong>' + escapeHtml(task.descZh) + '</p>' +
+          '<p>' +
+            '<span class="mos365-tag">領域: ' + escapeHtml(task.domain) + '</span>' +
+            '<span class="mos365-tag">難易度: ' + escapeHtml(task.tier) + '</span>' +
+            '<span class="mos365-tag">目安: ' + task.time + '分</span>' +
+          '</p>' +
+          '<div class="mos365-actions">' +
+            '<button class="mos365-btn" data-mvp-start="' + escapeHtml(task.taskId) + '" ' + (isCreating ? 'disabled' : '') + '>開始する</button>' +
+          '</div>' +
+        '</article>';
+      }).join('') +
       '</div>' + statusHtml +
       '<div id="mos-mvp-output"></div><div class="mos365-actions">' +
       '<button class="mos365-btn danger" data-mvp-clear>重新开始 / リセット</button></div>';
-    main.querySelector('[data-mvp-start]') && main.querySelectorAll('[data-mvp-start]').forEach(function (btn) {
+    main.querySelectorAll('[data-mvp-start]').forEach(function (btn) {
       btn.addEventListener('click', function () { startMvpTraining(btn.dataset.mvpStart, btn); });
     });
     main.querySelector('[data-mvp-clear]') && main.querySelector('[data-mvp-clear]').addEventListener('click', function () {
@@ -599,7 +624,11 @@
       state.mvpInProgress = true;
       state.launchState = { active: true, state: 'creating' };
     });
-    api('/api/mos365/sessions', { mode: mode + '_static_training' }).then(function (session) {
+    var taskId = mode;
+    if (taskId === 'r16') taskId = 'MOS_GP_001_ENTER_STATUS';
+    if (taskId === 'r17') taskId = 'MOS_GP_002_SUM_TWO_VALUES';
+
+    api('/api/mos365/sessions', { taskId: taskId }).then(function (session) {
       state.session = session;
       state.launchState = { active: true, state: 'creating', sessionId: session.sessionId };
       render();

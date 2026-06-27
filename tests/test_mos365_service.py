@@ -792,5 +792,180 @@ class MOS365R22FlowContractTests(unittest.TestCase):
         self.assertIn("state.launchState && state.launchState.active && !isTerminalLaunchState(state.launchState)", web)
 
 
+class MOS365R32OriginalPackTests(unittest.TestCase):
+    def setUp(self):
+        self.temp = tempfile.TemporaryDirectory()
+        self.service = MOS365Service(Path(__file__).resolve().parents[1], session_root=self.temp.name)
+
+    def tearDown(self):
+        self.temp.cleanup()
+
+    def test_catalog_completeness_and_uniqueness(self):
+        from mos365_service import MOS_CATALOG
+        self.assertEqual(len(MOS_CATALOG), 10)
+        task_ids = list(MOS_CATALOG.keys())
+        self.assertEqual(len(set(task_ids)), 10)
+        for tid, task in MOS_CATALOG.items():
+            self.assertEqual(task["contentProvenance"], "original_project_content_r32")
+            self.assertTrue(task["titleJa"])
+            self.assertTrue(task["titleZh"])
+            self.assertTrue(task["instructionJa"])
+            self.assertTrue(task["instructionZh"])
+            self.assertTrue(task["assessment"]["type"])
+            self.assertTrue(task["assessment"]["sheetName"])
+
+    def _inject_cell_data(self, workbook_path: str, sheet_name: str, cell_ref: str, value_or_formula: str, is_formula: bool):
+        import zipfile
+        import re
+        from xml.etree import ElementTree as ET
+        ns = {"m": "http://schemas.openxmlformats.org/spreadsheetml/2006/main",
+              "r": "http://schemas.openxmlformats.org/officeDocument/2006/relationships",
+              "pr": "http://schemas.openxmlformats.org/package/2006/relationships"}
+        with zipfile.ZipFile(workbook_path, "r") as zf:
+            parts = {name: zf.read(name) for name in zf.namelist()}
+
+        wb_root = ET.fromstring(parts["xl/workbook.xml"])
+        rels_root = ET.fromstring(parts["xl/_rels/workbook.xml.rels"])
+        sheet_rel_id = None
+        for sheet in wb_root.findall('.//m:sheets/m:sheet', ns):
+            if sheet.get('name', '') == sheet_name:
+                sheet_rel_id = sheet.attrib.get('{' + ns['r'] + '}id', sheet.attrib.get('r:id', ''))
+                break
+        if not sheet_rel_id:
+            raise ValueError(f"Sheet {sheet_name} not found")
+
+        target_path = ""
+        for rel in rels_root.findall('pr:Relationship', ns):
+            if rel.attrib.get('Id', '') == sheet_rel_id:
+                target_path = rel.attrib.get('Target', '')
+                break
+        if not target_path:
+            raise ValueError(f"Target path not found for relationship {sheet_rel_id}")
+
+        normalized = target_path.lstrip('/')
+        if not normalized.startswith('xl/'):
+            normalized = 'xl/' + normalized
+
+        sheet_root = ET.fromstring(parts[normalized])
+
+        cell_node = None
+        for c in sheet_root.findall('.//m:c', ns):
+            if c.attrib.get('r', '') == cell_ref:
+                cell_node = c
+                break
+
+        if cell_node is None:
+            sheet_data = sheet_root.find('.//m:sheetData', ns)
+            row_num = re.sub(r"[A-Z]+", "", cell_ref)
+            row_node = None
+            for r in sheet_data.findall('m:row', ns):
+                if r.attrib.get('r', '') == row_num:
+                    row_node = r
+                    break
+            if row_node is None:
+                row_node = ET.SubElement(sheet_data, f'{{{ns["m"]}}}row')
+                row_node.set('r', row_num)
+            cell_node = ET.SubElement(row_node, f'{{{ns["m"]}}}c')
+            cell_node.set('r', cell_ref)
+        else:
+            cell_node.clear()
+            cell_node.set('r', cell_ref)
+
+        if is_formula:
+            formula_text = value_or_formula.lstrip("=")
+            f_elem = ET.SubElement(cell_node, f'{{{ns["m"]}}}f')
+            f_elem.text = formula_text
+            v_elem = ET.SubElement(cell_node, f'{{{ns["m"]}}}v')
+            v_elem.text = "0"
+        else:
+            cell_node.set('t', 'inlineStr')
+            is_elem = ET.SubElement(cell_node, f'{{{ns["m"]}}}is')
+            t_elem = ET.SubElement(is_elem, f'{{{ns["m"]}}}t')
+            t_elem.text = value_or_formula
+
+        modified = ET.tostring(sheet_root, encoding="unicode", xml_declaration=True)
+        parts[normalized] = modified.encode("utf-8")
+
+        import io
+        buf = io.BytesIO()
+        with zipfile.ZipFile(buf, "w", compression=zipfile.ZIP_DEFLATED) as out:
+            for name, value in parts.items():
+                out.writestr(name, value)
+        with open(workbook_path, "wb") as f:
+            f.write(buf.getvalue())
+
+    def test_end_to_end_lifecycle_all_10_tasks(self):
+        from mos365_service import MOS_CATALOG
+        tests_data = {
+            "MOS_GP_001_ENTER_STATUS": ("完了", False, "进行中", False),
+            "MOS_GP_002_SUM_TWO_VALUES": ("=SUM(A2:B2)", True, "=A2+B2", True),
+            "MOS_GP_003_SUM_WEEKLY_SALES": ("=SUM(B2:B6)", True, "=SUM(B2:B5)", True),
+            "MOS_GP_004_AVERAGE_SCORE": ("=AVERAGE(B2:B4)", True, "=AVERAGE(B2:B3)", True),
+            "MOS_GP_005_IF_DELIVERY_STATUS": ('=IF(B2="完了","✓","✗")', True, '=IF(B2="完了","OK","NG")', True),
+            "MOS_GP_006_COUNTA_BOOKS": ("=COUNTA(A2:A11)", True, "=COUNTA(A2:A10)", True),
+            "MOS_GP_007_MAX_VISITORS": ("=MAX(B2:B8)", True, "=MAX(B2:B7)", True),
+            "MOS_GP_008_MIN_VISITORS": ("=MIN(B2:B8)", True, "=MIN(B2:B7)", True),
+            "MOS_GP_009_LEFT_DEPARTMENT_CODE": ("=LEFT(A2,2)", True, "=LEFT(A2,3)", True),
+            "MOS_GP_010_TEXTJOIN_PRODUCT_TAG": ('=TEXTJOIN("/",TRUE,A2:C2)', True, '=TEXTJOIN(",",TRUE,A2:C2)', True),
+        }
+
+        for tid, (correct_val, correct_f, wrong_val, wrong_f) in tests_data.items():
+            import mos365_service
+            with mos365_service._LAUNCH_LOCK:
+                mos365_service._LAUNCH_STATE = None
+            # 1. Create Session
+            session = self.service.create_session({"taskId": tid})
+            sid = session["sessionId"]
+            paths = self.service._paths(sid)
+            manifest = json.loads(paths.manifest.read_text(encoding="utf-8"))
+
+            # 2. Check catalog display fields are safe (no expectedFormula or expected leaks)
+            self.assertNotIn("expected", str(session["staticTask"]))
+            self.assertNotIn("expectedFormula", str(session["staticTask"]))
+            self.assertEqual(session["staticTask"]["taskId"], tid)
+            self.assertTrue(session["staticTask"]["instructionJa"])
+            self.assertTrue(session["staticTask"]["instructionZh"])
+
+            # 3. Check initial workbook goal cell is blank
+            import zipfile
+            from xml.etree import ElementTree as ET
+            ns = {"m": "http://schemas.openxmlformats.org/spreadsheetml/2006/main"}
+
+            with zipfile.ZipFile(paths.workbook, "r") as zf:
+                wb_root = ET.fromstring(zf.read("xl/workbook.xml"))
+                sheet_names = [s.get("name", "") for s in wb_root.findall('.//m:sheets/m:sheet', ns)]
+
+            assessment = MOS_CATALOG[tid]["assessment"]
+            target_sheet = assessment["sheetName"]
+            target_cell = assessment.get("cellRef") or assessment.get("target")
+            self.assertIn(target_sheet, sheet_names)
+
+            evidence = self.service._extract_evidence(paths.workbook)
+            cell = evidence["sheets"][target_sheet]["cells"].get(target_cell, {})
+            self.assertEqual(cell.get("value", ""), "", f"Initial cell {target_cell} in sheet {target_sheet} must be empty for {tid}")
+            self.assertEqual(cell.get("formula", ""), "", f"Initial cell {target_cell} in sheet {target_sheet} must have no formula for {tid}")
+
+            # 4. Mock attached state
+            manifest["state"] = "attached"
+            manifest["excelPid"] = 9999
+            manifest["attachedPid"] = 9999
+            manifest["completion"] = {"acknowledged": True, "acknowledgedAt": "2026-06-27T00:00:00+09:00", "acknowledgedPid": 9999}
+            paths.manifest.write_text(json.dumps(manifest, ensure_ascii=False, indent=2), encoding="utf-8")
+
+            # 5. Negative scoring check
+            self._inject_cell_data(paths.workbook, target_sheet, target_cell, wrong_val, wrong_f)
+            self.service.session_complete({"sessionId": sid, "excelPid": 9999})
+            score_res = self.service.session_score({"sessionId": sid, "excelPid": 9999})
+            self.assertEqual(score_res["assessment"]["result"], "incorrect", f"Negative scoring failed for {tid}")
+            self.assertEqual(score_res["assessment"]["earned"], 0, f"Negative scoring should earn 0 for {tid}")
+
+            # 6. Positive scoring check
+            self._inject_cell_data(paths.workbook, target_sheet, target_cell, correct_val, correct_f)
+            self.service.session_complete({"sessionId": sid, "excelPid": 9999})
+            score_res = self.service.session_score({"sessionId": sid, "excelPid": 9999})
+            self.assertEqual(score_res["assessment"]["result"], "correct", f"Positive scoring failed for {tid}")
+            self.assertEqual(score_res["assessment"]["earned"], 1, f"Positive scoring should earn 1 for {tid}")
+
+
 if __name__ == "__main__":
     unittest.main()
