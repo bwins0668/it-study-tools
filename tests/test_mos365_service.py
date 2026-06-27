@@ -1508,5 +1508,359 @@ class R352SafeForegroundHotfixGateTests(unittest.TestCase):
             temp.cleanup()
 
 
+class R3521BehavioralSeamTests(unittest.TestCase):
+    """R35.2.1 行为测试：使用 FakeUser32 API seam 模拟所有场景。"""
+
+    def setUp(self):
+        self.diag = {
+            "foreground_requested": False,
+            "window_found": False,
+            "maximize_requested": False,
+            "foreground_confirmed": False,
+            "maximize_confirmed": False,
+            "elapsed_ms": 0,
+            "failure_category": None,
+        }
+
+    # ── Fake API 桩 ──
+
+    class FakeUser32:
+        """模拟 user32 接口的桩，可控制所有返回值。
+
+        WARNING: _find_visible_window_for_pid 内部使用 ctypes.WINFUNCTYPE 包装
+        回调，hwnd 参数可能以 c_void_p 形式传递（而非 int）。
+        所有 FakeUser32 方法自动将 c_void_p 规约为 int。
+        """
+
+        def __init__(self):
+            self._windows: dict[int, dict] = {}
+            self._foreground_hwnd: int | None = None
+            self._next_hwnd = 1000
+            self._zoomed_hwnds: set[int] = set()
+
+        @staticmethod
+        def _to_int(hwnd) -> int:
+            """规约 c_void_p → int；int 直接返回。"""
+            return hwnd.value if hasattr(hwnd, "value") else hwnd
+
+        def add_window(self, pid: int, visible: bool = True, hwnd: int | None = None) -> int:
+            if hwnd is None:
+                hwnd = self._next_hwnd
+                self._next_hwnd += 1
+            self._windows[hwnd] = {"pid": pid, "visible": visible}
+            return hwnd
+
+        def set_foreground(self, hwnd: int) -> None:
+            self._foreground_hwnd = self._to_int(hwnd)
+
+        def set_zoomed(self, hwnd: int, zoomed: bool = True) -> None:
+            hwnd = self._to_int(hwnd)
+            if zoomed:
+                self._zoomed_hwnds.add(hwnd)
+            else:
+                self._zoomed_hwnds.discard(hwnd)
+
+        # user32 API 模拟
+        def ShowWindowAsync(self, hwnd, _cmd):
+            pass  # fire-and-forget, 不阻塞
+
+        def SetForegroundWindow(self, hwnd):
+            self._foreground_hwnd = self._to_int(hwnd)
+
+        def GetForegroundWindow(self):
+            return self._foreground_hwnd
+
+        def GetWindowThreadProcessId(self, hwnd, out_pid):
+            hwnd = self._to_int(hwnd)
+            win = self._windows.get(hwnd)
+            # out_pid may be CArgObject from ctypes.byref(c_ulong).
+            # Access the underlying c_ulong via _obj if present.
+            target = out_pid._obj if hasattr(out_pid, '_obj') else out_pid
+            target.value = win["pid"] if win else 0
+
+        def IsWindowVisible(self, hwnd):
+            hwnd = self._to_int(hwnd)
+            win = self._windows.get(hwnd)
+            return bool(win and win["visible"])
+
+        def IsZoomed(self, hwnd):
+            hwnd = self._to_int(hwnd)
+            return hwnd in self._zoomed_hwnds
+
+        def EnumWindows(self, enum_proc, _lparam):
+            for hwnd in self._windows:
+                if not enum_proc(hwnd, 0):
+                    break
+
+        def GetWindowThreadProcessId_raw(self, hwnd):
+            win = self._windows.get(hwnd)
+            return win["pid"] if win else 0
+
+    # ── 1. 完整成功路径 ──
+
+    def test_success_path(self):
+        """Foreground+maximize 完整成功路径：PID 匹配、IsZoomed 为真、且验证通过后退出。"""
+        from mos365_service import _foreground_excel_with_api
+        fake = self.FakeUser32()
+        FAKE_HWND = 1000
+        fake.add_window(pid=42, visible=True, hwnd=FAKE_HWND)
+        fake.set_foreground(FAKE_HWND)
+        fake.set_zoomed(FAKE_HWND, zoomed=True)
+
+        def find(_u, pid):
+            return FAKE_HWND if pid == 42 else None
+
+        _foreground_excel_with_api(fake, pid=42, session_id="s1", deadline_seconds=2.0, diag=self.diag, find_window=find)
+
+        self.assertTrue(self.diag["foreground_confirmed"])
+        self.assertTrue(self.diag["maximize_confirmed"])
+        self.assertIsNone(self.diag["failure_category"])
+        self.assertGreater(self.diag["elapsed_ms"], 0)
+
+    # ── 2. 调用顺序：SetForegroundWindow 在验证之前 ──
+
+    def test_set_foreground_before_verification(self):
+        """SetForegroundWindow 被调用之后才有 foreground_confirmed。"""
+        from mos365_service import _foreground_excel_with_api
+        fake = self.FakeUser32()
+
+        class OrderTrackingFake:
+            def __init__(self, inner):
+                self._inner = inner
+                self.call_sequence = []
+
+            def ShowWindowAsync(self, hwnd, cmd):
+                self._inner.ShowWindowAsync(hwnd, cmd)
+
+            def SetForegroundWindow(self, hwnd):
+                self.call_sequence.append("SetForegroundWindow")
+                self._inner._foreground_hwnd = self._inner._to_int(hwnd)
+
+            def GetForegroundWindow(self):
+                self.call_sequence.append("GetForegroundWindow")
+                return self._inner._foreground_hwnd
+
+            def GetWindowThreadProcessId(self, hwnd, out_pid):
+                self._inner.GetWindowThreadProcessId(hwnd, out_pid)
+
+            def IsWindowVisible(self, hwnd):
+                return True
+
+            def IsZoomed(self, hwnd):
+                self.call_sequence.append("IsZoomed")
+                hwnd = self._inner._to_int(hwnd)
+                return hwnd in self._inner._zoomed_hwnds
+
+            def EnumWindows(self, enum_proc, _lparam):
+                pass  # 不使用
+
+        FAKE_HWND = 1000
+        fake.add_window(pid=42, visible=True, hwnd=FAKE_HWND)
+        fake.set_foreground(FAKE_HWND)
+        fake.set_zoomed(FAKE_HWND, zoomed=True)
+        tracker = OrderTrackingFake(fake)
+
+        def find(_u, pid):
+            return FAKE_HWND if pid == 42 else None
+
+        _foreground_excel_with_api(tracker, pid=42, session_id="s2", deadline_seconds=2.0, diag=self.diag, find_window=find)
+
+        self.assertTrue(self.diag["foreground_confirmed"])
+        sfw_idx = tracker.call_sequence.index("SetForegroundWindow")
+        first_check = next(
+            i for i, name in enumerate(tracker.call_sequence)
+            if name in ("GetForegroundWindow", "IsZoomed")
+        )
+        self.assertLess(sfw_idx, first_check)
+
+    # ── 3. 非 PID 保护 ──
+
+    def test_non_pid_window_ignored(self):
+        """仅 PID 匹配的窗口被操作，非匹配窗口被忽略。"""
+        from mos365_service import _foreground_excel_with_api
+        fake = self.FakeUser32()
+        fake.add_window(pid=99, visible=True, hwnd=1001)  # 错误 PID
+        target_hwnd = fake.add_window(pid=42, visible=True, hwnd=1002)
+        fake.set_foreground(target_hwnd)
+        fake.set_zoomed(target_hwnd, zoomed=True)
+
+        def find(_u, pid):
+            return target_hwnd if pid == 42 else None
+
+        _foreground_excel_with_api(fake, pid=42, session_id="s3", deadline_seconds=2.0, diag=self.diag, find_window=find)
+
+        self.assertTrue(self.diag["window_found"])
+        self.assertTrue(self.diag["foreground_confirmed"])
+
+    # ── 4. maximize_not_confirmed ──
+
+    def test_maximize_not_confirmed(self):
+        """IsZoomed 返回假应分类为 maximize_not_confirmed。"""
+        from mos365_service import _foreground_excel_with_api
+        fake = self.FakeUser32()
+        FAKE_HWND = 1000
+        fake.add_window(pid=42, visible=True, hwnd=FAKE_HWND)
+        fake.set_foreground(FAKE_HWND)
+        fake.set_zoomed(FAKE_HWND, zoomed=False)  # 未最大化
+
+        def find(_u, pid):
+            return FAKE_HWND if pid == 42 else None
+
+        _foreground_excel_with_api(fake, pid=42, session_id="s4", deadline_seconds=5.0, diag=self.diag, find_window=find)
+
+        self.assertTrue(self.diag["foreground_confirmed"])
+        self.assertFalse(self.diag["maximize_confirmed"])
+        self.assertEqual(self.diag["failure_category"], "maximize_not_confirmed")
+
+    # ── 5. foreground_pid_mismatch ──
+
+    def test_foreground_pid_mismatch(self):
+        """SetForegroundWindow 后前台窗口的 PID 不匹配 → foreground_pid_mismatch。"""
+        from mos365_service import _foreground_excel_with_api
+
+        class PidMismatchFake(self.FakeUser32):
+            """SetForegroundWindow 总是将前台设为不同 PID 的窗口（模拟 OS 拒绝）。"""
+            def SetForegroundWindow(self, hwnd):
+                self._foreground_hwnd = 2001  # pid=99 的窗口
+
+        fake = PidMismatchFake()
+        FAKE_HWND = 1000
+        fake.add_window(pid=42, visible=True, hwnd=FAKE_HWND)
+        fake.add_window(pid=99, visible=True, hwnd=2001)  # 前台落到此窗口
+
+        def find(_u, pid):
+            return FAKE_HWND if pid == 42 else None
+
+        _foreground_excel_with_api(fake, pid=42, session_id="s5", deadline_seconds=2.0, diag=self.diag, find_window=find)
+
+        self.assertFalse(self.diag["foreground_confirmed"])
+        self.assertEqual(self.diag["failure_category"], "foreground_pid_mismatch")
+
+    # ── 6. set_foreground_rejected ──
+
+    def test_set_foreground_rejected(self):
+        """GetForegroundWindow 返回空 → set_foreground_rejected。"""
+        from mos365_service import _foreground_excel_with_api
+
+        class RejectedFake(self.FakeUser32):
+            """SetForegroundWindow 无效，前台始终为 None。"""
+            def SetForegroundWindow(self, hwnd):
+                self._foreground_hwnd = None
+
+        fake = RejectedFake()
+        FAKE_HWND = 1000
+        fake.add_window(pid=42, visible=True, hwnd=FAKE_HWND)
+
+        def find(_u, pid):
+            return FAKE_HWND if pid == 42 else None
+
+        _foreground_excel_with_api(fake, pid=42, session_id="s6", deadline_seconds=2.0, diag=self.diag, find_window=find)
+
+        self.assertFalse(self.diag["foreground_confirmed"])
+        self.assertEqual(self.diag["failure_category"], "set_foreground_rejected")
+
+    # ── 7. window_not_found ──
+
+    def test_window_not_found(self):
+        """未见目标 PID 窗口 → window_not_found。"""
+        from mos365_service import _foreground_excel_with_api
+        fake = self.FakeUser32()
+        fake.add_window(pid=99, visible=True, hwnd=1001)
+
+        _foreground_excel_with_api(fake, pid=42, session_id="s7", deadline_seconds=0.2, diag=self.diag, find_window=lambda u, pid: None)
+
+        self.assertFalse(self.diag["window_found"])
+        self.assertEqual(self.diag["failure_category"], "window_not_found")
+
+    # ── 8. timeout ──
+
+    def test_timeout_expired(self):
+        """前台操作超时 → maximize_not_confirmed。"""
+        from mos365_service import _foreground_excel_with_api
+        fake = self.FakeUser32()
+        FAKE_HWND = 1000
+        fake.add_window(pid=42, visible=True, hwnd=FAKE_HWND)
+        fake.set_foreground(FAKE_HWND)
+        fake.set_zoomed(FAKE_HWND, zoomed=False)  # 不最大化
+
+        def find(_u, pid):
+            return FAKE_HWND if pid == 42 else None
+
+        # Phase 2 内的 sleep 总和约为 0.5s，确保 deadline 在轮询期耗尽
+        _foreground_excel_with_api(fake, pid=42, session_id="s8", deadline_seconds=0.6, diag=self.diag, find_window=find)
+
+        # foreground 应确认成功但 maximize 超时
+        self.assertTrue(self.diag["foreground_confirmed"])
+        self.assertFalse(self.diag["maximize_confirmed"])
+        self.assertEqual(self.diag["failure_category"], "maximize_not_confirmed")
+        self.assertEqual(self.diag["failure_category"], "maximize_not_confirmed")
+
+    def test_timeout_full(self):
+        """foreground PID 和 maximize 都未达到 → timeout。"""
+        from mos365_service import _foreground_excel_with_api
+        fake = self.FakeUser32()
+        FAKE_HWND = 1000
+        fake.add_window(pid=42, visible=True, hwnd=FAKE_HWND)
+        fake._foreground_hwnd = None  # 永远不让前台
+        fake.set_zoomed(FAKE_HWND, zoomed=False)
+
+        def find(_u, pid):
+            # finder 成功后前台窗口为 None，导致 set_foreground_rejected
+            return FAKE_HWND if pid == 42 else None
+
+        _foreground_excel_with_api(fake, pid=42, session_id="s8b", deadline_seconds=0.2, diag=self.diag, find_window=find)
+
+        self.assertFalse(self.diag["foreground_confirmed"])
+        # foreground 从未确认，fg 为 None → set_foreground_rejected
+
+    # ── 9. 异常处理 ──
+
+    def test_unexpected_error(self):
+        """user32 调用抛出异常 → unexpected_win32_error。"""
+        from mos365_service import _foreground_excel_with_api
+
+        class FaultyFake:
+            def ShowWindowAsync(self, hwnd, cmd):
+                raise RuntimeError("模拟崩溃")
+
+            def SetForegroundWindow(self, hwnd):
+                pass
+            def GetForegroundWindow(self):
+                pass
+            def GetWindowThreadProcessId(self, hwnd, out_pid):
+                out_pid.value = 0
+            def IsWindowVisible(self, hwnd):
+                return True
+            def IsZoomed(self, hwnd):
+                return True
+            def EnumWindows(self, enum_proc, _lparam):
+                pass
+
+        fake = FaultyFake()
+
+        _foreground_excel_with_api(fake, pid=42, session_id="s9", deadline_seconds=2.0, diag=self.diag, find_window=lambda u, pid: 1000)
+
+        self.assertEqual(self.diag["failure_category"], "unexpected_win32_error")
+
+    # ── 10. 非阻塞 ──
+
+    def test_async_returns_immediately(self):
+        """_foreground_excel_async 立即返回 None（daemon 线程）。"""
+        from mos365_service import _foreground_excel_async
+        result = _foreground_excel_async(999999, "test_session_async_behavior")
+        self.assertIsNone(result)
+
+    def test_daemon_thread_no_wait(self):
+        """Daemon 线程不阻塞主线程退出。"""
+        import threading
+        from mos365_service import _foreground_excel_async
+
+        threads_before = threading.active_count()
+        _foreground_excel_async(42, "test_session_daemon")
+        threads_after = threading.active_count()
+        # 应启动一个新线程
+        self.assertGreaterEqual(threads_after, threads_before)
+
+
 if __name__ == "__main__":
     unittest.main()

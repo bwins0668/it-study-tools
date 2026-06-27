@@ -496,6 +496,127 @@ def _get_foreground_diagnostic(session_id: str) -> dict[str, Any] | None:
     return _FOREGROUND_DIAG.get(session_id)
 
 
+def _find_visible_window_for_pid(user32, target_pid: int) -> int | None:
+    """Find a visible top-level window belonging to the target PID.
+
+    Uses EnumWindows + GetWindowThreadProcessId for PID filtering.
+    Does NOT use title matching or class name matching.
+    """
+    import ctypes
+
+    result: list = []
+
+    def enum_callback(hwnd, _lparam):
+        process_id = ctypes.c_ulong()
+        user32.GetWindowThreadProcessId(hwnd, ctypes.byref(process_id))
+        if process_id.value == target_pid and user32.IsWindowVisible(hwnd):
+            result.append(hwnd)
+        return True
+
+    WNDENUMPROC = ctypes.WINFUNCTYPE(ctypes.c_bool, ctypes.c_void_p, ctypes.c_void_p)
+    user32.EnumWindows(WNDENUMPROC(enum_callback), 0)
+    return result[0] if result else None
+
+
+def _foreground_excel_with_api(
+    user32,
+    pid: int,
+    session_id: str,
+    deadline_seconds: float,
+    diag: dict[str, Any],
+    find_window=None,
+) -> None:
+    """Injectably testable foreground logic.
+
+    Call order: ShowWindowAsync(SW_RESTORE) → ShowWindowAsync(SW_MAXIMIZE)
+    → SetForegroundWindow → poll: GetForegroundWindow(PID) + IsZoomed(tolerance).
+    Verified in a polling loop within deadline_seconds from start.
+
+    The ``find_window`` parameter is an injection seam for testing:
+    ``find_window(user32, pid) -> int | None`` — when provided, used instead of
+    _find_visible_window_for_pid. Defaults to None (use production finder).
+    """
+    import ctypes
+    import time
+
+    SW_RESTORE = 9
+    SW_MAXIMIZE = 3
+
+    start = time.perf_counter()
+    diag["foreground_requested"] = True
+    deadline = start + deadline_seconds
+
+    def _remaining() -> float:
+        return deadline - time.perf_counter()
+
+    try:
+        # Phase 1: Wait for a visible top-level window owned by PID
+        finder = find_window if find_window is not None else _find_visible_window_for_pid
+        target_hwnd = None
+        while _remaining() > 0:
+            candidate = finder(user32, pid)
+            if candidate is not None:
+                target_hwnd = candidate
+                diag["window_found"] = True
+                break
+            time.sleep(0.1)
+
+        if target_hwnd is None:
+            diag["failure_category"] = "window_not_found"
+            diag["elapsed_ms"] = int((time.perf_counter() - start) * 1000)
+            return
+
+        # Phase 2: Restore if minimized, then maximize (fire-and-forget)
+        user32.ShowWindowAsync(target_hwnd, SW_RESTORE)
+        time.sleep(0.1)
+        user32.ShowWindowAsync(target_hwnd, SW_MAXIMIZE)
+        diag["maximize_requested"] = True
+        time.sleep(0.3)
+
+        # Phase 3: Request foreground (must precede verification of either)
+        user32.SetForegroundWindow(target_hwnd)
+
+        # Phase 4: Poll — verify foreground PID + IsZoomed within remaining deadline
+        while _remaining() > 0:
+            fore_hwnd = user32.GetForegroundWindow()
+            if fore_hwnd:
+                fore_pid = ctypes.c_ulong()
+                user32.GetWindowThreadProcessId(fore_hwnd, ctypes.byref(fore_pid))
+                if fore_pid.value == pid:
+                    diag["foreground_confirmed"] = True
+
+                if user32.IsZoomed(target_hwnd):
+                    diag["maximize_confirmed"] = True
+
+                if diag["foreground_confirmed"] and diag["maximize_confirmed"]:
+                    diag["elapsed_ms"] = int((time.perf_counter() - start) * 1000)
+                    return
+
+            time.sleep(0.1)
+
+        # Deadline expired — classify the failure
+        if diag["failure_category"] is None:
+            if diag["foreground_confirmed"] and not diag["maximize_confirmed"]:
+                diag["failure_category"] = "maximize_not_confirmed"
+            else:
+                fore_hwnd = user32.GetForegroundWindow()
+                if fore_hwnd:
+                    fore_pid = ctypes.c_ulong()
+                    user32.GetWindowThreadProcessId(fore_hwnd, ctypes.byref(fore_pid))
+                    if fore_pid.value != pid:
+                        diag["failure_category"] = "foreground_pid_mismatch"
+                    else:
+                        diag["failure_category"] = "timeout"
+                else:
+                    diag["failure_category"] = "set_foreground_rejected"
+
+    except Exception:
+        diag["failure_category"] = "unexpected_win32_error"
+    finally:
+        if diag["elapsed_ms"] == 0:
+            diag["elapsed_ms"] = int((time.perf_counter() - start) * 1000)
+
+
 def _foreground_excel_async(pid: int, session_id: str) -> None:
     """Bring the just-launched Excel window to foreground and maximize it.
 
@@ -508,10 +629,9 @@ def _foreground_excel_async(pid: int, session_id: str) -> None:
     """
     import ctypes
     import threading
-    import time
 
-    SW_RESTORE = 9
-    SW_MAXIMIZE = 3
+    user32 = ctypes.windll.user32
+    DEADLINE_SECONDS = 8.0
 
     diag: dict[str, Any] = {
         "foreground_requested": False,
@@ -525,87 +645,7 @@ def _foreground_excel_async(pid: int, session_id: str) -> None:
     _FOREGROUND_DIAG[session_id] = diag
 
     def _run() -> None:
-        start = time.perf_counter()
-        diag["foreground_requested"] = True
-        try:
-            user32 = ctypes.windll.user32
-
-            # Phase 1: Wait up to 8 seconds for a visible top-level window owned by PID
-            target_hwnd = None
-            for _ in range(80):
-                candidate = _find_visible_window_for_pid(user32, pid)
-                if candidate is not None:
-                    target_hwnd = candidate
-                    diag["window_found"] = True
-                    break
-                time.sleep(0.1)
-
-            if target_hwnd is None:
-                diag["failure_category"] = "window_not_found"
-                diag["elapsed_ms"] = int((time.perf_counter() - start) * 1000)
-                return
-
-            # Phase 2: Restore if minimized, then maximize
-            user32.ShowWindowAsync(target_hwnd, SW_RESTORE)
-            time.sleep(0.1)
-            user32.ShowWindowAsync(target_hwnd, SW_MAXIMIZE)
-            diag["maximize_requested"] = True
-            time.sleep(0.3)
-
-            # Phase 3: Verify maximize with IsZoomed
-            if user32.IsZoomed(target_hwnd):
-                diag["maximize_confirmed"] = True
-            else:
-                diag["failure_category"] = "maximize_not_confirmed"
-
-            # Phase 4: Request foreground (SetForegroundWindow, safe)
-            user32.SetForegroundWindow(target_hwnd)
-            time.sleep(0.15)
-
-            # Phase 5: Verify foreground PID with GetForegroundWindow
-            fore_hwnd = user32.GetForegroundWindow()
-            if fore_hwnd:
-                fore_pid = ctypes.c_ulong()
-                user32.GetWindowThreadProcessId(fore_hwnd, ctypes.byref(fore_pid))
-                if fore_pid.value == pid:
-                    diag["foreground_confirmed"] = True
-                else:
-                    diag["failure_category"] = "foreground_pid_mismatch"
-            else:
-                diag["failure_category"] = "set_foreground_rejected"
-
-        except Exception:
-            diag["failure_category"] = "unexpected_win32_error"
-        finally:
-            elapsed = int((time.perf_counter() - start) * 1000)
-            diag["elapsed_ms"] = elapsed
-            # Fallback: set a meaningful failure category if none assigned
-            if diag["failure_category"] is None and not diag["foreground_confirmed"]:
-                if not diag["window_found"]:
-                    diag["failure_category"] = "window_not_found"
-                elif not diag["maximize_confirmed"]:
-                    diag["failure_category"] = "maximize_not_confirmed"
-                else:
-                    diag["failure_category"] = "timeout"
-
-    def _find_visible_window_for_pid(user32, target_pid: int):
-        """Find a visible top-level window belonging to the target PID.
-
-        Uses EnumWindows + GetWindowThreadProcessId for PID filtering.
-        Does NOT use title matching or class name matching.
-        """
-        result: list = []
-
-        def enum_callback(hwnd, _lparam):
-            process_id = ctypes.c_ulong()
-            user32.GetWindowThreadProcessId(hwnd, ctypes.byref(process_id))
-            if process_id.value == target_pid and user32.IsWindowVisible(hwnd):
-                result.append(hwnd)
-            return True
-
-        WNDENUMPROC = ctypes.WINFUNCTYPE(ctypes.c_bool, ctypes.c_void_p, ctypes.c_void_p)
-        user32.EnumWindows(WNDENUMPROC(enum_callback), 0)
-        return result[0] if result else None
+        _foreground_excel_with_api(user32, pid, session_id, DEADLINE_SECONDS, diag)
 
     threading.Thread(target=_run, daemon=True, name=f"fg-excel-{pid}").start()
 
