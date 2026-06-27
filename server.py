@@ -18,6 +18,7 @@ import webbrowser
 import time
 import re
 import urllib.request
+import urllib.parse
 import hashlib
 from functools import lru_cache
 from http.server import HTTPServer, SimpleHTTPRequestHandler, ThreadingHTTPServer
@@ -40,6 +41,44 @@ from study_ai import (
     translate_items,
 )
 from mos365_service import MOS365Service, MOS365ServiceError
+
+# Auto-update system (Windows 完整版)
+from updater.state import read_state as read_updater_state
+from updater.check_update import check_for_update, download_update
+from updater.apply_update import apply_update
+from updater.path_safety import is_authorized_installation_path, is_dev_repo
+from updater.sign_verify import is_signature_configured
+
+# ── CSRF 保护 ────────────────────────────────────────────────────────
+import secrets
+import hmac
+
+_CSRF_TOKENS: dict[str, float] = {}  # token → timestamp
+_CSRF_TTL = 300  # 5 分钟过期
+
+
+def _generate_csrf_token() -> str:
+    """生成 CSRF token 并存储。"""
+    token = secrets.token_urlsafe(32)
+    _CSRF_TOKENS[token] = time.time()
+    return token
+
+
+def _validate_csrf_token(token: str) -> bool:
+    """验证 CSRF token 是否有效（存在且未过期）。"""
+    ts = _CSRF_TOKENS.pop(token, None)
+    if ts is None:
+        return False
+    if time.time() - ts > _CSRF_TTL:
+        return False
+    return True
+
+
+def _cleanup_expired_csrf_tokens():
+    now = time.time()
+    expired = [k for k, v in _CSRF_TOKENS.items() if now - v > _CSRF_TTL]
+    for k in expired:
+        _CSRF_TOKENS.pop(k, None)
 
 # Reconfigure standard output and error to use UTF-8 to prevent UnicodeEncodeError on Windows console
 if hasattr(sys.stdout, 'reconfigure'):
@@ -473,6 +512,33 @@ class StudyHubHandler(SimpleHTTPRequestHandler):
                 ))
             return
 
+        if path.split('?')[0] == '/api/updater/state':
+            """获取更新器当前状态。"""
+            try:
+                state = read_updater_state(APP_ROOT)
+                safe = {
+                    'currentVersion': state.get('currentVersion', ''),
+                    'lastCheckAt': state.get('lastCheckAt'),
+                    'lastCheckResult': state.get('lastCheckResult'),
+                    'latestVersion': state.get('latestVersion'),
+                    'downloadStage': state.get('downloadStage', 'idle'),
+                    'downloadProgress': state.get('downloadProgress', 0),
+                    'updateReady': state.get('updateReady', False),
+                    'updateAvailable': state.get('lastCheckResult') == 'update_available',
+                    'autoDownload': state.get('autoDownload', True),
+                    'lastError': state.get('lastError'),
+                    'signatureConfigured': is_signature_configured(),
+                }
+                self.send_json(200, {"success": True, "data": safe})
+            except Exception as exc:
+                self.send_service_error(ServiceError("UPDATER_ERROR", str(exc), 500))
+            return
+
+        if path.split('?')[0] == '/api/updater/csrf-token':
+            """获取 CSRF token（GET only，不校验 Origin）。"""
+            self.send_json(200, {"success": True, "data": {"csrfToken": _generate_csrf_token()}})
+            return
+
         if path.split('?')[0] == '/api/learning/recommendations':
             try:
                 self.send_json(200, {
@@ -593,6 +659,59 @@ class StudyHubHandler(SimpleHTTPRequestHandler):
                     )
                 elif path == '/api/i18n/translate':
                     data = translate_items(body, LEARNING_STORE)
+                elif path == '/api/updater/check':
+                    """检查更新。"""
+                    if is_dev_repo(APP_ROOT) and not is_signature_configured():
+                        raise ServiceError("UPDATER_ERROR", "签名验证未配置，更新功能不可用", 400)
+                    data = check_for_update(APP_ROOT)
+                elif path == '/api/updater/download':
+                    """下载更新。"""
+                    state = read_updater_state(APP_ROOT)
+                    if state.get('downloadStage') in ('downloading', 'applying'):
+                        raise ServiceError("UPDATER_ERROR", "已有下载或更新正在进行中", 409)
+                    if state.get('lastCheckResult') != 'update_available':
+                        raise ServiceError("UPDATER_ERROR", "没有可用的更新", 400)
+                    latest = {
+                        'latestVersion': state.get('latestVersion', ''),
+                        'downloadUrl': state.get('latestDownloadUrl', ''),
+                    }
+                    data = download_update(APP_ROOT, latest)
+                elif path == '/api/updater/apply':
+                    """应用更新（需要 CSRF token + same-origin 校验）。
+
+                    R38.2: 即使缺少 Origin 头也必须验证 Host 为本地地址。
+                    仅接受 POST；不接收任何用户指定参数（repo URL、路径等）。
+                    """
+                    state = read_updater_state(APP_ROOT)
+                    if state.get('downloadStage') == 'applying':
+                        raise ServiceError("UPDATER_ERROR", "更新正在应用中", 409)
+
+                    _cleanup_expired_csrf_tokens()
+
+                    origin = self.headers.get('Origin', '')
+                    if not origin:
+                        raise ServiceError("UPDATER_ERROR", "缺失 Origin 头部，拒绝请求", 403)
+
+                    host = self.headers.get('Host', '')
+
+                    # 无论是否有 Origin，都必须验证 Host 为本地地址
+                    actual_host = host.split(':')[0] if ':' in host else host
+                    if actual_host not in ('127.0.0.1', 'localhost'):
+                        raise ServiceError("UPDATER_ERROR", "仅允许本地请求", 403)
+
+                    # Same-origin: 校验 Origin 是否匹配本地服务
+                    origin_host = urllib.parse.urlparse(origin).hostname or ''
+                    if origin_host and origin_host not in ('127.0.0.1', 'localhost'):
+                        raise ServiceError("UPDATER_ERROR", "Origin 不匹配", 403)
+
+                    # CSRF token 验证（POST only）
+                    csrf = body.get('csrfToken', '')
+                    if not _validate_csrf_token(csrf):
+                        raise ServiceError("UPDATER_ERROR", "CSRF token 无效或过期", 403)
+
+                    if is_dev_repo(APP_ROOT) or not is_authorized_installation_path(APP_ROOT):
+                        raise ServiceError("UPDATER_ERROR", "开发仓库不支持更新，仅正式安装目录支持", 400)
+                    data = apply_update(APP_ROOT)
                 else:
                     raise ServiceError("NOT_FOUND", "未找到 API。", 404)
                 self.send_json(200, {"success": True, "data": data})
