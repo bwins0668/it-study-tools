@@ -5,7 +5,7 @@
   if (!content || document.getElementById('mos365-shell')) return;
 
   var STORAGE_KEY = 'study-tools.mos365.v1.records';
-  var state = { view: 'dashboard', session: null, examTimer: null, environment: null, launchState: null, mvpInProgress: false, launchPollTimer: null };
+  var state = { view: 'mvp', session: null, examTimer: null, environment: null, launchState: null, mvpInProgress: false, launchPollTimer: null };
 
   function escapeHtml(value) {
     return String(value == null ? '' : value).replace(/[&<>'"]/g, function (char) {
@@ -245,7 +245,7 @@
 
   var navItems = [
     ['dashboard', '考试目标与进度'], ['learn', '从零开始学'], ['dictionary', '功能・函数词典'], ['practice', '考点专项练习'],
-    ['guided', '指导式实机练习'], ['mvp', 'MOS 実技トレーニング（MVP）'], ['mock', '50分钟真机模拟'], ['wrong', '错题与薄弱项'], ['readiness', '报名准备度'], ['environment', '実機環境チェック']
+    ['guided', '指导式实机练习'], ['mvp', '実技トレーニング（R16/R17）'], ['mock', '练习蓝图（预览）'], ['wrong', '错题与薄弱项'], ['readiness', '报名准备度'], ['environment', '実機環境チェック']
   ];
 
   function renderNavigation() {
@@ -277,11 +277,11 @@
     }
 
     if (state.view === 'exam') {
-      if (headerTitle) headerTitle.textContent = 'MOS Excel 365 実機模擬トレーニング';
-      if (headerSub) headerSub.textContent = 'オリジナル学習・練習コンテンツ';
+      if (headerTitle) headerTitle.textContent = '练习蓝图 · 计时中';
+      if (headerSub) headerSub.textContent = '独立工作簿 · 非 pane 联动';
     } else if (state.view === 'mvp' && state.mvpInProgress) {
-      if (headerTitle) headerTitle.textContent = 'MOS 実技トレーニング（MVP）';
-      if (headerSub) headerSub.textContent = '原创学习与训练内容 / オリジナル学習コンテンツ';
+      if (headerTitle) headerTitle.textContent = 'MOS 実技トレーニング';
+      if (headerSub) headerSub.textContent = '当前训练进行中 / トレーニング実施中';
     } else {
       if (headerTitle) headerTitle.textContent = 'MOS Excel 365（日语版）合格作战中心';
       if (headerSub) headerSub.textContent = 'Microsoft Excel 365 一般 / 日本語版トレーニング';
@@ -423,8 +423,8 @@
   }
 
   function renderMock(main) {
-    main.innerHTML = '<h3>MOS Excel 365 実機模擬トレーニング</h3><p class="mos365-muted">原创学习与训练内容。Microsoft、Certiport、GMetrix 等の公式試験クライアントではありません。</p><div class="mos365-notice">開始後は、問題・状態・操作ボタンを含めて日本語のみで表示します。中国語の翻訳、ヒント、正解、メニュー経路は試験中に表示されません。</div><div class="mos365-list">' + content.mockBlueprints.map(function (blueprint, index) {
-      return '<article class="mos365-item"><h4>' + escapeHtml(blueprint.titleJa) + '</h4><p><strong>中文场景：</strong>' + escapeHtml(blueprint.titleZh) + '</p><p>50 分 / 全日文 / 无提示 / ' + blueprint.tasks.length + ' 个自动评分点 / 4 个可复现变式</p><div class="mos365-actions"><select data-variant="' + index + '"><option value="1">変式 1</option><option value="2">変式 2</option><option value="3">変式 3</option><option value="4">変式 4</option></select><button class="mos365-btn" data-mock="' + index + '">模擬を開始する</button></div></article>';
+    main.innerHTML = '<h3>练习蓝图（50 分钟模拟 · 预览）</h3><p class="mos365-muted">本區為多任務模擬藍圖預覽，非 VSTO 実技トレーニング。實機單任務訓練請使用左側「実技トレーニング（R16/R17）」。Microsoft、Certiport、GMetrix 等の公式試験クライアントではありません。</p><div class="mos365-notice mos365-error">⚠ 本模块尚未与 Excel 右侧训练面板（VSTO）绑定。当前仅创建独立工作簿，不与 pane 任务联动。如需真实 pane 训练，请使用 R16/R17。</div><div class="mos365-list">' + content.mockBlueprints.map(function (blueprint, index) {
+      return '<article class="mos365-item"><h4>' + escapeHtml(blueprint.titleJa) + '</h4><p><strong>中文场景：</strong>' + escapeHtml(blueprint.titleZh) + '</p><p>50 分 / 全日文 / 无提示 / ' + blueprint.tasks.length + ' 个自动评分点 / 4 个可复现变式</p><div class="mos365-actions"><select data-variant="' + index + '"><option value="1">変式 1</option><option value="2">変式 2</option><option value="3">変式 3</option><option value="4">変式 4</option></select><button class="mos365-btn secondary" data-mock="' + index + '">创建练习（无 pane 联动）</button></div></article>';
     }).join('') + '</div>';
     main.querySelectorAll('[data-mock]').forEach(function (button) { button.addEventListener('click', function () {
       var index = Number(button.dataset.mock); var variant = Number(main.querySelector('[data-variant="' + index + '"]').value); startMock(index, variant, button);
@@ -448,7 +448,7 @@
   function renderExam(main) {
     var session = state.session;
     if (!session) { transitionToView('mock'); return; }
-    main.innerHTML = '<section class="mos365-exam"><div class="mos365-exam-top"><div><strong>MOS Excel 365 実機模擬トレーニング</strong><br><small>オリジナル学習・練習コンテンツ</small></div><div><strong id="mos-exam-clock">50:00</strong></div></div><p>Excel の保存後、この画面に戻って提出してください。</p><div class="mos365-actions"><button class="mos365-btn" data-exam-open>Excel でファイルを開く</button><button class="mos365-btn danger" data-exam-submit>提出して採点する</button></div><div class="mos365-exam-list">' + session.tasks.map(function (task) { return '<article class="mos365-exam-task"><strong>' + escapeHtml(task.instructionJa) + '</strong></article>'; }).join('') + '</div></section>';
+    main.innerHTML = '<section class="mos365-exam"><div class="mos365-exam-top"><div><strong>练习蓝图 · 计时中</strong><br><small>独立工作簿 · 非 VSTO pane 联动</small></div><div><strong id="mos-exam-clock">50:00</strong></div></div><p>Excel の保存後、この画面に戻ってファイルを提出してください。（本模块与右侧训练面板独立，评分仅基于 Open XML 文件分析。）</p><div class="mos365-actions"><button class="mos365-btn" data-exam-open>Excel で開く</button><button class="mos365-btn danger" data-exam-submit>ファイルを提出して採点</button></div><div class="mos365-exam-list">' + session.tasks.map(function (task) { return '<article class="mos365-exam-task"><strong>' + escapeHtml(task.instructionJa) + '</strong></article>'; }).join('') + '</div></section>';
     main.querySelector('[data-exam-open]').addEventListener('click', function () { launchCurrent(null, true); });
     main.querySelector('[data-exam-submit]').addEventListener('click', function () {
       if (window.confirm('提出後、ファイルを採点します。続けますか？')) gradeCurrent('mock', true, null);
