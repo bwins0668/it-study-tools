@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Excel = Microsoft.Office.Interop.Excel;
@@ -9,6 +10,16 @@ using Microsoft.Office.Tools;
 
 namespace StudyTools.Mos365ExamHost
 {
+    /// <summary>
+    /// MOS 底部训练控制台 Add-in — R33
+    ///
+    /// 关键变更：
+    ///   1. Pane 停靠：msoCTPDockPositionBottom（高度 240px）
+    ///   2. 单一 pane：启动时清除旧训练 pane
+    ///   3. task_metadata_ready：workbook 打开后立即读取安全元数据并渲染题干
+    ///   4. 状态机：connecting/failed 不覆盖已渲染的题干
+    ///   5. Generation 防护：stale 回调无效化
+    /// </summary>
     public partial class ThisAddIn
     {
         private ExamHostPaneControl _paneControl;
@@ -22,6 +33,15 @@ namespace StudyTools.Mos365ExamHost
         private CancellationTokenSource _attachCts;
         private bool _exiting;
         private long _activeGeneration; // R31: current render generation
+
+        // R33: 安全任务元数据字段名（与服务端 workbook 写入字段一致）
+        private const string META_TASK_ID      = "MOS_TASK_ID";
+        private const string META_TITLE_JA     = "MOS_TITLE_JA";
+        private const string META_TITLE_ZH     = "MOS_TITLE_ZH";
+        private const string META_INSTR_JA     = "MOS_INSTRUCTION_JA";
+        private const string META_INSTR_ZH     = "MOS_INSTRUCTION_ZH";
+        private const string META_SHEET_LABEL  = "MOS_SHEET_LABEL";
+        private const string META_TARGET_LABEL = "MOS_TARGET_LABEL";
 
         private void ThisAddIn_Startup(object sender, System.EventArgs e)
         {
@@ -47,27 +67,39 @@ namespace StudyTools.Mos365ExamHost
                     if (_exiting) return;
                     var wb = _excelApp?.ActiveWorkbook;
                     if (wb != null) StartBindWorkbook(wb);
-                    else
-                        _paneControl.UpdateSessionState("retrying");
+                    else _paneControl.UpdateSessionState("retrying");
                 };
                 _paneControl.OnExitClicked = () => HandleExitAsync(Process.GetCurrentProcess().Id);
                 _probe.Write("control.handle.created", _sessionId.ToString("N"),
                     excelPid: Process.GetCurrentProcess().Id);
+
+                // R33: 底部停靠
                 _pane = this.CustomTaskPanes.Add(_paneControl, "MOS 実技トレーニング");
                 _probe.Write("pane.created", _sessionId.ToString("N"),
                     excelPid: Process.GetCurrentProcess().Id,
-                    paneTitle: "MOS 実技トレーニング", dockPosition: "Right");
-                _pane.DockPosition = Office.MsoCTPDockPosition.msoCTPDockPositionRight;
-                _pane.Width = 360;
+                    paneTitle: "MOS 実技トレーニング", dockPosition: "Bottom");
+
+                _pane.DockPosition = Office.MsoCTPDockPosition.msoCTPDockPositionBottom;
+                _pane.Height = 240;
                 _pane.Visible = true;
+
                 _probe.Write("pane.visible", _sessionId.ToString("N"),
                     excelPid: Process.GetCurrentProcess().Id,
-                    paneTitle: "MOS 実技トレーニング", dockPosition: "Right", paneVisible: true);
-                _paneControl.UpdateWorkbook(GetWorkbookName());
-                _excelApp.WorkbookActivate += OnWorkbookActivate;
+                    paneTitle: "MOS 実技トレーニング", dockPosition: "Bottom", paneVisible: true);
+
+                _excelApp.WorkbookActivate  += OnWorkbookActivate;
                 _excelApp.WorkbookDeactivate += OnWorkbookDeactivate;
-                _excelApp.WorkbookOpen += OnWorkbookOpen;
+                _excelApp.WorkbookOpen       += OnWorkbookOpen;
                 _bridge = new SessionBridge();
+
+                // R33: 如果启动时已有 workbook，立即尝试读取元数据
+                var activeWb = SafeGetActiveWorkbook();
+                if (activeWb != null)
+                {
+                    TryRenderMetadata(activeWb);
+                    StartBindWorkbook(activeWb);
+                }
+
                 _probe.Write("startup.complete", _sessionId.ToString("N"),
                     excelPid: Process.GetCurrentProcess().Id,
                     workbookCount: GetWorkbookCount());
@@ -90,9 +122,9 @@ namespace StudyTools.Mos365ExamHost
             {
                 if (_excelApp != null)
                 {
-                    _excelApp.WorkbookActivate -= OnWorkbookActivate;
+                    _excelApp.WorkbookActivate   -= OnWorkbookActivate;
                     _excelApp.WorkbookDeactivate -= OnWorkbookDeactivate;
-                    _excelApp.WorkbookOpen -= OnWorkbookOpen;
+                    _excelApp.WorkbookOpen       -= OnWorkbookOpen;
                 }
                 if (_pane != null)
                 {
@@ -112,8 +144,8 @@ namespace StudyTools.Mos365ExamHost
 
         private void OnWorkbookActivate(Excel.Workbook wb)
         {
-            try { _paneControl.UpdateWorkbook(wb.Name); }
-            catch { _paneControl.UpdateWorkbook("(unknown)"); }
+            // R33: 先渲染 metadata（即时），再异步 attach
+            TryRenderMetadata(wb);
             if (!_exiting) StartBindWorkbook(wb);
             _probe?.Write("excel.window.activate", _sessionId.ToString("N"),
                 excelPid: Process.GetCurrentProcess().Id,
@@ -123,12 +155,101 @@ namespace StudyTools.Mos365ExamHost
         private void OnWorkbookOpen(Excel.Workbook wb)
         {
             try { Debug.WriteLine("Workbook opened: " + wb.Name); } catch { }
+            TryRenderMetadata(wb);
             if (!_exiting) StartBindWorkbook(wb);
         }
 
+        private void OnWorkbookDeactivate(Excel.Workbook wb) { }
+
+        // ──────────────────────────────────────────────────────────
+        // R33 核心：读取 workbook 安全任务元数据并立即渲染题干
+        // ──────────────────────────────────────────────────────────
+
+        /// <summary>
+        /// 从 workbook CustomDocumentProperties 读取安全元数据。
+        /// 立即渲染题干，不等 attach。
+        /// 在 UI 线程调用（OnWorkbookActivate / OnWorkbookOpen）。
+        /// </summary>
+        private void TryRenderMetadata(Excel.Workbook wb)
+        {
+            if (wb == null || _paneControl == null) return;
+            try
+            {
+                var meta = ReadWorkbookMetadata(wb);
+                if (meta == null) return;
+
+                string titleJa   = meta.ContainsKey(META_TITLE_JA)     ? meta[META_TITLE_JA]     : "";
+                string titleZh   = meta.ContainsKey(META_TITLE_ZH)     ? meta[META_TITLE_ZH]     : "";
+                string instrJa   = meta.ContainsKey(META_INSTR_JA)     ? meta[META_INSTR_JA]     : "";
+                string instrZh   = meta.ContainsKey(META_INSTR_ZH)     ? meta[META_INSTR_ZH]     : "";
+                string sheetLbl  = meta.ContainsKey(META_SHEET_LABEL)  ? meta[META_SHEET_LABEL]  : "";
+                string targetLbl = meta.ContainsKey(META_TARGET_LABEL) ? meta[META_TARGET_LABEL] : "";
+
+                if (string.IsNullOrWhiteSpace(instrJa) && string.IsNullOrWhiteSpace(titleJa)) return;
+
+                _probe?.Write("training.metadata.ready", _sessionId.ToString("N"),
+                    excelPid: Process.GetCurrentProcess().Id);
+
+                // 在 UI 线程：直接调用（OnWorkbookActivate 已在 Excel 主线程）
+                _paneControl.ShowTaskFromMetadata(titleJa, titleZh, instrJa, instrZh, sheetLbl, targetLbl);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("TryRenderMetadata error: " + ex.Message);
+                // 失败无害：服务端 attach 会补充数据
+            }
+        }
+
+        /// <summary>
+        /// 从 workbook CustomDocumentProperties 读取字段。
+        /// 只读取 MOS_* 前缀的属性，不读取任何其他属性。
+        /// 返回 null 表示无元数据。
+        /// </summary>
+        private Dictionary<string, string> ReadWorkbookMetadata(Excel.Workbook wb)
+        {
+            try
+            {
+                // Excel CustomDocumentProperties: COM 自动化，官方 API
+                var props = wb.CustomDocumentProperties as Microsoft.Office.Core.DocumentProperties;
+                if (props == null) return null;
+
+                var result = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+                var fields = new[] {
+                    META_TASK_ID, META_TITLE_JA, META_TITLE_ZH,
+                    META_INSTR_JA, META_INSTR_ZH,
+                    META_SHEET_LABEL, META_TARGET_LABEL
+                };
+
+                foreach (var field in fields)
+                {
+                    try
+                    {
+                        var prop = props[field] as Microsoft.Office.Core.DocumentProperty;
+                        if (prop != null)
+                        {
+                            var val = prop.Value as string;
+                            if (!string.IsNullOrEmpty(val))
+                                result[field] = val;
+                        }
+                    }
+                    catch { /* 属性不存在 — 跳过 */ }
+                }
+                return result.Count > 0 ? result : null;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("ReadWorkbookMetadata error: " + ex.Message);
+                return null;
+            }
+        }
+
+        // ──────────────────────────────────────────────────────────
+        // 异步 attach：不覆盖已渲染的 metadata 题干
+        // ──────────────────────────────────────────────────────────
+
         /// <summary>
         /// Fire-and-forget bind: starts async verification on background thread.
-        /// Pane shows "connecting" immediately — Excel UI stays responsive.
+        /// R33: connecting state no longer clears task area.
         /// R31: generation-based rendering prevents stale overwrites.
         /// </summary>
         private void StartBindWorkbook(Excel.Workbook wb)
@@ -139,8 +260,8 @@ namespace StudyTools.Mos365ExamHost
             CancelAttach();
             _attachCts = new CancellationTokenSource();
             var token = _attachCts.Token;
-            var pid = Process.GetCurrentProcess().Id;
-            var guid = _sessionId.ToString("N");
+            var pid   = Process.GetCurrentProcess().Id;
+            var guid  = _sessionId.ToString("N");
 
             // R31: bump generation for this attach cycle
             long gen = _paneControl.NewRenderGeneration();
@@ -151,8 +272,8 @@ namespace StudyTools.Mos365ExamHost
 
             if (string.IsNullOrEmpty(path))
             {
-                _probe?.Write("session.verify.begin", guid, excelPid: pid);
                 _probe?.Write("session.verify.rejected", guid, excelPid: pid);
+                // R33: connecting 状态不覆盖题干
                 _paneControl.UpdateSessionState("connecting");
                 _boundSessionId = null;
                 _activeGeneration = 0;
@@ -161,12 +282,11 @@ namespace StudyTools.Mos365ExamHost
             }
 
             _probe?.Write("session.verify.begin", guid, excelPid: pid);
+            // R33: connecting 不覆盖题干（ExamHostPaneControl 已保证）
             _paneControl.UpdateSessionState("connecting");
 
-            // R31: capture gen so async callback can validate
             var capturedGen = gen;
 
-            // Fire async verification on thread pool — never block UI
             Task.Run(async () =>
             {
                 try
@@ -176,7 +296,6 @@ namespace StudyTools.Mos365ExamHost
 
                     if (token.IsCancellationRequested) return;
 
-                    // Marshal back to UI thread for pane updates
                     _paneControl.BeginInvoke((Action)(() =>
                     {
                         try
@@ -190,15 +309,13 @@ namespace StudyTools.Mos365ExamHost
                                 _probe?.Write("session.bound", result.SessionId, excelPid: pid);
                                 _boundSessionId = result.SessionId;
 
-                                // R31: only show "已连接" AFTER task is rendered
                                 if (!string.IsNullOrEmpty(result.TaskId)
                                     && !string.IsNullOrEmpty(result.InstructionJa)
                                     && !string.IsNullOrEmpty(result.InstructionZh))
                                 {
                                     _probe?.Write("training.task.received",
                                         _sessionId.ToString("N"), excelPid: pid);
-                                    _paneControl.UpdateSessionState("attached", result.SessionId,
-                                        result.ExcelPid ?? pid);
+                                    // R33: ShowTask 不清空 metadata 题干，只更新说明文字并启用评分
                                     _paneControl.ShowTask(result.InstructionJa,
                                         result.InstructionZh, capturedGen);
                                     if (result.CompletionAcknowledged)
@@ -208,12 +325,14 @@ namespace StudyTools.Mos365ExamHost
                                 }
                                 else
                                 {
-                                    // R31: training data missing — show error, not "connected"
                                     _probe?.Write("training.task.missing",
                                         _sessionId.ToString("N"), excelPid: pid);
-                                    _paneControl.UpdateSessionState("attach_verified",
+                                    // 服务端 attach 成功但无题干：只启用评分按钮（metadata 有题干时）
+                                    _paneControl.UpdateSessionState("attached",
                                         result.SessionId, result.ExcelPid ?? pid);
-                                    // After brief wait, show load failure
+                                    _paneControl.EnableGrading();
+                                    _paneControl.OnGradeClicked = () =>
+                                        HandleGradeAsync(pid);
                                     Task.Delay(1500).ContinueWith(_ =>
                                     {
                                         _paneControl.BeginInvoke((Action)(() =>
@@ -275,6 +394,10 @@ namespace StudyTools.Mos365ExamHost
             catch { }
         }
 
+        /// <summary>
+        /// 清除已有的 MOS 训练 pane（防止重复）。
+        /// R33：不保留右侧 pane，不创建多个 pane。
+        /// </summary>
         private void RemoveExistingTrainingPanes()
         {
             var panes = new List<CustomTaskPane>();
@@ -295,16 +418,10 @@ namespace StudyTools.Mos365ExamHost
                 }
                 foreach (var pane in panes)
                 {
-                    try { this.CustomTaskPanes.Remove(pane); }
-                    catch { }
+                    try { this.CustomTaskPanes.Remove(pane); } catch { }
                 }
             }
             catch { }
-        }
-
-        private void OnWorkbookDeactivate(Excel.Workbook wb)
-        {
-            _paneControl.UpdateWorkbook("(inactive)");
         }
 
         /// <summary>
@@ -387,8 +504,7 @@ namespace StudyTools.Mos365ExamHost
 
         /// <summary>
         /// Async exit: cancel attach, end session.
-        /// Never blocks UI thread. Always completes.
-        /// Workbook stays open — user closes manually.
+        /// Never blocks UI thread. Workbook stays open.
         /// </summary>
         private async void HandleExitAsync(int pid)
         {
@@ -396,17 +512,13 @@ namespace StudyTools.Mos365ExamHost
             _exiting = true;
             _activeGeneration = 0; // R31: invalidate all pending renders
 
-            var guid = _sessionId.ToString("N");
+            var guid      = _sessionId.ToString("N");
             var sessionId = _boundSessionId;
             _probe?.Write("training.exit.begin", guid, excelPid: pid);
 
-            // 1. Cancel any in-flight attach/retry
             CancelAttach();
-
-            // 2. Pane shows ending state immediately
             _paneControl.ShowEnding();
 
-            // 3. Async end session (non-blocking, max 3s)
             try
             {
                 if (!string.IsNullOrEmpty(sessionId))
@@ -425,27 +537,21 @@ namespace StudyTools.Mos365ExamHost
                 Debug.WriteLine("Exit session end failed: " + ex.Message);
             }
 
-            // 4. Pane shows ended — workbook stays open, user closes it manually
+            // Workbook stays open — user closes manually
             _paneControl.ShowEnded();
             _boundSessionId = null;
-            _exiting = false;
+            _exiting  = false;
             _verifying = 0;
         }
 
-        private string GetWorkbookName()
+        private Excel.Workbook SafeGetActiveWorkbook()
         {
-            try
-            {
-                Excel.Workbook wb = _excelApp.ActiveWorkbook;
-                return wb != null ? wb.Name : "(no workbook)";
-            }
-            catch { return "(no workbook)"; }
+            try { return _excelApp?.ActiveWorkbook; } catch { return null; }
         }
 
         private int GetWorkbookCount()
         {
-            try { return _excelApp.Workbooks.Count; }
-            catch { return 0; }
+            try { return _excelApp.Workbooks.Count; } catch { return 0; }
         }
 
         private Excel.Workbook GetActiveSessionWorkbook(string sessionId)
@@ -468,7 +574,7 @@ namespace StudyTools.Mos365ExamHost
         #region VSTO generated code
         private void InternalStartup()
         {
-            this.Startup += new System.EventHandler(ThisAddIn_Startup);
+            this.Startup  += new System.EventHandler(ThisAddIn_Startup);
             this.Shutdown += new System.EventHandler(ThisAddIn_Shutdown);
         }
         #endregion

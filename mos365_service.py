@@ -1813,8 +1813,65 @@ class MOS365Service:
             archive.writestr("xl/worksheets/sheet1.xml", input_sx)
             archive.writestr("xl/worksheets/sheet2.xml", calc_sx)
 
+    @staticmethod
+    def _xml_escape_attr(value: str) -> str:
+        """Escape XML attribute value (double-quote safe)."""
+        return (str(value)
+                .replace("&", "&amp;")
+                .replace("<", "&lt;")
+                .replace(">", "&gt;")
+                .replace('"', "&quot;"))
+
+    def _safe_metadata_custom_xml(self, task_id: str) -> str:
+        """Build docProps/custom.xml with safe task metadata.
+
+        Fields written (safe, no answers):
+          MOS_TASK_ID, MOS_TITLE_JA, MOS_TITLE_ZH,
+          MOS_INSTRUCTION_JA, MOS_INSTRUCTION_ZH,
+          MOS_SHEET_LABEL, MOS_TARGET_LABEL.
+
+        Fields never written:
+          expectedFormula, expectedValue, scoringSpec, assessmentType.
+        """
+        info = MOS_CATALOG.get(task_id)
+        if not info:
+            return ""
+        assessment = info.get("assessment", {})
+        sheet_label  = assessment.get("sheetName", "")
+        target_label = assessment.get("cellRef", "")
+
+        def prop(pid: int, name: str, value: str) -> str:
+            esc_name  = self._xml_escape_attr(name)
+            esc_value = self._xml_escape_attr(value)
+            return (f'<vt:property fmtid="{{D5CDD505-2E9C-101B-9397-08002B2CF9AE}}"'
+                    f' pid="{pid}" name="{esc_name}">'
+                    f'<vt:lpwstr>{esc_value}</vt:lpwstr>'
+                    f'</vt:property>')
+
+        props = [
+            prop(2,  "MOS_TASK_ID",       task_id),
+            prop(3,  "MOS_TITLE_JA",      info.get("titleJa",       "")),
+            prop(4,  "MOS_TITLE_ZH",      info.get("titleZh",       "")),
+            prop(5,  "MOS_INSTRUCTION_JA",info.get("instructionJa", "")),
+            prop(6,  "MOS_INSTRUCTION_ZH",info.get("instructionZh", "")),
+            prop(7,  "MOS_SHEET_LABEL",   sheet_label),
+            prop(8,  "MOS_TARGET_LABEL",  target_label),
+            prop(9,  "MOS_TIER",          info.get("tier",          "基礎")),
+            prop(10, "MOS_ESTIMATED_MINUTES", str(info.get("estimatedMinutes", 3))),
+        ]
+        ns = "http://schemas.openxmlformats.org/officeDocument/2006/custom-properties"
+        vt = "http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes"
+        return (
+            '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'
+            f'<Properties xmlns="{ns}" xmlns:vt="{vt}">'
+            + "".join(props)
+            + "</Properties>"
+        )
+
     def _write_gp_workbook(self, destination: Path, task_id: str) -> None:
         """Write a minimal original workbook configured for the specific MOS task_id."""
+        # R33: Safe metadata for VSTO immediate display (no answers written)
+        custom_props_xml = self._safe_metadata_custom_xml(task_id)
         if task_id in ("MOS_GP_001_ENTER_STATUS", "R16_STATIC_CELL_VALUE_DEMO"):
             sheets = ["入力"]
             sheet_data = {
@@ -1920,6 +1977,21 @@ class MOS365Service:
         root_rels = f'<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="{NS_PKG_REL}"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="xl/workbook.xml"/></Relationships>'
         styles = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><styleSheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><numFmts count="0"/><fonts count="1"><font><sz val="11"/><name val="Calibri"/></font></fonts><fills count="2"><fill><patternFill patternType="none"/></fill><fill><patternFill patternType="gray125"/></fill></fills><borders count="1"><border><left/><right/><top/><bottom/><diagonal/></border></borders><cellStyleXfs count="1"><xf numFmtId="0" fontId="0" fillId="0" borderId="0"/></cellStyleXfs><cellXfs count="1"><xf numFmtId="0" fontId="0" fillId="0" borderId="0" xfId="0"/></cellXfs></styleSheet>'
 
+        # R33: Include custom doc properties for VSTO immediate metadata display
+        if custom_props_xml:
+            content_types.append(
+                '<Override PartName="/docProps/custom.xml"'
+                ' ContentType="application/vnd.openxmlformats-officedocument.custom-properties+xml"/>'
+            )
+            # Add custom.xml relationship to root .rels
+            root_rels = (
+                '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'
+                f'<Relationships xmlns="{NS_PKG_REL}">'
+                '<Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="xl/workbook.xml"/>'
+                '<Relationship Id="rId2" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/custom-properties" Target="docProps/custom.xml"/>'
+                '</Relationships>'
+            )
+
         with zipfile.ZipFile(destination, "w", compression=zipfile.ZIP_DEFLATED) as archive:
             archive.writestr("[Content_Types].xml", '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types">' + "".join(content_types) + "</Types>")
             archive.writestr("_rels/.rels", root_rels)
@@ -1928,6 +2000,8 @@ class MOS365Service:
             archive.writestr("xl/styles.xml", styles)
             for index, content in enumerate(sheet_xml, start=1):
                 archive.writestr(f"xl/worksheets/sheet{index}.xml", content)
+            if custom_props_xml:
+                archive.writestr("docProps/custom.xml", custom_props_xml)
 
     @staticmethod
     def _normal_formula_comparer(actual: str, expected: str) -> bool:

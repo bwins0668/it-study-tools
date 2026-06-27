@@ -62,15 +62,33 @@
   function addStyles() {
     var style = document.createElement('style');
     style.textContent = [
-      '#mos365-shell{position:fixed;inset:0;z-index:10060;display:none;background:rgba(20,28,25,.55);padding:28px;box-sizing:border-box}',
+      // ── MOS シェル基盤
+      '#mos365-shell{position:fixed;inset:0;z-index:10060;display:none;background:rgba(10,12,15,.65);padding:20px;box-sizing:border-box}',
       '#mos365-shell.is-open{display:block}',
-      '.mos365-panel{height:100%;max-width:1320px;margin:0 auto;display:flex;flex-direction:column;overflow:hidden;background:#fbfbf7;color:#20322b;border-radius:18px;box-shadow:0 20px 80px rgba(0,0,0,.35);font-family:system-ui,-apple-system,"Segoe UI","Noto Sans JP",sans-serif}',
-      '.mos365-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:19px 24px;background:#174735;color:#fff}.mos365-head h2{font-size:19px;margin:0}.mos365-head small{opacity:.82}.mos365-close{color:#fff;background:transparent;border:1px solid rgba(255,255,255,.55);border-radius:8px;padding:7px 10px;cursor:pointer}',
-      '.mos365-body{min-height:0;display:flex;flex:1}.mos365-nav{width:224px;overflow-y:auto;padding:16px;background:#f0f4f0;border-right:1px solid #d8e0d9}.mos365-nav button{display:block;width:100%;padding:10px 12px;margin:0 0 5px;text-align:left;border:0;border-radius:8px;background:transparent;color:#264236;cursor:pointer;font-weight:650}.mos365-nav button:hover,.mos365-nav button.active{background:#d7e9de;color:#0e5638}',
-      '.mos365-main{flex:1;overflow:auto;padding:26px}.mos365-main h3{margin:0 0 8px;font-size:24px}.mos365-muted{color:#587065}.mos365-grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(205px,1fr));margin:18px 0}.mos365-card{border:1px solid #d7dfd8;border-radius:12px;background:#fff;padding:16px}.mos365-card h4{margin:0 0 8px;font-size:16px}.mos365-card p{margin:6px 0;line-height:1.55}.mos365-kpi{font-size:27px;font-weight:750;color:#174735}.mos365-domain{display:grid;grid-template-columns:minmax(155px,1fr) 2fr 50px;gap:10px;align-items:center;margin:10px 0}.mos365-bar{height:10px;background:#e6ece7;border-radius:8px;overflow:hidden}.mos365-bar i{display:block;height:100%;background:#23794f;border-radius:8px}',
-      '.mos365-btn{border:0;border-radius:8px;background:#1d6745;color:#fff;padding:9px 13px;cursor:pointer;font-weight:700}.mos365-btn.secondary{background:#e5ece7;color:#244232}.mos365-btn.danger{background:#9a3a35}.mos365-btn[disabled]{opacity:.55;cursor:wait}.mos365-actions{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0}.mos365-list{display:grid;gap:10px}.mos365-item{border:1px solid #dce4dd;background:#fff;border-radius:10px;padding:13px}.mos365-item h4{margin:0 0 6px}.mos365-item p{margin:5px 0;line-height:1.5}.mos365-tag{display:inline-block;padding:2px 7px;margin-right:5px;border-radius:999px;background:#e8f2eb;color:#24563b;font-size:12px}.mos365-lesson-detail{white-space:pre-line}',
-      '.mos365-question button{display:block;width:100%;text-align:left;border:1px solid #d1dbd3;background:#fff;border-radius:8px;padding:10px;margin:8px 0;cursor:pointer}.mos365-question button.correct{border-color:#1d7c45;background:#e4f5e8}.mos365-question button.wrong{border-color:#ab3933;background:#fdeceb}.mos365-notice{border-left:4px solid #1e714b;background:#edf6ef;padding:11px 13px;margin:14px 0;line-height:1.5}.mos365-error{border-left-color:#b33b36;background:#fff0ee}.mos365-exam{max-width:1000px;margin:0 auto}.mos365-exam-top{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #dbe2dc;padding-bottom:14px;margin-bottom:18px}.mos365-exam-task{font-size:18px;line-height:1.7;padding:17px;border:1px solid #d8e0d9;border-radius:12px;background:#fff;margin:12px 0}.mos365-exam-list{max-height:300px;overflow:auto}.mos365-results table{width:100%;border-collapse:collapse;font-size:13px}.mos365-results th,.mos365-results td{border-bottom:1px solid #dce4dd;padding:8px;text-align:left;vertical-align:top}',
-      '@media(max-width:760px){#mos365-shell{padding:0}.mos365-panel{border-radius:0}.mos365-body{display:block}.mos365-nav{width:auto;display:flex;overflow-x:auto;padding:8px;border-right:0;border-bottom:1px solid #d8e0d9}.mos365-nav button{width:auto;white-space:nowrap;margin:0 4px 0 0}.mos365-main{padding:18px}.mos365-head{padding:14px}.mos365-head h2{font-size:16px}.mos365-domain{grid-template-columns:1fr 2fr 42px}.mos365-results{overflow:auto}.mos365-results table{min-width:760px}}'
+      // ── パネル
+      '.mos365-panel{height:100%;max-width:1360px;margin:0 auto;display:flex;flex-direction:column;overflow:hidden;background:#15171A;color:#F3F4F6;border-radius:10px;box-shadow:0 24px 80px rgba(0,0,0,.6);font-family:system-ui,-apple-system,"Segoe UI","Noto Sans JP",sans-serif;border:1px solid #34383E}',
+      // ── ヘッダ
+      '.mos365-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 20px;background:#202328;color:#F3F4F6;border-bottom:1px solid #34383E}.mos365-head h2{font-size:15px;margin:0;font-weight:700;color:#F3F4F6}.mos365-head small{opacity:.6;font-size:11px;color:#A9AFB8}.mos365-close{color:#A9AFB8;background:transparent;border:1px solid #34383E;border-radius:6px;padding:5px 10px;cursor:pointer;font-size:12px;transition:border-color .2s}.mos365-close:hover{border-color:#A9AFB8;color:#F3F4F6}',
+      // ── ナビ
+      '.mos365-body{min-height:0;display:flex;flex:1}.mos365-nav{width:200px;overflow-y:auto;padding:12px 8px;background:#0E1013;border-right:1px solid #34383E}.mos365-nav button{display:block;width:100%;padding:8px 12px;margin:0 0 2px;text-align:left;border:0;border-radius:6px;background:transparent;color:#A9AFB8;cursor:pointer;font-size:12.5px;font-weight:500;transition:background .15s,color .15s}.mos365-nav button:hover,.mos365-nav button.active{background:#282C32;color:#F3F4F6}',
+      // ── メインエリア
+      '.mos365-main{flex:1;overflow:auto;padding:20px}.mos365-main h3{margin:0 0 6px;font-size:18px;color:#F3F4F6;font-weight:700}.mos365-muted{color:#727984;font-size:12.5px;margin:0 0 16px}',
+      // ── グリッド・カード
+      '.mos365-grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));margin:14px 0}.mos365-card{border:1px solid #34383E;border-radius:8px;background:#202328;padding:14px}.mos365-card h4{margin:0 0 6px;font-size:13px;color:#A9AFB8;font-weight:600}.mos365-kpi{font-size:24px;font-weight:700;color:#F3F4F6}.mos365-domain{display:grid;grid-template-columns:minmax(130px,1fr) 2fr 44px;gap:8px;align-items:center;margin:8px 0;font-size:12px}.mos365-bar{height:6px;background:#282C32;border-radius:4px;overflow:hidden}.mos365-bar i{display:block;height:100%;background:#6B7280;border-radius:4px}',
+      // ── ボタン系
+      '.mos365-btn{border:0;border-radius:6px;background:#3B3F46;color:#F3F4F6;padding:7px 12px;cursor:pointer;font-weight:600;font-size:12.5px;transition:background .15s}.mos365-btn:hover{background:#4A4F58}.mos365-btn.secondary{background:#282C32;color:#A9AFB8}.mos365-btn.secondary:hover{background:#34383E;color:#F3F4F6}.mos365-btn.danger{background:#463B3B;color:#FCA5A5}.mos365-btn.danger:hover{background:#5A4545}.mos365-btn[disabled]{opacity:.4;cursor:wait}.mos365-actions{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}',
+      // ── リスト・アイテム
+      '.mos365-list{display:grid;gap:8px}.mos365-item{border:1px solid #34383E;background:#202328;border-radius:8px;padding:12px 14px}.mos365-item h4{margin:0 0 4px;font-size:13.5px;color:#F3F4F6;font-weight:700}.mos365-item p{margin:3px 0;line-height:1.5;font-size:12px;color:#A9AFB8}.mos365-tag{display:inline-block;padding:2px 7px;margin-right:4px;border-radius:999px;background:#282C32;color:#727984;font-size:11px;border:1px solid #34383E}',
+      // ── タスクカード（実技トレーニング専用）
+      '.mos365-task-card{border:1px solid #34383E;background:#202328;border-radius:8px;padding:0;display:grid;grid-template-columns:1fr auto;align-items:stretch;overflow:hidden;transition:border-color .2s}.mos365-task-card:hover{border-color:#4A4F58}.mos365-task-card-body{padding:12px 14px}.mos365-task-card-action{display:flex;align-items:center;padding:0 16px;border-left:1px solid #34383E;background:#15171A}.mos365-task-title-ja{font-size:14px;font-weight:700;color:#F3F4F6;margin:0 0 2px}.mos365-task-title-zh{font-size:11.5px;color:#727984;margin:0 0 6px}.mos365-task-meta{display:flex;gap:6px;flex-wrap:wrap;margin:0}',
+      // ── ノーティス・エラー
+      '.mos365-notice{border-left:3px solid #4A4F58;background:#202328;padding:10px 12px;margin:12px 0;line-height:1.5;font-size:12.5px;color:#A9AFB8;border-radius:0 6px 6px 0}.mos365-error{border-left-color:#FCA5A5;color:#FCA5A5}',
+      // ── 試験・レビュー
+      '.mos365-exam{max-width:960px;margin:0 auto}.mos365-exam-top{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #34383E;padding-bottom:12px;margin-bottom:16px}.mos365-exam-task{font-size:14px;line-height:1.7;padding:14px;border:1px solid #34383E;border-radius:8px;background:#202328;margin:10px 0;color:#F3F4F6}.mos365-exam-list{max-height:260px;overflow:auto}.mos365-results table{width:100%;border-collapse:collapse;font-size:12px}.mos365-results th,.mos365-results td{border-bottom:1px solid #34383E;padding:7px;text-align:left;vertical-align:top;color:#A9AFB8}.mos365-results th{color:#727984}',
+      // ── 問題UI
+      '.mos365-question button{display:block;width:100%;text-align:left;border:1px solid #34383E;background:#202328;border-radius:6px;padding:9px 12px;margin:6px 0;cursor:pointer;color:#A9AFB8;font-size:12.5px;transition:border-color .15s,background .15s}.mos365-question button:hover{border-color:#4A4F58;background:#282C32}.mos365-question button.correct{border-color:#6EE7B7;background:#1A2820;color:#6EE7B7}.mos365-question button.wrong{border-color:#FCA5A5;background:#2A1A1A;color:#FCA5A5}',
+      // ── レスポンシブ
+      '@media(max-width:760px){#mos365-shell{padding:0}.mos365-panel{border-radius:0}.mos365-body{display:block}.mos365-nav{width:auto;display:flex;overflow-x:auto;padding:8px;border-right:0;border-bottom:1px solid #34383E}.mos365-nav button{width:auto;white-space:nowrap;margin:0 3px 0 0}.mos365-main{padding:14px}.mos365-head{padding:12px}.mos365-head h2{font-size:13px}.mos365-task-card{grid-template-columns:1fr;}.mos365-task-card-action{border-left:0;border-top:1px solid #34383E;padding:12px}}'
     ].join('');
     document.head.appendChild(style);
   }
@@ -256,8 +274,9 @@
   }
 
   var navItems = [
-    ['dashboard', '考试目标与进度'], ['learn', '从零开始学'], ['dictionary', '功能・函数词典'], ['practice', '考点专项练习'],
-    ['guided', '指导式实机练习'], ['mvp', '実技トレーニング（R16/R17）'], ['mock', '练习蓝图（预览）'], ['wrong', '错题与薄弱项'], ['readiness', '报名准备度'], ['environment', '実機環境チェック']
+    ['mvp', '実技トレーニング'],
+    ['dashboard', '進捗ダッシュボード'], ['learn', '学習コンテンツ'], ['dictionary', '機能・関数辞典'], ['practice', '考点練習'],
+    ['guided', '指導式実機練習'], ['mock', '練習ブループリント(プレビュー)'], ['wrong', '弱点・間違い項目'], ['readiness', '受験準備度'], ['environment', '実機環境チェック']
   ];
 
   function renderNavigation() {
@@ -295,8 +314,8 @@
       if (headerTitle) headerTitle.textContent = 'MOS 実技トレーニング';
       if (headerSub) headerSub.textContent = '当前训练进行中 / トレーニング実施中';
     } else {
-      if (headerTitle) headerTitle.textContent = 'MOS Excel 365（日语版）合格作战中心';
-      if (headerSub) headerSub.textContent = 'Microsoft Excel 365 一般 / 日本語版トレーニング';
+      if (headerTitle) headerTitle.textContent = 'MOS Excel 365  実技トレーニング / 实操训练';
+      if (headerSub) headerSub.textContent = 'Microsoft Excel 365 一般 / 原创基礎トレーニング';
     }
 
     renderNavigation();

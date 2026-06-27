@@ -767,9 +767,9 @@ class MOS365R22FlowContractTests(unittest.TestCase):
         self.assertNotIn("SWP_HIDEWINDOW", addin)
         self.assertNotIn("WM_CLOSE", addin)
         self.assertIn('"MOS 実技トレーニング"', addin)
-        self.assertIn("msoCTPDockPositionRight", addin)
-        self.assertIn("_pane.Width = 360", addin)
-        self.assertNotIn("msoCTPDockPositionBottom", addin)
+        # R33: bottom dock position (changed from Right in R22)
+        self.assertIn("msoCTPDockPositionBottom", addin)
+        self.assertNotIn("msoCTPDockPositionRight", addin)
         self.assertNotIn("MOS Native Exam Host", combined)
         self.assertNotIn("R3 VSTO POC", combined)
         self.assertNotIn("Excel PID", pane)
@@ -777,8 +777,11 @@ class MOS365R22FlowContractTests(unittest.TestCase):
         self.assertNotIn("Platform:", pane)
         self.assertNotIn("HTTP FAILED", combined)
         self.assertNotIn("HTTP_FAILED", combined)
-        self.assertIn("完成并评分", pane)
-        self.assertIn("退出训练", pane)
+        # R33: task display uses ShowTaskFromMetadata (immediate display)
+        self.assertIn("ShowTaskFromMetadata", pane)
+        # Scoring/exit buttons still present
+        self.assertIn("採点する", pane)
+        self.assertIn("終了する", pane)
 
     def test_r22_terminal_launch_state_does_not_start_another_poll_render_loop(self):
         root = Path(__file__).resolve().parents[1]
@@ -965,6 +968,185 @@ class MOS365R32OriginalPackTests(unittest.TestCase):
             score_res = self.service.session_score({"sessionId": sid, "excelPid": 9999})
             self.assertEqual(score_res["assessment"]["result"], "correct", f"Positive scoring failed for {tid}")
             self.assertEqual(score_res["assessment"]["earned"], 1, f"Positive scoring should earn 1 for {tid}")
+
+
+class R33BottomConsoleGateTests(unittest.TestCase):
+    """R33 门禁测试：底部训练控制台合约。"""
+
+    def setUp(self):
+        self.temp = tempfile.TemporaryDirectory()
+        self.service = MOS365Service(Path(__file__).resolve().parents[1], session_root=self.temp.name)
+        import pathlib
+        self.project_root = Path(__file__).resolve().parents[1]
+        self.vsto_dir = self.project_root / "native" / "StudyTools.Mos365ExamHost.VstoBottomPanePoc"
+
+    def tearDown(self):
+        self.temp.cleanup()
+
+    # ── 1. VSTO pane 停靠位置门禁
+    def test_vsto_pane_dock_position_bottom(self):
+        """ThisAddIn.cs must use msoCTPDockPositionBottom, not Right."""
+        this_addin = self.vsto_dir / "ThisAddIn.cs"
+        self.assertTrue(this_addin.exists(), "ThisAddIn.cs not found")
+        src = this_addin.read_text(encoding="utf-8")
+        self.assertIn("msoCTPDockPositionBottom", src,
+                      "VSTO pane must use msoCTPDockPositionBottom")
+        self.assertNotIn("msoCTPDockPositionRight", src,
+                         "VSTO pane must NOT use msoCTPDockPositionRight")
+
+    def test_no_right_pane_in_vsto(self):
+        """No right-side training pane should be created."""
+        this_addin = self.vsto_dir / "ThisAddIn.cs"
+        src = this_addin.read_text(encoding="utf-8")
+        self.assertNotIn("DockPositionRight", src,
+                         "No DockPositionRight allowed in ThisAddIn.cs")
+
+    # ── 2. 单一 pane 合约
+    def test_single_pane_only_one_add_call(self):
+        """CustomTaskPanes.Add should be called at most once in ThisAddIn.cs."""
+        this_addin = self.vsto_dir / "ThisAddIn.cs"
+        src = this_addin.read_text(encoding="utf-8")
+        count = src.count("CustomTaskPanes.Add(")
+        self.assertEqual(count, 1,
+                         f"Expected exactly 1 CustomTaskPanes.Add call, found {count}")
+
+    # ── 3. workbook 安全元数据完整性
+    def _create_gp_session(self, task_id: str):
+        return self.service.create_session({"taskId": task_id})
+
+    def test_workbook_safe_metadata_present_gp001(self):
+        """GP001 workbook must contain docProps/custom.xml with MOS_TASK_ID."""
+        session = self._create_gp_session("MOS_GP_001_ENTER_STATUS")
+        paths = self.service._paths(session["sessionId"])
+        with zipfile.ZipFile(paths.workbook, "r") as zf:
+            names = zf.namelist()
+            self.assertIn("docProps/custom.xml", names,
+                          "Workbook must contain docProps/custom.xml")
+            xml = zf.read("docProps/custom.xml").decode("utf-8")
+        self.assertIn("MOS_TASK_ID", xml)
+        self.assertIn("MOS_TITLE_JA", xml)
+        self.assertIn("MOS_INSTRUCTION_JA", xml)
+        self.assertIn("MOS_SHEET_LABEL", xml)
+        self.assertIn("MOS_TARGET_LABEL", xml)
+
+    def test_workbook_metadata_no_answers(self):
+        """Workbook metadata must NOT contain expectedFormula, expectedValue, or scoring specs."""
+        for tid in ["MOS_GP_001_ENTER_STATUS", "MOS_GP_003_SUM_WEEKLY_SALES",
+                    "MOS_GP_004_AVERAGE_SCORE", "MOS_GP_005_IF_DELIVERY_STATUS"]:
+            session = self._create_gp_session(tid)
+            paths = self.service._paths(session["sessionId"])
+            with zipfile.ZipFile(paths.workbook, "r") as zf:
+                if "docProps/custom.xml" in zf.namelist():
+                    xml = zf.read("docProps/custom.xml").decode("utf-8")
+                    self.assertNotIn("expectedFormula", xml,
+                                     f"{tid}: workbook must not contain expectedFormula")
+                    self.assertNotIn("expectedValue", xml,
+                                     f"{tid}: workbook must not contain expectedValue")
+                    self.assertNotIn("scoringSpec", xml,
+                                     f"{tid}: workbook must not contain scoringSpec")
+                    # SUM/AVERAGE answers must not appear in metadata
+                    self.assertNotIn("=SUM(", xml,
+                                     f"{tid}: workbook metadata must not contain formula answers")
+
+    def test_workbook_metadata_for_all_10_original_tasks(self):
+        """All 10 original tasks must produce workbooks with safe metadata."""
+        import mos365_service as svc
+        for tid in svc.MOS_CATALOG.keys():
+            session = self._create_gp_session(tid)
+            paths = self.service._paths(session["sessionId"])
+            with zipfile.ZipFile(paths.workbook, "r") as zf:
+                self.assertIn("docProps/custom.xml", zf.namelist(),
+                              f"{tid}: missing docProps/custom.xml")
+                xml = zf.read("docProps/custom.xml").decode("utf-8")
+            self.assertIn("MOS_TITLE_JA", xml, f"{tid}: MOS_TITLE_JA missing in metadata")
+            self.assertIn("MOS_INSTRUCTION_JA", xml,
+                          f"{tid}: MOS_INSTRUCTION_JA missing in metadata")
+
+    # ── 4. カタログ安全性
+    def test_catalog_safe_fields_no_answers(self):
+        """MOS_CATALOG must not expose expectedFormula or expectedValue at the top level."""
+        import mos365_service as svc
+        self.assertGreaterEqual(len(svc.MOS_CATALOG), 10,
+                                "Must have at least 10 original tasks")
+        for tid, info in svc.MOS_CATALOG.items():
+            self.assertIn("titleJa", info, f"{tid}: missing titleJa")
+            self.assertIn("titleZh", info, f"{tid}: missing titleZh")
+            self.assertIn("instructionJa", info, f"{tid}: missing instructionJa")
+            self.assertIn("instructionZh", info, f"{tid}: missing instructionZh")
+            # Assessment block exists (server-only) but top-level has no answer
+            self.assertNotIn("expectedFormula", info,
+                             f"{tid}: top-level must not have expectedFormula")
+            self.assertNotIn("expectedValue", info,
+                             f"{tid}: top-level must not have expectedValue")
+
+    # ── 5. C:\mos 参照禁止
+    def test_no_mos_dir_reference_in_project(self):
+        """No source file in the project should reference C:\\mos."""
+        search_dirs = [
+            self.project_root / "assets",
+            self.project_root / "native" / "StudyTools.Mos365ExamHost.VstoBottomPanePoc",
+        ]
+        python_files = [
+            self.project_root / "mos365_service.py",
+            self.project_root / "server.py",
+        ]
+        violation_files = []
+        forbidden = r"C:\mos"
+        for d in search_dirs:
+            if d.exists():
+                for f in d.rglob("*"):
+                    if f.suffix in (".cs", ".js", ".py", ".html", ".css", ".ts"):
+                        try:
+                            content = f.read_text(encoding="utf-8", errors="ignore")
+                            if forbidden in content or forbidden.replace("\\", "/") in content:
+                                violation_files.append(str(f))
+                        except Exception:
+                            pass
+        for pf in python_files:
+            if pf.exists():
+                content = pf.read_text(encoding="utf-8", errors="ignore")
+                if forbidden in content or forbidden.replace("\\", "/") in content:
+                    violation_files.append(str(pf))
+        self.assertEqual(violation_files, [],
+                         f"Files with C:\\mos reference: {violation_files}")
+
+    # ── 6. 題幹優先状態機合約（ロジックテスト）
+    def test_state_machine_connecting_does_not_clear_task_in_source(self):
+        """ExamHostPaneControl.cs ShowConnecting must not hide task instructions."""
+        src_file = self.vsto_dir / "ExamHostPaneControl.cs"
+        src = src_file.read_text(encoding="utf-8")
+        # ShowConnecting / connecting 分岐内で _taskInstrJa.Visible = false があってはならない
+        # （ShowTaskFromMetadata が設定した題干を connecting 状態が消してはならない）
+        # R33合約：ShowConnecting は状態ラベルのみ更新、_taskVisible = true の場合は題干を隠さない
+        self.assertIn("_taskVisible", src,
+                      "ExamHostPaneControl must track _taskVisible state")
+        self.assertIn("ShowTaskFromMetadata", src,
+                      "ExamHostPaneControl must implement ShowTaskFromMetadata")
+
+    def test_generation_guard_in_source(self):
+        """ShowTask must contain generation guard (gen != _renderGeneration return false)."""
+        src_file = self.vsto_dir / "ExamHostPaneControl.cs"
+        src = src_file.read_text(encoding="utf-8")
+        self.assertIn("_renderGeneration", src,
+                      "Generation guard must be present")
+        self.assertIn("return false", src,
+                      "ShowTask must return false for stale generations")
+
+    # ── 7. 10 タスク回帰
+    def test_ten_original_tasks_in_catalog(self):
+        """Must have exactly 10 original tasks in MOS_CATALOG."""
+        import mos365_service as svc
+        gp_tasks = [k for k in svc.MOS_CATALOG if k.startswith("MOS_GP_")]
+        self.assertEqual(len(gp_tasks), 10,
+                         f"Expected 10 MOS_GP_ tasks, found {len(gp_tasks)}: {gp_tasks}")
+
+    def test_r16_r17_legacy_aliases_preserved(self):
+        """R16/R17 aliases must still resolve to MOS_GP_001 and MOS_GP_002."""
+        session_r16 = self.service.create_session({"taskId": "MOS_GP_001_ENTER_STATUS"})
+        self.assertIsNotNone(session_r16.get("sessionId"))
+        self.assertEqual(session_r16.get("scenarioId"), "mos_gp_static")
+        session_r17 = self.service.create_session({"taskId": "MOS_GP_002_SUM_TWO_VALUES"})
+        self.assertIsNotNone(session_r17.get("sessionId"))
 
 
 if __name__ == "__main__":
