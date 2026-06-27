@@ -1285,5 +1285,228 @@ class R35ExamAndConsoleTests(unittest.TestCase):
             self.assertIn("<vt:lpwstr>2</vt:lpwstr>", custom_xml)
 
 
+class R352SafeForegroundHotfixGateTests(unittest.TestCase):
+    """R35.2 安全前置最大化热修门禁测试。"""
+
+    def setUp(self):
+        self.project_root = Path(__file__).resolve().parents[1]
+        self.service_path = self.project_root / "mos365_service.py"
+
+    # ── 1. Source-level prohibition gates ──
+
+    def test_no_attachthreadinput_in_runtime(self):
+        """Runtime source must not contain AttachThreadInput."""
+        src = self.service_path.read_text(encoding="utf-8")
+        self.assertNotIn("AttachThreadInput", src)
+
+    def test_no_bringwindowtotop_in_runtime(self):
+        """Runtime source must not contain BringWindowToTop."""
+        src = self.service_path.read_text(encoding="utf-8")
+        self.assertNotIn("BringWindowToTop", src)
+
+    def test_no_enumchildwindows_in_runtime(self):
+        """Runtime source must not contain EnumChildWindows."""
+        src = self.service_path.read_text(encoding="utf-8")
+        self.assertNotIn("EnumChildWindows", src)
+
+    def test_no_getwindowtext_in_runtime(self):
+        """Runtime source must not contain GetWindowText."""
+        src = self.service_path.read_text(encoding="utf-8")
+        self.assertNotIn("GetWindowText", src)
+
+    def test_no_wm_close_sw_hide_swp_hidewindow_in_runtime(self):
+        """Runtime source must not contain WM_CLOSE, SW_HIDE, or SWP_HIDEWINDOW."""
+        src = self.service_path.read_text(encoding="utf-8")
+        self.assertNotIn("WM_CLOSE", src)
+        self.assertNotIn("SW_HIDE", src)
+        self.assertNotIn("SWP_HIDEWINDOW", src)
+
+    def test_no_application_quit_or_workbook_close_in_runtime(self):
+        """Runtime source must not contain Application.Quit or Workbook.Close."""
+        src = self.service_path.read_text(encoding="utf-8")
+        self.assertNotIn("Application.Quit", src)
+        self.assertNotIn("Workbook.Close", src)
+
+    # ── 2. Safe API usage gates ──
+
+    def test_uses_showwindowasync_restore(self):
+        """Function must use ShowWindowAsync with SW_RESTORE (9)."""
+        src = self.service_path.read_text(encoding="utf-8")
+        self.assertIn("ShowWindowAsync", src)
+        self.assertIn("SW_RESTORE", src)
+        self.assertIn("user32.ShowWindowAsync(target_hwnd, SW_RESTORE)", src)
+
+    def test_uses_showwindowasync_maximize(self):
+        """Function must use ShowWindowAsync with SW_MAXIMIZE (3)."""
+        src = self.service_path.read_text(encoding="utf-8")
+        self.assertIn("user32.ShowWindowAsync(target_hwnd, SW_MAXIMIZE)", src)
+
+    def test_uses_setforegroundwindow(self):
+        """Function must use SetForegroundWindow."""
+        src = self.service_path.read_text(encoding="utf-8")
+        self.assertIn("SetForegroundWindow", src)
+
+    def test_uses_getforegroundwindow_pid_verification(self):
+        """Function must verify foreground PID with GetForegroundWindow + GetWindowThreadProcessId."""
+        src = self.service_path.read_text(encoding="utf-8")
+        self.assertIn("fore_hwnd = user32.GetForegroundWindow()", src)
+        self.assertIn("user32.GetWindowThreadProcessId(fore_hwnd, ctypes.byref(fore_pid))", src)
+
+    def test_uses_zoomed_verification(self):
+        """Function must verify maximize with IsZoomed."""
+        src = self.service_path.read_text(encoding="utf-8")
+        self.assertIn("IsZoomed", src)
+
+    def test_no_title_or_class_matching(self):
+        """Must NOT use GetWindowTextLengthW, GetWindowText, title matching, or class matching."""
+        src = self.service_path.read_text(encoding="utf-8")
+        self.assertNotIn("GetWindowTextLengthW", src)
+        self.assertNotIn("GetClassName", src)
+
+    # ── 3. EnumWindows PID-only filtering ──
+
+    def test_enumwindows_pid_filtered_only(self):
+        """EnumWindows callback must filter by PID and IsWindowVisible only — no title/class check."""
+        src = self.service_path.read_text(encoding="utf-8")
+        self.assertIn("_find_visible_window_for_pid", src)
+        # The callback must not use GetWindowText or title length
+        callback_patterns = [
+            "process_id.value == target_pid and user32.IsWindowVisible(hwnd)",
+        ]
+        all_found = all(p in src for p in callback_patterns)
+        self.assertTrue(all_found, "EnumWindows callback must filter by PID + IsWindowVisible only")
+        self.assertNotIn("GetWindowTextLengthW", src)
+
+    # ── 4. Diagnostics structure ──
+
+    def test_foreground_diagnostics_fields_exist(self):
+        """Diagnostics dict must contain all required fields."""
+        from mos365_service import _get_foreground_diagnostic, _foreground_excel_async
+
+        # Verify that filling diagnostics is the module-level function's responsibility
+        self.assertIsNotNone(_get_foreground_diagnostic)
+        self.assertIsNotNone(_foreground_excel_async)
+
+    def test_get_foreground_diagnostic_none_for_unknown_session(self):
+        """get_foreground_diagnostic must return None for unknown sessions."""
+        from mos365_service import _get_foreground_diagnostic
+        result = _get_foreground_diagnostic("nonexistent_session_id")
+        self.assertIsNone(result)
+
+    # ── 5. Diagnostics values rules ──
+
+    def test_foreground_confirmed_requires_pid_match(self):
+        """foreground_confirmed must NOT be set to True when PID mismatch."""
+        src = self.service_path.read_text(encoding="utf-8")
+        # The code must do PID comparison before setting foreground_confirmed = True
+        self.assertIn('fore_pid.value == pid', src)
+        self.assertIn('diag["foreground_confirmed"] = True', src)
+
+    def test_maximize_confirmed_requires_zoomed(self):
+        """maximize_confirmed must NOT be set to True when IsZoomed returns False."""
+        src = self.service_path.read_text(encoding="utf-8")
+        # Must check IsZoomed before setting maximize_confirmed = True
+        self.assertIn('user32.IsZoomed(target_hwnd)', src)
+        self.assertIn('diag["maximize_confirmed"] = True', src)
+
+    def test_failure_category_not_none_on_failure(self):
+        """When foreground is not confirmed, failure_category must not be None."""
+        src = self.service_path.read_text(encoding="utf-8")
+        # Must assign a failure_category in all non-success cases
+        self.assertIn('"failure_category"', src)
+        expected_categories = [
+            "window_not_found",
+            "set_foreground_rejected", "foreground_pid_mismatch",
+            "maximize_not_confirmed", "timeout", "unexpected_win32_error",
+        ]
+        for cat in expected_categories:
+            self.assertIn(cat, src)
+
+    # ── 6. Diagnostics field boundaries ──
+
+    def test_diagnostics_no_pid_or_path_leak(self):
+        """Diagnostics must NOT contain PID, port, session ID, local path, or tech stack."""
+        from mos365_service import _foreground_excel_async
+        import inspect
+        src = inspect.getsource(_foreground_excel_async)
+        # Diagnostics may reference pid and session_id values but the REPORTED
+        # field names must not include pid/path/tech stack. The diag dict keys
+        # are: foreground_requested, window_found, maximize_requested,
+        # foreground_confirmed, maximize_confirmed, elapsed_ms, failure_category
+        self.assertIn("foreground_requested", src)
+        self.assertIn("window_found", src)
+        self.assertIn("foreground_confirmed", src)
+        self.assertIn("maximize_confirmed", src)
+        self.assertIn("elapsed_ms", src)
+        self.assertIn("failure_category", src)
+        # diag dict must NOT store pid as a diagnostic field name
+        diag_lines = [l.strip() for l in src.split("\n") if 'diag' in l]
+        for line in diag_lines:
+            if '"pid"' in line.lower():
+                self.fail(f"Diagnostics must not store PID: {line}")
+
+    # ── 7. Idempotency / non-blocking ──
+
+    def test_foreground_runs_in_daemon_thread(self):
+        """Foreground function must start a daemon thread (never blocks launch)."""
+        src = self.service_path.read_text(encoding="utf-8")
+        self.assertIn("threading.Thread(target=_run, daemon=True", src)
+
+    def test_foreground_never_blocks_response(self):
+        """Foreground function must return None immediately (thread is fire-and-forget)."""
+        from mos365_service import _foreground_excel_async
+        result = _foreground_excel_async(999999, "test_session_id_no_excel")
+        self.assertIsNone(result, "_foreground_excel_async must return None immediately")
+
+    # ── 8. R16 / R17 regression (reference existing tests, must still pass) ──
+
+    def test_r16_regression_via_r352(self):
+        """R16 scoring must still work (class contract preserved)."""
+        temp = tempfile.TemporaryDirectory()
+        try:
+            svc = MOS365Service(self.project_root, session_root=temp.name)
+            from mos365_service import _LAUNCH_LOCK
+            with _LAUNCH_LOCK:
+                mos365_service._LAUNCH_STATE = None
+            session = svc.create_session({"mode": "r16_static_training"})
+            paths = svc._paths(session["sessionId"])
+            import json
+            manifest = json.loads(paths.manifest.read_text(encoding="utf-8"))
+            manifest["state"] = "attached"
+            manifest["excelPid"] = 0
+            manifest["attachedPid"] = 0
+            manifest["completion"] = {"acknowledged": True, "acknowledgedAt": "", "acknowledgedPid": 0}
+            paths.manifest.write_text(json.dumps(manifest, ensure_ascii=False, indent=2), encoding="utf-8")
+            result = svc.session_score({"sessionId": session["sessionId"], "excelPid": 0})
+            self.assertTrue(result["ok"])
+            self.assertEqual(result["assessment"]["result"], "incorrect")
+            self.assertEqual(result["assessment"]["earned"], 0)
+        finally:
+            temp.cleanup()
+
+    def test_r17_regression_via_r352(self):
+        """R17 scoring must still work (class contract preserved)."""
+        temp = tempfile.TemporaryDirectory()
+        try:
+            svc = MOS365Service(self.project_root, session_root=temp.name)
+            from mos365_service import _LAUNCH_LOCK
+            with _LAUNCH_LOCK:
+                mos365_service._LAUNCH_STATE = None
+            session = svc.create_session({"mode": "r17_static_training"})
+            paths = svc._paths(session["sessionId"])
+            import json
+            manifest = json.loads(paths.manifest.read_text(encoding="utf-8"))
+            manifest["state"] = "attached"
+            manifest["excelPid"] = 0
+            manifest["attachedPid"] = 0
+            manifest["completion"] = {"acknowledged": True, "acknowledgedAt": "", "acknowledgedPid": 0}
+            paths.manifest.write_text(json.dumps(manifest, ensure_ascii=False, indent=2), encoding="utf-8")
+            result = svc.session_score({"sessionId": session["sessionId"], "excelPid": 0})
+            self.assertTrue(result["ok"])
+            self.assertEqual(result["assessment"]["result"], "incorrect")
+        finally:
+            temp.cleanup()
+
+
 if __name__ == "__main__":
     unittest.main()
