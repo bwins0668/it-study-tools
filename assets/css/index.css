@@ -21,16 +21,17 @@
   --error-glow: hsla(350, 80%, 55%, 0.15);
 
   /* ── transition-smooth: shared token for non-hover transitions only.
-     R36.1 changed this from `all` to a compositor-friendly whitelist.
-     R36.3 adds `transform` and `opacity` so that components using this
-     variable can keep transform transitions without reverting to `all`.
-     This is safe because the whitelist is still narrower than `all`.
-     Hover-specific transitions are defined locally, not via this token. */
+     R36.1 narrowed from `all` to a compositor-friendly whitelist.
+     R36.3 added `transform` and `opacity`, but that leaked `transform` to
+     ~60 non-home consumers (japanese-typing.css, coding-typing.css,
+     index.html CBT buttons, app.js template strings, index.css quiz/challenge
+     components). R36.4 reverts `transform` from this shared token so that
+     unrelated components do not unexpectedly acquire transform transitions.
+     Home hover transitions are defined locally, not via this token. */
   --transition-smooth: background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
                        color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
                        border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-                       opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-                       transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                       opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   --glass-blur: blur(12px);
 }
 
@@ -6003,7 +6004,10 @@ body.mode-python .python-sandbox-card:focus-within {
   --error-color: #ef4444;
   --error-glow: rgba(239, 68, 68, 0.1);
 
-  --transition-smooth: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-smooth: background-color 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+                       color 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+                       border-color 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+                       opacity 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   --glass-blur: blur(16px);
 }
 
@@ -7045,7 +7049,7 @@ body.mode-sg .sub-header-tab.active {
   }
   .chapter-header-title:hover .chapter-arrow,
   .sidebar-chapter-header:hover .chapter-arrow {
-    transform: rotate(0deg) translateX(4px);
+    transform: rotate(0deg);
   }
   .sidebar-chapter-header:hover .chapter-header-title span {
     transform: translateX(6px);
@@ -7102,7 +7106,7 @@ body.mode-sg .sub-header-tab.active {
   transform: translateX(6px);
 }
 .sidebar-chapter-header:focus-visible .chapter-arrow {
-  transform: rotate(0deg) translateX(4px);
+  transform: rotate(0deg);
 }
 .sidebar-chapter-header:focus-visible .chapter-progress-badge {
   transform: translateX(4px);
