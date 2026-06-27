@@ -6,8 +6,8 @@ namespace StudyTools.Mos365ExamHost
 {
     /// <summary>
     /// MOS training task pane with proper state machine.
-    /// States: connecting → retrying → attached → failed → ending → ended
-    /// Exit button is always available during connecting/retrying/failed states.
+    /// States: connecting → retrying → attach_verified → rendering_task → attached_and_rendered → failed → ending → ended
+    /// Generation-based rendering prevents stale overwrites.
     /// </summary>
     public class ExamHostPaneControl : UserControl
     {
@@ -25,9 +25,14 @@ namespace StudyTools.Mos365ExamHost
         public Action OnRetryClicked { get; set; }
         public Action OnExitClicked { get; set; }
 
+        // R31: generation counter prevents stale UI overwrites
+        private long _renderGeneration;
+        public long RenderGeneration { get { return _renderGeneration; } }
+
         public ExamHostPaneControl()
         {
             InitializeComponent();
+            _renderGeneration = 0;
             ShowConnecting();
         }
 
@@ -41,7 +46,15 @@ namespace StudyTools.Mos365ExamHost
         }
 
         /// <summary>
-        /// State machine: accepts "connecting", "retrying", "attached", "failed", "ending", "ended".
+        /// Bump render generation — call when starting a new attach cycle.
+        /// </summary>
+        public long NewRenderGeneration()
+        {
+            return System.Threading.Interlocked.Increment(ref _renderGeneration);
+        }
+
+        /// <summary>
+        /// State machine with generation guard.
         /// </summary>
         public void UpdateSessionState(string state, string sessionId = null, int? excelPid = null)
         {
@@ -57,7 +70,23 @@ namespace StudyTools.Mos365ExamHost
                     break;
                 case "attached":
                 case "connected":
-                    _stateLabel.Text = "接続済み / 已连接";
+                    // R31: do NOT show "已连接" here — ShowTask handles that when
+                    // training data is actually rendered. This prevents the
+                    // "connected but blank" bug.
+                    break;
+                case "attach_verified":
+                    // Server confirmed session, but training data not yet rendered
+                    _stateLabel.Text = "接続しました / 正在加载训练题目…";
+                    _progressLabel.Text = "問題 1 / 1";
+                    _taskInstructionJa.Visible = false;
+                    _taskInstructionZh.Visible = false;
+                    _gradeBtn.Visible = false;
+                    _retryBtn.Visible = false;
+                    _exitBtn.Visible = true;
+                    _exitBtn.Enabled = true;
+                    _resultLabel.Visible = true;
+                    _resultLabel.ForeColor = Color.FromArgb(210, 220, 225);
+                    _resultLabel.Text = "トレーニング問題を読み込んでいます…\n正在加载训练题目…";
                     break;
                 case "failed":
                     ShowConnectionFailed(null);
@@ -69,7 +98,6 @@ namespace StudyTools.Mos365ExamHost
                     ShowEnded();
                     break;
                 default:
-                    // Legacy: check for error keywords in state string
                     if (state.IndexOf("HTTP", StringComparison.OrdinalIgnoreCase) >= 0 ||
                         state.IndexOf("FAILED", StringComparison.OrdinalIgnoreCase) >= 0 ||
                         state.IndexOf("REJECTED", StringComparison.OrdinalIgnoreCase) >= 0 ||
@@ -85,8 +113,14 @@ namespace StudyTools.Mos365ExamHost
             }
         }
 
-        public void ShowTask(string instructionJa, string instructionZh)
+        /// <summary>
+        /// Show training task with generation guard.
+        /// Only applies if gen matches current render generation.
+        /// </summary>
+        public bool ShowTask(string instructionJa, string instructionZh, long gen)
         {
+            if (gen != _renderGeneration) return false; // stale — ignore
+
             _stateLabel.Text = "接続済み / 已连接";
             _progressLabel.Text = "問題 1 / 1";
             _taskInstructionJa.Text = "日本語:\n" + (instructionJa ?? "");
@@ -102,6 +136,35 @@ namespace StudyTools.Mos365ExamHost
             _resultLabel.Visible = true;
             _resultLabel.ForeColor = Color.FromArgb(210, 220, 225);
             _resultLabel.Text = "Excel で操作してから採点します。\n完成 Excel 操作后可评分。";
+            return true;
+        }
+
+        /// <summary>
+        /// Show training task without generation guard (backward compat).
+        /// </summary>
+        public void ShowTask(string instructionJa, string instructionZh)
+        {
+            ShowTask(instructionJa, instructionZh, _renderGeneration);
+        }
+
+        /// <summary>
+        /// Show task load failure — training data missing after attach.
+        /// </summary>
+        public void ShowTaskLoadFailed()
+        {
+            _stateLabel.Text = "問題の読み込みに失敗しました / 题目加载失败";
+            _progressLabel.Text = "問題 1 / 1";
+            _taskInstructionJa.Visible = false;
+            _taskInstructionZh.Visible = false;
+            _gradeBtn.Visible = false;
+            _retryBtn.Visible = true;
+            _retryBtn.Enabled = true;
+            _retryBtn.Text = "再接続する / 重新连接";
+            _exitBtn.Visible = true;
+            _exitBtn.Enabled = true;
+            _resultLabel.Visible = true;
+            _resultLabel.ForeColor = Color.FromArgb(180, 105, 80);
+            _resultLabel.Text = "訓練問題を取得できませんでした。再接続してください。\n无法获取训练题目，请重新连接。";
         }
 
         public void ShowCompletionAccepted()
@@ -191,7 +254,6 @@ namespace StudyTools.Mos365ExamHost
             _taskInstructionZh.Visible = false;
             _gradeBtn.Visible = false;
             _retryBtn.Visible = false;
-            // Exit button available during connecting — user can bail out
             _exitBtn.Visible = true;
             _exitBtn.Enabled = true;
             _resultLabel.Visible = true;

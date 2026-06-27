@@ -21,6 +21,7 @@ namespace StudyTools.Mos365ExamHost
         private int _verifying; // 0=idle, 1=verifying
         private CancellationTokenSource _attachCts;
         private bool _exiting;
+        private long _activeGeneration; // R31: current render generation
 
         private void ThisAddIn_Startup(object sender, System.EventArgs e)
         {
@@ -128,6 +129,7 @@ namespace StudyTools.Mos365ExamHost
         /// <summary>
         /// Fire-and-forget bind: starts async verification on background thread.
         /// Pane shows "connecting" immediately — Excel UI stays responsive.
+        /// R31: generation-based rendering prevents stale overwrites.
         /// </summary>
         private void StartBindWorkbook(Excel.Workbook wb)
         {
@@ -140,6 +142,10 @@ namespace StudyTools.Mos365ExamHost
             var pid = Process.GetCurrentProcess().Id;
             var guid = _sessionId.ToString("N");
 
+            // R31: bump generation for this attach cycle
+            long gen = _paneControl.NewRenderGeneration();
+            _activeGeneration = gen;
+
             string path = null;
             try { path = wb.FullName; } catch { }
 
@@ -149,12 +155,16 @@ namespace StudyTools.Mos365ExamHost
                 _probe?.Write("session.verify.rejected", guid, excelPid: pid);
                 _paneControl.UpdateSessionState("connecting");
                 _boundSessionId = null;
+                _activeGeneration = 0;
                 _verifying = 0;
                 return;
             }
 
             _probe?.Write("session.verify.begin", guid, excelPid: pid);
             _paneControl.UpdateSessionState("connecting");
+
+            // R31: capture gen so async callback can validate
+            var capturedGen = gen;
 
             // Fire async verification on thread pool — never block UI
             Task.Run(async () =>
@@ -171,23 +181,47 @@ namespace StudyTools.Mos365ExamHost
                     {
                         try
                         {
+                            // R31: ignore stale generations
+                            if (capturedGen != _activeGeneration) return;
+
                             if (result.Ok)
                             {
                                 _probe?.Write("session.verify.accepted", guid, excelPid: pid);
                                 _probe?.Write("session.bound", result.SessionId, excelPid: pid);
                                 _boundSessionId = result.SessionId;
-                                _paneControl.UpdateSessionState("attached", result.SessionId,
-                                    result.ExcelPid ?? pid);
-                                if (!string.IsNullOrEmpty(result.TaskId))
+
+                                // R31: only show "已连接" AFTER task is rendered
+                                if (!string.IsNullOrEmpty(result.TaskId)
+                                    && !string.IsNullOrEmpty(result.InstructionJa)
+                                    && !string.IsNullOrEmpty(result.InstructionZh))
                                 {
                                     _probe?.Write("training.task.received",
                                         _sessionId.ToString("N"), excelPid: pid);
+                                    _paneControl.UpdateSessionState("attached", result.SessionId,
+                                        result.ExcelPid ?? pid);
                                     _paneControl.ShowTask(result.InstructionJa,
-                                        result.InstructionZh);
+                                        result.InstructionZh, capturedGen);
                                     if (result.CompletionAcknowledged)
                                         _paneControl.ShowCompletionAccepted();
                                     _paneControl.OnGradeClicked = () =>
                                         HandleGradeAsync(pid);
+                                }
+                                else
+                                {
+                                    // R31: training data missing — show error, not "connected"
+                                    _probe?.Write("training.task.missing",
+                                        _sessionId.ToString("N"), excelPid: pid);
+                                    _paneControl.UpdateSessionState("attach_verified",
+                                        result.SessionId, result.ExcelPid ?? pid);
+                                    // After brief wait, show load failure
+                                    Task.Delay(1500).ContinueWith(_ =>
+                                    {
+                                        _paneControl.BeginInvoke((Action)(() =>
+                                        {
+                                            if (capturedGen == _activeGeneration)
+                                                _paneControl.ShowTaskLoadFailed();
+                                        }));
+                                    });
                                 }
                             }
                             else
@@ -352,13 +386,15 @@ namespace StudyTools.Mos365ExamHost
         }
 
         /// <summary>
-        /// Async exit: cancel attach, end session, close workbook.
+        /// Async exit: cancel attach, end session.
         /// Never blocks UI thread. Always completes.
+        /// Workbook stays open — user closes manually.
         /// </summary>
         private async void HandleExitAsync(int pid)
         {
             if (_exiting) return;
             _exiting = true;
+            _activeGeneration = 0; // R31: invalidate all pending renders
 
             var guid = _sessionId.ToString("N");
             var sessionId = _boundSessionId;
