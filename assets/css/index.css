@@ -20,13 +20,17 @@
   --error-color: hsl(350, 80%, 55%);
   --error-glow: hsla(350, 80%, 55%, 0.15);
 
-  /* R36.1: compositor-only transition — individual components
-     override with specific properties; this fallback is for
-     non-interactive / non-hover transitions only. */
+  /* ── transition-smooth: shared token for non-hover transitions only.
+     R36.1 changed this from `all` to a compositor-friendly whitelist.
+     R36.3 adds `transform` and `opacity` so that components using this
+     variable can keep transform transitions without reverting to `all`.
+     This is safe because the whitelist is still narrower than `all`.
+     Hover-specific transitions are defined locally, not via this token. */
   --transition-smooth: background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
                        color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
                        border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-                       opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                       opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                       transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   --glass-blur: blur(12px);
 }
 
@@ -6942,8 +6946,11 @@ body.mode-sg .sub-header-tab.active {
 .lesson-header-top {
   position: relative;
   z-index: 1;
-  transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
-  transform: translateX(0);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: none;
+  transform: none;
 }
 .lesson-badge {
   display: inline-block;
@@ -6955,6 +6962,25 @@ body.mode-sg .sub-header-tab.active {
 #lesson-title-zh {
   transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
   transform: translateX(0);
+  display: inline-block;
+}
+
+/* Layer 2: lesson-hover-arrow — visible right-side indicator,
+   aria-hidden so screen readers skip it, no click interaction.
+   Uses absolute positioning to avoid layout shift when appearing. */
+.lesson-hover-arrow {
+  display: inline-block;
+  font-size: 24px;
+  line-height: 1;
+  color: var(--text-main);
+  opacity: 0.4;
+  transform: translateX(0);
+  transition:
+    transform 0.22s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.22s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: 0s;
+  margin-left: auto;
+  flex-shrink: 0;
 }
 
 /* Layer 2: locate-pdf-btn acts as right-side action indicator */
@@ -6972,13 +6998,13 @@ body.mode-sg .sub-header-tab.active {
     transform: translateY(-1px);
   }
   .content-card:hover .lesson-header-top {
-    transform: translateX(0); /* stays anchored */
+    transform: none; /* stays anchored — no horizontal shift */
   }
   .content-card:hover #lesson-title-ja,
   .content-card:hover #lesson-title-zh {
     transform: translateX(10px);
   }
-  .content-card:hover .locate-pdf-btn {
+  .content-card:hover .lesson-hover-arrow {
     transform: translateX(6px);
     opacity: 1;
     transition-delay: 50ms;
@@ -7066,9 +7092,9 @@ body.mode-sg .sub-header-tab.active {
   transform: translateX(10px);
 }
 .content-card:focus-visible .lesson-header-top {
-  transform: translateX(0);
+  transform: none;
 }
-.content-card:focus-visible .locate-pdf-btn {
+.content-card:focus-visible .lesson-hover-arrow {
   transform: translateX(6px);
   opacity: 1;
 }
@@ -7102,7 +7128,7 @@ body.mode-sg .sub-header-tab.active {
   .content-card,
   .lesson-header-top,
   #lesson-title-ja, #lesson-title-zh,
-  .locate-pdf-btn,
+  .lesson-hover-arrow,
   .sidebar-chapter-header,
   .chapter-arrow,
   .chapter-header-title span,
