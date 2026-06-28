@@ -26,14 +26,16 @@ except ModuleNotFoundError:
     pass
 
 # 内嵌生产公钥（PEM 格式）
-_EMBEDDED_PUBLIC_KEY_PEM = b"""\
------BEGIN PUBLIC KEY-----
+_EMBEDDED_PUBLIC_KEY_PEM = b"""-----BEGIN PUBLIC KEY-----
 MCowBQYDK2VwAyEA+maLXkHz3xhW80D67SjYZH4tlvhaFSDXLhNfZvaacEM=
 -----END PUBLIC KEY-----"""
 
 # 受托公钥注册表
 _AUTHORIZED_PUBLIC_KEYS = {
-    'prod-key-2026': _EMBEDDED_PUBLIC_KEY_PEM
+    'prod-key-2026': _EMBEDDED_PUBLIC_KEY_PEM,
+    'prod-key-2026-r42': b"""-----BEGIN PUBLIC KEY-----
+MCowBQYDK2VwAyEAk8ANftREay0yCqCUoCXmxxi64lCPMk4z2LdGeWYK2Kc=
+-----END PUBLIC KEY-----""",
 }
 
 
@@ -74,7 +76,6 @@ def sign_manifest(manifest_data: dict, private_key_path: str) -> str:
     if not HAS_CRYPTOGRAPHY:
         raise RuntimeError("cryptography module is not available")
     private_key = load_private_key(private_key_path)
-    # 剥离 signature 字段以防万一
     verify_data = dict(manifest_data)
     verify_data.pop('signature', None)
     canonical = json.dumps(verify_data, ensure_ascii=False, sort_keys=True, separators=(',', ':')).encode('utf-8')
@@ -94,11 +95,9 @@ def verify_manifest_signature(manifest_data: dict, signature_b64: str, public_ke
     if not HAS_CRYPTOGRAPHY:
         return False
 
-    # 未提供签名 → fail-closed
     if not signature_b64 or not isinstance(signature_b64, str):
         return False
 
-    # 客户端通过 keyId 选择内置公钥
     key_id = manifest_data.get('keyId')
     if public_key_pem is None:
         if not key_id:
@@ -118,7 +117,6 @@ def verify_manifest_signature(manifest_data: dict, signature_b64: str, public_ke
     except (base64.binascii.Error, ValueError):
         return False
 
-    # 剥离 'signature' 键
     verify_data = dict(manifest_data)
     verify_data.pop('signature', None)
     canonical = json.dumps(verify_data, ensure_ascii=False, sort_keys=True, separators=(',', ':')).encode('utf-8')
@@ -162,4 +160,3 @@ def is_signature_configured() -> bool:
         return True
     except Exception:
         return False
-

@@ -678,6 +678,10 @@ document.addEventListener("DOMContentLoaded", () => {
   try { if (window.StudyAuthUI) window.StudyAuthUI.initAuthUI(); }
   catch (_) { console.warn("[App] AuthUI init skipped"); }
 
+  // Initialize updater UI (will skip if script not loaded)
+  try { if (window.StudyUpdater && typeof window.StudyUpdater.init === 'function') window.StudyUpdater.init(); }
+  catch (_) { /* updater-ui.js not loaded */ }
+
   // Initialize module switch panel
   initModuleSwitch();
 
@@ -1357,6 +1361,21 @@ function initToolsDrawer() {
         var settingsBtn = document.getElementById('ai-settings-btn') || document.getElementById('ai-launcher-settings');
         if (settingsBtn) settingsBtn.click();
       }
+      return;
+    }
+
+    if (action === 'open-updater') {
+      closeDrawer();
+      if (window.StudyUpdater && typeof window.StudyUpdater.open === 'function') {
+        window.StudyUpdater.open();
+      }
+      return;
+    }
+
+    if (action === 'close-updater-panel') {
+      var updaterPanel = document.getElementById('updater-panel');
+      if (updaterPanel) updaterPanel.hidden = true;
+      if (window.openToolsDrawer) window.openToolsDrawer();
       return;
     }
 

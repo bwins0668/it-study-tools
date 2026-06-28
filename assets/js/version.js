@@ -36,4 +36,31 @@
   } else {
     applyVersionInfo();
   }
+
+  /* R38: fetch version.json from server as authoritative desktop version source */
+  function fetchVersionJson() {
+    fetch('/version.json')
+      .then(function (r) {
+        if (!r.ok) throw new Error('HTTP ' + r.status);
+        return r.json();
+      })
+      .then(function (data) {
+        if (data && data.version) {
+          window.STUDY_TOOLS_VERSION.desktopVersion = 'v' + data.version;
+          window.STUDY_TOOLS_VERSION.releaseUrl =
+            'https://github.com/bwins0668/it-study-tools/releases/tag/v' + data.version;
+          // re-apply version info with fetched data
+          applyVersionInfo();
+        }
+      })
+      .catch(function () {
+        /* silent: server not running or no version.json */
+      });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", fetchVersionJson);
+  } else {
+    fetchVersionJson();
+  }
 })();

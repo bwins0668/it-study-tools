@@ -503,6 +503,175 @@ body {
   color: rgba(239, 68, 68, 0.6);
 }
 
+/* ---- Tools Drawer Sub-Panel (updater etc.) ---- */
+.tools-drawer-section-panel {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  background: rgba(14, 20, 34, 0.98);
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+.tools-drawer-section-panel[hidden] {
+  display: none;
+}
+.tools-drawer-section-panel__header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--border-color);
+  font-size: 15px;
+  color: var(--text-main);
+}
+.tools-drawer-section-panel__back {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 13px;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: var(--transition-smooth);
+  font-family: inherit;
+}
+.tools-drawer-section-panel__back:hover {
+  color: var(--text-main);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+/* Updater panel */
+.updater-section {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.updater-info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+.updater-info-row strong {
+  color: var(--text-main);
+  font-weight: 600;
+}
+.updater-status {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--text-muted);
+  padding: 8px 12px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.03);
+}
+.updater-status[hidden] {
+  display: none;
+}
+.updater-progress-pct {
+  font-size: 12px;
+  color: var(--neon-cyan);
+  font-weight: 600;
+}
+.updater-progress-bar {
+  width: 100%;
+  height: 4px;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.08);
+}
+.updater-progress-bar::-webkit-progress-bar {
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 2px;
+}
+.updater-progress-bar::-webkit-progress-value {
+  background: var(--neon-cyan);
+  border-radius: 2px;
+}
+.updater-error {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--error-color);
+  padding: 8px 12px;
+  border-radius: 6px;
+  background: rgba(239, 68, 68, 0.08);
+}
+.updater-error[hidden] {
+  display: none;
+}
+.updater-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.btn-updater {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  font-size: 13px;
+  font-family: inherit;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text-main);
+  cursor: pointer;
+  transition: var(--transition-smooth);
+}
+.btn-updater:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+.btn-updater-primary {
+  background: rgba(0, 240, 255, 0.1);
+  border-color: var(--neon-cyan);
+  color: var(--neon-cyan);
+}
+.btn-updater-primary:hover {
+  background: rgba(0, 240, 255, 0.18);
+}
+.btn-updater-danger {
+  background: rgba(239, 68, 68, 0.1);
+  border-color: var(--error-color);
+  color: var(--error-color);
+}
+.btn-updater-danger:hover {
+  background: rgba(239, 68, 68, 0.18);
+}
+.updater-toggle-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 6px 0;
+}
+.updater-toggle-row input[type="checkbox"] {
+  accent-color: var(--neon-cyan);
+}
+
+/* Badge on tools drawer item */
+.tools-drawer-item__badge {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #22c55e;
+  box-shadow: 0 0 6px rgba(34, 197, 94, 0.5);
+  position: absolute;
+  top: 4px;
+  right: 4px;
+}
+.tools-drawer-item__badge[hidden] {
+  display: none;
+}
+
 /* ---- Tools Drawer Confirm Modal ---- */
 .tools-confirm-overlay {
   position: fixed;

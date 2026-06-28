@@ -230,6 +230,14 @@
               <small data-i18n="tools.settingsDesc">调整学习工具偏好</small>
             </span>
           </button>
+          <button type="button" class="tools-drawer-item" data-action="open-updater">
+            <span class="tools-drawer-item__icon">🔄</span>
+            <span class="tools-drawer-item__text">
+              <strong data-i18n="tools.updater">检查更新</strong>
+              <small data-i18n="tools.updaterDesc">查看和更新程序版本</small>
+              <span id="updater-badge" class="tools-drawer-item__badge" hidden style="position:absolute;top:4px;right:4px;width:8px;height:8px;background:#22c55e;border-radius:50%;"></span>
+            </span>
+          </button>
         </div>
 
         <div class="tools-drawer__section tools-drawer__section--danger">
@@ -1592,13 +1600,65 @@
     </main>
   </section>
 
+  <!-- Update Panel -->
+  <div id="updater-panel" class="tools-drawer-section-panel" hidden>
+    <div class="tools-drawer-section-panel__header">
+      <button type="button" class="tools-drawer-section-panel__back" data-action="close-updater-panel" data-i18n-title="tools.closeMenu">← 返回</button>
+      <strong data-i18n="tools.updaterAppUpdate">软件更新</strong>
+    </div>
+    <div class="updater-section">
+      <div class="updater-info-row">
+        <span data-i18n="tools.updaterCurrentVersion">当前版本</span>
+        <strong id="updater-current-version">—</strong>
+      </div>
+      <div class="updater-info-row">
+        <span data-i18n="tools.updaterLatestVersion">最新版本</span>
+        <strong id="updater-latest-version">—</strong>
+      </div>
+      <div class="updater-status" id="updater-status-idle">
+        <span data-i18n="tools.updaterIdle">就绪</span>
+      </div>
+      <div class="updater-status" id="updater-status-checking" hidden>
+        <i class="fa-solid fa-spinner fa-spin"></i>
+        <span data-i18n="tools.updaterChecking">正在检查更新...</span>
+      </div>
+      <div class="updater-status" id="updater-status-downloading" hidden>
+        <i class="fa-solid fa-download"></i>
+        <span data-i18n="tools.updaterDownloading">正在下载更新</span>
+        <span class="updater-progress-pct" id="updater-dl-progress">0%</span>
+        <progress id="updater-progress-bar" value="0" max="100"></progress>
+      </div>
+      <div class="updater-status" id="updater-status-uptodate" hidden>
+        <span style="color:var(--success-color,#10b981);">✓</span>
+        <span data-i18n="tools.updaterUpToDate">已是最新版本</span>
+      </div>
+      <div class="updater-status" id="updater-status-available" hidden>
+        <span style="color:var(--neon-cyan,#22d3ee);">⬇</span>
+        <span data-i18n="tools.updaterDownloadComplete">下载完成，准备更新</span>
+      </div>
+      <div class="updater-error" id="updater-error" hidden>
+        <span style="color:var(--error-color,#ef4444);">✗</span>
+        <span id="updater-error-text"></span>
+      </div>
+      <div class="updater-actions">
+        <button id="updater-check-btn" type="button" class="btn-updater" data-i18n="tools.updaterCheckBtn"><i class="fa-solid fa-rotate"></i> 检查更新</button>
+        <button id="updater-download-btn" type="button" class="btn-updater btn-updater-primary" hidden data-i18n="tools.updaterDownloadBtn"><i class="fa-solid fa-download"></i> 下载更新</button>
+        <button id="updater-apply-btn" type="button" class="btn-updater btn-updater-danger" hidden data-i18n="tools.updaterApplyBtn"><i class="fa-solid fa-power-off"></i> 立即重启并更新</button>
+      </div>
+      <label class="updater-toggle-row">
+        <input type="checkbox" id="updater-auto-download" checked>
+        <span data-i18n="tools.updaterAutoDownload">自动下载更新</span>
+      </label>
+    </div>
+  </div>
+
   <!-- Glossary Modal -->
   <div id="glossary-modal" class="glossary-modal" hidden>
     <div class="glossary-backdrop" data-glossary-close></div>
     <section class="glossary-dialog" role="dialog" aria-modal="true" aria-labelledby="glossary-title">
       <header class="glossary-header">
         <div>
-          <h2 id="glossary-title" data-i18n="glossary.title">IT术语表</h2>
+          <h2 id="glossary-title" data-i18n="glossary.title">IT 术语表</h2>
           <p data-i18n="glossary.keepEnglishNote">保留英文技术术语</p>
         </div>
         <button type="button" class="glossary-close-btn" data-glossary-close data-i18n-title="glossary.close">
@@ -1747,6 +1807,7 @@
   <script src="data/i18n_content/navigation_zh.js?v=v2026.6.20-r-locale-nav-compare"></script>
   <script src="assets/js/app.js?v=v2026.6.20-r-locale-nav-compare"></script>
   <script src="assets/js/version.js?v=v2026.6.20-r-locale-nav-compare"></script>
+  <script src="assets/js/updater-ui.js?v=v2026.7.1"></script>
   <script src="assets/js/syntax-highlighter.js?v=v2026.6.16-r136.2"></script>
   <script src="assets/js/japanese-typing-helpers.js?v=v2026.6.16-r136.2"></script>
   <script src="assets/js/keyboard-shortcuts.js?v=v2026.6.16-r136.2"></script>

@@ -165,7 +165,7 @@ def create_release(version, channel='stable', release_notes='', output_dir=None,
         'releaseNotes': [release_notes] if release_notes else [],
         'fileCount': file_count,
         'sizeBytes': size_bytes,
-        'keyId': 'prod-key-2026',  # 内置受托公钥标识
+        'keyId': 'prod-key-2026-r42',  # 内置受托公钥标识
     }
 
     # 4. 签名 manifest (对不含 signature 字段的 manifest 签名)
