@@ -1,0 +1,128 @@
+/* ============================================================
+   Design Tokens — PC UI Rebuild
+   深色默认「炭绯」(Charcoal × Scarlet)；浅色「暖纸」(Warm Paper)
+   唯一颜色/间距/字号/圆角/阴影/层级来源。
+   规则：
+   - 业务样式只允许引用本文件变量，禁止裸色值
+   - 浅色模式 = 本文件 [data-theme="light"] 翻转，禁止 !important 覆盖层
+   - accent 只用于选中/进度/主行动/焦点；danger 必须伴随图标与文案
+   ============================================================ */
+
+:root {
+  /* ── 背景 4 层（纯中性炭灰） ── */
+  --bg-0: #121213;   /* 应用底 */
+  --bg-1: #171718;   /* 面板/侧栏 */
+  --bg-2: #1D1D1F;   /* 卡片 */
+  --bg-3: #252528;   /* 悬浮/输入底 */
+
+  /* ── 文本 4 层（暖白灰阶） ── */
+  --tx-1: #ECEAE8;
+  --tx-2: #B0ADA9;
+  --tx-3: #787571;
+  --tx-disabled: #55524E;
+
+  /* ── 边框 2 层 ── */
+  --bd-1: rgba(236, 234, 232, 0.07);
+  --bd-2: rgba(236, 234, 232, 0.14);
+
+  /* ── 强调色：日式绯红 ── */
+  --accent: #D0564F;
+  --accent-hover: #DC6E67;
+  --accent-press: #B8463F;
+  --accent-subtle: rgba(208, 86, 79, 0.12);
+  --on-accent: #FFFFFF;
+
+  /* ── 状态色（仅状态语义） ── */
+  --ok: #56A56C;
+  --warn: #D9A13B;
+  --danger: #C03A30;
+  --ok-subtle: rgba(86, 165, 108, 0.12);
+  --warn-subtle: rgba(217, 161, 59, 0.12);
+  --danger-subtle: rgba(192, 58, 48, 0.12);
+
+  /* ── 字体 ── */
+  --font-ui: 'Noto Sans JP', 'Outfit', 'Yu Gothic UI', sans-serif;
+  --font-mono: 'Fira Code', Consolas, 'Noto Sans Mono CJK JP', monospace;
+
+  /* ── 字号 ── */
+  --fs-12: 12px;
+  --fs-13: 13px;   /* 辅助 */
+  --fs-14: 14px;   /* 正文 */
+  --fs-16: 16px;   /* 小标 */
+  --fs-18: 18px;   /* 卡题 */
+  --fs-22: 22px;   /* 页题 */
+  --fs-28: 28px;   /* 大数字 */
+
+  /* ── 行高 ── */
+  --lh-cjk: 1.75;  /* CJK 正文 */
+  --lh-ui: 1.4;
+  --lh-code: 1.6;
+
+  /* ── 间距（4px 基数） ── */
+  --sp-1: 4px;  --sp-2: 8px;  --sp-3: 12px; --sp-4: 16px; --sp-5: 20px;
+  --sp-6: 24px; --sp-7: 32px; --sp-8: 40px; --sp-9: 48px;
+
+  /* ── 圆角 ── */
+  --r-1: 4px;   /* 控件 */
+  --r-2: 6px;   /* 输入/按钮 */
+  --r-3: 8px;   /* 卡片 */
+  --r-4: 12px;  /* 模态/面板 */
+
+  /* ── 阴影（深色以边框分层为主，阴影只给悬浮层与模态） ── */
+  --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-2: 0 8px 24px rgba(0, 0, 0, 0.5);
+
+  /* ── 层级（全站仅此 6 档） ── */
+  --z-raised: 10;
+  --z-sticky: 100;
+  --z-dropdown: 200;
+  --z-overlay: 300;
+  --z-modal: 400;
+  --z-toast: 500;
+
+  /* ── 动效 ── */
+  --dur-1: 120ms;  /* hover/press */
+  --dur-2: 180ms;  /* 面板折叠/下拉 */
+  --dur-3: 240ms;  /* 模态/抽屉 */
+  --ease: cubic-bezier(0.2, 0, 0, 1);
+
+  /* ── 壳层尺寸 ── */
+  --rail-w: 56px;
+  --header-h: 48px;
+  --ctx-w: 260px;
+  --aside-w: 420px;
+  --statusbar-h: 28px;
+}
+
+/* ============ 浅色「暖纸」：token 对等翻转 ============ */
+body[data-theme="light"] {
+  --bg-0: #F4EFE6;
+  --bg-1: #FAF6EE;
+  --bg-2: #FFFEFA;
+  --bg-3: #ECE5D6;
+
+  --tx-1: #2A251C;
+  --tx-2: #5C5546;
+  --tx-3: #8C8371;
+  --tx-disabled: #B3AA98;
+
+  --bd-1: rgba(42, 37, 28, 0.11);
+  --bd-2: rgba(42, 37, 28, 0.2);
+
+  --accent: #B07A28;
+  --accent-hover: #C08A34;
+  --accent-press: #96671F;
+  --accent-subtle: rgba(176, 122, 40, 0.1);
+  --on-accent: #FFFFFF;
+
+  --ok: #4E7A46;
+  --warn: #A87817;
+  --danger: #B5433A;
+  --ok-subtle: rgba(78, 122, 70, 0.11);
+  --warn-subtle: rgba(168, 120, 23, 0.11);
+  --danger-subtle: rgba(181, 67, 58, 0.1);
+
+  /* 浅色卡片层级改用阴影 */
+  --shadow-1: 0 1px 3px rgba(42, 37, 28, 0.08);
+  --shadow-2: 0 8px 28px rgba(42, 37, 28, 0.14);
+}

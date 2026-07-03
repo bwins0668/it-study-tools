@@ -1,0 +1,258 @@
+/* ============================================================
+   Shell — 桌面工作台壳层
+   结构：body.has-shell > [skip-link, .app-frame(nav-rail + body), .app-statusbar]
+   P1：rail + statusbar 与旧 .app-container 并存；
+   P2+：header 重排、context/aside 纳入本文件规则。
+   断点体系（全站仅 4 档）：>=1280 / 1024-1279 / 721-1023 / <=720
+   ============================================================ */
+
+body.has-shell {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+  background: var(--bg-0);
+}
+
+.app-frame {
+  flex: 1;
+  display: flex;
+  min-height: 0;
+}
+
+/* 旧壳兼容：app-container 占满 frame 主体（index.css 定义的 100vh 在此被约束） */
+.app-frame__body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+.app-frame__body > .app-container {
+  height: 100%;
+  flex: 1;
+  min-height: 0;
+}
+
+/* ── Nav Rail ── */
+.nav-rail {
+  width: var(--rail-w);
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: var(--sp-2) 0;
+  background: var(--bg-1);
+  border-right: 1px solid var(--bd-1);
+  z-index: var(--z-sticky);
+}
+
+.nav-rail__logo {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--r-2);
+  background: var(--accent);
+  color: var(--on-accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-ui);
+  font-weight: 700;
+  font-size: var(--fs-14);
+  margin-bottom: var(--sp-3);
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.rail-item {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: var(--r-2);
+  background: transparent;
+  color: var(--tx-3);
+  font-size: 17px;
+  cursor: pointer;
+  position: relative;
+  flex-shrink: 0;
+  transition: background-color var(--dur-1) var(--ease), color var(--dur-1) var(--ease);
+}
+@media (hover: hover) and (pointer: fine) {
+  .rail-item:hover { background: var(--bg-3); color: var(--tx-1); }
+}
+.rail-item.active {
+  color: var(--accent);
+  background: var(--accent-subtle);
+}
+.rail-item.active::before {
+  content: "";
+  position: absolute;
+  left: -8px;
+  top: 9px;
+  bottom: 9px;
+  width: 2px;
+  border-radius: 1px;
+  background: var(--accent);
+}
+
+/* rail 分组分隔线与弹性区 */
+.nav-rail__sep {
+  width: 24px;
+  border: none;
+  border-top: 1px solid var(--bd-1);
+  margin: var(--sp-2) 0;
+  flex-shrink: 0;
+}
+.nav-rail__spacer { flex: 1; }
+
+/* rail tooltip：复用 aria-label（i18n 经 data-i18n-aria-label 注入） */
+.rail-item::after {
+  content: attr(aria-label);
+  position: absolute;
+  left: calc(100% + 10px);
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 4px 10px;
+  border-radius: var(--r-2);
+  background: var(--bg-3);
+  border: 1px solid var(--bd-2);
+  color: var(--tx-1);
+  font-size: var(--fs-12);
+  font-family: var(--font-ui);
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  z-index: var(--z-dropdown);
+  transition: opacity var(--dur-1) var(--ease);
+}
+@media (hover: hover) and (pointer: fine) {
+  .rail-item:hover::after { opacity: 1; }
+}
+.rail-item:focus-visible::after { opacity: 1; }
+.rail-item:not([aria-label])::after { display: none; }
+
+/* ── StatusBar ── */
+.app-statusbar {
+  height: var(--statusbar-h);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: var(--sp-5);
+  padding: 0 var(--sp-4);
+  background: var(--bg-1);
+  border-top: 1px solid var(--bd-1);
+  font-size: 11.5px;
+  color: var(--tx-3);
+  user-select: none;
+}
+.app-statusbar__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+.app-statusbar__spacer { flex: 1; }
+.app-statusbar .ds-kbd { font-size: 10px; }
+
+/* updater 徽标位（updater-ui.js 控制 hidden） */
+.app-statusbar__update-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--warn);
+  cursor: pointer;
+}
+
+/* ── 旧 fixed 全屏视图兼容：避开 rail 与 statusbar（P5 迁移后移除） ── */
+body.has-shell .typing-hub,
+body.has-shell .coding-typing-hub {
+  left: var(--rail-w);
+  bottom: var(--statusbar-h);
+}
+
+/* ── 视口降级 ── */
+/* 1024–1279：rail 保持；上下文/右栏策略由后续 Phase 的模块样式接管 */
+
+/* <=720：rail 隐藏，复用现有 mobile 抽屉机制（body class 契约不变） */
+@media (max-width: 720px) {
+  .nav-rail { display: none; }
+  .app-statusbar { display: none; }
+}
+
+/* ============================================================
+   P1 并存期防御：旧浅色模式由 app.js 注入 runtime override
+   （body[data-theme="light"] * { background:#fff; color:#000 !important ... }），
+   app.js 不在本轮修改范围，内容区浅色行为保持原样；
+   仅壳层元素以更高特异性 + !important 恢复暖纸 token。
+   P2 浅色主题整体迁移（移除 runtime override）后删除本段。
+   ============================================================ */
+body[data-theme="light"] .nav-rail,
+body[data-theme="light"] .nav-rail *,
+body[data-theme="light"] .app-statusbar,
+body[data-theme="light"] .app-statusbar *,
+body[data-theme="light"] .skip-link {
+  -webkit-text-fill-color: currentColor !important;
+  text-shadow: none !important;
+}
+body[data-theme="light"] .nav-rail {
+  background: var(--bg-1) !important;
+  border-color: var(--bd-1) !important;
+}
+body[data-theme="light"] .nav-rail__logo {
+  background: var(--accent) !important;
+  color: var(--on-accent) !important;
+}
+body[data-theme="light"] .nav-rail .rail-item {
+  background: transparent !important;
+  color: var(--tx-3) !important;
+}
+body[data-theme="light"] .nav-rail .rail-item i {
+  background: transparent !important;
+  color: inherit !important;
+}
+@media (hover: hover) and (pointer: fine) {
+  body[data-theme="light"] .nav-rail .rail-item:hover {
+    background: var(--bg-3) !important;
+    color: var(--tx-1) !important;
+  }
+}
+body[data-theme="light"] .nav-rail .rail-item.active {
+  background: var(--accent-subtle) !important;
+  color: var(--accent) !important;
+}
+body[data-theme="light"] .nav-rail .rail-item::after {
+  background: var(--bg-3) !important;
+  border-color: var(--bd-2) !important;
+  color: var(--tx-1) !important;
+}
+body[data-theme="light"] .nav-rail__sep {
+  border-color: var(--bd-1) !important;
+}
+body[data-theme="light"] .app-statusbar {
+  background: var(--bg-1) !important;
+  border-color: var(--bd-1) !important;
+  color: var(--tx-3) !important;
+}
+body[data-theme="light"] .app-statusbar * {
+  background: transparent !important;
+  color: inherit !important;
+}
+body[data-theme="light"] .app-statusbar .ds-kbd {
+  background: var(--bg-3) !important;
+  border-color: var(--bd-2) !important;
+  color: var(--tx-2) !important;
+}
+body[data-theme="light"] .app-statusbar .ds-dot {
+  background: var(--ok) !important;
+}
+body[data-theme="light"] .app-statusbar .app-statusbar__update-badge {
+  color: var(--warn) !important;
+}
+body[data-theme="light"] .skip-link {
+  background: var(--bg-3) !important;
+  color: var(--tx-1) !important;
+  border-color: var(--bd-2) !important;
+}

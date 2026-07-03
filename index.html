@@ -17,9 +17,36 @@
 
   <link rel="stylesheet" href="assets/css/glossary.css?v=20260611_v1">
   <link rel="stylesheet" href="assets/css/coding-typing.css?v=v2026.6.14-r22.25">
+  <!-- Design System (PC UI Rebuild) -->
+  <link rel="stylesheet" href="assets/css/ds/tokens.css?v=r1">
+  <link rel="stylesheet" href="assets/css/ds/base.css?v=r1">
+  <link rel="stylesheet" href="assets/css/ds/components.css?v=r1">
+  <link rel="stylesheet" href="assets/css/ds/shell.css?v=r1">
 </head>
-<body>
+<body class="has-shell">
 
+  <a href="#main-app-body" class="skip-link ds-scope">メインコンテンツへ / 跳到主内容</a>
+
+  <div class="app-frame">
+    <!-- Nav Rail（P1：与旧导航并存，P2 起为唯一主导航） -->
+    <nav class="nav-rail ds-scope" id="nav-rail" aria-label="学習セクション" data-i18n-aria-label="moduleSwitch.title">
+      <div class="nav-rail__logo" aria-hidden="true">ST</div>
+      <button type="button" class="rail-item" data-module="sql" aria-label="SQL 学习" data-i18n-aria-label="nav.sql"><i class="fa-solid fa-database" aria-hidden="true"></i></button>
+      <button type="button" class="rail-item" data-module="java" aria-label="Java 学习" data-i18n-aria-label="nav.java"><i class="fa-brands fa-java" aria-hidden="true"></i></button>
+      <button type="button" class="rail-item" data-module="python" aria-label="Python 学习" data-i18n-aria-label="nav.python"><i class="fa-brands fa-python" aria-hidden="true"></i></button>
+      <button type="button" class="rail-item" data-module="itpass" aria-label="IT Passport 备考" data-i18n-aria-label="nav.itpass"><i class="fa-solid fa-graduation-cap" aria-hidden="true"></i></button>
+      <button type="button" class="rail-item" data-module="sg" aria-label="SG 备考" data-i18n-aria-label="nav.sg"><i class="fa-solid fa-shield-halved" aria-hidden="true"></i></button>
+      <hr class="nav-rail__sep">
+      <button type="button" class="rail-item" data-module="typing" aria-label="日本語タイピング" data-i18n-aria-label="nav.typing"><i class="fa-solid fa-keyboard" aria-hidden="true"></i></button>
+      <button type="button" class="rail-item" data-module="coding-typing" aria-label="编程打字" data-i18n-aria-label="nav.codingTyping"><i class="fa-solid fa-laptop-code" aria-hidden="true"></i></button>
+      <hr class="nav-rail__sep">
+      <button type="button" class="rail-item" data-module="mos365" id="rail-mos365" aria-label="MOS Excel 365"><i class="fa-solid fa-file-excel" aria-hidden="true"></i></button>
+      <div class="nav-rail__spacer"></div>
+      <button type="button" class="rail-item" id="rail-tools" aria-label="工具" data-i18n-aria-label="tools.tools"><i class="fa-solid fa-screwdriver-wrench" aria-hidden="true"></i></button>
+      <button type="button" class="rail-item" id="rail-theme" aria-label="切换浅色/深色模式" data-i18n-aria-label="common.themeToggle"><i class="fa-solid fa-sun" aria-hidden="true"></i></button>
+    </nav>
+
+    <div class="app-frame__body">
   <!-- App Container -->
   <div class="app-container">
 
@@ -1319,6 +1346,16 @@
     </div>
 
   </div>
+    </div><!-- /app-frame__body -->
+  </div><!-- /app-frame -->
+
+  <!-- StatusBar（P1：版本 + 快捷键提示；P6 接 updater 徽标） -->
+  <footer class="app-statusbar ds-scope" id="app-statusbar">
+    <span class="app-statusbar__item"><span class="ds-dot" aria-hidden="true"></span><span data-study-tools-desktop-version>—</span></span>
+    <button type="button" class="app-statusbar__update-badge" id="statusbar-update-badge" hidden><i class="fa-solid fa-circle-arrow-up" aria-hidden="true"></i><span data-i18n="tools.updater">检查更新</span></button>
+    <span class="app-statusbar__spacer"></span>
+    <span class="app-statusbar__item"><kbd class="ds-kbd">Ctrl Shift /</kbd></span>
+  </footer>
 
   <section class="typing-hub" id="typing-hub" aria-label="日本語タイピング" data-i18n-aria-label="nav.typing">
     <aside class="typing-panel typing-library-panel">
@@ -1806,6 +1843,7 @@
   <script src="data/i18n_content/navigation_fr.js?v=v2026.6.20-r-locale-nav-compare"></script>
   <script src="data/i18n_content/navigation_zh.js?v=v2026.6.20-r-locale-nav-compare"></script>
   <script src="assets/js/app.js?v=v2026.6.20-r-locale-nav-compare"></script>
+  <script src="assets/js/shell.js?v=r1"></script>
   <script src="assets/js/version.js?v=v2026.6.20-r-locale-nav-compare"></script>
   <script src="assets/js/updater-ui.js?v=v2026.7.1"></script>
   <script src="assets/js/syntax-highlighter.js?v=v2026.6.16-r136.2"></script>
