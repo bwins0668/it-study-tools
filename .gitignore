@@ -19,6 +19,10 @@ assets/js/supabase-config.local.js
 .env.local
 *.secret
 
+# UI rebuild visual evidence (screenshots are not committed, scripts are)
+docs/ui-rebuild-baseline/
+docs/ui-rebuild-evidence/
+
 # Temporary browser/CDP diagnostics
 scratch/
 tools/_cdp_*.js
