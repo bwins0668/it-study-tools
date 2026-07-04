@@ -193,7 +193,12 @@ function note(msg) { console.log("      " + msg); }
       ps = await panelState();
       check("A10 正确登录成功", ps.authMode === "signed_in", ps.authMode);
 
-      // A6 手动同步（真实）
+      // A6 手动同步（真实）——先写入一个可安全测试的学习进度（测试 profile 的 localStorage）
+      await page.evaluate(() => {
+        const cur = JSON.parse(localStorage.getItem("sql_hub_completed") || "[]");
+        if (!cur.includes(1)) cur.push(1);
+        localStorage.setItem("sql_hub_completed", JSON.stringify(cur));
+      });
       await page.evaluate(() => window.StudyAuthUI.openAuthPanel());
       await page.waitForTimeout(400);
       const syncBtnVisible = await page.evaluate(() => !!document.querySelector('[data-auth-action="manual-sync"]:not([disabled])'));
@@ -233,10 +238,24 @@ function note(msg) { console.log("      " + msg); }
       }, null, { timeout: 20000 }).catch(() => {});
       const mode2 = await page2.evaluate(() => { try { return JSON.parse(localStorage.getItem("study_tools_auth_state") || "{}").mode; } catch (_) { return "err"; } });
       check("A8 第二上下文可独立登录同一账号", mode2 === "signed_in", mode2);
+      // A8+ 第二上下文手动同步 → 验证第一上下文推送的学习进度真实到达
+      await page2.evaluate(() => window.StudyAuthUI.openAuthPanel());
+      await page2.waitForTimeout(400);
+      await page2.click('[data-auth-action="manual-sync"]').catch(() => {});
+      await page2.waitForFunction(() => {
+        const c = document.querySelector(".auth-sync-state");
+        return c && c.getAttribute("data-sync-ui-state") !== "syncing";
+      }, null, { timeout: 45000 }).catch(() => {});
+      const arrived = await page2.evaluate(() => {
+        const arr = JSON.parse(localStorage.getItem("sql_hub_completed") || "[]");
+        const card = document.querySelector(".auth-sync-state");
+        return { hasLesson1: arr.includes(1), state: card ? card.getAttribute("data-sync-ui-state") : null };
+      });
+      check("A8+ 跨上下文同步数据真实到达（sql lesson1 progress）", arrived.hasLesson1 && (arrived.state === "synced" || arrived.state === "syncedWithMerges"), JSON.stringify(arrived));
       await ctx2.close();
 
       // A12 同步失败（断网模拟）→ syncFailed + 本地数据未丢 + 可重试
-      const progressBefore = await page.evaluate(() => localStorage.getItem("sql_completed_lessons"));
+      const progressBefore = await page.evaluate(() => localStorage.getItem("sql_hub_completed"));
       const cfgUrl = await page.evaluate(() => (window.STUDY_TOOLS_SUPABASE_CONFIG || {}).url || "");
       if (cfgUrl) {
         await page.route(cfgUrl.replace(/\/$/, "") + "/**", (route) => route.abort());
@@ -249,7 +268,7 @@ function note(msg) { console.log("      " + msg); }
         }, null, { timeout: 30000 }).catch(() => {});
         ps = await panelState();
         check("A12 断网同步 → syncFailed/cloudUnavailable（真实降级）", ps.syncUiState === "syncFailed" || ps.syncUiState === "cloudUnavailable", ps.syncUiState);
-        const progressAfter = await page.evaluate(() => localStorage.getItem("sql_completed_lessons"));
+        const progressAfter = await page.evaluate(() => localStorage.getItem("sql_hub_completed"));
         check("A12 同步失败后本地学习数据未丢失", progressAfter === progressBefore);
         const retryVisible = await page.evaluate(() => !!document.querySelector(".auth-sync-state__action"));
         check("A12 失败状态提供下一步操作（重试）", retryVisible);
@@ -273,7 +292,7 @@ function note(msg) { console.log("      " + msg); }
          正确行为 = 表单可用 → 真实提交 → 真实网络失败 → 明确错误 + 表单恢复 +
          绝不出现 signed_in / 同步成功。绝不伪造云端可用。 */
       await page.click('[data-auth-tab="login"]');
-      const progressBefore = await page.evaluate(() => localStorage.getItem("sql_completed_lessons"));
+      const progressBefore = await page.evaluate(() => localStorage.getItem("sql_hub_completed"));
       await page.fill('[data-auth-input="login-username"]', TEST_USER);
       await page.fill('[data-auth-input="login-password"]', TEST_PASS);
       // 双击验证防重复提交（in-flight 锁）
@@ -292,7 +311,7 @@ function note(msg) { console.log("      " + msg); }
       check("A-BLOCKED 真实登录尝试 → 真实失败反馈（无伪造成功）", failReal.notice.length > 0 && failReal.mode !== "signed_in", `notice="${failReal.notice.slice(0, 40)}" mode=${failReal.mode}`);
       check("A-BLOCKED 失败后表单恢复可编辑（可重试）", failReal.editable && failReal.btnEnabled);
       check("A-BLOCKED 状态卡保持本地模式（不谎报同步）", failReal.card === "signedOutLocal", failReal.card);
-      const progressAfter = await page.evaluate(() => localStorage.getItem("sql_completed_lessons"));
+      const progressAfter = await page.evaluate(() => localStorage.getItem("sql_hub_completed"));
       check("A-BLOCKED 失败后本地学习数据未动", progressAfter === progressBefore);
       await shot(page, "account-auth-failure-light.png");
       await shot(page, "account-cloud-unavailable-light.png");

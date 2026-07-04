@@ -1891,7 +1891,9 @@
   <script src="assets/js/export-data.js?v=v2026.6.15-r90.0"></script>
   <script src="assets/js/dashboard.js?v=v2026.6.15-r29.1"></script>
   <script src="assets/js/sync-engine.js?v=v2026.6.15-r25.2"></script>
-  <!-- 云同步配置（可选文件，gitignored；缺失时 404 静默降级为本地模式——发布包不携带） -->
+  <!-- 云同步配置：public（tracked，随 Portable 发布，与 Web 公开版同构）
+       + local（gitignored 可选覆盖，开发者切换测试项目用；缺失时 404 静默） -->
+  <script src="assets/js/supabase-config.public.js"></script>
   <script src="assets/js/supabase-config.local.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="assets/js/supabase-client.js?v=v2026.6.15-r24.0"></script>
