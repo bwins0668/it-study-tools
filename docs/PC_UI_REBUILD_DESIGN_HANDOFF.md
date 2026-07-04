@@ -186,7 +186,22 @@ app-frame
 
 **Release gate 双向**：真实缺 cryptography 的完整 runtime 副本被 `verify_runtime_signature_dependency` 明确拒绝，`create_release` 整体 RuntimeError 且失败路径不产出任何 zip；解压后的**最终 zip 真实 runtime**（非开发目录）通过同一 gate。进程审计证明全程未调用系统 Python / pip / Node / Git（仅受控或包内 python 与 PowerShell 内置）。
 
-**已知工艺约束**：embedded runtime 的 `python312._pth` 隔离特性使 `PYTHONPATH` 不生效——驱动脚本须显式 `sys.path.insert` 项目根；`create_release` 输出含 `✓`，管道重定向下驱动进程须设 `PYTHONUTF8=1` 防 GBK 编码崩溃。
+**已知工艺约束**：embedded runtime 的 `python312._pth` 隔离特性使 `PYTHONPATH` 不生效——驱动脚本须显式 `sys.path.insert` 项目根；`create_release` 输出含 `✓`，管道重定向下驱动进程须设 `PYTHONUTF8=1` 防 GBK 编码崩溃。含中文的 `.ps1` 必须带 UTF-8 BOM（Windows PowerShell 5.1 无 BOM 按 ANSI 解析直接语法炸裂）；PS5.1 在 `EAP=Stop` 下 native stderr 经 `2>&1` 会抛 NativeCommandError——探针类调用须局部降级 EAP；PS5.1 的 `Invoke-WebRequest` 不加 `-UseBasicParsing` 会走 IE 引擎解析 HTML（对大页面每次请求可挂起数十秒）——轮询/页面 GET 必须显式加该参数（pwsh 7 三者均无此行为）。
+
+## 19. P15.2 账号同步契约与侧栏几何纪要
+
+**账号与同步真实契约**（以代码与数据流为准，非 UI 文案）：认证 = Supabase **用户名+密码**（`signUpWithUsername` 将用户名映射为内部邮箱 `<username>@study-tools.local`，`auth_mode:"username"`，无需真实邮箱）；云同步范围 = 学习进度/设置/错题本/收藏(tombstone 删除同步)/打字与考试记录/重练设置，**仅手动触发**（无自动同步）；冲突策略 = union「只增不删」合并（远端 `is_completed=false` 不清本地）+ upsert onConflict；并发保护 = 引擎级 `manualSyncRunning` + UI 级 in-flight 锁。
+
+| 问题 | 根因 | 修复 |
+|---|---|---|
+| 登录/注册按钮恒禁用，Supabase 恒 not_configured | `supabase-config.local.js` 的 script 引用在 c5659e4 被替换为不存在的 `supabase-config.public.js`，后续轮次又整行删除——config 从未加载 | index.html 恢复容错引用（gitignored 文件缺失时 404 静默降级本地模式，发布包不携带） |
+| 弹窗字段无可见 label、错误全局重绘丢输入、无提交状态机、可重复提交、同步区是含义不明的折叠条 | 表单只有 placeholder；`refreshAuthPanel` 全量 innerHTML 重建；无 in-flight 锁 | 重构为「账号与同步」信息架构：label+hint+字段级错误（不重建表单）、`idle/loggingIn/registering` 状态机、密码显隐、Esc/焦点圈/背景 inert/关闭焦点回触发器、同步状态卡（signedOutLocal/authenticating/pending/syncing/synced/merged/cloudUnavailable/syncFailed 八态如实推导，绝不伪造已同步） |
+| 网络级失败被误报为"用户名或密码不正确" | `friendlyAuthError` 默认分支 | 网络类错误如实归类为"云同步不可用"文案 |
+| 收起态 Rail 右侧 86px 废弃空带（四学科一致） | `.workspace-shell` padding-left 21.6px + quiet.css 为悬浮目录按钮保留的 64px 正文避让带 | 目录按钮（44×44）迁入 header brand 区流内（surfaces.js 捕获重定向需豁免 `#context-nav-toggle`，同 `#mobile-sidebar-toggle` 先例）；避让带删除；gutter 统一为 `.workspace-shell` 双侧 16px——实测 86→16px，双栏 667/667 均衡，右缘从贴边获得对称呼吸 |
+
+**云端事实（EXTERNAL-BLOCKED）**：本地 config 的 Supabase 项目域名 DNS 解析失败（node 侧 ENOTFOUND，41ms 即败——项目已下线或网络封锁），云端注册/登录/同步的真实 E2E 在当前环境**物理不可达**。已完成并验证的降级面：config/SDK 就绪时表单可用 → 真实提交 → 真实网络失败 → 云不可用文案 + 表单恢复可重试 + 本地数据零丢失 + 状态卡保持本地模式。云端恢复后 `tools/verify_account_sync_and_gutter.js` 的完整 E2E 分支（注册/重复注册/登录失败/刷新恢复/第二上下文/手动同步/断网重试/退出清理）即自动启用。
+
+**回归门禁**：`node tools/verify_account_sync_and_gutter.js`（38 断言 + 21 张 evidence 截图到 `docs/ui-rebuild-evidence/p15-2-account-and-gutter/`）；弹窗三语（default/zh-CN/ja-JP）切换无残留已验证。
 
 **边框预算实施**：正文区（concept/analogy/lang-tabs/quiz-question）零边框化，以留白、字阶、细分隔线分层；仅可操作容器（编辑器/选项行/输入区）与一层 surface 保留低对比边线；全站禁"描边+阴影+高对比填充"三叠加（视觉 smoke 断言把守）。
 
