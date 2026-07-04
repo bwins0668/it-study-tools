@@ -56,6 +56,7 @@
     document.addEventListener("click", function (e) {
       if (!window.matchMedia("(min-width: 721px)").matches) return;
       if (e.target.closest("#mobile-sidebar-toggle")) return; // 内嵌汉堡按钮各行其职
+      if (e.target.closest("#context-nav-toggle")) return; // P15.2：桌面目录按钮迁入 brand 区后同样豁免
       var trigger = e.target.closest("#header-brand-trigger");
       if (!trigger) return;
       e.preventDefault();
@@ -66,6 +67,7 @@
     document.addEventListener("keydown", function (e) {
       if (e.key !== "Enter" && e.key !== " ") return;
       if (!window.matchMedia("(min-width: 721px)").matches) return;
+      if (e.target.closest && (e.target.closest("#mobile-sidebar-toggle") || e.target.closest("#context-nav-toggle"))) return; // P15.2
       var trigger = e.target.closest && e.target.closest("#header-brand-trigger");
       if (!trigger) return;
       e.preventDefault();

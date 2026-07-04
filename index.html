@@ -67,6 +67,13 @@
           <button id="mobile-sidebar-toggle" class="mobile-toggle-btn" onclick="toggleMobileSidebar(); event.stopPropagation();" title="目录" data-i18n-title="sidebar.unitList" aria-label="目录" data-i18n-aria-label="sidebar.unitList" aria-controls="app-sidebar" aria-expanded="false">
             <i class="fa-solid fa-bars"></i>
           </button>
+          <!-- P15.2：桌面目录入口迁入 header 左端（流内 44×44；收起态正文不再保留左侧避让带） -->
+          <button type="button" class="context-nav-toggle ds-scope" id="context-nav-toggle"
+            onclick="event.stopPropagation();"
+            aria-label="课程目录" data-i18n-aria-label="sidebar.unitList"
+            aria-expanded="false" aria-controls="app-sidebar">
+            <i class="fa-solid fa-table-list" aria-hidden="true"></i>
+          </button>
           <!-- P11：品牌 monogram（学习笔记折角 + 代码行隐喻；token 着色，深浅自适配） -->
           <span class="brand-mark" aria-hidden="true">
             <svg viewBox="0 0 32 32" width="32" height="32" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -371,13 +378,6 @@
         title="课程目录">
         <span class="sidebar-edge-label"><span class="sidebar-edge-text" data-i18n="sidebar.unitList">目录</span><i class="fa-solid fa-chevron-right"></i></span>
       </div>
-
-      <!-- P10：目录触发按钮（44×44，第二层上下文导航的固定入口） -->
-      <button type="button" class="context-nav-toggle ds-scope" id="context-nav-toggle"
-        aria-label="课程目录" data-i18n-aria-label="sidebar.unitList"
-        aria-expanded="false" aria-controls="app-sidebar">
-        <i class="fa-solid fa-table-list" aria-hidden="true"></i>
-      </button>
 
       <!-- Sidebar: Lessons List -->
       <aside class="app-sidebar" id="app-sidebar" aria-label="课程目录" data-i18n-aria-label="sidebar.unitList">
@@ -1891,6 +1891,8 @@
   <script src="assets/js/export-data.js?v=v2026.6.15-r90.0"></script>
   <script src="assets/js/dashboard.js?v=v2026.6.15-r29.1"></script>
   <script src="assets/js/sync-engine.js?v=v2026.6.15-r25.2"></script>
+  <!-- 云同步配置（可选文件，gitignored；缺失时 404 静默降级为本地模式——发布包不携带） -->
+  <script src="assets/js/supabase-config.local.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="assets/js/supabase-client.js?v=v2026.6.15-r24.0"></script>
   <script src="assets/js/auth-ui.js?v=v2026.6.15-r25.0"></script>

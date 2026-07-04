@@ -9277,8 +9277,9 @@ body.desktop-sidebar-expanded .mobile-backdrop {
 .top-utility-cluster .auth-user-btn,
 .top-utility-cluster .theme-toggle-btn,
 .top-utility-icon-btn {
-  min-width: 32px;
-  height: 30px;
+  /* P15.2：簇内按钮点击区提升到 36px（原 32×30 低于可用性下限） */
+  min-width: 36px;
+  height: 36px;
   padding: 5px 8px;
   margin: 0;
   justify-content: center;
@@ -12856,12 +12857,14 @@ body.mobile-playground-open {
 
   /* Workspace Grid — centered symmetric two-column layout */
   .workspace-shell {
-    width: min(1760px, calc(100vw - 2 * clamp(16px, 2vw, 36px)));
-    margin-inline: auto;
+    /* P15.2：收起态左侧空间回收——Rail 右侧仅保留 16px 产品级 gutter，
+       右缘对称 16px，主内容与右侧实操区吃进原废弃空带 */
+    width: 100%;
     min-height: 0;
     flex: 1;
     display: flex;
-    padding-left: clamp(18px, 1.5vw, 24px);
+    padding-left: 16px;
+    padding-right: 16px;
   }
   .workspace-grid {
     display: grid;
@@ -13251,4 +13254,73 @@ body.immersive-fullscreen-active .fullscreen-toggle-btn {
 .mos365-immersive-btn:hover {
   background: rgba(255, 255, 255, 0.22);
   border-color: rgba(255, 255, 255, 0.6);
+}
+
+/* ============================================================
+   P15.2: Account & Sync panel — semantic fields, field-level
+   errors, truthful sync-state card, focus management
+   ============================================================ */
+.auth-panel-heading { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.auth-panel-heading h3 { margin: 0; }
+.auth-panel-subtitle { margin: 2px 0 0; font-size: 12px; font-weight: 400; color: var(--text-muted); }
+
+.auth-field { display: flex; flex-direction: column; gap: 4px; margin-bottom: 12px; }
+.auth-field-label { font-size: 12.5px; font-weight: 600; color: var(--text-main); }
+.auth-field-optional { font-weight: 400; color: var(--text-muted); font-size: 11px; }
+.auth-input-wrap { position: relative; display: flex; }
+.auth-input-wrap .auth-input { flex: 1; width: 100%; }
+.auth-input-wrap .auth-input[type="password"],
+.auth-input-wrap .auth-input[data-auth-input$="password"] { padding-right: 38px; }
+.auth-pw-toggle {
+  position: absolute; right: 4px; top: 50%; transform: translateY(-50%);
+  width: 30px; height: 30px; display: inline-flex; align-items: center; justify-content: center;
+  background: transparent; border: none; border-radius: 6px;
+  color: var(--text-muted); font-size: 13px; cursor: pointer;
+}
+.auth-pw-toggle:hover { color: var(--text-main); background: rgba(255, 255, 255, 0.06); }
+.auth-field-error { font-size: 12px; color: #f87171; line-height: 1.4; }
+.auth-field-error[hidden] { display: none; }
+.auth-input[aria-invalid="true"] { border-color: rgba(248, 113, 113, 0.7); }
+
+.auth-sync-section { margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--border-color); }
+.auth-sync-state {
+  border: 1px solid var(--border-color); border-radius: 8px; padding: 12px;
+  display: flex; flex-direction: column; gap: 6px;
+  background: rgba(255, 255, 255, 0.03);
+}
+.auth-sync-state__head { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--text-main); }
+.auth-sync-state__desc { font-size: 12px; color: var(--text-muted); line-height: 1.55; }
+.auth-sync-state.is-ok .auth-sync-state__head i { color: var(--success-color, #34d399); }
+.auth-sync-state.is-warn .auth-sync-state__head i { color: #fbbf24; }
+.auth-sync-state.is-warn { border-color: rgba(251, 191, 36, 0.3); }
+.auth-sync-state.is-busy .auth-sync-state__head i,
+.auth-sync-state.is-local .auth-sync-state__head i,
+.auth-sync-state.is-pending .auth-sync-state__head i { color: var(--text-muted); }
+.auth-sync-state__action { align-self: flex-start; margin-top: 4px; }
+.auth-scope-note { font-size: 11px; color: var(--text-muted); margin: 10px 0; display: flex; align-items: center; gap: 6px; }
+.auth-offline-note { margin-bottom: 12px; }
+
+.auth-notice.is-error { background: rgba(248, 113, 113, 0.08); border-color: rgba(248, 113, 113, 0.25); color: #f87171; }
+.auth-notice.is-success { background: rgba(52, 211, 153, 0.08); border-color: rgba(52, 211, 153, 0.25); color: #34d399; }
+.auth-message-slot:empty { display: none; }
+
+.auth-panel input:focus-visible,
+.auth-panel button:focus-visible,
+.auth-panel summary:focus-visible {
+  outline: 2px solid var(--neon-cyan, #38bdf8);
+  outline-offset: 2px;
+}
+
+/* 浅色主题适配（变量体系 + 语义色微调） */
+body[data-theme="light"] .auth-sync-state { background: rgba(0, 0, 0, 0.025); }
+body[data-theme="light"] .auth-pw-toggle:hover { background: rgba(0, 0, 0, 0.05); }
+body[data-theme="light"] .auth-field-error { color: #b91c1c; }
+body[data-theme="light"] .auth-notice.is-error { color: #b91c1c; }
+body[data-theme="light"] .auth-notice.is-success { color: #047857; }
+
+/* 移动端：弹窗可滚动、字段错误不截断 */
+@media (max-width: 480px) {
+  .auth-panel { width: min(94vw, 380px); }
+  .auth-panel-content { max-height: 88vh; }
+  .auth-field-error { white-space: normal; }
 }

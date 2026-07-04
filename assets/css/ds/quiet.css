@@ -426,14 +426,14 @@ body .content-card .lang-tabs .lang-tab.active {
   color: var(--tx-3);
 }
 
-/* P10：目录触发按钮 — 44×44、明确图标、tooltip（复用 rail tooltip 机制） */
+/* P10→P15.2：目录触发按钮 — 44×44、明确图标、tooltip（复用 rail tooltip 机制）。
+   P15.2 起迁入 header brand 区流内：收起态正文左侧不再保留 64px 悬浮避让带。 */
 .context-nav-toggle {
-  position: absolute;
-  top: var(--sp-2);
-  left: var(--sp-2);
   width: 44px;
   height: 44px;
-  z-index: 870; /* sidebar overlay(860) 之上：展开时保持可达可关 */
+  flex-shrink: 0;
+  margin-right: var(--sp-2);
+  position: relative; /* tooltip 定位锚点 */
   display: none;
   align-items: center;
   justify-content: center;
@@ -510,11 +510,8 @@ body.desktop-sidebar-expanded .context-nav-toggle {
   body:not(.desktop-sidebar-expanded) .app-sidebar { display: none; }
 }
 
-/* P11：左侧留白回收——按钮让位从 64px 收至 16px（按钮悬浮于卡外空带），
-   双语列呼吸间距放宽 */
-@media (min-width: 721px) {
-  .lesson-content { padding-left: 16px; }
-}
+/* P15.2：左侧避让带退役——目录按钮迁入 header 流内，正文 gutter 统一由
+   .workspace-shell 的 padding-left 提供（16px 产品级呼吸间距，不留废轨） */
 .concept-container { gap: 32px; }
 body .content-card .lang-tabs { margin-top: var(--sp-2); }
 /* tooltip：复用 aria-label（与 rail 同机制） */
@@ -541,10 +538,6 @@ body .content-card .lang-tabs { margin-top: var(--sp-2); }
   .context-nav-toggle:hover::after { opacity: 1; }
 }
 .context-nav-toggle:focus-visible::after { opacity: 1; }
-/* 主内容让位：按钮悬浮于正文左上，正文首行避让 */
-@media (min-width: 721px) {
-  .lesson-content { padding-left: 64px; }
-}
 .sidebar-progress { background: transparent; border: none; }
 .progress-bar-container { background: var(--bg-3); border: none; height: 4px; }
 .progress-bar-fill { background: var(--accent); }
