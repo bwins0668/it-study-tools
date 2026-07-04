@@ -107,9 +107,53 @@
     });
   }
 
+  // P10：目录触发按钮（取代 16px hover 竖条；44×44、click/键盘、焦点闭环）。
+  // 开合复用 app.js 的 openDesktopSidebar/closeDesktopSidebar；
+  // 展开态以 body.desktop-sidebar-expanded 为唯一事实源。
+  function initContextNavToggle() {
+    var btn = $("context-nav-toggle");
+    if (!btn) return;
+
+    function isOpen() { return document.body.classList.contains("desktop-sidebar-expanded"); }
+
+    btn.addEventListener("click", function () {
+      if (isOpen()) {
+        if (window.closeDesktopSidebar) window.closeDesktopSidebar();
+        btn.focus();
+      } else if (window.openDesktopSidebar) {
+        window.openDesktopSidebar();
+        // 焦点进入目录：当前课时优先，其次目录标题
+        window.setTimeout(function () {
+          var target = document.querySelector("#lessons-nav .lesson-nav-item.active") ||
+                       document.getElementById("sidebar-title-text");
+          if (target) {
+            if (!target.hasAttribute("tabindex") && target.tagName !== "BUTTON" && target.tagName !== "A") {
+              target.setAttribute("tabindex", "-1");
+            }
+            target.focus({ preventScroll: false });
+          }
+        }, 240);
+      }
+    });
+
+    // 展开态同步 aria-expanded 与图标（关闭动作可能来自 Esc/外点/模式切换）
+    new MutationObserver(function () {
+      var open = isOpen();
+      btn.setAttribute("aria-expanded", open ? "true" : "false");
+      var icon = btn.querySelector("i");
+      if (icon) icon.className = open ? "fa-solid fa-angles-left" : "fa-solid fa-table-list";
+      // Esc/外点关闭后焦点若困在被藏目录内，交还按钮
+      if (!open) {
+        var sidebar = document.getElementById("app-sidebar");
+        if (sidebar && sidebar.contains(document.activeElement)) btn.focus();
+      }
+    }).observe(document.body, { attributes: true, attributeFilter: ["class"] });
+  }
+
   function init() {
     initRail();
     initSkipLinkFirstTab();
+    initContextNavToggle();
     // 供表面状态层（surfaces.js）在 overlay 关闭后恢复高亮
     window.ShellRail = { setActive: updateRailActive };
   }

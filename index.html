@@ -207,28 +207,28 @@
         <div class="tools-drawer__section">
           <div class="tools-drawer__section-title" data-i18n="tools.learningTools">学习工具</div>
           <button type="button" class="tools-drawer-item" data-action="open-dashboard">
-            <span class="tools-drawer-item__icon">📊</span>
+            <span class="tools-drawer-item__icon"><i class="fa-solid fa-chart-column" aria-hidden="true"></i></span>
             <span class="tools-drawer-item__text">
               <strong data-i18n="tools.dashboard">学习统计</strong>
               <small data-i18n="tools.dashboardDesc">查看学习进度与数据概览</small>
             </span>
           </button>
           <button type="button" class="tools-drawer-item" data-action="continue-learning">
-            <span class="tools-drawer-item__icon">▶️</span>
+            <span class="tools-drawer-item__icon"><i class="fa-solid fa-play" aria-hidden="true"></i></span>
             <span class="tools-drawer-item__text">
               <strong data-i18n="tools.continueLearning">继续学习</strong>
               <small data-i18n="tools.continueLearningDesc">从上次进度继续</small>
             </span>
           </button>
           <button type="button" class="tools-drawer-item" data-action="export-data">
-            <span class="tools-drawer-item__icon">💾</span>
+            <span class="tools-drawer-item__icon"><i class="fa-solid fa-floppy-disk" aria-hidden="true"></i></span>
             <span class="tools-drawer-item__text">
               <strong data-i18n="tools.exportData">导出学习数据</strong>
               <small data-i18n="tools.exportDataDesc">下载本地学习数据备份 (JSON)</small>
             </span>
           </button>
           <button type="button" class="tools-drawer-item" data-action="import-preview" style="opacity:0.4;pointer-events:none;">
-            <span class="tools-drawer-item__icon">📥</span>
+            <span class="tools-drawer-item__icon"><i class="fa-solid fa-file-import" aria-hidden="true"></i></span>
             <span class="tools-drawer-item__text">
               <strong data-i18n="tools.importPreview">预览导入备份</strong>
               <small data-i18n="tools.importPreviewDesc">只读预览，不会修改当前数据</small>
@@ -236,7 +236,7 @@
             </span>
           </button>
           <button type="button" class="tools-drawer-item" data-action="open-glossary">
-            <span class="tools-drawer-item__icon">📖</span>
+            <span class="tools-drawer-item__icon"><i class="fa-solid fa-book" aria-hidden="true"></i></span>
             <span class="tools-drawer-item__text">
               <strong data-i18n="tools.glossary">术语表</strong>
               <small data-i18n="tools.glossaryDesc">查询 IT / SQL / 编程术语</small>
@@ -247,7 +247,7 @@
         <div class="tools-drawer__section">
           <div class="tools-drawer__section-title" data-i18n="tools.examTools">考试工具</div>
           <button type="button" class="tools-drawer-item" data-action="open-exam-history">
-            <span class="tools-drawer-item__icon">📝</span>
+            <span class="tools-drawer-item__icon"><i class="fa-solid fa-clipboard-list" aria-hidden="true"></i></span>
             <span class="tools-drawer-item__text">
               <strong data-i18n="tools.examHistory">考试历史</strong>
               <small data-i18n="tools.examHistoryDesc">查看最近的模拟考试记录</small>
@@ -258,14 +258,14 @@
         <div class="tools-drawer__section">
           <div class="tools-drawer__section-title" data-i18n="tools.settings">设置</div>
           <button type="button" class="tools-drawer-item" data-action="open-settings">
-            <span class="tools-drawer-item__icon">⚙️</span>
+            <span class="tools-drawer-item__icon"><i class="fa-solid fa-gear" aria-hidden="true"></i></span>
             <span class="tools-drawer-item__text">
               <strong data-i18n="tools.settings">设置</strong>
               <small data-i18n="tools.settingsDesc">调整学习工具偏好</small>
             </span>
           </button>
           <button type="button" class="tools-drawer-item" data-action="open-updater">
-            <span class="tools-drawer-item__icon">🔄</span>
+            <span class="tools-drawer-item__icon"><i class="fa-solid fa-arrows-rotate" aria-hidden="true"></i></span>
             <span class="tools-drawer-item__text">
               <strong data-i18n="tools.updater">检查更新</strong>
               <small data-i18n="tools.updaterDesc">查看和更新程序版本</small>
@@ -277,7 +277,7 @@
         <div class="tools-drawer__section tools-drawer__section--danger">
           <div class="tools-drawer__section-title" data-i18n="tools.dangerous">危险操作</div>
           <button type="button" class="tools-drawer-item tools-drawer-item--danger" data-action="reset-progress">
-            <span class="tools-drawer-item__icon">↩️</span>
+            <span class="tools-drawer-item__icon"><i class="fa-solid fa-rotate-left" aria-hidden="true"></i></span>
             <span class="tools-drawer-item__text">
               <strong data-i18n="tools.resetProgress">重置进度</strong>
               <small data-i18n="tools.resetProgressDesc">清空当前学习进度，需要确认</small>
@@ -355,13 +355,20 @@
     <div class="app-body" id="main-app-body">
       <div class="mobile-backdrop" id="mobile-backdrop" onclick="closeMobileDrawers()" aria-hidden="true"></div>
 
-      <!-- Sidebar Edge Handle (desktop hover target to open sidebar) -->
+      <!-- Sidebar Edge Handle (legacy hover strip — P10 起桌面由 context-nav-toggle 取代) -->
       <div class="sidebar-edge-handle" id="sidebar-edge-handle" tabindex="0" role="button"
         aria-label="课程目录" data-i18n-aria-label="sidebar.unitList"
         aria-expanded="false" aria-controls="app-sidebar"
         title="课程目录">
         <span class="sidebar-edge-label"><span class="sidebar-edge-text" data-i18n="sidebar.unitList">目录</span><i class="fa-solid fa-chevron-right"></i></span>
       </div>
+
+      <!-- P10：目录触发按钮（44×44，第二层上下文导航的固定入口） -->
+      <button type="button" class="context-nav-toggle ds-scope" id="context-nav-toggle"
+        aria-label="课程目录" data-i18n-aria-label="sidebar.unitList"
+        aria-expanded="false" aria-controls="app-sidebar">
+        <i class="fa-solid fa-table-list" aria-hidden="true"></i>
+      </button>
 
       <!-- Sidebar: Lessons List -->
       <aside class="app-sidebar" id="app-sidebar" aria-label="课程目录" data-i18n-aria-label="sidebar.unitList">
@@ -1007,7 +1014,7 @@
                     <span>JDK 21 · 10s · 128MB</span>
                   </div>
                   <button class="java-run-btn" id="java-run-btn" onclick="JavaSandbox.runCode()">
-                    <span class="sandbox-btn-icon">▶</span> <span data-i18n="sandbox.runCode">実行</span> <kbd>Ctrl+Enter</kbd>
+                    <i class="fa-solid fa-play sandbox-btn-icon" aria-hidden="true"></i> <span data-i18n="sandbox.runCode">実行</span> <kbd>Ctrl+Enter</kbd>
                   </button>
                 </div>
               </div>
@@ -1099,7 +1106,7 @@
                     <span data-i18n="sandbox.pythonSandboxDesc">Python 3.12 · 10s · 离线沙盒</span>
                   </div>
                   <button class="python-run-btn" id="python-run-btn" onclick="PythonSandbox.runCode()">
-                    <span class="sandbox-btn-icon">▶</span> <span data-i18n="sandbox.runCode">実行</span> <kbd>Ctrl+Enter</kbd>
+                    <i class="fa-solid fa-play sandbox-btn-icon" aria-hidden="true"></i> <span data-i18n="sandbox.runCode">実行</span> <kbd>Ctrl+Enter</kbd>
                   </button>
                 </div>
               </div>

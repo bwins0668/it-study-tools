@@ -510,6 +510,7 @@ if (document.readyState === 'loading') {
   window.initDesktopWorkspace = initDesktopWorkspace;
   window.populateHeaderModeNav = populateHeaderModeNav;
   window.closeDesktopSidebar = closeDesktopSidebar;
+  window.openDesktopSidebar = openDesktopSidebar; // P10：目录触发按钮（shell.js）的必需入口
   window.isDesktopSidebarOpen = function() { return desktopSidebarOpen; };
 
   // Hook: close button in sidebar also closes desktop overlay
