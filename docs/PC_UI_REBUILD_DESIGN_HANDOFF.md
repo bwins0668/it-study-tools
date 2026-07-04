@@ -187,7 +187,16 @@ app-frame
 
 **工作簿 schema 修复（P10 追记）**：用户实测 Excel 打开训练工作簿弹"内容有问题"修复对话框——根因是 `docProps/custom.xml` 属性元素误写为 `<vt:property>`（应为默认命名空间 `<property>`，仅 `vt:lpwstr` 属 vt），另 5 处 styles 含空 `<numFmts count="0"/>`。经 Excel COM A/B 消融 + 对照组定位，修复后 Excel 打开无对话框、另存往返元数据保留（Excel 规范化输出与修复形态一致）。教训：手写 Open XML 必须以"Excel 往返（打开→另存→diff）"为验收，不能只看 zip 能否解析。
 
-## 18. 未来维护原则
+## 18. P11 视觉凝聚纪要
+
+- **目录机制终形态**：触发按钮（44×44，收起态可见）↔ 目录头部行收起按钮（展开态，结构的一部分）；触发按钮展开时淡出而非位移；收起态目录 `display:none`（无幽灵槽），开合动画由 app.js 先置内联 display 再切 class 的既有机制保障。
+- **留白预算**：rail→正文死带 87px→~33px（幽灵槽 1px + 让位 64→16px）；双语列 gap 32px。
+- **沙盒统一**：java/python 沙盒的结构性变量全部收编 token（品牌色仅存语法高亮）；运行按钮 = 区域唯一 Primary；stdin 行 bg-1。
+- **品牌 monogram**：内联 SVG（`brand-mark__plate/fold/line--main/line--sub` 四类 token 着色），折角=accent 记忆点，深浅自适配；模块图标由 rail 唯一承担。
+- **更新入口**：教训级缺陷——`display` 显式声明会压过 `hidden` 的 UA 样式（`[hidden]{display:none}` 特异性仅 0,1,0），P1 的"检查更新"色块因此意外显示五轮；修复后凡带 display 的组件必须补 `[hidden]` 分支。版本号即更新入口（`#statusbar-version-entry`→StudyUpdater.open）。
+- **动效**：`--transition-smooth` 全局收紧至 160ms 统一曲线。
+
+## 19. 未来维护原则
 
 1. 新增界面一律引用 tokens；禁 `transition:all`、裸色值、`!important`（浅色防御块为唯一豁免且随 override 一起退役）。
 2. hover 只在 `(hover:hover) and (pointer:fine)` 下启用；动效只用 transform/opacity；新增动效必须过 reduced-motion。
