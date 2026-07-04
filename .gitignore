@@ -30,3 +30,6 @@ tools/_check_*.js
 tools/_get_supa_token*.js
 tools/_supa_login.js
 *.bak
+
+# P14.1: runtime 依赖装配产物（tools/provision_runtime.ps1 生成，不入库；打包前 provision + release gate 校验）
+python/Lib/site-packages/

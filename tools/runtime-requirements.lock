@@ -1,0 +1,5 @@
+# 受控 runtime 依赖锁（provision_runtime.ps1 生成）
+# python: 3.12 embedded win_amd64
+cffi-2.0.0-cp312-cp312-win_amd64.whl
+cryptography-49.0.0-cp311-abi3-win_amd64.whl
+pycparser-3.0-py3-none-any.whl
