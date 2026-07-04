@@ -1,4 +1,4 @@
-# tools/verify_portable_runtime_proof.ps1 — P14.3 干净 Portable Runtime 发布证明
+﻿# tools/verify_portable_runtime_proof.ps1 — P14.3 干净 Portable Runtime 发布证明
 #
 # 从干净临时目录证明：Portable zip 自带签名验证 runtime（cryptography + Ed25519），
 # 解压后不依赖系统 Python / pip / Node / Git 即可启动 server 并安全地执行更新检查；
@@ -38,7 +38,11 @@ function RunPy([string]$py, [string[]]$argv, [string]$cwdir, [hashtable]$extraEn
   foreach ($k in $env2.Keys) { $old[$k] = [Environment]::GetEnvironmentVariable($k); [Environment]::SetEnvironmentVariable($k, $env2[$k]) }
   try {
     Push-Location $cwdir
-    try { $out = & $py @argv 2>&1 | Out-String } finally { Pop-Location }
+    # Windows PowerShell 5.1：EAP=Stop 时 native stderr 经 2>&1 会被包装为 ErrorRecord 并抛出；
+    # 探针类调用（如 nocrypto runtime 的预期 Traceback）必须允许 stderr——局部降级。
+    $prevEap = $ErrorActionPreference
+    $ErrorActionPreference = "Continue"
+    try { $out = & $py @argv 2>&1 | Out-String } finally { $ErrorActionPreference = $prevEap; Pop-Location }
     return @{ Code = $LASTEXITCODE; Out = $out }
   } finally {
     foreach ($k in $old.Keys) { [Environment]::SetEnvironmentVariable($k, $old[$k]) }
@@ -174,11 +178,11 @@ $server = Start-Process -FilePath $portablePy -ArgumentList @("server.py", "$por
 try {
   $up = $false
   foreach ($i in 1..60) {
-    try { if ((Invoke-WebRequest -Uri "http://127.0.0.1:$port/index.html" -TimeoutSec 3).StatusCode -eq 200) { $up = $true; break } } catch {}
+    try { if ((Invoke-WebRequest -UseBasicParsing -Uri "http://127.0.0.1:$port/index.html" -TimeoutSec 3).StatusCode -eq 200) { $up = $true; break } } catch {}
     Start-Sleep -Milliseconds 400
   }
   Check "S8 包内 runtime 启动 server 并提供页面 (GET /index.html=200)" $up
-  $page = Invoke-WebRequest -Uri "http://127.0.0.1:$port/index.html" -TimeoutSec 10
+  $page = Invoke-WebRequest -UseBasicParsing -Uri "http://127.0.0.1:$port/index.html" -TimeoutSec 10
   Check "S8 页面内容非空且含应用骨架" (($page.Content.Length -gt 10000) -and ($page.Content -match "main-app-body"))
 
   $state0 = (Invoke-RestMethod -Uri "http://127.0.0.1:$port/api/updater/state" -TimeoutSec 10).data
