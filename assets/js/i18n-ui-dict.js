@@ -4,6 +4,28 @@
 
   window.I18nUiDict = {
     "ja-JP": {
+      home: {
+        eyebrow: "学習ワークスペース",
+        title: "今日も続けましょう",
+        currentContext: "現在の学習",
+        startLearning: "学習を始める",
+        continueLearning: "続きから学習",
+        reviewCourse: "最初から復習",
+        courseDone: "完了",
+        goContinue: "続ける",
+        emptyHint: "学習記録はまだありません。SQL の第1課から始めるのがおすすめです。",
+        openDashboard: "学習統計",
+        progressOverview: "コース進捗",
+        quickActions: "クイックアクション",
+        openGlossary: "用語辞典"
+      },
+      lessonNav: {
+        title: "レッスンナビゲーション",
+        prev: "前の課",
+        next: "次の課",
+        completed: "この課は完了済み",
+        notCompleted: "未完了 · 課題クリアで完了"
+      },
       common: {
         save: "保存",
         cancel: "キャンセル",
@@ -637,6 +659,28 @@
     },
 
     "zh-CN": {
+      home: {
+        eyebrow: "学习工作台",
+        title: "今天也继续加油",
+        currentContext: "当前学习",
+        startLearning: "开始学习",
+        continueLearning: "继续学习",
+        reviewCourse: "从头复习",
+        courseDone: "已完成",
+        goContinue: "继续",
+        emptyHint: "还没有学习记录。建议从 SQL 第 1 课开始。",
+        openDashboard: "学习统计",
+        progressOverview: "课程进度",
+        quickActions: "快捷操作",
+        openGlossary: "术语词典"
+      },
+      lessonNav: {
+        title: "课时导航",
+        prev: "上一课",
+        next: "下一课",
+        completed: "本课已完成",
+        notCompleted: "未完成 · 完成课题后自动标记"
+      },
       common: {
         save: "保存",
         cancel: "取消",
@@ -1259,6 +1303,28 @@
     },
 
     "en-US": {
+      home: {
+        eyebrow: "Learning Workspace",
+        title: "Keep the momentum going",
+        currentContext: "Current course",
+        startLearning: "Start learning",
+        continueLearning: "Continue learning",
+        reviewCourse: "Review from start",
+        courseDone: "Done",
+        goContinue: "Continue",
+        emptyHint: "No learning history yet. Starting with SQL Lesson 1 is recommended.",
+        openDashboard: "Statistics",
+        progressOverview: "Course progress",
+        quickActions: "Quick actions",
+        openGlossary: "Glossary"
+      },
+      lessonNav: {
+        title: "Lesson navigation",
+        prev: "Previous lesson",
+        next: "Next lesson",
+        completed: "Lesson completed",
+        notCompleted: "Not completed · finish the task to complete"
+      },
       common: {
         save: "Save",
         cancel: "Cancel",
@@ -2839,6 +2905,28 @@
     },
 
     "fr-FR": {
+      home: {
+        eyebrow: "Espace d'apprentissage",
+        title: "Continuez sur votre lancée",
+        currentContext: "Cours actuel",
+        startLearning: "Commencer",
+        continueLearning: "Reprendre l'apprentissage",
+        reviewCourse: "Réviser depuis le début",
+        courseDone: "Terminé",
+        goContinue: "Continuer",
+        emptyHint: "Aucun historique d'apprentissage. Commencez par la leçon 1 de SQL.",
+        openDashboard: "Statistiques",
+        progressOverview: "Progression des cours",
+        quickActions: "Actions rapides",
+        openGlossary: "Glossaire"
+      },
+      lessonNav: {
+        title: "Navigation des leçons",
+        prev: "Leçon précédente",
+        next: "Leçon suivante",
+        completed: "Leçon terminée",
+        notCompleted: "Non terminée · validez l'exercice pour terminer"
+      },
       common: {
         save: "Enregistrer",
         cancel: "Annuler",

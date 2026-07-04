@@ -29,7 +29,7 @@ function readArg(name, fallback) {
 const FULL = process.argv.includes("--full");
 const OUT = path.resolve(ROOT, readArg("--out", "docs/ui-rebuild-baseline"));
 
-const MODULES = ["sql", "itpass", "sg", "java", "python", "typing", "coding-typing"];
+const MODULES = ["home", "sql", "itpass", "sg", "java", "python", "typing", "coding-typing"];
 const VIEWPORTS = { 1440: [1440, 900], 1280: [1280, 800], 1024: [1024, 768], 390: [390, 844] };
 
 function reservePort() {
@@ -117,12 +117,18 @@ async function waitForServer(base) {
 
     async function switchModule(mod) {
       const ok = await page.evaluate((m) => {
+        if (m === "home") {
+          if (!window.HomeWorkspace) return false;
+          window.HomeWorkspace.open();
+          return true;
+        }
         if (m === "mos365") {
           const el = document.getElementById("module-switch-option-mos365");
           if (!el) return false;
           el.click();
           return true;
         }
+        // 具体模块切换会自动关闭学習ワークスペース overlay（shell.js 钩子）
         if (window.switchSubject) { window.switchSubject(m); return true; }
         return false;
       }, mod);

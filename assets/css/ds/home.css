@@ -1,0 +1,234 @@
+/* ============================================================
+   Home — 学习工作台（PC UI Rebuild P2）
+   结构：.app-frame__body > #home-workspace（overlay，hidden 控制）
+   设计：行式信息密度，无卡片墙；全部 token；动效仅 transform/opacity
+   ============================================================ */
+
+.home-workspace {
+  position: absolute;
+  inset: 0;
+  /* 高于旧 app-header（工作台为完整视图，避免双层导航同屏抢焦点） */
+  z-index: var(--z-sticky);
+  background: var(--bg-0);
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+.home-workspace[hidden] { display: none; }
+
+.home-inner {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: var(--sp-8) var(--sp-7) var(--sp-9);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-8);
+}
+
+/* ── 顶部关闭（移动/无 rail 场景的返回通道） ── */
+.home-close {
+  position: absolute;
+  top: var(--sp-4);
+  right: var(--sp-4);
+}
+
+/* ── Hero：当前上下文 + 主行动 ── */
+.home-hero { display: flex; flex-direction: column; gap: var(--sp-4); }
+
+.home-hero__eyebrow {
+  font-size: var(--fs-12);
+  letter-spacing: 0.12em;
+  color: var(--tx-3);
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+}
+.home-hero__eyebrow .ds-dot { background: var(--accent); }
+
+.home-hero__title {
+  font-size: var(--fs-28);
+  font-weight: 700;
+  line-height: var(--lh-ui);
+  color: var(--tx-1);
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+.home-hero__context {
+  font-size: var(--fs-14);
+  color: var(--tx-2);
+  line-height: var(--lh-cjk);
+  overflow-wrap: anywhere;
+}
+.home-hero__context strong { color: var(--tx-1); font-weight: 600; }
+
+.home-hero__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  flex-wrap: wrap;
+  margin-top: var(--sp-2);
+}
+
+/* ── 区块标题（安静的小节导航） ── */
+.home-section__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--sp-3);
+  margin-bottom: var(--sp-3);
+}
+.home-section__title {
+  font-size: var(--fs-13);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--tx-3);
+  margin: 0;
+}
+
+/* ── 课程进度：行式列表（非卡片墙） ── */
+.home-course-list {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--bd-1);
+}
+.home-course-row {
+  display: grid;
+  grid-template-columns: 20px minmax(140px, 220px) 1fr 88px auto;
+  align-items: center;
+  gap: var(--sp-4);
+  min-height: 52px;
+  padding: var(--sp-2) var(--sp-2);
+  border: none;
+  border-bottom: 1px solid var(--bd-1);
+  background: transparent;
+  text-align: left;
+  font-family: var(--font-ui);
+  cursor: pointer;
+  color: var(--tx-2);
+  transition: background-color var(--dur-1) var(--ease);
+}
+@media (hover: hover) and (pointer: fine) {
+  .home-course-row:hover { background: var(--bg-2); }
+  .home-course-row:hover .home-course-row__go { opacity: 1; transform: translateX(0); }
+}
+.home-course-row__icon { color: var(--tx-3); font-size: var(--fs-14); text-align: center; }
+.home-course-row__name {
+  font-size: var(--fs-14);
+  font-weight: 600;
+  color: var(--tx-1);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.home-course-row__bar { min-width: 0; }
+.home-course-row__stat {
+  font-size: var(--fs-12);
+  font-family: var(--font-mono);
+  color: var(--tx-3);
+  text-align: right;
+  white-space: nowrap;
+}
+.home-course-row__stat strong { color: var(--tx-1); font-weight: 600; }
+.home-course-row__go {
+  font-size: var(--fs-12);
+  color: var(--accent);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-1);
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateX(-4px);
+  transition: opacity var(--dur-1) var(--ease), transform var(--dur-1) var(--ease);
+}
+.home-course-row:focus-visible .home-course-row__go { opacity: 1; transform: translateX(0); }
+/* 触摸/无 hover 环境常显跳转提示 */
+@media (hover: none), (pointer: coarse) {
+  .home-course-row__go { opacity: 1; transform: none; }
+}
+.home-course-row.is-done .home-course-row__icon { color: var(--ok); }
+
+/* ── 快捷行动 / 工具入口：ghost 行动条 ── */
+.home-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-3);
+}
+.home-action {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  height: 40px;
+  padding: 0 var(--sp-4);
+  border: 1px solid var(--bd-2);
+  border-radius: var(--r-2);
+  background: var(--bg-1);
+  color: var(--tx-2);
+  font-family: var(--font-ui);
+  font-size: var(--fs-13);
+  cursor: pointer;
+  transition: background-color var(--dur-1) var(--ease),
+              color var(--dur-1) var(--ease),
+              border-color var(--dur-1) var(--ease);
+}
+.home-action i { color: var(--tx-3); font-size: var(--fs-14); transition: color var(--dur-1) var(--ease); }
+@media (hover: hover) and (pointer: fine) {
+  .home-action:hover { background: var(--bg-3); color: var(--tx-1); border-color: var(--tx-3); }
+  .home-action:hover i { color: var(--accent); }
+}
+
+/* ── 空状态 ── */
+.home-empty-hint {
+  font-size: var(--fs-13);
+  color: var(--tx-3);
+  line-height: var(--lh-cjk);
+}
+
+/* ── 响应式 ── */
+@media (max-width: 1279px) {
+  .home-inner { padding: var(--sp-7) var(--sp-6) var(--sp-8); }
+}
+@media (max-width: 1023px) {
+  .home-course-row { grid-template-columns: 20px minmax(120px, 180px) 1fr 72px; }
+  .home-course-row__go { display: none; }
+}
+@media (max-width: 720px) {
+  .home-inner { padding: var(--sp-6) var(--sp-4) var(--sp-7); gap: var(--sp-6); }
+  .home-hero__title { font-size: var(--fs-22); }
+  .home-course-row {
+    grid-template-columns: 20px 1fr 72px;
+    grid-template-areas: "icon name stat" ". bar bar";
+    row-gap: var(--sp-2);
+  }
+  .home-course-row__icon { grid-area: icon; }
+  .home-course-row__name { grid-area: name; white-space: normal; }
+  .home-course-row__bar { grid-area: bar; }
+  .home-course-row__stat { grid-area: stat; }
+}
+
+/* ── P1 并存期浅色防御（同 shell.css 策略；P5 内容区迁移后随 override 一并移除） ──
+   旧 runtime override 会把 home 区刷白；home 是新建区域，必须完整呈现暖纸 token */
+body[data-theme="light"] .home-workspace,
+body[data-theme="light"] .home-workspace * {
+  -webkit-text-fill-color: currentColor !important;
+  text-shadow: none !important;
+  box-shadow: none !important;
+}
+body[data-theme="light"] .home-workspace { background: var(--bg-0) !important; }
+body[data-theme="light"] .home-workspace .home-hero__title,
+body[data-theme="light"] .home-workspace .home-course-row__name,
+body[data-theme="light"] .home-workspace .home-hero__context strong,
+body[data-theme="light"] .home-workspace .home-course-row__stat strong { color: var(--tx-1) !important; background: transparent !important; }
+body[data-theme="light"] .home-workspace .home-hero__context { color: var(--tx-2) !important; background: transparent !important; }
+body[data-theme="light"] .home-workspace .home-hero__eyebrow,
+body[data-theme="light"] .home-workspace .home-section__title,
+body[data-theme="light"] .home-workspace .home-course-row__icon,
+body[data-theme="light"] .home-workspace .home-course-row__stat,
+body[data-theme="light"] .home-workspace .home-empty-hint { color: var(--tx-3) !important; background: transparent !important; }
+body[data-theme="light"] .home-workspace .home-course-row { background: transparent !important; border-color: var(--bd-1) !important; }
+body[data-theme="light"] .home-workspace .home-course-row.is-done .home-course-row__icon { color: var(--ok) !important; }
+body[data-theme="light"] .home-workspace .home-course-row__go { color: var(--accent) !important; background: transparent !important; }
+body[data-theme="light"] .home-workspace .home-action { background: var(--bg-1) !important; color: var(--tx-2) !important; border-color: var(--bd-2) !important; }
+body[data-theme="light"] .home-workspace .home-action i { color: var(--tx-3) !important; }
+body[data-theme="light"] .home-workspace .ds-btn--primary { background: var(--accent) !important; color: var(--on-accent) !important; }
+body[data-theme="light"] .home-workspace .ds-btn--secondary { background: var(--bg-3) !important; color: var(--tx-1) !important; border-color: var(--bd-2) !important; }
+body[data-theme="light"] .home-workspace .ds-progress { background: var(--bg-3) !important; border-color: var(--bd-1) !important; }
+body[data-theme="light"] .home-workspace .ds-progress__fill { background: var(--accent) !important; }

@@ -226,6 +226,7 @@
 
 /* ── 进度条 ── */
 .ds-progress {
+  display: block;
   height: 6px;
   border-radius: var(--r-1);
   background: var(--bg-3);

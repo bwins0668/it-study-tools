@@ -18,10 +18,12 @@
   <link rel="stylesheet" href="assets/css/glossary.css?v=20260611_v1">
   <link rel="stylesheet" href="assets/css/coding-typing.css?v=v2026.6.14-r22.25">
   <!-- Design System (PC UI Rebuild) -->
-  <link rel="stylesheet" href="assets/css/ds/tokens.css?v=r1">
-  <link rel="stylesheet" href="assets/css/ds/base.css?v=r1">
-  <link rel="stylesheet" href="assets/css/ds/components.css?v=r1">
-  <link rel="stylesheet" href="assets/css/ds/shell.css?v=r1">
+  <link rel="stylesheet" href="assets/css/ds/tokens.css?v=r2">
+  <link rel="stylesheet" href="assets/css/ds/base.css?v=r2">
+  <link rel="stylesheet" href="assets/css/ds/components.css?v=r2">
+  <link rel="stylesheet" href="assets/css/ds/shell.css?v=r2">
+  <link rel="stylesheet" href="assets/css/ds/home.css?v=r2">
+  <link rel="stylesheet" href="assets/css/ds/lesson.css?v=r2">
 </head>
 <body class="has-shell">
 
@@ -31,6 +33,8 @@
     <!-- Nav Rail（P1：与旧导航并存，P2 起为唯一主导航） -->
     <nav class="nav-rail ds-scope" id="nav-rail" aria-label="学習セクション" data-i18n-aria-label="moduleSwitch.title">
       <div class="nav-rail__logo" aria-hidden="true">ST</div>
+      <button type="button" class="rail-item" data-module="home" id="rail-home" aria-label="学習ワークスペース" data-i18n-aria-label="home.eyebrow"><i class="fa-solid fa-house" aria-hidden="true"></i></button>
+      <hr class="nav-rail__sep">
       <button type="button" class="rail-item" data-module="sql" aria-label="SQL 学习" data-i18n-aria-label="nav.sql"><i class="fa-solid fa-database" aria-hidden="true"></i></button>
       <button type="button" class="rail-item" data-module="java" aria-label="Java 学习" data-i18n-aria-label="nav.java"><i class="fa-brands fa-java" aria-hidden="true"></i></button>
       <button type="button" class="rail-item" data-module="python" aria-label="Python 学习" data-i18n-aria-label="nav.python"><i class="fa-brands fa-python" aria-hidden="true"></i></button>
@@ -1346,6 +1350,11 @@
     </div>
 
   </div>
+
+  <!-- 学習ワークスペース（P2：overlay，rail Home で開閉；home.js が描画。
+       置于 app-container 之后：同 z-sticky 层级下 DOM 顺序保证盖过旧 header） -->
+  <section id="home-workspace" class="home-workspace ds-scope" hidden aria-label="学習ワークスペース" data-i18n-aria-label="home.eyebrow"></section>
+
     </div><!-- /app-frame__body -->
   </div><!-- /app-frame -->
 
@@ -1843,7 +1852,9 @@
   <script src="data/i18n_content/navigation_fr.js?v=v2026.6.20-r-locale-nav-compare"></script>
   <script src="data/i18n_content/navigation_zh.js?v=v2026.6.20-r-locale-nav-compare"></script>
   <script src="assets/js/app.js?v=v2026.6.20-r-locale-nav-compare"></script>
-  <script src="assets/js/shell.js?v=r1"></script>
+  <script src="assets/js/shell.js?v=r2"></script>
+  <script src="assets/js/home.js?v=r2"></script>
+  <script src="assets/js/lesson-nav.js?v=r2"></script>
   <script src="assets/js/version.js?v=v2026.6.20-r-locale-nav-compare"></script>
   <script src="assets/js/updater-ui.js?v=v2026.7.1"></script>
   <script src="assets/js/syntax-highlighter.js?v=v2026.6.16-r136.2"></script>

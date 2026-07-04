@@ -20,12 +20,14 @@ body.has-shell {
   min-height: 0;
 }
 
-/* 旧壳兼容：app-container 占满 frame 主体（index.css 定义的 100vh 在此被约束） */
+/* 旧壳兼容：app-container 占满 frame 主体（index.css 定义的 100vh 在此被约束）
+   position:relative 为 home-workspace overlay 提供定位锚点 */
 .app-frame__body {
   flex: 1;
   min-width: 0;
   display: flex;
   flex-direction: column;
+  position: relative;
 }
 .app-frame__body > .app-container {
   height: 100%;

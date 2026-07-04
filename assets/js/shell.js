@@ -30,10 +30,19 @@
   }
 
   function activateModule(mod) {
+    if (mod === "home") {
+      // 学習ワークスペース（home.js 提供；overlay，不触碰 main-app-body 状态机）
+      if (window.HomeWorkspace) {
+        window.HomeWorkspace.open();
+        updateRailActive("home");
+      }
+      return;
+    }
     if (mod === "mos365") {
       // MOS365 入口由 mos365.js 运行时注入旧模块面板；复用其 click 行为（不触碰其状态机）
       var entry = $("module-switch-option-mos365");
       if (entry) {
+        if (window.HomeWorkspace) window.HomeWorkspace.close();
         entry.click();
         updateRailActive("mos365");
       }
@@ -76,11 +85,13 @@
       }
     });
 
-    // 受控同步钩子：所有 switchSubject 调用（rail、旧导航、程序化）后刷新高亮
+    // 受控同步钩子：所有 switchSubject 调用（rail、旧导航、程序化）后刷新高亮，
+    // 并关闭学習ワークスペース overlay（进入具体模块即离开工作台）
     var orig = window.switchSubject;
     if (typeof orig === "function") {
       window.switchSubject = function (subject) {
         var result = orig.apply(this, arguments);
+        if (window.HomeWorkspace) window.HomeWorkspace.close();
         updateRailActive(subject);
         return result;
       };
