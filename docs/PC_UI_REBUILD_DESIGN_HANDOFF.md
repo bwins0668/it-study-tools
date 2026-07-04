@@ -185,6 +185,8 @@ app-frame
 
 **smoke 新增规则**：目录触发器 ≥44×44 + aria、未命名图标按钮=0、emoji 图标=0（连同 P9 规则组成视觉质量门）。
 
+**训练面板高度（P12.1 追记）**：底部 CustomTaskPane 高度必须 ≥ 内容各段合计（281px）+ Excel CTP 标题条（~30px）；现值 340（`VstoBottomPanePoc/ThisAddIn.cs`）。改 native 面板后用 VS18 MSBuild 重建 Release 即可（`vstolocal` 清单免重注册）；验证方式=真实启动链 ready 后 DPI 感知截取 Excel 主窗口。
+
 **工作簿 schema 修复（P10 追记）**：用户实测 Excel 打开训练工作簿弹"内容有问题"修复对话框——根因是 `docProps/custom.xml` 属性元素误写为 `<vt:property>`（应为默认命名空间 `<property>`，仅 `vt:lpwstr` 属 vt），另 5 处 styles 含空 `<numFmts count="0"/>`。经 Excel COM A/B 消融 + 对照组定位，修复后 Excel 打开无对话框、另存往返元数据保留（Excel 规范化输出与修复形态一致）。教训：手写 Open XML 必须以"Excel 往返（打开→另存→diff）"为验收，不能只看 zip 能否解析。
 
 ## 18. P11 视觉凝聚纪要
