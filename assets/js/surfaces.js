@@ -75,6 +75,28 @@
     }, true);
   }
 
+  // P13.1：CBT 双态合成——config 卡隐藏且容器可见 = 考试进行态。
+  // 仅呈现层状态类（body.cbt-exam-active），不触碰考试判定与数据。
+  function watchCbtExamState() {
+    var container = document.getElementById("cbt-exam-container");
+    if (!container) return;
+    var sync = function () {
+      var visible = getComputedStyle(container).display !== "none";
+      // 正向判定：题目画布真实可见（checkVisibility 穿透全祖先；
+      // offsetParent 在 fixed 祖先链下恒为 null，不可用）
+      var canvas = container.querySelector(".cbt-question-canvas");
+      var canvasVisible = !!canvas && (canvas.checkVisibility
+        ? canvas.checkVisibility()
+        : canvas.getBoundingClientRect().width > 0);
+      document.body.classList.toggle("cbt-exam-active", visible && canvasVisible);
+    };
+    new MutationObserver(sync).observe(container, {
+      attributes: true, attributeFilter: ["style", "class"],
+      childList: true, subtree: true
+    });
+    sync();
+  }
+
   // P11：statusbar 版本号 = 低打扰更新入口（复用既有 StudyUpdater 面板）
   function bindVersionEntry() {
     var entry = document.getElementById("statusbar-version-entry");
@@ -92,6 +114,7 @@
     new MutationObserver(scan).observe(document.body, { childList: true });
     redirectBrandOnDesktop();
     bindVersionEntry();
+    watchCbtExamState();
   }
 
   if (document.readyState === "loading") {

@@ -1387,10 +1387,11 @@
 
   <!-- StatusBar（P11：版本号即低打扰更新入口；徽标仅真实有更新时由 updater 显示） -->
   <footer class="app-statusbar ds-scope" id="app-statusbar">
+    <span class="app-statusbar__item"><span class="ds-dot" aria-hidden="true"></span><span data-study-tools-desktop-version>—</span></span>
     <button type="button" class="app-statusbar__version-entry" id="statusbar-version-entry"
-      aria-label="检查更新" data-i18n-aria-label="tools.updater">
-      <span class="ds-dot" aria-hidden="true"></span><span data-study-tools-desktop-version>—</span>
-      <span class="app-statusbar__version-hint" aria-hidden="true"><i class="fa-solid fa-circle-arrow-up"></i> <span data-i18n="tools.updater">检查更新</span></span>
+      aria-label="检查更新" data-i18n-aria-label="tools.updater" title="检查更新" data-i18n-title="tools.updater">
+      <i class="fa-solid fa-arrows-rotate" aria-hidden="true"></i>
+      <span data-i18n="tools.updater">检查更新</span>
     </button>
     <button type="button" class="app-statusbar__update-badge" id="statusbar-update-badge" hidden><i class="fa-solid fa-circle-arrow-up" aria-hidden="true"></i><span data-i18n="tools.updater">检查更新</span></button>
     <span class="app-statusbar__spacer"></span>

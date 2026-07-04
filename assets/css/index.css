@@ -2224,7 +2224,7 @@ body.desktop-sidebar-expanded .sidebar-edge-handle {
 /* Sub-Header bar for IT Passport options */
 .sub-header-bar {
   display: block;
-  background: #0b0f19;
+  background: transparent;
   border-bottom: 1px solid var(--border-color);
   padding: 8px 24px;
   z-index: 10;
@@ -6390,7 +6390,7 @@ body.mode-sg .sidebar-title,
 }
 
 .example-card {
-  background: #09090b !important;
+  background: var(--bg-0) !important;
   border: 1px solid rgba(255, 255, 255, 0.08) !important;
 }
 .example-header {
@@ -6490,14 +6490,14 @@ body.mode-sg .quiz-option.selected {
 }
 .quiz-option.selected .option-marker,
 body.mode-sg .quiz-option.selected .option-marker {
-  border-color: #ffffff !important;
-  background: #ffffff !important;
-  color: #09090b !important;
+  border-color: transparent !important;
+  background: var(--accent) !important;
+  color: var(--on-accent) !important;
 }
 
 /* Code Editors */
 .editor-container {
-  background: #09090b !important;
+  background: var(--bg-0) !important;
   border: 1px solid rgba(255, 255, 255, 0.08) !important;
   border-radius: 8px !important;
   overflow: hidden !important;
@@ -6540,7 +6540,7 @@ body.mode-sg .quiz-option.selected .option-marker {
   border-color: var(--bd-2) !important;
 }
 .output-card.maximized {
-  background: #09090b !important;
+  background: var(--bg-0) !important;
   border: 1.5px solid rgba(255, 255, 255, 0.2) !important;
   box-shadow: 0 24px 80px rgba(0, 0, 0, 0.8) !important;
 }
@@ -6624,9 +6624,9 @@ body.mode-sg .quiz-option.selected .option-marker {
 .tool-selector-group select,
 #calculator-select,
 #coding-exam-count {
-  background: #09090b !important;
-  border: 1px solid rgba(255, 255, 255, 0.08) !important;
-  color: #f4f4f5 !important;
+  background: var(--bg-3) !important;
+  border: 1px solid var(--bd-2) !important;
+  color: var(--tx-1) !important;
   border-radius: 6px !important;
 }
 
@@ -6718,9 +6718,9 @@ body.mode-sg .quiz-option.selected .option-marker {
 }
 
 .quiz-option.selected .option-marker {
-  border-color: #ffffff !important;
-  background: #ffffff !important;
-  color: #09090b !important;
+  border-color: transparent !important;
+  background: var(--accent) !important;
+  color: var(--on-accent) !important;
 }
 
 .concept-body .vocab-highlight,
@@ -6763,14 +6763,15 @@ body.mode-sg .quiz-option.selected .option-marker {
   border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
 }
 
+/* P13.1：模式条 = 轻量 Context Tabs 容器（黑底退役，token 随主题） */
 .sub-header-bar {
-  background: #121214 !important;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
+  background: transparent !important;
+  border-bottom: 1px solid var(--bd-1) !important;
 }
 
 .app-sidebar {
-  background: #0d0d0f !important;
-  border-right: 1px solid rgba(255, 255, 255, 0.08) !important;
+  background: var(--bg-1) !important;
+  border-right: 1px solid var(--bd-1) !important;
 }
 
 /* Elevate interactive cards from app body */
@@ -6980,7 +6981,7 @@ body.mode-sg .sub-header-tab.active {
   border-radius: 0 !important;
   border: none !important;
   margin: 0 !important;
-  background: #09090b !important;
+  background: var(--bg-0) !important;
   box-shadow: none !important;
 }
 

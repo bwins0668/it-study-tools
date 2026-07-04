@@ -854,3 +854,187 @@ body[data-theme="light"] .line-numbers {
 /* ── 11. P10：字符图标统一（▶ 等字符退役为同风格线性图标由 HTML 层处理，
    这里只保证 sandbox 按钮不再放大字符） ── */
 .sandbox-btn-icon { font-size: inherit; }
+
+/* ══════════ P13.1 ══════════ */
+
+/* ── 12. A：收起态灰色死带清除 ──
+   死带真身 = .lesson-content 自带半透深底（rgba(10,14,23,.2)），
+   浅色下呈灰带、深色下亦为多余层；正文层级由卡面表达 */
+.lesson-content { background: transparent; }
+
+/* ── 13. B：检查更新入口恢复常显（quiet tertiary，非广告色块） ── */
+.app-statusbar__version-entry {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 36px;
+  padding: 0 var(--sp-2);
+  border: none;
+  background: transparent;
+  color: var(--tx-3);
+  font: inherit;
+  cursor: pointer;
+  border-radius: var(--r-1);
+  transition: background-color 140ms var(--ease), color 140ms var(--ease);
+}
+@media (hover: hover) and (pointer: fine) {
+  .app-statusbar__version-entry:hover { background: var(--bg-3); color: var(--tx-1); }
+}
+.app-statusbar__version-entry:focus-visible { color: var(--tx-1); }
+.app-statusbar__version-entry i { font-size: 11px; }
+
+/* ── 14. D：CBT 双态分离 ──
+   Preflight（准备）继承浅色学习工作区；仅 body.cbt-exam-active
+   （surfaces.js 依据 config 卡隐藏 + 容器可见合成）进入深石墨考试 root */
+.cbt-exam-container {
+  background: var(--bg-0) !important;
+}
+body.cbt-exam-active .cbt-exam-container {
+  background: #17171A !important; /* 专注考试底：深石墨，非纯黑 */
+}
+/* 考试进行态内文字继承深色 token（exam root 显式 scope；
+   runtime 浅色层已对本 root 整树排除） */
+body.cbt-exam-active .cbt-exam-container {
+  --bg-0: #17171A; --bg-1: #1D1D20; --bg-2: #232327; --bg-3: #2B2B30;
+  --tx-1: #ECEAE8; --tx-2: #B0ADA9; --tx-3: #8A8781;
+  --bd-1: rgba(236, 234, 232, 0.08); --bd-2: rgba(236, 234, 232, 0.16);
+  color: var(--tx-1);
+}
+/* 题面与选项读感（旧白 1.6% 底在深 root 不可辨） */
+body.cbt-exam-active .cbt-question-canvas { color: var(--tx-1); }
+body.cbt-exam-active .cbt-question-canvas .cbt-q-stem,
+body.cbt-exam-active .cbt-q-stem { color: var(--tx-1); }
+body.cbt-exam-active #cbt-q-options-list > * {
+  background: var(--bg-2);
+  border: 1px solid var(--bd-1);
+  color: var(--tx-1);
+}
+/* 考试 chrome 色彩预算：提交=唯一 Primary；退出=danger 线性；
+   Flag/badge 灰阶（紫/黄装饰退役） */
+body.cbt-exam-active .cbt-exam-container [id*="submit"],
+body.cbt-exam-active .cbt-exam-container [class*="submit"] {
+  background: var(--accent) !important;
+  border-color: transparent !important;
+  color: var(--on-accent) !important;
+  box-shadow: none !important;
+}
+body.cbt-exam-active .cbt-exam-container [class*="abort"],
+body.cbt-exam-active .cbt-exam-container [id*="abort"],
+body.cbt-exam-active .cbt-exam-container [class*="quit"] {
+  background: transparent !important;
+  border: 1px solid var(--danger) !important;
+  color: var(--danger) !important;
+  box-shadow: none !important;
+}
+body.cbt-exam-active .cbt-exam-container [class*="flag"] {
+  background: transparent !important;
+  border: 1px solid var(--bd-2) !important;
+  color: var(--tx-2) !important;
+}
+body.cbt-exam-active .cbt-exam-container [class*="badge"] {
+  background: var(--bg-3) !important;
+  border-color: var(--bd-1) !important;
+  color: var(--tx-2) !important;
+}
+
+/* ── 15. E：MOS365 面板 token 化（body 前缀压过 js 注入样式的同名规则） ──
+   浅色=暖纸工作台；深色=石墨；scrim 不压死背景 */
+body #mos365-shell { background: rgba(46, 42, 36, 0.42); }
+body[data-theme="light"] #mos365-shell { background: rgba(46, 42, 36, 0.38); }
+body #mos365-shell .mos365-panel {
+  background: var(--bg-1);
+  color: var(--tx-1);
+  border: 1px solid var(--bd-1);
+}
+body #mos365-shell .mos365-head {
+  background: var(--bg-2);
+  border-bottom: 1px solid var(--bd-1);
+  color: var(--tx-1);
+}
+body #mos365-shell .mos365-nav { background: var(--bg-2); border-color: var(--bd-1); }
+body #mos365-shell .mos365-nav button { background: transparent; color: var(--tx-2); border-color: transparent; }
+body #mos365-shell .mos365-nav button.active { background: var(--accent-subtle); color: var(--tx-1); }
+body #mos365-shell .mos365-main { background: transparent; color: var(--tx-1); }
+body #mos365-shell .mos365-item,
+body #mos365-shell .mos365-card,
+body #mos365-shell .mos365-task-card {
+  background: var(--bg-2);
+  border: 1px solid var(--bd-1);
+  color: var(--tx-1);
+}
+body #mos365-shell .mos365-muted { color: var(--tx-3); }
+body #mos365-shell .mos365-tag {
+  background: var(--bg-3);
+  color: var(--tx-2);
+  border: none;
+}
+body #mos365-shell .mos365-notice {
+  background: var(--bg-2);
+  border: 1px solid var(--bd-1);
+  color: var(--tx-1);
+}
+body #mos365-shell .mos365-notice.mos365-error {
+  background: var(--danger-subtle);
+  border-color: var(--danger);
+}
+body #mos365-shell .mos365-btn {
+  background: var(--accent);
+  color: var(--on-accent);
+  border: 1px solid transparent;
+}
+body #mos365-shell .mos365-btn.secondary {
+  background: transparent;
+  color: var(--tx-1);
+  border: 1px solid var(--bd-2);
+}
+body #mos365-shell .mos365-btn.danger {
+  background: transparent;
+  color: var(--danger);
+  border: 1px solid var(--bd-1);
+}
+body #mos365-shell .mos365-results table,
+body #mos365-shell .mos365-results th,
+body #mos365-shell .mos365-results td {
+  background: transparent;
+  color: var(--tx-1);
+  border-color: var(--bd-1);
+}
+body #mos365-shell .mos365-launch { background: var(--bg-2); border-color: var(--bd-1); }
+body #mos365-shell .mos365-step { color: var(--tx-3); }
+body #mos365-shell .mos365-step[data-step-state="done"] { color: var(--tx-1); }
+body #mos365-shell .mos365-step[data-step-state="active"] { color: var(--tx-1); }
+body #mos365-shell .mos365-launch-diag { background: var(--bg-0); border-color: var(--bd-1); color: var(--tx-2); }
+body #mos365-shell .mos365-launch-stall { background: var(--warn-subtle); border-left-color: var(--warn); color: var(--tx-1); }
+body #mos365-shell .mos365-launch-stall code { background: var(--bg-3); }
+
+/* Preflight 卡内旧白字（深底时代）在浅 root 上发漂 → token 字色 */
+.cbt-exam-container:not(.dummy) .cbt-config-card,
+.cbt-exam-container .cbt-config-card h1,
+.cbt-exam-container .cbt-config-card h2,
+.cbt-exam-container .cbt-config-card h3,
+.cbt-exam-container .cbt-config-card label,
+.cbt-exam-container .cbt-config-card p,
+.cbt-exam-container .cbt-config-card li,
+.cbt-exam-container .cbt-config-card span {
+  color: var(--tx-1);
+}
+.cbt-exam-container .cbt-config-card small,
+.cbt-exam-container .cbt-config-card .cbt-config-desc { color: var(--tx-2); }
+.cbt-exam-container .cbt-config-card input[type="checkbox"] { accent-color: var(--accent); }
+.cbt-exam-container .cbt-config-options {
+  background: var(--bg-2) !important;
+  border-color: var(--bd-1) !important;
+}
+
+/* Context Tabs 点击区 ≥40px（任务书硬规则） */
+.sub-header-bar .sub-header-tab { min-height: 40px; }
+
+/* ── 16. 浅色表单可读性（黑下拉/黑输入残留） ── */
+body[data-theme="light"] select,
+body[data-theme="light"] .itpass-widget select,
+body[data-theme="light"] .itpass-widget input[type="text"],
+body[data-theme="light"] .itpass-widget input[type="number"] {
+  background-color: var(--bg-2);
+  color: var(--tx-1);
+  border-color: var(--bd-2);
+}

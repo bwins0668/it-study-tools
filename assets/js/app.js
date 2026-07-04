@@ -7858,7 +7858,7 @@ body[data-theme="light"] {
 }
 /* 通配段不重置背景：旧样式背景多为 var(--bg-*)，由 quiet.css 的
    浅色变量重映射自动暖纸化；强制透明会击穿旧浮层 */
-body[data-theme="light"] :where(*):not(.ds-scope):not(.ds-scope *) {
+body[data-theme="light"] :where(*):not(.ds-scope):not(.ds-scope *):not(.cbt-exam-container):not(.cbt-exam-container *) {
   color: #2E2A24 !important;
   -webkit-text-fill-color: currentColor !important;
   text-shadow: none !important;
@@ -7872,15 +7872,15 @@ body[data-theme="light"] :where(*)::after {
 }
 /* 以下分层段与通配段同特异性（:not 链），依源序覆盖 */
 /* 次级文字层（浅色可读性分层） */
-body[data-theme="light"] :where(small, .text-muted, [class*="subtitle"], [class*="-muted"], [class*="hint"], .sidebar-title, .concept-col h4):not(.ds-scope):not(.ds-scope *) {
+body[data-theme="light"] :where(small, .text-muted, [class*="subtitle"], [class*="-muted"], [class*="hint"], .sidebar-title, .concept-col h4):not(.ds-scope):not(.ds-scope *):not(.cbt-exam-container):not(.cbt-exam-container *) {
   color: #6B6459 !important;
 }
 /* 面层：主要工作容器（微暖白） */
-body[data-theme="light"] :where(.app-header, .app-sidebar, .content-card, .schema-card, .console-card, .output-card, .example-card, .cbt-config-card, .typing-panel, .tools-drawer__panel, .dashboard-panel__content, .module-switch-panel, .ai-assistant-drawer, .ai-modal, .updater-panel, .glossary-modal-panel):not(.ds-scope):not(.ds-scope *) {
+body[data-theme="light"] :where(.app-header, .app-sidebar, .content-card, .schema-card, .console-card, .output-card, .example-card, .cbt-config-card, .typing-panel, .tools-drawer__panel, .dashboard-panel__content, .module-switch-panel, .ai-assistant-drawer, .ai-modal, .updater-panel, .glossary-modal-panel):not(.ds-scope):not(.ds-scope *):not(.cbt-exam-container):not(.cbt-exam-container *) {
   background-color: #F8F4EB !important;
 }
 /* 凹陷层：输入 / 编辑器 / 代码 / 选项行 */
-body[data-theme="light"] :where(textarea, input, select, pre, code, .quiz-option, .cbt-config-options, .option-marker, .ct-textarea):not(.ds-scope):not(.ds-scope *) {
+body[data-theme="light"] :where(textarea, input, select, pre, code, .quiz-option, .cbt-config-options, .option-marker, .ct-textarea):not(.ds-scope):not(.ds-scope *):not(.cbt-exam-container):not(.cbt-exam-container *) {
   background-color: #EAE4D7 !important;
 }
 body[data-theme="light"] ::placeholder {
@@ -7888,21 +7888,21 @@ body[data-theme="light"] ::placeholder {
   opacity: 1 !important;
 }
 /* 强调仅保留于主行动与真实进度 */
-body[data-theme="light"] :where(.run-query-btn, .cbt-btn-action, .quiz-submit-btn, .ct-sandbox-run-btn):not(.ds-scope):not(.ds-scope *) {
+body[data-theme="light"] :where(.run-query-btn, .cbt-btn-action, .quiz-submit-btn, .ct-sandbox-run-btn):not(.ds-scope):not(.ds-scope *):not(.cbt-exam-container):not(.cbt-exam-container *) {
   background-color: #9E5049 !important;
   color: #FBF8F3 !important;
   border-color: transparent !important;
 }
 /* 正误判定标注（is-correct/is-wrong，practice.css 语义色）优先于选中态 */
-body[data-theme="light"] :where(.quiz-option.selected:not(.is-correct):not(.is-wrong)):not(.ds-scope):not(.ds-scope *) {
+body[data-theme="light"] :where(.quiz-option.selected:not(.is-correct):not(.is-wrong)):not(.ds-scope):not(.ds-scope *):not(.cbt-exam-container):not(.cbt-exam-container *) {
   background-color: rgba(158, 80, 73, 0.11) !important;
   border-color: #9E5049 !important;
 }
-body[data-theme="light"] :where(.lang-tab.active, .header-mode-nav button.active):not(.ds-scope):not(.ds-scope *) {
+body[data-theme="light"] :where(.lang-tab.active, .header-mode-nav button.active):not(.ds-scope):not(.ds-scope *):not(.cbt-exam-container):not(.cbt-exam-container *) {
   border-bottom-color: #9E5049 !important;
   color: #2E2A24 !important;
 }
-body[data-theme="light"] :where(.lesson-nav-item.active, .ct-item-btn.active):not(.ds-scope):not(.ds-scope *) {
+body[data-theme="light"] :where(.lesson-nav-item.active, .ct-item-btn.active):not(.ds-scope):not(.ds-scope *):not(.cbt-exam-container):not(.cbt-exam-container *) {
   background-color: rgba(158, 80, 73, 0.11) !important;
 }
 body[data-theme="light"] .progress-bar-fill,
@@ -7912,11 +7912,11 @@ body[data-theme="light"] .ai-mastery-bar span {
   background-image: none !important;
 }
 /* 正误判定为真实状态语义（ok/danger），置于最后压过通配与凹陷层 */
-body[data-theme="light"] :where(.quiz-option.is-correct):not(.ds-scope):not(.ds-scope *) {
+body[data-theme="light"] :where(.quiz-option.is-correct):not(.ds-scope):not(.ds-scope *):not(.cbt-exam-container):not(.cbt-exam-container *) {
   background-color: rgba(78, 122, 70, 0.11) !important;
   border-color: #4E7A46 !important;
 }
-body[data-theme="light"] :where(.quiz-option.is-wrong):not(.ds-scope):not(.ds-scope *) {
+body[data-theme="light"] :where(.quiz-option.is-wrong):not(.ds-scope):not(.ds-scope *):not(.cbt-exam-container):not(.cbt-exam-container *) {
   background-color: rgba(181, 67, 58, 0.10) !important;
   border-color: #B5433A !important;
 }
