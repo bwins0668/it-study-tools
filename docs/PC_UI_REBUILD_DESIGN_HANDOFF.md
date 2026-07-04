@@ -167,6 +167,17 @@ app-frame
 | lang-tabs 三枚描边按钮 | 多级旧选择器特异性 | 下划线式 tab（`body .content-card` 链压平） |
 | 霓虹变量残留 | `--neon-cyan:#fff` 等旧变量体系 | quiet.css `:root` + 浅色两段全部重映射到 token |
 
+## 17. P14.2 i18n 语言码边界纪要（短码 registry × BCP-47 调用方）
+
+**边界约定**：语言 registry（locale-registry.js → `languageByCode`）只使用短码（default-ja-zh/ja/zh/ko/my/vi/th/fr）；UI dictionary（`I18nUiDict`）与部分程序化调用方使用 BCP-47 长码（zh-CN/ja-JP/…）。两套体系的合法汇合点只有两处：`translateStatic` 内部 `normalizeLanguageCode(currentLang)`（短→长查 dict），以及 `setLanguage` 入口 `normalizeLangShort(code)`（长→短入 registry，P14.2 新增）。新增语言时两侧均需登记；selector 不提供英文——en/en-US 归一化后仍不受支持，受控回落 default，不得伪装为可选语言。
+
+| 问题 | 根因 | 修复 |
+|---|---|---|
+| 程序化 `setLanguage("zh-CN")` 静默无效（0/321 静态写入）；zh 状态再传长码被踢回 default | `setLanguage` 入口只认短码，长码坍缩为 DEFAULT_LANG 后 `next === currentLang` 静默 return，`applyStaticUI` 从未执行 | 入口先 registry 精确命中，未命中经 `normalizeLangShort` 归一化再查表；仍不支持才回落 default 并 `console.warn`。空值不得进入 `normalizeLangShort`（它把 `""` 映射为 `"zh"`） |
+| P14.1 诊断脚本 storage 恒为 `"?"`，掩盖"语言从未切换" | 误读 `study_lang`/`app_language`；canonical key 为 `study-tools-language`（i18n.js `STORAGE_KEY`） | 诊断脚本改读 canonical key，并输出 `currentLang` 与 managed 写入统计（位于 gitignored evidence 目录，修复随工作区生效、不入库） |
+
+**回归门禁**：`node tools/verify_i18n_long_code_boundary.js` —— 41 项断言：七语长码矩阵（currentLang/localStorage/静态写入率≥90%）、zh/ja 状态防回退、en-US 与 xx-YY 受控 warn 且不抛异常、短码 selector 路径不回归、全程 console 无 error。
+
 **边框预算实施**：正文区（concept/analogy/lang-tabs/quiz-question）零边框化，以留白、字阶、细分隔线分层；仅可操作容器（编辑器/选项行/输入区）与一层 surface 保留低对比边线；全站禁"描边+阴影+高对比填充"三叠加（视觉 smoke 断言把守）。
 
 **已知遗留（不阻塞）**：
