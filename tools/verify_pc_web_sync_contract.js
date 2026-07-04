@@ -40,7 +40,9 @@ function check(name, ok, detail) {
   console.log(`${ok ? "PASS" : "FAIL"}  ${name}${detail ? "  | " + String(detail).slice(0, 160) : ""}`);
 }
 function sha256(file) {
-  return crypto.createHash("sha256").update(fs.readFileSync(file)).digest("hex").slice(0, 16);
+  /* EOL 规范化：两仓库均为 autocrlf 环境，CRLF/LF 视为等价（共享模块全部是文本文件） */
+  const norm = fs.readFileSync(file).toString("utf8").replace(/\r\n/g, "\n");
+  return crypto.createHash("sha256").update(norm).digest("hex").slice(0, 16);
 }
 function expand(repo, pattern) {
   if (!pattern.includes("*")) return [pattern];

@@ -1,42 +1,209 @@
 {
   "contract": "docs/PC_WEB_SYNC_CONTRACT.md",
-  "canonicalSource": { "repo": "bwins0668/it-study-tools", "role": "PC 完整版 = 共享产品体验唯一原型" },
-  "adaptation": { "repo": "bwins0668/study-tools-web", "role": "Web 公开版 = Web 适配实现（Cloudflare Pages, master 自动部署）" },
-  "pcSourceCommit": "b531dcbbed02b3619ecb845503e7ace855be8d49",
-  "webAdaptationCommit": "02a961ed3d5be4ec4f21687e6698139154d37502",
+  "canonicalSource": {
+    "repo": "bwins0668/it-study-tools",
+    "role": "PC 完整版 = 共享产品体验唯一原型"
+  },
+  "adaptation": {
+    "repo": "bwins0668/study-tools-web",
+    "role": "Web 公开版 = Web 适配实现（Cloudflare Pages, master 自动部署）"
+  },
+  "pcSourceCommit": "81cb5ce3ee7b1fd9e5759b46bd297f40dc5d618d",
+  "webAdaptationCommit": "21f7dcf2797672b0978447cba2f4906fa1acf0fe",
   "syncedAt": "2026-07-04",
   "sharedModules": {
-    "design-system": { "mode": "direct-copy", "status": "synced", "files": ["assets/css/ds/*.css", "assets/css/index.css", "assets/css/light-theme.css"] },
-    "shell": { "mode": "direct-copy", "status": "synced", "files": ["assets/js/shell.js", "assets/js/surfaces.js", "assets/js/home.js"] },
-    "lesson-workspace": { "mode": "direct-copy", "status": "synced", "files": ["assets/js/lesson-nav.js", "assets/js/practice.js"] },
-    "app-core": { "mode": "adapted", "status": "adapted", "files": ["assets/js/app.js"], "note": "Web = PC 本体 + 尾部 Service Worker 注册块（Web-only 织入段）" },
-    "shell-html": { "mode": "adapted", "status": "adapted", "files": ["index.html"], "note": "Web = PC 骨架 + 织入 config.web/code-runner/sandbox_bridge/import-preview 引用与 execution-status；移除 updater 面板、mos365.js、supabase-config.local 引用；statusbar 版本入口改为 GitHub Releases 链接" },
-    "i18n": { "mode": "direct-copy", "status": "synced", "files": ["assets/js/i18n.js", "assets/js/i18n-ui-dict.js", "assets/js/locale-registry.js", "assets/js/content-i18n.js"] },
-    "auth-sync": { "mode": "direct-copy", "status": "synced", "files": ["assets/js/auth-ui.js", "assets/js/sync-engine.js", "assets/js/supabase-client.js", "assets/js/supabase-config.public.js"] },
-    "version-entry": { "mode": "direct-copy", "status": "synced", "files": ["assets/js/version.js", "version.json"] },
-    "practice-typing": { "mode": "direct-copy", "status": "synced", "files": ["assets/js/coding_typing.js", "assets/js/japanese_typing.js", "assets/js/japanese-typing-helpers.js"] },
-    "data-tools": { "mode": "direct-copy", "status": "synced", "files": ["assets/js/dashboard.js", "assets/js/export-data.js", "assets/js/glossary.js", "assets/js/ai_assistant.js", "assets/js/keyboard-shortcuts.js", "assets/js/syntax-highlighter.js"] }
+    "design-system": {
+      "mode": "direct-copy",
+      "status": "synced",
+      "files": [
+        "assets/css/ds/*.css",
+        "assets/css/index.css",
+        "assets/css/light-theme.css"
+      ]
+    },
+    "shell": {
+      "mode": "direct-copy",
+      "status": "synced",
+      "files": [
+        "assets/js/shell.js",
+        "assets/js/surfaces.js",
+        "assets/js/home.js"
+      ]
+    },
+    "lesson-workspace": {
+      "mode": "direct-copy",
+      "status": "synced",
+      "files": [
+        "assets/js/lesson-nav.js",
+        "assets/js/practice.js"
+      ]
+    },
+    "app-core": {
+      "mode": "adapted",
+      "status": "adapted",
+      "files": [
+        "assets/js/app.js"
+      ],
+      "note": "Web = PC 本体 + 尾部 Service Worker 注册块（Web-only 织入段）"
+    },
+    "shell-html": {
+      "mode": "adapted",
+      "status": "adapted",
+      "files": [
+        "index.html"
+      ],
+      "note": "Web = PC 骨架 + 织入 config.web/code-runner/sandbox_bridge/import-preview 引用与 execution-status；移除 updater 面板、mos365.js、supabase-config.local 引用；statusbar 版本入口改为 GitHub Releases 链接"
+    },
+    "i18n": {
+      "mode": "direct-copy",
+      "status": "synced",
+      "files": [
+        "assets/js/i18n.js",
+        "assets/js/i18n-ui-dict.js",
+        "assets/js/locale-registry.js",
+        "assets/js/content-i18n.js"
+      ]
+    },
+    "auth-sync": {
+      "mode": "direct-copy",
+      "status": "synced",
+      "files": [
+        "assets/js/auth-ui.js",
+        "assets/js/sync-engine.js",
+        "assets/js/supabase-client.js",
+        "assets/js/supabase-config.public.js"
+      ]
+    },
+    "version-entry": {
+      "mode": "direct-copy",
+      "status": "synced",
+      "files": [
+        "assets/js/version.js",
+        "version.json"
+      ]
+    },
+    "practice-typing": {
+      "mode": "direct-copy",
+      "status": "synced",
+      "files": [
+        "assets/js/coding_typing.js",
+        "assets/js/japanese_typing.js",
+        "assets/js/japanese-typing-helpers.js"
+      ]
+    },
+    "data-tools": {
+      "mode": "direct-copy",
+      "status": "synced",
+      "files": [
+        "assets/js/dashboard.js",
+        "assets/js/export-data.js",
+        "assets/js/glossary.js",
+        "assets/js/ai_assistant.js",
+        "assets/js/keyboard-shortcuts.js",
+        "assets/js/syntax-highlighter.js"
+      ]
+    }
   },
   "pcOnlyPathPrefixes": [
-    "python/", "updater/", "bootstrapper", "native/", "tests/", "server.py",
-    "tools/", "docs/", "textbooks/", "data/mos365",
-    "assets/js/mos365.js", "assets/js/updater-ui.js", "assets/js/supabase-config.local.js",
-    "assets/js/java_sandbox.js", "assets/js/python_sandbox.js",
-    "version.json", ".github/", "package.json", "study_ai.py", "launcher"
+    "python/",
+    "updater/",
+    "bootstrapper",
+    "native/",
+    "tests/",
+    "server.py",
+    "tools/",
+    "docs/",
+    "textbooks/",
+    "data/mos365",
+    "assets/js/mos365.js",
+    "assets/js/updater-ui.js",
+    "assets/js/supabase-config.local.js",
+    "assets/js/java_sandbox.js",
+    "assets/js/python_sandbox.js",
+    "version.json",
+    ".github/",
+    "package.json",
+    "study_ai.py",
+    "launcher"
   ],
   "pcOnly": {
-    "python-runtime": { "paths": ["python/"], "reason": "Windows embedded runtime，本地执行环境" },
-    "updater": { "paths": ["updater/", "assets/js/updater-ui.js"], "reason": "Ed25519 验签自动更新依赖本地受控 runtime；Web 由 SW + Releases 链接承担" },
-    "portable-packaging": { "paths": ["tools/create_release.py", "tools/provision_runtime.ps1", "tools/verify_portable_runtime_proof.ps1"], "reason": "Windows Portable 构建签名链" },
-    "local-sandbox": { "paths": ["server.py", "assets/js/java_sandbox.js", "assets/js/python_sandbox.js"], "reason": "本地 Java/Python 执行链；Web 有同名浏览器 API 适配版（Web-only），PC 版不得覆盖" },
-    "vsto-mos365": { "paths": ["native/", "assets/js/mos365.js", "data/mos365_content.js"], "reason": "Excel 原生宿主与实操训练需本地 Excel 环境；Web 显示克制平台说明" },
-    "tests-and-docs": { "paths": ["tests/", "docs/", "textbooks/"], "reason": "PC 仓库私有验证与文档（契约三件除外，双仓库同构）" }
+    "python-runtime": {
+      "paths": [
+        "python/"
+      ],
+      "reason": "Windows embedded runtime，本地执行环境"
+    },
+    "updater": {
+      "paths": [
+        "updater/",
+        "assets/js/updater-ui.js"
+      ],
+      "reason": "Ed25519 验签自动更新依赖本地受控 runtime；Web 由 SW + Releases 链接承担"
+    },
+    "portable-packaging": {
+      "paths": [
+        "tools/create_release.py",
+        "tools/provision_runtime.ps1",
+        "tools/verify_portable_runtime_proof.ps1"
+      ],
+      "reason": "Windows Portable 构建签名链"
+    },
+    "local-sandbox": {
+      "paths": [
+        "server.py",
+        "assets/js/java_sandbox.js",
+        "assets/js/python_sandbox.js"
+      ],
+      "reason": "本地 Java/Python 执行链；Web 有同名浏览器 API 适配版（Web-only），PC 版不得覆盖"
+    },
+    "vsto-mos365": {
+      "paths": [
+        "native/",
+        "assets/js/mos365.js",
+        "data/mos365_content.js"
+      ],
+      "reason": "Excel 原生宿主与实操训练需本地 Excel 环境；Web 显示克制平台说明"
+    },
+    "tests-and-docs": {
+      "paths": [
+        "tests/",
+        "docs/",
+        "textbooks/"
+      ],
+      "reason": "PC 仓库私有验证与文档（契约三件除外，双仓库同构）"
+    }
   },
   "webOnly": {
-    "pwa": { "paths": ["manifest.webmanifest", "service-worker.js"], "reason": "PWA 安装与缓存版本控制（CACHE_NAME）" },
-    "web-config": { "paths": ["assets/js/config.web.js"], "reason": "Web 运行时契约 + Web 专有 i18n key 运行时注入 + MOS365 平台说明" },
-    "browser-exec": { "paths": ["assets/js/code-runner-api.js", "assets/js/sqlite-adapter.js", "assets/js/sandbox_bridge.js", "assets/js/execution-status.js", "assets/js/detect_java.js", "functions/"], "reason": "浏览器执行链与 Cloudflare Functions" },
-    "deploy": { "paths": ["_headers"], "reason": "Cloudflare Pages 部署头配置" }
+    "pwa": {
+      "paths": [
+        "manifest.webmanifest",
+        "service-worker.js"
+      ],
+      "reason": "PWA 安装与缓存版本控制（CACHE_NAME）"
+    },
+    "web-config": {
+      "paths": [
+        "assets/js/config.web.js"
+      ],
+      "reason": "Web 运行时契约 + Web 专有 i18n key 运行时注入 + MOS365 平台说明"
+    },
+    "browser-exec": {
+      "paths": [
+        "assets/js/code-runner-api.js",
+        "assets/js/sqlite-adapter.js",
+        "assets/js/sandbox_bridge.js",
+        "assets/js/execution-status.js",
+        "assets/js/detect_java.js",
+        "functions/"
+      ],
+      "reason": "浏览器执行链与 Cloudflare Functions"
+    },
+    "deploy": {
+      "paths": [
+        "_headers"
+      ],
+      "reason": "Cloudflare Pages 部署头配置"
+    }
   },
   "releaseGate": "PC 创建正式 GitHub Release 前必须 node tools/verify_pc_web_sync_contract.js PASS；PC-only 改动以 [PC-ONLY] 标记或路径豁免"
 }
