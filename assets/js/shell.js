@@ -99,6 +99,12 @@
 
     updateRailActive(window.currentSubject || "sql");
     syncThemeIcon();
+
+    // 主题可由多处切换（rail / 旧 header 按钮 / initTheme 恢复）——
+    // 以 body[data-theme] 为唯一事实源观察，保证 rail 图标恒同步
+    new MutationObserver(syncThemeIcon).observe(document.body, {
+      attributes: true, attributeFilter: ["data-theme"]
+    });
   }
 
   function init() {

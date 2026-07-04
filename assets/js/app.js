@@ -8001,8 +8001,12 @@ window.StudySync = window.StudySync || null;
     const skipBtn = document.getElementById('immersive-skip-btn');
 
     if (overlay && startBtn && skipBtn) {
+      // P5：遮罩的业务含义是「全屏邀请」（requestFullscreen 需用户手势，无法自动）。
+      // 跳过过的用户选择持久化（localStorage），不再每次启动强制弹出；
+      // 选择过全屏的用户保留每会话弹出——那是其选择的模式且必须经手势进入。
       const started = sessionStorage.getItem('immersive_started');
-      if (started === 'true') {
+      const dismissed = localStorage.getItem('immersive_overlay_dismissed');
+      if (started === 'true' || dismissed === 'true') {
         overlay.setAttribute('hidden', '');
       } else {
         overlay.removeAttribute('hidden');
@@ -8022,6 +8026,7 @@ window.StudySync = window.StudySync || null;
       skipBtn.addEventListener('click', function() {
         overlay.setAttribute('hidden', '');
         sessionStorage.setItem('immersive_started', 'true');
+        localStorage.setItem('immersive_overlay_dismissed', 'true');
       });
     }
   }
