@@ -185,6 +185,31 @@ async function waitForServer(base) {
         // 6) AI 抽屉关闭态必须 inert（焦点治理回归锚）
         const ai = document.getElementById("ai-assistant-drawer");
         if (ai && !ai.classList.contains("open") && !ai.hasAttribute("inert")) res.issues.push("ai-drawer-not-inert");
+        // P10-8) 目录触发器可发现性：≥44×44 且带 aria-label
+        const cnt = document.getElementById("context-nav-toggle");
+        if (cnt) {
+          const r = cnt.getBoundingClientRect();
+          const vp = getComputedStyle(cnt).display !== "none";
+          if (vp && (r.width < 44 || r.height < 44)) res.issues.push(`context-toggle-size=${Math.round(r.width)}x${Math.round(r.height)}`);
+          if (vp && !cnt.getAttribute("aria-label")) res.issues.push("context-toggle-no-aria");
+        } else if (innerWidth > 720) {
+          res.issues.push("context-toggle-missing");
+        }
+        // P10-9) 仅图标按钮必须有可达名称（tooltip/aria）
+        let unnamedIcon = 0;
+        document.querySelectorAll(".app-header button, #nav-rail button").forEach((b) => {
+          if (!isVisible(b)) return;
+          const hasText = (b.textContent || "").trim().length > 0;
+          const named = b.getAttribute("aria-label") || b.getAttribute("title");
+          if (!hasText && !named) unnamedIcon++;
+        });
+        if (unnamedIcon > 0) res.issues.push(`unnamed-icon-buttons=${unnamedIcon}`);
+        // P10-10) UI 控件图标不得使用 emoji 字符
+        let emojiIcons = 0;
+        document.querySelectorAll("[class*='__icon'], .sandbox-btn-icon").forEach((el) => {
+          if (/[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}\u{25B6}]/u.test(el.textContent || "")) emojiIcons++;
+        });
+        if (emojiIcons > 0) res.issues.push(`emoji-icons=${emojiIcons}`);
         // 7) 嵌套 surface 深度（正文区 4 层以上实底嵌套 = 卡中卡）
         const hasBg = (el) => { const b = getComputedStyle(el).backgroundColor; return b !== "rgba(0, 0, 0, 0)"; };
         let deep = 0;
