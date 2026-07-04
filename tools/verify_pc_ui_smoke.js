@@ -136,6 +136,71 @@ async function waitForServer(base) {
       return ok;
     }
 
+    // P9 视觉质量规则：可观测断言（不以截图数量代替质量）
+    async function visualQualityCheck(theme) {
+      const v = await page.evaluate(() => {
+        const res = { issues: [] };
+        const isVisible = (el) => { const r = el.getBoundingClientRect(); return r.width > 0 && r.height > 0; };
+        const toRgb = (hex) => { const n = parseInt(hex.slice(1), 16); return `rgb(${(n >> 16) & 255}, ${(n >> 8) & 255}, ${n & 255})`; };
+        // 从 body 读取：浅色翻转定义在 body[data-theme="light"] 层
+        const accentRgb = toRgb(getComputedStyle(document.body).getPropertyValue("--accent").trim());
+        // 1) 单视图可见 Primary（accent 实底）预算
+        let primaries = 0;
+        document.querySelectorAll("button").forEach((b) => {
+          if (isVisible(b) && getComputedStyle(b).backgroundColor === accentRgb) primaries++;
+        });
+        res.primaries = primaries;
+        if (primaries > 3) res.issues.push(`primary-buttons=${primaries}(>3)`);
+        // 2) 大面积纯白 / 纯黑应用底
+        const appBg = getComputedStyle(document.querySelector(".app-container")).backgroundColor;
+        const isLight = document.body.getAttribute("data-theme") === "light";
+        if (isLight && appBg === "rgb(255, 255, 255)") res.issues.push("pure-white app bg");
+        if (!isLight && appBg === "rgb(0, 0, 0)") res.issues.push("pure-black app bg");
+        // 3) 高饱和装饰色抽样（非语义容器上 s>0.62 且中亮度）
+        let vivid = 0;
+        document.querySelectorAll("button, [class*='tag'], [class*='chip'], [class*='badge']").forEach((el) => {
+          if (!isVisible(el)) return;
+          const m = getComputedStyle(el).backgroundColor.match(/rgba?\((\d+), (\d+), (\d+)/);
+          if (!m) return;
+          const [r, g, b] = [+m[1] / 255, +m[2] / 255, +m[3] / 255];
+          const mx = Math.max(r, g, b), mn = Math.min(r, g, b), l = (mx + mn) / 2;
+          const s = mx === mn ? 0 : (mx - mn) / (1 - Math.abs(2 * l - 1));
+          if (s > 0.62 && l > 0.35 && l < 0.72) vivid++;
+        });
+        if (vivid > 2) res.issues.push(`vivid-elements=${vivid}(>2)`);
+        // 4) Rail 与内容不重叠
+        const rail = document.getElementById("nav-rail");
+        const frameBody = document.querySelector(".app-frame__body");
+        if (rail && frameBody && getComputedStyle(rail).display !== "none") {
+          const rr = rail.getBoundingClientRect(), cc = frameBody.getBoundingClientRect();
+          if (rr.right - 1 > cc.left) res.issues.push(`rail-overlap(${Math.round(rr.right)}>${Math.round(cc.left)})`);
+        }
+        // 5) 交互动效时长（>320ms 视为迟滞）
+        let slow = 0;
+        document.querySelectorAll(".rail-item, .sub-header-tab, .quiz-option, .ds-btn, .lang-tab, .lesson-nav-item").forEach((el) => {
+          const ds = getComputedStyle(el).transitionDuration.split(",").map((x) => parseFloat(x) * 1000);
+          if (ds.some((d) => d > 320)) slow++;
+        });
+        if (slow > 0) res.issues.push(`slow-transitions=${slow}`);
+        // 6) AI 抽屉关闭态必须 inert（焦点治理回归锚）
+        const ai = document.getElementById("ai-assistant-drawer");
+        if (ai && !ai.classList.contains("open") && !ai.hasAttribute("inert")) res.issues.push("ai-drawer-not-inert");
+        // 7) 嵌套 surface 深度（正文区 4 层以上实底嵌套 = 卡中卡）
+        const hasBg = (el) => { const b = getComputedStyle(el).backgroundColor; return b !== "rgba(0, 0, 0, 0)"; };
+        let deep = 0;
+        document.querySelectorAll(".content-card *").forEach((el) => {
+          if (!isVisible(el) || !hasBg(el)) return;
+          let depth = 0, p = el.parentElement;
+          while (p && p !== document.body) { if (hasBg(p)) depth++; p = p.parentElement; }
+          if (depth >= 4) deep++;
+        });
+        if (deep > 8) res.issues.push(`surface-nesting=${deep}`);
+        return res;
+      });
+      if (v.issues.length) failures.push(`visual[${theme}]: ${v.issues.join("; ")}`);
+      else console.log(`VISUAL-OK [${theme}] primaries=${v.primaries}`);
+    }
+
     async function overflowCheck(width) {
       const ov = await page.evaluate(() => ({
         doc: document.documentElement.scrollWidth,
@@ -161,6 +226,7 @@ async function waitForServer(base) {
         try {
           await switchModule(mod);
           await shot(`${mod}-${theme}-1440`);
+          if (mod === "sql") await visualQualityCheck(theme);
         } catch (e) { failures.push(`shot ${mod}-${theme}: ${e.message.split("\n")[0]}`); }
       }
       // MOS365 视图（入口为运行时注入；不触发任何 launch）
