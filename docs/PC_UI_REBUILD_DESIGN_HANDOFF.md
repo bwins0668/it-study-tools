@@ -1,7 +1,8 @@
-# PC UI 重建设计交接文档（P1–P8）
+# PC UI 重建设计交接文档（P1–P9）
 
-分支 `feat/pc-ui-rebuild`｜基线 `1827f8c`｜完成于 2026-07-04
+分支 `feat/pc-ui-rebuild`｜基线 `1827f8c`｜P9 视觉纠偏完成于 2026-07-04
 本文档是桌面端 UI 重建的唯一设计事实源。上会话遗失的原设计计划由本文档取代。
+**P9 起视觉方向为 Quiet Technical Workspace**（安静、精确、低刺激的专业学习工具），详见 §16。
 
 ---
 
@@ -35,7 +36,7 @@ app-frame
 | 背景 4 层 | `--bg-0..3` | #121213 / #171718 / #1D1D1F / #252528 | #F4EFE6 / #FAF6EE / #FFFEFA / #ECE5D6 |
 | 文本 4 层 | `--tx-1..3, --tx-disabled` | #ECEAE8 / #B0ADA9 / #787571 / #55524E | #2A251C / #5C5546 / #8C8371 / #B3AA98 |
 | 边框 | `--bd-1/2` | 白 7%/14% | 墨 11%/20% |
-| 强调 | `--accent`(+hover/press/subtle/on) | 绯红 #D0564F | 金棕 #B07A28 |
+| 强调 | `--accent`(+hover/press/subtle/on) | 砖红 #B4544C（P9 降饱和） | 氧化红 #9E5049（P9 金棕退役） |
 | 状态 | `--ok/--warn/--danger`(+subtle) | #56A56C / #D9A13B / #C03A30 | #4E7A46 / #A87817 / #B5433A |
 | 字号 | `--fs-12..28` | 12/13/14/16/18/22/28px | 同 |
 | 行高 | `--lh-cjk/ui/code` | 1.75 / 1.4 / 1.6 | 同 |
@@ -77,12 +78,15 @@ app-frame
 
 `≥1280`：完整布局。`1024–1279`：rail 保持，home 概览列收窄。`721–1023`：go 提示隐藏。`≤720`：rail/statusbar 隐藏，复用既有 mobile 抽屉；brand 下拉恢复为唯一模块导航；workspace 单列 + 右上关闭按钮。全档零横向溢出（smoke 断言）。
 
-## 8. 主题规则
+## 8. 主题规则（P9 收口后架构）
 
-- `body[data-theme="light"]` 为唯一开关；tokens.css 负责变量翻转。
-- **既有事实（重要）**：旧浅色 = app.js `setRuntimeLightThemeOverride` 注入 `body[data-theme="light"] * { background:#fff; color:#000 !important … }` 全局强制层。本轮**未移除**（逐区域迁移原则）：内容区浅色保持强制白的既有可读行为；全部新建区域（壳层/workspace/课时导航/练习标注）各自携带"防御块"（更高特异性 + !important 恢复 token）。
-- **移除路线**：待内容区逐模块 token 化后，删除 app.js 的 override 注入与各 ds 文件尾部防御块（搜索 "P1 并存期浅色防御"）。
-- 主题图标以 `body[data-theme]` MutationObserver 为唯一同步源（P5）：rail 与旧按钮任一来源切换均同步。
+浅色由三层构成，全部以 token 为值来源：
+1. **tokens.css**：`body[data-theme="light"]` 变量翻转（唯一颜色定义点）；
+2. **quiet.css**：旧全局变量重映射（`--bg-primary/--text-main/--neon-*` → token；`:root` 深色 + `body[data-theme="light"]` 浅色两段）；
+3. **runtime 主题层（app.js `RUNTIME_LIGHT_THEME_CSS`）**：对未迁移旧区域的兜底——通配段只管文字/边线/阴影（不碰背景，背景由变量重映射自动适配），面层/凹陷层/主行动/正误语义分段与通配同特异性、按源序分层；`.ds-scope` 区整体排除。
+- **light-theme.css 已卸载**（index.html 注释了 link；文件保留仅作历史参考）；其"高对比核弹段"已删除。
+- ds 文件不再携带任何浅色防御块（P9 删除，净减一层 `!important`）。
+- 主题图标以 `body[data-theme]` MutationObserver 为唯一同步源（P5）。
 
 ## 9. i18n 规则
 
@@ -144,7 +148,34 @@ app-frame
 - `#statusbar-update-badge` 待 updater 正式接管（P1 预留位，现 hidden 无害）。
 - 小字号 `--tx-3` 在深色下对比度约 4.5:1 边缘，正文层级未受影响；后续微调建议提亮至 #82807B。
 
-## 16. 未来维护原则
+## 16. P9 视觉纠偏纪要（Quiet Technical Workspace）
+
+**推翻的 P1–P8 假设**：
+- "旧界面 + 新 token 叠加层"不构成视觉验收——P1–P8 的功能与交互成果保留，但视觉被判定为"旧界面套壳"（方框税/双导航/浅色刺眼/深色颜色失控四项反例）。
+- "炭绯 + 暖纸"的字面延续被重置为 Quiet Technical Workspace：中性灰为默认，砖红/氧化红仅当前选中与主行动，语义色只表达真实状态。
+- "防御块 + !important 对抗"路线被废弃：改为来源收口（light-theme 卸载、漂白段 token 化、变量重映射）。
+
+**P9 关键修复（根因 → 处置）**：
+| 问题 | 根因 | 处置 |
+|---|---|---|
+| 打字页红墙 | P1 token 泄漏：旧组件 `var(--accent, #6366f1)` 被全局 `--accent` 灌红 | 作用域重定义 + 选中态弱底左条；主行动让位「在沙盒中运行」 |
+| 浅色白底黑框线框感 | app.js runtime 核弹（#fff/#000/#111）+ light-theme"高对比段"双源 | runtime 重写为暖纸石墨低对比线；高对比段删除；light-theme 卸载 |
+| 主行动白色大按钮 | index.css 两处"漂白轮"`background:#ffffff !important` | 值 token 化（accent），不新增层 |
+| 右列深壳/结果区纯黑 | `.playground-card` 半透深底、"Sinking"纯黑段、`.app-container` 近黑渐变（全 `!important`） | 全部值 token 化 |
+| 双语列灰块 | `.concept-body` 半透黑（浅色下成灰卡） | 透明化，排版留白分层 |
+| 模式 tab/子头浮起框 | 两处漂白 active 段白框白底 | 弱 accent 底、无框无影 |
+| lang-tabs 三枚描边按钮 | 多级旧选择器特异性 | 下划线式 tab（`body .content-card` 链压平） |
+| 霓虹变量残留 | `--neon-cyan:#fff` 等旧变量体系 | quiet.css `:root` + 浅色两段全部重映射到 token |
+
+**边框预算实施**：正文区（concept/analogy/lang-tabs/quiz-question）零边框化，以留白、字阶、细分隔线分层；仅可操作容器（编辑器/选项行/输入区）与一层 surface 保留低对比边线；全站禁"描边+阴影+高对比填充"三叠加（视觉 smoke 断言把守）。
+
+**已知遗留（不阻塞）**：
+- light-theme.css 文件保留在仓库（已卸载、未删除），确认无回访需求后可物理删除；
+- 沉浸遮罩视觉未重设计（功能正常，P5 已治理弹出策略）；
+- itpass 词卡/工具箱等右栏组件仍带旧卡片边框（低对比可接受，后续可按边框预算继续瘦身）；
+- coding-typing 的类别 chips 悬停背景来自旧 CSS（灰阶已合规）。
+
+## 17. 未来维护原则
 
 1. 新增界面一律引用 tokens；禁 `transition:all`、裸色值、`!important`（浅色防御块为唯一豁免且随 override 一起退役）。
 2. hover 只在 `(hover:hover) and (pointer:fine)` 下启用；动效只用 transform/opacity；新增动效必须过 reduced-motion。
