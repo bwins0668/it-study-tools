@@ -1799,7 +1799,16 @@ DISABLE_TRANSLATION_OVERLAY = true;
   }
 
   async function setLanguage(code) {
-    const next = languageByCode.has(code) ? code : DEFAULT_LANG;
+    /* Boundary rule: registry keys are short codes (zh/ja/...) while callers may
+       pass BCP-47 long codes (zh-CN/ja-JP/...) — normalize before lookup, and an
+       unrecognized code falls back to DEFAULT_LANG with a visible warn, never
+       silently. Empty input must NOT reach normalizeLangShort (it maps "" → "zh"). */
+    const raw = typeof code === "string" ? code.trim() : "";
+    const wanted = languageByCode.has(raw) ? raw : (raw ? normalizeLangShort(raw) : "");
+    if (!languageByCode.has(wanted) && typeof console !== "undefined" && console.warn) {
+      console.warn(`[I18n] setLanguage: unsupported code "${raw}" → fallback "${DEFAULT_LANG}"`);
+    }
+    const next = languageByCode.has(wanted) ? wanted : DEFAULT_LANG;
     if (next === currentLang) return;
     translationRunId += 1;
     translating = false;

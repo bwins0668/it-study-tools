@@ -54,6 +54,13 @@ async function openFresh(page) {
   await page.waitForSelector("#main-app-body", { timeout: NAVIGATION_TIMEOUT_MS });
   await page.waitForSelector("#mobile-playground-toggle", { state: "attached", timeout: NAVIGATION_TIMEOUT_MS });
   await page.waitForTimeout(500);
+  // 沉浸遮罩（全屏邀请）会拦截后续点击；与真实用户跳过同路径关闭
+  await page.evaluate(() => {
+    const overlay = document.getElementById("immersive-start-overlay");
+    const skip = document.getElementById("immersive-skip-btn");
+    if (overlay && !overlay.hidden && skip) skip.click();
+  });
+  await page.waitForTimeout(200);
 }
 
 async function closeDrawers(page) {
@@ -296,7 +303,7 @@ async function verifyCloseButtonSticky(page, label, viewport) {
     return;
   }
 
-  // Initial bounding box before scroll �?should be fully in viewport
+  // Initial bounding box before scroll �?should be fully in viewport
   const initialBox = await closeBtn.first().boundingBox();
   if (!initialBox) {
     record(`${label} sticky: no bounding box initially`, {});
@@ -328,7 +335,7 @@ async function verifyCloseButtonSticky(page, label, viewport) {
     });
   }
 
-  // Click close button (no force:true) �?must work without positional override
+  // Click close button (no force:true) �?must work without positional override
   await closeBtn.first().click();
   await page.waitForTimeout(250);
 
@@ -472,10 +479,10 @@ async function verifyDesktopRegression(page, label) {
 }
 
 async function verifyDesktopEdgeHandle(page, label) {
-  // Edge handle hover �?sidebar expands as overlay
+  // Edge handle hover �?sidebar expands as overlay
   // Use programmatic events to avoid Playwright hit-testing conflicts with collapsed sidebar
 
-  // 1. Dispatch mouseenter on edge handle �?should expand sidebar
+  // 1. Dispatch mouseenter on edge handle �?should expand sidebar
   await page.evaluate(() => {
     const eh = document.getElementById('sidebar-edge-handle');
     if (eh) {
@@ -486,14 +493,14 @@ async function verifyDesktopEdgeHandle(page, label) {
   const expanded = await page.evaluate(() => document.body.classList.contains("desktop-sidebar-expanded"));
   if (!expanded) record(`${label} edge: mouseenter did not expand sidebar`, {});
 
-  // 2. Sidebar is overlay �?content should still fill the app-body width
+  // 2. Sidebar is overlay �?content should still fill the app-body width
   const contentWidthExpanded = await page.evaluate(() => {
     const body = document.getElementById("main-app-body");
     return body ? body.offsetWidth : 0;
   });
   if (contentWidthExpanded < 400) record(`${label} edge: content collapsed when sidebar expands`, { contentWidthExpanded });
 
-  // 3. Scroll within sidebar �?sidebar stays open
+  // 3. Scroll within sidebar �?sidebar stays open
   const sidebar = page.locator("#app-sidebar");
   if (expanded) {
     await sidebar.evaluate(el => { el.scrollTop = el.scrollHeight; });
@@ -704,7 +711,7 @@ async function run() {
       }
     }
 
-    // Desktop regression �?sidebar in-flow, no sticky leakage, toggle hidden
+    // Desktop regression �?sidebar in-flow, no sticky leakage, toggle hidden
     if (viewport.width >= 1280) {
       await verifyDesktopRegression(page, label);
       await verifyDesktopEdgeHandle(page, label);

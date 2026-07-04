@@ -632,27 +632,86 @@
       (launchState.state === 'ready' || launchState.state === 'failed' || launchState.state === 'ended'));
   }
 
+  /* P10：启动步骤模型——全部来自 launch/state 的真实相位时间戳，绝不伪造 */
+  function launchStepsModel(ls) {
+    var phases = (ls && ls.phases) || {};
+    var st = ls && ls.state;
+    var defs = [
+      { key: 'session_created', label: 'セッション作成 / 创建训练会话' },
+      { key: 'workbook_ready', label: 'ワークブック準備 / 准备练习文件' },
+      { key: 'excel_process_started', label: 'Excel 起動 / 启动 Excel' },
+      { key: 'panel_attached', label: 'トレーニングパネル接続 / 连接训练面板' }
+    ];
+    var activeAssigned = false;
+    return defs.map(function (def) {
+      var s = 'pending';
+      if (def.key === 'panel_attached') {
+        if (st === 'ready' || st === 'ended') s = 'done';
+        else if (st === 'failed') s = 'error';
+        else if (st === 'awaiting_attach') s = 'active';
+      } else if (phases[def.key]) {
+        s = 'done';
+      } else if (st === 'failed') {
+        s = activeAssigned ? 'pending' : 'error';
+        activeAssigned = true;
+      } else if (!activeAssigned) {
+        s = 'active';
+        activeAssigned = true;
+      }
+      return { key: def.key, label: def.label, state: s };
+    });
+  }
+
+  var ATTACH_STALL_MS = 20000;
+  function launchStalled(ls) {
+    if (!ls || ls.state !== 'awaiting_attach') return false;
+    var started = ls.phases && ls.phases.excel_process_started;
+    if (!started) return false;
+    return (Date.now() - Date.parse(started)) > ATTACH_STALL_MS;
+  }
+
   function renderMvp(main) {
     var isCreating = state.mvpInProgress ||
       (state.launchState && state.launchState.active && !isTerminalLaunchState(state.launchState));
     var ls = state.launchState;
     var statusHtml = '';
     if (isCreating || (ls && ls.active)) {
-      var statusText = '正在创建训练';
-      if (ls && ls.active) {
-        var stateMap = {
-          creating: '正在创建训练 / トレーニングを作成中',
-          launching: '正在打开 Excel / Excel を起動中',
-          awaiting_attach: '正在连接训练面板 / トレーニングパネルへ接続中',
-          ready: '已开始答题 / Excel で問題を解いてください',
-          ended: '训练已结束 / トレーニングを終了しました',
-          failed: '启动失败，可安全重试 / 起動に失敗しました'
-        };
-        statusText = stateMap[ls.state] || ls.state;
-      }
-      statusHtml = '<div class="mos365-notice"><strong>' + statusText + '</strong></div>';
+      var steps = launchStepsModel(ls);
+      var stalled = launchStalled(ls);
+      var headline = {
+        ready: 'Excel で問題を解いてください / 已就绪，请在 Excel 中作答',
+        ended: 'トレーニングを終了しました / 训练已结束',
+        failed: '起動に失敗しました。安全に再試行できます / 启动失败，可安全重试'
+      }[ls && ls.state] || 'トレーニングを準備しています / 正在准备训练';
+
+      statusHtml = '<section class="mos365-launch" aria-live="polite">' +
+        '<h4 class="mos365-launch__title">' + escapeHtml(headline) + '</h4>' +
+        '<ol class="mos365-launch-steps">' + steps.map(function (s) {
+          return '<li class="mos365-step" data-step-state="' + s.state + '">' +
+            '<span class="mos365-step__dot" aria-hidden="true"></span>' +
+            '<span class="mos365-step__label">' + escapeHtml(s.label) + '</span>' +
+            '<span class="mos365-step__state">' + ({ done: '完了', active: '進行中…', error: '失敗', pending: '' }[s.state] || '') + '</span>' +
+          '</li>';
+        }).join('') + '</ol>' +
+        (stalled
+          ? '<div class="mos365-launch-stall"><strong>トレーニングパネルが接続されていません / 训练面板未连接。</strong><br>' +
+            'Excel は起動済みですが、Excel 側のトレーニングアドイン（Exam Host）が応答していません。' +
+            'アドインが未インストールの場合は <code>tools/install_mos365_exam_host.ps1</code> で導入できます。<br>' +
+            '中文：Excel 已启动，但训练插件未响应。若尚未安装插件，可运行上述脚本安装后重试；也可以取消本次训练安全返回。</div>'
+          : '') +
+        '<div class="mos365-actions mos365-launch-actions">' +
+          '<button class="mos365-btn secondary" data-launch-cancel>キャンセル / 取消</button>' +
+          (ls && (ls.state === 'failed' || stalled) ? '<button class="mos365-btn" data-launch-retry>再試行 / 重试</button>' : '') +
+          '<button class="mos365-btn secondary" data-launch-diag aria-expanded="' + (state.launchDiagOpen ? 'true' : 'false') + '">診断情報 / 诊断</button>' +
+          '<button class="mos365-btn secondary" data-launch-back>学習に戻る / 返回工作台</button>' +
+        '</div>' +
+        '<pre class="mos365-launch-diag"' + (state.launchDiagOpen ? '' : ' hidden') + '>' +
+          escapeHtml(JSON.stringify({ sessionId: ls && ls.sessionId, pid: ls && ls.pid, state: ls && ls.state, updatedAt: ls && ls.updatedAt, phases: ls && ls.phases }, null, 2)) +
+        '</pre>' +
+      '</section>';
     }
     main.innerHTML = '<h3>MOS 実技トレーニング</h3><p class="mos365-muted">本物の Excel を使って操作を練習します。评分系统は実際の Open XML 分析に基づきます。</p>' +
+      statusHtml +
       '<div class="mos365-list">' +
       ORIGINAL_TASKS.map(function (task) {
         return '<article class="mos365-item">' +
@@ -669,19 +728,39 @@
           '</div>' +
         '</article>';
       }).join('') +
-      '</div>' + statusHtml +
+      '</div>' +
       '<div id="mos-mvp-output"></div><div class="mos365-actions">' +
       '<button class="mos365-btn danger" data-mvp-clear>重新开始 / リセット</button></div>';
     main.querySelectorAll('[data-mvp-start]').forEach(function (btn) {
       btn.addEventListener('click', function () { startMvpTraining(btn.dataset.mvpStart, btn); });
     });
-    main.querySelector('[data-mvp-clear]') && main.querySelector('[data-mvp-clear]').addEventListener('click', function () {
+    function clearLaunch(afterClear) {
       api('/api/mos365/clear-launch', {}).then(function () {
         transitionToView('mvp', function() {
           state.mvpInProgress = false;
           state.launchState = null;
+          state.lastLaunchSig = null;
+          if (afterClear) afterClear();
         });
       });
+    }
+    main.querySelector('[data-mvp-clear]') && main.querySelector('[data-mvp-clear]').addEventListener('click', function () { clearLaunch(); });
+    main.querySelector('[data-launch-cancel]') && main.querySelector('[data-launch-cancel]').addEventListener('click', function () { clearLaunch(); });
+    main.querySelector('[data-launch-retry]') && main.querySelector('[data-launch-retry]').addEventListener('click', function () {
+      var taskId = state.lastMvpTaskId;
+      clearLaunch(function () {
+        if (taskId) window.setTimeout(function () { startMvpTraining(taskId, null); }, 200);
+      });
+    });
+    main.querySelector('[data-launch-diag]') && main.querySelector('[data-launch-diag]').addEventListener('click', function () {
+      state.launchDiagOpen = !state.launchDiagOpen;
+      var pre = main.querySelector('.mos365-launch-diag');
+      var b = main.querySelector('[data-launch-diag]');
+      if (pre) pre.hidden = !state.launchDiagOpen;
+      if (b) b.setAttribute('aria-expanded', state.launchDiagOpen ? 'true' : 'false');
+    });
+    main.querySelector('[data-launch-back]') && main.querySelector('[data-launch-back]').addEventListener('click', function () {
+      close();
     });
     if (!isTerminalLaunchState(state.launchState)) scheduleLaunchPoll(0);
   }
@@ -696,11 +775,21 @@
             state.mvpInProgress = false;
           });
         }
-        else { render(); scheduleLaunchPoll(1000); }
+        else {
+          // P10：仅状态签名变化时重绘（消除每秒 innerHTML 重建的闪烁，
+          // 并保留诊断展开等本地 UI 状态）；stall 跨阈值也计入签名
+          var sig = JSON.stringify([data.state, data.updatedAt, launchStalled(data)]);
+          if (sig !== state.lastLaunchSig) {
+            state.lastLaunchSig = sig;
+            render();
+          }
+          scheduleLaunchPoll(1000);
+        }
       } else if (state.mvpInProgress) {
         transitionToView('mvp', function() {
           state.mvpInProgress = false;
           state.launchState = null;
+          state.lastLaunchSig = null;
         });
       }
     }).catch(function () { scheduleLaunchPoll(2000); });
@@ -709,9 +798,11 @@
   function startMvpTraining(mode, btn) {
     if (state.mvpInProgress) return;
     state.lastTriggerElement = btn;
+    state.lastMvpTaskId = mode; // P10：供失败/卡住时一键重试
     transitionToView('mvp', function() {
       state.mvpInProgress = true;
       state.launchState = { active: true, state: 'creating' };
+      state.lastLaunchSig = null;
     });
     var taskId = mode;
     if (taskId === 'r16') taskId = 'MOS_GP_001_ENTER_STATUS';

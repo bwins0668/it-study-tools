@@ -1,6 +1,6 @@
 {
-  "version": "2026.8.0",
+  "version": "2026.8.1",
   "channel": "stable",
-  "buildCommit": "ba11315",
-  "publishedAt": "2026-06-28T00:00:00+09:00"
+  "buildCommit": "43b2557",
+  "publishedAt": "2026-07-04T00:00:00+09:00"
 }

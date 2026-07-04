@@ -19,6 +19,10 @@ assets/js/supabase-config.local.js
 .env.local
 *.secret
 
+# UI rebuild visual evidence (screenshots are not committed, scripts are)
+docs/ui-rebuild-baseline/
+docs/ui-rebuild-evidence/
+
 # Temporary browser/CDP diagnostics
 scratch/
 tools/_cdp_*.js
@@ -26,3 +30,6 @@ tools/_check_*.js
 tools/_get_supa_token*.js
 tools/_supa_login.js
 *.bak
+
+# P14.1: runtime 依赖装配产物（tools/provision_runtime.ps1 生成，不入库；打包前 provision + release gate 校验）
+python/Lib/site-packages/

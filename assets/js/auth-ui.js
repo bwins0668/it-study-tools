@@ -35,12 +35,17 @@
 
   var supabaseAdapterLoading = null;
   var authMessage = "";
+  var authMessageKind = "info"; // "info" | "error" | "success"
   var authSubscription = null;
   var syncMessage = "";
   var syncInProgress = false;
   var accountManagementOpen = false;
   var profileUpdateInProgress = false;
   var passwordUpdateInProgress = false;
+  /* P15.2 提交状态机：idle | loggingIn | registering（validating 为同步校验，瞬时不驻留） */
+  var authFlowState = "idle";
+  var lastFocusedTrigger = null;
+  var activeAuthTab = "login";
 
   function ensureSupabaseAdapter() {
     if (window.StudySupabase) return Promise.resolve(window.StudySupabase);
@@ -195,6 +200,33 @@
       "auth.currentUsername": "Current username",
       "auth.currentDisplayName": "Current display name",
       "auth.saving": "Saving",
+      "auth.panelTitle": "Account & Sync",
+      "auth.panelSubtitle": "Sign in to sync learning progress and settings across devices",
+      "auth.optional": "optional",
+      "auth.showPassword": "Show password",
+      "auth.hidePassword": "Hide password",
+      "auth.loggingIn": "Signing in",
+      "auth.registering": "Creating account",
+      "auth.displayNameDefaultHint": "Leave empty to use your username",
+      "auth.passwordRuleHint": "At least 6 characters; use a unique password",
+      "auth.syncState.signedOutLocalTitle": "Local mode",
+      "auth.syncState.signedOutLocalDesc": "Your learning data is stored on this device. Everything works offline. Sign in to enable multi-device sync.",
+      "auth.syncState.authenticatingTitle": "Verifying identity",
+      "auth.syncState.authenticatingDesc": "Contacting the sync service. Please wait.",
+      "auth.syncState.pendingTitle": "Signed in, not synced yet",
+      "auth.syncState.pendingDesc": "Nothing syncs automatically. Click “Sync now” to upload and fetch progress.",
+      "auth.syncState.syncingTitle": "Syncing",
+      "auth.syncState.syncingDesc": "Uploading and fetching learning progress. Please keep this window open.",
+      "auth.syncState.syncedTitle": "Synced",
+      "auth.syncState.syncedDesc": "Your learning progress and settings are synced to your account.",
+      "auth.syncState.mergedTitle": "Synced (merged)",
+      "auth.syncState.mergedDesc": "Remote and local progress merged additively — local records are never deleted.",
+      "auth.syncState.cloudUnavailableTitle": "Cloud sync unavailable",
+      "auth.syncState.cloudUnavailableDesc": "Cannot reach the sync service. Your data is safe on this device and learning is unaffected.",
+      "auth.syncState.failedTitle": "Sync failed",
+      "auth.syncState.failedDesc": "No local data was lost. You can retry the sync or keep learning locally.",
+      "auth.syncState.retrySync": "Retry sync",
+      "auth.syncState.retryConnect": "Retry connection",
     };
     return dict[key] || fallback || key;
   }
@@ -321,9 +353,44 @@
   /* ── Panel ────────────────────────────────────────── */
   var panelVisible = false;
 
+  /* P15.2：overlay 打开时背景 inert；关闭必须完全清理（不残留 inert/backdrop） */
+  function setBackgroundInert(on) {
+    [".app-frame", ".app-statusbar"].forEach(function (sel) {
+      var node = document.querySelector(sel);
+      if (!node) return;
+      if (on) node.setAttribute("inert", "");
+      else node.removeAttribute("inert");
+    });
+  }
+
+  function onAuthPanelKeydown(event) {
+    if (!panelVisible) return;
+    if (event.key === "Escape") {
+      event.stopPropagation();
+      closeAuthPanel();
+      return;
+    }
+    if (event.key === "Tab") {
+      var panel = el("auth-panel");
+      if (!panel || panel.hidden) return;
+      var focusables = panel.querySelectorAll('button:not([disabled]), input:not([disabled]), summary, [href], [tabindex]:not([tabindex="-1"])');
+      if (!focusables.length) return;
+      var first = focusables[0];
+      var last = focusables[focusables.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    }
+  }
+
   function openAuthPanel(mode) {
     if (panelVisible) return;
     panelVisible = true;
+    lastFocusedTrigger = document.activeElement;
 
     var backdrop = el("auth-panel-backdrop");
     if (!backdrop) {
@@ -345,10 +412,18 @@
 
     // Populate panel content
     populateAuthPanel(panel, mode || "default");
+    setBackgroundInert(true);
+    document.addEventListener("keydown", onAuthPanelKeydown, true);
+
+    var firstFocus = panel.querySelector(".auth-tab.active") || panel.querySelector("input, button");
+    if (firstFocus) firstFocus.focus();
   }
 
   function closeAuthPanel() {
     panelVisible = false;
+    authFlowState = "idle";
+    document.removeEventListener("keydown", onAuthPanelKeydown, true);
+    setBackgroundInert(false);
     var backdrop = el("auth-panel-backdrop");
     if (backdrop) {
       backdrop.hidden = true;
@@ -359,6 +434,11 @@
       panel.hidden = true;
       panel.style.display = "none";
     }
+    /* 焦点回到账户触发器（任务书：关闭后焦点恢复，无黑幕锁死） */
+    var trigger = el("auth-user-btn");
+    if (trigger && typeof trigger.focus === "function") trigger.focus();
+    else if (lastFocusedTrigger && typeof lastFocusedTrigger.focus === "function") lastFocusedTrigger.focus();
+    lastFocusedTrigger = null;
   }
 
   function createAuthPanel() {
@@ -377,6 +457,208 @@
 
     document.body.appendChild(panel);
     return panel;
+  }
+
+  /* ── P15.2 同步状态模型 ──────────────────────────────
+     推导为真实状态，绝不伪造：未登录不显示已同步；云不可用如实说明；
+     失败强调本地数据未丢失；合并策略如实标注（union 只增不删）。 */
+  function deriveSyncUiState() {
+    if (authFlowState === "loggingIn" || authFlowState === "registering") return "authenticating";
+    var state = getLocalAuthState();
+    if (!state || state.mode !== "signed_in" || state.provider !== "supabase") return "signedOutLocal";
+    var supa = window.StudySupabase && typeof window.StudySupabase.getStatus === "function"
+      ? window.StudySupabase.getStatus()
+      : { ready: false };
+    if (!supa.ready) return "cloudUnavailable";
+    if (syncInProgress) return "syncing";
+    var summary = window.StudySync && typeof window.StudySync.getSyncSummary === "function"
+      ? window.StudySync.getSyncSummary()
+      : null;
+    if (summary && summary.status === "error") return "syncFailed";
+    if (summary && summary.status === "success") {
+      var merges = summary.summary && (summary.summary.conflicts_resolved || summary.summary.bookmarks_conflicts_resolved);
+      return merges ? "syncedWithMerges" : "synced";
+    }
+    return "authenticatedSyncPending";
+  }
+
+  function syncStateCardHtml() {
+    var s = deriveSyncUiState();
+    var canSync = !syncInProgress;
+    var M = {
+      signedOutLocal: {
+        icon: "fa-laptop", cls: "is-local",
+        title: t("auth.syncState.signedOutLocalTitle", "本地模式"),
+        desc: t("auth.syncState.signedOutLocalDesc", "当前学习记录保存在这台设备上，学习功能完全可用。登录后可开启多设备同步。"),
+        action: null,
+      },
+      authenticating: {
+        icon: "fa-circle-notch fa-spin", cls: "is-busy",
+        title: t("auth.syncState.authenticatingTitle", "正在验证身份"),
+        desc: t("auth.syncState.authenticatingDesc", "正在与同步服务通信，请稍候。"),
+        action: null,
+      },
+      authenticatedSyncPending: {
+        icon: "fa-cloud-arrow-up", cls: "is-pending",
+        title: t("auth.syncState.pendingTitle", "已登录，尚未同步"),
+        desc: t("auth.syncState.pendingDesc", "不会自动同步。点击「立即同步」上传并获取学习进度。"),
+        action: canSync ? { act: "manual-sync", label: t("auth.syncNow", "立即同步"), icon: "fa-rotate" } : null,
+      },
+      syncing: {
+        icon: "fa-rotate fa-spin", cls: "is-busy",
+        title: t("auth.syncState.syncingTitle", "正在同步"),
+        desc: t("auth.syncState.syncingDesc", "正在上传或获取学习进度，请不要关闭当前窗口。"),
+        action: null,
+      },
+      synced: {
+        icon: "fa-cloud-check", cls: "is-ok",
+        title: t("auth.syncState.syncedTitle", "已同步"),
+        desc: t("auth.syncState.syncedDesc", "你的学习进度与设置已同步到账户。"),
+        action: canSync ? { act: "manual-sync", label: t("auth.syncNow", "立即同步"), icon: "fa-rotate" } : null,
+      },
+      syncedWithMerges: {
+        icon: "fa-code-merge", cls: "is-ok",
+        title: t("auth.syncState.mergedTitle", "已同步（含合并）"),
+        desc: t("auth.syncState.mergedDesc", "已按「只增不删」策略合并远端与本地进度，本地记录不会被覆盖删除。"),
+        action: canSync ? { act: "manual-sync", label: t("auth.syncNow", "立即同步"), icon: "fa-rotate" } : null,
+      },
+      cloudUnavailable: {
+        icon: "fa-cloud-slash", cls: "is-warn",
+        title: t("auth.syncState.cloudUnavailableTitle", "云同步不可用"),
+        desc: t("auth.syncState.cloudUnavailableDesc", "当前无法连接同步服务。学习记录仍安全保存在本机，学习不受影响。"),
+        action: { act: "retry-cloud", label: t("auth.syncState.retryConnect", "重试连接"), icon: "fa-plug" },
+      },
+      syncFailed: {
+        icon: "fa-triangle-exclamation", cls: "is-warn",
+        title: t("auth.syncState.failedTitle", "同步失败"),
+        desc: t("auth.syncState.failedDesc", "本地记录没有丢失。你可以重试同步，或继续本地学习。"),
+        action: canSync ? { act: "manual-sync", label: t("auth.syncState.retrySync", "重试同步"), icon: "fa-rotate-right" } : null,
+      },
+    };
+    var m = M[s] || M.signedOutLocal;
+    return '<div class="auth-sync-state ' + m.cls + '" data-sync-ui-state="' + s + '">' +
+      '<div class="auth-sync-state__head"><i class="fa-solid ' + m.icon + '" aria-hidden="true"></i>' +
+        '<strong>' + esc(m.title) + '</strong></div>' +
+      '<div class="auth-sync-state__desc">' + esc(m.desc) + '</div>' +
+      (m.action
+        ? '<button type="button" class="auth-btn auth-btn-secondary auth-sync-state__action" data-auth-action="' + m.action.act + '">' +
+            '<i class="fa-solid ' + m.action.icon + '"></i> ' + esc(m.action.label) + '</button>'
+        : '') +
+      '</div>';
+  }
+
+  /* ── P15.2 语义字段与字段级错误 ── */
+  function fieldHtml(opts) {
+    var attrs = ' id="' + opts.id + '" class="auth-input" data-auth-input="' + opts.input + '" type="' + opts.type + '"';
+    if (opts.autocomplete) attrs += ' autocomplete="' + opts.autocomplete + '"';
+    if (opts.maxlength) attrs += ' maxlength="' + opts.maxlength + '"';
+    if (opts.type !== "password") attrs += ' autocapitalize="none" spellcheck="false"';
+    attrs += ' aria-describedby="' + opts.id + '-error' + (opts.hint ? " " + opts.id + "-hint" : "") + '"';
+    return '<div class="auth-field">' +
+      '<label class="auth-field-label" for="' + opts.id + '">' + esc(opts.label) +
+        (opts.optional ? ' <span class="auth-field-optional">' + esc(t("auth.optional", "可选")) + '</span>' : '') + '</label>' +
+      '<div class="auth-input-wrap">' +
+        '<input' + attrs + '>' +
+        (opts.type === "password"
+          ? '<button type="button" class="auth-pw-toggle" data-pw-toggle="' + opts.id + '" aria-pressed="false" aria-label="' + esc(t("auth.showPassword", "显示密码")) + '"><i class="fa-solid fa-eye" aria-hidden="true"></i></button>'
+          : '') +
+      '</div>' +
+      (opts.hint ? '<div class="auth-field-hint" id="' + opts.id + '-hint">' + esc(opts.hint) + '</div>' : '') +
+      '<div class="auth-field-error" id="' + opts.id + '-error" data-error-for="' + opts.input + '" hidden></div>' +
+    '</div>';
+  }
+
+  function clearFieldErrors() {
+    var content = el("auth-panel-content");
+    if (!content) return;
+    content.querySelectorAll(".auth-field-error").forEach(function (node) {
+      node.hidden = true;
+      node.textContent = "";
+    });
+    content.querySelectorAll(".auth-input[aria-invalid]").forEach(function (input) {
+      input.removeAttribute("aria-invalid");
+    });
+  }
+
+  /* 字段级错误：不重建表单（保留用户已输入内容），聚焦出错字段 */
+  function setFieldError(inputName, message) {
+    var content = el("auth-panel-content");
+    if (!content) return;
+    var node = qs('[data-error-for="' + inputName + '"]', content);
+    var input = qs('[data-auth-input="' + inputName + '"]', content);
+    if (node) {
+      node.textContent = message;
+      node.hidden = false;
+    }
+    if (input) {
+      input.setAttribute("aria-invalid", "true");
+      input.focus();
+    }
+  }
+
+  /* 全局通知区更新（不重建表单） */
+  function setAuthNotice(message, kind) {
+    authMessage = message || "";
+    authMessageKind = kind || "info";
+    var content = el("auth-panel-content");
+    if (!content) return;
+    var host = qs(".auth-message-slot", content);
+    if (!host) return;
+    host.innerHTML = authMessage
+      ? '<div class="auth-notice auth-message-notice is-' + authMessageKind + '"><i class="fa-solid ' +
+        (authMessageKind === "error" ? "fa-circle-exclamation" : authMessageKind === "success" ? "fa-circle-check" : "fa-circle-info") +
+        '"></i> <span>' + esc(authMessage) + '</span></div>'
+      : "";
+  }
+
+  /* 提交状态机：请求进行中仅禁用相关表单按钮与输入，禁止重复提交 */
+  function setFlowState(next) {
+    authFlowState = next;
+    var content = el("auth-panel-content");
+    if (!content) return;
+    var busy = next === "loggingIn" || next === "registering";
+    var loginBtn = qs('[data-auth-action="password-sign-in"]', content);
+    var regBtn = qs('[data-auth-action="register"]', content);
+    if (loginBtn) {
+      loginBtn.disabled = busy;
+      loginBtn.innerHTML = next === "loggingIn"
+        ? '<i class="fa-solid fa-circle-notch fa-spin"></i> ' + esc(t("auth.loggingIn", "正在登录"))
+        : '<i class="fa-solid fa-right-to-bracket"></i> ' + esc(t("auth.loginButton", "登录"));
+    }
+    if (regBtn) {
+      regBtn.disabled = busy;
+      regBtn.innerHTML = next === "registering"
+        ? '<i class="fa-solid fa-circle-notch fa-spin"></i> ' + esc(t("auth.registering", "正在创建"))
+        : '<i class="fa-solid fa-user-plus"></i> ' + esc(t("auth.createAccountButton", "创建账号"));
+    }
+    content.querySelectorAll(".auth-login-form input").forEach(function (input) {
+      input.disabled = busy;
+    });
+    var form = qs(".auth-login-section", content);
+    if (form) form.setAttribute("aria-busy", busy ? "true" : "false");
+    updateSyncStateCard();
+  }
+
+  function updateSyncStateCard() {
+    var content = el("auth-panel-content");
+    if (!content) return;
+    var slot = qs(".auth-sync-state-slot", content);
+    if (slot) {
+      slot.innerHTML = syncStateCardHtml();
+      var actionBtn = qs("[data-auth-action]", slot);
+      if (actionBtn) actionBtn.addEventListener("click", handleSyncStateAction);
+    }
+  }
+
+  function handleSyncStateAction(event) {
+    var act = event.currentTarget.getAttribute("data-auth-action");
+    if (act === "manual-sync") return handleManualSync();
+    if (act === "retry-cloud") {
+      if (window.StudySupabase && typeof window.StudySupabase.initClient === "function") {
+        window.StudySupabase.initClient();
+      }
+      if (panelVisible) populateAuthPanel(el("auth-panel"), "retry-cloud");
+    }
   }
 
   function populateAuthPanel(panel, mode) {
@@ -525,27 +807,19 @@
         '</div>' +
       '</details>';
 
-    // Sync status collapsed section
+    /* P15.2：同步区不再是含义模糊的折叠条——状态卡直接可见（真实状态模型），
+       设备与同步明细保留在 details 内 */
     var syncSectionHtml =
-      '<details class="auth-sync-collapsed">' +
-        '<summary class="auth-sync-summary">' +
-          '<i class="fa-solid fa-cloud"></i> ' + esc(t("auth.sync", "同步")) + ' — ' +
-          esc(isAnonymous ? t("auth.localMode", "本地模式") : t("auth.signedIn", "已登录")) +
-        '</summary>' +
-        '<div class="auth-sync-body">' +
-          (isSupabaseUser && canManualSync
-            ? '<div class="auth-btn-row">' +
-                '<button class="auth-btn auth-btn-primary" data-auth-action="manual-sync">' +
-                  '<i class="fa-solid fa-rotate' + (syncInProgress ? " fa-spin" : "") + '"></i> ' +
-                  esc(syncInProgress ? t("auth.syncingNow", "正在同步") : t("auth.syncNow", "立即同步")) +
-                '</button>' +
-              '</div>'
-            : '') +
-          (syncMessage ? '<div class="auth-notice sync-message-notice"><i class="fa-solid fa-circle-info"></i> ' + esc(syncMessage) + '</div>' : '') +
-          deviceInfoHtml +
-          syncDetailsHtml +
+      '<div class="auth-sync-section">' +
+        '<div class="auth-sync-state-slot">' + syncStateCardHtml() + '</div>' +
+        (syncMessage ? '<div class="auth-notice sync-message-notice"><i class="fa-solid fa-circle-info"></i> ' + esc(syncMessage) + '</div>' : '') +
+        '<div class="auth-scope-note">' +
+          '<i class="fa-solid fa-shield-halved" aria-hidden="true"></i> ' +
+          esc(t("auth.syncScope", "只同步学习进度与设置")) + ' · ' + esc(t("auth.noAiKeyUpload", "AI 密钥不会上传")) +
         '</div>' +
-      '</details>';
+        deviceInfoHtml +
+        syncDetailsHtml +
+      '</div>';
 
     var accountManagementHtml =
       '<details class="auth-account-management"' + (accountManagementOpen ? " open" : "") + '>' +
@@ -594,10 +868,19 @@
         '</div>' +
       '</details>';
 
+    var supabaseUnavailableNotice = !supabaseReady
+      ? '<div class="auth-notice is-info auth-offline-note"><i class="fa-solid fa-cloud-slash"></i> <span>' +
+          esc(getSupabaseStatusLabel()) + ' — ' + esc(t("auth.syncState.cloudUnavailableDesc", "当前无法连接同步服务。学习记录仍安全保存在本机，学习不受影响。")) +
+        '</span></div>'
+      : "";
+
     content.innerHTML =
       '<div class="auth-panel-header">' +
-        '<h3 id="auth-panel-title">' + esc(t("auth.account", "账号")) + '</h3>' +
-        '<button class="auth-panel-close-btn" data-auth-action="close" title="' + esc(t("auth.close", "关闭")) + '"><i class="fa-solid fa-xmark"></i></button>' +
+        '<div class="auth-panel-heading">' +
+          '<h3 id="auth-panel-title">' + esc(t("auth.panelTitle", "账号与同步")) + '</h3>' +
+          '<p class="auth-panel-subtitle">' + esc(t("auth.panelSubtitle", "登录后可在多设备同步学习进度与设置")) + '</p>' +
+        '</div>' +
+        '<button class="auth-panel-close-btn" data-auth-action="close" aria-label="' + esc(t("auth.close", "关闭")) + '" title="' + esc(t("auth.close", "关闭")) + '"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>' +
       '</div>' +
       '<div class="auth-panel-body">' +
         (isSupabaseUser
@@ -618,61 +901,68 @@
                 '</button>' +
               '</div>' +
             '</div>' +
+            '<div class="auth-message-slot"></div>' +
             accountManagementHtml +
             syncSectionHtml
           : // Not logged in state
-            '<div class="auth-panel-section auth-login-section">' +
-              '<div class="auth-panel-subtitle">' + esc(t("auth.syncIntro", "多设备同步进度及设置")) + '</div>' +
+            '<div class="auth-panel-section auth-login-section" aria-busy="false">' +
               '<div class="auth-tabs" role="tablist">' +
-                '<button class="auth-tab active" role="tab" data-auth-tab="login" aria-selected="true">' +
+                '<button class="auth-tab' + (activeAuthTab === "login" ? " active" : "") + '" role="tab" data-auth-tab="login" aria-selected="' + (activeAuthTab === "login") + '">' +
                   '<i class="fa-solid fa-right-to-bracket"></i> ' + esc(t("auth.loginTitle", "登录")) +
                 '</button>' +
-                '<button class="auth-tab" role="tab" data-auth-tab="register" aria-selected="false">' +
-                  '<i class="fa-solid fa-user-plus"></i> ' + esc(t("auth.registerTitle", "注册")) +
+                '<button class="auth-tab' + (activeAuthTab === "register" ? " active" : "") + '" role="tab" data-auth-tab="register" aria-selected="' + (activeAuthTab === "register") + '">' +
+                  '<i class="fa-solid fa-user-plus"></i> ' + esc(t("auth.registerTitle", "创建账号")) +
                 '</button>' +
               '</div>' +
+              supabaseUnavailableNotice +
 
-              '<div class="auth-tab-panel" data-auth-panel="login">' +
+              '<div class="auth-tab-panel" data-auth-panel="login"' + (activeAuthTab === "login" ? "" : ' style="display:none"') + '>' +
                 '<div class="auth-login-form">' +
-                  '<input class="auth-input" data-auth-input="login-username" type="text" autocomplete="username" autocapitalize="none" spellcheck="false" maxlength="24" placeholder="' + esc(t("auth.username", "用户名")) + '">' +
-                  '<input class="auth-input" data-auth-input="login-password" type="password" autocomplete="current-password" placeholder="' + esc(t("auth.password", "密码")) + '">' +
+                  fieldHtml({ id: "auth-login-username", input: "login-username", type: "text", autocomplete: "username", maxlength: 24,
+                    label: t("auth.username", "用户名"),
+                    hint: t("auth.noEmailRequiredDesc", "登录只需用户名和密码，无需邮箱。") }) +
+                  fieldHtml({ id: "auth-login-password", input: "login-password", type: "password", autocomplete: "current-password",
+                    label: t("auth.password", "密码") }) +
                   '<div class="auth-btn-row">' +
                     '<button class="auth-btn auth-btn-primary" data-auth-action="password-sign-in"' + (supabaseReady ? "" : " disabled") + '>' +
                       '<i class="fa-solid fa-right-to-bracket"></i> ' + esc(t("auth.loginButton", "登录")) +
                     '</button>' +
                   '</div>' +
-                  '<div class="auth-field-hint"><i class="fa-solid fa-shield-halved"></i> ' +
-                    esc(t("auth.noEmailRequiredDesc", "登录只需用户名和密码。")) +
-                  '</div>' +
                 '</div>' +
               '</div>' +
 
-              '<div class="auth-tab-panel" data-auth-panel="register" style="display:none">' +
+              '<div class="auth-tab-panel" data-auth-panel="register"' + (activeAuthTab === "register" ? "" : ' style="display:none"') + '>' +
                 '<div class="auth-login-form">' +
-                  '<input class="auth-input" data-auth-input="reg-username" type="text" autocomplete="username" autocapitalize="none" spellcheck="false" maxlength="24" placeholder="' + esc(t("auth.username", "用户名")) + '">' +
-                  '<div class="auth-field-hint">' + esc(t("auth.usernamePlaceholder", "3-24 位字母、数字、下划线或连字符")) + '</div>' +
-                  '<input class="auth-input" data-auth-input="reg-display-name" type="text" autocomplete="nickname" placeholder="' + esc(t("auth.displayNameOptional", "昵称（可选）")) + '">' +
-                  '<input class="auth-input" data-auth-input="reg-password" type="password" autocomplete="new-password" placeholder="' + esc(t("auth.password", "密码")) + '">' +
-                  '<input class="auth-input" data-auth-input="reg-confirm-password" type="password" autocomplete="new-password" placeholder="' + esc(t("auth.confirmPassword", "确认密码")) + '">' +
+                  fieldHtml({ id: "auth-reg-username", input: "reg-username", type: "text", autocomplete: "username", maxlength: 24,
+                    label: t("auth.username", "用户名"),
+                    hint: t("auth.usernamePlaceholder", "3-24 位字母、数字、下划线或连字符") }) +
+                  fieldHtml({ id: "auth-reg-display-name", input: "reg-display-name", type: "text", autocomplete: "nickname", maxlength: 32, optional: true,
+                    label: t("auth.displayName", "昵称"),
+                    hint: t("auth.displayNameDefaultHint", "留空时使用用户名作为昵称") }) +
+                  fieldHtml({ id: "auth-reg-password", input: "reg-password", type: "password", autocomplete: "new-password",
+                    label: t("auth.password", "密码"),
+                    hint: t("auth.passwordRuleHint", "至少 6 位；建议使用独立密码并妥善保管") }) +
+                  fieldHtml({ id: "auth-reg-confirm-password", input: "reg-confirm-password", type: "password", autocomplete: "new-password",
+                    label: t("auth.confirmPassword", "确认密码") }) +
                   '<div class="auth-btn-row">' +
                     '<button class="auth-btn auth-btn-primary" data-auth-action="register"' + (supabaseReady ? "" : " disabled") + '>' +
                       '<i class="fa-solid fa-user-plus"></i> ' + esc(t("auth.createAccountButton", "创建账号")) +
                     '</button>' +
                   '</div>' +
                   '<div class="auth-field-hint"><i class="fa-solid fa-envelope-circle-check"></i> ' +
-                    esc(t("auth.noEmailRequired", "无需邮箱")) +
+                    esc(t("auth.noEmailRequired", "无需邮箱")) + ' — ' + esc(t("auth.noEmailRequiredDesc", "只需用户名和密码。")) +
                   '</div>' +
                 '</div>' +
               '</div>' +
             '</div>' +
+            '<div class="auth-message-slot"></div>' +
             syncSectionHtml
           ) +
-          (authMessage ? '<div class="auth-notice auth-message-notice"><i class="fa-solid fa-circle-info"></i> ' + esc(authMessage) + '</div>' : '') +
-        '</div>' +
       '</div>';
 
     content.setAttribute("data-i18n-managed", "static");
     bindAuthPanelActions(content);
+    if (authMessage) setAuthNotice(authMessage, authMessageKind);
   }
 
   function bindAuthPanelActions(content) {
@@ -714,7 +1004,9 @@
     var tabs = content.querySelectorAll("[data-auth-tab]");
     tabs.forEach(function (tab) {
       tab.addEventListener("click", function () {
+        if (authFlowState !== "idle") return; // 请求进行中不允许切换（防状态错乱）
         var target = tab.getAttribute("data-auth-tab");
+        activeAuthTab = target;
         tabs.forEach(function (t2) {
           t2.classList.remove("active");
           t2.setAttribute("aria-selected", "false");
@@ -725,9 +1017,40 @@
         panels.forEach(function (p) {
           p.style.display = p.getAttribute("data-auth-panel") === target ? "block" : "none";
         });
-        authMessage = "";
-        var notice = qs(".auth-message-notice", content);
-        if (notice) notice.remove();
+        clearFieldErrors();
+        setAuthNotice("", "info");
+      });
+    });
+
+    // P15.2：密码显示/隐藏
+    content.querySelectorAll("[data-pw-toggle]").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        var input = el(btn.getAttribute("data-pw-toggle"));
+        if (!input) return;
+        var show = input.type === "password";
+        input.type = show ? "text" : "password";
+        btn.setAttribute("aria-pressed", String(show));
+        btn.setAttribute("aria-label", show ? t("auth.hidePassword", "隐藏密码") : t("auth.showPassword", "显示密码"));
+        var icon = btn.querySelector("i");
+        if (icon) icon.className = show ? "fa-solid fa-eye-slash" : "fa-solid fa-eye";
+        input.focus();
+      });
+    });
+
+    // P15.2：同步状态卡动作（manual-sync / retry-cloud）
+    content.querySelectorAll(".auth-sync-state__action").forEach(function (btn) {
+      btn.addEventListener("click", handleSyncStateAction);
+    });
+
+    // Enter 提交（登录/注册表单内）
+    content.querySelectorAll(".auth-login-form input").forEach(function (input) {
+      input.addEventListener("keydown", function (event) {
+        if (event.key !== "Enter") return;
+        event.preventDefault();
+        var panelName = input.closest("[data-auth-panel]");
+        if (!panelName) return;
+        if (panelName.getAttribute("data-auth-panel") === "login") handlePasswordSignIn();
+        else handleRegister();
       });
     });
   }
@@ -761,55 +1084,95 @@
   }
 
   async function handlePasswordSignIn() {
+    if (authFlowState !== "idle") return; // in-flight 锁：禁止重复提交
+    clearFieldErrors();
+    setAuthNotice("", "info");
+    var content = el("auth-panel-content");
     var username = getAuthInput("login-username");
-    var passwordInput = qs('[data-auth-input="login-password"]', el("auth-panel-content"));
+    var passwordInput = qs('[data-auth-input="login-password"]', content);
     var password = passwordInput ? passwordInput.value : "";
     var usernameError = validateUsername(username);
-    if (usernameError) return refreshAuthPanel(usernameError);
-    if (!password) return refreshAuthPanel(t("auth.passwordRequired", "请输入密码"));
-    var result = await window.StudySupabase.signInWithUsername(username, password);
-    password = "";
-    if (passwordInput) passwordInput.value = "";
-    if (result && result.data && result.data.user) setSupabaseSignedInUser(result.data.user);
-    if (result && result.error) {
-      refreshAuthPanel(friendlyAuthError(result.error, "login"));
-    } else {
-      refreshAuthPanel(t("auth.loginSuccess", "登录成功"));
+    if (usernameError) return setFieldError("login-username", usernameError);
+    if (!password) return setFieldError("login-password", t("auth.passwordRequired", "请输入密码"));
+    if (!window.StudySupabase) return setAuthNotice(t("auth.sdkMissing", "SDK 未加载"), "error");
+
+    setFlowState("loggingIn");
+    try {
+      var result = await window.StudySupabase.signInWithUsername(username, password);
+      password = "";
+      if (passwordInput) passwordInput.value = "";
+      if (result && result.error) {
+        setFlowState("idle");
+        setAuthNotice(friendlyAuthError(result.error, "login"), "error");
+        return;
+      }
+      if (result && result.data && result.data.user) {
+        authFlowState = "idle";
+        authMessage = t("auth.loginSuccess", "登录成功");
+        authMessageKind = "success";
+        setSupabaseSignedInUser(result.data.user); // 触发登录态全量重绘（含成功通知）
+      } else {
+        setFlowState("idle");
+        setAuthNotice(t("auth.loginFailed", "登录失败"), "error");
+      }
+    } catch (error) {
+      setFlowState("idle");
+      setAuthNotice(t("auth.loginFailed", "登录失败") + (error && error.message ? ": " + error.message : ""), "error");
     }
   }
 
   async function handleRegister() {
+    if (authFlowState !== "idle") return; // in-flight 锁：禁止重复提交
+    clearFieldErrors();
+    setAuthNotice("", "info");
+    var content = el("auth-panel-content");
     var username = getAuthInput("reg-username");
     var displayName = getAuthInput("reg-display-name");
-    var pwInput = qs('[data-auth-input="reg-password"]', el("auth-panel-content"));
-    var cpInput = qs('[data-auth-input="reg-confirm-password"]', el("auth-panel-content"));
+    var pwInput = qs('[data-auth-input="reg-password"]', content);
+    var cpInput = qs('[data-auth-input="reg-confirm-password"]', content);
     var password = pwInput ? pwInput.value : "";
     var confirmPassword = cpInput ? cpInput.value : "";
 
     var usernameError = validateUsername(username);
-    if (usernameError) return refreshAuthPanel(usernameError);
-    if (!password) return refreshAuthPanel(t("auth.passwordRequired", "请输入密码"));
-    if (password.length < 6) return refreshAuthPanel(t("auth.passwordTooShort", "密码至少 6 位"));
-    if (password !== confirmPassword) return refreshAuthPanel(t("auth.passwordMismatch", "两次密码不一致"));
+    if (usernameError) return setFieldError("reg-username", usernameError);
+    if (displayName && displayName.length > 32) return setFieldError("reg-display-name", t("auth.displayNameTooLong", "昵称最多 32 个字符"));
+    if (!password) return setFieldError("reg-password", t("auth.passwordRequired", "请输入密码"));
+    if (password.length < 6) return setFieldError("reg-password", t("auth.passwordTooShort", "密码至少 6 位"));
+    if (password !== confirmPassword) return setFieldError("reg-confirm-password", t("auth.passwordMismatch", "两次密码不一致"));
+    if (!window.StudySupabase) return setAuthNotice(t("auth.sdkMissing", "SDK 未加载"), "error");
 
     username = normalizeUsername(username);
     displayName = displayName || username;
-    var result = await window.StudySupabase.signUpWithUsername(username, password, displayName);
-    password = ""; confirmPassword = "";
-    if (pwInput) pwInput.value = "";
-    if (cpInput) cpInput.value = "";
+    setFlowState("registering");
+    try {
+      var result = await window.StudySupabase.signUpWithUsername(username, password, displayName);
+      password = ""; confirmPassword = "";
+      if (pwInput) pwInput.value = "";
+      if (cpInput) cpInput.value = "";
 
-    if (result && result.error) {
-      return refreshAuthPanel(friendlyAuthError(result.error, "register"));
-    }
-    if (result && result.data && result.data.user) {
-      var session = result.data.session;
-      if (session) {
-        setSupabaseSignedInUser(result.data.user, displayName);
-        refreshAuthPanel(t("auth.registerSuccess", "注册成功"));
-      } else {
-        refreshAuthPanel(t("auth.emailConfirmationUsernameWarning", "账号已创建，但项目启用了邮箱确认。用户名账号无法接收确认邮件，请管理员关闭邮箱确认，或使用现有测试账号。"));
+      if (result && result.error) {
+        setFlowState("idle");
+        setAuthNotice(friendlyAuthError(result.error, "register"), "error");
+        return;
       }
+      if (result && result.data && result.data.user) {
+        var session = result.data.session;
+        if (session) {
+          authFlowState = "idle";
+          authMessage = t("auth.registerSuccess", "注册成功");
+          authMessageKind = "success";
+          setSupabaseSignedInUser(result.data.user, displayName);
+        } else {
+          setFlowState("idle");
+          setAuthNotice(t("auth.emailConfirmationUsernameWarning", "账号已创建，但项目启用了邮箱确认。用户名账号无法接收确认邮件，请管理员关闭邮箱确认，或使用现有测试账号。"), "error");
+        }
+      } else {
+        setFlowState("idle");
+        setAuthNotice(t("auth.registerFailed", "注册失败"), "error");
+      }
+    } catch (error) {
+      setFlowState("idle");
+      setAuthNotice(t("auth.registerFailed", "注册失败") + (error && error.message ? ": " + error.message : ""), "error");
     }
   }
 
@@ -819,6 +1182,10 @@
       : t("auth.registerFailed", "注册失败");
     var msg = error.message || "";
     var code = error.code || "";
+    /* P15.2：网络级失败如实归类为云不可用——不得误导为"密码不正确" */
+    if (/failed to fetch|networkerror|load failed|fetch failed|network request failed|ERR_NAME_NOT_RESOLVED|ERR_INTERNET/i.test(msg) || code === "network_error") {
+      return t("auth.syncState.cloudUnavailableTitle", "云同步不可用") + " — " + t("auth.syncState.cloudUnavailableDesc", "当前无法连接同步服务。学习记录仍安全保存在本机，学习不受影响。");
+    }
     if (/invalid login credentials/i.test(msg)) return t("auth.usernameOrPasswordWrong", "用户名或密码不正确");
     if (/email not confirmed/i.test(msg)) return t("auth.emailConfirmationUsernameWarning", "项目启用了邮箱确认，用户名账号当前无法完成确认。");
     if (/user already registered/i.test(msg) || /already registered/i.test(msg)) return t("auth.usernameTaken", "该用户名已被使用");
@@ -961,13 +1328,11 @@
     userBtn.id = "auth-user-btn";
     userBtn.className = "auth-user-btn";
     userBtn.type = "button";
-    userBtn.setAttribute("title", t("auth.account", "账号"));
+    userBtn.setAttribute("title", t("auth.panelTitle", "账号与同步"));
+    userBtn.setAttribute("aria-haspopup", "dialog");
     userBtn.addEventListener("click", function () {
       openAuthPanel();
     });
-
-    var state = getLocalAuthState();
-    var isAnonymous = state.mode === "local_anonymous";
 
     userBtn.innerHTML =
       '<span class="auth-user-icon"><i class="fa-solid fa-' + (isAnonymous ? "user" : "user-check") + '"></i></span>' +

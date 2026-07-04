@@ -99,7 +99,10 @@ namespace StudyTools.Mos365ExamHost
                     paneTitle: "MOS 実技トレーニング", dockPosition: "Bottom");
 
                 _pane.DockPosition = Office.MsoCTPDockPosition.msoCTPDockPositionBottom;
-                _pane.Height = 280;
+                // P12.1：内容各段合计 281px（44+1+30+1+130+1+74），加上 Excel CTP
+                // 自身标题条约 30px，280 会裁掉操作栏（開始/採点する/終了する 只露半截）。
+                // 340 = 内容 281 + 标题条 ~30 + 呼吸 ~29，操作栏完整可见，机考控制台感完整。
+                _pane.Height = 340;
                 _pane.Visible = true;
 
                 _probe.Write("pane.visible", _sessionId.ToString("N"),

@@ -1,0 +1,121 @@
+/* ============================================================
+   Base — 排版基线 / 焦点 / 滚动条 / skip-link / reduced-motion
+   只定义元素级与全局行为，不定义组件（见 components.css）。
+   ============================================================ */
+
+/* skip-link：Tab 首位直达主内容 */
+.skip-link {
+  position: absolute;
+  left: 8px;
+  top: -48px;
+  z-index: var(--z-toast);
+  height: 32px;
+  display: flex;
+  align-items: center;
+  padding: 0 var(--sp-3);
+  background: var(--bg-3);
+  color: var(--tx-1);
+  border: 1px solid var(--bd-2);
+  border-radius: var(--r-2);
+  font-size: var(--fs-13);
+  text-decoration: none;
+  transition: top var(--dur-1) var(--ease);
+}
+.skip-link:focus-visible {
+  top: 8px;
+}
+
+/* 全局 focus-visible：统一 2px accent 外描边 */
+.ds-scope :focus {
+  outline: none;
+}
+.ds-scope :focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: var(--r-1);
+}
+
+/* 滚动条（新壳层作用域） */
+.ds-scope ::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+.ds-scope ::-webkit-scrollbar-track {
+  background: transparent;
+}
+.ds-scope ::-webkit-scrollbar-thumb {
+  background: var(--bd-2);
+  border-radius: 4px;
+}
+@media (hover: hover) and (pointer: fine) {
+  .ds-scope ::-webkit-scrollbar-thumb:hover {
+    background: var(--tx-3);
+  }
+}
+
+/* 文本选区 */
+.ds-scope ::selection {
+  background: var(--accent-subtle);
+}
+
+/* kbd 统一样式 */
+.ds-kbd {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  background: var(--bg-3);
+  border: 1px solid var(--bd-2);
+  border-radius: var(--r-1);
+  padding: 1px 5px;
+  color: var(--tx-2);
+  white-space: nowrap;
+}
+
+/* 双语层：日文主层 / 中文辅层 */
+.ds-ja {
+  font-size: var(--fs-14);
+  line-height: var(--lh-cjk);
+  color: var(--tx-1);
+}
+.ds-zh-aux {
+  border-left: 2px solid var(--accent);
+  background: var(--accent-subtle);
+  padding: var(--sp-2) var(--sp-3);
+  border-radius: 0 var(--r-2) var(--r-2) 0;
+  font-size: var(--fs-13);
+  line-height: 1.7;
+  color: var(--tx-2);
+}
+.ds-zh-aux__label {
+  display: block;
+  font-size: 10.5px;
+  letter-spacing: 0.1em;
+  color: var(--tx-3);
+  margin-bottom: 2px;
+}
+
+/* 视觉隐藏但可读屏 */
+.ds-visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* reduced-motion：运动归零，保留即时状态反馈
+   !important 必要：组件规则（如 shell.css .rail-item 的 transition shorthand）
+   与本规则特异性同为 (0,1,0) 且加载在后，无 !important 时会覆盖归零值 */
+@media (prefers-reduced-motion: reduce) {
+  .ds-scope *,
+  .ds-scope *::before,
+  .ds-scope *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

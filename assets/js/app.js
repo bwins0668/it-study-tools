@@ -510,6 +510,7 @@ if (document.readyState === 'loading') {
   window.initDesktopWorkspace = initDesktopWorkspace;
   window.populateHeaderModeNav = populateHeaderModeNav;
   window.closeDesktopSidebar = closeDesktopSidebar;
+  window.openDesktopSidebar = openDesktopSidebar; // P10：目录触发按钮（shell.js）的必需入口
   window.isDesktopSidebarOpen = function() { return desktopSidebarOpen; };
 
   // Hook: close button in sidebar also closes desktop overlay
@@ -7847,35 +7848,77 @@ function wrapAllTablesWithScrollWrapper() {
    ==================================================== */
 
 const RUNTIME_LIGHT_THEME_STYLE_ID = "runtime-light-theme-override";
+/* P9 Quiet Technical Workspace：浅色 = 暖纸 + 石墨 + 低对比线。
+   机制保留（对未迁移旧区域全覆盖，保证可读性），值不再是纯白/纯黑/黑框；
+   .ds-scope（壳层/workspace/课时导航等已 token 化区域）整体排除，由 tokens.css 管理。 */
 const RUNTIME_LIGHT_THEME_CSS = `
-body[data-theme="light"],
-body[data-theme="light"] *,
-body[data-theme="light"] :where(div, header, nav, aside, main, section, article, form, fieldset, details, summary, dialog, table, thead, tbody, tfoot, tr, th, td, ul, ol, li, p, h1, h2, h3, h4, h5, h6, pre, code, textarea, input, select, option, button, label, span) {
-  background: #ffffff !important;
-  background-color: #ffffff !important;
-  background-image: none !important;
-  color: #000000 !important;
-  -webkit-text-fill-color: #000000 !important;
-  text-shadow: none !important;
-  box-shadow: none !important;
-  border-color: #111111 !important;
+body[data-theme="light"] {
+  background: #EFEAE0 !important;
+  color: #2E2A24 !important;
 }
-body[data-theme="light"] *::before,
-body[data-theme="light"] *::after {
-  color: #000000 !important;
+/* 通配段不重置背景：旧样式背景多为 var(--bg-*)，由 quiet.css 的
+   浅色变量重映射自动暖纸化；强制透明会击穿旧浮层 */
+body[data-theme="light"] :where(*):not(.ds-scope):not(.ds-scope *):not(.cbt-exam-container):not(.cbt-exam-container *) {
+  color: #2E2A24 !important;
+  -webkit-text-fill-color: currentColor !important;
   text-shadow: none !important;
   box-shadow: none !important;
-  border-color: #111111 !important;
+  border-color: rgba(62, 55, 44, 0.16) !important;
+}
+body[data-theme="light"] :where(*)::before,
+body[data-theme="light"] :where(*)::after {
+  text-shadow: none !important;
+  box-shadow: none !important;
+}
+/* 以下分层段与通配段同特异性（:not 链），依源序覆盖 */
+/* 次级文字层（浅色可读性分层） */
+body[data-theme="light"] :where(small, .text-muted, [class*="subtitle"], [class*="-muted"], [class*="hint"], .sidebar-title, .concept-col h4):not(.ds-scope):not(.ds-scope *):not(.cbt-exam-container):not(.cbt-exam-container *) {
+  color: #6B6459 !important;
+}
+/* 面层：主要工作容器（微暖白） */
+body[data-theme="light"] :where(.app-header, .app-sidebar, .content-card, .schema-card, .console-card, .output-card, .example-card, .cbt-config-card, .typing-panel, .tools-drawer__panel, .dashboard-panel__content, .module-switch-panel, .ai-assistant-drawer, .ai-modal, .updater-panel, .glossary-modal-panel):not(.ds-scope):not(.ds-scope *):not(.cbt-exam-container):not(.cbt-exam-container *) {
+  background-color: #F8F4EB !important;
+}
+/* 凹陷层：输入 / 编辑器 / 代码 / 选项行 */
+body[data-theme="light"] :where(textarea, input, select, pre, code, .quiz-option, .cbt-config-options, .option-marker, .ct-textarea):not(.ds-scope):not(.ds-scope *):not(.cbt-exam-container):not(.cbt-exam-container *) {
+  background-color: #EAE4D7 !important;
 }
 body[data-theme="light"] ::placeholder {
-  color: #333333 !important;
+  color: #8C8371 !important;
   opacity: 1 !important;
+}
+/* 强调仅保留于主行动与真实进度 */
+body[data-theme="light"] :where(.run-query-btn, .cbt-btn-action, .quiz-submit-btn, .ct-sandbox-run-btn):not(.ds-scope):not(.ds-scope *):not(.cbt-exam-container):not(.cbt-exam-container *) {
+  background-color: #9E5049 !important;
+  color: #FBF8F3 !important;
+  border-color: transparent !important;
+}
+/* 正误判定标注（is-correct/is-wrong，practice.css 语义色）优先于选中态 */
+body[data-theme="light"] :where(.quiz-option.selected:not(.is-correct):not(.is-wrong)):not(.ds-scope):not(.ds-scope *):not(.cbt-exam-container):not(.cbt-exam-container *) {
+  background-color: rgba(158, 80, 73, 0.11) !important;
+  border-color: #9E5049 !important;
+}
+body[data-theme="light"] :where(.lang-tab.active, .header-mode-nav button.active):not(.ds-scope):not(.ds-scope *):not(.cbt-exam-container):not(.cbt-exam-container *) {
+  border-bottom-color: #9E5049 !important;
+  color: #2E2A24 !important;
+}
+body[data-theme="light"] :where(.lesson-nav-item.active, .ct-item-btn.active):not(.ds-scope):not(.ds-scope *):not(.cbt-exam-container):not(.cbt-exam-container *) {
+  background-color: rgba(158, 80, 73, 0.11) !important;
 }
 body[data-theme="light"] .progress-bar-fill,
 body[data-theme="light"] .field-score-fill,
 body[data-theme="light"] .ai-mastery-bar span {
-  background: #000000 !important;
+  background: #9E5049 !important;
   background-image: none !important;
+}
+/* 正误判定为真实状态语义（ok/danger），置于最后压过通配与凹陷层 */
+body[data-theme="light"] :where(.quiz-option.is-correct):not(.ds-scope):not(.ds-scope *):not(.cbt-exam-container):not(.cbt-exam-container *) {
+  background-color: rgba(78, 122, 70, 0.11) !important;
+  border-color: #4E7A46 !important;
+}
+body[data-theme="light"] :where(.quiz-option.is-wrong):not(.ds-scope):not(.ds-scope *):not(.cbt-exam-container):not(.cbt-exam-container *) {
+  background-color: rgba(181, 67, 58, 0.10) !important;
+  border-color: #B5433A !important;
 }
 `;
 
@@ -8001,8 +8044,12 @@ window.StudySync = window.StudySync || null;
     const skipBtn = document.getElementById('immersive-skip-btn');
 
     if (overlay && startBtn && skipBtn) {
+      // P5：遮罩的业务含义是「全屏邀请」（requestFullscreen 需用户手势，无法自动）。
+      // 跳过过的用户选择持久化（localStorage），不再每次启动强制弹出；
+      // 选择过全屏的用户保留每会话弹出——那是其选择的模式且必须经手势进入。
       const started = sessionStorage.getItem('immersive_started');
-      if (started === 'true') {
+      const dismissed = localStorage.getItem('immersive_overlay_dismissed');
+      if (started === 'true' || dismissed === 'true') {
         overlay.setAttribute('hidden', '');
       } else {
         overlay.removeAttribute('hidden');
@@ -8022,6 +8069,7 @@ window.StudySync = window.StudySync || null;
       skipBtn.addEventListener('click', function() {
         overlay.setAttribute('hidden', '');
         sessionStorage.setItem('immersive_started', 'true');
+        localStorage.setItem('immersive_overlay_dismissed', 'true');
       });
     }
   }

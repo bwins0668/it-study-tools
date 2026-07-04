@@ -86,6 +86,25 @@ def iter_package_files(root):
                 yield full, os.path.relpath(full, root)
 
 
+def verify_runtime_signature_dependency(runtime_py=None):
+    """P14.1 Release gate：受控 runtime 必须能独立验证签名（fail closed 的另一半——
+    打包缺依赖直接失败，绝不生成"更新检查不可用"的半成品）。"""
+    import subprocess
+    if runtime_py is None:
+        runtime_py = os.path.join(PROJECT_ROOT, 'python', 'python.exe')
+    if not os.path.isfile(runtime_py):
+        raise RuntimeError('受控 runtime python/python.exe 不存在，无法打包 Portable。')
+    probe = subprocess.run(
+        [runtime_py, '-c',
+         'from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PublicKey; print("ok")'],
+        capture_output=True, text=True, timeout=30, stdin=subprocess.DEVNULL)
+    if probe.returncode != 0 or 'ok' not in probe.stdout:
+        raise RuntimeError(
+            '受控 runtime 缺少签名验证依赖（cryptography/ed25519）。'
+            '先运行 tools/provision_runtime.ps1 再打包。stderr: '
+            + probe.stderr.strip()[:200])
+
+
 def create_release(version, channel='stable', release_notes='', output_dir=None, private_key_path=None):
     """创建 Release 打包文件。
 
@@ -101,6 +120,7 @@ def create_release(version, channel='stable', release_notes='', output_dir=None,
     """
     if not private_key_path or not os.path.isfile(private_key_path):
         raise FileNotFoundError(f"缺少有效私钥或私钥文件不存在: {private_key_path}")
+    verify_runtime_signature_dependency()
 
     if output_dir is None:
         output_dir = os.getcwd()

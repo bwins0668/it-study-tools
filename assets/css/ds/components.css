@@ -1,0 +1,343 @@
+/* ============================================================
+   Components — 统一组件库（全部 ds- 前缀，只引用 tokens）
+   按钮 / 输入 / Tabs / 卡片 / 列表 / 徽标 / 进度 / 模态 /
+   空态 / 错误态 / 骨架 / Toast
+   ============================================================ */
+
+/* ── 按钮 ── */
+.ds-btn {
+  height: 32px;
+  padding: 0 var(--sp-4);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-2);
+  border-radius: var(--r-2);
+  border: 1px solid transparent;
+  font-family: var(--font-ui);
+  font-size: var(--fs-13);
+  font-weight: 600;
+  line-height: 1;
+  cursor: pointer;
+  user-select: none;
+  background: transparent;
+  color: var(--tx-1);
+  transition: background-color var(--dur-1) var(--ease),
+              border-color var(--dur-1) var(--ease),
+              color var(--dur-1) var(--ease);
+}
+.ds-btn--sm { height: 28px; padding: 0 var(--sp-3); font-size: var(--fs-12); }
+.ds-btn--lg { height: 40px; padding: 0 var(--sp-5); font-size: var(--fs-14); }
+
+.ds-btn--primary { background: var(--accent); color: var(--on-accent); }
+.ds-btn--primary:active { background: var(--accent-press); }
+.ds-btn--secondary { background: var(--bg-3); border-color: var(--bd-2); color: var(--tx-1); }
+.ds-btn--ghost { color: var(--tx-2); }
+.ds-btn--danger { background: var(--danger); color: #fff; }
+
+@media (hover: hover) and (pointer: fine) {
+  .ds-btn--primary:hover { background: var(--accent-hover); }
+  .ds-btn--secondary:hover { border-color: var(--tx-3); }
+  .ds-btn--ghost:hover { background: var(--bg-3); color: var(--tx-1); }
+  .ds-btn--danger:hover { filter: brightness(1.1); }
+}
+
+.ds-btn:disabled,
+.ds-btn[aria-disabled="true"] {
+  color: var(--tx-disabled);
+  background: var(--bg-3);
+  border-color: transparent;
+  cursor: not-allowed;
+}
+
+/* 图标按钮 */
+.ds-iconbtn {
+  width: 32px;
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--r-2);
+  border: 1px solid var(--bd-1);
+  background: transparent;
+  color: var(--tx-2);
+  cursor: pointer;
+  font-size: var(--fs-14);
+  transition: background-color var(--dur-1) var(--ease), color var(--dur-1) var(--ease);
+}
+@media (hover: hover) and (pointer: fine) {
+  .ds-iconbtn:hover { background: var(--bg-3); color: var(--tx-1); }
+}
+
+/* 按钮内加载 spinner */
+.ds-spinner {
+  width: 14px;
+  height: 14px;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: ds-spin 0.7s linear infinite;
+}
+@keyframes ds-spin { to { transform: rotate(360deg); } }
+
+/* ── 输入 / 选择 ── */
+.ds-input,
+.ds-select {
+  height: 32px;
+  padding: 0 var(--sp-3);
+  background: var(--bg-3);
+  border: 1px solid var(--bd-1);
+  border-radius: var(--r-2);
+  color: var(--tx-1);
+  font-family: var(--font-ui);
+  font-size: var(--fs-13);
+  transition: border-color var(--dur-1) var(--ease);
+}
+.ds-input::placeholder { color: var(--tx-3); }
+.ds-input:focus-visible,
+.ds-select:focus-visible {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px var(--accent-subtle);
+}
+.ds-input--error { border-color: var(--danger); }
+.ds-field-hint { font-size: var(--fs-12); color: var(--tx-3); margin-top: var(--sp-1); }
+.ds-field-hint--error { color: var(--danger); }
+
+/* ── Tabs（视图切换，下划线式） ── */
+.ds-tabs {
+  display: flex;
+  height: 40px;
+  gap: var(--sp-1);
+}
+.ds-tab {
+  padding: 0 var(--sp-4);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  border: none;
+  background: transparent;
+  color: var(--tx-2);
+  font-family: var(--font-ui);
+  font-size: var(--fs-13);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: color var(--dur-1) var(--ease), border-color var(--dur-1) var(--ease);
+}
+.ds-tab[aria-selected="true"],
+.ds-tab.active {
+  color: var(--tx-1);
+  font-weight: 600;
+  border-bottom-color: var(--accent);
+}
+@media (hover: hover) and (pointer: fine) {
+  .ds-tab:hover { color: var(--tx-1); }
+}
+
+/* ── 卡片（禁止卡中卡） ── */
+.ds-card {
+  background: var(--bg-2);
+  border: 1px solid var(--bd-1);
+  border-radius: var(--r-3);
+  padding: var(--sp-5);
+}
+.ds-card__title {
+  font-size: var(--fs-16);
+  font-weight: 600;
+  color: var(--tx-1);
+  margin-bottom: var(--sp-3);
+}
+.ds-card--flush { padding: 0; overflow: hidden; }
+.ds-card__header {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  padding: var(--sp-3) var(--sp-4);
+  border-bottom: 1px solid var(--bd-1);
+  font-size: var(--fs-13);
+  font-weight: 600;
+}
+.ds-divider { border: none; border-top: 1px solid var(--bd-1); margin: var(--sp-3) 0; }
+
+/* ── 列表（课时/文章/选项行） ── */
+.ds-list { display: flex; flex-direction: column; gap: 2px; }
+.ds-list-item {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  min-height: 40px;
+  padding: 0 var(--sp-3);
+  border-radius: var(--r-2);
+  color: var(--tx-2);
+  font-size: var(--fs-13);
+  cursor: pointer;
+  position: relative;
+  background: transparent;
+  border: none;
+  text-align: left;
+  font-family: var(--font-ui);
+  transition: background-color var(--dur-1) var(--ease), color var(--dur-1) var(--ease);
+}
+@media (hover: hover) and (pointer: fine) {
+  .ds-list-item:hover { background: var(--bg-3); color: var(--tx-1); }
+}
+.ds-list-item.active {
+  background: var(--accent-subtle);
+  color: var(--tx-1);
+  font-weight: 600;
+}
+.ds-list-item.active::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 8px;
+  bottom: 8px;
+  width: 2px;
+  border-radius: 1px;
+  background: var(--accent);
+}
+.ds-list-item__check { color: var(--ok); font-size: var(--fs-12); }
+
+/* ── 徽标 / 状态点 ── */
+.ds-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-1);
+  height: 20px;
+  padding: 0 var(--sp-2);
+  border-radius: 10px;
+  font-size: 11px;
+  font-weight: 600;
+  background: var(--accent-subtle);
+  color: var(--accent);
+}
+.ds-badge--ok { background: var(--ok-subtle); color: var(--ok); }
+.ds-badge--warn { background: var(--warn-subtle); color: var(--warn); }
+.ds-badge--danger { background: var(--danger-subtle); color: var(--danger); }
+.ds-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--ok);
+  display: inline-block;
+}
+.ds-dot--warn { background: var(--warn); }
+.ds-dot--danger { background: var(--danger); }
+
+/* ── 进度条 ── */
+.ds-progress {
+  display: block;
+  height: 6px;
+  border-radius: var(--r-1);
+  background: var(--bg-3);
+  border: 1px solid var(--bd-1);
+  overflow: hidden;
+}
+.ds-progress__fill {
+  display: block;
+  height: 100%;
+  background: var(--accent);
+  border-radius: var(--r-1);
+  transition: width var(--dur-2) var(--ease);
+}
+
+/* ── 模态 ── */
+.ds-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-modal);
+  background: rgba(0, 0, 0, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--sp-6);
+}
+.ds-modal {
+  background: var(--bg-1);
+  border: 1px solid var(--bd-1);
+  border-radius: var(--r-4);
+  box-shadow: var(--shadow-2);
+  max-width: 640px;
+  width: 100%;
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.ds-modal__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--sp-4) var(--sp-5);
+  border-bottom: 1px solid var(--bd-1);
+  font-size: var(--fs-16);
+  font-weight: 600;
+}
+.ds-modal__body { padding: var(--sp-5); overflow-y: auto; }
+
+/* ── 空态 ── */
+.ds-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-2);
+  padding: var(--sp-7) var(--sp-5);
+  color: var(--tx-3);
+  font-size: var(--fs-13);
+  text-align: center;
+}
+.ds-empty i { font-size: 24px; opacity: 0.75; }
+
+/* ── 错误态条 ── */
+.ds-error-strip {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--sp-2);
+  padding: var(--sp-3) var(--sp-4);
+  background: var(--danger-subtle);
+  border: 1px solid var(--danger);
+  border-radius: var(--r-2);
+  color: var(--tx-1);
+  font-size: var(--fs-13);
+  line-height: 1.6;
+}
+.ds-error-strip i { color: var(--danger); margin-top: 2px; }
+
+/* ── 骨架（>1s 才显示由 JS 控制） ── */
+.ds-skeleton {
+  background: var(--bg-3);
+  border-radius: var(--r-1);
+  animation: ds-skeleton-pulse 1.4s var(--ease) infinite;
+}
+@keyframes ds-skeleton-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.55; }
+}
+
+/* ── Toast ── */
+.ds-toast-region {
+  position: fixed;
+  right: var(--sp-4);
+  bottom: calc(var(--statusbar-h) + var(--sp-4));
+  z-index: var(--z-toast);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+}
+.ds-toast {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  padding: var(--sp-3) var(--sp-4);
+  background: var(--bg-3);
+  border: 1px solid var(--bd-2);
+  border-radius: var(--r-3);
+  color: var(--tx-1);
+  font-size: var(--fs-13);
+  box-shadow: var(--shadow-1);
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity var(--dur-2) var(--ease), transform var(--dur-2) var(--ease);
+}
+.ds-toast.show { opacity: 1; transform: translateY(0); }

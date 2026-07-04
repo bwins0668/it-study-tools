@@ -1,0 +1,50 @@
+/* ============================================================
+   Lesson — 课时页导航层（PC UI Rebuild P2）
+   .content-card 末尾的 前の課 / 完成状态 / 次の課
+   ============================================================ */
+
+.lesson-nav-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-3);
+  margin-top: var(--sp-6);
+  padding-top: var(--sp-4);
+  border-top: 1px solid var(--bd-1);
+  flex-wrap: wrap;
+}
+.lesson-nav-footer[hidden] { display: none; }
+
+.lesson-nav-footer__status {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  font-size: var(--fs-12);
+  color: var(--tx-3);
+  min-width: 0;
+  flex: 1;
+  justify-content: center;
+  text-align: center;
+  flex-wrap: wrap;
+}
+.lesson-nav-footer__status.is-done { color: var(--ok); }
+.lesson-nav-footer__status.is-done i { color: var(--ok); }
+.lesson-nav-footer__count {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--tx-3);
+  background: var(--bg-3);
+  border: 1px solid var(--bd-1);
+  border-radius: var(--r-1);
+  padding: 1px 6px;
+  white-space: nowrap;
+}
+
+.lesson-nav-footer .ds-btn:disabled {
+  opacity: 0.45;
+}
+
+@media (max-width: 720px) {
+  .lesson-nav-footer { gap: var(--sp-2); }
+  .lesson-nav-footer__status { order: -1; flex-basis: 100%; }
+}
