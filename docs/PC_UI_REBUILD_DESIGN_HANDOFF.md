@@ -198,7 +198,15 @@ app-frame
 - **更新入口**：教训级缺陷——`display` 显式声明会压过 `hidden` 的 UA 样式（`[hidden]{display:none}` 特异性仅 0,1,0），P1 的"检查更新"色块因此意外显示五轮；修复后凡带 display 的组件必须补 `[hidden]` 分支。版本号即更新入口（`#statusbar-version-entry`→StudyUpdater.open）。
 - **动效**：`--transition-smooth` 全局收紧至 160ms 统一曲线。
 
-## 19. 未来维护原则
+## 19. P13.1 状态系统纪要
+
+- **模式状态所有权**：常规学习 = 主 token；CBT Preflight = 继承浅色工作区；CBT Active = `body.cbt-exam-active` 下的显式 exam token scope（深石墨 #17171A，runtime 浅色层对 `.cbt-exam-container` 整树排除）；MOS365 = token 化面板 + 石墨 scrim（38%/42%）。
+- **cbt-exam-active 合成**（surfaces.js）：题目画布 `checkVisibility()` 正向判定——`offsetParent` 在 fixed 祖先链恒为 null 不可用；开考渲染为新建节点，观察必须含 `childList`。
+- **更新入口终形态**：版本号（状态）+「⟳ 检查更新」（36px quiet tertiary，真实开 StudyUpdater）两段分离。
+- **死带教训**：`.lesson-content` 的历史半透深底在浅色下即"灰色死带"——查死带先查命中元素背景，勿先动布局。
+- **漂白段清零**：`#09090b !important` 已全数 token 化；后续新增深底一律走 token。
+
+## 20. 未来维护原则
 
 1. 新增界面一律引用 tokens；禁 `transition:all`、裸色值、`!important`（浅色防御块为唯一豁免且随 override 一起退役）。
 2. hover 只在 `(hover:hover) and (pointer:fine)` 下启用；动效只用 transform/opacity；新增动效必须过 reduced-motion。
