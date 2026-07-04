@@ -103,7 +103,7 @@
     if (!entry) return;
     entry.addEventListener("click", function () {
       if (window.StudyUpdater && typeof window.StudyUpdater.open === "function") {
-        window.StudyUpdater.open();
+        window.StudyUpdater.open(entry); // P14.1：opener 供关闭后焦点回归
       }
     });
   }

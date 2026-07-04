@@ -1679,10 +1679,14 @@
   </section>
 
   <!-- Update Panel -->
-  <div id="updater-panel" class="tools-drawer-section-panel" hidden>
-    <div class="tools-drawer-section-panel__header">
-      <button type="button" class="tools-drawer-section-panel__back" data-action="close-updater-panel" data-i18n-title="tools.closeMenu">← 返回</button>
-      <strong data-i18n="tools.updaterAppUpdate">软件更新</strong>
+  <div id="updater-panel" class="tools-drawer-section-panel updater-dialog" hidden
+    role="dialog" aria-modal="true" aria-labelledby="updater-dialog-title">
+    <div class="updater-dialog__card">
+    <div class="tools-drawer-section-panel__header updater-dialog__header">
+      <button type="button" class="tools-drawer-section-panel__back" data-action="close-updater-panel" data-i18n-title="tools.closeMenu">← <span data-i18n="tools.tools">工具</span></button>
+      <strong id="updater-dialog-title" data-i18n="tools.updaterAppUpdate">软件更新</strong>
+      <button type="button" class="updater-dialog__close" id="updater-close-btn"
+        aria-label="閉じる / 关闭" data-i18n-aria-label="common.close"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>
     </div>
     <div class="updater-section">
       <div class="updater-info-row">
@@ -1715,18 +1719,31 @@
         <span data-i18n="tools.updaterDownloadComplete">下载完成，准备更新</span>
       </div>
       <div class="updater-error" id="updater-error" hidden>
-        <span style="color:var(--error-color,#ef4444);">✗</span>
+        <span class="updater-error__icon" aria-hidden="true"><i class="fa-solid fa-circle-exclamation"></i></span>
         <span id="updater-error-text"></span>
+      </div>
+      <!-- P14.1：安全停止专用状态（fail closed 的用户可理解呈现） -->
+      <div class="updater-security" id="updater-security" hidden>
+        <h4 class="updater-security__title" data-i18n="tools.updaterSecureTitle">更新確認を安全に停止しました / 更新检查暂时不可用</h4>
+        <p class="updater-security__desc" data-i18n="tools.updaterSecureDesc">此安装缺少安全验证组件，因此更新已安全停止。学习功能不受影响。你可以继续学习，或使用官方 Portable 包重新安装后再检查更新。</p>
+        <p class="updater-security__note" data-i18n="tools.updaterSecureNote">学習機能には影響しません。</p>
+        <button type="button" class="updater-security__diag-toggle" id="updater-diag-toggle" aria-expanded="false">
+          <i class="fa-solid fa-stethoscope" aria-hidden="true"></i> <span data-i18n="tools.updaterDiag">診断情報 / 诊断信息</span>
+        </button>
+        <pre class="updater-security__diag" id="updater-diag" hidden></pre>
       </div>
       <div class="updater-actions">
         <button id="updater-check-btn" type="button" class="btn-updater" data-i18n="tools.updaterCheckBtn"><i class="fa-solid fa-rotate"></i> 检查更新</button>
+        <button id="updater-retry-btn" type="button" class="btn-updater" hidden><i class="fa-solid fa-rotate" aria-hidden="true"></i> <span data-i18n="tools.updaterRetry">再試行 / 重新检查</span></button>
         <button id="updater-download-btn" type="button" class="btn-updater btn-updater-primary" hidden data-i18n="tools.updaterDownloadBtn"><i class="fa-solid fa-download"></i> 下载更新</button>
         <button id="updater-apply-btn" type="button" class="btn-updater btn-updater-danger" hidden data-i18n="tools.updaterApplyBtn"><i class="fa-solid fa-power-off"></i> 立即重启并更新</button>
+        <button id="updater-back-btn" type="button" class="btn-updater updater-back-to-learning"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i> <span data-i18n="tools.updaterBackToLearning">学習に戻る / 返回学习</span></button>
       </div>
       <label class="updater-toggle-row">
         <input type="checkbox" id="updater-auto-download" checked>
         <span data-i18n="tools.updaterAutoDownload">自动下载更新</span>
       </label>
+    </div>
     </div>
   </div>
 

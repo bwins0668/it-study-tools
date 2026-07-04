@@ -1029,6 +1029,116 @@ body #mos365-shell .mos365-launch-stall code { background: var(--bg-3); }
 /* Context Tabs 点击区 ≥40px（任务书硬规则） */
 .sub-header-bar .sub-header-tab { min-height: 40px; }
 
+/* ── 15.5 P14.1：更新面板 = 可退出的 Quiet dialog（全屏 98% 黑幕退役） ── */
+#updater-panel.updater-dialog {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-modal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--sp-6);
+  /* scrim：背景可辨认但不可交互 */
+  background: rgba(46, 42, 36, 0.34);
+}
+body:not([data-theme="light"]) #updater-panel.updater-dialog {
+  background: rgba(0, 0, 0, 0.45);
+}
+#updater-panel.updater-dialog[hidden] { display: none; }
+#updater-panel .updater-dialog__card {
+  width: min(480px, 100%);
+  max-height: 85vh;
+  overflow-y: auto;
+  background: var(--bg-1);
+  border: 1px solid var(--bd-1);
+  border-radius: var(--r-4);
+  color: var(--tx-1);
+  display: flex;
+  flex-direction: column;
+}
+#updater-panel .updater-dialog__header {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  padding: var(--sp-4) var(--sp-5);
+  border-bottom: 1px solid var(--bd-1);
+  background: transparent;
+}
+#updater-panel .updater-dialog__header strong { flex: 1; font-size: var(--fs-16); color: var(--tx-1); }
+#updater-panel .tools-drawer-section-panel__back {
+  background: transparent;
+  border: 1px solid var(--bd-2);
+  color: var(--tx-2);
+  border-radius: var(--r-2);
+  padding: 4px 10px;
+  cursor: pointer;
+  font-size: var(--fs-12);
+}
+#updater-panel .updater-dialog__close {
+  width: 32px; height: 32px;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: transparent; border: none; color: var(--tx-2);
+  border-radius: var(--r-2); cursor: pointer; font-size: var(--fs-14);
+  transition: background-color 140ms var(--ease), color 140ms var(--ease);
+}
+@media (hover: hover) and (pointer: fine) {
+  #updater-panel .updater-dialog__close:hover { background: var(--bg-3); color: var(--tx-1); }
+}
+#updater-panel .updater-section { padding: var(--sp-5); display: flex; flex-direction: column; gap: var(--sp-3); }
+#updater-panel .updater-info-row { display: flex; justify-content: space-between; color: var(--tx-2); font-size: var(--fs-13); }
+#updater-panel .updater-info-row strong { color: var(--tx-1); }
+#updater-panel .updater-status { color: var(--tx-2); font-size: var(--fs-13); }
+#updater-panel .updater-error {
+  background: var(--danger-subtle);
+  border: 1px solid var(--danger);
+  border-radius: var(--r-2);
+  padding: var(--sp-3);
+  color: var(--tx-1);
+  font-size: var(--fs-13);
+  line-height: 1.6;
+}
+#updater-panel .updater-error__icon { color: var(--danger); margin-right: 6px; }
+/* 安全停止块：语义清晰但不惊悚 */
+#updater-panel .updater-security {
+  background: var(--bg-2);
+  border: 1px solid var(--bd-2);
+  border-left: 3px solid var(--warn);
+  border-radius: var(--r-2);
+  padding: var(--sp-4);
+}
+#updater-panel .updater-security__title { margin: 0 0 var(--sp-2); font-size: var(--fs-14); color: var(--tx-1); }
+#updater-panel .updater-security__desc { margin: 0 0 var(--sp-2); font-size: var(--fs-13); color: var(--tx-2); line-height: 1.7; }
+#updater-panel .updater-security__note { margin: 0 0 var(--sp-3); font-size: var(--fs-12); color: var(--tx-3); }
+#updater-panel .updater-security__diag-toggle {
+  background: transparent; border: 1px solid var(--bd-2); color: var(--tx-2);
+  border-radius: var(--r-2); padding: 4px 10px; cursor: pointer; font-size: var(--fs-12);
+}
+#updater-panel .updater-security__diag {
+  margin: var(--sp-2) 0 0; padding: var(--sp-3);
+  background: var(--bg-0); border: 1px solid var(--bd-1); border-radius: var(--r-2);
+  font-size: 11px; line-height: 1.6; color: var(--tx-2); white-space: pre-wrap;
+}
+#updater-panel .updater-actions { display: flex; flex-wrap: wrap; gap: var(--sp-2); }
+#updater-panel .btn-updater {
+  background: transparent; border: 1px solid var(--bd-2); color: var(--tx-1);
+  border-radius: var(--r-2); padding: 8px 14px; cursor: pointer; font-size: var(--fs-13);
+  transition: background-color 140ms var(--ease), color 140ms var(--ease);
+}
+@media (hover: hover) and (pointer: fine) {
+  #updater-panel .btn-updater:hover { background: var(--bg-3); }
+}
+#updater-panel .btn-updater:disabled { opacity: 0.5; cursor: default; }
+/* P11 守则：带 display 的组件必须补 [hidden] 分支 */
+#updater-panel .btn-updater[hidden],
+#updater-panel .updater-status[hidden],
+#updater-panel .updater-error[hidden],
+#updater-panel .updater-security[hidden],
+#updater-panel .updater-security__diag[hidden] { display: none !important; }
+#updater-panel .btn-updater-primary { background: var(--accent); border-color: transparent; color: var(--on-accent); }
+#updater-panel .btn-updater-danger { background: transparent; border-color: var(--danger); color: var(--danger); }
+#updater-panel .updater-toggle-row { color: var(--tx-3); font-size: var(--fs-12); display: flex; gap: 8px; align-items: center; }
+#updater-panel .updater-toggle-row input { accent-color: var(--accent); }
+
 /* ── 16. 浅色表单可读性（黑下拉/黑输入残留） ── */
 body[data-theme="light"] select,
 body[data-theme="light"] .itpass-widget select,

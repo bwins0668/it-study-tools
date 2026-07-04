@@ -30,6 +30,8 @@
 
   function qs(sel) { return document.querySelector(sel); }
 
+  var lastOpener = null;
+
   function init() {
     // 延迟检查——启动后 2 分钟再检查，不阻塞启动
     setTimeout(function () {
@@ -48,17 +50,71 @@
 
     var autoToggle = document.getElementById('updater-auto-download');
     if (autoToggle) autoToggle.addEventListener('change', onAutoToggleChange);
+
+    // P14.1：可退出生命周期——×、返回学习、重试、诊断折叠、Esc
+    var closeBtn = document.getElementById('updater-close-btn');
+    if (closeBtn) closeBtn.addEventListener('click', close);
+    var backBtn = document.getElementById('updater-back-btn');
+    if (backBtn) backBtn.addEventListener('click', close);
+    var retryBtn = document.getElementById('updater-retry-btn');
+    if (retryBtn) retryBtn.addEventListener('click', onRetryClick);
+    var diagToggle = document.getElementById('updater-diag-toggle');
+    if (diagToggle) diagToggle.addEventListener('click', function () {
+      var pre = document.getElementById('updater-diag');
+      if (!pre) return;
+      pre.hidden = !pre.hidden;
+      diagToggle.setAttribute('aria-expanded', pre.hidden ? 'false' : 'true');
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key !== 'Escape') return;
+      var panel = document.getElementById('updater-panel');
+      if (panel && !panel.hidden) {
+        e.stopPropagation();
+        close();
+      }
+    }, true);
   }
 
-  function open() {
+  function open(openerEl) {
+    lastOpener = openerEl && openerEl.focus ? openerEl
+      : (document.activeElement && document.activeElement !== document.body ? document.activeElement : null);
     refreshState();
     var panel = document.getElementById('updater-panel');
-    if (panel) panel.hidden = false;
+    if (panel) {
+      panel.hidden = false;
+      var title = document.getElementById('updater-dialog-title');
+      if (title) {
+        if (!title.hasAttribute('tabindex')) title.setAttribute('tabindex', '-1');
+        title.focus({ preventScroll: true });
+      }
+    }
   }
 
   function close() {
     var panel = document.getElementById('updater-panel');
     if (panel) panel.hidden = true;
+    // 焦点回触发器：更新检查失败绝不锁死学习界面
+    if (lastOpener && document.contains(lastOpener)) {
+      lastOpener.focus();
+    } else {
+      var entry = document.getElementById('statusbar-version-entry');
+      if (entry) entry.focus();
+    }
+  }
+
+  function onRetryClick() {
+    // 仅重新查询状态与 check；不下载、不 apply；进行中防抖
+    var retryBtn = document.getElementById('updater-retry-btn');
+    if (retryBtn) retryBtn.disabled = true;
+    fetch('/api/updater/state', { method: 'GET' })
+      .then(function (r) { return r.json(); })
+      .then(function (json) {
+        if (json.success && json.data) updateState(json.data);
+      })
+      .catch(function () {})
+      .finally(function () {
+        if (retryBtn) retryBtn.disabled = false;
+      });
   }
 
   function refreshState() {
@@ -96,19 +152,31 @@
     var statusIdle = document.getElementById('updater-status-idle');
     var errorEl = document.getElementById('updater-error');
 
-    // Option C: 签名校验模块不可用时严格 fail-closed
+    // Option C: 签名校验模块不可用时严格 fail-closed（P14.1：securityUnavailable
+    // 专用状态——用户可理解、可关闭、可重试、可诊断；学习功能不受影响）
+    var securityEl = document.getElementById('updater-security');
+    var retryBtn = document.getElementById('updater-retry-btn');
     if (state.signatureConfigured === false) {
-      if (statusIdle) {
-        statusIdle.hidden = false;
-        var errElText = document.getElementById('updater-error-text');
-        if (errElText) errElText.textContent = '签名验证组件不可用，请联系管理员安装 cryptography 库。';
+      if (statusIdle) statusIdle.hidden = true;
+      if (securityEl) securityEl.hidden = false;
+      var diag = document.getElementById('updater-diag');
+      if (diag) {
+        diag.textContent = [
+          'errorCode: UPDATER_CRYPTOGRAPHY_UNAVAILABLE',
+          'runtime: controlled portable runtime',
+          'signatureComponent: unavailable (fail closed)',
+          'download: blocked / apply: blocked'
+        ].join('\n');
       }
       if (checkBtn) checkBtn.hidden = true;
       if (downloadBtn) downloadBtn.hidden = true;
       if (applyBtn) applyBtn.hidden = true;
-      if (errorEl) errorEl.hidden = false;
+      if (retryBtn) retryBtn.hidden = false;
+      if (errorEl) errorEl.hidden = true;
       return;
     }
+    if (securityEl) securityEl.hidden = true;
+    if (retryBtn) retryBtn.hidden = true;
 
     // 版本信息
     var currentVerEl = document.getElementById('updater-current-version');

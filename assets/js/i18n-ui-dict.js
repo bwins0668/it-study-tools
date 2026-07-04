@@ -1033,7 +1033,13 @@
         updaterChangelog: "更新日志",
         updaterReleaseDate: "发布日期",
         updaterLastCheck: "上次检查",
-        updaterAppUpdate: "软件更新"
+        updaterAppUpdate: "软件更新",
+        updaterSecureTitle: "更新检查暂时不可用",
+        updaterSecureDesc: "此安装缺少安全验证组件，因此更新已安全停止。学习功能不受影响。你可以继续学习，或使用官方 Portable 包重新安装后再检查更新。",
+        updaterSecureNote: "不影响任何学习功能。",
+        updaterDiag: "诊断信息",
+        updaterRetry: "重新检查",
+        updaterBackToLearning: "返回学习"
       },
       dashboard: {
         dashboard: "学习统计",
