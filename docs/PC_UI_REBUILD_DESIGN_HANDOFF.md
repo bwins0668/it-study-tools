@@ -178,6 +178,16 @@ app-frame
 
 **回归门禁**：`node tools/verify_i18n_long_code_boundary.js` —— 41 项断言：七语长码矩阵（currentLang/localStorage/静态写入率≥90%）、zh/ja 状态防回退、en-US 与 xx-YY 受控 warn 且不抛异常、短码 selector 路径不回归、全程 console 无 error。
 
+## 18. P14.3 干净 Portable Runtime 发布证明纪要
+
+**版本化诊断**：一次性 evidence 诊断脚本的能力收编为受控资产 `tools/verify_i18n_runtime_state.js`（只读输出 currentLang / documentElement.lang / canonical storage key / managed 总数 / 已写入 / 未写入；不含用户数据、Token、私钥、系统绝对路径；`--lang` 可选观察切换后状态）。
+
+**干净证明工具**：`pwsh -File tools/verify_portable_runtime_proof.ps1`（27 项断言，全部临时产物在 `%TEMP%\studytools-p14-3-proof\`）。链路：干净目录 → provision 幂等 → `generate_dev_keypair` 测试密钥 fixture（不触生产私钥）→ `create_release` 产出 Portable zip → 解压全新目录 → **仅包内 runtime**：import cryptography + Ed25519PublicKey + `sys.path` 全自包含 → 起 server → 页面 200 → 真实更新检查（GitHub manifest 下载 → Ed25519 验签 → 版本比较端到端走通，`signatureConfigured=true`，非 securityUnavailable）→ 无自动 download（downloadStage=idle）/ 无自动 apply（updateReady=false）→ 包内 runtime 复核缺失签名 / 错误签名（dev 签名 vs 受信 keyId）/ 篡改 manifest 全部 fail closed。
+
+**Release gate 双向**：真实缺 cryptography 的完整 runtime 副本被 `verify_runtime_signature_dependency` 明确拒绝，`create_release` 整体 RuntimeError 且失败路径不产出任何 zip；解压后的**最终 zip 真实 runtime**（非开发目录）通过同一 gate。进程审计证明全程未调用系统 Python / pip / Node / Git（仅受控或包内 python 与 PowerShell 内置）。
+
+**已知工艺约束**：embedded runtime 的 `python312._pth` 隔离特性使 `PYTHONPATH` 不生效——驱动脚本须显式 `sys.path.insert` 项目根；`create_release` 输出含 `✓`，管道重定向下驱动进程须设 `PYTHONUTF8=1` 防 GBK 编码崩溃。
+
 **边框预算实施**：正文区（concept/analogy/lang-tabs/quiz-question）零边框化，以留白、字阶、细分隔线分层；仅可操作容器（编辑器/选项行/输入区）与一层 surface 保留低对比边线；全站禁"描边+阴影+高对比填充"三叠加（视觉 smoke 断言把守）。
 
 **已知遗留（不阻塞）**：
