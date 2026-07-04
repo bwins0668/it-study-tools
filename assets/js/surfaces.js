@@ -48,10 +48,38 @@
     hookMos(document.getElementById("mos365-shell"));
   }
 
+  // P6：桌面端 rail 为唯一主模块导航；header brand 下拉与其完全重复。
+  // >=721px 时 brand 点击重定向到学習ワークスペース（模块面板仅移动端保留；
+  // 面板 DOM 不删除——MOS365 注入入口 module-switch-option-mos365 经 JS click() 调用，
+  // display:none 不影响其触发）。capture 阶段拦截，先于 app.js 的面板开关处理。
+  function redirectBrandOnDesktop() {
+    document.addEventListener("click", function (e) {
+      if (!window.matchMedia("(min-width: 721px)").matches) return;
+      if (e.target.closest("#mobile-sidebar-toggle")) return; // 内嵌汉堡按钮各行其职
+      var trigger = e.target.closest("#header-brand-trigger");
+      if (!trigger) return;
+      e.preventDefault();
+      e.stopPropagation();
+      if (window.HomeWorkspace) window.HomeWorkspace.open();
+      if (window.ShellRail) window.ShellRail.setActive("home");
+    }, true);
+    document.addEventListener("keydown", function (e) {
+      if (e.key !== "Enter" && e.key !== " ") return;
+      if (!window.matchMedia("(min-width: 721px)").matches) return;
+      var trigger = e.target.closest && e.target.closest("#header-brand-trigger");
+      if (!trigger) return;
+      e.preventDefault();
+      e.stopPropagation();
+      if (window.HomeWorkspace) window.HomeWorkspace.open();
+      if (window.ShellRail) window.ShellRail.setActive("home");
+    }, true);
+  }
+
   function init() {
     scan();
     // AI 抽屉 / MOS shell 由各自脚本延迟注入 → 观察 body 直接子级补挂
     new MutationObserver(scan).observe(document.body, { childList: true });
+    redirectBrandOnDesktop();
   }
 
   if (document.readyState === "loading") {

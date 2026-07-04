@@ -175,6 +175,15 @@ body.has-shell .coding-typing-hub {
   bottom: var(--statusbar-h);
 }
 
+/* ── P6：桌面端重复主导航收口 ──
+   rail 为唯一模块导航；旧 brand 下拉面板仅移动端保留
+   （面板 DOM 保留：MOS365 注入入口经 JS click() 触发，不依赖可见性） */
+@media (min-width: 721px) {
+  #module-switch-panel { display: none !important; }
+  /* brand 触发器重定向到 workspace（surfaces.js），去除下拉暗示 */
+  #header-brand-trigger .brand-caret { display: none; }
+}
+
 /* ── 视口降级 ── */
 /* 1024–1279：rail 保持；上下文/右栏策略由后续 Phase 的模块样式接管 */
 
