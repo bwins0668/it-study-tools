@@ -214,3 +214,11 @@ app-frame
 4. 每次壳层/导航/主题改动必须跑：`node tools/verify_pc_ui_smoke.js --full` + 相关 `interactive_p*_check.js`；截图证据入 evidence 目录（不提交二进制）。
 5. i18n 新键至少覆盖 ja/zh/en/fr；动态节点同时给 `data-i18n` 与 `t()` 初值。
 6. MOS365 / updater / 签名 / bootstrapper / server.py 属安全与发布链，UI 层只经既有公开入口调用。
+
+## 21. P14.1 更新失败恢复纪要
+
+- **对话框化**：`#updater-panel` 从工具抽屉附属层改为独立 `role="dialog"`（`.updater-dialog` scrim + `.updater-dialog__card` 居中卡，浅 34%/深 45% scrim，禁 80%+ 黑幕）。完整生命周期：`StudyUpdater.open(openerEl)` 记录触发器并聚焦标题 → 关闭按钮/返回学习/Esc（capture）任一路径 `close()` → 焦点回 opener（回退 `#statusbar-version-entry`），无 inert/overflow 残留。**任何全屏层必须先证明"能出去"再谈内容。**
+- **fail closed 三态 UI**：`signatureConfigured===false` → `#updater-security` 专用块（用户可懂文案，禁"联系管理员"、禁 traceback）；check/download/apply 全部隐藏；仅暴露重新检查（只打 `updater/state`，防抖）与诊断折叠（错误代码+runtime 类型，禁私钥/Token/路径）。签名协议本身零改动。
+- **旧 `.btn-updater` 的 author `display` 再次压过 `[hidden]`**——§18 教训重演，quiet.css 已补 `[hidden]{display:none!important}` 分支；新增带 display 组件时此分支为必写项。
+- **runtime 真因与装配**：embedded Python 3.12（`python\`，tracked）从未带 cryptography → 签名验证 fail closed 触发。`tools/provision_runtime.ps1`（幂等，系统 pip 仅作 wheel 下载器：`--python-version 3.12 --only-binary=:all: --platform win_amd64`，解压至 `python\Lib\site-packages`，版本入 `tools/runtime-requirements.lock`）。site-packages 装配产物**不入库**（build 产物），克隆后打包前跑一次 provision；`create_release.verify_runtime_signature_dependency()` 为 release gate——runtime 缺依赖时打包直接失败（`tests/test_updater_release_gate.py` 守护三分支 + python/ 打包规则）。终端用户永不接触 pip。
+- **zh-CN 静态翻译既有失效**：切 zh-CN 后全站 data-i18n 静态 dict 写入 0/303 生效（`diag_i18n_p14.js` 可复现，独立任务追踪）；用户可懂性由 HTML 日中双语原文保障，dict 键（`tools.updaterSecure*` 等 6 键）已就位待 i18n 修复后自动生效。
