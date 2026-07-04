@@ -104,6 +104,8 @@
   function init() {
     initRail();
     initSkipLinkFirstTab();
+    // 供表面状态层（surfaces.js）在 overlay 关闭后恢复高亮
+    window.ShellRail = { setActive: updateRailActive };
   }
 
   if (document.readyState === "loading") {

@@ -261,5 +261,8 @@
     init();
   }
 
-  window.HomeWorkspace = { open: open, close: close, isOpen: isOpen, refresh: render };
+  window.HomeWorkspace = {
+    open: open, close: close, isOpen: isOpen, refresh: render,
+    getSubject: function () { return lastSubject; }
+  };
 })();
