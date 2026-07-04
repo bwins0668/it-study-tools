@@ -1,0 +1,73 @@
+/* ============================================================
+   Practice — 练习区状态层（PC UI Rebuild P3）
+   quiz 选项：溢出保护 / focus-visible / 提交后正误标注
+   反馈条：图标 + 文字双重表达（文字由 checkQuizAnswer 提供）
+   ============================================================ */
+
+/* 长选项（日文长句/代码片段）不得横向溢出 */
+.quiz-option {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+/* div 渲染的选项获得键盘焦点时的可见描边（P3 补 tabindex 后生效） */
+.quiz-option:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: var(--r-2);
+}
+
+/* ── 提交后所选项正误标注（叠加层，不改旧 selected 样式语义） ── */
+.quiz-option.is-correct {
+  border-color: var(--ok) !important;
+  background: var(--ok-subtle) !important;
+}
+.quiz-option.is-wrong {
+  border-color: var(--danger) !important;
+  background: var(--danger-subtle) !important;
+}
+.quiz-option.is-correct::after,
+.quiz-option.is-wrong::after {
+  font-family: var(--font-ui);
+  font-weight: 700;
+  font-size: var(--fs-13);
+  margin-left: auto;
+  padding-left: var(--sp-3);
+  flex-shrink: 0;
+}
+.quiz-option.is-correct::after {
+  content: "\2713 正解";
+  color: var(--ok);
+}
+.quiz-option.is-wrong::after {
+  content: "\2717 不正解";
+  color: var(--danger);
+}
+
+/* ── 反馈条：图标前缀（success/error class 由判分逻辑写入） ── */
+#quiz-feedback.quiz-feedback.success::before,
+#quiz-feedback.quiz-feedback.error::before {
+  font-family: "Font Awesome 6 Free";
+  font-weight: 900;
+  margin-right: var(--sp-2);
+}
+#quiz-feedback.quiz-feedback.success::before {
+  content: "\f058"; /* circle-check */
+  color: var(--ok);
+}
+#quiz-feedback.quiz-feedback.error::before {
+  content: "\f057"; /* circle-xmark */
+  color: var(--danger);
+}
+
+/* ── P1 并存期浅色防御（同 shell.css 策略；P5 收口时随 override 移除） ── */
+body[data-theme="light"] .quiz-option.is-correct {
+  background: var(--ok-subtle) !important;
+  border-color: var(--ok) !important;
+}
+body[data-theme="light"] .quiz-option.is-wrong {
+  background: var(--danger-subtle) !important;
+  border-color: var(--danger) !important;
+}
+body[data-theme="light"] .quiz-option.is-correct::after { color: var(--ok) !important; -webkit-text-fill-color: var(--ok) !important; }
+body[data-theme="light"] .quiz-option.is-wrong::after { color: var(--danger) !important; -webkit-text-fill-color: var(--danger) !important; }
