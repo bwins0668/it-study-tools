@@ -48,16 +48,3 @@
   .lesson-nav-footer { gap: var(--sp-2); }
   .lesson-nav-footer__status { order: -1; flex-basis: 100%; }
 }
-
-/* ── P1 并存期浅色防御（同 shell.css 策略；P5 收口时随 override 移除） ── */
-body[data-theme="light"] .lesson-nav-footer,
-body[data-theme="light"] .lesson-nav-footer * {
-  -webkit-text-fill-color: currentColor !important;
-  text-shadow: none !important;
-}
-body[data-theme="light"] .lesson-nav-footer { border-color: var(--bd-1) !important; background: transparent !important; }
-body[data-theme="light"] .lesson-nav-footer__status { color: var(--tx-3) !important; background: transparent !important; }
-body[data-theme="light"] .lesson-nav-footer__status.is-done,
-body[data-theme="light"] .lesson-nav-footer__status.is-done i { color: var(--ok) !important; }
-body[data-theme="light"] .lesson-nav-footer__count { color: var(--tx-3) !important; background: var(--bg-3) !important; border-color: var(--bd-1) !important; }
-body[data-theme="light"] .lesson-nav-footer .ds-btn--secondary { background: var(--bg-3) !important; color: var(--tx-1) !important; border-color: var(--bd-2) !important; }

@@ -6209,12 +6209,11 @@ body.mode-sg {
   --neon-cyan: #ffffff;
 }
 
+/* P9 Quiet：应用底 token 化（硬编码近黑与顶光渐变退役） */
 .app-container, body.mode-sg {
-  background-color: #09090b !important;
-  background-image:
-    radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.035) 0%, transparent 60%),
-    linear-gradient(to bottom, #09090b, #09090b) !important;
-  background-attachment: fixed !important;
+  background-color: var(--bg-0) !important;
+  background-image: none !important;
+  background-attachment: scroll !important;
 }
 
 /* Subject tab switcher buttons */
@@ -6260,16 +6259,16 @@ body.mode-sg {
   background: rgba(255, 255, 255, 0.03) !important;
 }
 
-/* Active sub-header tabs */
+/* Active sub-header tabs — P9 Quiet：弱底选中，去浮起框 */
 .sub-header-tab.active,
 #sql-sub-header .sub-header-tab.active,
 #python-sub-header .sub-header-tab.active,
 #java-sub-header .sub-header-tab.active,
 body.mode-sg .sub-header-tab.active {
-  background: rgba(255, 255, 255, 0.08) !important;
-  border: 1px solid rgba(255, 255, 255, 0.15) !important;
-  color: #ffffff !important;
-  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.05) !important;
+  background: var(--accent-subtle) !important;
+  border: 1px solid transparent !important;
+  color: var(--tx-1) !important;
+  box-shadow: none !important;
 }
 
 /* Sidebar lesson items */
@@ -6313,14 +6312,15 @@ body.mode-sg .progress-info strong {
 }
 
 /* card stylings */
+/* P9 Quiet：主面板 token 化（半透深底与重阴影退役） */
 .content-card,
 .playground-card,
 .java-sandbox-card,
 .python-sandbox-card,
 .cbt-config-options {
-  border: 1px solid rgba(255, 255, 255, 0.08) !important;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4) !important;
-  background: rgba(24, 24, 27, 0.6) !important;
+  border: 1px solid var(--bd-1) !important;
+  box-shadow: none !important;
+  background: var(--bg-1) !important;
 }
 
 /* Remove colored glows on focus for sandbox cards */
@@ -6361,18 +6361,19 @@ body.mode-sg .sidebar-title,
   font-weight: 600 !important;
 }
 
+/* P9 Quiet：正文区 token 化（半透明深底在浅色下成灰块，退役） */
 .concept-body {
-  background: rgba(9, 9, 11, 0.5) !important;
-  border: 1px solid rgba(255, 255, 255, 0.06) !important;
-  color: #e4e4e7 !important;
+  background: transparent !important;
+  border: none !important;
+  color: var(--tx-1) !important;
 }
 .concept-body strong {
-  color: #ffffff !important;
+  color: var(--tx-1) !important;
 }
 .concept-body code {
-  background: rgba(255, 255, 255, 0.06) !important;
-  color: #e4e4e7 !important;
-  border: 1px solid rgba(255, 255, 255, 0.04) !important;
+  background: var(--bg-3) !important;
+  color: var(--tx-1) !important;
+  border: 1px solid var(--bd-1) !important;
 }
 
 /* Analogy Card & Glossary Card */
@@ -6399,18 +6400,18 @@ body.mode-sg .sidebar-title,
   color: #f4f4f5 !important;
 }
 
-/* Primary Action Buttons */
+/* Primary Action Buttons — P9 Quiet：统一 accent token（“漂白轮”白底退役） */
 .run-query-btn,
 .quiz-submit-btn,
 .cbt-launch-btn,
 .coding-exam-run-btn,
 .coding-exam-run-btn.java-theme,
 .coding-exam-run-btn.python-theme {
-  background: #ffffff !important;
-  border: 1px solid rgba(255, 255, 255, 0.1) !important;
-  color: #09090b !important;
-  font-weight: 700 !important;
-  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.05) !important;
+  background: var(--accent) !important;
+  border: 1px solid transparent !important;
+  color: var(--on-accent) !important;
+  font-weight: 600 !important;
+  box-shadow: none !important;
   animation: none !important;
 }
 
@@ -6418,9 +6419,9 @@ body.mode-sg .sidebar-title,
 .quiz-submit-btn:hover,
 .cbt-launch-btn:hover,
 .coding-exam-run-btn:hover {
-  background: #e4e4e7 !important;
-  transform: translateY(-1px) !important;
-  box-shadow: 0 6px 16px rgba(255, 255, 255, 0.12) !important;
+  background: var(--accent-hover) !important;
+  transform: none !important;
+  box-shadow: none !important;
 }
 
 /* Secondary Action Buttons */
@@ -6519,24 +6520,24 @@ body.mode-sg .quiz-option.selected .option-marker {
   border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
 }
 
-/* Output terminal */
+/* Output terminal — P9 Quiet：token 化 */
 .output-body {
-  background: rgba(9, 9, 11, 0.4) !important;
+  background: var(--bg-0) !important;
 }
 
 .result-table th {
-  background: rgba(255, 255, 255, 0.02) !important;
-  color: #ffffff !important;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+  background: var(--bg-3) !important;
+  color: var(--tx-1) !important;
+  border-bottom: 1px solid var(--bd-2) !important;
 }
 .result-table td {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.04) !important;
-  color: #e4e4e7 !important;
+  border-bottom: 1px solid var(--bd-1) !important;
+  color: var(--tx-2) !important;
 }
 
 .maximize-btn.active {
-  color: #ffffff !important;
-  border-color: #ffffff !important;
+  color: var(--tx-1) !important;
+  border-color: var(--bd-2) !important;
 }
 .output-card.maximized {
   background: #09090b !important;
@@ -6782,13 +6783,13 @@ body.mode-sg .quiz-option.selected .option-marker {
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5) !important;
 }
 
-/* Sinking effect for editors and output terminals to represent 'input/output fields' */
+/* 输入/输出凹陷层 — P9 Quiet：token 化（纯黑与内阴影退役） */
 .editor-container,
 .output-body,
 .output-placeholder {
-  background: #000000 !important; /* Pure black to sink input regions */
-  border: 1px solid rgba(255, 255, 255, 0.06) !important;
-  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.8) !important;
+  background: var(--bg-0) !important;
+  border: 1px solid var(--bd-1) !important;
+  box-shadow: none !important;
 }
 
 /* Active tab distinct elevation */
@@ -6808,10 +6809,10 @@ body.mode-sg .quiz-option.selected .option-marker {
 #python-sub-header .sub-header-tab.active,
 #java-sub-header .sub-header-tab.active,
 body.mode-sg .sub-header-tab.active {
-  background: #27272a !important;
-  border-color: rgba(255, 255, 255, 0.2) !important;
-  color: #ffffff !important;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+  background: var(--accent-subtle) !important;
+  border-color: transparent !important;
+  color: var(--tx-1) !important;
+  box-shadow: none !important;
 }
 
 /* ── Hover rules for desktop (compositor-only) ── */
@@ -6835,31 +6836,33 @@ body.mode-sg .sub-header-tab.active {
 }
 
 /* Interactive elements: buttons and options */
+/* P9 Quiet：主行动按钮最终层 = accent token（白底/位移/发光退役） */
 .run-query-btn,
 .quiz-submit-btn,
 .cbt-launch-btn,
 .coding-exam-run-btn {
-  background: #ffffff !important;
-  border: 1px solid #ffffff !important;
-  color: #000000 !important;
-  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1) !important;
-  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s, background-color 0.2s !important;
+  background: var(--accent) !important;
+  border: 1px solid transparent !important;
+  color: var(--on-accent) !important;
+  box-shadow: none !important;
+  transition: background-color 0.14s ease, color 0.14s ease !important;
 }
 
 .run-query-btn:hover,
 .quiz-submit-btn:hover,
 .cbt-launch-btn:hover,
 .coding-exam-run-btn:hover {
-  background: #f4f4f5 !important;
-  transform: translateY(-2px) !important;
-  box-shadow: 0 6px 20px rgba(255, 255, 255, 0.15) !important;
+  background: var(--accent-hover) !important;
+  transform: none !important;
+  box-shadow: none !important;
 }
 
 .run-query-btn:active,
 .quiz-submit-btn:active,
 .cbt-launch-btn:active {
-  transform: translateY(0) !important;
-  box-shadow: 0 2px 8px rgba(255, 255, 255, 0.05) !important;
+  transform: none !important;
+  background: var(--accent-press) !important;
+  box-shadow: none !important;
 }
 
 /* Distinct depth for Quiz options */

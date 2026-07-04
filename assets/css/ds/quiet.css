@@ -1,0 +1,474 @@
+/* ============================================================
+   Quiet Technical Workspace — P9 视觉纠偏层
+   最后加载。职责：
+   1) 旧全局变量一次性重映射到石墨系（旧 UI 整体对齐，去霓虹/玻璃）
+   2) 应用 Chrome 去噪（header/brand/rail/状态栏：削边框预算）
+   3) 课时阅读区去框（排版与留白分层，替代粗边框堆叠）
+   4) SQL 工作台收敛（一层 surface + 内部分隔线）
+   5) 练习界面降噪（coding-typing 红墙治理 = P1 token 泄漏修复）
+   规则：本层只用普通级联（加载序胜出），不新增 !important；
+   浅色基础由重写后的 runtime 主题层（app.js）提供。
+   ============================================================ */
+
+/* ── 1. 旧全局变量重映射 ── */
+:root {
+  --bg-primary: var(--bg-0);
+  --bg-secondary: var(--bg-1);
+  --bg-card: var(--bg-2);                 /* 去半透明玻璃 */
+  --border-color: var(--bd-1);
+  --border-color-glow: var(--bd-2);       /* 辉光退役为普通边界 */
+  --text-main: var(--tx-1);
+  --text-muted: var(--tx-2);
+  --neon-cyan: var(--tx-1);               /* 旧“高亮”→中性主文字 */
+  --neon-cyan-glow: rgba(236, 234, 232, 0.06);
+  --neon-blue: var(--tx-2);
+  --neon-purple: var(--tx-2);
+  --neon-purple-glow: rgba(236, 234, 232, 0.05);
+  --glass-blur: blur(0px);                /* 玻璃拟态退役 */
+}
+
+/* 浅色下压平 light-theme.css 的变量层（蓝/紫/纯白退役）：
+   同特异性 (0,1,1)，本层后载胜出 → 旧 UI 的 var() 背景与文字自动暖纸化 */
+body[data-theme="light"] {
+  --bg-primary: var(--bg-0);
+  --bg-secondary: var(--bg-1);
+  --bg-card: var(--bg-2);
+  --border-color: var(--bd-1);
+  --border-color-glow: var(--bd-2);
+  --text-main: var(--tx-1);
+  --text-muted: var(--tx-2);
+  --neon-cyan: var(--tx-1);
+  --neon-cyan-glow: rgba(46, 42, 36, 0.06);
+  --neon-blue: var(--tx-2);
+  --neon-purple: var(--tx-2);
+  --neon-purple-glow: rgba(46, 42, 36, 0.05);
+  --success-color: var(--ok);
+  --success-glow: var(--ok-subtle);
+  --error-color: var(--danger);
+  --error-glow: var(--danger-subtle);
+}
+
+/* ── 2. 应用 Chrome ── */
+/* 应用底：霓虹夜空渐变退役，纯石墨/暖纸 */
+.app-container {
+  background-image: none;
+  background-color: var(--bg-0);
+}
+
+/* Header：一条安静的工具带，而不是一排独立小窗口 */
+.app-header {
+  background: var(--bg-1);
+  border-bottom: 1px solid var(--bd-1);
+  backdrop-filter: none;
+}
+
+/* 品牌区：去“大号输入框”感 */
+.header-brand-trigger {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  border-radius: var(--r-2);
+}
+.header-brand-trigger:hover { background: var(--bg-2); }
+
+/* Utility 群：图标按钮 tertiary 化（无框、无影，hover 仅弱底） */
+.fullscreen-toggle-btn,
+.theme-toggle-btn,
+.tools-trigger-btn,
+.mobile-toggle-btn,
+.ai-header-btn,
+.language-toggle-btn,
+.top-utility-cluster button {
+  background: transparent;
+  border: 1px solid transparent;
+  box-shadow: none;
+  color: var(--tx-2);
+  border-radius: var(--r-2);
+  transition: background-color var(--dur-1) var(--ease), color var(--dur-1) var(--ease);
+}
+@media (hover: hover) and (pointer: fine) {
+  .fullscreen-toggle-btn:hover,
+  .theme-toggle-btn:hover,
+  .tools-trigger-btn:hover,
+  .mobile-toggle-btn:hover,
+  .ai-header-btn:hover,
+  .language-toggle-btn:hover,
+  .top-utility-cluster button:hover {
+    background: var(--bg-3);
+    color: var(--tx-1);
+    border-color: transparent;
+    box-shadow: none;
+  }
+}
+
+/* 模式切换（教科書与演練沙盒 / 実操模擬考試）：下划线 tab，不是两枚浮起按钮
+   （按钮由 populateHeaderModeNav 渲染为 .sub-header-tab；三连级压平旧 sub-header 样式） */
+body #header-mode-nav .sub-header-tab {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  color: var(--tx-2);
+  border-radius: 0;
+  border-bottom: 2px solid transparent;
+  transform: none;
+}
+body #header-mode-nav .sub-header-tab:hover {
+  background: transparent;
+  color: var(--tx-1);
+  box-shadow: none;
+  transform: none;
+}
+body #header-mode-nav .sub-header-tab.active {
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid var(--accent);
+  color: var(--tx-1);
+  box-shadow: none;
+}
+
+/* 挑战入口：secondary 化，不做火焰高亮块 */
+.header-challenge-btn-start {
+  background: transparent;
+  border: 1px solid var(--bd-2);
+  box-shadow: none;
+  color: var(--tx-2);
+}
+@media (hover: hover) and (pointer: fine) {
+  .header-challenge-btn-start:hover { background: var(--bg-3); color: var(--tx-1); }
+}
+
+/* ── 3. 课时阅读区：排版分层替代边框堆叠 ── */
+/* 主容器只保留一层 surface；内部区块去独立卡片化 */
+.content-card {
+  background: var(--bg-1);
+  border: 1px solid var(--bd-1);
+  box-shadow: none;
+}
+.lesson-header { border: none; background: transparent; }
+.lesson-badge {
+  background: var(--bg-3);
+  border: none;
+  color: var(--tx-2);
+  box-shadow: none;
+}
+
+/* 语言层 tab：下划线式（原三枚描边按钮退役）
+   body 前缀提级：压过 body.i18n-active .lang-tab 等旧态选择器 */
+body .content-card .lang-tabs { border-bottom: 1px solid var(--bd-1); background: transparent; gap: 2px; border-top: none; border-left: none; border-right: none; }
+body .content-card .lang-tabs .lang-tab {
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  border-bottom: 2px solid transparent;
+  box-shadow: none;
+  color: var(--tx-2);
+}
+body .content-card .lang-tabs .lang-tab:hover { background: transparent; color: var(--tx-1); }
+body .content-card .lang-tabs .lang-tab.active {
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid var(--accent);
+  color: var(--tx-1);
+  box-shadow: none;
+}
+
+/* 双语列：去内层卡框，留白 + 左细线分栏 */
+.concept-container { background: transparent; border: none; box-shadow: none; }
+.concept-col { background: transparent; border: none; box-shadow: none; padding: 0; }
+.concept-col.zh-col { border-left: 2px solid var(--bd-1); padding-left: var(--sp-5); }
+.concept-body { background: transparent; border: none; box-shadow: none; line-height: var(--lh-cjk); }
+.concept-col h4 { color: var(--tx-3); border: none; background: transparent; }
+
+/* 比喻/例句/词汇：细分隔线区块，不再各自为卡 */
+.analogy-card {
+  background: transparent;
+  border: none;
+  border-left: 2px solid var(--bd-2);
+  border-radius: 0;
+  box-shadow: none;
+  padding-left: var(--sp-4);
+}
+.analogy-card .card-icon { color: var(--tx-3); background: transparent; border: none; }
+.example-card {
+  background: var(--bg-2);
+  border: 1px solid var(--bd-1);
+  box-shadow: none;
+}
+.example-card .example-header { background: transparent; border-bottom: 1px solid var(--bd-1); box-shadow: none; }
+.copy-example-btn {
+  background: transparent;
+  border: 1px solid var(--bd-2);
+  box-shadow: none;
+  color: var(--tx-2);
+}
+@media (hover: hover) and (pointer: fine) {
+  .copy-example-btn:hover { background: var(--bg-3); color: var(--tx-1); }
+}
+
+/* 理解度テスト：区块标题 + 选项行，整体不再套粗框 */
+.quiz-section { background: transparent; border: none; box-shadow: none; border-top: 1px solid var(--bd-1); }
+.quiz-question { background: transparent; border: none; border-left: 2px solid var(--accent); box-shadow: none; }
+.quiz-option {
+  background: transparent;
+  border: 1px solid var(--bd-1);
+  box-shadow: none;
+}
+@media (hover: hover) and (pointer: fine) {
+  .quiz-option:hover { background: var(--bg-2); border-color: var(--bd-2); box-shadow: none; transform: none; }
+}
+.quiz-option.selected {
+  background: var(--accent-subtle);
+  border-color: var(--accent);
+  box-shadow: none;
+}
+.quiz-option .option-marker {
+  background: var(--bg-3);
+  border: none;
+  color: var(--tx-2);
+  box-shadow: none;
+}
+.quiz-option.selected .option-marker { background: var(--accent); color: var(--on-accent); }
+.quiz-submit-btn {
+  background: var(--bg-3);
+  border: 1px solid var(--bd-2);
+  color: var(--tx-1);
+  box-shadow: none;
+}
+@media (hover: hover) and (pointer: fine) {
+  .quiz-submit-btn:hover { background: var(--bg-3); border-color: var(--tx-3); box-shadow: none; transform: none; }
+}
+
+/* ── 4. SQL 工作台：一层 surface，内部分隔线 ── */
+.playground-section { background: transparent; border: none; box-shadow: none; }
+.playground-section .content-card,
+.schema-card,
+.console-card,
+.output-card {
+  background: var(--bg-1);
+  border: 1px solid var(--bd-1);
+  box-shadow: none;
+}
+.console-card .console-header,
+.output-card .output-header,
+.schema-card .schema-header {
+  background: transparent;
+  border-bottom: 1px solid var(--bd-1);
+  box-shadow: none;
+}
+.console-btn, .db-group-tab, .schema-tab {
+  background: transparent;
+  border: 1px solid var(--bd-2);
+  box-shadow: none;
+  color: var(--tx-2);
+}
+@media (hover: hover) and (pointer: fine) {
+  .console-btn:hover, .db-group-tab:hover, .schema-tab:hover {
+    background: var(--bg-3);
+    color: var(--tx-1);
+    box-shadow: none;
+    transform: none;
+  }
+}
+.db-group-tab.active, .schema-tab.active {
+  background: var(--bg-3);
+  border-color: var(--tx-3);
+  color: var(--tx-1);
+}
+/* 唯一 Primary：执行 SQL（id 级压平旧多级类链） */
+#run-query-btn {
+  background: var(--accent);
+  border: 1px solid transparent;
+  color: var(--on-accent);
+  box-shadow: none;
+}
+#run-query-btn kbd { background: rgba(0, 0, 0, 0.18); color: inherit; border: none; }
+@media (hover: hover) and (pointer: fine) {
+  #run-query-btn:hover { background: var(--accent-hover); box-shadow: none; transform: none; }
+}
+#run-query-btn:active { background: var(--accent-press); }
+#sql-editor, .sql-editor-wrapper, .editor-area {
+  background: var(--bg-0);
+  border-color: var(--bd-1);
+  box-shadow: none;
+}
+/* 编辑器周边硬编码深色退役（深浅均由 token 决定） */
+.sql-editor { color: var(--tx-1); caret-color: var(--tx-1); }
+.line-numbers { background: var(--bg-3); color: var(--tx-3); border-right: 1px solid var(--bd-1); }
+.console-footer { background: var(--bg-2); border-top: 1px solid var(--bd-1); }
+.editor-container { background: var(--bg-0); border-color: var(--bd-1); }
+.output-placeholder { color: var(--tx-3); }
+
+/* 任务/ミッション条：轻量上下文，不再高亮框 */
+.mission-card, .current-task-bar {
+  background: transparent;
+  border: none;
+  border-left: 2px solid var(--bd-2);
+  box-shadow: none;
+}
+
+/* 考试准备卡：安静居中 */
+.cbt-config-card {
+  background: var(--bg-1);
+  border: 1px solid var(--bd-1);
+  box-shadow: none;
+  max-width: 640px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.cbt-config-card .cbt-logo-icon { color: var(--tx-3); background: transparent; }
+.cbt-config-options { background: var(--bg-2); border: 1px solid var(--bd-1); }
+.cbt-btn-action {
+  background: var(--accent);
+  border: none;
+  color: var(--on-accent);
+  box-shadow: none;
+}
+@media (hover: hover) and (pointer: fine) {
+  .cbt-btn-action:hover { background: var(--accent-hover); box-shadow: none; transform: none; }
+}
+
+/* ── 5. Sidebar / 目录 ── */
+.app-sidebar { background: var(--bg-1); border-right: 1px solid var(--bd-1); box-shadow: none; }
+.sidebar-title { color: var(--tx-3); border: none; background: transparent; }
+.lesson-nav-item {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  color: var(--tx-2);
+  border-radius: var(--r-2);
+}
+@media (hover: hover) and (pointer: fine) {
+  .lesson-nav-item:hover { background: var(--bg-2); color: var(--tx-1); transform: none; box-shadow: none; }
+}
+.lesson-nav-item.active {
+  background: var(--accent-subtle);
+  color: var(--tx-1);
+  border: none;
+  box-shadow: inset 2px 0 0 var(--accent);
+}
+.lesson-nav-item.completed { color: var(--tx-3); }
+/* 目录展开手柄：低调化（去渐变竖条感） */
+.sidebar-edge-handle {
+  background: var(--bg-1);
+  border-right: 1px solid var(--bd-1);
+  color: var(--tx-3);
+}
+.sidebar-edge-handle:hover { background: var(--bg-2); color: var(--tx-1); }
+.sidebar-progress { background: transparent; border: none; }
+.progress-bar-container { background: var(--bg-3); border: none; height: 4px; }
+.progress-bar-fill { background: var(--accent); }
+
+/* ── 6. 编程打字：红墙治理（P1 --accent 泄漏进 var(--accent, #6366f1) 的修复） ── */
+.coding-typing-hub {
+  /* 作用域内重定义：选中体系回归中性 + 低饱和强调 */
+  --accent: #B4544C;
+  --accent-dim: rgba(180, 84, 76, 0.14);
+  --accent-light: #C88780;
+  background: var(--bg-0);
+}
+/* 语言选择：中性 chip，选中弱底 + 强调文字（不再整块红底白字） */
+.coding-typing-hub .ct-lang-tab {
+  background: transparent;
+  border: 1px solid var(--bd-2);
+  color: var(--tx-2);
+  box-shadow: none;
+}
+.coding-typing-hub .ct-lang-tab.active {
+  background: var(--accent-subtle, rgba(180, 84, 76, 0.14));
+  border-color: #B4544C;
+  color: #C88780;
+}
+/* 类别/难度筛选：灰阶墙 → 无框文本 chip */
+.coding-typing-hub .ct-cat-btn,
+.coding-typing-hub .ct-diff-btn {
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--tx-3);
+  box-shadow: none;
+}
+.coding-typing-hub .ct-cat-btn:hover,
+.coding-typing-hub .ct-diff-btn:hover { background: var(--bg-3); color: var(--tx-1); }
+.coding-typing-hub .ct-cat-btn.active,
+.coding-typing-hub .ct-diff-btn.active {
+  background: var(--bg-3);
+  border-color: var(--bd-2);
+  color: var(--tx-1);
+}
+/* 练习列表：文本行 + 左强调条（整行红底退役） */
+.coding-typing-hub .ct-item-btn {
+  background: transparent;
+  border: none;
+  color: var(--tx-2);
+  box-shadow: none;
+  border-radius: var(--r-2);
+}
+.coding-typing-hub .ct-item-btn:hover { background: var(--bg-2); color: var(--tx-1); }
+.coding-typing-hub .ct-item-btn.active {
+  background: rgba(180, 84, 76, 0.14);
+  color: var(--tx-1);
+  box-shadow: inset 2px 0 0 #B4544C;
+}
+.coding-typing-hub .ct-item-btn.active .ct-item-id { color: #C88780; }
+/* 主行动对：在沙盒中运行=Primary（区域唯一），发送=Secondary（白底大按钮退役） */
+.coding-typing-hub .ct-sandbox-run-btn {
+  background: #B4544C;
+  border: 1px solid transparent;
+  color: #F6F1EC;
+  box-shadow: none;
+}
+.coding-typing-hub .ct-sandbox-run-btn:hover { background: #C26A62; box-shadow: none; transform: none; }
+.coding-typing-hub .ct-sandbox-btn {
+  background: transparent;
+  border: 1px solid var(--bd-2);
+  color: var(--tx-1);
+  box-shadow: none;
+}
+.coding-typing-hub .ct-sandbox-btn:hover { background: var(--bg-3); box-shadow: none; transform: none; }
+/* 工具条：随机一题降为普通操作（Primary 让位给“在沙盒中运行”） */
+.coding-typing-hub .ct-primary-btn {
+  background: transparent;
+  border: 1px solid var(--bd-2);
+  color: var(--tx-1);
+  box-shadow: none;
+}
+.coding-typing-hub .ct-primary-btn:hover { background: var(--bg-3); color: var(--tx-1); }
+.coding-typing-hub .ct-secondary-btn {
+  background: transparent;
+  border: 1px solid var(--bd-1);
+  color: var(--tx-2);
+  box-shadow: none;
+}
+.coding-typing-hub .ct-secondary-btn:hover { background: var(--bg-3); color: var(--tx-1); }
+/* 输入区：石墨凹陷层（旧蓝黑退役） */
+.coding-typing-hub .ct-textarea {
+  background: var(--bg-0);
+  border: 1px solid var(--bd-1);
+  color: var(--tx-1);
+  box-shadow: none;
+}
+.coding-typing-hub .ct-textarea:focus { border-color: var(--accent); box-shadow: none; }
+/* 危险操作只保留文字级危险色 */
+.coding-typing-hub button[onclick*="clearHistory"] {
+  background: transparent;
+  border: 1px solid var(--bd-1);
+  color: var(--danger);
+  box-shadow: none;
+}
+
+/* 要点/标签：紫蓝/红胶囊 → 灰阶小标 */
+.coding-typing-hub .ct-focus-tag,
+.coding-typing-hub .ct-exam-insight__badge,
+.coding-typing-hub .ct-item-meta {
+  background: var(--bg-3);
+  border: none;
+  color: var(--tx-2);
+  box-shadow: none;
+}
+
+/* ── 7. 日本語タイピング面板同规降噪 ── */
+.typing-panel { box-shadow: none; border: 1px solid var(--bd-1); background: var(--bg-1); }
+.typing-panel .typing-panel-header { background: transparent; border-bottom: 1px solid var(--bd-1); }
+
+/* ── 8. 状态语义色仅用于真实状态 ── */
+.output-error-box { border-color: var(--danger); background: var(--danger-subtle); box-shadow: none; }
+.output-message-box { border-color: var(--bd-2); background: var(--bg-2); box-shadow: none; }

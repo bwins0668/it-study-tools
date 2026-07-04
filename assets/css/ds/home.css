@@ -203,32 +203,3 @@
   .home-course-row__bar { grid-area: bar; }
   .home-course-row__stat { grid-area: stat; }
 }
-
-/* ── P1 并存期浅色防御（同 shell.css 策略；P5 内容区迁移后随 override 一并移除） ──
-   旧 runtime override 会把 home 区刷白；home 是新建区域，必须完整呈现暖纸 token */
-body[data-theme="light"] .home-workspace,
-body[data-theme="light"] .home-workspace * {
-  -webkit-text-fill-color: currentColor !important;
-  text-shadow: none !important;
-  box-shadow: none !important;
-}
-body[data-theme="light"] .home-workspace { background: var(--bg-0) !important; }
-body[data-theme="light"] .home-workspace .home-hero__title,
-body[data-theme="light"] .home-workspace .home-course-row__name,
-body[data-theme="light"] .home-workspace .home-hero__context strong,
-body[data-theme="light"] .home-workspace .home-course-row__stat strong { color: var(--tx-1) !important; background: transparent !important; }
-body[data-theme="light"] .home-workspace .home-hero__context { color: var(--tx-2) !important; background: transparent !important; }
-body[data-theme="light"] .home-workspace .home-hero__eyebrow,
-body[data-theme="light"] .home-workspace .home-section__title,
-body[data-theme="light"] .home-workspace .home-course-row__icon,
-body[data-theme="light"] .home-workspace .home-course-row__stat,
-body[data-theme="light"] .home-workspace .home-empty-hint { color: var(--tx-3) !important; background: transparent !important; }
-body[data-theme="light"] .home-workspace .home-course-row { background: transparent !important; border-color: var(--bd-1) !important; }
-body[data-theme="light"] .home-workspace .home-course-row.is-done .home-course-row__icon { color: var(--ok) !important; }
-body[data-theme="light"] .home-workspace .home-course-row__go { color: var(--accent) !important; background: transparent !important; }
-body[data-theme="light"] .home-workspace .home-action { background: var(--bg-1) !important; color: var(--tx-2) !important; border-color: var(--bd-2) !important; }
-body[data-theme="light"] .home-workspace .home-action i { color: var(--tx-3) !important; }
-body[data-theme="light"] .home-workspace .ds-btn--primary { background: var(--accent) !important; color: var(--on-accent) !important; }
-body[data-theme="light"] .home-workspace .ds-btn--secondary { background: var(--bg-3) !important; color: var(--tx-1) !important; border-color: var(--bd-2) !important; }
-body[data-theme="light"] .home-workspace .ds-progress { background: var(--bg-3) !important; border-color: var(--bd-1) !important; }
-body[data-theme="light"] .home-workspace .ds-progress__fill { background: var(--accent) !important; }

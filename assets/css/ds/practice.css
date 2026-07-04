@@ -59,15 +59,3 @@
   content: "\f057"; /* circle-xmark */
   color: var(--danger);
 }
-
-/* ── P1 并存期浅色防御（同 shell.css 策略；P5 收口时随 override 移除） ── */
-body[data-theme="light"] .quiz-option.is-correct {
-  background: var(--ok-subtle) !important;
-  border-color: var(--ok) !important;
-}
-body[data-theme="light"] .quiz-option.is-wrong {
-  background: var(--danger-subtle) !important;
-  border-color: var(--danger) !important;
-}
-body[data-theme="light"] .quiz-option.is-correct::after { color: var(--ok) !important; -webkit-text-fill-color: var(--ok) !important; }
-body[data-theme="light"] .quiz-option.is-wrong::after { color: var(--danger) !important; -webkit-text-fill-color: var(--danger) !important; }

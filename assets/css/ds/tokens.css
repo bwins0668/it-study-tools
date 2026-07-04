@@ -25,12 +25,12 @@
   --bd-1: rgba(236, 234, 232, 0.07);
   --bd-2: rgba(236, 234, 232, 0.14);
 
-  /* ── 强调色：日式绯红 ── */
-  --accent: #D0564F;
-  --accent-hover: #DC6E67;
-  --accent-press: #B8463F;
-  --accent-subtle: rgba(208, 86, 79, 0.12);
-  --on-accent: #FFFFFF;
+  /* ── 强调色：低饱和砖红（P9 Quiet 纠偏：仅当前选中/主行动/焦点） ── */
+  --accent: #B4544C;
+  --accent-hover: #C26A62;
+  --accent-press: #9A453E;
+  --accent-subtle: rgba(180, 84, 76, 0.14);
+  --on-accent: #F6F1EC;
 
   /* ── 状态色（仅状态语义） ── */
   --ok: #56A56C;
@@ -109,11 +109,12 @@ body[data-theme="light"] {
   --bd-1: rgba(42, 37, 28, 0.11);
   --bd-2: rgba(42, 37, 28, 0.2);
 
-  --accent: #B07A28;
-  --accent-hover: #C08A34;
-  --accent-press: #96671F;
-  --accent-subtle: rgba(176, 122, 40, 0.1);
-  --on-accent: #FFFFFF;
+  /* P9：浅色强调统一为低饱和氧化红（金棕退役） */
+  --accent: #9E5049;
+  --accent-hover: #AE5E56;
+  --accent-press: #87413B;
+  --accent-subtle: rgba(158, 80, 73, 0.11);
+  --on-accent: #FBF8F3;
 
   --ok: #4E7A46;
   --warn: #A87817;
