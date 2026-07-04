@@ -175,7 +175,17 @@ app-frame
 - itpass 词卡/工具箱等右栏组件仍带旧卡片边框（低对比可接受，后续可按边框预算继续瘦身）；
 - coding-typing 的类别 chips 悬停背景来自旧 CSS（灰阶已合规）。
 
-## 17. 未来维护原则
+## 17. P10 可用性收口纪要
+
+**导航与目录**：目录触发器从 16px hover 竖条重做为 44×44 图标按钮（`#context-nav-toggle`，shell.js 驱动）：click/键盘开合、aria-expanded 同步、展开时滑至目录右上内侧成收起把手、焦点入当前课时/Esc 后回按钮；旧竖条桌面退役（≤720 仍由汉堡+抽屉承担）。根因修复：`openDesktopSidebar` 此前从未导出到 window，一切编程式打开均静默失效。
+
+**MOS365 启动体验（web 层）**：真实诊断确认 Excel 启动成功（pid+相位时间戳完整）、卡死点为 `awaiting_attach`（VSTO Exam Host 未安装则永不连接）。现为：4 步 stepper（全部由 `launch/state` 真实相位驱动）→ 20s 未连接出现 stall 引导（含 `tools/install_mos365_exam_host.ps1` 安装指引）→ 取消/重试（记忆 taskId）/診断情報（sessionId·pid·全相位 JSON）/返回工作台；轮询按状态签名 diff 重绘防闪。**技术边界**：运行中 Excel 内的训练面板形态属 native VSTO 宿主（`native/`，未部署的历史产物），web 层无法重塑；Companion 形态改造记为后续 native 工作。
+
+**图标体系**：UI 控件统一 fa-solid 线性体系；工具抽屉 9 枚 emoji 与沙盒 ▶ 字符全部退役；smoke 断言 emoji 图标数为 0、仅图标按钮必须有 aria/tooltip。
+
+**smoke 新增规则**：目录触发器 ≥44×44 + aria、未命名图标按钮=0、emoji 图标=0（连同 P9 规则组成视觉质量门）。
+
+## 18. 未来维护原则
 
 1. 新增界面一律引用 tokens；禁 `transition:all`、裸色值、`!important`（浅色防御块为唯一豁免且随 override 一起退役）。
 2. hover 只在 `(hover:hover) and (pointer:fine)` 下启用；动效只用 transform/opacity；新增动效必须过 reduced-motion。
