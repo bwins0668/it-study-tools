@@ -75,11 +75,23 @@
     }, true);
   }
 
+  // P11：statusbar 版本号 = 低打扰更新入口（复用既有 StudyUpdater 面板）
+  function bindVersionEntry() {
+    var entry = document.getElementById("statusbar-version-entry");
+    if (!entry) return;
+    entry.addEventListener("click", function () {
+      if (window.StudyUpdater && typeof window.StudyUpdater.open === "function") {
+        window.StudyUpdater.open();
+      }
+    });
+  }
+
   function init() {
     scan();
     // AI 抽屉 / MOS shell 由各自脚本延迟注入 → 观察 body 直接子级补挂
     new MutationObserver(scan).observe(document.body, { childList: true });
     redirectBrandOnDesktop();
+    bindVersionEntry();
   }
 
   if (document.readyState === "loading") {

@@ -67,10 +67,19 @@
           <button id="mobile-sidebar-toggle" class="mobile-toggle-btn" onclick="toggleMobileSidebar(); event.stopPropagation();" title="目录" data-i18n-title="sidebar.unitList" aria-label="目录" data-i18n-aria-label="sidebar.unitList" aria-controls="app-sidebar" aria-expanded="false">
             <i class="fa-solid fa-bars"></i>
           </button>
-          <i class="fa-solid fa-graduation-cap logo-icon" id="main-logo-icon"></i>
+          <!-- P11：品牌 monogram（学习笔记折角 + 代码行隐喻；token 着色，深浅自适配） -->
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 32 32" width="32" height="32" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="1.5" y="1.5" width="29" height="29" rx="7.5" class="brand-mark__plate"/>
+              <path d="M20.5 1.5 H23 A7.5 7.5 0 0 1 30.5 9 V11.5 L20.5 1.5 Z" class="brand-mark__fold"/>
+              <rect x="8" y="13" width="16" height="2.6" rx="1.3" class="brand-mark__line brand-mark__line--main"/>
+              <rect x="8" y="19" width="10" height="2.6" rx="1.3" class="brand-mark__line brand-mark__line--sub"/>
+            </svg>
+          </span>
+          <i class="fa-solid fa-graduation-cap logo-icon" id="main-logo-icon" hidden></i>
           <div class="logo-text">
             <h1 id="main-title-text">Study Tools</h1>
-            <span><span data-i18n="common.subtitle">配套备考平台</span> &nbsp;•&nbsp; By: Coco</span>
+            <span><span data-i18n="common.subtitle">配套备考平台</span> · By: Coco</span>
           </div>
           <span class="brand-caret" aria-hidden="true">▾</span>
         </div>
@@ -380,6 +389,14 @@
           <button type="button" class="mobile-drawer-close" data-mobile-drawer-close="true" aria-label="Close" data-i18n-aria-label="common.close">
             <i class="fa-solid fa-xmark"></i>
             <span data-i18n="common.close">关闭</span>
+          </button>
+        </div>
+        <!-- P11：桌面目录头部行（收起按钮成为结构的一部分，不再悬浮压进度） -->
+        <div class="sidebar-head ds-scope">
+          <span class="sidebar-head__title"><i class="fa-solid fa-table-list" aria-hidden="true"></i> <span data-i18n="sidebar.unitList">課程目録</span></span>
+          <button type="button" class="sidebar-head__collapse" id="sidebar-collapse-btn"
+            aria-label="目次を閉じる / 收起目录" aria-controls="app-sidebar">
+            <i class="fa-solid fa-angles-left" aria-hidden="true"></i>
           </button>
         </div>
         <!-- Sidebar Progress -->
@@ -1368,9 +1385,13 @@
     </div><!-- /app-frame__body -->
   </div><!-- /app-frame -->
 
-  <!-- StatusBar（P1：版本 + 快捷键提示；P6 接 updater 徽标） -->
+  <!-- StatusBar（P11：版本号即低打扰更新入口；徽标仅真实有更新时由 updater 显示） -->
   <footer class="app-statusbar ds-scope" id="app-statusbar">
-    <span class="app-statusbar__item"><span class="ds-dot" aria-hidden="true"></span><span data-study-tools-desktop-version>—</span></span>
+    <button type="button" class="app-statusbar__version-entry" id="statusbar-version-entry"
+      aria-label="检查更新" data-i18n-aria-label="tools.updater">
+      <span class="ds-dot" aria-hidden="true"></span><span data-study-tools-desktop-version>—</span>
+      <span class="app-statusbar__version-hint" aria-hidden="true"><i class="fa-solid fa-circle-arrow-up"></i> <span data-i18n="tools.updater">检查更新</span></span>
+    </button>
     <button type="button" class="app-statusbar__update-badge" id="statusbar-update-badge" hidden><i class="fa-solid fa-circle-arrow-up" aria-hidden="true"></i><span data-i18n="tools.updater">检查更新</span></button>
     <span class="app-statusbar__spacer"></span>
     <span class="app-statusbar__item"><kbd class="ds-kbd">Ctrl Shift /</kbd></span>

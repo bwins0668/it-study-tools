@@ -136,12 +136,19 @@
       }
     });
 
-    // 展开态同步 aria-expanded 与图标（关闭动作可能来自 Esc/外点/模式切换）
+    // P11：收起按钮是目录头部结构的一部分（触发按钮在展开态淡出让位）
+    var collapseBtn = $("sidebar-collapse-btn");
+    if (collapseBtn) {
+      collapseBtn.addEventListener("click", function () {
+        if (window.closeDesktopSidebar) window.closeDesktopSidebar();
+        btn.focus();
+      });
+    }
+
+    // 展开态同步 aria-expanded（关闭动作可能来自 Esc/外点/收起按钮/模式切换）
     new MutationObserver(function () {
       var open = isOpen();
       btn.setAttribute("aria-expanded", open ? "true" : "false");
-      var icon = btn.querySelector("i");
-      if (icon) icon.className = open ? "fa-solid fa-angles-left" : "fa-solid fa-table-list";
       // Esc/外点关闭后焦点若困在被藏目录内，交还按钮
       if (!open) {
         var sidebar = document.getElementById("app-sidebar");
