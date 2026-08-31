@@ -4050,7 +4050,8 @@
       },
       glossary: {
         title: "ศัพท์ IT", open: "เปิดศัพท์", close: "ปิด", searchPlaceholder: "ค้นหาศัพท์...",
-        allCategories: "ทั้งหมด", category: "หมวดหมู่", noResults: "ไม่พบศัพท์ที่เกี่ยวข้อง"
+        allCategories: "ทั้งหมด", category: "หมวดหมู่", noResults: "ไม่พบศัพท์ที่เกี่ยวข้อง",
+        currentLanguage: "ภาษาปัจจุบัน"
       },
       quiz: {
         title: "แบบทดสอบความเข้าใจ",
@@ -4062,14 +4063,8 @@
         unavailable: "แบบทดสอบของ {title} ยังไม่ได้แปลสำหรับภาษาที่เลือก",
         thisLesson: "บทนี้"
       },
-      aiLearning: "AI เรียนรู้", language: "ภาษา",
-      account: "บัญชี", login: "เข้าสู่ระบบ", logout: "ออกจากระบบ",
-      sync: "ซิงค์", manualSync: "ซิงค์ด้วยตนเอง", bookmarks: "บุ๊กมาร์ก",
-      randomChallenge: "สุ่มท้าทาย", practiceSandbox: "Sandbox ฝึก", dashboard: "แดชบอร์ด",
-      glossary: "ศัพท์", japaneseTyping: "พิมพ์ภาษาญี่ปุ่น",
-      fallback: "สำรอง", error: "ข้อผิดพลาด", success: "สำเร็จ",
-      currentLanguage: "ภาษาปัจจุบัน",
-      settings: "การตั้งค่า",
+      auth: { account: "บัญชี", sync: "ซิงค์", loginTitle: "เข้าสู่ระบบ", signedOut: "ออกจากระบบ" },
+      dashboard: { japaneseTyping: "พิมพ์ภาษาญี่ปุ่น" },
       tools: {
         quickStart: "เริ่มต้นอย่างรวดเร็ว",
         quickStartTitle: "ขั้นตอนการเรียน",
@@ -4163,18 +4158,15 @@
       },
       glossary: {
         title: "Glosarium IT", open: "Buka glosarium", close: "Tutup", searchPlaceholder: "Cari istilah...",
-        allCategories: "Semua", category: "Kategori", noResults: "Tidak ada istilah terkait"
+        allCategories: "Semua", category: "Kategori", noResults: "Tidak ada istilah terkait",
+        currentLanguage: "Bahasa saat ini"
       },
       quiz: {
         title: "Tes pemahaman", previous: "Sebelumnya", next: "Berikutnya",
         submitAnswer: "Kirim jawaban"
       },
-      aiLearning: "AI Belajar", language: "Bahasa", settings: "Pengaturan",
-      account: "Akun", login: "Masuk", logout: "Keluar", sync: "Sinkron",
-      manualSync: "Sinkron manual", bookmarks: "Penanda", randomChallenge: "Tantangan acak",
-      practiceSandbox: "Sandbox latihan", dashboard: "Dasbor", tools: "Alat",
-      glossary: "Glosarium", japaneseTyping: "Mengetik Jepang", fallback: "Cadangan",
-      error: "Kesalahan", success: "Berhasil", currentLanguage: "Bahasa saat ini"
+      auth: { account: "Akun", sync: "Sinkron", loginTitle: "Masuk", signedOut: "Keluar" },
+      dashboard: { japaneseTyping: "Mengetik Jepang" }
     }
   };
 
@@ -6523,9 +6515,13 @@
       }
     };
 
-    // Duplicate English translations for other non-CJK locales to ensure they never leak Chinese/Japanese
+    // Provide English fallback values for locales that lack this patch's modules.
+    // The merge below only fills MISSING keys, so existing native translations
+    // are never overwritten (the old deep-copy+overwrite destroyed ~159 native strings).
     ["vi-VN", "th-TH", "fr-FR", "id-ID", "en-US"].forEach(function (loc) {
-      HOTFIX2_DICT_PATCH[loc] = JSON.parse(JSON.stringify(HOTFIX2_DICT_PATCH["my-MM"]));
+      if (!HOTFIX2_DICT_PATCH[loc]) {
+        HOTFIX2_DICT_PATCH[loc] = JSON.parse(JSON.stringify(HOTFIX2_DICT_PATCH["my-MM"]));
+      }
     });
 
     Object.assign(HOTFIX2_DICT_PATCH["fr-FR"].common, {
@@ -6551,7 +6547,11 @@
       if (!window.I18nUiDict[locale]) window.I18nUiDict[locale] = {};
       Object.keys(HOTFIX2_DICT_PATCH[locale]).forEach(function (module) {
         if (!window.I18nUiDict[locale][module]) window.I18nUiDict[locale][module] = {};
-        Object.assign(window.I18nUiDict[locale][module], HOTFIX2_DICT_PATCH[locale][module]);
+        var target = window.I18nUiDict[locale][module];
+        var patch = HOTFIX2_DICT_PATCH[locale][module];
+        Object.keys(patch).forEach(function (key) {
+          if (!(key in target)) target[key] = patch[key];
+        });
       });
     });
   })();

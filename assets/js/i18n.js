@@ -1872,7 +1872,7 @@ DISABLE_TRANSLATION_OVERLAY = true;
     toast.className = "i18n-migration-toast";
     toast.setAttribute("role", "alert");
     toast.textContent = msg;
-    toast.style.cssText = "position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#1e293b;color:#f1f5f9;padding:12px 24px;border-radius:8px;font-size:14px;z-index:99999;box-shadow:0 4px 12px rgba(0,0,0,.3);transition:opacity .4s;max-width:90vw;text-align:center;";
+    toast.style.cssText = "position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#1e293b;color:#f1f5f9;padding:12px 24px;border-radius:8px;font-size:14px;z-index:var(--z-toast,99999);box-shadow:0 4px 12px rgba(0,0,0,.3);transition:opacity .4s;max-width:90vw;text-align:center;";
     document.body.appendChild(toast);
     setTimeout(function () { toast.style.opacity = "0"; setTimeout(function () { toast.remove(); }, 500); }, 4000);
   }

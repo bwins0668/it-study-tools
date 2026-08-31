@@ -72,13 +72,21 @@
   --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.4);
   --shadow-2: 0 8px 24px rgba(0, 0, 0, 0.5);
 
-  /* ── 层级（全站仅此 6 档） ── */
+  /* ── 层级（全站单一来源：其他样式表不得重复定义，统一用 var(--z-*)） ──
+     遗留硬编码层备忘：glossary 800/801、mobile-backdrop 840、exam-history 850、
+     sidebar 860、auth 900、module-switch 920、tools-drawer 9999、
+     pdf-viewer 10000、typing 10010、mos365 10060（全屏体验层） */
   --z-raised: 10;
   --z-sticky: 100;
+  --z-header: 100;
   --z-dropdown: 200;
   --z-overlay: 300;
-  --z-modal: 400;
-  --z-toast: 500;
+  --z-tabs: 860;
+  --z-drawer: 2000;
+  --z-backdrop: 2500;
+  --z-popover: 3000;
+  --z-modal: 4000;
+  --z-toast: 20000;
 
   /* ── 动效 ── */
   --dur-1: 120ms;  /* hover/press */
